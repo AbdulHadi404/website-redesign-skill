@@ -1,0 +1,17 @@
+{
+  "name": "website-redesign-skill",
+  "owner": { "name": "Abdul Hadi", "url": "https://github.com/AbdulHadi404" },
+  "metadata": {
+    "description": "Claude Code skill for genuine marketing-site redesigns — methodology, not a house style.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "website-redesign",
+      "source": "./",
+      "description": "Audit → research → art direction → keep/replace/remove/create → implementation → visual QA → self-critique → iteration → technical QA for marketing sites.",
+      "version": "1.0.0",
+      "keywords": ["website", "redesign", "rebrand", "design"]
+    }
+  ]
+}

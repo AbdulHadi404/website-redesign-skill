@@ -1,0 +1,65 @@
+# Phase 3 — Art direction
+
+Goal: a written direction, specific to this company, that decides the visual system before any code is touched — and that would be recognisably wrong for a different company.
+
+## Derive the concept from the company
+
+Start from the audit, not from a style you like. Useful prompts:
+
+- What is the **moment** the product serves? (a call answered, a shipment scanned, a contract signed, a dashboard updating). Concepts built from a moment produce imagery, motion and copy that all point the same way.
+- What is the **material** of the business? (paper, steel, code, voice, money, people, light). Materials suggest surfaces, textures and palettes.
+- What is the **posture** the buyer needs to feel? (safe, fast, expert, calm, ambitious, precise). Posture suggests typography and pacing.
+- What **real assets** exist? A product with a beautiful UI wants to be shown large. A service business with no UI wants photography or typography. A data product wants its data.
+
+Write the concept as one line a founder would recognise as theirs, then a paragraph on how it translates to surfaces, type, imagery and motion. If the line would fit a random SaaS company ("modern, clean, trustworthy"), it is not a concept yet.
+
+## Direction families (examples, not templates)
+
+The right answer differs per company. Some families that regularly produce strong, distinct results — choose from the audit, mix with intent, and never default:
+
+- **Editorial** — serif display, generous measure, chapters, photography treated like a magazine.
+- **Typography-driven** — oversized statements, hairline grids, few or no images; the type is the identity.
+- **Product-driven** — the UI is the hero and recurs at large size; everything else is quiet.
+- **Photographic / cinematic** — full-bleed imagery of the customer's world with a strong consistent treatment; copy on its own solid ground.
+- **Technical / instrument** — monospace details, dense data, dark surfaces, diagrams that actually explain the system.
+- **Brutalist / raw** — heavy type, hard edges, exposed structure, black and white with one colour.
+- **Bright and spacious** — white, air, one accent, soft imagery; for approachable consumer-facing products.
+- **Corporate-premium** — restrained palette, precise grid, proof-forward, serif or humanist grotesk.
+- **Playful / illustrated** — bespoke illustration or 3D as the identity; needs real illustration assets or a clear plan to create them.
+- **Luxury** — extreme whitespace, minimal copy, product or material photography, small type.
+- **Data-oriented** — charts and live numbers as visual language; only when the numbers are real.
+
+Two unrelated companies should land in different places on this list. If the last three redesigns you did all landed in the same family, be suspicious of yourself.
+
+## Decide every layer, in writing
+
+Fill `templates/DESIGN.md`. The decisions that matter most:
+
+**Typography.** Choose new families unless the existing ones are a documented brand asset with a reason to survive. Decide display and body (and a data/mono face if the concept wants one), weights, tracking at display sizes, line heights, uppercase usage, and a real scale (hero › chapter › statement › panel › h3 › body › small › label) where every level gets used. Typography alone should make the new site read as a different generation. Free sources with proper licences: Google Fonts, Fontshare, Fontsource; check each family's licence before using it.
+
+**Colour.** Build a system, not a swatch: background surfaces (at least two, so chapters can alternate), elevated surface, text at three strengths, line colour, one accent used for action and emphasis only, and the accent's darker variant for small text on light surfaces (contrast). Avoid the reflexive purple/blue gradient unless the brand genuinely owns it. Keep brand recognition where it helps — a logo motif, a colour the customers know — and rebuild everything around it.
+
+**Layout philosophy.** Container widths, gutters, vertical rhythm per chapter, how surfaces change between chapters, how much asymmetry, whether cards exist at all (often: no).
+
+**Hero concept.** Not headline + paragraph + two buttons + screenshot. Options that work depending on the company: oversized editorial statement over a photograph with copy on its own ground; the product itself, large, doing the thing; a live demo the visitor can use in the first viewport; a split composition; typography interacting with an image; a full-width composition of product fragments. Pick the one the concept demands.
+
+**Product visualisation.** Real screenshots if they exist. Otherwise faithful HTML fragments of real screens with sample data that is obviously illustrative (never customer names). Never a fabricated capability. Show state and flow — a row expanding into a transcript, a pipeline filling, a number changing — rather than a static frame.
+
+**Imagery strategy.** Photography, product, illustration, diagrams, or none — chosen and justified (see `imagery.md`).
+
+**Motion language.** Two or three moves that carry the concept (a masked photo reveal, a word-rise on serif headlines, dots travelling a diagram, a live transcript), plus quiet scroll reveals. Nothing that exists only to move. All of it off under `prefers-reduced-motion`.
+
+## Keep / replace / remove / create
+
+List each explicitly:
+
+- **Keep**: facts and copy structure; functional widgets and their ids; routes and anchors; server contracts; a logo motif if it has meaning; the framework.
+- **Replace**: fonts, palette, hero, nav, footer, section grammar, product presentation, secondary pages, the social image, the favicon if the identity changes.
+- **Remove**: decorative gradients, textures, card grids, chips, badges, icon grids, animations without meaning, placeholder copy that leaked into production.
+- **Create**: new primitives (chapter wrapper, heading pattern, button variants), product fragments, diagrams, imagery pipeline, new components the concept needs.
+
+If **keep** is the longest list, the direction is still a refresh. Go back to the concept before writing code.
+
+## Page narrative
+
+Reorganise the homepage from scratch around what a visitor must understand in seconds: what it is, who it is for, why it matters, why to trust it, what to do next. For every section ask why it deserves to exist and whether it is the most *visual* way to say it. Vary composition chapter by chapter so the page has rhythm: a typographic chapter, a product chapter, a photographic chapter, a split, an index, a closing. Real proof gets a compact chapter; missing proof gets no chapter.
