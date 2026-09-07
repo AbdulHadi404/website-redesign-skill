@@ -47,7 +47,7 @@ Fill `templates/DESIGN.md`. The decisions that matter most:
 
 **Product visualisation.** Real screenshots if they exist. Otherwise faithful HTML fragments of real screens with sample data that is obviously illustrative (never customer names). Never a fabricated capability. Show state and flow — a row expanding into a transcript, a pipeline filling, a number changing — rather than a static frame.
 
-**Imagery strategy.** Photography, product, illustration, diagrams, or none — chosen and justified (see `imagery.md`).
+**Imagery strategy.** Photography, product, illustration, diagrams, or none — chosen and justified (see `imagery.md`). "None" never means *no graphics*: plan a drawn graphics layer in the brand's line style (milestone art, spot illustrations, glyphs, a watermark family from the logo) so the page has visual events between the type.
 
 **Motion language.** Two or three moves that carry the concept (a masked photo reveal, a word-rise on serif headlines, dots travelling a diagram, a live transcript), plus quiet scroll reveals. Nothing that exists only to move. All of it off under `prefers-reduced-motion`.
 
