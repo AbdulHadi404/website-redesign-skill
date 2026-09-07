@@ -10,7 +10,7 @@ Read, do not skim:
 - **Routes and pages**: every page, including legal, error and utility pages. Note dynamic or server-rendered routes and what they depend on.
 - **Layout and shared components**: nav, footer, section wrappers, buttons, heading styles. Which are reused where.
 - **Styling system**: tokens, global CSS, utility framework, fonts (families, weights, where loaded), palette, radii, shadows, breakpoints.
-- **Brand assets**: logo files, favicon, icon sets, brand guidelines or docs if they exist. Note the *meaning* of the logo (a motif you may keep even if you recolour it).
+- **Brand assets**: logo files, favicon, icon sets, brand guidelines or docs if they exist. **Sample the logo's actual colours** (a few lines of Python or an eyedropper — record the hex values in `DESIGN.md`) and describe the wordmark's construction (geometric, humanist, serif, techno, condensed). These are the starting point for the palette and the display face; note the *meaning* of the mark as a motif you can turn into a system.
 - **Imagery**: real screenshots, photos, illustrations, videos. Real product UI is the most valuable asset a marketing site can have — find out whether any exists and whether the product can be run locally for capture.
 - **Motion**: existing animation code, reveal systems, scroll effects, reduced-motion handling.
 - **SEO and meta**: titles, descriptions, canonical, Open Graph and social image, structured data, sitemap, robots.

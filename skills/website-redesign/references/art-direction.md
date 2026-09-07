@@ -4,7 +4,9 @@ Goal: a written direction, specific to this company, that decides the visual sys
 
 ## Derive the concept from the company
 
-Start from the audit, not from a style you like. Useful prompts:
+Start from the audit, not from a style you like. Read `lessons.md` first. Useful prompts:
+
+- What do the **logo and wordmark** already say? Their colours are the palette's first candidates; their letterform construction points at a display face (a geometric techno wordmark wants a geometric grotesk, not a serif). The mark can become a system: label glyph, list marker, watermark, the hero object.
 
 - What is the **moment** the product serves? (a call answered, a shipment scanned, a contract signed, a dashboard updating). Concepts built from a moment produce imagery, motion and copy that all point the same way.
 - What is the **material** of the business? (paper, steel, code, voice, money, people, light). Materials suggest surfaces, textures and palettes.
@@ -35,9 +37,9 @@ Two unrelated companies should land in different places on this list. If the las
 
 Fill `templates/DESIGN.md`. The decisions that matter most:
 
-**Typography.** Choose new families unless the existing ones are a documented brand asset with a reason to survive. Decide display and body (and a data/mono face if the concept wants one), weights, tracking at display sizes, line heights, uppercase usage, and a real scale (hero › chapter › statement › panel › h3 › body › small › label) where every level gets used. Typography alone should make the new site read as a different generation. Free sources with proper licences: Google Fonts, Fontshare, Fontsource; check each family's licence before using it.
+**Typography.** Choose new families unless the existing ones are a documented brand asset with a reason to survive. Match the voice to the business: monospace belongs to developer and infrastructure products; a sales, services, consumer or manufacturing company gets its data in the sans or display face with tabular figures. Emphasis can be weight contrast, colour or size — the serif italic is one option, not the default. Decide display and body (and a data/mono face if the concept wants one), weights, tracking at display sizes, line heights, uppercase usage, and a real scale (hero › chapter › statement › panel › h3 › body › small › label) where every level gets used. Typography alone should make the new site read as a different generation. Free sources with proper licences: Google Fonts, Fontshare, Fontsource; check each family's licence before using it.
 
-**Colour.** Build a system, not a swatch: background surfaces (at least two, so chapters can alternate), elevated surface, text at three strengths, line colour, one accent used for action and emphasis only, and the accent's darker variant for small text on light surfaces (contrast). Avoid the reflexive purple/blue gradient unless the brand genuinely owns it. Keep brand recognition where it helps — a logo motif, a colour the customers know — and rebuild everything around it.
+**Colour.** Start from the sampled logo colours and build outward — deepen or lighten them for contrast, derive the surfaces as tints, and keep the brand's hue family unless the user says the identity is the problem. Build a system, not a swatch: background surfaces (at least two, so chapters can alternate), elevated surface, text at three strengths, line colour, one accent used for action and emphasis only, and the accent's darker variant for small text on light surfaces (contrast). Avoid the reflexive purple/blue gradient unless the brand genuinely owns it. Keep brand recognition where it helps — a logo motif, a colour the customers know — and rebuild everything around it.
 
 **Layout philosophy.** Container widths, gutters, vertical rhythm per chapter, how surfaces change between chapters, how much asymmetry, whether cards exist at all (often: no).
 
@@ -59,6 +61,10 @@ List each explicitly:
 - **Create**: new primitives (chapter wrapper, heading pattern, button variants), product fragments, diagrams, imagery pipeline, new components the concept needs.
 
 If **keep** is the longest list, the direction is still a refresh. Go back to the concept before writing code.
+
+## House-recipe check (before writing code)
+
+Write the direction in one sentence: surfaces, display face and emphasis device, label device, dark-chapter colour, accent. Compare it with the recipe in `anti-patterns.md` ("The skill's own house style") and with any other site the user has built with this skill (look for a `DESIGN.md` in their other projects). If the sentence would fit both, change the family: different surfaces, a display face chosen from the wordmark, a label device that is not mono uppercase, an accent from the logo. Record the comparison in `DESIGN.md` under "Distance from the house recipe".
 
 ## Page narrative
 

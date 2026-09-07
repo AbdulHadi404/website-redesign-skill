@@ -37,6 +37,8 @@ Fix defects in source, re-capture, and look again. Do not close the loop on the 
 - Parallax layers without overscan expose the section background at the edges.
 - Reveal classes on the same element as a scroll-driven transform fight each other; wrap one in the other.
 - Preview tools sometimes report `innerWidth: 0` or time out on clicks when the pane is hidden; front the pane or use the headless script.
+- Framework-scoped styles (Astro, Svelte, Vue) do not reach markup rendered by a child component: a decorative SVG given a class by its parent lays out in normal flow as a giant block. Position such elements with a global selector or a global utility class, and check the render.
+- Third-party iframes (review widgets, badges, booking embeds) often paint blank in headless captures because of bot challenges; confirm in the preview browser before calling them broken, and give them a solid fallback so the band never reads as empty.
 
 ## Self-critique (Phase 7)
 

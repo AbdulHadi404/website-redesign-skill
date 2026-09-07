@@ -12,6 +12,17 @@ The most important failure, because it feels like success from the inside. Sympt
 
 The test: name the five things a stranger notices first on the old site. If the new site keeps three, it is a refresh. Fix it at the direction stage; it is far more expensive to discover after implementation.
 
+## The skill's own house style
+
+Run this skill on several companies and, left alone, it converges on one look: bone or paper surfaces, a serif display face with an italic emphasised phrase, monospace uppercase eyebrows and labels, near-black "ink" chapters, one warm accent (amber, orange, green), hairline rules everywhere. Each of those is a fine choice once; together they are a template, and a user who has seen it on one of their sites will recognise it instantly on the next. Symptoms:
+
+- The palette was chosen from taste rather than sampled from the logo; the brand's own colours vanished.
+- The display face is a serif "because it is distinctive" — distinctive from the old site, not from the skill's last three outputs.
+- Mono uppercase labels appear on a company that has nothing to do with code. Monospace reads as *developer tool*; for a sales, services, consumer or manufacturing company it is the wrong voice. Use the sans or display face with tabular figures for data instead.
+- The concept line is about the company, but nothing on the page is derived from the company's actual identity assets.
+
+The test: write the direction in one sentence and ask whether it would also describe the last site this skill produced for this user. If yes, change the family, not the values.
+
 ## Composition
 
 - Hero = headline + paragraph + two pill buttons + a dashboard screenshot (or a glowing blob).

@@ -15,6 +15,7 @@ This skill exists because the natural failure mode is subtle and common: keep th
 
 1. **The distance test.** Write down the five things a stranger notices first on the current site (typeface, palette, hero composition, section rhythm, imagery or its absence). A redesign changes what those five things *are*. If your plan keeps three of them, it is a refresh; stop and rethink the direction before writing code.
 2. **Truth is not negotiable.** Product capabilities, prices, claims, customers, numbers, legal text: only what exists in the repo or from the user. Never invent testimonials, logos, statistics, integrations or features to fill a layout. When proof does not exist, design a page that does not need it.
+3. **The brand's own assets come first; the skill's habits come last.** Sample the logo and wordmark before choosing a single colour or typeface, and build from them unless the user says the identity itself is the problem. Then run the house-recipe check in `references/anti-patterns.md` ("The skill's own house style"): if the direction can be described as paper surfaces + serif display with italic emphasis + mono uppercase eyebrows + dark chapters + one accent, it is the skill's default, not this company's design. Two companies run through this skill by the same user must not come out looking like siblings — check against their other sites, not only against the old one.
 
 ## Workflow
 
@@ -24,7 +25,7 @@ Work through the phases in order. Each phase has a reference file with the detai
 | --- | --- | --- |
 | 1. Audit | A written audit: what the company sells, to whom, what the site gets wrong | `references/audit.md` |
 | 2. Research | 4–8 live reference sites inspected, principles extracted (never sections copied) | `references/research.md` |
-| 3. Art direction | `DESIGN.md` in the repo from `templates/DESIGN.md`, including keep / replace / remove / create | `references/art-direction.md`, `references/anti-patterns.md` |
+| 3. Art direction | `DESIGN.md` in the repo from `templates/DESIGN.md`, including keep / replace / remove / create | `references/art-direction.md`, `references/anti-patterns.md`, `references/lessons.md` |
 | 4. Imagery | Licensed assets localised and optimised, or a deliberate decision not to use photography | `references/imagery.md` |
 | 5. Implementation | The redesign in the existing stack, on a branch | `references/implementation.md` |
 | 6. Visual QA | Full-page renders at 1440 / 1280 / 1024 / 768 / 390, defects fixed | `references/visual-qa.md` |
@@ -33,7 +34,7 @@ Work through the phases in order. Each phase has a reference file with the detai
 
 Two gates sit inside this sequence. **Before implementation**, `DESIGN.md` must show all five first-notice things changed and a keep list shorter than replace + create; if it does not, the direction is a refresh and writing code now only makes that expensive to discover. **Before technical QA**, the critique must have no remaining "no" — a weakness you can see in a render is a task, not a caveat for the report.
 
-Do not skip to implementation because the direction "feels obvious". The direction that feels obvious before the audit is usually the generic one.
+Do not skip to implementation because the direction "feels obvious". The direction that feels obvious before the audit is usually the generic one — and the direction that feels obvious *after* several redesigns is usually the skill's own habit.
 
 ### Phase 1 — Audit (understand before judging)
 
@@ -49,7 +50,7 @@ If there is no browser access, say so plainly, name what would help (a browser M
 
 ### Phase 3 — Art direction (derive it, do not pick it)
 
-The direction must come from the company: what it sells, the emotion of the moment it serves, who is buying, and the assets that actually exist. Name the concept in one line that a founder would recognise as *theirs* ("the moment the phone rings", "the ledger", "the workshop floor") and let that drive every choice. Two unrelated companies run through this skill should produce two clearly different sites; if your direction would fit any SaaS company, it is not a direction yet.
+The direction must come from the company: what it sells, the emotion of the moment it serves, who is buying, and the assets that actually exist — starting with the logo. Extract its colours and the construction of its wordmark (geometric, humanist, serif, techno) and let those drive the palette and the display face; a logo motif can become a system (labels, markers, watermarks, the hero object). Dropping the brand's own colours for a "nicer" accent is a rebrand the user did not ask for. Name the concept in one line that a founder would recognise as *theirs* ("the moment the phone rings", "the ledger", "the workshop floor") and let that drive every choice. Two unrelated companies run through this skill should produce two clearly different sites; if your direction would fit any SaaS company, it is not a direction yet.
 
 Decide, in writing, each of: display and body typography (new families unless the existing ones are a genuine, documented brand asset); a palette built as a system (surfaces, text, lines, one accent); composition philosophy; the hero concept; the product visualisation strategy; the imagery strategy (photography, product UI, illustration, typography-only — chosen, not defaulted); the motion language. Then the four lists: **keep**, **replace**, **remove**, **create**. If `keep` is the longest list, the direction is too conservative — revisit it now, while it is cheap.
 
@@ -74,6 +75,16 @@ Put the old first viewport next to the new one and ask whether a stranger would 
 ### Phase 8 — Technical QA and hand-off
 
 Typecheck, lint, build and test with the project's own commands. Click every nav link, CTA and footer link; submit every form; exercise every widget; check the mobile menu, keyboard focus, contrast, reduced-motion behaviour, image loading (lazy below the fold, eager for the hero), metadata and social image, analytics hooks. Commit with a message that explains the direction, push the branch, and use the project's preview mechanism if it has one. Do not deploy to production unless the user asks.
+
+## Learning from corrections
+
+Every revision or correction the user asks for is evidence that something in this skill let the mistake through. Before or right after fixing the work, do all three:
+
+1. Name the root cause in one line — not the symptom ("green looked wrong") but the missing rule ("the audit never sampled the logo's colours").
+2. Update the skill itself so the same issue is less likely next time: the relevant phase reference, `references/anti-patterns.md`, or a template field. Prefer a check that runs at the cheapest point (audit or art direction) over a warning at the end.
+3. Log it in `references/lessons.md` (date, what went wrong, what changed), and read that file at the start of Phase 3 so the lessons are actually applied.
+
+Do this proactively — do not wait to be asked to "make the skill learn". Tell the user what was changed in the skill in the final report.
 
 ## Reporting
 

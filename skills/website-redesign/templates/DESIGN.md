@@ -10,6 +10,8 @@ Written <date>, before implementation. Benchmark for finish: <reference site(s)>
 
 **Real proof that exists:** … (customers, numbers, product UI, demo, awards — only what is real)
 
+**Logo colours sampled:** … (hex values from the actual files; wordmark construction: geometric / humanist / serif / techno)
+
 **Must be preserved (functionality and truth):**
 - Routes / anchors: …
 - Element ids, data attributes and form fields wired to scripts: …
@@ -44,6 +46,8 @@ One line a founder would recognise as theirs: **“…”**
 How it translates: surfaces …; typography …; imagery …; motion …
 
 Why this is *not* the obvious direction for a generic company in this category: …
+
+**Distance from the house recipe:** the direction in one sentence, and why it is not "paper + serif italic + mono eyebrows + ink chapters + one accent". Other sites this user built with the skill that were checked: …
 
 ## Typography
 

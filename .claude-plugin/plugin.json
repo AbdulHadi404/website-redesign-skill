@@ -1,7 +1,7 @@
 {
   "name": "website-redesign",
   "description": "Redesign an existing marketing website into a genuinely new, brand-specific design: audit, live reference research, derived art direction, keep/replace/remove/create, implementation in the existing stack, visual QA at five widths, self-critique, iteration, technical QA.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": { "name": "Abdul Hadi", "url": "https://github.com/AbdulHadi404" },
   "homepage": "https://github.com/AbdulHadi404/website-redesign-skill",
   "repository": "https://github.com/AbdulHadi404/website-redesign-skill",
