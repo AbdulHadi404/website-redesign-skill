@@ -33,6 +33,7 @@ The test: write the direction in one sentence and ask whether it would also desc
 - Every section the same width, the same padding, the same alignment.
 - Cards used for content that is a list, a table, a diagram or a paragraph.
 - Pill badges and chips as decoration ("NEW", "AI-POWERED") rather than as data.
+- The accent-stripe card: a coloured left or top border on a card or column as the only signal of status, category or "most popular". It is the signature of generated UI. Encode status as a labelled tag with a data mark, a word, or a position; emphasise a column with its label, not a stripe.
 
 ## Colour and surface
 
