@@ -32,6 +32,8 @@ The test: write the direction in one sentence and ask whether it would also desc
 - Every heading the same size; no level between the hero and the body.
 - Every section the same width, the same padding, the same alignment.
 - Cards used for content that is a list, a table, a diagram or a paragraph.
+- The stepper timeline: a thin rule with dots or icons at each step, labels beneath. It reads as a progress bar or an onboarding widget. Show a process as a schedule (ruled columns with the time as the dominant number), a ledger, or a real artifact of the process.
+- A hero visual floating on a flat ground with only a watermark behind it. The hero object needs its own surface — a panel, a band, a grid it belongs to — or the first viewport reads as unfinished.
 - Pill badges and chips as decoration ("NEW", "AI-POWERED") rather than as data.
 - The accent-stripe card: a coloured left or top border on a card or column as the only signal of status, category or "most popular". It is the signature of generated UI. Encode status as a labelled tag with a data mark, a word, or a position; emphasise a column with its label, not a stripe.
 
