@@ -103,12 +103,7 @@ Green means succeeded, red means failed, amber means attention — and nothing e
 
 ## 4. Logos and marks
 
-- **Silhouette test first.** Before sizes, colours or a lockup, look at the mark as a flat shape at 24px and ask what a stranger sees. Circles inside circles, a dot in a round counter, two bumps, a slot on a rounded rectangle (a battery) — the eye reads bodies and objects before it reads letters, and a mark that needs explaining has already failed. List every unintended reading you can find; if any is embarrassing or off-brand, redraw before showing it.
-- Two colours, three at most. The mark must survive as **one colour** (ink on white, white on ink, white on the brand field) without losing its idea.
-- Legible at **16px** (favicon) and dignified at **160px**. If the idea depends on a detail smaller than 1/16 of the mark's height, it is decoration and will vanish in the tab strip — design so the mark degrades gracefully (the simple form remains when the detail goes).
-- The mark's geometry sets the display face: rounded square + geometric letter → geometric sans; a seal or crest → serif or humanist.
-- Build the motif into a system: the same construction becomes the favicon, the app icon, a watermark, a list marker, a stamp.
-- A wordmark is set in the display face with tighter tracking than running text (−2 to −4%), and never in the body face.
+The full method — what a mark is for, the kinds, the clichés, the silhouette / blur / 16px / one-colour / category / context tests, construction and optical corrections, and how to present five or six directions — is in `logo-design.md`. Read it before drawing anything; the short form is: appropriate, distinctive, simple; nameable in a word; sketched in quantity and in black and white; tested as a silhouette before anyone sees it; shown in context; the user picks.
 
 ## 5. The palette checklist (fill this before implementation)
 

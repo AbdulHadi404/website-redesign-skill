@@ -25,7 +25,7 @@ Work through the phases in order. Each phase has a reference file with the detai
 | --- | --- | --- |
 | 1. Audit | A written audit: what the company sells, to whom, what the site gets wrong | `references/audit.md` |
 | 2. Research | 4–8 live reference sites inspected, principles extracted (never sections copied) | `references/research.md` |
-| 3. Art direction | `DESIGN.md` in the repo from `templates/DESIGN.md`, including keep / replace / remove / create | `references/art-direction.md`, `references/design-theory.md`, `references/anti-patterns.md`, `references/lessons.md` |
+| 3. Art direction | `DESIGN.md` in the repo from `templates/DESIGN.md`, including keep / replace / remove / create | `references/art-direction.md`, `references/design-theory.md`, `references/logo-design.md` (if a mark is in scope), `references/anti-patterns.md`, `references/lessons.md` |
 | 4. Imagery | Licensed assets localised and optimised, or a deliberate decision not to use photography | `references/imagery.md` |
 | 5. Implementation | The redesign in the existing stack, on a branch | `references/implementation.md` |
 | 6. Visual QA | Full-page renders at 1440 / 1280 / 1024 / 768 / 390, defects fixed | `references/visual-qa.md` |
