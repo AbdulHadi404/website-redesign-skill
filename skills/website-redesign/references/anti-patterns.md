@@ -79,6 +79,11 @@ Illustration you draw yourself fails in ways stock imagery never does. Each of t
 - **A watermark clipped down to a meaningless wedge**: a huge mark cropped by its container until only a diagonal band shows reads as a stray shape, not as the logo — and it is worse when it crosses the headline. Either show enough of the form to be recognisable, or make it a small complete ornament in a corner that has no copy.
 - **Positioning inside a full-bleed container**: a ground that bleeds with `left: -100vw; right: -100vw` moves its own edges 100vw away, so a child positioned with `right:`/`left:` lands off-screen. Anchor such children back to the visible panel with `calc(100vw - …)`, and check the watermark is actually visible after clipping it.
 
+## Logos and marks
+
+- **A mark with an unintended silhouette.** A dot inside a round counter, a circle inside a circle, two rounded lobes, a rounded rectangle with a slot — read as a body part, a battery, a target, before they read as the idea. Look at the mark as a flat shape at 24px and name what a stranger sees before anyone else does; redraw if the answer is embarrassing.
+- A "concept" that has to be explained (three readings, a hidden motif) is decoration; the mark must say one thing on sight.
+
 ## Product and proof
 
 - Describing capabilities in bullets and never showing the product.
