@@ -23,9 +23,20 @@ Watch for paid tiers mixed into results: on Unsplash, files served from `plus.un
 
 Search by *subject in the customer's world*, not by mood words. Inspect candidates at thumbnail size before downloading; pick for composition (where the subject sits, where copy could go), light, and how it will take the treatment.
 
+## Sourcing in practice (when the search pages fight back)
+
+Stock libraries defend their search pages against automation, and each one fails differently: Unsplash serves a proof-of-work bot wall to headless requests, its `napi` search returns nothing without a browser session, and Pexels answers a plain fetch with a Cloudflare challenge. What works:
+
+- Drive a **real browser context** (headless is fine) with a desktop user agent, one search per fresh context, a pause of a few seconds after load, and a scroll to trigger the lazy grid. Read the image `src` values out of the DOM — the ids are in the path — rather than parsing markup.
+- Pull the candidates at a working width and **build contact sheets** (a grid of thumbnails with their ids). Choose from the sheet, by composition and light — never from titles, and never one image at a time.
+- Download the chosen frames at the width the design needs, then check the licence on each photo's own page before it ships.
+
+If none of that is possible, say so and name the capability that would help; do not ship placeholders.
+
 ## Localise and process
 
 - Download originals at the largest size you need (2000–2400px wide is enough for full-bleed at 2× density in most cases) into the project's asset system — never hot-link a search-result URL.
+- **Bake the treatment, do not layer it.** A duotone (or black-and-white, or a tint) applied in code to every frame — convert to luminance, autocontrast, map black and white to two brand colours — is what makes eight photographs from four sources read as one series. Export two widths (a desktop and a phone one) in a modern format and let the markup pick with `<source media>`; a treatment left to CSS filters costs paint time and cannot be checked in a still.
 - Apply one treatment to the whole set so it reads as a series: black and white, a duotone, a consistent crop, a consistent tint. Bake expensive treatments into the file; apply cheap ones (a colour overlay, a gradient fade) in CSS so they stay adjustable.
 - Serve through the framework's image pipeline (responsive widths, modern formats, explicit width and height to avoid layout shift). Hero image eager with high fetch priority; everything below the fold lazy.
 - Keep total image weight sane: one hero at ~150–300 KB in a modern format is normal; a page with several megabytes of photography is not.

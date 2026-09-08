@@ -41,6 +41,7 @@ Do not build a mark on: the checkmark, the shield, the globe, the swoosh, the li
 4. **One colour**, black on white and white on black, no tile. A mark that needs its tile is weak.
 5. **Other readings**: another letter (P → R, D, B), an arrow the wrong way, a number, a competitor's mark.
 6. **Category**: beside the five nearest competitors. *Theirs* or *anyone's*?
+6b. **Family**: beside the parent company's mark and any sibling product's mark, at the same size. It should read as the same house in a different colour — same construction, same stroke weight, same terminals. A mark that looks like it came from another company's design system is wrong even when it passes every other test.
 7. **Context**: the header, an app icon on a home screen, a tab favicon, the product's own surface, a sign, a shirt. Never present a mark floating alone.
 
 ## 5. Construction

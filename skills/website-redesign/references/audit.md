@@ -33,6 +33,17 @@ From the repo and anything the user gave you, answer in writing:
 
 If the product has a distinctive *moment* — a call being answered, a shipment arriving, a document signed, a number updating live — name it. Concepts are built from moments, not from adjectives.
 
+## 2b. The brand family — parent, siblings, and what else carries the name
+
+**Look at the company's other surfaces before deciding anything.** A product site is rarely alone: there is usually a parent company site, a sibling product, an app, a deck. Open each, and record — with screenshots and sampled values — its mark and construction, its display and text faces, its palette, its imagery, and the tone of its copy.
+
+Two things come out of this and both are load-bearing:
+
+- **What the family already owns.** A display face used across the parent and every product surface is a documented brand asset; so is the mark's construction (a tile and a single-stroke glyph, a wordmark's weight and tracking). Those survive the redesign unless the user says the identity itself is the problem — see `art-direction.md`.
+- **Where this product must differ.** A sibling product is not a competitor: the redesign should read as *the same house, a different room* — same construction, different colour, different subject.
+
+A redesign drawn without this step produces a good-looking orphan: nothing wrong with it, and nothing that says whose it is. That is a rejection waiting to happen.
+
 ## 3. The rendered site
 
 Run the project and look at every page at desktop and phone width. Capture full pages (see `visual-qa.md` for methods). Then name the weaknesses specifically. Vague diagnoses ("feels dated") produce vague fixes; specific ones produce direction:
