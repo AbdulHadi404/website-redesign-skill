@@ -44,6 +44,7 @@ The test: write the direction in one sentence and ask whether it would also desc
 - Random glowing blobs, mesh gradients and grain as a substitute for composition.
 - Glassmorphism on everything.
 - Accent colour on every heading, icon and border until it stops meaning anything.
+- **More than one full-bleed accent chapter per page**, or accent used as a field *and* as the button colour, so the primary action has to change colour to stay visible. One identity field per page; the action colour never changes (`design-theory.md`, the 60/30/10 budget).
 - One background colour for the whole page, so it has no chapters.
 
 ## Typography
@@ -52,6 +53,8 @@ The test: write the direction in one sentence and ask whether it would also desc
 - A single grotesk at one weight for everything.
 - Display type that is just body type made bigger.
 - Uppercase tracking on long text; centred paragraphs wider than 70 characters.
+- **Tracked capitals in a condensed or geometric grotesk at 10–13px as the label system** — eyebrows, field labels, chips, tabs, numerals. To a non-designer this reads as a terminal or a spec sheet ("the code kind of font") even though no monospace is loaded; the monospace ban in "The skill's own house style" is about the *voice*, and this is the same voice by another route. One small-caps device per page at most; the rest sentence case in the text face.
+- **Typesetting an object that looks like machine output** — an MRZ strip (`P<CLEOHR<<SANTOS<<<<`), a hash, a serial block — as "authenticity". It reads as code. Draw the object (a signature line, a seal, a stamp) or leave it out.
 - Headlines wrapped by chance rather than by intent.
 
 ## Imagery

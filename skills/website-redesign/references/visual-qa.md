@@ -47,6 +47,9 @@ Full-page captures are the wrong instrument for illustration: at page scale a tr
 - Reveal classes on the same element as a scroll-driven transform fight each other; wrap one in the other.
 - Preview tools sometimes report `innerWidth: 0` or time out on clicks when the pane is hidden; front the pane or use the headless script.
 - Framework-scoped styles (Astro, Svelte, Vue) do not reach markup rendered by a child component: a decorative SVG given a class by its parent lays out in normal flow as a giant block. Position such elements with a global selector or a global utility class, and check the render.
+- An absolutely positioned `<svg>` with `left` and `right` but no `width` keeps its intrinsic 300px: replaced elements resolve `width: auto` from intrinsic size, so `right` is ignored and the drawing ends wherever 300px lands. Give it an explicit `width` (a `calc()` if it must span between two nodes).
+- A "stamp press" or any enter animation that starts scaled above 1 adds its overhang to the document's scroll width until it fires; wide labels near the right edge produce a phantom 10px horizontal scroll on phones. Clip the offending ancestor with `overflow-x: clip` (not `hidden`, which would break sticky children).
+- A `body { overflow-x: hidden }` hides the scroll but not the fault, and it fools an overflow detector that stops at any clipping ancestor — stop the ancestor walk at `body`, or the detector reports nothing while `scrollWidth` still exceeds `clientWidth`.
 - Third-party iframes (review widgets, badges, booking embeds) often paint blank in headless captures because of bot challenges; confirm in the preview browser before calling them broken, and give them a solid fallback so the band never reads as empty.
 
 ## Self-critique (Phase 7)

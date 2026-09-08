@@ -10,9 +10,11 @@ It encodes one hard-won lesson: the default outcome of "redesign this site" is a
 
 - **Audit** the repository and the rendered site: product, audience, proof that actually exists, everything that must be preserved (routes, ids wired to scripts, forms, integrations), and *specific* reasons the current design reads as weak.
 - **Research** live reference sites when a browser is available, extracting principles rather than sections.
+- **Design and colour theory** as a working reference (`references/design-theory.md`): harmony and the 60/30/10 budget, perceptual (OKLCH) scales and the 12-step role scale, WCAG and APCA contrast, typographic scale and caps rules, Gestalt, logo construction — with a palette checklist that must be complete before any code.
 - **Art direction** written down before code: a concept derived from the company, typography, a colour system, layout philosophy, hero concept, product visualisation, imagery strategy, motion — and explicit keep / replace / remove / create lists, with a check that flags a plan that is still a refresh.
 - **Imagery** only when it carries the concept: licensed sources, localised and optimised assets, one consistent treatment, credits — or a deliberate decision to use product UI, diagrams or typography instead.
 - **Implementation** in the existing framework, tokens upward, with functionality untouched and composition varied chapter by chapter.
+- **Lessons log** (`references/lessons.md`): every user correction becomes a rule somewhere in the skill, so the next run does not repeat it.
 - **Visual QA** from full-page renders at 1440 / 1280 / 1024 / 768 / 390, then a **self-critique** whose every "no" becomes a fix and a re-render.
 - **Technical QA**: typecheck, build, tests, links, forms, widgets, accessibility, performance, SEO — and a hand-off that reports what was verified and what the user must decide.
 

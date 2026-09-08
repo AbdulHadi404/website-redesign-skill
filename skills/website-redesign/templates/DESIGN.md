@@ -51,13 +51,23 @@ Why this is *not* the obvious direction for a generic company in this category: 
 
 ## Typography
 
-- Display: family, weights, tracking, line height, optical size; where it appears.
+- Scale ratio and the full set of sizes (every step used somewhere).
+- Caps/tracked-label device: at most one, and which it is. Nothing typeset to look like machine output.
+- Display: family, weights, tracking, line height, optical size; where it appears — and why it matches the wordmark's construction.
 - Body / UI: family, weights, measure.
 - Data / labels: family (if any).
 - Scale: hero › chapter › statement › panel › h3 › body › small › label — with sizes.
 - Licence / source for each family.
 
 ## Colour
+
+**Harmony:** … (which scheme; which hue dominates, supports, accents — from the sampled logo hues)
+
+**Budget (60 / 30 / 10):** … (per page: dominant surface / secondary or dark / accent — count accent-coloured fields; the primary action is one colour everywhere)
+
+**Scale method:** … (OKLCH: H fixed, L stepped, C shaped; neutral tint hue and chroma)
+
+**Contrast table:** every text/ground pair actually used, with WCAG ratio and APCA Lc on the real ground.
 
 | Token | Value | Use |
 | --- | --- | --- |
