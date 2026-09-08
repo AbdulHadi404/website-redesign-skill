@@ -41,7 +41,7 @@ Fill `templates/DESIGN.md`. The decisions that matter most:
 
 **Colour.** Work through `design-theory.md` §1 and its checklist: name the harmony, budget the page 60/30/10 (accent fields count as accent), build the scales perceptually (OKLCH), tint the neutrals, keep one action colour everywhere, and keep labels and numerals off the accent. Start from the sampled logo colours and build outward — deepen or lighten them for contrast, derive the surfaces as tints, and keep the brand's hue family unless the user says the identity is the problem. Build a system, not a swatch: background surfaces (at least two, so chapters can alternate), elevated surface, text at three strengths, line colour, one accent used for action and emphasis only, and the accent's darker variant for small text on light surfaces (contrast). Avoid the reflexive purple/blue gradient unless the brand genuinely owns it. Keep brand recognition where it helps — a logo motif, a colour the customers know — and rebuild everything around it.
 
-**Layout philosophy.** Container widths, gutters, vertical rhythm per chapter, how surfaces change between chapters, how much asymmetry, whether cards exist at all (often: no).
+**Layout philosophy.** Apply `design-theory.md` Part A: a spacing scale, a grid and baseline rhythm, hierarchy limits (three sizes, two big things), Gestalt-explainable chapters, one deliberate grid break. Container widths, gutters, vertical rhythm per chapter, how surfaces change between chapters, how much asymmetry, whether cards exist at all (often: no).
 
 **Hero concept.** Not headline + paragraph + two buttons + screenshot. Options that work depending on the company: oversized editorial statement over a photograph with copy on its own ground; the product itself, large, doing the thing; a live demo the visitor can use in the first viewport; a split composition; typography interacting with an image; a full-width composition of product fragments. Pick the one the concept demands.
 
@@ -67,5 +67,8 @@ If **keep** is the longest list, the direction is still a refresh. Go back to th
 Write the direction in one sentence: surfaces, display face and emphasis device, label device, dark-chapter colour, accent. Compare it with the recipe in `anti-patterns.md` ("The skill's own house style") and with any other site the user has built with this skill (look for a `DESIGN.md` in their other projects). If the sentence would fit both, change the family: different surfaces, a display face chosen from the wordmark, a label device that is not mono uppercase, an accent from the logo. Record the comparison in `DESIGN.md` under "Distance from the house recipe".
 
 ## Page narrative
+
+Use the chapter kinds and the landing-page formula in `web-design.md` §2–3, and run the headline test on the hero before writing anything else.
+
 
 Reorganise the homepage from scratch around what a visitor must understand in seconds: what it is, who it is for, why it matters, why to trust it, what to do next. For every section ask why it deserves to exist and whether it is the most *visual* way to say it. Vary composition chapter by chapter so the page has rhythm: a typographic chapter, a product chapter, a photographic chapter, a split, an index, a closing. Real proof gets a compact chapter; missing proof gets no chapter.

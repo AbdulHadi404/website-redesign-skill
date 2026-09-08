@@ -47,6 +47,18 @@ Run the project and look at every page at desktop and phone width. Capture full 
 - Mobile: desktop layout squeezed, not designed.
 - Consistency: nav and footer from a different era than the homepage; secondary pages untouched.
 
+## 3b. The interaction and trust audit
+
+Walk the rendered site with `ui-ux.md` open and note, specifically:
+
+- Nielsen's ten, one line each: where status is invisible, where the words are ours not theirs, where there is no way back, where conventions are broken, where errors are possible instead of prevented, what the visitor must remember, what is cluttered, how errors read, whether help is in context.
+- The states of every widget (idle / loading / active / empty / error) and whether each was designed.
+- Forms: field count, label placement, validation timing, action alignment, autofill.
+- Targets and thumbs: anything under 24 px; the primary action's position on a phone.
+- Reading: the headline test (`web-design.md` §2); word count per chapter; whether headings front-load.
+- Credibility (Stanford's ten): is there a real organisation, real people, contact, freshness, and zero errors of any kind?
+- Performance baseline: Core Web Vitals at p75 if data exists, otherwise a Lighthouse run of the current site — the redesign must not be slower.
+
 ## 4. Audit output
 
 Write the audit into `DESIGN.md` (section "Audit") using `templates/DESIGN.md`. Include the preserved-list. This document is what the art direction will be derived from, and the record the user can check your reasoning against.

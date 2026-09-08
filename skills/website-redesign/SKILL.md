@@ -25,12 +25,12 @@ Work through the phases in order. Each phase has a reference file with the detai
 | --- | --- | --- |
 | 1. Audit | A written audit: what the company sells, to whom, what the site gets wrong | `references/audit.md` |
 | 2. Research | 4–8 live reference sites inspected, principles extracted (never sections copied) | `references/research.md` |
-| 3. Art direction | `DESIGN.md` in the repo from `templates/DESIGN.md`, including keep / replace / remove / create | `references/art-direction.md`, `references/design-theory.md`, `references/logo-design.md` (if a mark is in scope), `references/anti-patterns.md`, `references/lessons.md` |
+| 3. Art direction | `DESIGN.md` in the repo from `templates/DESIGN.md`, including keep / replace / remove / create | `references/art-direction.md`, `references/design-theory.md`, `references/web-design.md`, `references/logo-design.md` (if a mark is in scope), `references/anti-patterns.md`, `references/lessons.md` |
 | 4. Imagery | Licensed assets localised and optimised, or a deliberate decision not to use photography | `references/imagery.md` |
-| 5. Implementation | The redesign in the existing stack, on a branch | `references/implementation.md` |
+| 5. Implementation | The redesign in the existing stack, on a branch | `references/implementation.md`, `references/ui-ux.md` |
 | 6. Visual QA | Full-page renders at 1440 / 1280 / 1024 / 768 / 390, defects fixed | `references/visual-qa.md` |
 | 7. Self-critique | `templates/critique.md` filled honestly, weak areas fixed, re-rendered | `references/visual-qa.md` |
-| 8. Technical QA | Typecheck, build, tests, links, forms, a11y, performance, SEO | `references/technical-qa.md` |
+| 8. Technical QA | Typecheck, build, tests, links, forms, a11y, performance, SEO | `references/technical-qa.md`, `references/ui-ux.md` §8 |
 
 Two gates sit inside this sequence. **Before implementation**, `DESIGN.md` must show all five first-notice things changed and a keep list shorter than replace + create; if it does not, the direction is a refresh and writing code now only makes that expensive to discover. **Before technical QA**, the critique must have no remaining "no" — a weakness you can see in a render is a task, not a caveat for the report.
 
@@ -75,6 +75,18 @@ Put the old first viewport next to the new one and ask whether a stranger would 
 ### Phase 8 — Technical QA and hand-off
 
 Typecheck, lint, build and test with the project's own commands. Click every nav link, CTA and footer link; submit every form; exercise every widget; check the mobile menu, keyboard focus, contrast, reduced-motion behaviour, image loading (lazy below the fold, eager for the hero), metadata and social image, analytics hooks. Commit with a message that explains the direction, push the branch, and use the project's preview mechanism if it has one. Do not deploy to production unless the user asks.
+
+## The knowledge base
+
+Five references hold the theory the skill works to, written from the primary sources and stated as checkable rules with their numbers. They are not optional reading for the phase that names them:
+
+| File | Holds | Read at |
+| --- | --- | --- |
+| `references/design-theory.md` | Rams, Vignelli, Rand; Gestalt; visual hierarchy limits; whitespace, grids, spacing scales, rhythm; Albers and Itten; harmony, the 60/30/10 budget, perceptual (HCT/OKLCH) scales, the 12-step roles, WCAG + APCA, colour-blindness numbers, dark mode; Bringhurst/Butterick typography, scale, pairing, voice; Part D checklists | Phase 3, and before any token file |
+| `references/ui-ux.md` | Nielsen's heuristics, Norman's vocabulary, the laws with numbers, reading/scanning research, response times and states, forms, targets and thumb zones, navigation, motion durations, WCAG 2.2 additions, writing, dark patterns, credibility | Phases 5 and 8 |
+| `references/web-design.md` | homepage principles, the landing-page formula and headline test, chapter kinds and rhythm, content-driven breakpoints, Core Web Vitals thresholds, header/footer/nav, imagery, metadata; the page checklist | Phase 3 (narrative) and Phase 5 |
+| `references/logo-design.md` | what a mark is for (Rand, Haviv, Airey), kinds, clichés, the seven tests, construction and optical correction, identity deliverables, presenting five or six directions | whenever a mark is in scope |
+| `references/anti-patterns.md` + `references/lessons.md` | what makes a site read as generated; every correction so far and the rule it produced | Phase 3 and before Phase 5 |
 
 ## Learning from corrections
 

@@ -39,6 +39,10 @@ Goal: the redesign, built in the existing stack, with functionality untouched an
 - If the product offers a live demo the visitor can use on the site, give it a prominent, dedicated surface with its own heading — inputs and results on a solid background, never over a photograph.
 - Never draw a capability that does not exist.
 
+## Interaction rules
+
+`ui-ux.md` governs everything a visitor touches: one primary action per view, targets ≥ 44 px (never < 24), forms single-column with labels above and the actions on the field axis, every widget's five states designed, response feedback within 100 ms / skeletons over spinners, motion 100–300 ms ease-out and off under reduced motion, icons with visible labels, nav ≤ 7 items and a labelled mobile menu, error messages next to the field in plain words with the input preserved, no dark patterns, nothing shaped like an ad.
+
 ## Engineering discipline
 
 - Semantic HTML: landmarks, one `h1`, heading levels in order, lists as lists, buttons vs links used correctly, labels for inputs, `aria-*` on custom widgets (tabs, menus), a skip link.

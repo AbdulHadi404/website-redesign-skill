@@ -16,6 +16,12 @@ Fill this from the **renders**, with the old first viewport beside the new one. 
 | 10 | Does copy always sit on its own ground, never on the busy part of an image? | | | |
 | 11 | Are the five "first-notice" things from the audit all changed? | | | |
 | 12 | Would this hold up beside the Phase 2 references? | | | |
+| 13 | Does the hero pass the headline test — would a stranger know exactly what is sold from that sentence alone? | | | |
+| 14 | Is there one primary action per view, one colour everywhere, and does it continue the hero's sentence? | | | |
+| 15 | Do the squint test and the 24px silhouette of every drawn mark show the intended hierarchy and no unintended reading? | | | |
+| 16 | Is the colour budget ≈ 60/30/10 with one accent field, and every text pair ≥ 4.5:1 on its real ground (and safe for red-green deficiency)? | | | |
+| 17 | Are every widget's five states designed, targets ≥ 44px, forms single-column with labels above, motion ≤ 300ms and off under reduced motion? | | | |
+| 18 | Are the words short enough to be read (headings and first sentences carry the page), with nothing shaped like an ad? | | | |
 
 **Weakest chapter and why:** …
 

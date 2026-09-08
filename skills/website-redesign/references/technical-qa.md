@@ -31,7 +31,12 @@ Exercise, not inspect:
 - `prefers-reduced-motion` disables decorative motion; nothing essential depends on animation.
 - Decorative SVGs and images marked `aria-hidden`; meaningful images have alt text.
 
+WCAG 2.2 additions to check explicitly: target size ≥ 24 × 24 CSS px (2.5.8); focus never fully obscured by sticky bars or overlays (2.4.11); focus ring ≥ 2 px and 3:1 (2.4.13, aim for it); no drag-only interactions (2.5.7); help in the same place on every page (3.2.6); nothing asked twice in one process (3.3.7); no puzzle to sign in (3.3.8).
+
 ## Performance
+
+Targets at the 75th percentile, mobile and desktop: LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1. Run Lighthouse on the built site at phone emulation and compare with the audit baseline; the redesign must not be slower.
+
 
 - No runtime framework shipped for static content; client JS limited to what routes need.
 - Images responsive with explicit dimensions; hero eager with high fetch priority; below-the-fold lazy; total page weight sane.
