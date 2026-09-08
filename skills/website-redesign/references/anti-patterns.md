@@ -62,6 +62,20 @@ The test: write the direction in one sentence and ask whether it would also desc
 - Copy placed over the busy part of a photograph.
 - Hot-linked images from temporary URLs.
 
+## Custom artwork and diagrams
+
+Illustration you draw yourself fails in ways stock imagery never does. Each of these reads as "unfinished" rather than "wrong", which is why it survives a full-page review:
+
+- **Debris**: small marks, dots, ticks or lines floating outside the object they belong to. Every element sits inside the artwork's own frame, or deliberately overlaps it as a layered card — never drifts free beside it.
+- **Elements that break their container**: a glyph overflowing the circle it sits in, a chip hanging off the edge of the tile, a shape crossing a header band it should sit under.
+- **A label or badge that covers data**: a stamp placed over the very blocks it certifies, a legend on top of a bar. Lay the data out first, then reserve the corner the label needs.
+- **Diagram labels outside the viewBox**: text anchored outward from a node gets clipped, because the viewBox was sized for the geometry and not for the type. Size the viewBox around the labels, and give every label a halo (`paint-order: stroke fill`) so it survives whatever is behind it.
+- **Labels that collide**: two nodes whose labels meet, or a label crossed by a connector line. Lay nodes out on a column or an arc so the label side is always clear.
+- **Disconnected objects**: a tool drawn as a head and a handle that do not meet, an arrow that misses its target. If it needs two paths, check they touch.
+- **Decoration that escapes its surface**: a watermark positioned freely against a background painted by a `::before` will spill onto the surrounding surface at some width. Give the surface a real element with `overflow: hidden` and put the watermark inside it.
+- **A watermark clipped down to a meaningless wedge**: a huge mark cropped by its container until only a diagonal band shows reads as a stray shape, not as the logo — and it is worse when it crosses the headline. Either show enough of the form to be recognisable, or make it a small complete ornament in a corner that has no copy.
+- **Positioning inside a full-bleed container**: a ground that bleeds with `left: -100vw; right: -100vw` moves its own edges 100vw away, so a child positioned with `right:`/`left:` lands off-screen. Anchor such children back to the visible panel with `calc(100vw - …)`, and check the watermark is actually visible after clipping it.
+
 ## Product and proof
 
 - Describing capabilities in bullets and never showing the product.

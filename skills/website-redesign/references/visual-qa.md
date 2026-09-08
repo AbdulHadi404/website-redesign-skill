@@ -29,6 +29,15 @@ Keep the captures; the user should see before/after, and you need them for the c
 
 Fix defects in source, re-capture, and look again. Do not close the loop on the assumption that a CSS change did what you intended.
 
+## Inspecting custom artwork
+
+Full-page captures are the wrong instrument for illustration: at page scale a triangle overflowing its circle, a stamp covering a data block or a clipped label all look like texture. Any site with drawn artwork needs a second pass:
+
+- Screenshot **each artwork element on its own**, at `deviceScaleFactor: 2–3`, using the element locator rather than a page crop.
+- Look at every piece against a checklist: is anything outside its frame, is anything clipped by the viewBox, do labels collide, does any label cover data, do the parts of each object actually connect?
+- Do the same for any SVG diagram at the **narrowest** width it renders at, where labels are largest relative to the drawing.
+- Check decorative watermarks at every width: they are the most common source of "something spilled onto the page".
+
 ## Rendering traps seen repeatedly
 
 - Dev servers may serve a heavy client bundle (an embedded CMS, a demo) blank on first load while dependencies pre-bundle; verify such routes on a production build.
