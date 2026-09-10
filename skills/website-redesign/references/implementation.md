@@ -61,3 +61,34 @@ Goal: the redesign, built in the existing stack, with functionality untouched an
 - Do not keep the old stylesheet and append; replace it and delete what is dead.
 - Do not leave the nav, footer or a secondary page in the old identity "for later".
 - Do not ship anything you have not rendered.
+
+## Restyling something a script renders
+
+"Keep the widget, restyle it through its class names" is the right instruction and the most common way to ship a broken screen, because the class names are only half the contract. **Open the file that writes the markup and read it** before writing a line of CSS for it:
+
+- Which element carries which class, and how they nest. A rule written for `.card > .title` does nothing if the script emits `.card > .row > .title`, and the defect looks like "the CSS did not load" rather than like a selector miss.
+- Whether it injects SVG, and whether those marks have intrinsic dimensions (usually not — see `visual-qa.md`).
+- Which classes are states (`.open`, `.active`, `.is-partial`) and which are structure.
+- Whether it sets inline styles — an `animation-delay` on a card is inert if you removed the animation, and an inline `style` will beat your rule.
+
+Then drive the widget through every state and look at each one. A results list, a loading state and an error state are three different renders of the same class names, and the direction has to survive all three.
+
+## The reveal, written safely
+
+If the direction uses scroll reveals, write them so the page is finished without JavaScript:
+
+```css
+.reveal { opacity: 1; }                                  /* the default */
+.motion .reveal { opacity: 0; transform: translateY(10px); transition: ...; }
+.motion .reveal.in { opacity: 1; transform: none; }
+```
+
+```js
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches &&
+    document.visibilityState === "visible") {
+  document.documentElement.classList.add("motion");
+  /* observe, add .in, and keep a fail-safe timeout */
+}
+```
+
+No JavaScript, a background tab, or a reduced-motion preference all render the finished page rather than a column of holes.
