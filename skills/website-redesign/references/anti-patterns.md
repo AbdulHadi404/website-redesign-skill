@@ -93,6 +93,8 @@ Illustration you draw yourself fails in ways stock imagery never does. Each of t
 
 ## Motion
 
+- **Content that starts hidden and depends on a transition to become visible.** `.reveal { opacity: 0 }` plus a class added by an observer is the standard scroll-reveal, and it is a trap: every path where the transition does not run — JavaScript that never loads, a page opened in a background tab, a compositor that has not started, a headless capture — leaves a hole where a photograph or a chapter should be. Invert it. The page is finished by default; a class the script adds (`.motion` on the root) is what *hides* things so they can arrive, and the script only adds it when there is a visible document and no reduced-motion preference. A fail-safe timeout is not enough on its own, because it adds the "shown" class and still waits on the same transition.
+- **Animating a photograph in at all.** A wipe or a clip-path reveal on an `<img>` is the highest-cost, lowest-return move on the page: when it fails it does not degrade to "no animation", it degrades to "missing image". Let the chapter around it carry the motion.
 - Fade-up on every element, at the same delay.
 - Parallax, particles or counters that carry no meaning.
 - Animation that causes layout shift or makes scrolling heavy.
