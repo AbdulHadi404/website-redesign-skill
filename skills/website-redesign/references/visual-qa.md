@@ -12,6 +12,13 @@ Run the project with its own dev server (use the environment's preview/browser t
 
 Whichever method: wait for fonts (`document.fonts.ready`) and for reveal animations, and disable nothing you would not disable for a visitor.
 
+**Two things a capture script must do, or it will lie to you about images.**
+
+1. **Grow the viewport to the whole document before the shot.** A `fullPage: true` screenshot in headless does not reliably rasterise images that were never composited in the viewport: they come out as empty grey boxes while the DOM reports loaded, `naturalWidth` correct, `opacity: 1` and the right box size. Measure `document.documentElement.scrollHeight`, `setViewportSize` to it (Chrome tolerates ~15,000px), `await` `img.decode()` on every image — which waits for the bitmap, not just the bytes — and then screenshot. Without this you will chase a page bug that does not exist, or worse, dismiss a real one as "the harness".
+2. **Settle motion by removing the hidden start state, not by adding the "shown" class.** Opacity and transform transitions run on the compositor, which headless advances unreliably for content that has never been on screen — so an element with the reveal class applied can still screenshot at `opacity: 0`. Strip the class that *hides* things (see the reveal rule in `implementation.md`) rather than adding the one that shows them.
+
+**Drive widgets with the element's own `click()`, not a synthetic pointer.** An opaque sticky masthead over a module the harness has just scrolled to will intercept the click, and the failure tells you nothing about the widget. `page.$eval(sel, el => el.click())` skips hit-testing; the states pass is about what the widget looks like in each state.
+
 Keep the captures; the user should see before/after, and you need them for the critique.
 
 ## What to check, per width
@@ -46,6 +53,8 @@ Full-page captures are the wrong instrument for illustration: at page scale a tr
 - Parallax layers without overscan expose the section background at the edges.
 - Reveal classes on the same element as a scroll-driven transform fight each other; wrap one in the other.
 - Preview tools sometimes report `innerWidth: 0` or time out on clicks when the pane is hidden; front the pane or use the headless script.
+- **An SVG with no `width`/`height` attributes, injected as a string into a flex row, lays out at the row's full width.** Icon helpers that return markup (`lucide`'s node-to-string, hand-written path strings) usually carry no intrinsic size, so a 13px map pin renders 56px tall beside every row of a list and nobody notices in the source. Size every injected SVG in CSS — `.thing svg { width: 12px; height: 12px }` — and add `svg { flex-shrink: 0 }` to the container.
+- **A hero object laid over a photograph can cover almost all of it.** At the width you designed for it may read as a composition; one breakpoint over it reads as a border around a mistake. If the object is the point, give it a surface made of the design's own material (ruled paper, a panel, a band) rather than a photograph it will smother.
 - Framework-scoped styles (Astro, Svelte, Vue) do not reach markup rendered by a child component: a decorative SVG given a class by its parent lays out in normal flow as a giant block. Position such elements with a global selector or a global utility class, and check the render.
 - An absolutely positioned `<svg>` with `left` and `right` but no `width` keeps its intrinsic 300px: replaced elements resolve `width: auto` from intrinsic size, so `right` is ignored and the drawing ends wherever 300px lands. Give it an explicit `width` (a `calc()` if it must span between two nodes).
 - A "stamp press" or any enter animation that starts scaled above 1 adds its overhang to the document's scroll width until it fires; wide labels near the right edge produce a phantom 10px horizontal scroll on phones. Clip the offending ancestor with `overflow-x: clip` (not `hidden`, which would break sticky children).
