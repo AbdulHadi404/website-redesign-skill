@@ -135,7 +135,7 @@ Green = succeeded / available, red = failed / danger, amber = attention — and 
 - **Body size** 15–25px on the web (16 is the default and a fine baseline); **line spacing** 120–145% (1.5 for a long measure); **measure** 45–90 characters including spaces — aim 60–70 (the "69 characters" middle); **ragged right**, never justified on the web (rivers, hyphenation).
 - **Paragraphs**: space *or* indent, never both; one line-height between paragraphs, or a 1-en indent on every paragraph after the first.
 - **Capitals**: letterspace all strings of capitals and small caps by 5–12%; all-caps only for less than a line; **never letterspace lower case** without a reason.
-- **Figures**: tabular (monospaced) figures in tables and anywhere numbers align; proportional elsewhere. Titling figures with full caps, text figures otherwise.
+- **Figures**: tabular figures (fixed-width digits in the text face — `font-variant-numeric: tabular-nums`, not a monospace font) in tables and anywhere numbers align; proportional elsewhere. Titling figures with full caps, text figures otherwise.
 - **Punctuation**: real quotes and apostrophes (‘ ’ “ ”), en dash for ranges (17–25), em dash for breaks, one ellipsis glyph, hard spaces inside short numerical expressions ("$164 per hire", "3 min"). Hang quotation marks and bullets outside the margin where the design is fine enough to show it.
 - **Emphasis**: bold *or* italic, never both; underline only for links.
 - **Hyphenation**: at least two characters left behind and three taken forward; never more than three hyphenated lines in a row; never begin a column with the last line of a paragraph.
