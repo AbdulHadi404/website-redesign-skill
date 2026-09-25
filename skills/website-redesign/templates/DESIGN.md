@@ -2,6 +2,8 @@
 
 Written <date>, before implementation. Benchmark for finish: <reference site(s)>. This must read as *this company's* work — not the references', and not the previous site's.
 
+**Surface (Phase 0):** marketing / application / hybrid — and why. (Application → fill "Product UI" below and follow `references/product-ui.md`; the hero, page-narrative and imagery sections shrink to the sign-in and empty states.)
+
 ## Audit
 
 **What the company sells, to whom:** …
@@ -118,6 +120,17 @@ The two or three concept moves; the reveal system; reduced-motion behaviour.
 3. …
 
 For each: why it exists, and why this composition rather than heading → paragraph → cards.
+
+## Product UI (application surfaces only)
+
+- **Identity carried over from the marketing site / brand:** mark, colours and their meanings, display face (and its one job), status vocabulary.
+- **Expression deliberately not carried over:** …
+- **Type roles (fixed):** page title … / section … / panel title … / body 14/20 / secondary … / label & caption (≥ 12) … / numerals … — with families and weights.
+- **Density:** default …, compact where …; row heights …; page padding …; page-header height budget …
+- **Navigation:** sidebar groups …; phone pattern …; tab titles; accelerators (command palette, shortcuts) …
+- **State inventory:** controls (hover / active / focus / disabled / busy) and data regions (loading / empty / error / populated) — where each is designed.
+- **Accessibility targets:** text pairs incl. hover/secondary surfaces and dark mode; input borders, focus ring, switch tracks at 3:1; targets; keyboard paths; reflow.
+- **Brand moments (2–3):** where the brand is allowed to be expressive (e.g. sign-in, greeting, empty states) and how.
 
 ## Keep / replace / remove / create
 

@@ -8,6 +8,7 @@ It encodes one hard-won lesson: the default outcome of "redesign this site" is a
 
 ## What it does
 
+- **Classify the surface first** (Phase 0): a marketing site people *visit* and an application people *use* all day need different design. For applications the skill switches to `references/product-ui.md` — fixed productive type (IBM Carbon and Material 3 numbers), density, grouped navigation and accelerators, component and data states, WCAG 2.2 for heavy use, visual comfort — and carries a marketing site's **identity** into the product without its **expression**.
 - **Audit** the repository and the rendered site: product, audience, proof that actually exists, everything that must be preserved (routes, ids wired to scripts, forms, integrations), and *specific* reasons the current design reads as weak.
 - **Research** live reference sites when a browser is available, extracting principles rather than sections.
 - **A knowledge base** written from the primary sources, stated as checkable rules with their numbers: design fundamentals, colour and typography (`references/design-theory.md`), interaction and accessibility (`references/ui-ux.md`), pages and performance (`references/web-design.md`), marks and identity (`references/logo-design.md`).
@@ -60,11 +61,16 @@ Rebrand this landing page. We sell fleet insurance to logistics companies; our
 customers are dispatch managers. Don't invent stats we don't have.
 ```
 
+```
+Our app no longer looks like our new marketing site. Bring the product into the
+same brand — but people use it all day, so keep it readable, dense and accessible.
+```
+
 Claude then works through audit → research → art direction (it writes a `DESIGN.md` in the repo) → implementation on a branch → renders and critique → iteration → technical QA, and reports with before/after captures. It stops to ask only for things you own: credentials, a capability the environment lacks, a fact the repo cannot answer, or a production deployment.
 
 ## Prerequisites and optional capabilities
 
-- A repository with a runnable marketing site (any framework; the skill works inside the existing stack).
+- A repository with a runnable marketing site or application (any framework; the skill works inside the existing stack). For an application, a way to run it locally with realistic data — the skill judges screens with real volumes, not empty states alone.
 - **Recommended:** a browser capability in Claude Code — the built-in preview browser, or a browser MCP — so references can be inspected live and the result rendered. Without it the skill says so and works from the audit alone.
 - **Recommended for photography:** the ability to fetch files (a fetch-capable runtime such as Node, or a browser tool). Imagery is optional; the skill explains what to enable if it is missing rather than shipping placeholders.
 - **Optional:** `puppeteer-core` and a local Chrome for `scripts/capture.mjs`, the bundled full-page capture helper used in visual QA.
@@ -79,6 +85,9 @@ skills/website-redesign/
     research.md            how to inspect references and extract principles
     art-direction.md       deriving a direction; direction families; keep/replace/remove/create
     anti-patterns.md       what makes a site read as generated — incl. the "refresh" failure
+                           and marketing expression transplanted into a product
+    product-ui.md          application surfaces: productive type, density, navigation,
+                           states, accessibility for heavy use, sign-in and brand moments
     imagery.md             sourcing, licences, localising, treatment, text-over-photo rules
     implementation.md      order of work, composition rules, engineering discipline, rendering traps
     visual-qa.md           capture methods, per-width checks, the self-critique

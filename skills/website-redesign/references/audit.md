@@ -70,6 +70,16 @@ Walk the rendered site with `ui-ux.md` open and note, specifically:
 - Credibility (Stanford's ten): is there a real organisation, real people, contact, freshness, and zero errors of any kind?
 - Performance baseline: Core Web Vitals at p75 if data exists, otherwise a Lighthouse run of the current site — the redesign must not be slower.
 
+## 3c. For an application: the task audit
+
+If Phase 0 classified the surface as an application, audit use, not impression:
+
+- **Top tasks and their frequency** — what a user does every day, weekly, once (from the nav, the data model, analytics or the user). Design for the daily ones first.
+- **Roles and permissions** — who sees which screens; what a member without admin rights sees.
+- **Data at real volume** — the longest names, the most rows, zero rows, the error rows. Seed realistic data locally before judging a screen.
+- **Efficiency blockers** — screens where the main object starts below the fold, actions that need a round trip, lists without filters, missing keyboard paths, modals that hide the data they refer to.
+- **The accessibility baseline** — contrast of every text token on every surface it appears on, input borders and focus rings against 3:1, target sizes, keyboard walk, phone layout. Record it; the redesign must beat it.
+
 ## 4. Audit output
 
 Write the audit into `DESIGN.md` (section "Audit") using `templates/DESIGN.md`. Include the preserved-list. This document is what the art direction will be derived from, and the record the user can check your reasoning against.

@@ -15,6 +15,15 @@ Start from the audit, not from a style you like. Read `lessons.md` first. Useful
 
 Write the concept as one line a founder would recognise as theirs, then a paragraph on how it translates to surfaces, type, imagery and motion. If the line would fit a random SaaS company ("modern, clean, trustworthy"), it is not a concept yet.
 
+## When the surface is an application
+
+Phase 0 decided this. The direction is still derived from the company, but it is written as a **translation** of an identity, not as a concept for a stage:
+
+- **Identity that transfers:** the mark and its construction; the palette's hues *and their meanings* (which colour is action, which is live, which is ground); the display face — assigned one job (page titles, the greeting) at product sizes; the status vocabulary; the tone of voice, made shorter.
+- **Expression that does not:** display sizes and fluid type; eyebrow-plus-lead heading stacks; editorial chapters and whitespace; photography as concept (the sign-in gets at most a brand graphic from the mark); decorative motion; persuasive copy.
+- Write the product type scale as fixed roles with line heights (`product-ui.md` §1), the density per surface, the navigation model, the state inventory and the accessibility targets into `DESIGN.md` before touching components.
+- The **family test** replaces the distance test's hero and rhythm items: a user moving from the marketing site into the product should recognise the house (mark, colour, voice) and immediately find the product calmer, denser and faster than the site.
+
 ## Direction families (examples, not templates)
 
 The right answer differs per company. Some families that regularly produce strong, distinct results — choose from the audit, mix with intent, and never default:

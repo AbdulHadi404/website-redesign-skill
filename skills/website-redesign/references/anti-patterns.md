@@ -23,6 +23,21 @@ Run this skill on several companies and, left alone, it converges on one look: b
 
 The test: write the direction in one sentence and ask whether it would also describe the last site this skill produced for this user. If yes, change the family, not the values.
 
+## Marketing expression transplanted into a product
+
+The failure of "make the app match the site": the identity is right, the ergonomics are wrong. It photographs well and tires the people who use it all day. Symptoms (all seen in one real redesign, see `lessons.md` 2026-09-25):
+
+- **Display-size page titles on every screen** — a 40 px serif, an eyebrow index above it and a two-line lead below: 180 px of header before the first row of data, on every page, read once and scrolled past for ever. Product page titles are 24–32 px, fixed, in one band with the actions (`product-ui.md` §1–2).
+- **The site's small-caps label device as the product's label system** — 10–11 px tracked monospace capitals on window bars, table heads, status words and stat labels. Glanceable for one word (NN/g), tiring down a column of statuses and sentences. Sentence case in the UI face; caps only for one- or two-word labels at ≥ 11 px.
+- **Serif record names and serif numerals in lists and KPIs** — a display cut at 18–38 px where a 15–16 px semibold UI face scans faster. The display face gets one job.
+- **The marketing hero photograph and its tagline on the sign-in screen.** The user is already a customer; the door is a utility. Form first; brand from the mark and at most one abstract graphic derived from it.
+- **"Windows" and editorial frames copied as decoration** around every object — mono bars that only repeat the title below them.
+- **Marketing hairlines on controls.** A 12–24 % border reads as refined on a landing page and fails WCAG 1.4.11 (3:1) on an input; the accent used as a focus ring on a light ground can fail it too.
+- **Contrast checked on the main surface only.** Muted text that passes on the page ground fails on the hover row, the zebra stripe, the segmented control's track or the secondary panel.
+- **Marketing whitespace.** Chapter padding (100+ px) and generous leads between sections, so the main object starts below the fold on a laptop.
+
+The test: open the product's busiest screen at 1280 × 800. If the first row of its main table, board or form is not visible, or if anything a user reads daily is under 12 px or in tracked capitals, the marketing site's expression has leaked in.
+
 ## Composition
 
 - Hero = headline + paragraph + two pill buttons + a dashboard screenshot (or a glowing blob).

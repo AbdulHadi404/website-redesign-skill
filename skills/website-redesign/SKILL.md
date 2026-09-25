@@ -1,11 +1,11 @@
 ---
 name: website-redesign
-description: Redesign an existing marketing website into a genuinely new, premium, brand-specific design — not a refresh. Runs the full loop — audit the repo and the rendered site, research live reference sites, derive an art direction from the company's own truth, decide keep / replace / remove / create, rebuild the visual system in the existing stack, source licensed imagery when it earns its place, render and inspect at desktop/laptop/tablet/phone, self-critique, iterate, then functional and technical QA. Use this whenever a user asks to redesign, rebrand, "make premium", "make it look like a real design agency did it", modernise, overhaul, or "level up" a marketing site, landing page or homepage — even if they only say "the site looks generic/dated/templated" or name a reference site they admire. Not for small tweaks (one colour, one component) or for application UI inside a product.
+description: Redesign an existing marketing website into a genuinely new, premium, brand-specific design — not a refresh. Runs the full loop — audit the repo and the rendered site, research live reference sites, derive an art direction from the company's own truth, decide keep / replace / remove / create, rebuild the visual system in the existing stack, source licensed imagery when it earns its place, render and inspect at desktop/laptop/tablet/phone, self-critique, iterate, then functional and technical QA. Use this whenever a user asks to redesign, rebrand, "make premium", "make it look like a real design agency did it", modernise, overhaul, or "level up" a marketing site, landing page or homepage — even if they only say "the site looks generic/dated/templated" or name a reference site they admire. Also use it to redesign a logged-in product, dashboard or admin, or to make an application "match" a marketing site: Phase 0 classifies the surface and switches to the product-UI rules (fixed productive type, density, states, accessibility, brand identity without marketing expression). Not for small tweaks (one colour, one component).
 ---
 
 # Website redesign
 
-The job is to turn a company's existing marketing site into one that looks like an excellent design studio rebuilt it around that company — while keeping every fact, route, form and integration intact. The core principle:
+The job is to turn a company's existing marketing site — or its product — into one that looks like an excellent design studio rebuilt it around that company, while keeping every fact, route, form and integration intact. The core principle:
 
 > Preserve the company's truth and its functionality — not its existing visual implementation.
 
@@ -17,6 +17,15 @@ This skill exists because the natural failure mode is subtle and common: keep th
 2. **Truth is not negotiable.** Product capabilities, prices, claims, customers, numbers, legal text: only what exists in the repo or from the user. Never invent testimonials, logos, statistics, integrations or features to fill a layout. When proof does not exist, design a page that does not need it.
 3. **The brand's own assets come first; the skill's habits come last.** Sample the logo and wordmark before choosing a single colour or typeface, and build from them unless the user says the identity itself is the problem. Then run the house-recipe check in `references/anti-patterns.md` ("The skill's own house style"): if the direction can be described as paper surfaces + serif display with italic emphasis + mono uppercase eyebrows + dark chapters + one accent, it is the skill's default, not this company's design. Two companies run through this skill by the same user must not come out looking like siblings — check against their other sites, not only against the old one.
 
+## Phase 0 — Classify the surface (before the audit)
+
+Decide, in writing, whether the job is a **marketing surface** (visited: strangers, seconds, persuasion) or an **application surface** (used: the same people, hours a day, tasks). Signals, and the hybrids (sign-in, onboarding, docs), are in `references/product-ui.md` §0.
+
+- **Marketing** → the workflow below as written.
+- **Application** → the same workflow, with `references/product-ui.md` governing typography, density, navigation, states, accessibility and imagery. The marketing rules that do *not* transfer: display scale, editorial chapters, the distance test's "hero composition" and "section rhythm", photography as concept, decorative motion, persuasive copy. If a marketing site exists, it supplies the product's **identity** (mark, colours and their meanings, display face for one job, status vocabulary) — never its **expression** (sizes, spacing, layouts, hero imagery, taglines). A product that copies its site's type scale and devices will look right in a screenshot and wear its users out in a week.
+
+Record the classification at the top of `DESIGN.md`.
+
 ## Workflow
 
 Work through the phases in order. Each phase has a reference file with the detailed checklist — read it when you reach that phase, not all at once.
@@ -27,10 +36,10 @@ Work through the phases in order. Each phase has a reference file with the detai
 | 2. Research | 4–8 live reference sites inspected, principles extracted (never sections copied) | `references/research.md` |
 | 3. Art direction | `DESIGN.md` in the repo from `templates/DESIGN.md`, including keep / replace / remove / create | `references/art-direction.md`, `references/design-theory.md`, `references/web-design.md`, `references/logo-design.md` (if a mark is in scope), `references/anti-patterns.md`, `references/lessons.md` |
 | 4. Imagery | Licensed assets localised and optimised, or a deliberate decision not to use photography | `references/imagery.md` |
-| 5. Implementation | The redesign in the existing stack, on a branch | `references/implementation.md`, `references/ui-ux.md` |
+| 5. Implementation | The redesign in the existing stack, on a branch | `references/implementation.md`, `references/ui-ux.md`, `references/product-ui.md` (application surfaces) |
 | 6. Visual QA | Full-page renders at 1440 / 1280 / 1024 / 768 / 390, defects fixed | `references/visual-qa.md` |
 | 7. Self-critique | `templates/critique.md` filled honestly, weak areas fixed, re-rendered | `references/visual-qa.md` |
-| 8. Technical QA | Typecheck, build, tests, links, forms, a11y, performance, SEO | `references/technical-qa.md`, `references/ui-ux.md` §8 |
+| 8. Technical QA | Typecheck, build, tests, links, forms, a11y, performance, SEO — for applications also axe on every route, a keyboard walk of the top tasks, and the data checked | `references/technical-qa.md`, `references/ui-ux.md` §8, `references/product-ui.md` §5 |
 
 Two gates sit inside this sequence. **Before implementation**, `DESIGN.md` must show all five first-notice things changed and a keep list shorter than replace + create; if it does not, the direction is a refresh and writing code now only makes that expensive to discover. **Before technical QA**, the critique must have no remaining "no" — a weakness you can see in a render is a task, not a caveat for the report.
 
@@ -85,6 +94,7 @@ Five references hold the theory the skill works to, written from the primary sou
 | `references/design-theory.md` | Rams, Vignelli, Rand; Gestalt; visual hierarchy limits; whitespace, grids, spacing scales, rhythm; Albers and Itten; harmony, the 60/30/10 budget, perceptual (HCT/OKLCH) scales, the 12-step roles, WCAG + APCA, colour-blindness numbers, dark mode; Bringhurst/Butterick typography, scale, pairing, voice; Part D checklists | Phase 3, and before any token file |
 | `references/ui-ux.md` | Nielsen's heuristics, Norman's vocabulary, the laws with numbers, reading/scanning research, response times and states, forms, targets and thumb zones, navigation, motion durations, WCAG 2.2 additions, writing, dark patterns, credibility | Phases 5 and 8 |
 | `references/web-design.md` | homepage principles, the landing-page formula and headline test, chapter kinds and rhythm, content-driven breakpoints, Core Web Vitals thresholds, header/footer/nav, imagery, metadata; the page checklist | Phase 3 (narrative) and Phase 5 |
+| `references/product-ui.md` | classifying the surface; productive vs expressive type (Carbon, Material 3 numbers); density; navigation and accelerators; component and data states; WCAG 2.2 for heavy use (1.4.11 input borders and focus rings); visual comfort; brand moments and sign-in | Phase 0, and Phases 3–8 for any application surface |
 | `references/logo-design.md` | what a mark is for (Rand, Haviv, Airey), kinds, clichés, the seven tests, construction and optical correction, identity deliverables, presenting five or six directions | whenever a mark is in scope |
 | `references/anti-patterns.md` + `references/lessons.md` | what makes a site read as generated; every correction so far and the rule it produced | Phase 3 and before Phase 5 |
 
