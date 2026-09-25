@@ -97,7 +97,7 @@ skills/website-redesign/
     critique.md            the self-critique scorecard
   scripts/
     capture.mjs            full-page captures at several widths (puppeteer-core)
-    a11y.mjs               axe-core scan per route × theme × width, overlays opened (apps)
+    a11y.mjs               axe-core scan per route × theme × width, overlays opened; fails on monospace text
 ```
 
 ## Licence

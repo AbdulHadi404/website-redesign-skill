@@ -11,11 +11,12 @@ The job is to turn a company's existing marketing site — or its product — in
 
 This skill exists because the natural failure mode is subtle and common: keep the fonts, keep the palette, keep the hero shape, add nicer components, and call it a redesign. Everyone involved can see the improvement, and nobody can see the difference. The workflow below is built to make that outcome hard to reach by accident.
 
-## Two commitments before you start
+## Commitments before you start
 
 1. **The distance test.** Write down the five things a stranger notices first on the current site (typeface, palette, hero composition, section rhythm, imagery or its absence). A redesign changes what those five things *are*. If your plan keeps three of them, it is a refresh; stop and rethink the direction before writing code.
 2. **Truth is not negotiable.** Product capabilities, prices, claims, customers, numbers, legal text: only what exists in the repo or from the user. Never invent testimonials, logos, statistics, integrations or features to fill a layout. When proof does not exist, design a page that does not need it.
 3. **The brand's own assets come first; the skill's habits come last.** Sample the logo and wordmark before choosing a single colour or typeface, and build from them unless the user says the identity itself is the problem. Then run the house-recipe check in `references/anti-patterns.md` ("The skill's own house style"): if the direction can be described as paper surfaces + serif display with italic emphasis + mono uppercase eyebrows + dark chapters + one accent, it is the skill's default, not this company's design. Two companies run through this skill by the same user must not come out looking like siblings — check against their other sites, not only against the old one.
+4. **No monospace ("code") fonts unless the audience reads code.** A developer or infrastructure tool may use one; every other company, site or app gets none — not for labels, data, IDs, passwords, env names, `[placeholders]`, keyboard hints or timers. Use the text face at 500 with tabular figures instead. A sibling site that already uses a mono face does not make it transferable, and the browser's default monospace for `code`/`kbd`/`samp`/`pre` counts too. `scripts/a11y.mjs` fails any page that renders monospace text. The owner has rejected code-like type on three projects (`references/lessons.md`).
 
 ## Phase 0 — Classify the surface (before the audit)
 

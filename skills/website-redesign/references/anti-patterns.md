@@ -18,7 +18,7 @@ Run this skill on several companies and, left alone, it converges on one look: b
 
 - The palette was chosen from taste rather than sampled from the logo; the brand's own colours vanished.
 - The display face is a serif "because it is distinctive" — distinctive from the old site, not from the skill's last three outputs.
-- Mono uppercase labels appear on a company that has nothing to do with code. Monospace reads as *developer tool*; for a sales, services, consumer or manufacturing company it is the wrong voice. Use the sans or display face with tabular figures for data instead.
+- Mono uppercase labels appear on a company that has nothing to do with code. Monospace reads as *developer tool*; for a sales, services, consumer or manufacturing company it is the wrong voice. Use the sans or display face with tabular figures for data instead. The same applies inside the product and to "just the values": passwords, IDs, env names, `[placeholders]`, `Ctrl K` hints — and the browser default for `code`/`kbd`, which nobody chose but still renders a code font.
 - The concept line is about the company, but nothing on the page is derived from the company's actual identity assets.
 
 The test: write the direction in one sentence and ask whether it would also describe the last site this skill produced for this user. If yes, change the family, not the values.

@@ -35,7 +35,7 @@ WCAG 2.2 additions to check explicitly: target size ≥ 24 × 24 CSS px (2.5.8);
 
 ## Application surfaces (Phase 0 said "application")
 
-- **Automated accessibility on every route, both themes, and at phone width** — `scripts/a11y.mjs` in this skill runs axe-core (WCAG 2.0/2.1/2.2 A + AA and best practice) per route × theme × width, takes session cookies for signed-in routes and `--open` to scan palettes and dialogs in their open state, and exits non-zero on any serious or critical violation. Zero serious/critical; review the rest. The usual finds are listed in `product-ui.md` §9.
+- **Automated accessibility on every route, both themes, and at phone width** — `scripts/a11y.mjs` in this skill runs axe-core (WCAG 2.0/2.1/2.2 A + AA and best practice) per route × theme × width, takes session cookies for signed-in routes and `--open` to scan palettes and dialogs in their open state, and exits non-zero on any serious or critical violation. It also lists the faces actually rendered and fails on any monospace text (commitment 4 in `SKILL.md`) unless `--allow-mono` is passed for a product whose users read code. Zero serious/critical; review the rest. The usual finds are listed in `product-ui.md` §9.
 - **Keyboard walk of the top tasks** — create, edit, filter, act, recover from an error — without a mouse. Focus always visible and never under a sticky bar.
 - **Contrast of the token matrix** — every text token on every surface token it sits on (including hover, selected, secondary panels, dark mode); input borders, focus ring and switch tracks at 3:1.
 - **The busiest screen at 1280 × 800** — the first rows of its main object visible without scrolling.

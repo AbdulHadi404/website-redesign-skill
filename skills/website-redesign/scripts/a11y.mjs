@@ -16,11 +16,17 @@
  * never type credentials into the page). --open presses a key chord on a path
  * and scans again, because palettes, menus and dialogs only exist when open.
  *
+ * It also reads the computed font of every element that renders text and
+ * fails on any monospace face (a code font reads as "code" to anyone who is
+ * not a developer — lessons.md). Pass --allow-mono only for a product whose
+ * users read code. Browsers set code / kbd / samp / pre in monospace by
+ * default, so this catches faces nobody chose as well as ones somebody did.
+ *
  * In Git Bash on Windows, pass paths without the leading slash (MSYS rewrites
  * "/x" into a Windows path); the script adds it.
  *
  * Rules: WCAG 2.0/2.1/2.2 A + AA and axe best practice. Exits 1 on any
- * serious or critical violation. Dark mode is scanned at the widest width
+ * serious or critical violation, or on monospace text without --allow-mono. Dark mode is scanned at the widest width
  * only; the phone widths run in the first theme.
  */
 import { existsSync, readFileSync } from 'node:fs';
@@ -48,6 +54,7 @@ const widths = opt('widths', '1440,390').split(',').map((w) => parseInt(w, 10));
 const themeKey = opt('theme-key');
 const cookies = opt('cookies') ? JSON.parse(readFileSync(opt('cookies'), 'utf8')) : [];
 const opens = Object.fromEntries((list('open') ?? []).map((s) => s.split('=')));
+const allowMono = args.includes('--allow-mono');
 
 const candidates = [
   process.env.CHROME_PATH,
@@ -76,6 +83,33 @@ try {
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const byRule = new Map();
 let serious = 0;
+let monoViews = 0;
+const faces = new Set();
+
+// Faces actually rendered: the first family of every element with its own text.
+async function fontAudit(page) {
+  const { fams, mono } = await page.evaluate(() => {
+    const MONO = /mono|courier|consolas|menlo|monaco|code/i;
+    const fams = new Set();
+    const mono = new Set();
+    for (const el of document.querySelectorAll('body *:not(script):not(style):not(noscript):not(template)')) {
+      const ownText = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
+      if (!ownText) continue;
+      const first = getComputedStyle(el).fontFamily.split(',')[0].replace(/["']/g, '').trim();
+      fams.add(first);
+      if (MONO.test(first) || first === 'monospace') {
+        const cls = typeof el.className === 'string' ? el.className.trim().split(/\s+/).slice(0, 2).join('.') : '';
+        mono.add(`${el.tagName.toLowerCase()}${cls ? '.' + cls : ''} "${el.textContent.trim().slice(0, 24)}" (${first})`);
+      }
+    }
+    return { fams: [...fams], mono: [...mono].slice(0, 6) };
+  });
+  fams.forEach((f) => faces.add(f));
+  if (mono.length) {
+    monoViews++;
+    console.log(`${' '.repeat(40)} ${allowMono ? 'note' : '⚠'} monospace: ${mono.join('; ')}`);
+  }
+}
 
 async function scan(page, label) {
   await page.addScriptTag({ content: axeSource });
@@ -99,6 +133,7 @@ async function scan(page, label) {
     byRule.set(v.id, e);
   }
   console.log(label.padEnd(40), violations.length ? violations.map((v) => `${v.id}(${v.impact}×${v.nodes.length})`).join(' ') : 'clean');
+  await fontAudit(page);
 }
 
 const browser = await puppeteer.launch({ executablePath, args: ['--no-sandbox', '--disable-gpu'] });
@@ -138,5 +173,7 @@ for (const [id, e] of [...byRule].sort((a, b) => order[a[1].impact] - order[b[1]
   console.log(`\n[${e.impact}] ${id} — ${e.help} (${e.views.length} views)`);
   for (const n of e.nodes) console.log(`  ${n.at} :: ${n.target}\n    ${n.why}`);
 }
-console.log(serious ? `\n${serious} serious/critical violation(s)` : '\nno serious or critical violations');
-process.exit(serious ? 1 : 0);
+console.log(`\nfaces rendered: ${[...faces].join(', ')}`);
+if (monoViews) console.log(`monospace text in ${monoViews} view(s)${allowMono ? ' (allowed)' : ''}`);
+console.log(serious ? `${serious} serious/critical violation(s)` : 'no serious or critical violations');
+process.exit(serious || (monoViews && !allowMono) ? 1 : 0);

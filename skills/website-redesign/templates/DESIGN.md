@@ -58,6 +58,7 @@ Why this is *not* the obvious direction for a generic company in this category: 
 - Display: family, weights, tracking, line height, optical size; where it appears — and why it matches the wordmark's construction.
 - Body / UI: family, weights, measure.
 - Data / labels: family (if any).
+- Monospace: **none** — or the one-line reason this audience reads code (SKILL.md commitment 4). Where the framework has a mono token, point it at the UI face.
 - Scale: hero › chapter › statement › panel › h3 › body › small › label — with sizes.
 - Licence / source for each family.
 
