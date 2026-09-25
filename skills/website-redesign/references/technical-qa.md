@@ -35,11 +35,11 @@ WCAG 2.2 additions to check explicitly: target size ≥ 24 × 24 CSS px (2.5.8);
 
 ## Application surfaces (Phase 0 said "application")
 
-- **Automated accessibility on every route, both themes** — axe-core injected into the rendered page (headless browser is fine). Zero serious/critical violations; review the rest.
+- **Automated accessibility on every route, both themes, and at phone width** — `scripts/a11y.mjs` in this skill runs axe-core (WCAG 2.0/2.1/2.2 A + AA and best practice) per route × theme × width, takes session cookies for signed-in routes and `--open` to scan palettes and dialogs in their open state, and exits non-zero on any serious or critical violation. Zero serious/critical; review the rest. The usual finds are listed in `product-ui.md` §9.
 - **Keyboard walk of the top tasks** — create, edit, filter, act, recover from an error — without a mouse. Focus always visible and never under a sticky bar.
 - **Contrast of the token matrix** — every text token on every surface token it sits on (including hover, selected, secondary panels, dark mode); input borders, focus ring and switch tracks at 3:1.
 - **The busiest screen at 1280 × 800** — the first rows of its main object visible without scrolling.
-- **Real data** — longest names, many rows, zero rows, errors. For anything that writes, drive the flow through the new UI and check the stored records, not just the screen.
+- **Real data** — longest names, many rows, zero rows, errors. For anything that writes, drive the flow through the new UI and check the stored records, not just the screen. For any number the redesign makes more prominent (a new column, a coloured count, a chart), query what it counts.
 - **Zoom 200 % and reflow at 320 px** — nothing lost or overlapping.
 
 ## Performance

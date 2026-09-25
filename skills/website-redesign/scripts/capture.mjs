@@ -15,6 +15,7 @@ import { mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const args = process.argv.slice(2);
 const opt = (name, def) => {
@@ -52,7 +53,7 @@ if (!executablePath) {
 
 let puppeteer;
 try {
-  puppeteer = (await import(createRequire(path.resolve('package.json')).resolve('puppeteer-core'))).default;
+  puppeteer = (await import(pathToFileURL(createRequire(path.resolve('package.json')).resolve('puppeteer-core')).href)).default;
 } catch {
   console.error('puppeteer-core not found. Install it in the project: npm i -D puppeteer-core');
   process.exit(1);

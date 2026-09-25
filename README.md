@@ -73,7 +73,7 @@ Claude then works through audit → research → art direction (it writes a `DES
 - A repository with a runnable marketing site or application (any framework; the skill works inside the existing stack). For an application, a way to run it locally with realistic data — the skill judges screens with real volumes, not empty states alone.
 - **Recommended:** a browser capability in Claude Code — the built-in preview browser, or a browser MCP — so references can be inspected live and the result rendered. Without it the skill says so and works from the audit alone.
 - **Recommended for photography:** the ability to fetch files (a fetch-capable runtime such as Node, or a browser tool). Imagery is optional; the skill explains what to enable if it is missing rather than shipping placeholders.
-- **Optional:** `puppeteer-core` and a local Chrome for `scripts/capture.mjs`, the bundled full-page capture helper used in visual QA.
+- **Optional:** `puppeteer-core` and a local Chrome for `scripts/capture.mjs`, the bundled full-page capture helper used in visual QA; add `axe-core` for `scripts/a11y.mjs`, the accessibility scan used for application surfaces.
 
 ## Layout
 
@@ -97,6 +97,7 @@ skills/website-redesign/
     critique.md            the self-critique scorecard
   scripts/
     capture.mjs            full-page captures at several widths (puppeteer-core)
+    a11y.mjs               axe-core scan per route × theme × width, overlays opened (apps)
 ```
 
 ## Licence

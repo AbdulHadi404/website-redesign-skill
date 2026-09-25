@@ -109,6 +109,56 @@ Rules that follow:
 - [ ] Navigation: grouped sidebar, phone drawer, tab titles, command palette or shortcuts.
 - [ ] State inventory: every control's five interaction states; every data region's four content states.
 - [ ] Brand-moment budget and the sign-in treatment decided.
+- [ ] After building: `scripts/a11y.mjs` clean on every route × theme × phone width with overlays open, a keyboard walk of the top tasks, and the §9 traps checked by hand.
+
+## 9. Traps that only show up while building it
+
+Found by the checker and the keyboard walk on the Brio3 app after the design
+itself was right. Each is common, each passes a visual review, so look for
+them on purpose.
+
+- **The faint token leaks into text.** A palette's fourth grey (for dots,
+  disabled states, rules) ends up on timestamps and select placeholders at
+  ~2.5:1. Name the token "decorative" where it is defined, and grep its text
+  uses before shipping.
+- **Dimming with opacity.** "Read", "archived" or "deleted" rows at 50–60 %
+  opacity take every piece of text in them below 4.5:1. Show the state with a
+  status word plus ink or weight (`ink-2`, 400 instead of 500, a
+  strike-through for deleted) — never by fading the row.
+- **A clickable row that contains a button.** `<div role="button">` wrapping a
+  delete or menu button is nested-interactive: screen readers announce one
+  control and swallow the other. Make the row's main target a real `<button>`
+  and put secondary actions beside it, not inside.
+- **Hover-only actions on touch.** Row actions revealed on hover are invisible
+  on a phone. Hide them only under `@media (pointer: fine)`, and reveal them on
+  `:focus-visible` as well as hover.
+- **Tables that scroll sideways.** A scroll container with no focusable
+  content cannot be scrolled from the keyboard. On phones, fold the secondary
+  columns under the first (name + meta line) and drop what the phone does not
+  need; where it must scroll, give the container `tabindex="0"`,
+  `role="region"` and a label.
+- **The phone top bar outside every landmark.** The desktop shell has
+  `<nav>` and `<main>`; the phone bar is often a bare `<div>`. Make it the
+  `<header>`.
+- **Command palette focus.** Record what had focus when it opened and return
+  it on Escape or a click outside; do not return it when a command navigates
+  (the new page owns focus). The input is the dialog's only stop, so Tab must
+  not fall through to the page behind. The shortcut that opens it should close
+  it through the same path.
+- **Overlays only exist when open.** Automated checks of a route never see its
+  palette, menus or dialogs; open them and scan again.
+- **A redesign promotes numbers — check what they count.** Turning a line of
+  meta into a table column in the danger colour makes a number louder. Query
+  the stored records behind it before shipping. On Brio3 the "failed" count
+  of finished campaigns included contacts that were never dialled (ending a
+  campaign writes them as failed); the design was right and the number was
+  not. Report it as a finding for the data owner instead of quietly relabelling
+  it in the UI.
+- **Sign-in art on phones.** The graphic band collapses to a strip under the
+  logo; a large mark drawn there only repeats the logo — show the field
+  without it. And a CSS grid with `min-height: 100dvh` stretches its auto rows,
+  so a "short" band grows to a third of the screen; set the rows explicitly
+  (`auto 1fr`).
 
 ## Sources read for this reference
 
