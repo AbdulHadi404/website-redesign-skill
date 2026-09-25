@@ -150,6 +150,9 @@ try {
         await page.setViewport({ width, height: mobile ? 844 : 900, isMobile: mobile, hasTouch: mobile });
         await page.goto(base + (p.startsWith('/') ? p : `/${p}`), { waitUntil: 'networkidle0', timeout: 60000 });
         await page.evaluate(() => document.fonts?.ready);
+        // Finish entrance animations first: a scan taken mid-fade reads
+        // half-transparent text as low contrast (seen on a live site at 390).
+        await page.addStyleTag({ content: '*,*::before,*::after{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important;transition-delay:0s!important}' });
         await sleep(500);
         await scan(page, `${p} ${theme} ${width}`);
         if (opens[p] && !mobile) {
