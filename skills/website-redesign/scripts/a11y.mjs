@@ -150,8 +150,18 @@ try {
         await page.setViewport({ width, height: mobile ? 844 : 900, isMobile: mobile, hasTouch: mobile });
         await page.goto(base + (p.startsWith('/') ? p : `/${p}`), { waitUntil: 'networkidle0', timeout: 60000 });
         await page.evaluate(() => document.fonts?.ready);
-        // Finish entrance animations first: a scan taken mid-fade reads
-        // half-transparent text as low contrast (seen on a live site at 390).
+        // Reveal everything a visitor would see: scroll the page so scroll-
+        // triggered reveals fire, then finish entrance animations. A scan taken
+        // before that reads not-yet-revealed or mid-fade text as low contrast
+        // (seen on a live site at 390, where the section sat below the fold).
+        await page.evaluate(async () => {
+          const step = Math.max(200, Math.floor(innerHeight * 0.8));
+          for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
+            scrollTo(0, y);
+            await new Promise((r) => setTimeout(r, 60));
+          }
+          scrollTo(0, 0);
+        });
         await page.addStyleTag({ content: '*,*::before,*::after{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important;transition-delay:0s!important}' });
         await sleep(500);
         await scan(page, `${p} ${theme} ${width}`);
