@@ -163,7 +163,11 @@ try {
           scrollTo(0, 0);
         });
         await page.addStyleTag({ content: '*,*::before,*::after{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important;transition-delay:0s!important}' });
-        await sleep(500);
+        await sleep(300);
+        // CSS overrides miss animations started from script (element.animate):
+        // finish every running one; infinite ones throw and are left alone.
+        await page.evaluate(() => document.getAnimations().forEach((a) => { try { a.finish(); } catch {} }));
+        await sleep(200);
         await scan(page, `${p} ${theme} ${width}`);
         if (opens[p] && !mobile) {
           const keys = opens[p].split('+');
