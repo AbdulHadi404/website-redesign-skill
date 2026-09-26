@@ -86,6 +86,14 @@ Actions (LukeW's eye-tracking study): primary and secondary actions **left-align
 - Motion carries meaning or it goes: where a thing came from, what changed, what to look at next. Frequent motions are subtler and shorter than rare ones.
 - Animate transform and opacity only; never layout. `prefers-reduced-motion` switches decorative motion off entirely and keeps essential feedback.
 
+### Direct manipulation on a canvas (editors, configurators, 3D)
+
+- **Never move the canvas under the pointer in response to the pointer.** If selecting an object opens a side panel and the view re-centres to make room, the object slides away before the user can drag it. Only persistent panels offset the view, and contextual panels float over it.
+- Separate a tap from the end of an orbit by the distance the pointer moved (≈6px), or every orbit ends by selecting whatever was under the finger.
+- One history entry per gesture: record an undo point when a drag or slider gesture *starts*, update without history while it moves, and commit on release.
+- Drag from a library onto the object with a ghost that shows exactly where it will land, and hide the ghost where it can't go. On touch, lift the ghost above the fingertip, and start a drag from a horizontally scrolling tray only on an upward pull.
+- Start from a beautiful, real default (the client's signature piece), never an empty scene.
+
 ## 8. Accessibility — the WCAG 2.2 additions on top of 2.1 AA
 
 - **2.5.8 Target size (AA)**: ≥ 24 × 24 CSS px, or spacing that gives the equivalent.

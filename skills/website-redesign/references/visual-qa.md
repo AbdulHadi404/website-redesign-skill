@@ -67,6 +67,14 @@ Full-page captures are the wrong instrument for illustration: at page scale a tr
 - **On Windows Git Bash, arguments that start with `/` are rewritten into filesystem paths** (`/studio` becomes `C:/Program Files/Git/studio`), so a capture script silently captures `/` instead. Prefix with `MSYS_NO_PATHCONV=1`.
 - **Rounded corners under an edge ornament** (a scalloped or piped top edge on a panel) leave gaps at both ends. Square the panel where the ornament forms the edge.
 
+### 3D and WebGL experiences
+
+- **Judge WebGL only on a real GPU, in a focused browser.** Embedded preview panes throttle `requestAnimationFrame` when the app window isn't focused (1 fps, and a 100ms timer taking a second), and the default headless shell renders WebGL in software (SwiftShader), so every frame takes seconds and input queues behind it. Neither can judge motion or speed. Capture with full Chromium and GPU flags (on Windows: `--use-angle=d3d11 --ignore-gpu-blocklist --enable-gpu`), and log `WEBGL_debug_renderer_info` with every capture so a software run can't pass for a real one. Run the e2e project the same way.
+- **Check lighting before shape on generated geometry.** A dark, brown or faceted surface on something that should be pale is usually inverted winding: the computed normals point inward. The same fault makes a metal surface render black. Sweeps, lathes and extrusions each have a direction rule (for example, a lathe profile runs bottom to top). Only then judge the silhouette.
+- **Procedural detail aliases.** A ridged profile twisted faster than about half a ridge per sample turns into spikes. Budget samples per unit length, not per path.
+- **Calibrate against the client's own photographs at the same angle,** side by side, never from memory. Proportions (a tall cake), scale of details, what sits on what, and colours come from the photo.
+- **Measure, then state the number.** Frame rate over three seconds at the target viewport and quality tier, with the renderer named, e.g. "144 fps at 1440×900, High tier, Radeon 680M". An unmeasured "it runs smoothly" isn't evidence.
+
 ## Self-critique (Phase 7)
 
 Put the old first viewport beside the new one. Then fill `templates/critique.md` honestly. The questions, and what a "no" means:
