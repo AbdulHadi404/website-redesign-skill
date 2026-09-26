@@ -1,6 +1,6 @@
 # website-redesign — a Claude Code skill
 
-A skill that makes Claude Code approach a marketing-site redesign the way a good design studio would: investigate the company, research live references, derive an art direction from the company's own truth, decide what to keep / replace / remove / create, rebuild the visual system in the existing stack, render the result at five widths, critique it honestly, iterate, and only then run technical QA.
+A skill that makes Claude Code approach a marketing-site redesign (or a business's first site) the way a good design studio would: investigate the company, research live references, derive an art direction from the company's own truth, decide what to keep / replace / remove / create, rebuild the visual system in the existing stack, render the result at five widths, critique it honestly, iterate, and only then run technical QA.
 
 It encodes one hard-won lesson: the default outcome of "redesign this site" is a *refresh* — same fonts, same palette, same hero shape, nicer components. This skill is built to make that outcome hard to reach by accident, and to make the result specific to each company rather than to one house style.
 
@@ -8,6 +8,7 @@ It encodes one hard-won lesson: the default outcome of "redesign this site" is a
 
 ## What it does
 
+- **Discovery when context is thin** (`references/discovery.md`): triage how much R&D a brief needs, and build the missing context before designing. That means auditing a brand that only lives on social media, learning an unfamiliar industry's variables and workflow, choosing references by problem, recognising when a "website" is really an ordering or booking application (both sides, one shared record, `templates/PRODUCT.md`), recording a greenfield architecture decision, and keeping project memory for long projects.
 - **Audit** the repository and the rendered site: product, audience, proof that actually exists, everything that must be preserved (routes, ids wired to scripts, forms, integrations), and *specific* reasons the current design reads as weak.
 - **Research** live reference sites when a browser is available, extracting principles rather than sections.
 - **A knowledge base** written from the primary sources, stated as checkable rules with their numbers: design fundamentals, colour and typography (`references/design-theory.md`), interaction and accessibility (`references/ui-ux.md`), pages and performance (`references/web-design.md`), marks and identity (`references/logo-design.md`).
@@ -75,6 +76,7 @@ Claude then works through audit → research → art direction (it writes a `DES
 skills/website-redesign/
   SKILL.md                 the workflow and its commitments (read on trigger)
   references/
+    discovery.md           Phase 0 for thin context: triage, social audit, domain learning, product/app thinking
     audit.md               repository, company and rendered-site audit
     research.md            how to inspect references and extract principles
     art-direction.md       deriving a direction; direction families; keep/replace/remove/create
@@ -86,6 +88,7 @@ skills/website-redesign/
   templates/
     DESIGN.md              the art-direction document the skill writes into the repo
     critique.md            the self-critique scorecard
+    PRODUCT.md             product definition when the site is becoming an application
   scripts/
     capture.mjs            full-page captures at several widths (puppeteer-core)
 ```

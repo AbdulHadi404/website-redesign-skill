@@ -1,6 +1,6 @@
 ---
 name: website-redesign
-description: Redesign an existing marketing website into a genuinely new, premium, brand-specific design — not a refresh. Runs the full loop — audit the repo and the rendered site, research live reference sites, derive an art direction from the company's own truth, decide keep / replace / remove / create, rebuild the visual system in the existing stack, source licensed imagery when it earns its place, render and inspect at desktop/laptop/tablet/phone, self-critique, iterate, then functional and technical QA. Use this whenever a user asks to redesign, rebrand, "make premium", "make it look like a real design agency did it", modernise, overhaul, or "level up" a marketing site, landing page or homepage — even if they only say "the site looks generic/dated/templated" or name a reference site they admire. Not for small tweaks (one colour, one component) or for application UI inside a product.
+description: Redesign an existing marketing website — or design a first one from scratch — into a genuinely new, premium, brand-specific site, not a refresh. Runs the full loop — triage how much discovery the brief needs (a brand that only lives on Instagram, an unfamiliar industry, no references, a "website" that is really an ordering or booking application), audit the repo and the rendered site, research live reference sites, derive an art direction from the company's own truth, decide keep / replace / remove / create, rebuild the visual system in the existing stack (or choose one deliberately when greenfield), source licensed imagery when it earns its place, render and inspect at desktop/laptop/tablet/phone, self-critique, iterate, then functional and technical QA. Use this whenever a user asks to redesign, rebrand, "make premium", "make it look like a real design agency did it", modernise, overhaul, or "level up" a site, landing page or homepage, or to build a first website for a business from its social media — even if they only say "the site looks generic/dated/templated" or name a reference site they admire. Not for small tweaks (one colour, one component).
 ---
 
 # Website redesign
@@ -21,8 +21,11 @@ This skill exists because the natural failure mode is subtle and common: keep th
 
 Work through the phases in order. Each phase has a reference file with the detailed checklist — read it when you reach that phase, not all at once.
 
+**First, triage the context** (`references/discovery.md` §1). The less reliable product and design context you are given, the more deliberately you build it before designing. A redesign of a working site starts at Phase 1. A business whose brand lives on social media, an unfamiliar industry, a brief with no references, a "website" that is really an ordering or booking application, or an empty folder all need **Phase 0** first. There, the social profile or the competitor's template plays the part of "the old site" in every later check.
+
 | Phase | Output | Read |
 | --- | --- | --- |
+| 0. Discovery (when context is thin) | Brand audit from social media, domain notes that changed decisions, problem-based references, `PRODUCT.md` if the site is becoming an application, an architecture decision if greenfield, project memory files | `references/discovery.md`, `templates/PRODUCT.md` |
 | 1. Audit | A written audit: what the company sells, to whom, what the site gets wrong | `references/audit.md` |
 | 2. Research | 4–8 live reference sites inspected, principles extracted (never sections copied) | `references/research.md` |
 | 3. Art direction | `DESIGN.md` in the repo from `templates/DESIGN.md`, including keep / replace / remove / create | `references/art-direction.md`, `references/design-theory.md`, `references/web-design.md`, `references/logo-design.md` (if a mark is in scope), `references/anti-patterns.md`, `references/lessons.md` |
@@ -96,7 +99,7 @@ Every revision or correction the user asks for is evidence that something in thi
 2. Update the skill itself so the same issue is less likely next time: the relevant phase reference, `references/anti-patterns.md`, or a template field. Prefer a check that runs at the cheapest point (audit or art direction) over a warning at the end.
 3. Log it in `references/lessons.md` (date, what went wrong, what changed), and read that file at the start of Phase 3 so the lessons are actually applied.
 
-Do this proactively — do not wait to be asked to "make the skill learn". Tell the user what was changed in the skill in the final report.
+Do this proactively — do not wait to be asked to "make the skill learn". Findings from your own self-critique count too: when a "no" in Phase 7 exposes a gap the skill could have caught earlier, log it the same way. Keep the skill generic: write the reasoning rule ("research the domain's configuration variables before designing a configurator"), never the project's facts. Tell the user what was changed in the skill in the final report.
 
 ## Reporting
 

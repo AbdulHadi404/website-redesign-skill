@@ -37,6 +37,20 @@ The test: write the direction in one sentence and ask whether it would also desc
 - A hero visual floating on a flat ground with only a watermark behind it. The hero object needs its own surface — a panel, a band, a grid it belongs to — or the first viewport reads as unfinished.
 - Pill badges and chips as decoration ("NEW", "AI-POWERED") rather than as data.
 - The accent-stripe card: a coloured left or top border on a card or column as the only signal of status, category or "most popular". It is the signature of generated UI. Encode status as a labelled tag with a data mark, a word, or a position; emphasise a column with its label, not a stripe.
+- **Two primary buttons in one viewport.** A persistent header CTA in the action colour next to the hero's primary action gives the first screen two "do this" signals with different words. Make the header CTA secondary (outline or quiet) so the action colour marks one thing per view.
+- **A hero object that falls below the first phone screen.** Headline, lede, two stacked buttons and a facts row can push the photograph or product past 844px, so on a phone the "hero" is a paragraph. Order the hero as head → object → body on narrow screens (grid areas on desktop), and check the first viewport at 390×844 specifically.
+
+## Product flows and configurators
+
+When the site takes orders, bookings or requests, these read as generated or simply fail:
+
+- **The giant form.** Twenty dropdowns in a column, however well styled. Group decisions into a few chapters, ask what the customer knows ("how many people?") and infer the trade term.
+- **Steps named after the data model.** "Toppings (1)", "Toppings (2)", "Step 7 of 11". Name steps after the customer's decisions, and keep them few enough that the navigation fits one row on a phone.
+- **Options as words.** A select of trade terms the customer cannot picture. Show each option as a picture of *that option on their thing*, with the trade term as a small hint.
+- **A preview that only appears at the end.** The customer must see their object change while they choose, with the preview pinned on phones and an honest label (a sketch is not a photo).
+- **A price the business cannot honour.** Instant totals built from invented or placeholder numbers. Show an estimate only from the owner's numbers and only when every part is priced; otherwise say who will quote it and when.
+- **Back loses the choice.** Going back, reloading or closing the tab must not reset the configuration. Keep it in the URL and in local storage.
+- **Checkout for things that need a human.** Carts and card forms for work that must be confirmed, quoted or scheduled. Model the real workflow (request → quote → approval → deposit) and say what happens next at every step.
 
 ## Colour and surface
 

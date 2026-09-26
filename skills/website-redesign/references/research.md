@@ -10,6 +10,7 @@ Aim for 4–8 sites, chosen deliberately:
 - Two or three direct competitors or the closest adjacent category (if the company sells voice agents, look at the best voice-AI sites; if it sells accounting software, the best fintech sites).
 - One or two best-in-class sites outside the category whose *problem* is similar (a technical product that must show its UI; a service business that must build trust without a product screenshot; a physical product that lives on photography).
 - One site that is deliberately different in tone from the obvious choice, so the direction is chosen rather than defaulted.
+- When the site has an interaction problem (configure, quote, book, personalise), one or two **adjacent products that solved the same problem** in another industry: ring and sofa configurators, invitation personalisation, tradespeople's quote flows. They teach the interaction; competitors teach the market.
 
 Actually load them. Screenshot the first viewport and, where possible, one or two lower sections. Sites that render on scroll may capture blank below the fold — page text extraction still tells you the structure.
 
@@ -37,7 +38,9 @@ Turn the notes into principles that are independent of any one site's look, for 
 - "Chapters alternate surfaces so the page has visible structure."
 - "Display type does the branding; UI type stays neutral."
 
-Record in `DESIGN.md` (section "References") what was taken from each site *conceptually* and, just as important, what was deliberately not taken. A redesign that names its influences is easier for the user to trust and easier to keep original.
+Record in `DESIGN.md` (section "References") what was taken from each site *conceptually* and, just as important, what was deliberately not taken. A redesign that names its influences is easier for the user to trust and easier to keep original. Use the shape **Reference → Useful because → Lesson we apply → Deliberately not taken**; a list of URLs is not research.
+
+When a browser pane stops painting (hidden or throttled), screenshots go stale while the DOM still works: read the page text and structure instead, and capture visuals later with the headless script.
 
 ## Without a browser
 

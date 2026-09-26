@@ -21,6 +21,8 @@ Whichever method: wait for fonts (`document.fonts.ready`) and for reveal animati
 
 Keep the captures; the user should see before/after, and you need them for the critique.
 
+**Flows are visual QA too.** For any site with a multi-step flow (a builder, a booking, a checkout), write an end-to-end test that walks the real flow on a phone profile and screenshots each step. It catches what page captures cannot: a sticky preview covering the step title after "Next", a button hidden behind a dev overlay, a validation that jumps to the wrong step. Add an automated accessibility pass (axe, WCAG 2.2 AA tags) over the main pages in the same suite.
+
 ## What to check, per width
 
 - Horizontal overflow (`document.documentElement.scrollWidth > clientWidth`) and which element causes it.
@@ -60,6 +62,10 @@ Full-page captures are the wrong instrument for illustration: at page scale a tr
 - A "stamp press" or any enter animation that starts scaled above 1 adds its overhang to the document's scroll width until it fires; wide labels near the right edge produce a phantom 10px horizontal scroll on phones. Clip the offending ancestor with `overflow-x: clip` (not `hidden`, which would break sticky children).
 - A `body { overflow-x: hidden }` hides the scroll but not the fault, and it fools an overflow detector that stops at any clipping ancestor — stop the ancestor walk at `body`, or the detector reports nothing while `scrollWidth` still exceeds `clientWidth`.
 - Third-party iframes (review widgets, badges, booking embeds) often paint blank in headless captures because of bot challenges; confirm in the preview browser before calling them broken, and give them a solid fallback so the band never reads as empty.
+- **An SVG `<pattern>` or ornament stretched with `preserveAspectRatio="none"`** keeps its viewBox proportions only at one width; at 600px a row of small scallops becomes five giant bumps. Draw repeating ornaments at their true size with a CSS mask or background (`mask: url(shape.svg) repeat-x / 28px 18px; background: currentColor`), and look at them at 390 and 1440.
+- **Procedurally generated SVG must be deterministic between server and browser.** Sorting shapes by a floating-point depth can order symmetric twins differently in Node and in the browser, which causes a hydration mismatch. Round before comparing and add a tiebreak.
+- **On Windows Git Bash, arguments that start with `/` are rewritten into filesystem paths** (`/studio` becomes `C:/Program Files/Git/studio`), so a capture script silently captures `/` instead. Prefix with `MSYS_NO_PATHCONV=1`.
+- **Rounded corners under an edge ornament** (a scalloped or piped top edge on a panel) leave gaps at both ends. Square the panel where the ornament forms the edge.
 
 ## Self-critique (Phase 7)
 

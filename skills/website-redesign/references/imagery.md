@@ -33,6 +33,17 @@ Stock libraries defend their search pages against automation, and each one fails
 
 If none of that is possible, say so and name the capability that would help; do not ship placeholders.
 
+## The client's own photographs (social media)
+
+When the business's real work exists as social posts, it beats any library, with some care:
+
+- **Get permission, then collect everything** (see `discovery.md` §2). Keep raw downloads in a local research folder that is neither shipped nor committed.
+- **Check resolution before choosing a hero.** Platforms store some media small: video covers can be 540px wide while stills are 1440px. Put the high-resolution stills in the large placements and the small covers in thumbnails and cards. Frames pulled from the original video are an option, with permission.
+- **Curate by era and set.** Accounts drift from phone-on-the-bench to a proper backdrop. Use the newest consistent set for first screens and the weakest era only deep in categories. A consistent backdrop is a free "treatment", so do not add a filter on top.
+- **Stage photos on their own colour.** When the photos share a backdrop, a page ground sampled from it makes the photograph and the page read as one surface.
+- **Alt text describes only what is visible.** Never invent the occasion or the customer.
+- **Process images through a script** into responsive widths and modern formats, with the source index recorded, so the set can be rebuilt when new work is added.
+
 ## Localise and process
 
 - Download originals at the largest size you need (2000–2400px wide is enough for full-bleed at 2× density in most cases) into the project's asset system — never hot-link a search-result URL.
