@@ -42,6 +42,8 @@ The test: write the direction in one sentence and ask whether it would also desc
 
 ## Product flows and configurators
 
+- **Shrinking a signature experience to fit the website.** A feature the user described as the reason the business is remembered, built as a stepper with a thumbnail preview inside a normal page. If the user wants people to *play* with it, it needs a full-screen creative shell, direct manipulation, real materials and lighting, and a quality bar tested with a prototype (`discovery.md` §5b).
+
 When the site takes orders, bookings or requests, these read as generated or simply fail:
 
 - **The giant form.** Twenty dropdowns in a column, however well styled. Group decisions into a few chapters, ask what the customer knows ("how many people?") and infer the trade term.

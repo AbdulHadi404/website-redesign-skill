@@ -74,6 +74,19 @@ Signals: a transaction needs a human decision, customers have state (an order, a
 
 Write the result in `templates/PRODUCT.md`: journeys, principles, IA, the configurator model, lifecycle, operator views, and V1 versus later. That document is what the art direction and the architecture follow.
 
+## 5b. Signature experiences: do not shrink the differentiator
+
+When the triage finds a feature that is meant to *be* the differentiator (a studio, a configurator, a visualiser, a tool people will play with and show others), treat it as its own product:
+
+1. **Write the experiential quality bar first, in the user's words.** For example: "someone opens it and thinks *what is this?*", "people would screen-record it", "the output is worth sharing on its own". Everything after this is judged against that bar, not against a feature list.
+2. **Research it as a product.** Look at the best real products doing anything similar, in and outside the category (configurators, creative tools, editors, character creators), and at the current technical state of the art. Record what makes their *interaction* satisfying: direct manipulation, camera behaviour, selection, feedback, constraints, loading, and how they work on phones.
+3. **Let the architecture follow the experience.** A signature experience usually needs its own full-screen shell (a dedicated route with its own layout, or a separate app), its own interaction model, and its own asset pipeline. It shares the brand (type, colour, motion, tone), not the website's layout. Do not embed it in a page section or an iframe because that is convenient.
+4. **Prove quality with one vertical slice before breadth.** One excellent instance (one product, one scene, one flow) with real materials, lighting, motion and direct manipulation is the gate. More options come only after the slice passes the bar. Mass-producing weak assets or options is the failure mode.
+5. **Scale quality, don't delete it.** Offer quality tiers (high, standard, low) and fallbacks. Optimise the ambitious version rather than designing a lesser one "for performance".
+6. **Keep it practical.** The signature experience must also solve the business's real problem: less ambiguity, better specifications, fewer messages. Spectacle that doesn't improve understanding, confidence, sharing or ordering doesn't belong.
+
+The trap this prevents: a builder, configurator or studio that was meant to be the reason the business is remembered, reduced to "a step-by-step form with a small preview" because it had to fit between two website sections.
+
 ## 6. Greenfield architecture, decided not defaulted
 
 Before scaffolding, write a requirements table (what the *product* needs: static SEO pages, an interactive client, uploads, auth for whom, capacity rules, notifications, cost at the business's scale, who maintains it), then compare real options, including "use an existing product". Record the choice and why each major alternative lost. Check the facts that bite small businesses: **free hosting tiers that forbid commercial use**, databases that pause when idle, adapters that drop image optimisation. Keep the core portable (standard runtime, an ORM, a storage interface) so hosting stays a later, reversible decision that needs the user's approval.
