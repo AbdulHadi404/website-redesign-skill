@@ -74,6 +74,29 @@ When the real product becomes better than the pages advertising it, replace old 
 copy with captures from the **real** product (its own hero renders, same camera angles). Never fake the
 product in marketing images when the real thing is better.
 
+### Hand-over from a page into the live 3D product
+
+The strongest website → product moment is continuity: the picture they clicked becomes the thing they
+use. A recipe that works without live WebGL on the marketing page:
+
+- Let the product's own content open from the page (a template, a saved design) and render each one
+  from the **exact view the product opens on**. At capture time, also record where the subject sits in
+  the still (project its framing points), so the still can later be laid over the live scene precisely.
+- Give the page's still and the product's loading poster the same shared-element name (React
+  `<ViewTransition name share>` or `view-transition-name`), and use the **same image file** on both
+  sides, warmed on hover/focus/touch together with the 3D code chunk, so the morph lands on a decoded
+  image.
+- **Don't start the 3D engine during the morph.** A shared-element morph animates width/height on the
+  main thread, and engine start-up (module evaluation, context creation, shader compiles) blocks it:
+  measured, a 0.56 s morph stretched to 3.8 s. Mount the canvas when the morph's animation finishes.
+- When the live scene is built and steady, move/scale the poster onto the live subject's projected box
+  (FLIP), then dissolve it. Hold the camera still at the poster's view until then, and start idle motion
+  and bring in the tool panels only after (opacity only if panel boxes drive the camera framing).
+- Replacing someone's work with a template must be undoable (push it through the same undo history),
+  and the entry URL should be rewritten so a reload reopens their work, not the template.
+- Verify with a compositor screencast (CDP `Page.startScreencast`); ordinary screenshots don't capture
+  view transitions. Time it on a production build from the navigation commit.
+
 ## 8. Pick motion and 3D tools per effect
 
 Choose the tool for each interaction, not one library for the whole site: CSS (and scroll-driven
