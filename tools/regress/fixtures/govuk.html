@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" class="govuk-template">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Error: Apply for a licence – GOV.UK baseline</title>
+<link rel="stylesheet" href="govuk/govuk-frontend.min.css">
+</head>
+<body class="govuk-template__body">
+<a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+
+
+
+<header class="govuk-header">
+  <div class="govuk-header__container govuk-width-container">
+    <div class="govuk-header__logo">
+      <a href="//gov.uk" class="govuk-header__homepage-link">
+          <span class="govuk-header__logotype">Service</span>
+        
+      </a>
+    </div>
+  </div>
+</header>
+<div class="govuk-width-container">
+  <a href="#" class="govuk-back-link">Back</a>
+  <main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-error-summary" data-module="govuk-error-summary">
+          <div role="alert">
+            <h2 class="govuk-error-summary__title">There is a problem</h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list"><li><a href="#email">Enter an email address in the correct format, like name@example.com</a></li></ul>
+            </div>
+          </div>
+        </div>
+        <h1 class="govuk-heading-l">Apply for a licence</h1>
+        <p class="govuk-body">It takes around 10 minutes. You will need your reference number.</p>
+        <form novalidate>
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="full-name">Full name</label>
+            <input class="govuk-input" id="full-name" name="fullName" type="text" autocomplete="name" spellcheck="false">
+          </div>
+          <div class="govuk-form-group govuk-form-group--error">
+            <label class="govuk-label" for="email">Email address</label>
+            <div id="email-hint" class="govuk-hint">We will only use this to send you a receipt</div>
+            <p id="email-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter an email address in the correct format, like name@example.com</p>
+            <input class="govuk-input govuk-input--error" id="email" name="email" type="email" autocomplete="email" aria-describedby="email-hint email-error">
+          </div>
+          <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </form>
+        <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--m">Licence fees</caption>
+          <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Licence</th><th scope="col" class="govuk-table__header govuk-table__header--numeric">Fee</th></tr></thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row"><th scope="row" class="govuk-table__header">Standard</th><td class="govuk-table__cell govuk-table__cell--numeric">£85.00</td></tr>
+            <tr class="govuk-table__row"><th scope="row" class="govuk-table__header">Premium</th><td class="govuk-table__cell govuk-table__cell--numeric">£120.50</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+<footer class="govuk-footer"><div class="govuk-width-container"><p class="govuk-body-s">© Crown copyright</p></div></footer>
+</body>
+</html>

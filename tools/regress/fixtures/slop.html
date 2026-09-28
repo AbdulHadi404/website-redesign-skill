@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FlowAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Inter, sans-serif; color: #111827; background: #fff; }
+  nav { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; padding: 14px 32px; background: rgba(255,255,255,.6); backdrop-filter: blur(12px); z-index: 10; }
+  nav a { color: #6b7280; margin-left: 22px; text-decoration: none; font-size: 14px; }
+  nav .cta { background: linear-gradient(90deg,#8b5cf6,#3b82f6); color: #fff; padding: 8px 18px; border-radius: 999px; }
+  .hero { min-height: 100vh; text-align: center; padding: 120px 24px 60px; background: radial-gradient(circle at 30% 20%, #c4b5fd 0%, transparent 40%), radial-gradient(circle at 70% 30%, #93c5fd 0%, transparent 40%), #faf5ff; }
+  .pill { display: inline-block; font-size: 13px; padding: 6px 14px; border-radius: 999px; background: rgba(139,92,246,.12); color: #7c3aed; }
+  h1 { font-size: 72px; font-weight: 800; letter-spacing: -0.03em; margin: 24px auto; max-width: 900px; line-height: 1.05; }
+  .grad { background: linear-gradient(90deg,#8b5cf6,#3b82f6,#06b6d4); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { font-size: 20px; color: #9ca3af; max-width: 640px; margin: 0 auto 32px; }
+  .btn { display: inline-block; padding: 14px 28px; border-radius: 999px; font-weight: 600; text-decoration: none; margin: 0 6px; }
+  .btn.primary { background: linear-gradient(90deg,#8b5cf6,#3b82f6); color: #fff; box-shadow: 0 10px 30px rgba(139,92,246,.4); }
+  .btn.ghost { border: 1px solid #e5e7eb; color: #111827; }
+  .shot { margin: 64px auto 0; max-width: 1100px; border-radius: 24px; box-shadow: 0 30px 80px rgba(0,0,0,.25); }
+  .logos { text-align: center; padding: 48px 24px; color: #9ca3af; font-size: 14px; }
+  .logos span { display: inline-block; margin: 12px 24px; font-weight: 700; font-size: 22px; color: #d1d5db; }
+  section { padding: 96px 24px; max-width: 1200px; margin: 0 auto; text-align: center; }
+  h2 { font-size: 48px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 16px; }
+  .sub { color: #9ca3af; font-size: 18px; margin: 0 auto 48px; max-width: 600px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card { background: #fff; border: 1px solid #f3f4f6; border-radius: 20px; padding: 32px; text-align: left; box-shadow: 0 4px 24px rgba(0,0,0,.06); }
+  .icon { width: 48px; height: 48px; border-radius: 12px; background: #ede9fe; display: grid; place-items: center; font-size: 22px; margin-bottom: 20px; }
+  .card h3 { font-size: 20px; margin: 0 0 8px; }
+  .card p { color: #9ca3af; font-size: 15px; line-height: 1.6; margin: 0; }
+  .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+  .stat b { display: block; font-size: 56px; font-weight: 800; }
+  .stat span { color: #9ca3af; }
+  .reveal { opacity: 0; transform: translateY(30px); transition: all .8s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .price { position: relative; }
+  .price.popular { border: 2px solid #8b5cf6; box-shadow: 0 0 60px rgba(139,92,246,.35); transform: scale(1.05); }
+  .price .tag { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg,#8b5cf6,#3b82f6); color: #fff; font-size: 12px; padding: 4px 12px; border-radius: 999px; }
+  .price b { font-size: 44px; display: block; margin: 12px 0; }
+  table { border-collapse: collapse; width: 900px; margin: 0 auto; }
+  td, th { border-bottom: 1px solid #f3f4f6; padding: 12px 16px; font-size: 14px; }
+  footer { padding: 48px 32px; background: #0f0f23; color: #6b7280; display: flex; justify-content: space-between; }
+  footer a { color: #6b7280; margin-left: 12px; font-size: 12px; }
+  footer .social a { display: inline-block; width: 16px; height: 16px; }
+  a:focus, button:focus { outline: none; }
+  @media (max-width: 700px) { h1 { font-size: 44px; } .grid, .stats { grid-template-columns: 1fr; } nav a:not(.cta) { display: none; } }
+</style>
+</head>
+<body>
+<nav>
+  <div style="font-weight:800;font-size:20px">⚡ FlowAI</div>
+  <div><a href="#">Features</a><a href="#">Pricing</a><a href="#">Blog</a><a class="cta" href="#">Get started</a></div>
+</nav>
+<div class="hero">
+  <span class="pill">✨ New: AI-powered workflows</span>
+  <h1>Supercharge your workflow with <span class="grad">AI-powered automation</span></h1>
+  <p>The all-in-one platform that empowers teams to work smarter, not harder. Seamlessly integrate with your favorite tools.</p>
+  <a class="btn primary" href="#">Start for free →</a><a class="btn ghost" href="#">Book a demo</a>
+  <img class="shot" src="dashboard.png" loading="lazy" style="width:100%">
+</div>
+<div class="logos">Trusted by 10,000+ teams worldwide<br><span>ACME</span><span>Globex</span><span>Initech</span><span>Umbrella</span><span>Hooli</span></div>
+<section>
+  <h2>Everything you need to <span class="grad">scale faster</span></h2>
+  <p class="sub">Powerful features designed to help you move faster and achieve more.</p>
+  <div class="grid">
+    <div class="card reveal"><div class="icon">🚀</div><h3>Lightning fast</h3><p>Experience blazing-fast performance that scales with your business needs.</p></div>
+    <div class="card reveal"><div class="icon">🔒</div><h3>Enterprise security</h3><p>Bank-grade security keeps your data safe and compliant at every step.</p></div>
+    <div class="card reveal"><div class="icon">🤖</div><h3>AI insights</h3><p>Leverage cutting-edge AI to unlock actionable insights from your data.</p></div>
+    <div class="card reveal"><div class="icon">⚙️</div><h3>Seamless integrations</h3><p>Connect with 100+ tools you already love in just a few clicks.</p></div>
+    <div class="card reveal"><div class="icon">📊</div><h3>Advanced analytics</h3><p>Real-time dashboards give you complete visibility into performance.</p></div>
+    <div class="card reveal"><div class="icon">💬</div><h3>24/7 support</h3><p>Our world-class team is always here to help you succeed.</p></div>
+  </div>
+</section>
+<section class="stats">
+  <div class="stat"><b class="grad">10x</b><span>Faster workflows</span></div>
+  <div class="stat"><b class="grad">99.9%</b><span>Uptime</span></div>
+  <div class="stat"><b class="grad">500+</b><span>Integrations</span></div>
+  <div class="stat"><b class="grad">24/7</b><span>Support</span></div>
+</section>
+<section>
+  <h2>Simple, transparent pricing</h2>
+  <p class="sub">Choose the plan that's right for you.</p>
+  <div class="grid">
+    <div class="card price"><h3>Starter</h3><b>$0</b><p>For individuals getting started.</p><a class="btn ghost" href="#">Get started</a></div>
+    <div class="card price popular"><span class="tag">Most popular</span><h3>Pro</h3><b>$29</b><p>For growing teams.</p><a class="btn primary" href="#">Get started</a></div>
+    <div class="card price"><h3>Enterprise</h3><b>Custom</b><p>For large organisations.</p><a class="btn ghost" href="#">Contact sales</a></div>
+  </div>
+</section>
+<section>
+  <h2>Compare plans</h2>
+  <table><tr><th>Feature</th><th>Starter</th><th>Pro</th><th>Enterprise</th><th>Notes</th></tr>
+  <tr><td>Workflows</td><td>3</td><td>Unlimited</td><td>Unlimited</td><td>Per workspace, billed monthly</td></tr>
+  <tr><td>Seats</td><td>1</td><td>10</td><td>Unlimited</td><td>Additional seats available</td></tr></table>
+</section>
+<section>
+  <div class="card" style="max-width:640px;margin:0 auto"><p style="font-size:20px;color:#374151">"FlowAI has completely transformed how our team works. We've seen a 300% increase in productivity!"</p><p><b>Sarah Johnson</b>, CEO at TechCorp</p></div>
+  <form style="margin-top:48px" action="/subscribe"><input type="email" name="email" placeholder="Enter your email" style="padding:14px;border:1px solid #e5e7eb;border-radius:999px;width:280px"><button style="padding:14px 24px;border:0;border-radius:999px;background:#8b5cf6;color:#fff">Subscribe</button></form>
+</section>
+<footer><div>© 2026 FlowAI. All rights reserved.</div><div class="social"><a href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#6b7280"/></svg></a><a href="#"><svg viewBox="0 0 24 24"><rect width="20" height="20" fill="#6b7280"/></svg></a><a href="#">Privacy</a><a href="#">Terms</a></div></footer>
+<script>
+  // typical reveal: hidden by default, shown by observer (fails in background tabs / headless full-page)
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('visible')));
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

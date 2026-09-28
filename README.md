@@ -133,6 +133,7 @@ skills/website-redesign/
   scripts/                 the measurement scripts above
 research/                  the evidence behind 2.0: audit, research streams, experiments, labs, blind evaluations
 tools/check-skill.mjs      repository check (frontmatter, cross-references, script syntax), run in CI
+tools/regress.mjs          the scripts against pages with known defects and clean pages (tools/regress/fixtures, the a11y lab), run in CI
 ```
 
 ## Licence
