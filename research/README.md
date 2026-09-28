@@ -52,6 +52,11 @@ The environment allowed only GitHub, npm, PyPI and Google Fonts. Most live websi
   - chart and component bundle costs
   - `content-visibility`
 - **Tools**: dembrandt, colorjs.io, fontkit, pixelmatch, Lighthouse, unlighthouse, svgo, sharp, css-analyzer, purgecss and knip were each installed and run. Verdicts are in `experiments/01-qa-tooling.md`.
+- **Blind evaluations** (experiment H): fresh agents ran the whole skill on four fictional companies, each in a different category — a marketing site, a field tool, a bilingual financial dashboard and an ecommerce storefront (a public-service form is round 4). Rounds 2 onward ran on frozen snapshots; every finding was reproduced, fixed and added to the regression set.
+- **Task walkthroughs** (experiment K): an agent attempting farmers' tasks from captures, and the driver changes that stopped the accessibility tree and selector scrolling from overstating success.
+- **Figures in the type shortlist**: every family in `type-and-colour.md` checked with `fonts.mjs --google` (three had no tabular figures, one of them listed as having them).
+- **`perf.mjs` against a hand-written probe**: the same pages within 25 ms of LCP.
+- **The regression set** (`tools/regress.mjs`, run in CI): the a11y lab, GOV.UK Frontend, slop and dashboard fixtures, finish defects, the old Milkline and Sanad builds, parity on an Arabic pair, storage seeding, card links, clipped versus covered images, CLS and TBT. A deliberate break fails it; its first CI run caught a font-dependent expectation, now moved to a deterministic fixture.
 
 ## Principles the research converged on
 
@@ -88,5 +93,8 @@ Full lists: A §6, C §11, F §5.
   - NN/g navigation numbers
   - Russell's budget table
 - **Live-site studies** (Linear, Stripe, Shopify admin, GOV.UK services) with `dembrandt` and `capture.mjs` once egress allows. The product-lab probe (`experiments/G-product-lab/ui-probe.js`) is ready for it.
-- **A small corpus of before/after redesigns** to regression-test the skill's taste checks. The ledger is the start of it.
-- **A real-device performance pass** on a mid-range Android phone (backdrop-filter, shadows, long lists).
+- **A small corpus of before/after redesigns** to regression-test the skill's taste checks. The ledger and its shipped captures (`skills/website-redesign/references/ledger/`) are the start of it; the four blind-test outputs are the first entries.
+- **A real-device performance pass** on a mid-range Android phone (backdrop-filter, shadows, long lists). `perf.mjs` ranks builds; it does not predict field data.
+- **Screen-reader and real-user checks.** Every evaluation so far ended at "no screen reader available" and "no users". A VoiceOver and NVDA smoke test of one blind-test output would calibrate how much of `a11y.mjs` and `widgets.mjs`'s PASS survives real assistive technology.
+- **Categories not yet run blind:** docs and developer tools, enterprise admin, a mobile-first consumer app, a content or editorial site.
+- **A fresh-context reviewer** has never been exercised: no evaluation environment had a subagent tool. The critique's independence rests on the self-review fallback until one does.
