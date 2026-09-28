@@ -58,7 +58,7 @@ Choose references by the problem they solve (show a complex product simply; buil
 
 ### Phase 3 — Direction (derive it, do not pick it)
 
-For **expressive** surfaces: derive a concept from the company's moment, material and assets; list three to seven real candidates (never padded to a count) across at least three material families; state what the direction refuses (the page this category always ships, and its predictable opposite); decide typography, a named colour strategy, composition, the first viewport exactly, imagery and motion. For **productive** surfaces: decide the interaction model, density, navigation model, elevation model and state language; brand shows in type, colour roles, tone and a few considered moments, not in custom controls. Before writing code, run the similar-brief test, the category test and the ledger comparison — on the whole direction for expressive routes, on the brand layer for productive ones. Then write keep / replace / remove / create.
+For **expressive** surfaces: derive a concept from the company's moment, material and assets; list three to seven real candidates (never padded to a count) across at least three material families; state what the direction refuses (the page this category always ships, and its predictable opposite); decide typography, a named colour strategy, composition, the first viewport exactly, imagery and motion. For **productive** surfaces: decide the interaction model, density, navigation model, elevation model and state language; brand shows in type, colour roles, tone and a few considered moments, not in custom controls. Before writing code, run the similar-brief test, the category test and the ledger comparison — on the whole direction for expressive routes, on the brand layer for productive ones. The ledger comparison is a picture, not a sentence: blur the style tile beside the captures in `references/ledger/` (`compare.mjs --grid … --blur 6`), so a sibling of a past output is caught before it is built. Then write keep / replace / remove / create.
 
 ### Phase 4 — System (tokens upward)
 
@@ -70,7 +70,7 @@ Work on a branch. Tokens → base → motion → primitives → product fragment
 
 ### Phase 6 — Verify (renders and measurements)
 
-Capture every page at 1440, 1280, 1024, 768 and 390 with `scripts/capture.mjs`, element shots of artwork, and every state of every widget with `scripts/states.mjs` (the same scenario file on the old and the new build); look at the captures. Run `scripts/audit.mjs` at 1440 and 390 with the right `--kind`, `scripts/a11y.mjs` on each key template and `scripts/widgets.mjs` on each custom widget, then the manual accessibility pass (`accessibility.md` §11), the responsive pass and a performance run. Fix and re-capture; do not close a loop on the assumption that a change did what you intended.
+Capture every page at 1440, 1280, 1024, 768 and 390 with `scripts/capture.mjs`, element shots of artwork, and every state of every widget with `scripts/states.mjs` (the same scenario file on the old and the new build); look at the captures. Run `scripts/audit.mjs` at 1440 and 390 with the right `--kind`, `scripts/a11y.mjs` on each key template and `scripts/widgets.mjs` on each custom widget, then the manual accessibility pass (`accessibility.md` §11), the responsive pass and a performance run (`scripts/perf.mjs --before` against the old build, and Lighthouse where it runs). Fix and re-capture; do not close a loop on the assumption that a change did what you intended.
 
 ### Phase 7 — Critique (the honest pass)
 
@@ -126,7 +126,7 @@ Do this proactively and tell the user what changed in the skill. If the skill's 
 
 ## Reporting
 
-Lead with what changed and why, in the user's language. State what was verified and how (widths rendered, scripts run and their results, flows exercised, commands passed). State plainly what was left out and why (missing proof, assets, capability, network access). Share before/after captures. Ask for a decision only where the user owns it: production deployment, unresolved facts, brand assets only they have, a component-library migration, a paid resource.
+Lead with what changed and why, in the user's language — and, before that, any deploy blocker: a change to what the server receives that only staging can confirm. State what was verified and how (widths rendered, scripts run and their results, flows exercised, commands passed). State plainly what was left out and why (missing proof, assets, capability, network access). Share before/after captures. Ask for a decision only where the user owns it: production deployment, unresolved facts, brand assets only they have, a component-library migration, a paid resource.
 
 ## When to stop and ask
 
