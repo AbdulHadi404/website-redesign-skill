@@ -3,7 +3,11 @@
  * Drive widgets into their states and capture each one: the state matrix
  * (app-ui.md §2) rendered, not imagined.
  *
- *   node states.mjs states.json [--base http://localhost:3000] [--out captures/states] [--label after] [--only name,name]
+ *   node states.mjs states.json [--base http://localhost:3000] [--out captures/states] [--label after] [--only name,name] [--aria]
+ *
+ * --aria also writes what the screen offers as text (the accessibility tree: roles, names, states) next to each
+ * capture. That turns this script into a task-walkthrough driver: a reviewer who sees only the capture and the
+ * tree chooses the next step by role and name ("click": "role=button[name='Find a cow']") and re-runs.
  *
  * states.json:
  *   {
@@ -142,6 +146,7 @@ try {
       if (shot === 'viewport' || shot === 'full') buf = await page.screenshot({ path: f, fullPage: shot === 'full' });
       else buf = await page.locator(shot).first().screenshot({ path: f, timeout: 5000 });
       entry.file = f;
+      if (a.aria) await writeFile(f.replace(/\.png$/, '.aria.yml'), await page.locator('body').ariaSnapshot({ timeout: 5000 }).catch((e) => `# aria snapshot failed: ${e.message}`));
       if (!first) first = { name: st.name, buf, shot, device: entry.device };
       else if (first.shot === shot && first.device === entry.device && identical(first.buf, buf)) entry.note = `identical to "${first.name}" — the scenario probably did not take effect (selector, route pattern?)`;
     } catch (e) {
