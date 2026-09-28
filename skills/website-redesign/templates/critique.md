@@ -34,7 +34,7 @@ One line per point: **objective → element → effect → why** (principle or e
 | 11 | Does every image have a purpose and one treatment? **Image removed:** does the first viewport lose information? | where imagery | | | |
 | 12 | **Content-free render** (`capture.mjs --variant no-text`: glyphs and logo gone, icons and shapes kept): still recognisably this design? **Shadows removed** (`--variant no-shadows`): still finished? | expressive | | | |
 | 13 | **Headlines only** (h1–h3 in order): does the story or the structure read? | all | | | |
-| 14 | **Blurred** first viewport beside the old site and the last `ledger.md` project that has a capture (`compare.mjs --grid … --blur 6`); where the ledger row has no capture, compare the one-sentence directions in words: could a stranger mistake them? | expressive | | | |
+| 14 | **Blurred** first viewport beside the old site and the `ledger.md` captures in `references/ledger/` (`compare.mjs --grid new.png old.png references/ledger/*.jpg --blur 6`) — done first on the Phase 3 style tile, so a sibling is caught before it is built; where the ledger row has no capture, compare the one-sentence directions in words: could a stranger mistake them? | expressive | | | |
 | 15 | One primary action per view, one colour everywhere; selected ≠ accent? | all | | | |
 | 16 | Every widget's applicable states designed *and rendered* — loading, empty, error, disabled/read-only, long content, 0/1/many (`app-ui.md` state matrix)? | all with widgets | | | |
 | 17 | Colour budget per the named strategy; every text pair ≥ 4.5:1 (3:1 large) on its real ground; no meaning by colour alone? | all | | | |

@@ -22,7 +22,9 @@ node scripts/parity.mjs --before http://localhost:4000 --after http://localhost:
 
 ## Functional checks
 
-Exercise, don't inspect: every nav link, footer link, in-page anchor and call to action, on desktop and in the open mobile menu; every form — fields, validation (on submit, then live), error summary, honeypot or captcha, success and error states, no double submission; every widget through every state (script it when a backend is unavailable); external links and `mailto:` addresses; analytics hooks, consent banners and embeds still load where they did; unsaved-changes warnings on long forms.
+Exercise, don't inspect: every nav link, footer link, in-page anchor and call to action, on desktop and in the open mobile menu; every form — fields, validation (on submit, then live), error summary, honeypot or captcha, success and error states, no double submission; every widget through every state (script it when a backend is unavailable); external links and `mailto:` addresses; analytics hooks, consent banners and embeds still load where they did; unsaved-changes warnings on long forms. Pages that exist only with saved state (a filled basket, a signed-in view) are exercised with it: `--storage` on every script.
+
+**What the server receives.** A front end can prove a form still posts the same keys; it cannot prove the backend accepts the new values. List every change to what the server receives — a field now empty or optional, a guest order with no password, a value in a new format — as a deploy blocker to test on staging, first in the report.
 
 ## Accessibility
 
@@ -30,7 +32,7 @@ WCAG 2.2 AA is the floor. `audit.mjs` (axe-core plus measured contrast, focus an
 
 ## Performance
 
-Lighthouse at phone emulation, median of 3–5 runs, same version as the baseline, LCP *element* checked; the budget in `DESIGN.md` met; the redesign not slower than the audit baseline (`performance.md` §6).
+Lighthouse at phone emulation (or `perf.mjs --before` where Lighthouse cannot run), median of 3–5 runs, same version as the baseline, LCP *element* checked; the budget in `DESIGN.md` met; the redesign not slower than the audit baseline (`performance.md` §6).
 
 ## Implementation checks
 

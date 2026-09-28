@@ -14,6 +14,7 @@ Imagery is optional. Decide from the concept whether photography, product UI, il
 - The product's own UI is the strongest visual asset — show that instead, large.
 - The brand is typographic, technical or data-driven; photography would dilute it.
 - Only generic stock is available for the subject.
+- The product is the maker's own work (tiles, ceramics, furniture, prints): a stock photograph shows *another* maker's product on this maker's shop — a truth problem, not a taste one. Draw or render the real product, or wait for the owners' photographs.
 
 ## Sourcing
 

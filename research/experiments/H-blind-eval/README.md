@@ -137,3 +137,25 @@ The agent took about 85 minutes, with no subagent available and no live referenc
 - A blinder self-review when no subagent exists: the blurred and no-text sheets come first, then walkthroughs.
 
 See `lessons.md` (the round 2 row) and the commits "Script fixes from the Sanad blind evaluation (round 2)", "parity, capture, widgets: the rest of the Sanad script findings" and "Skill content from the Sanad blind evaluation".
+
+## Round 3 (frozen snapshot `f4d6eaf`)
+
+| Run | Surface | Result | Evidence |
+| --- | --- | --- | --- |
+| `azul/` | Azul & Co, a five-page tile shop: identity redesign and checkout rethink | Everything derives from the founder's mark: cobalt, white and one ochre corner. Alegreya italic matches the hand-lettered italic wordmark. The hero is a statement over a full-bleed wall of one tile design, and the story chapter is built in the mark's quartered square. Checkout is guest-first, with delivery cost shown beside every price and the total on the pay button, and the GOV.UK error pattern. Every route, id, field, `data-track` hook and the checkout payload is kept. a11y FAILs 31–69 per page → 0 on all eight page states, including a seeded basket. On a throttled phone LCP is 1.1–1.4 s with CLS 0. | `azul/REPORT.md`, `EVAL-NOTES.md`, `DESIGN.md`, `SYSTEM.md`, `CRITIQUE.md`, `captures/`, `audit/` |
+
+The agent took about 2 hours; the environment refused `npx` (Lighthouse, dembrandt), and no subagent was available. It wrote `REPORT.md` and `EVAL-NOTES.md` with a shell heredoc after the harness refused report-named files; the brief had asked for them.
+
+### What it found, and what changed
+
+- **Stateful pages were unauditable.** Only `states.mjs` could seed storage, so the filled basket and checkout — the job's real risk — needed a seed page the agent invented. *Changed:* `launch()` takes `--storage` (localStorage, sessionStorage, cookies), so every script reaches them; Phase 1 writes the seeds.
+- **The split-hero warning was in the wrong phase.** The agent built a copy/panel split, saw it was a sibling of the last ledger output only in the Phase 7 blur, and rebuilt the hero. *Changed:* the warning sits beside the hero options in `art-direction.md` §4, and the blur against the ledger runs on the Phase 3 style tile, with the ledger's captures now shipped inside the skill (`references/ledger/`, 720 px JPEGs).
+- **Rules with no tie-breaker.** Brand hue versus the category test (a company called Azul with a cobalt mark): the assets win, and distance comes from composition and content. Checkout best practice versus a preserved contract: the contract wins; remove from the interface, never from the payload; changes to what the server receives are deploy blockers for staging.
+- **Script false positives** (about a third of verification time): contrast sampled inside a closed `<details>`; an italic-only web font reported "not available"; `widgets.mjs` fixed at 1280×800 (a phone-only menu untestable; the agent's own probe found a real tab-order bug there); images clipped on purpose reported as "painted flat"; `parity.mjs` matching strings (18.0 ≠ 18.00, a step number read as "4 reviews", dimensions as multipliers); focus rings drawn on a card ancestor measured as weak; 2.5.3 applied to all text in a card link; lazy images blank in the colour-vision renders; step numbers as "accented headlines". All fixed and in `tools/regress.mjs`.
+- **No performance measurement without Lighthouse.** *Changed:* `perf.mjs` (Lighthouse's mobile profile, median of runs, LCP/CLS/TBT, old against new, broken baselines named). It reproduces the agent's hand-written probe within 25 ms.
+- **The type list was wrong about figures.** Gloock was listed with tabular figures. Every family in the shortlist was then checked with `fonts.mjs --google`: Gloock, Piazzolla and Fredoka have none.
+- **Smaller:** the candidate count (three real ones, never padded); the font budget moved into the typography step; search only for catalogues too big to browse; a maker's own product never shown in stock photography; middle dots allowed in product specifications; `DESIGN.md` and `SYSTEM.md` each own their half.
+
+## Across the three rounds
+
+The four outputs (`references/ledger/`, blurred side by side) read as four different products. Three use a deep blue: the two Milkline surfaces from Milkline's navy mark, and Azul's cobalt from its own. Each is the brand's own logo colour, so this is recorded to watch rather than counted as convergence: a fourth blue from a brand whose mark is not blue would be the prior. Each round found less wrong with the direction and more wrong with the tools. By round 3 the design method needed only tie-breakers, and the rest was verification friction, which is where the fixes went.

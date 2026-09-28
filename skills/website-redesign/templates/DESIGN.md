@@ -56,11 +56,11 @@ Written <date>, before implementation. Benchmark for finish: <reference(s)>. Thi
 
 ## Direction
 
-Fill the parts that apply. **Expressive** routes: everything below except "Productive surfaces". **Productive** routes (apps, dashboards, field tools, checkout, services): "Productive surfaces", "First viewport", "Breaks if" and the convergence checks *for the brand layer only*; skip Concept, material-family candidates and the memory test. A two-page site does not need every section of this template at full length — the Brief, Accessibility, Colour, Typography and Keep/replace/remove/create always; the rest as far as they change a decision.
+Fill the parts that apply. **Expressive** routes: everything below except "Productive surfaces". **Productive** routes (apps, dashboards, field tools, checkout, services): "Productive surfaces", "First viewport", "Breaks if" and the convergence checks *for the brand layer only*; skip Concept, material-family candidates and the memory test. A two-page site does not need every section of this template at full length — the Brief, Accessibility, Colour, Typography and Keep/replace/remove/create always; the rest as far as they change a decision. When `SYSTEM.md` also exists, each rule lives in one place: `DESIGN.md` holds decisions and their reasons (the accessibility block says *which* commitments this product makes and why); `SYSTEM.md` holds how components carry them out (focus ring, target sizes, error pattern). Refer, don't repeat.
 
 **Concept** (expressive surfaces) — one line a founder would recognise as theirs: **"…"**
 
-**Candidates considered** (5–7 from the company's own world — its moment, material, customers' world, product, industry vernacular — spanning at least three material families), and why each lost: …
+**Candidates considered** (three to seven real ones from the company's own world — its moment, material, customers' world, product, industry vernacular — spanning at least three material families), and why each lost: …
 
 **Refuses:** the page this category always ships — and its predictable opposite.
 
