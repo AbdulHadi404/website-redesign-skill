@@ -2,7 +2,7 @@
 
 Fill this from the **renders**, with the old first viewport beside the new one (`compare.mjs`). Best done by a fresh-context reviewer given only the brief, `DESIGN.md` and the capture paths; the builder's account of its own fixes is not evidence.
 
-**Evidence rule.** A "yes" names a capture file and what in it shows the answer. Hierarchy, rhythm, clarity and fit cannot be answered from source. Before hand-off, re-open each cited capture and try to prove the "yes" wrong.
+**Evidence rule.** A "yes" names a capture file and what in it shows the answer — and is then hunted: look for the capture that would prove it wrong, starting with check 23. Hierarchy, rhythm, clarity and fit cannot be answered from source. Before hand-off, re-open each cited capture and try to prove the "yes" wrong.
 
 ## First impression (write before reading `DESIGN.md`)
 
@@ -43,6 +43,8 @@ One line per point: **objective → element → effect → why** (principle or e
 | 20 | Performance within budget — LCP element eager and sized, fonts subset, no layout shift, JS limited to what routes need (`performance.md`)? | all | | | |
 | 21 | Copy short enough to be read; no happy talk, no clichés, product UI written as product UI; one label per intent? | all | | | |
 | 22 | Would it hold up beside the Phase 2 references — in finish, restraint and hierarchy? | all | | | |
+| 23 | **Breaks if:** each of the three things `DESIGN.md` says would betray the direction — found in the renders or not? Name the capture that proves it holds (a direction's own rule is the easiest to stop seeing). | all | | | |
+| 24 | **Images tell the truth:** does any image contradict the copy beside it ("each tile slightly different" over identical repeats), or show the product altered — faded, filtered, idealised — so a buyer would be misled? | where imagery | | | |
 
 ## Task walkthroughs (productive routes)
 
