@@ -35,8 +35,10 @@ const { browser } = await launch({ chrome: a.chrome });
 
 function extract() {
   const text = document.body.innerText || '';
-  const claimRe = /(?:\b\d(?:\.\d)?\s?\/\s?(?:5|10)\b|\b\d(?:\.\d)?\s?(?:out of|of)\s?(?:5|10)\b|[$€£¥₹]\s?\d[\d,.]*(?:\s?(?:k|m|bn|million|billion))?(?:\s?\/\s?\w+)?|\b\d[\d,.]*\s?(?:%|x\b|×|\+|k\+?\b|m\+?\b|ms\b|seconds?\b|mins?\b|minutes?\b|hours?\b|days?\b|weeks?\b|months?\b|years?\b|users?\b|customers?\b|clients?\b|teams?\b|companies\b|businesses\b|countries\b|languages\b|integrations\b|reviews?\b|stars?\b|downloads\b|employees\b|people\b)|\b(?:since|founded in|est\.?)\s+\d{4}\b)/gi;
-  const claims = [...new Set([...text.matchAll(claimRe)].map((m) => m[0].trim()))];
+  // A claim keeps the noun it counts ("12,000+ teams"): the same number counting something else is a new claim.
+  const NOUN = '(?:\\s(?:active\\s|happy\\s|paying\\s|monthly\\s)?(?:users?|customers?|clients?|teams?|companies|businesses|brands|countries|languages|integrations|reviews?|ratings?|stars?|downloads|installs|employees|people|members|subscribers|developers|partners|farms|stores|shops|orders|projects|sites|websites|apps|hours?|days?|weeks?|months?|years?|minutes?|seconds?))';
+  const claimRe = new RegExp(`(?:\\b\\d(?:\\.\\d)?\\s?\\/\\s?(?:5|10)\\b|\\b\\d(?:\\.\\d)?\\s?(?:out of|of)\\s?(?:5|10)\\b|[$€£¥₹]\\s?\\d[\\d,.]*(?:\\s?(?:k|m|bn|million|billion))?(?:\\s?\\/\\s?\\w+)?|\\b\\d[\\d,.]*\\s?(?:%|x\\b|×|\\+|k\\+?\\b|m\\+?\\b|ms\\b)${NOUN}?|\\b\\d[\\d,.]*${NOUN}\\b|\\b(?:since|founded in|est\\.?)\\s+\\d{4}\\b)`, 'gi');
+  const claims = [...new Set([...text.matchAll(claimRe)].map((m) => m[0].replace(/\s+/g, ' ').trim()))];
   const quotes = [...new Set([
     ...[...document.querySelectorAll('blockquote, q')].map((q) => q.innerText.replace(/\s+/g, ' ').trim()),
     ...[...text.matchAll(/[“"]([^”"\n]{25,280})[”"]/g)].map((m) => m[1].trim()),
@@ -61,7 +63,13 @@ async function load(base, p) {
     const status = res ? res.status() : 0;
     if (status >= 400) return { status };
     await settle(page, { settleMs: 300 });
-    return { status, ...(await page.evaluate(extract)) };
+    // Read twice: countdowns, clocks and count-up animations change between reads and are not claims to compare.
+    const r1 = await page.evaluate(extract);
+    await page.waitForTimeout(1500);
+    const r2 = await page.evaluate(extract);
+    const stable = r2.claims.filter((c) => r1.claims.includes(c));
+    const changing = [...r1.claims, ...r2.claims].filter((c) => !stable.includes(c));
+    return { status, ...r2, claims: stable, changing };
   } catch (e) {
     return { status: 0, error: String(e.message).split('\n')[0] };
   } finally {
@@ -74,8 +82,10 @@ if (crawlN) {
   const seen = new Set(paths), queue = [...paths];
   while (queue.length && seen.size < crawlN) {
     const p = queue.shift();
-    const r = await load(before, p);
-    for (const l of r.links || []) if (!seen.has(l) && !/\.(pdf|zip|png|jpe?g|svg|webp|xml|txt)$/i.test(l) && seen.size < crawlN) { seen.add(l); queue.push(l); }
+    const page = await browser.newPage();
+    const links = await open(page, urlFor(before, p)).then(() => page.evaluate(() => [...new Set([...document.querySelectorAll('a[href]')].map((l) => { try { const u = new URL(l.href, location.href); return u.origin === location.origin ? u.pathname.replace(/\/$/, '') || '/' : null; } catch { return null; } }).filter(Boolean))])).catch(() => []);
+    await page.close();
+    for (const l of links) if (!seen.has(l) && !/\.(pdf|zip|png|jpe?g|svg|webp|xml|txt)$/i.test(l) && seen.size < crawlN) { seen.add(l); queue.push(l); }
   }
   paths = [...seen];
 }
@@ -102,9 +112,14 @@ const md = (s = '') => out.push(s);
 const oldAll = { text: '', claims: new Set(), quotes: new Set(), links: new Set() };
 const newAll = { text: '', claims: new Set(), quotes: new Set(), links: new Set() };
 const perPage = [];
-for (const p of paths) {
-  const [o, n] = [await load(before, p), await load(after, p)];
-  perPage.push({ p, o, n });
+const changingAll = new Set();
+// Four routes at a time, old and new side by side.
+for (let i = 0; i < paths.length; i += 4) {
+  const batch = await Promise.all(paths.slice(i, i + 4).map(async (p) => { const [o, n] = await Promise.all([load(before, p), load(after, p)]); return { p, o, n }; }));
+  perPage.push(...batch);
+}
+for (const { o, n } of perPage) {
+  for (const r of [o, n]) (r.changing || []).forEach((c) => changingAll.add(c));
   for (const [acc, r] of [[oldAll, o], [newAll, n]]) {
     if (!r.text) continue;
     acc.text += r.text + '\n';
@@ -135,8 +150,9 @@ md(unsourced.length || unsourcedQuotes.length ? [
 ].join('\n') + '\n\nEach needs a source (the user, the repo, a document) or it comes out. Sample data in a product fragment must read as obviously illustrative.' : '- ✓ none — every number and quotation on the new site exists on the old site or in the sources.');
 md();
 
+if (changingAll.size) { md(`Changing values (timers, clocks, count-up animations) left out of the comparison: ${[...changingAll].slice(0, 8).map((c) => `"${c.replace(/\s+/g, ' ')}"`).join(', ')}`); md(); }
 md('## Claims on the old site missing from the new one');
-const dropped = [...oldAll.claims].filter((c) => !newNorm.includes(norm(c)));
+const dropped = [...oldAll.claims].filter((c) => !newNorm.includes(norm(c)) && !changingAll.has(c));
 const droppedQuotes = [...oldAll.quotes].filter((q) => !newNorm.includes(norm(q).slice(0, 60)));
 md(dropped.length || droppedQuotes.length ? [
   ...dropped.map((c) => `- ⚠ "${c}"`),

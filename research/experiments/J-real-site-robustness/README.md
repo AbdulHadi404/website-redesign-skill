@@ -33,6 +33,16 @@
 | 12 | Copy button "does nothing, nothing announced" | Headless Chromium denies clipboard access, so the site's handler failed silently | Contexts get `clipboard-read`/`clipboard-write`; the button then announces "Copied" through its live region — PASS |
 | 13 | Header dropdown "Enter does nothing — falling back to click … toggles on click" | The menu opens on `:focus-within`/`:hover`: focusing it already opened it, and the "click" was really a hover | Detects open-on-focus and says so (keyboard-reachable; no state exposed; opens on every Tab) — the real failure, no `aria-expanded`, stays |
 
+**`parity.mjs` against a doctored copy** (the "after" site had a planted "trusted by 12,000+ teams, 99.99% uptime", a renamed consent field and a deleted `/about`):
+
+| # | Symptom | Cause | Fix |
+| --- | --- | --- | --- |
+| 14 | "12,000+ teams" not reported | Claims were bare numbers matched site-wide; the old site said "12,000+ active subscribers (sample)" on another page | A claim keeps the noun it counts ("12,000+ teams", "340 farms", "2,300 reviews"); the same number counting something else is a new claim |
+| 15 | "36 SECONDS" unsourced and "43 SECONDS" dropped | A live countdown, and count-up statistics read mid-animation | Each page is read twice, 1.5 s apart; values that change are listed as "changing" and left out |
+| 16 | 25 routes took 7 min 12 s | Sequential loads, and the crawl did a full settle per page | Link-only crawl; four routes at a time with old and new loaded in parallel: 1 min 27 s |
+
+After the fixes all four plants are caught (both claims, the route, the field on its three pages) and nothing else is reported except the two claims that genuinely disappeared with `/about`.
+
 **Real-site FAIL counts after the fixes:**
 
 - `a11y.mjs`: 5, down from 33.
