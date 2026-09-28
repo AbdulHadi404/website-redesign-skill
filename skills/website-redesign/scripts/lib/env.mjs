@@ -108,7 +108,13 @@ export async function launch({ chrome, headless = true } = {}) {
   process.exit(1);
 }
 
-export const slugFor = (p) => (p === '/' || p === '' ? 'home' : p.replace(/^\/+|\/+$/g, '').replace(/[^a-z0-9]+/gi, '-').toLowerCase() || 'page');
+// "/" → home, "/pricing/" → pricing, "/?lang=en" → home-lang-en, "/app/?tab=2" → app-tab-2
+export const slugFor = (p) => {
+  const [pathPart, query = ''] = String(p).split('?');
+  const base = pathPart.replace(/^\/+|\/+$/g, '').replace(/[^a-z0-9]+/gi, '-').toLowerCase() || 'home';
+  const q = query.replace(/[^a-z0-9]+/gi, '-').replace(/^-+|-+$/g, '').toLowerCase();
+  return q ? `${base}-${q}` : base;
+};
 
 export function urlFor(base, p) {
   if (/^https?:|^file:/.test(p)) return p;
