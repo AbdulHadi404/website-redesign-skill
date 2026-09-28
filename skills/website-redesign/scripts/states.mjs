@@ -42,8 +42,16 @@
  *                              finger cannot (a column cut off by overflow: hidden): state checks only, never walkthroughs
  * After each click, tap, press or swipe the screen is compared with the one before; a step that changed nothing
  * visible is reported ("dead tap"). A failing step still leaves a capture (…-failed.png) of where it stopped.
- * Routes: url (glob), delay (ms), abort, status, body, json, file (relative to this scenario file), contentType;
- * several routes as a list. A missing file fails that state only.
+ * Routes: url (glob), delay (ms), abort, status, body, json, file (relative to this scenario file), contentType,
+ * record; several routes as a list. A missing file fails that state only.
+ * Payload contract: "record": true on a route, or "record": "<url glob>" (or a list) on a state or the whole file,
+ * saves every matching request as <out>/requests/<state>-<device>[-<label>].json: method, URL, Content-Type and
+ * body (parsed JSON; a urlencoded or multipart form as {name: value} in the order sent, a file as its name).
+ * The route still mocks, aborts or continues as configured; a state-level "record": true takes every request
+ * that is not a GET. Run the same answers through the old and the new build, then
+ *   node parity.mjs --payloads <old out dir> <new out dir>
+ * diffs what each build sends (keys, order, types, values). Add a wait after the submit: a request sent after
+ * the last step is not recorded.
  * "shot": "viewport" (default) | "full" | a selector (element capture, 2× density).
  *
  * Every state gets a fresh context. Console and page errors are recorded per state. A state whose capture is
@@ -113,9 +121,10 @@ const hitAt = (page, x, y, tap = true) => page.evaluate(([x, y, tap]) => {
 // Fixture files resolve relative to the scenario file, not the working directory.
 const fixture = (f) => path.resolve(path.dirname(file), f);
 
-async function applyRoutes(page, routes) {
+async function applyRoutes(page, routes, rec) {
   for (const r of [].concat(routes || [])) {
     await page.route(r.url, async (route) => {
+      if (r.record) rec(route.request());
       if (r.delay) await new Promise((res) => setTimeout(res, r.delay));
       if (r.abort) return route.abort(typeof r.abort === 'string' ? r.abort : 'internetdisconnected').catch(() => {});
       if (r.status || r.body !== undefined || r.json !== undefined || r.file) {
@@ -125,6 +134,24 @@ async function applyRoutes(page, routes) {
       return route.continue().catch(() => {});
     }, r.times ? { times: r.times } : undefined);
   }
+}
+
+// What a request sends, parsed so parity.mjs --payloads can diff it key by key. JSON as JSON; a urlencoded or
+// multipart form as {name: value} in the order sent (a repeated name as a list, a file as "(file) name"). The random
+// multipart boundary is replaced in the raw body, so the same form sent twice records the same bytes.
+function snapshot(req) {
+  const type = req.headers()['content-type'] || '';
+  let raw = req.postData(), body = raw, format = raw == null ? 'none' : 'text';
+  const boundary = (type.match(/boundary=("?)([^";]+)\1/i) || [])[2];
+  if (raw != null && boundary) raw = raw.split(boundary).join('{boundary}');
+  if (raw != null && raw.length > 200000) raw = raw.slice(0, 200000) + '…(truncated)';
+  if (raw != null) try { body = JSON.parse(raw); format = 'json'; } catch {
+    const pairs = /x-www-form-urlencoded/i.test(type) ? [...new URLSearchParams(raw)]
+      : boundary ? raw.split('--{boundary}').slice(1, -1).map((part) => { const [head, ...rest] = part.split('\r\n\r\n'); const file = head.match(/filename="([^"]*)"/i); return [(head.match(/\bname="([^"]*)"/i) || [])[1], file ? `(file) ${file[1]}` : rest.join('\r\n\r\n').replace(/\r\n$/, '')]; })
+        : null;
+    if (pairs) { body = {}; format = boundary ? 'multipart' : 'form'; for (const [k, v] of pairs) body[k] = Object.hasOwn(body, k) ? [].concat(body[k], v) : v; }
+  }
+  return { method: req.method(), url: req.url(), contentType: type || null, format, body, raw };
 }
 
 async function swipe(page, cdp, x, y, dx, dy) {
@@ -225,6 +252,7 @@ const unmarkTap = (page) => page.evaluate(() => document.getElementById('__tap_m
 const { browser } = await launch({ chrome: a.chrome });
 const results = [];
 const shots = []; // every capture so far, for the identical-pair check
+let anyRecorded = false;
 try {
   for (const st of spec.states || []) {
     if (only && !only.includes(st.name)) continue;
@@ -237,7 +265,15 @@ try {
     page.on('console', (m) => { if (m.type() === 'error') errors.push(`console: ${m.text().slice(0, 160)}`); });
     const storage = { ...(spec.storage || {}), ...(st.storage || {}) };
     if (Object.keys(storage).length) await ctx.addInitScript((kv) => { try { for (const [k, v] of Object.entries(kv)) localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v)); } catch { /* storage blocked */ } }, storage);
-    await applyRoutes(page, [].concat(spec.route || [], st.route || []));
+    // Requests to record: routes marked "record" (in applyRoutes) and the state's or file's "record" globs. The glob
+    // routes are registered last, so they run first and fall back to the mocks above (or the network).
+    const requests = [], recorded = new WeakSet();
+    const rec = (req) => { if (!recorded.has(req)) { recorded.add(req); requests.push(snapshot(req)); } };
+    const routes = [].concat(spec.route || [], st.route || []);
+    await applyRoutes(page, routes, rec);
+    const recordGlobs = [].concat(st.record ?? spec.record ?? []).filter(Boolean);
+    for (const g of recordGlobs) await page.route(g === true ? '**/*' : g, (route) => { if (g !== true || !/^(GET|HEAD|OPTIONS)$/.test(route.request().method())) rec(route.request()); return route.fallback(); });
+    const recording = recordGlobs.length > 0 || routes.some((r) => r.record);
     const url = urlFor(base, st.path || spec.path || '/');
     const missingFiles = [].concat(spec.route || [], st.route || []).filter((r) => r.file && !existsSync(fixture(r.file))).map((r) => fixture(r.file));
     const entry = { name: st.name, device: deviceName(dev), file: null, errors, note: '', trail: [], dead: [] };
@@ -287,8 +323,17 @@ try {
         if (a.aria) await writeFile(f.replace(/\.png$/, '.aria.yml'), await seenTree(page).catch(() => ''));
       }
     }
+    // Written for failed states too: what was sent before the failure is still evidence.
+    if (recording) {
+      const f = path.join(outDir, 'requests', `${st.name}-${entry.device}${label}.json`);
+      await mkdir(path.dirname(f), { recursive: true });
+      await writeFile(f, JSON.stringify({ state: st.name, device: entry.device, label: a.label || null, base, requests }, null, 1) + '\n');
+      entry.recorded = requests.length ? `◇ recorded ${requests.map((r) => `${r.method} ${new URL(r.url).pathname}`).join(', ')} → requests/${path.basename(f)}`
+        : `⚠ recorded nothing: no request matched ${[...recordGlobs.map((g) => (g === true ? 'any non-GET' : g)), ...routes.filter((r) => r.record).map((r) => r.url)].join(', ')} (wrong glob, or the submit never happened)`;
+      anyRecorded = true;
+    }
     results.push(entry);
-    console.log(`${entry.file ? '✓' : '✗'} ${st.name} (${entry.device})${entry.file ? `  ${entry.file}` : ''}${entry.note ? `\n   ⚠ ${entry.note}` : ''}${entry.dead.map((d) => `\n   ⚠ ${d}`).join('')}${errors.length ? `\n   ${errors.length} error(s): ${errors.slice(0, 2).join(' | ')}` : ''}${a.aria || each ? entry.trail.map((t) => `\n     ${t}`).join('') : ''}`);
+    console.log(`${entry.file ? '✓' : '✗'} ${st.name} (${entry.device})${entry.file ? `  ${entry.file}` : ''}${entry.note ? `\n   ⚠ ${entry.note}` : ''}${entry.dead.map((d) => `\n   ⚠ ${d}`).join('')}${entry.recorded ? `\n   ${entry.recorded}` : ''}${errors.length ? `\n   ${errors.length} error(s): ${errors.slice(0, 2).join(' | ')}` : ''}${a.aria || each ? entry.trail.map((t) => `\n     ${t}`).join('') : ''}`);
     await ctx.close();
   }
 } finally {
@@ -296,9 +341,10 @@ try {
 }
 
 const md = ['# States', '', `${base} · ${results.length} states · ${new Date().toISOString().slice(0, 16)}`, '', '| State | Device | Capture | Errors | Note |', '| --- | --- | --- | --- | --- |',
-  ...results.map((r) => `| ${r.name} | ${r.device} | ${r.file ? path.basename(r.file) : '—'} | ${r.errors.length || ''} | ${[r.note, ...r.dead].filter(Boolean).join('; ')} |`)];
+  ...results.map((r) => `| ${r.name} | ${r.device} | ${r.file ? path.basename(r.file) : '—'} | ${r.errors.length || ''} | ${[r.note, ...r.dead, r.recorded].filter(Boolean).join('; ')} |`)];
 const walked = results.filter((r) => r.trail.length);
 if (walked.length) md.push('', '## Steps', '', ...walked.flatMap((r) => [`**${r.name}** (${r.device})`, '', ...r.trail.map((t) => `    ${t}`), '']));
 await writeFile(path.join(outDir, `states${label}.md`), md.join('\n') + '\n');
 console.log(`\n${results.filter((r) => r.file).length}/${results.length} captured · summary ${path.join(outDir, `states${label}.md`)} · sheet: node compare.mjs --grid ${outDir}/*.png --out ${outDir}/sheet.png`);
+if (anyRecorded) console.log(`requests: ${path.join(outDir, 'requests')} · diff with the other build's: node parity.mjs --payloads <old out dir> <new out dir>`);
 process.exitCode = results.some((r) => !r.file) ? 1 : 0;
