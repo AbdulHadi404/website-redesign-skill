@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Milkline</title>
+<meta name="description" content="Herd health alerts, milking rotas and vet records for dairy farms.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="/" class="brand">🐄 Milkline</a>
+  <div><a href="#features">Features</a><a href="pricing.html">Pricing</a><a href="#story">About</a><a class="cta" href="#visit">Start free trial</a></div>
+</nav>
+<header class="hero">
+  <span class="pill">✨ New: AI-powered herd intelligence</span>
+  <h1>Supercharge your farm with <span class="grad">smart herd insights</span></h1>
+  <p>The all-in-one platform that empowers dairy farmers to work smarter, not harder. Seamlessly connect your parlour data.</p>
+  <a class="btn primary" href="#visit">Start free trial →</a><a class="btn ghost" href="app/">See the app</a>
+  <img class="shot" src="assets/app-screenshot.png" loading="lazy" style="width:100%">
+</header>
+<div class="logos">Trusted by farms across Ireland and the UK<br><span>340 farms</span></div>
+<section id="features">
+  <h2>Everything your herd needs, <span class="grad">in one place</span></h2>
+  <p class="sub">Powerful features designed to help you farm smarter.</p>
+  <div class="grid">
+    <div class="card reveal"><div class="icon">🩺</div><h3>Early health alerts</h3><p>Milkline reads your parlour software exports and in-line milk meters and flags any cow whose yield drops or whose milk conductivity rises — often the first sign of mastitis.</p></div>
+    <div class="card reveal"><div class="icon">📶</div><h3>Works offline</h3><p>No signal in the parlour? Milkline keeps working and syncs when you're back in range.</p></div>
+    <div class="card reveal"><div class="icon">📅</div><h3>Milking rota</h3><p>Plan who milks when. Milkers swap shifts by text message and the rota updates itself.</p></div>
+    <div class="card reveal"><div class="icon">💉</div><h3>Vet visit log</h3><p>Treatments, withdrawal periods and vet visits in one record you can share with your vet.</p></div>
+    <div class="card reveal"><div class="icon">📊</div><h3>Advanced analytics</h3><p>Yield per cow, per group and per milking, with trends over the lactation.</p></div>
+    <div class="card reveal"><div class="icon">📞</div><h3>Farm-hours support</h3><p>A real person on the phone from 6am to 10pm, every day of the year.</p></div>
+  </div>
+</section>
+<section class="stats">
+  <div class="stat"><b class="grad">340</b><span>Farms</span></div>
+  <div class="stat"><b class="grad">2 days</b><span>Earlier mastitis detection*</span></div>
+  <div class="stat"><b class="grad">99.9%</b><span>Uptime</span></div>
+  <div class="stat"><b class="grad">6am–10pm</b><span>Support, 365 days</span></div>
+</section>
+<p class="footnote">* As reported by Brennan Farm, Co. Cork.</p>
+<section id="story">
+  <h2>Built by a vet and a farmer</h2>
+  <p class="sub">Milkline was started in Cork in 2019 by Dr Niamh O'Sullivan, a large-animal vet, and Tom Hegarty, who milks 210 cows near Mallow. They were tired of finding out about mastitis from the bulk tank.</p>
+</section>
+<section>
+  <div class="card quote"><p>"We catch mastitis about two days earlier than we used to, and the relief milker knows what to check without ringing me."</p><p><b>Aoife Brennan</b>, Brennan Farm, Co. Cork — 180 cows</p></div>
+</section>
+<section id="visit">
+  <h2>Try it free for 30 days</h2>
+  <p class="sub">No card needed. We'll ring you to set up your parlour export.</p>
+  <form id="visit-form" action="/api/visit" method="post" data-track="visit_form_submit">
+    <input name="name" placeholder="Your name">
+    <input name="farm" placeholder="Farm name">
+    <input name="herd_size" placeholder="Herd size">
+    <input name="phone" placeholder="Phone">
+    <button type="submit">Start free trial</button>
+    <div id="visit-msg"></div>
+  </form>
+</section>
+<footer><div>© 2026 Milkline Ltd, Mallow, Co. Cork. Registered in Ireland 651234.</div><div><a href="pricing.html">Pricing</a><a href="#">Privacy</a><a href="#">Terms</a></div></footer>
+<script src="assets/site.js"></script>
+</body>
+</html>
