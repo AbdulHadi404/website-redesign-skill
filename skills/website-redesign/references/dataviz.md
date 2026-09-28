@@ -1,6 +1,6 @@
 # Data visualisation — dashboards, analytics, and charts on marketing pages
 
-Read whenever a surface shows numbers as charts or KPI tiles. If the environment has a dedicated data-visualisation skill (e.g. `dataviz`), follow its palette and mark specs for the charts themselves; this file holds what a redesign needs to decide around them. Evidence: `research/streams/F-…` (Tufte, Cleveland & McGill, Stephen Few, Datawrapper, the FT Visual Vocabulary, Chartability; libraries measured 2026-09-28).
+Read whenever a surface shows numbers as charts or KPI tiles. If the environment has a dedicated data-visualisation skill (e.g. `dataviz`), follow its palette and mark specs for the charts themselves; this file holds what a redesign needs to decide around them, and where the two disagree about money (below), this file wins. Evidence: `research/streams/F-…` (Tufte, Cleveland & McGill, Stephen Few, Datawrapper, the FT Visual Vocabulary, Chartability; libraries measured 2026-09-28).
 
 ## 1. Decide which kind of chart first
 
@@ -55,7 +55,7 @@ Read whenever a surface shows numbers as charts or KPI tiles. If the environment
 - Marks ≥ 3:1 against the background, text ≥ 4.5:1, chart text ≥ 12 px.
 - Dark mode: re-tune, don't invert — lighter, slightly desaturated hues, lower gridline contrast, marks still ≥ 3:1.
 - Titles state the finding in explanatory charts ("Churn halved after the onboarding redesign"); dashboards name the metric plainly. A subtitle for measure and unit; a source line.
-- Numbers through `Intl.NumberFormat` with the locale; compact notation on axes and tiles ("1.2M"), full precision in tables and tooltips; consistent decimals per column; percentages vs percentage points distinguished; a true minus sign. Arabic and Persian interfaces: the digit system set in code, no hand-built number strings in RTL, digits that are tabular in the font actually used, numeric columns right-aligned (`multilingual.md` §2a).
+- Numbers through `Intl.NumberFormat` with the locale; compact notation on axes, and on tiles only where the figure is a magnitude to glance at ("1.2M visits"); full precision in tables and tooltips. **Money on invoicing, accounting, tax, payments and billing surfaces is never compacted**, in tiles included: the exact amount with its fixed decimals is the figure people reconcile against (and tax regimes such as ZATCA require it). Compact only the axis ticks; consistent decimals per column; percentages vs percentage points distinguished; a true minus sign. Arabic and Persian interfaces: the digit system set in code, no hand-built number strings in RTL, digits that are tabular in the font actually used, numeric columns right-aligned (`multilingual.md` §2a).
 - Bars start at zero; lines may not (say so); about five round ticks; dates formatted for the range.
 
 ## 6. Responsive charts

@@ -66,6 +66,7 @@ Then name the weaknesses specifically — vague diagnoses produce vague fixes:
 - Motion: none, generic fade-ups on everything, or motion on frequent actions.
 - Mobile: desktop squeezed; tables overflowing; navigation hidden without a label.
 - States: blank empties, eternal spinners, unstyled errors.
+- Numbers and languages (bilingual, RTL, financial or data-heavy products — read `multilingual.md` §2a now, not at Phase 4): two digit systems on one screen, numeric columns aligned by text direction instead of place value, decimals that vary, dates in an unintended calendar or shifted a day by UTC parsing, `type="number"` inputs that drop Arabic digits, untranslated strings on a language variant. `audit.mjs` measures most of these; the calendar and the arithmetic (do the totals add up, and to what?) need a probe.
 - Consistency: nav and footer from another era; secondary pages untouched.
 
 ## 6. Heuristic evaluation and walkthrough

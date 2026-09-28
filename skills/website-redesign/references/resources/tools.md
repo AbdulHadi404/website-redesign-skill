@@ -7,7 +7,7 @@ Checked 2026-09-28. The scripts in this skill cover the common path; the rest ar
 | Script | What it answers |
 | --- | --- |
 | `capture.mjs` | What does every page look like at each width, fold and full, with reveals finished and images decoded? Element shots at 3× for artwork; `--variant no-text,no-images,no-shadows` for the removal tests; `--reduced-motion`, `--dark`, `--no-js`, `--forced-colors`; self-checks for images that painted flat |
-| `audit.mjs` | What is measurably wrong, and which generic-look signals are present? (`--kind` switches marketing, app and field rules) |
+| `audit.mjs` | What is measurably wrong, and which generic-look signals are present? (`--kind` switches marketing, app, field, commerce, content, docs and service rules and accepts category names such as dashboard or fintech.) Includes the number and script checks for bilingual and financial screens. |
 | `a11y.mjs` | What would a keyboard, screen-reader, zoom, forced-colours or colour-blind user hit that rule engines cannot see? |
 | `widgets.mjs` | Does each custom widget keep its keyboard contract (dialog, tabs, disclosure, live region, form errors, menu button)? |
 | `states.mjs` | What does each widget look like loading, empty, failing, offline, stale, with 200 items, open, focused — driven by mocked routes and steps, not imagined? With `--aria --each`: can a user do the top task from what is on screen (`visual-qa.md`, "Task walkthroughs")? |

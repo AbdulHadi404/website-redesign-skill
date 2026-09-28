@@ -79,6 +79,8 @@ Write each into `DESIGN.md`. On **productive** routes they apply to the brand la
 - **House-recipe and ledger check**: the direction in one sentence — surfaces, display face and emphasis device, label device, dark-chapter colour, accent — compared with the recipe in `anti-patterns.md` and the rows in `ledger.md` (and any `DESIGN.md` in the user's other projects). If the sentence fits both, change the family: different surfaces, a display face chosen from the wordmark, a label device that is not mono uppercase, an accent from the logo.
 - **Breaks if** (three things that would betray the direction) and the **memory test** (what a visitor describes an hour later).
 
+**Short form, when the brand layer is fully supplied.** If the company's own assets fix the brand layer — a logo whose colours and wordmark face are named in the file, a brand guide in use — the tests can only confirm the derivation. Write one line instead of five paragraphs: "Brand layer derived from the supplied mark: teal #0E5E5A and saffron #E0A526 from the arch and keystone, IBM Plex Sans Arabic named in the wordmark; no free choices left to converge." Run the full tests on whatever *was* chosen freely (a secondary face, an illustration style, a data palette).
+
 ## 6. Productive surfaces: the interaction direction
 
 For apps, dashboards, admin, checkout, services and field tools, decide in writing (`app-ui.md`, `categories.md`). The candidates in §2 become **interaction-model candidates** (a table with filters, an exceptions-first list, a map, a queue, a calendar), judged against the top tasks:

@@ -116,7 +116,7 @@ Containers, grid and gutters per breakpoint; spacing scale; vertical rhythm per 
 
 ## Imagery and graphics
 
-Photography / product UI / illustration / diagrams / typography-only — chosen and argued (if the company's world is photographable, "none" must be argued). Source, licence class, treatment, pipeline, credits location. The drawn graphics layer: its line style and the motif it comes from.
+(A productive screen with no images or illustrations writes "none" and its icon set here.) Photography / product UI / illustration / diagrams / typography-only — chosen and argued (if the company's world is photographable, "none" must be argued). Source, licence class, treatment, pipeline, credits location. The drawn graphics layer: its line style and the motif it comes from.
 
 ## Motion
 
@@ -161,4 +161,4 @@ Headline test: the hero sentence a stranger would understand alone — "…"
 
 ## Secondary pages
 
-How each page adopts the system; what changes structurally.
+(Skip for a single-screen job.) How each page adopts the system; what changes structurally.

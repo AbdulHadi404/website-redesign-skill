@@ -55,7 +55,7 @@ Write the budget into `DESIGN.md`; the redesign must not be slower than the audi
 ## 4. Fonts
 
 - **Self-host** (cache partitioning since 2020 means a CDN font is never shared across sites; self-hosting also keeps OpenType features and avoids the EU privacy problem — `resources/type-and-colour.md`). WOFF2 only; keep at least a Latin `unicode-range` subset; keep full layout features when subsetting scripts that need shaping (Arabic, Devanagari).
-- Preload at most the one or two files used above the fold (`crossorigin` even on the same origin). `font-display: swap` for text, `optional` where a first-visit fallback is acceptable (0 CLS), never `block` for body.
+- Preload at most the one or two files used above the fold (`crossorigin` even on the same origin). `font-display: swap` for text, `optional` where a first-visit fallback is acceptable (0 CLS), never `block` for body. A daily-use app is that case: preload its one or two files and use `optional`, so the first visit may render in the fallback and no visit shifts.
 - **Fallback metrics** (`scripts/fonts.mjs <file> --fallback arial` prints the `@font-face`; or fontaine, Capsize, `next/font`, Astro's Fonts API): compute overrides from the exact fallback face *and weight*; a wrong override is worse than none (measured CLS 0.0029 → 0.0753). Safari honours `size-adjust` but not `ascent-/descent-/line-gap-override`. Measure CLS after adding them.
 - A variable font pays off from the second weight (Playfair latin: one static weight 23 KB, the 400–900 variable 38 KB).
 

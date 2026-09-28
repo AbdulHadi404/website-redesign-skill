@@ -1,6 +1,6 @@
-# UI / UX — the interaction rules a marketing site still has to obey
+# UI / UX — the interaction rules every surface obeys
 
-A landing page is an interface: a nav, forms, widgets, links, states, motion, and people using it on a phone with one thumb. Read this before implementation (Phase 5) and again during technical QA (Phase 8). Numbers are the ones the sources give. Companion: `design-theory.md` (visual system), `web-design.md` (page structure), `technical-qa.md` (the checklist).
+Every surface is an interface — a landing page included: a nav, forms, widgets, links, states, motion, and people using it on a phone with one thumb. §1 is the Phase 1 heuristic checklist for any surface (`audit.md` §6); read the rest before implementation (Phase 5) and again during technical QA (Phase 8). Product screens add `app-ui.md`. Numbers are the ones the sources give. Companion: `design-theory.md` (visual system), `web-design.md` (page structure), `technical-qa.md` (the checklist).
 
 ## 1. The two frameworks everything else hangs on
 
@@ -105,7 +105,7 @@ The full procedure — design decisions, implementation rules, automated and man
 
 ## 9. Writing
 
-Plain words in the visitor's language; the point first (inverted pyramid); the first two words of every heading and link do the work; buttons are verbs that say what happens next ("Get your Passport", not "Submit"); confirmations say what was done and what happens now; consistent terms (one name per thing across the site); a tone chosen on purpose and held. Nothing a visitor reads is an internal name, a file path, a ticket number or a provider (this repo's own hard rule).
+Plain words in the visitor's language; the point first (inverted pyramid); the first two words of every heading and link do the work; buttons are verbs that say what happens next ("Get your Passport", not "Submit"); confirmations say what was done and what happens now; consistent terms (one name per thing across the site); a tone chosen on purpose and held. Nothing a visitor reads is an internal name, a file path, a ticket number or the name of a vendor behind the feature.
 
 ## 10. Dark patterns — never
 

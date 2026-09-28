@@ -57,7 +57,7 @@ On **productive** surfaces the rule inverts: one layout per kind of task, applie
 - **Sticky and fixed traps**: a `backdrop-filter`, `filter` or `transform` on an ancestor makes it the containing block for fixed children — put the blur on a pseudo-element. Input-mode media queries go *after* the base rules.
 - **Responsive images in `<picture>`**: the wrapper has no height of its own — size it to the container.
 - **Heights**: heroes sized by content with a modest minimum (`min(100svh, 56rem)`), never `height: 100vh`; parallax containers overscan their section.
-- **RTL-ready**: logical properties throughout (`multilingual.md`).
+- **RTL-ready**: logical properties throughout, except numeric columns, which are `text-align: right` in both directions (`multilingual.md` §1, §2a).
 
 ## What not to do
 

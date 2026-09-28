@@ -8,7 +8,7 @@ Read in Phases 3–5 whenever a route is a productive surface (`framing.md`). A 
 2. **Frequency sets the budget.** What is done a hundred times a day gets no animation, no confirmation dialog and a keyboard shortcut; what is done once a year gets guidance.
 3. **Few sizes, used consistently.** Real systems use three to five type sizes on a screen (Primer's issues page: three, largest 16 px); a size used once is a smell. 13–14 px body, 20–28 px page titles.
 4. **One elevation model, named.** Canvas → sibling surfaces → layers inside a surface; overlays are a separate plane; never a surface nested in a surface (Plane's written model). Cards are an elevation for independent objects, not a layout primitive.
-5. **Colour is information.** Neutral chrome; one colour for action; a *neutral* fill for selection (Spectrum 2 — an accent-coloured selected item competes with the primary action); semantic colours for status only; a separate data palette.
+5. **Colour is information.** Neutral chrome; one colour for action; a *neutral* fill for selection (Spectrum 2 — an accent-coloured selected item competes with the primary action; a low-chroma tint of the brand hue, step 2–3 of its scale, counts as neutral when it is clearly not the action colour and a second cue — weight, a bar, a check — carries the state); semantic colours for status only; a separate data palette.
 6. **Every state is designed** — including empty, error, loading, long, many and none (§2).
 7. **Content is design.** Labels in the users' words; one name per thing; a verb that survives from button ("Publish") to confirmation ("Published"); product UI written as product UI, not as marketing.
 
@@ -57,6 +57,7 @@ Also render the **content extremes**: 0, 1, typical and 100+ items; 1-character 
 - **Commands** in a command palette (⌘K) that shows each command's shortcut, so users graduate to the shortcut. Keyboard shortcuts for top tasks; `?` to list them.
 - **State in the URL**: filters, sort, tabs, pagination, open panels. Back restores position.
 - Parent → child always has a way back (breadcrumbs, back link). Primary–detail layouts for lists of records.
+- A navigation item users know but whose destination is missing or out of scope (a route the repo does not have): keep it where it was as an inert label (no link, no pointer, no role), and ask where it should go. Never a fake link to `#`, and never silently removed: people navigate by position.
 - Do not use ARIA `menu` / `menubar` roles for site or app navigation — they are for application command menus. Use links, and disclosure buttons for sub-lists.
 
 ## 5. Tables and lists
@@ -108,20 +109,20 @@ Any screen that shows data fetched from somewhere can be wrong about the present
 
 ## 8. Loading, empty, error
 
-- **Loading** (Primer, consistent with NN/g): under 1 s show nothing; 1–3 s an indeterminate spinner or skeleton; 3–10 s determinate progress; over 10 s a background task the user can leave. Delay spinners ~150–300 ms and keep them ~300–500 ms once shown to avoid flicker. Show each item as it arrives.
+- **Loading** (Primer, consistent with NN/g): under 1 s show nothing — but *lay out* the skeleton from first paint (in the server or static HTML, `visibility: hidden` until 1 s), so the space is reserved and nothing shifts when data or the skeleton appears; 1–3 s an indeterminate spinner or skeleton; 3–10 s determinate progress; over 10 s a background task the user can leave. Delay spinners ~150–300 ms and keep them ~300–500 ms once shown to avoid flicker. Show each item as it arrives.
 - **Skeletons** only for containers (tables, lists, tiles) and shaped like the final layout (no CLS); never for buttons, inputs, menus, toasts or modals.
 - **Empty states**: *first use* — what will appear here and the one action that fills it; *no results* — how to adjust the filters; *cleared / done* — a quiet confirmation; *permission or error* — what went wrong and the corrective action. Never "No data".
 - **Errors**: degrade the part, not the page ("This table could not be loaded — Retry"); separate pages for "Page not found", "There is a problem with the service" and "Service unavailable".
 
 ## 9. Dashboards
 
-Decide operational (monitor and act) or analytical (explore and decide) before placing anything; three to five decision-driving metrics, each with a target or comparison, a period and a link to the records; deviations carry the weight; every chart with axis values, units and freshness; tabular numerals; drill-down. Charts, colour and library choices: `dataviz.md`.
+Decide operational (monitor and act) or analytical (explore and decide) before placing anything; three to five decision-driving metrics, each with a target or comparison, a period and a link to the records; deviations carry the weight — colour the deviating values or marks, not their containers, and keep the rest in a muted tint, so the squint sheet's heaviest thing is the one needing action; every chart with axis values, units and freshness; tabular numerals; drill-down. Charts, colour and library choices: `dataviz.md`.
 
 ## 10. Feel
 
 - Respond to input within 100 ms (hover, press, toggle); keep flow under 400 ms (Doherty); optimistic updates with a clear undo for reversible actions; confirmation dialogs only for the irreversible.
 - Motion only to explain change (where something came from, what changed), 100–250 ms, none on keyboard-triggered actions or anything done tens of times a day (`motion.md`).
-- No layout shift from late data: reserve space, match skeletons to the final layout.
+- No layout shift from late data: reserve space, match skeletons to the final layout. Two more sources the Sanad test measured (CLS 0.26–0.75 until fixed): a page that switches language or direction after first paint — set `lang` and `dir` in the server response, or hide the untranslated body until the strings are swapped, with a fail-safe; and web fonts swapping in — for a daily-use app, `font-display: optional` with the font preloaded (`performance.md`).
 - Themed browser surfaces: `::selection`, `accent-color` on native controls, `caret-color`, `scrollbar-color` where it helps, `text-underline-offset`, `color-scheme` and `theme-color`.
 - Tooltips on icon-only buttons show the name *and* the shortcut; every icon-only control has an accessible name.
 
