@@ -319,7 +319,7 @@ try {
       if (t.centred.length) W.push(`Centred text of 3+ lines: ${t.centred.slice(0, 4).map((m) => `\`${m.selector}\` (${m.lines} lines)`).join(', ')}`);
       if (t.justified.length) W.push(`Justified text: ${t.justified.map((m) => `\`${m.selector}\``).join(', ')}`);
       if (t.tightLeading.length) W.push(`Multi-line body text with line-height under 1.35: ${t.tightLeading.slice(0, 4).map((m) => `\`${m.selector}\` ${m.lineHeight}`).join(', ')}`);
-      if (t.smallText.length) W.push(`Text under 12px: ${t.smallText.slice(0, 5).map((m) => `\`${m.selector}\` ${m.px}px`).join(', ')}`);
+      if (t.smallText.length) W.push(`Text under 12px: ${t.smallText.slice(0, 5).map((m) => `\`${m.selector}\` ${m.px}px "${m.text}"`).join(', ')}`);
       if (t.caps.length) W.push(`Long uppercase runs (> 24 characters): ${t.caps.slice(0, 3).map((m) => `"${m.text}"`).join(', ')}`);
       const sys = inv.system;
       W.push(`System: ${sys.spacingDistinct} distinct spacing values (${sys.spacingOn4}% on a 4px grid); radii ${sys.radii.map((r) => `${r.radius}${r.radius === 'pill' ? '' : 'px'}×${r.count}`).join(', ')}; ${sys.shadowKinds} distinct shadows.`);
