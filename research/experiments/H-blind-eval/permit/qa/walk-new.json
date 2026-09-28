@@ -1,0 +1,12 @@
+{ "path": "/", "device": "phone", "states": [
+  { "name": "t1-zone-and-price-new-startpage", "each": true, "steps": [
+    { "wait": 400 },
+    { "swipe": { "at": [200, 600], "dx": 0, "dy": -600 } }, { "wait": 300 },
+    { "swipe": { "at": [200, 600], "dx": 0, "dy": -600 } }, { "wait": 300 }
+  ] },
+  { "name": "t1-zone-and-price-new-apply", "each": true, "steps": [
+    { "wait": 400 },
+    { "tap": "text=Start now" }, { "wait": 700 },
+    { "select": ["#street", "Mill Road"] }, { "wait": 300 },
+    { "tap": "text=Continue" }, { "wait": 400 }
+  ] } ] }

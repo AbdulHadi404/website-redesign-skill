@@ -1,0 +1,8 @@
+{ "updated": "2026-09-27",
+  "zones": [
+    { "code": "A", "name": "Old Harbour", "streets": ["Quay Street", "Rope Walk", "Anchor Lane", "Fish Row"], "hours": "Mon–Sat 8am–6pm", "prices": { "3": 35, "6": 60, "12": 110 } },
+    { "code": "B", "name": "Station Hill", "streets": ["Station Road", "Hill Terrace", "Victoria Place"], "hours": "Mon–Fri 9am–5pm", "prices": { "3": 30, "6": 52, "12": 95 } },
+    { "code": "C", "name": "Castle Green", "streets": ["Castle Street", "Green Lane", "Mill Road", "Tower View", "Church Walk"], "hours": "Every day 8am–8pm", "prices": { "3": 40, "6": 70, "12": 128 } },
+    { "code": "D", "name": "Northshore", "streets": ["Beach Road", "Dune Close", "Lighthouse Way"], "hours": "Apr–Sep, every day 10am–6pm", "prices": { "3": 20, "6": 34, "12": 60 } }
+  ],
+  "rules": { "max_permits_per_household": 2, "blue_badge_free": true, "proof": ["council tax bill", "tenancy agreement", "utility bill from the last 3 months"], "decision_days": 5 } }

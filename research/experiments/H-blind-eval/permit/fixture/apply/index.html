@@ -1,0 +1,28 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apply</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body>
+<div class="top"><img src="../assets/crest.svg" alt=""><span class="name">Harbourside Council</span></div>
+<div class="wrap">
+  <h1>Resident Parking Permit Application</h1>
+  <div id="errors"></div>
+  <p class="muted">Please complete all fields. Your session will expire after 10 minutes of inactivity.</p>
+  <form id="apply" novalidate>
+    <div class="row"><input name="full_name" placeholder="Full name"><input name="email" type="email" placeholder="Email"></div>
+    <div class="row"><input name="phone" placeholder="Phone"><input name="address_line1" placeholder="Address"></div>
+    <input name="postcode" placeholder="Postcode">
+    <select name="zone"><option value="">Select CPZ</option></select>
+    <table class="zones" id="zones"><thead><tr><th>CPZ</th><th>Name</th><th>Streets</th><th>Hours</th></tr></thead><tbody></tbody></table>
+    <div class="row"><input name="vehicle_reg" placeholder="VRM"><input name="vehicle_make" placeholder="Make"></div>
+    <select name="permit_length"><option value="">Duration</option><option value="3">3 months</option><option value="6">6 months</option><option value="12">12 months</option></select>
+    <input name="proof_of_address" type="file">
+    <label><input type="checkbox" name="blue_badge" style="width:auto"> Blue badge holder</label>
+    <label><input type="checkbox" name="consent" style="width:auto"> I agree to the T&Cs</label>
+    <div class="human"><span id="human"></span> I am not a robot</div>
+    <button class="btn" type="submit">Submit</button>
+    <p id="price" class="muted"></p>
+  </form>
+</div>
+<div class="footer">© 2026 Harbourside Council · Privacy · Cookies · Accessibility</div>
+<script src="../assets/site.js"></script>
+</body></html>

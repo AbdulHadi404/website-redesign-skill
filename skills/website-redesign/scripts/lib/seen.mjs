@@ -87,7 +87,8 @@ export async function seenTree(page) {
   try { snap = await page.locator('body').ariaSnapshot({ mode: 'ai', timeout: 8000 }); }
   catch { return (await page.locator('body').ariaSnapshot({ timeout: 5000 }).catch((e) => `# aria snapshot failed: ${e.message}`)) + '\n'; }
   const lines = snap.split('\n');
-  const refs = [...new Set(lines.flatMap((l) => [...l.matchAll(/\[ref=(e\d+)\]/g)].map((m) => m[1])))].slice(0, 2500);
+  // Refs gain a frame-generation prefix after a navigation (e3 on the first page, f1e3 after a link is followed).
+  const refs = [...new Set(lines.flatMap((l) => [...l.matchAll(/\[ref=([a-z]*\d*e\d+)\]/g)].map((m) => m[1])))].slice(0, 2500);
   // An older Playwright ignores mode: 'ai' and returns no refs: say so rather than implying everything is readable.
   if (!refs.length) return `# This Playwright cannot mark what is readable on screen (needs ai-mode snapshots); judge from the capture.\n${snap}\n`;
   const marks = new Map();
@@ -106,7 +107,7 @@ export async function seenTree(page) {
     while (stack.length && stack[stack.length - 1].indent >= indent) stack.pop();
     const inherited = stack.length ? stack[stack.length - 1].seen : '';
     const parentOwn = stack.length ? stack[stack.length - 1].own : '';
-    const ref = line.match(/\[ref=(e\d+)\]/)?.[1];
+    const ref = line.match(/\[ref=([a-z]*\d*e\d+)\]/)?.[1];
     // A container counts as seen while any real part of it is (its children carry their own marks); a leaf needs
     // most of itself on screen to be read.
     const m = ref && marks.get(ref);
@@ -114,7 +115,7 @@ export async function seenTree(page) {
     const limit = leaf ? 0.6 : 0.05;
     // Clipping outranks the viewport: a row below the fold scrolls into view, a column cut off by a card never does.
     const mark = !m ? parentOwn : m.covered ? m.covered : m.f >= limit ? '' : m.clip && m.sf < limit ? m.clip : m.view;
-    const clean = line.replace(/ \[ref=e\d+\]/g, '').replace(/ \[cursor=pointer\]/g, '');
+    const clean = line.replace(/ \[ref=[a-z]*\d*e\d+\]/g, '').replace(/ \[cursor=pointer\]/g, '');
     // A bare wrapper ("- generic:" with no name or text) adds depth, not information.
     // Kept when it carries a new mark, so its children need not repeat it.
     const drop = /^\s*- generic:?\s*$/.test(clean) && mark === inherited;

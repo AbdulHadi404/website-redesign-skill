@@ -199,6 +199,17 @@ const cases = [
       [/CLS 0\.1\d\d over 0\.1|CLS 0\.[2-9]\d* over 0\.1/.test(md), 'the late 300px insert is measured as CLS over 0.1'],
       [/TBT \d+ ms over 200 ms/.test(md), 'the 400 ms busy loop is measured as TBT over 200 ms'],
     ] },
+  { group: 'states', name: 'states.mjs --aria after a navigation (frame-prefixed refs)', run: async () => {
+      const spec = path.join(tmp, 'nav.json');
+      await (await import('node:fs/promises')).writeFile(spec, JSON.stringify({ path: '/nav-a.html', device: 'phone', states: [{ name: 'nav', steps: [{ tap: '#go' }, { wait: 300 }] }] }));
+      const r = await run('states.mjs', [spec, '--base', fx, '--out', `${tmp}/nav`, '--aria']);
+      return { ...r, tree: await readFile(`${tmp}/nav/nav-phone.aria.yml`, 'utf8').catch(() => '') };
+    },
+    check: ({ tree }) => [
+      [/Which street do you live on/.test(tree), 'the tree is of the page the tap navigated to'],
+      [!/cannot mark/.test(tree), 'marks are computed after a navigation'],
+      [/Contact us[^\n]*⟨below⟩|⟨below⟩[\s\S]*Contact us/.test(tree), 'content below the fold on the new page is marked'],
+    ] },
   { group: 'contrast', name: 'contrast.mjs', run: () => run('contrast.mjs', ['#767676', '#ffffff']),
     check: ({ out }) => [[/4\.54:1/.test(out), '#767676 on white = 4.54:1']] },
 ];
