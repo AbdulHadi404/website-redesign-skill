@@ -24,10 +24,20 @@
 | 8 | "Focusable but hidden from AT", plus partly covered focus, on "Menu", "Inspect", "Audit" and "Settings" | **Astro's dev toolbar**, injected by the dev server. It also floats over captures. | `open()` removes and hides known dev toolbars (Astro, Next, Nuxt, Vercel Live) and records which it found. Error overlays are left visible, because they are findings. |
 | 9 | "Looks like a heading": `6K`, `1.7K` | Stat numbers with K/M suffixes slipped past the numeric filter | The filter accepts K/M/B, ×, x, ~ and similar. |
 
+**`widgets.mjs` on AstroWind's own widgets** (header dropdown, FAQ `<details>`, copy button) — three more process errors, fixed:
+
+| # | Symptom | Cause | Fix |
+| --- | --- | --- | --- |
+| 10 | Native `<details>` FAQ: "Enter does not toggle the content" | In current Chromium the content of a *closed* `<details>` keeps its layout boxes (`::details-content` hides it with `content-visibility`), so `getClientRects()` says "visible" either way | Visibility by `checkVisibility()`; `<summary>` state from `details.open` |
+| 11 | "Visible message not in a live region" quoting half the page, then the logo, then a stat | The mutation recorder reported the text of whatever container changed; sticky-header scroll classes and reveal-animation inline styles change constantly | Silent messages are found by diffing the short texts visible just before and just after the action (trigger scrolled into view and settled first); the trigger's own relabelling ("Copy" → "Copied") is reported separately |
+| 12 | Copy button "does nothing, nothing announced" | Headless Chromium denies clipboard access, so the site's handler failed silently | Contexts get `clipboard-read`/`clipboard-write`; the button then announces "Copied" through its live region — PASS |
+| 13 | Header dropdown "Enter does nothing — falling back to click … toggles on click" | The menu opens on `:focus-within`/`:hover`: focusing it already opened it, and the "click" was really a hover | Detects open-on-focus and says so (keyboard-reachable; no state exposed; opens on every Tab) — the real failure, no `aria-expanded`, stays |
+
 **Real-site FAIL counts after the fixes:**
 
 - `a11y.mjs`: 5, down from 33.
 - `audit.mjs` on `/`: no axe contrast failures (29 before); no target or dot false positives.
+- `widgets.mjs`: 1 of 3 contracts fails, down from 3; the remaining failure is genuine.
 
 The remaining findings were checked and look genuine:
 

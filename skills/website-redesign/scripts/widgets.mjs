@@ -36,13 +36,15 @@ const RECORDER = () => {
       const region = el.closest(liveSel);
       const txt = (region || el).innerText?.trim();
       if (region && txt) window.__announced.push(txt);
-      else if (!region && txt && m.type === 'childList') {
-        const cs = getComputedStyle(el); // new text that looks like a toast/message but is silent
-        if (el.getBoundingClientRect().height > 0 && (cs.position === 'fixed' || cs.position === 'absolute' || /error|alert|toast|message|notice/i.test(el.className + el.id))) window.__silent.push(txt);
+      else if (!region && m.type === 'childList') {
+        // new text that looks like a toast/message but is silent — the added text only, never a whole container
+        const added = [...m.addedNodes].filter(n => n.nodeType === 3 || (n.nodeType === 1 && !/^(SCRIPT|STYLE|LINK|META|TEMPLATE)$/.test(n.tagName))).map(n => (n.nodeType === 1 ? n.innerText : n.nodeValue) || '').join(' ').trim();
+        const cs = getComputedStyle(el);
+        if (added && added.length <= 200 && el.getBoundingClientRect().height > 0 && (cs.position === 'fixed' || cs.position === 'absolute' || /error|alert|toast|message|notice/i.test(el.className + el.id))) window.__silent.push(added);
       }
-      if (m.type === 'attributes' && !region && m.target.nodeType === 1) {
-        const t = m.target; const cs = getComputedStyle(t);
-        if (t.innerText?.trim() && cs.display !== 'none' && cs.visibility !== 'hidden' && t.getBoundingClientRect().height > 0 && /(display|hidden|style|class)/.test(m.attributeName) && t.children.length < 5) window.__silent.push(t.innerText.trim());
+      if (m.type === 'attributes' && !region && m.target.nodeType === 1 && m.target !== document.body && m.target !== document.documentElement) {
+        const t = m.target; const cs = getComputedStyle(t); const tt = t.innerText?.trim() || '';
+        if (tt && tt.length <= 200 && cs.display !== 'none' && cs.visibility !== 'hidden' && t.getBoundingClientRect().height > 0 && (m.attributeName !== 'class' || /toast|message|alert|notice|error|snack|status|flash/i.test(t.className + t.id)) && t.children.length < 5) window.__silent.push(tt);
       }
     }
   }).observe(document.documentElement, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['style', 'class', 'hidden'] });
@@ -56,10 +58,11 @@ async function activate(page, sel, r, keys = ['Enter']) {
   await loc.waitFor({ state: 'attached', timeout: 3000 });
   const focusable = await loc.evaluate(el => { el.focus(); return document.activeElement === el; });
   if (!focusable) { r.fail('2.1.1', 'Trigger cannot receive keyboard focus'); await loc.click(); return 'click'; }
-  const before = await page.evaluate(() => document.documentElement.innerHTML.length + '|' + document.querySelectorAll('[open],[aria-expanded=true]').length + '|' + [...document.querySelectorAll('body *')].filter(e => e.getClientRects().length).length);
+  const sig = () => page.evaluate(() => { const all = [...document.querySelectorAll('body *')]; return document.documentElement.innerHTML.length + '|' + all.map((e, i) => (e.matches('[open],[aria-expanded=true]') ? i : '')).join('') + '|' + all.filter(e => (e.checkVisibility ? e.checkVisibility({ visibilityProperty: true }) : e.getClientRects().length)).length; });
+  const before = await sig();
   for (const k of keys) await page.keyboard.press(k);
   await page.waitForTimeout(350);
-  const after = await page.evaluate(() => document.documentElement.innerHTML.length + '|' + document.querySelectorAll('[open],[aria-expanded=true]').length + '|' + [...document.querySelectorAll('body *')].filter(e => e.getClientRects().length).length);
+  const after = await sig();
   if (before === after) { r.fail('2.1.1', `${keys.join('+')} on the focused trigger does nothing — falling back to click`); await loc.click(); await page.waitForTimeout(350); return 'click'; }
   return 'keyboard';
 }
@@ -142,13 +145,26 @@ const tests = {
   async disclosure(page, c) {
     const r = recorder('disclosure', c.button);
     const btn = page.locator(c.button).first();
-    const state = () => btn.evaluate(b => ({ exp: b.getAttribute('aria-expanded'), tag: b.tagName, role: b.getAttribute('role'), ctrl: b.getAttribute('aria-controls'), vis: (() => { const t = document.getElementById(b.getAttribute('aria-controls') || '') || b.nextElementSibling; return t ? t.getClientRects().length > 0 : null; })() }));
+    // Visibility by checkVisibility(): the content of a closed <details> keeps its layout boxes in current Chromium
+    // (::details-content hides it with content-visibility), so getClientRects() cannot tell open from closed.
+    const state = () => btn.evaluate(b => ({ exp: b.getAttribute('aria-expanded'), tag: b.tagName, role: b.getAttribute('role'), ctrl: b.getAttribute('aria-controls'),
+      vis: b.tagName === 'SUMMARY' ? b.parentElement.open : (() => { const t = document.getElementById(b.getAttribute('aria-controls') || '') || b.nextElementSibling; return t ? (t.checkVisibility ? t.checkVisibility({ visibilityProperty: true }) : t.getClientRects().length > 0) : null; })() }));
     const s0 = await state();
     s0.tag === 'BUTTON' || s0.role === 'button' || s0.tag === 'SUMMARY' ? r.ok('is a button') : r.fail('4.1.2', `Disclosure trigger is <${s0.tag.toLowerCase()}> without role=button`);
-    s0.exp !== null || s0.tag === 'SUMMARY' ? r.ok(`aria-expanded="${s0.exp}"`) : r.fail('4.1.2', 'No aria-expanded — screen readers cannot tell it is collapsed/expanded');
-    await activate(page, c.button, r, ['Enter']);
+    if (s0.tag === 'SUMMARY') r.ok('native <details>/<summary> — the browser exposes the expanded state');
+    else s0.exp !== null ? r.ok(`aria-expanded="${s0.exp}"`) : r.fail('4.1.2', 'No aria-expanded — screen readers cannot tell it is collapsed/expanded');
+    // Menus that open on :focus-within / :hover are keyboard-reachable but expose no state and open on every Tab past.
+    await btn.evaluate(b => b.focus()); await page.waitForTimeout(250);
+    const sf = await state();
+    if (sf.vis !== s0.vis) {
+      r.warnf('4.1.2', 'Content opens on focus (CSS :focus-within or :hover), not on activation — reachable by keyboard, but it opens on every Tab past and exposes no expanded state; use a button that toggles aria-expanded (APG disclosure navigation)');
+      return r;
+    }
+    await btn.evaluate(b => b.blur());
+    const how = await activate(page, c.button, r, ['Enter']);
     const s1 = await state();
-    s1.vis !== s0.vis ? r.ok('Enter toggles the content') : r.fail('2.1.1', 'Enter does not toggle the content');
+    if (how === 'keyboard') s1.vis !== s0.vis ? r.ok('Enter toggles the content') : r.fail('2.1.1', 'Enter does not toggle the content');
+    else s1.vis !== s0.vis ? r.ok('the content toggles on click (not by keyboard — see above)') : r.fail('2.1.1', 'The content does not toggle, by keyboard or click (hover-only?)');
     if (s0.exp !== null) s1.exp !== s0.exp ? r.ok(`aria-expanded now "${s1.exp}"`) : r.fail('4.1.2', 'aria-expanded does not change when toggled');
     await btn.evaluate(b => b.focus()); await page.keyboard.press('Space'); await page.waitForTimeout(150);
     const s2 = await state();
@@ -158,11 +174,33 @@ const tests = {
 
   async live(page, c) {
     const r = recorder('live', c.trigger);
+    const label = () => page.locator(c.trigger).first().evaluate(el => (el.innerText || el.getAttribute('aria-label') || '').trim()).catch(() => '');
+    const label0 = await label();
+    // What newly became visible is compared, not what mutated: animation libraries, sticky headers and scroll
+    // states rewrite classes and inline styles constantly. Scroll the trigger into view and let that settle first.
+    const texts = () => page.evaluate(() => {
+      const live = '[aria-live]:not([aria-live="off"]),[role=status],[role=alert],[role=log],output';
+      const out = [];
+      for (const el of document.body.querySelectorAll('*')) {
+        const own = [...el.childNodes].filter(n => n.nodeType === 3).map(n => n.nodeValue).join(' ').replace(/\s+/g, ' ').trim();
+        if (!own || own.length > 200 || el.closest(live) || !(el.checkVisibility ? el.checkVisibility({ visibilityProperty: true, opacityProperty: true }) : el.getClientRects().length)) continue;
+        out.push(own);
+      }
+      return out;
+    });
+    await page.locator(c.trigger).first().evaluate(el => el.scrollIntoView({ block: 'center', behavior: 'instant' })).catch(() => {});
+    await page.waitForTimeout(600);
+    const seen0 = new Set(await texts());
     await page.evaluate(() => { window.__announced = []; window.__silent = []; });
     await activate(page, c.trigger, r);
-    await page.waitForTimeout(1200);
-    const { announced, silent } = await page.evaluate(() => ({ announced: [...new Set(window.__announced)], silent: [...new Set(window.__silent)] }));
-    announced.length ? r.ok(`announced via live region: "${announced.join(' / ')}"`) : r.fail('4.1.3', `Nothing announced${silent.length ? `; visible message not in a live region: "${silent.join(' / ')}"` : ''}`);
+    await page.waitForTimeout(400);
+    const label1 = await label();
+    const appeared = (await texts()).filter(t => !seen0.has(t) && t !== label1);
+    await page.waitForTimeout(800);
+    const { announced } = await page.evaluate(() => ({ announced: [...new Set(window.__announced)] }));
+    const silent = [...new Set(appeared)].slice(0, 3);
+    const relabel = label1 && label1 !== label0 ? `; the trigger's own label changed ("${label0}" → "${label1}"), which screen readers do not reliably announce` : '';
+    announced.length ? r.ok(`announced via live region: "${announced.join(' / ')}"`) : r.fail('4.1.3', `Nothing announced${silent.length ? `; visible message not in a live region: "${silent.join(' / ')}"` : ''}${relabel}`);
     const regionsAtLoad = await page.evaluate(() => document.querySelectorAll('[aria-live]:not([aria-live="off"]),[role=status],[role=alert],[role=log]').length);
     r.ok(`${regionsAtLoad} live region(s) in the DOM`);
     return r;
@@ -220,7 +258,8 @@ const tests = {
 
 const t0 = performance.now();
 for (const c of contracts) {
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  // Clipboard permission: copy buttons otherwise fail silently in headless Chromium and look inert.
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, permissions: ['clipboard-read', 'clipboard-write'] });
   await ctx.addInitScript(RECORDER);
   const page = await ctx.newPage();
   await open(page, url);
