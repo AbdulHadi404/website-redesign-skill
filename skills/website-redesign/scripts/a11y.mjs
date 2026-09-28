@@ -224,7 +224,9 @@ async function newPage(opts = {}) {
 
   // ---------- 8. non-text contrast of form controls (1.4.11) ----------
   const weak = await page.evaluate(() => {
-    const parse = c => { const m = c.match(/rgba?\(([^)]+)\)/); if (!m) return null; const [r, g, b, a = 1] = m[1].split(/[ ,/]+/).filter(Boolean).map(Number); return { r, g, b, a }; };
+    // Any CSS colour syntax through a canvas: Tailwind 4 and shadcn compute to oklch(), which a rgb() regex misses.
+    const cx = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
+    const parse = c => { if (!c) return null; cx.clearRect(0, 0, 1, 1); cx.fillStyle = '#000'; cx.fillStyle = c; cx.fillRect(0, 0, 1, 1); const [r, g, b, a] = cx.getImageData(0, 0, 1, 1).data; return { r, g, b, a: a / 255 }; };
     const lum = ({ r, g, b }) => { const f = v => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
     const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
     const bgOf = el => { for (let n = el; n; n = n.parentElement) { const c = parse(getComputedStyle(n).backgroundColor); if (c && c.a > 0.5) return c; } return { r: 255, g: 255, b: 255, a: 1 }; };
@@ -324,6 +326,8 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
   for (let i = 0; i < limit; i++) {
     await page.keyboard.press('Tab');
     await page.waitForTimeout(60);
+    // Skip links that slide in and rings that fade in are measured where they end up, not mid-transition.
+    await page.evaluate(() => { for (const a of document.getAnimations()) { try { if (a.effect?.getComputedTiming?.().iterations !== Infinity) a.finish(); } catch { /* ignore */ } } });
     const info = await page.evaluate((describeSrc) => {
       const d = eval(describeSrc); let el = document.activeElement; while (el && el.shadowRoot && el.shadowRoot.activeElement) el = el.shadowRoot.activeElement;
       if (!el || el === document.body) return { body: true };
@@ -458,13 +462,15 @@ for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
       const cs = getComputedStyle(el); if (!/(hidden|clip)/.test(cs.overflow + cs.overflowX + cs.overflowY) && !(cs.textOverflow === 'ellipsis')) return false;
       if (!(el.innerText || '').trim() || el.getBoundingClientRect().width < 2) return false;
       return el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
-    }).map(el => d(el));
+    }).map(el => (getComputedStyle(el).textOverflow === 'ellipsis' ? '…' : '') + d(el));
   }, describe);
   const before = new Set(await clipped());
   await page.addStyleTag({ content: '*,*::before,*::after{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' });
   await page.waitForTimeout(200);
   const after = (await clipped()).filter(x => !before.has(x));
-  for (const c of after) add('FAIL', 'spacing', '1.4.12', 'Text clipped when WCAG text-spacing is applied (fixed height + overflow hidden?)', c);
+  for (const c of after) c.startsWith('…')
+    ? add('WARN', 'spacing', '1.4.12', 'Ellipsis truncation hides more text under WCAG text-spacing — confirm the full value is available (tooltip, detail view)', c.slice(1))
+    : add('FAIL', 'spacing', '1.4.12', 'Text clipped when WCAG text-spacing is applied (fixed height + overflow hidden?)', c);
   await page.screenshot({ path: path.join(outDir, 'text-spacing.png'), fullPage: true });
   await page.context().close();
 }
@@ -548,7 +554,13 @@ const order = { FAIL: 0, WARN: 1, INFO: 2 };
 findings.sort((a, b) => order[a.level] - order[b.level] || a.section.localeCompare(b.section));
 const count = l => findings.filter(f => f.level === l).length;
 console.log(`a11y-audit ${url}\n${count('FAIL')} FAIL, ${count('WARN')} WARN, ${count('INFO')} INFO in ${report.seconds}s — details ${path.join(outDir, 'audit.json')}\n`);
-for (const f of findings) console.log(`${f.level.padEnd(4)} ${f.section.padEnd(12)} ${f.sc.padEnd(12)} ${f.msg}${f.where ? `  ⟶ ${f.where}` : ''}`);
+// One line per distinct finding; repeats are counted, with the first three places (audit.json has every one).
+const groups = new Map();
+for (const f of findings) { const k = [f.level, f.section, f.sc, f.msg].join('|'); if (!groups.has(k)) groups.set(k, { ...f, wheres: [] }); if (f.where) groups.get(k).wheres.push(f.where); }
+for (const g of groups.values()) {
+  const n = g.wheres.length;
+  console.log(`${g.level.padEnd(4)} ${g.section.padEnd(12)} ${g.sc.padEnd(12)} ${g.msg}${n > 1 ? ` (×${n})` : ''}${n ? `  ⟶ ${g.wheres.slice(0, 3).join(' · ')}${n > 3 ? ' · …' : ''}` : ''}`);
+}
 console.log('\nTab order (role "name" ← element):'); (report.data.tabOrder || []).forEach((s, i) => console.log(`  ${String(i + 1).padStart(2)}. ${s}`));
 console.log('\nHeadings:', report.data.headings.map(h => `h${h.level} ${h.name || '(empty)'}`).join(' · '));
 console.log('Landmarks:', report.data.landmarks.map(l => l.role + (l.name ? ` "${l.name}"` : '')).join(' · ') || '(none)');
