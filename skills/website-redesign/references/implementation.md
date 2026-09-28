@@ -99,3 +99,19 @@ No JavaScript, a background tab, or a reduced-motion preference all render the f
 - **A drawn glyph component is `inline-block` (or `inline-flex`) with its own size.** A bare `<span>` with a width is ignored in a block context and its SVG fills the column.
 - **The reduced-motion block zeroes delays as well as durations.** `transition-delay: 0s !important` beside `transition-duration: 0.01ms !important`, or a settled state still arrives late.
 
+## Accessibility that the render does not show
+
+Found by an axe pass and a keyboard pass over two finished prototypes, after the visual QA had passed:
+
+- **A theme switch belongs in the header, on every page at every width — never only in the footer.** A control that changes the whole site's legibility has to be reachable before the visitor scrolls; the footer copy can stay as a labelled group.
+- **Drawn product fragments are `user-select: none`.** The film, the credential, the dashboard rows, the thread, the covers: they are illustrations captioned as invented, and a drag across the hero should not select the fake UI. Real controls (a form, an estimator) stay selectable.
+- **Accent text is measured on the darkest ground it lands on.** An orange that passes 4.5:1 on ivory fails on the alternate chapter one shade down; pick the token for the darker surface, not the hero.
+- **The focus ring passes 3:1 in every theme.** A light theme that reuses the dark theme's orange outline gives 2.8:1 on ivory; give the light theme its own outline colour.
+- **Form errors describe their field only while shown.** `aria-invalid` plus `aria-describedby` set when the error appears and removed when it clears; a permanently wired `aria-describedby` reads the error as a description of a valid field.
+- **A mobile sheet is a modal.** `role="dialog"`, `aria-modal`, and `inert` on `main` and `footer` while it is open, so tabbing cannot leave it.
+- **A live region announces the answer, not the panel.** `aria-live` on the total line of an estimator, never on the whole calculator.
+- **Decoration that loops stops within five seconds** (a breathing dot, a turning ring) or gets a pause control (a looping film). Reduced-motion is respected on top, not instead.
+- **Field boundaries at 3:1.** Hairline inputs on a sheet fail non-text contrast; use a dedicated field-line token.
+- **Buttons wrap below 380px.** A `nowrap` primary action with a long label is the usual 320px reflow failure.
+- **Heading order is per page, not per component.** A sidebar list of `h3`s under an `h1` with no `h2` is a break; the axe `heading-order` rule catches what the render cannot.
+

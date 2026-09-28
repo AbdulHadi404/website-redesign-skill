@@ -31,6 +31,12 @@ Exercise, not inspect:
 - `prefers-reduced-motion` disables decorative motion; nothing essential depends on animation.
 - Decorative SVGs and images marked `aria-hidden`; meaningful images have alt text.
 
+**Run an automated pass, not just a checklist.** Inject axe-core into a headless browser over every route, at desktop and phone width, in every theme the site has, and with the mobile menu and a desktop panel open; fix every `serious` and `critical` finding and read the `moderate` ones. The pass on the CleoHR prototypes found 138 contrast failures, a modal without a landmark and a heading-order break that two full visual QA passes had not.
+
+- A theme switch is reachable in the header on every page, not only in the footer.
+- Illustrative product fragments are not selectable; real controls are.
+- No viewport-wide wordmark or mark in the footer.
+
 WCAG 2.2 additions to check explicitly: target size ≥ 24 × 24 CSS px (2.5.8); focus never fully obscured by sticky bars or overlays (2.4.11); focus ring ≥ 2 px and 3:1 (2.4.13, aim for it); no drag-only interactions (2.5.7); help in the same place on every page (3.2.6); nothing asked twice in one process (3.3.7); no puzzle to sign in (3.3.8).
 
 ## Performance
