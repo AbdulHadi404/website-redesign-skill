@@ -115,7 +115,17 @@ async function newPage(opts = {}) {
   const links = [];
   const headings = [], landmarks = [];
   const landmarkRoles = new Set(['banner', 'navigation', 'main', 'contentinfo', 'complementary', 'search', 'region', 'form']);
-  for (const n of nodes) {
+  // getFullAXTree's flat list is not in document order: walk the tree from the root so headings list as they read.
+  const byId = new Map(nodes.map(n => [n.nodeId, n]));
+  const ordered = [], seenIds = new Set(), stack = [nodes.find(n => !n.parentId) || nodes[0]];
+  while (stack.length) {
+    const n = stack.pop(); if (!n || seenIds.has(n.nodeId)) continue;
+    seenIds.add(n.nodeId); ordered.push(n);
+    const kids = (n.childIds || []).map(id => byId.get(id)).filter(Boolean);
+    for (let i = kids.length - 1; i >= 0; i--) stack.push(kids[i]);
+  }
+  for (const n of nodes) if (!seenIds.has(n.nodeId)) ordered.push(n);
+  for (const n of ordered) {
     if (n.ignored) continue;
     const role = n.role?.value, name = (n.name?.value || '').trim();
     const src = nameSource(n);
@@ -332,7 +342,9 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
       const d = eval(describeSrc); let el = document.activeElement; while (el && el.shadowRoot && el.shadowRoot.activeElement) el = el.shadowRoot.activeElement;
       if (!el || el === document.body) return { body: true };
       const r = el.getBoundingClientRect();
-      const pts = [[r.left + r.width / 2, r.top + r.height / 2], [r.left + 2, r.top + 2], [r.right - 2, r.top + 2], [r.left + 2, r.bottom - 2], [r.right - 2, r.bottom - 2]];
+      // Sample inside the box, not at its corners: rounded corners are outside the hit-test shape.
+      const at = (fx, fy) => [r.left + r.width * fx, r.top + r.height * fy];
+      const pts = [at(0.5, 0.5), at(0.2, 0.25), at(0.8, 0.25), at(0.2, 0.75), at(0.8, 0.75)];
       let covered = 0, offscreen = 0;
       const root = el.getRootNode(); // works inside shadow DOM too
       const inside = (a, b) => { for (let n = b; n; n = n.parentNode || n.host) if (n === a) return true; return false; };
@@ -406,7 +418,7 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
     const r = await page.evaluate((describeSrc) => {
       let el = document.activeElement; while (el && el.shadowRoot && el.shadowRoot.activeElement) el = el.shadowRoot.activeElement; if (!el || el === document.body) return null; const d = eval(describeSrc);
       const b = el.getBoundingClientRect(); if (!b.width || !b.height) return null;
-      const pts = [[b.left + b.width / 2, b.top + b.height / 2], [b.left + 2, b.top + 2], [b.right - 2, b.bottom - 2]];
+      const pts = [[b.left + b.width / 2, b.top + b.height / 2], [b.left + b.width * 0.2, b.top + b.height * 0.25], [b.left + b.width * 0.8, b.top + b.height * 0.75]];
       const root = el.getRootNode(); const inside = (a, b) => { for (let n = b; n; n = n.parentNode || n.host) if (n === a) return true; return false; };
       const cov = pts.filter(([x, y]) => { const t = (root.elementFromPoint ? root : document).elementFromPoint(x, y); return t && t !== el && !inside(el, t) && !inside(t, el); }).length;
       return { cov, where: d(el) };

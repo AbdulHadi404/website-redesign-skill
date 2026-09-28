@@ -170,7 +170,23 @@ export async function retrying(page, fn, tries = 4) {
 }
 
 export async function settle(page, opts = {}) {
-  return retrying(page, () => settleOnce(page, opts));
+  // With JavaScript disabled, timers inside the page never fire: scroll and wait from Node instead.
+  if (opts.js === false) return settleNoJs(page, opts);
+  // A node-side deadline, so nothing inside the page can hang a run.
+  let timer;
+  const deadline = new Promise((resolve) => { timer = setTimeout(() => resolve('timeout'), opts.timeoutMs ?? 45000); });
+  const r = await Promise.race([retrying(page, () => settleOnce(page, opts)), deadline]);
+  clearTimeout(timer);
+  if (r === 'timeout') console.error(`  ⚠ settle timed out on ${page.url()} — capturing as is`);
+}
+
+async function settleNoJs(page, { settleMs = 600 } = {}) {
+  await page.waitForLoadState('load').catch(() => {});
+  const h = await page.evaluate(() => document.documentElement.scrollHeight).catch(() => 0);
+  const vh = page.viewportSize()?.height || 800;
+  for (let y = 0; y < h; y += Math.floor(vh * 0.8)) { await page.mouse.wheel(0, Math.floor(vh * 0.8)); await page.waitForTimeout(80); }
+  await page.mouse.wheel(0, -h - vh);
+  await page.waitForTimeout(settleMs);
 }
 
 async function settleOnce(page, { settleMs = 600 } = {}) {
