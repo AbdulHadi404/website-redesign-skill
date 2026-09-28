@@ -51,17 +51,17 @@ For each route write: category, **frequency** (once · occasional · weekly · d
 | **Redesign** | the visual system: type, colour roles, composition, imagery, components' look, motion | information architecture, flows, facts, routes, contracts | "make it look premium / like a real studio did it", "rebrand the site", "it looks generic / AI-made" |
 | **Rethink** | structure: IA, navigation, flows, page inventory, plus the system | facts, routes (or redirects), contracts, data | "nobody finds anything", "the onboarding loses people", "we're repositioning" |
 
-A first site (greenfield) runs as **rethink** with no baseline, and the brief says so. What the customer meets today — the social profile, a competitor's template, a PDF menu — stands in for "the old site", and the five first-notice things come from it and from the category template (`discovery.md`).
+A first site (greenfield) runs as **rethink** with no baseline, and the brief says so. What the customer meets today — the social profile, a competitor's template, a PDF menu — stands in for "the old site", and the five first-notice things come from it and from the category template (`discovery.md`); the five-things and keep < replace + create rules below apply to it as to any expressive redesign.
 
 The user's words set the starting point; the audit can argue for more or less. Say so when it does ("you asked for a visual redesign; the audit shows the checkout's problems are structural"), and let the user decide if the scope grows. Intensity is per route too: a marketing-site redesign often travels with a refine of the app it links to.
 
 **What the classification switches on or off**
 
-| Rule | Expressive + redesign | Productive (any intensity) |
+| Rule | Expressive, redesign or rethink (a first site included) | Productive (any intensity) |
 | --- | --- | --- |
-| Five first-notice things must change; keep < replace + create | yes | no — keep what users have learned unless evidence says it fails |
+| Five first-notice things must change, except a documented brand asset kept on purpose and named with its reason (`art-direction.md` §4–§5); keep < replace + create | yes | no — keep what users have learned unless evidence says it fails |
 | Hero concept, chapters, varied composition per section | yes | no — repeat the right layout; one layout family per task type |
-| Motion | two or three concept moves + quiet reveals | only to explain change; nothing on keyboard actions or anything done tens of times a day |
+| Motion | two or three concept moves + quiet reveals | only to explain change; nothing on keyboard actions or anything done 100+ times a day; on what is done tens of times a day, ≤ 150 ms colour or opacity at most (`motion.md` §2) |
 | Novelty | spent in one place | near zero; brand lives in type, colour roles, tone, empty states and rare moments |
 | Density | low, generous | medium to very high; density modes where users differ |
 | Success measured by | memorability, clarity in five seconds, conversion, credibility | task success, time, errors, learnability, accessibility |

@@ -27,7 +27,7 @@ Goal: the redesign, built in the existing stack, with functionality untouched an
 - Alternate surfaces so chapters are visible from a distance.
 - Prefer rules, columns and whitespace to boxes. A list renders as a list, a table as a table.
 - One primary action, repeated; secondary actions as text links.
-- Headlines on a real scale, wrapped deliberately (`max-width` in `ch`, `text-wrap: balance`), emphasis by the type, not by badges. Body at 45–75 characters, never centred in long runs.
+- Headlines on a real scale, wrapped deliberately (`max-width` in `ch`, `text-wrap: balance`), emphasis by the type, not by badges. Body at 60–70 characters and never over 75 (`design-theory.md` C1), never centred in long runs.
 - Text on its own ground, always (`imagery.md`).
 
 On **productive** surfaces the rule inverts: one layout per kind of task, applied consistently; the user's content gets the width; chrome recedes (`app-ui.md`).
@@ -43,7 +43,7 @@ On **productive** surfaces the rule inverts: one layout per kind of task, applie
 
 ## Interaction
 
-`ui-ux.md` and `app-ui.md` govern everything a visitor touches: one primary action per view; targets ≥ 44 px on touch (never < 24); forms single-column, labels above, validated on submit then live, an error summary; every component's applicable states designed; feedback within 100 ms; motion only to explain change on productive surfaces; icons with visible labels; navigation with a labelled mobile menu; nothing shaped like an ad; no dark patterns.
+`ui-ux.md` and `app-ui.md` govern everything a visitor touches: one primary action per view; targets ≥ 44 px on touch (never < 24); forms single-column, labels above, validated on submit then live, an error summary at three or more errors; every component's applicable states designed; feedback within 100 ms; motion only to explain change on productive surfaces; icons with visible labels; navigation with a labelled mobile menu; nothing shaped like an ad; no dark patterns.
 
 ## Engineering discipline
 

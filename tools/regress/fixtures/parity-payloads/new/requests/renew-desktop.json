@@ -1,0 +1,20 @@
+{
+ "state": "renew",
+ "device": "desktop",
+ "label": null,
+ "base": "http://localhost:5843",
+ "requests": [
+  {
+   "method": "PUT",
+   "url": "http://localhost:5843/api/renew",
+   "contentType": "application/json",
+   "format": "json",
+   "body": {
+    "permit": "P-1042"
+   },
+   "raw": "{\"permit\":\"P-1042\"}",
+   "bytes": 19,
+   "sha256": "6ced921905a2d71c3978fea1885bae763b9743544245cdf862b4c5d24a15adb8"
+  }
+ ]
+}

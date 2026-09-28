@@ -1,0 +1,18 @@
+/* Token source: the ONLY file where raw values are allowed (excluded from the lint by config). */
+:root {
+  --color-text: #1c1d21;
+  --color-muted: #5b5d66;
+  --color-surface: #f6f6f7;
+  --color-border: #d9d9de;
+  --accent: #1a3cf2;
+  --on-accent: #ffffff;
+  --focus: #1a3cf2;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --radius-2: 6px;
+  --shadow-2: 0 1px 2px rgb(0 0 0 / 0.08), 0 4px 12px rgb(0 0 0 / 0.08);
+  --text-body: 14px;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}

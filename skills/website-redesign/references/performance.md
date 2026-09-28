@@ -11,7 +11,7 @@ Core Web Vitals at the 75th percentile, phone and desktop separately: **LCP ≤ 
 | JavaScript, initial | **≤ 100 KB** (islands only; 0 for static pages) | ≤ 200 KB | **≤ 300 KB** | chrome and controls as an app; the engine and scene load late, after a poster, and are not counted against the initial budget of the marketing page that links here (that page stays within its own column) |
 | CSS | ≤ 50 KB | ≤ 75 KB | ≤ 100 KB | as an app |
 | Fonts | ≤ 2 files preloaded, ≤ 100 KB WOFF2 in total | same | same (a system UI font is a valid choice) | same |
-| LCP image | ≤ 150–250 KB at the rendered width, AVIF | ≤ 200 KB | usually text | the poster: a real render in the first frame's framing, AVIF, ≤ 150–250 KB as on a marketing page (`motion.md` §9) |
+| LCP image | **≤ 200 KB** at the rendered width, AVIF | same | usually text | the poster: a real render in the first frame's framing, AVIF, ≤ 200 KB as on a marketing page (`motion.md` §9) |
 | Images in the first viewport | ≤ 300 KB | ≤ 400 KB | — | ≤ 300 KB, the poster included |
 | Third parties on the critical path | 1–2 | ≤ 3 | ≤ 2 | as an app |
 | DOM in an interactive view | — | ≤ ~1,500 elements on a listing before virtualising | virtualise or `content-visibility` beyond ~2–3k rows | — |
@@ -26,7 +26,7 @@ Write the budget into `DESIGN.md`; the redesign must not be slower than the audi
 
 | Decision | Hurts | Mitigation |
 | --- | --- | --- |
-| Full-bleed photo hero | LCP (and CLS if unsized) | `<picture>` AVIF with `srcset`/`sizes`, `fetchpriority="high"`, width/height, never lazy, ≤ 200 KB |
+| Full-bleed photo hero | LCP (and CLS if unsized) | `<picture>` AVIF with `srcset`/`sizes`, `fetchpriority="high"`, width/height, never lazy, within the LCP-image budget (§1) |
 | Hero carousel | LCP (JS-rendered first slide), INP, CLS | a static first slide in the HTML, no autoplay — or no carousel |
 | Hero video | LCP (the poster is the candidate) | an optimised poster; `preload="none"`; a click-to-play facade |
 | Display web font on a text hero | LCP, CLS (swap) | preload one WOFF2; fallback metrics computed from the *actual* fallback file, or `font-display: optional` |

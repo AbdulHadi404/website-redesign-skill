@@ -25,7 +25,7 @@ One line per point: **objective → element → effect → why** (principle or e
 | 2 | Can each top task be done from this screen with obvious next steps, on a phone and by keyboard? | all | | | |
 | 3 | **Swap test:** replace the company and product names — would the page still fit the nearest competitor? (A yes here caps the whole critique.) On productive routes, ask it of the brand layer only (type, colour roles, marks, tone): a familiar interaction model is often right. | all | | | |
 | 4 | Is anything reading as generated — the model's prior, the SaaS kit, the tells in `anti-patterns.md`? Every `audit.mjs` signal fixed or justified in `DESIGN.md`? | all | | | |
-| 5 | Would a stranger call before/after two different companies' work? Are the five first-notice things all changed? | expressive + redesign | | | |
+| 5 | Would a stranger call before/after two different companies' work? Has every first-notice thing changed, except a brand asset `DESIGN.md` names as kept, with its reason (`art-direction.md` §4–§5)? | expressive redesign or rethink | | | |
 | 6 | Is the first viewport memorable without reading the copy? Does the hero pass the headline test, with the action continuing its sentence? | expressive | | | |
 | 7 | Is the typography distinctive where it should be and quiet where it should be, with a real scale that is actually used? | all | | | |
 | 8 | Rhythm: no two adjacent chapters share a composition (expressive) / one layout per kind of task, applied consistently (productive)? | all | | | |
@@ -38,7 +38,7 @@ One line per point: **objective → element → effect → why** (principle or e
 | 15 | One primary action per view, one colour everywhere; selected ≠ accent? | all | | | |
 | 16 | Every widget's applicable states designed *and rendered* — loading, empty, error, disabled/read-only, long content, 0/1/many (`app-ui.md` state matrix)? | all with widgets | | | |
 | 17 | Colour budget per the named strategy; every text pair ≥ 4.5:1 (3:1 large) on its real ground; no meaning by colour alone? | all | | | |
-| 18 | Mobile designed, not squeezed: stack order, sizes, targets ≥ 44 px for primary actions, navigation transformed, tables handled (`responsive.md`)? | all | | | |
+| 18 | Mobile designed, not squeezed: stack order, sizes, every target ≥ 44 px on coarse pointers (24 px floor everywhere), navigation transformed, tables handled (`responsive.md`)? | all | | | |
 | 19 | Accessibility pass done — keyboard walkthrough, visible focus never hidden, 200%/400% zoom reflow, screen-reader names, forced colours, reduced motion (`accessibility.md`)? | all | | | |
 | 20 | Performance within budget — LCP element eager and sized, fonts subset, no layout shift, JS limited to what routes need (`performance.md`)? | all | | | |
 | 21 | Copy short enough to be read; no happy talk, no clichés, product UI written as product UI; one label per intent? | all | | | |
@@ -47,6 +47,7 @@ One line per point: **objective → element → effect → why** (principle or e
 | 24 | **Images tell the truth:** does any image contradict the copy beside it ("each tile slightly different" over identical repeats), or show the product altered — faded, filtered, idealised — so a buyer would be misled? | where imagery | | | |
 | 25 | **Fold at 1280 × 800:** on the busiest productive screen (`capture.mjs --widths 1280 --height 800`), are the first rows of the main object visible without scrolling, and is the page header one band (72–120 px)? | productive | | | |
 | 26 | **Seam test** (a marketing site exists): moving from the site into the product, is the house recognisable (mark, colour, voice) and the product calmer, denser and faster than the site? | productive | | | |
+| 27 | **Quality bar:** does the experience meet the experiential quality bar in `DESIGN.md`, judged from captures and filmstrips taken on a real GPU (`capture.mjs --gpu`; `visual-qa.md` "3D and WebGL experiences", `motion.md` §7), with the measured frame rate and the renderer stated? Its chrome and controls answer the productive rows. | signature | | | |
 
 ## Task walkthroughs (productive routes)
 

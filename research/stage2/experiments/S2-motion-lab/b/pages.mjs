@@ -26,6 +26,7 @@ export const BODY = {
   'lottie-svg': { body: '<div id="stage" style="width:300px;height:150px"></div>', css: '' },
   'lottie-light': { body: '<div id="stage" style="width:300px;height:150px"></div>', css: '' },
   dotlottie: { body: '<canvas id="c" style="width:300px;height:150px"></canvas>', css: '' },
+  'dotlottie-worker': { body: '<canvas id="c" style="width:300px;height:150px"></canvas>', css: '' },
   'css-svg': { body: `<button id="toggle" role="switch" aria-checked="false" aria-label="Dark mode"><svg viewBox="0 0 300 150" aria-hidden="true"><rect class="track" x="0" y="0" width="300" height="150" rx="75"/><circle class="knob" cx="75" cy="75" r="56"/></svg></button>`, css: CSS_TOGGLE },
   sprite: { body: '<button id="toggle" role="switch" aria-checked="false" aria-label="Dark mode"></button>', css: SPRITE },
 };

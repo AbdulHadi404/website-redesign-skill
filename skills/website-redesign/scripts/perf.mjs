@@ -13,10 +13,10 @@
  * Flags (⚠) against the "good" thresholds: LCP ≤ 2.5 s, CLS ≤ 0.1, TBT ≤ 200 ms, and a page that answered with an
  * HTTP error; with --before, any page that got slower or shifts more.
  * Notes (◇, questions and caveats for the report, not failures):
- *   - requests that failed here, on either build: fonts (files, and the stylesheets and kits of font services), stylesheets,
- *     scripts, images, media, frames and data requests (cancellations, beacons and prefetches are left out). A page
- *     measured without them is lighter and faster than it is in production. Network, TLS, DNS and proxy errors are
- *     this machine's; an HTTP error or a browser block may be the site's own, so it is worded as a possibility.
+ *   - requests that failed here, on either build: fonts (files, and the stylesheets and kits of font services),
+ *     stylesheets, scripts, images, media, frames and data requests (cancellations, beacons and prefetches are left
+ *     out). A page measured without them is lighter and faster than it is in production. Network, TLS, DNS and proxy
+ *     errors are this machine's; an HTTP error or a browser block may be the site's own, so it is worded as a possibility.
  *     With --before, the old pages are the "broken baseline"; the new build's are named too, with or without --before.
  *   - with --before, transfer growth of more than 50 KB, compared gzip-equivalent (text a server sent uncompressed is
  *     counted at its gzip size, since a production host compresses it), by type: what does it buy? And a note when

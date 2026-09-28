@@ -2,9 +2,13 @@
   "name": "s6-interactive-experiences-lab",
   "private": true,
   "type": "module",
-  "description": "Stage-2 stream S6: accessible canvas toy (4 variants), sound-library payloads, browser-compat queries. Run: npm install && node run.mjs",
+  "description": "Stage-2 stream S6: an accessible drag-and-drop canvas toy in six variants (canvas only, focusable proxies, form alternative, hybrid, PixiJS AccessibilitySystem defaults and enabled), UI-sound payloads and browser-compat rows, and facts read from open-source web games. Run: npm install && sh fetch-sources.sh && node run.mjs",
   "scripts": {
-    "start": "node run.mjs"
+    "start": "node run.mjs",
+    "toy": "node run-toy.mjs",
+    "audio": "node run-audio.mjs",
+    "sources": "node run-sources.mjs",
+    "fetch": "sh fetch-sources.sh"
   },
   "dependencies": {
     "@mdn/browser-compat-data": "8.1.3",

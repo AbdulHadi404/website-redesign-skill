@@ -1,0 +1,10 @@
+[
+ {
+  "type": "tabs",
+  "tablist": "#tabs-aware"
+ },
+ {
+  "type": "tabs",
+  "tablist": "#tabs-naive"
+ }
+]

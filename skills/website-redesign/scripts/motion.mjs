@@ -5,7 +5,8 @@
  * checks a rendered page against a machine-checkable motion spec (motion.md §2, "The motion spec") and audits
  * the motion it finds without one.
  *
- *   node motion.mjs <url> [--spec DESIGN.md|motion.json] [--out motion-report] [--device desktop|phone]
+ *   node motion.mjs <url> | --base http://localhost:3000 --path /pricing
+ *                   [--spec DESIGN.md|motion.json] [--out motion-report] [--device desktop|phone]
  *                   [--filmstrip all|none|id,id] [--times 0,50,100,150,200,300,450,700] [--jpeg]
  *                   [--no-audit] [--max 60] [--strict]
  *
@@ -45,10 +46,10 @@
  */
 import { writeFile, readFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
-import { parseArgs, asList, launch, open } from './lib/env.mjs';
+import { parseArgs, asList, launch, open, urlFor } from './lib/env.mjs';
 
 const a = parseArgs();
-const url = a._[0] || a.url;
+const url = a._[0] || a.url || (a.base && a.base !== true ? urlFor(String(a.base), String(a.path && a.path !== true ? a.path : '/')) : null);
 if (!url || url === true) {
   console.error('Usage: node motion.mjs <url> [--spec DESIGN.md|motion.json] [--out motion-report] [--device desktop|phone] [--filmstrip all|none|id,id] [--times 0,50,100,150,200,300,450,700] [--jpeg] [--no-audit] [--max 60] [--strict]');
   process.exit(2);
@@ -200,12 +201,13 @@ function pageHelpers() {
   const readVT = () => {
     const vt = document.getAnimations().filter((x) => (x.effect?.pseudoElement || '').startsWith('::view-transition'));
     if (!vt.length) return null;
-    let move = 0, fade = 0;
-    for (const x of vt) { const cs = getComputedStyle(document.documentElement, x.effect.pseudoElement); const t = cs.transform;
-      if (t && t !== 'none') { const q = new DOMMatrixReadOnly(t); move += Math.abs(q.m41) + Math.abs(q.m42) + Math.abs(q.m11 - 1) * 100; }
-      if (cs.translate && cs.translate !== 'none') move += cs.translate.split(' ').reduce((s, v) => s + Math.abs(num(v)), 0);
-      fade += +cs.opacity; }
-    return { n: vt.length, move: +move.toFixed(1), fade: +fade.toFixed(3) };
+    // one entry per pseudo: its position/scale and its opacity (sums would hide a symmetric slide or crossfade)
+    const move = [], fade = [];
+    for (const pe of [...new Set(vt.map((x) => x.effect.pseudoElement))].sort()) { const cs = getComputedStyle(document.documentElement, pe); const t = cs.transform;
+      let m = [0, 0, 1]; if (t && t !== 'none') { const q = new DOMMatrixReadOnly(t); m = [q.m41, q.m42, Math.hypot(q.m11, q.m12)]; }
+      if (cs.translate && cs.translate !== 'none') { const tr = cs.translate.split(' ').map(num); m[0] += tr[0] || 0; m[1] += tr[1] || 0; }
+      move.push(m.map((x) => x.toFixed(1)).join(',')); fade.push((+cs.opacity).toFixed(2)); }
+    return { n: vt.length, move: move.join(' '), fade: fade.join(' ') };
   };
   const fingerprint = (el) => {
     const f = (e, pseudo) => { const cs = getComputedStyle(e, pseudo); if (pseudo && (cs.content === 'none' || cs.content === 'normal')) return '';
@@ -303,59 +305,76 @@ function samplerCollect() {
 const CH = { tx: 40, ty: 40, sx: 0.08, sy: 0.08, rot: 20, op: 1, ow: 60, oh: 60, ol: 40, ot: 40 }; // normalising scales per channel
 const MOVE_CH = ['tx', 'ty', 'sx', 'sy', 'rot', 'ol', 'ot'];
 const SIZE_CH = ['ow', 'oh'];
-const STR_CH = ['color', 'bg', 'shadow', 'filter', 'clip', 'outline', 'text'];
-const EPS = { tx: 0.6, ty: 0.6, sx: 0.004, sy: 0.004, rot: 0.3, op: 0.01, ow: 1, oh: 1, ol: 1, ot: 1 };
+const STR_CH = ['color', 'bg', 'shadow', 'filter', 'clip', 'outline', 'text', 'vis'];
+const EPS = { tx: 0.15, ty: 0.15, sx: 0.001, sy: 0.001, rot: 0.1, op: 0.004, ow: 0.5, oh: 0.5, ol: 0.5, ot: 0.5, num: 1e-9 };
+const numOf = (t) => { const d = String(t ?? '').replace(/[^\d.-]/g, ''); return /\d/.test(d) ? parseFloat(d) : null; };
 
-/** For one target over the sampled frames: which channels changed, over how many frames, from when to when. */
+/** For one target over the sampled frames: which channels changed, over how many frames, from when to when.
+ *  The frame just before tFrom is included, so the first change after the trigger counts. */
 function channelStats(frames, idx, tFrom) {
-  const F = frames.filter((f) => f.t >= tFrom - 1 && f.v[idx]);
+  const all = frames.filter((f) => f.v[idx]);
+  const k = Math.max(0, all.findIndex((f) => f.t >= tFrom - 1) - 1);
+  const F = all.findIndex((f) => f.t >= tFrom - 1) < 0 ? [] : all.slice(k);
   if (F.length < 2) return null;
   const out = {};
-  for (const ch of [...Object.keys(CH), ...STR_CH]) {
-    const vals = F.map((f) => f.v[idx][ch]);
-    let changes = 0, first = null, last = null;
+  for (const ch of [...Object.keys(CH), ...STR_CH, 'num']) {
+    const vals = F.map((f) => (ch === 'num' ? numOf(f.v[idx].text) : f.v[idx][ch]));
+    if (ch === 'num' && vals.some((x) => x == null)) continue;
+    let changes = 0, first = null, last = null, firstI = null;
     for (let i = 1; i < vals.length; i++) {
       const diff = typeof vals[i] === 'number' ? Math.abs(vals[i] - vals[i - 1]) > EPS[ch] : vals[i] !== vals[i - 1];
-      if (diff) { changes++; first ??= F[i].t; last = F[i].t; }
+      if (diff) { changes++; if (first == null) { first = F[i].t; firstI = i; } last = F[i].t; }
     }
     if (!changes) continue;
-    const distinct = new Set(vals.map((x) => (typeof x === 'number' ? x.toFixed(2) : x))).size;
-    out[ch] = { changes, distinct, first, last, from: vals[0], to: vals.at(-1), range: typeof vals[0] === 'number' ? Math.max(...vals) - Math.min(...vals) : null,
-      firstFrameBefore: F[Math.max(0, F.findIndex((f) => f.t === first) - 1)].t };
+    out[ch] = { changes, first, last, from: vals[0], to: vals.at(-1), range: typeof vals[0] === 'number' ? Math.max(...vals) - Math.min(...vals) : null, firstFrameBefore: F[firstI - 1].t };
   }
+  // a changing number reflows its own box: width/height changes that come with text changes are not layout animation
+  if (out.text) { delete out.ow; delete out.oh; delete out.ol; }
   return out;
 }
 /** animates: changed over ≥ 3 frames; instant: changed in 1–2 steps; none. */
 function classify(stats) {
-  if (!stats || !Object.keys(stats).length) return { state: 'none', moves: false, fades: false, layout: false };
+  if (!stats || !Object.keys(stats).length) return { state: 'none', moves: false, fades: false, layout: false, jumps: [] };
   const anim = (ch) => stats[ch] && stats[ch].changes >= 3;
   const moves = MOVE_CH.some(anim) || SIZE_CH.some(anim);
   const fades = anim('op') || ['color', 'bg', 'shadow', 'filter', 'outline'].some(anim) || anim('clip') || anim('text');
   const any = Object.values(stats).some((s) => s.changes >= 3);
-  return { state: any ? 'animates' : 'instant', moves, fades, layout: SIZE_CH.some(anim) || (anim('ol') || anim('ot')) };
+  const jumps = [...SIZE_CH, 'ol', 'ot'].filter((ch) => stats[ch] && stats[ch].changes < 3);
+  return { state: any ? 'animates' : 'instant', moves, fades, layout: SIZE_CH.some(anim) || (anim('ol') || anim('ot')), jumps };
 }
 function dominant(stats) {
   let best = null, score = 0;
   for (const [ch, s] of Object.entries(stats || {})) if (CH[ch] && s.range != null && s.changes >= 3) { const k = s.range / CH[ch]; if (k > score) { score = k; best = ch; } }
+  if (!best && stats?.num && stats.num.changes >= 3) best = 'num'; // a counting number is the motion when nothing else moves
   return best;
 }
-/** Fit the sampled progress curve of one channel against candidate easings; lower RMS is better. */
+/** Fit easing and duration together to one channel's samples: for each candidate easing, the duration (and a
+ *  sub-frame start offset) that minimises the RMS between the eased progress and the sampled progress, including
+ *  the samples after the end (which must sit at 1). A decelerating tail changes less than a pixel per frame, so the
+ *  "last visible change" undercounts a sampled duration; the fit does not. */
 function fitEasing(frames, idx, ch, candidates) {
-  const F = frames.filter((f) => f.v[idx] && f.v[idx][ch] != null);
-  const vals = F.map((f) => f.v[idx][ch]);
-  let i0 = vals.findIndex((v, i) => i > 0 && Math.abs(v - vals[i - 1]) > EPS[ch]) - 1;
+  const F = frames.filter((f) => f.v[idx] && (ch === 'num' ? numOf(f.v[idx].text) != null : f.v[idx][ch] != null));
+  const vals = F.map((f) => (ch === 'num' ? numOf(f.v[idx].text) : f.v[idx][ch]));
+  const i0 = vals.findIndex((v, i) => i > 0 && Math.abs(v - vals[i - 1]) > EPS[ch]) - 1;
   if (i0 < 0) return null;
   const v0 = vals[i0], v1 = vals.at(-1);
   let i1 = vals.length - 1; while (i1 > i0 && Math.abs(vals[i1 - 1] - v1) <= EPS[ch]) i1--;
   if (i1 - i0 < 4 || Math.abs(v1 - v0) < EPS[ch] * 4) return null;
-  // the change began somewhere between frame i0 and i0+1: take the midpoint, and end at i1
-  const tA = (F[i0].t + F[i0 + 1].t) / 2 - (F[i0 + 1].t - F[i0].t) / 2, tB = F[i1].t;
-  const pts = []; for (let i = i0 + 1; i < i1; i++) pts.push([(F[i].t - tA) / (tB - tA), (vals[i] - v0) / (v1 - v0)]);
-  const res = {};
-  for (const [name, css] of Object.entries(candidates)) { const f = easingFn(css); if (!f) continue;
-    res[name] = +Math.sqrt(pts.reduce((s, [u, p]) => s + (f(Math.min(1, Math.max(0, u))) - p) ** 2, 0) / pts.length).toFixed(3); }
-  const best = Object.entries(res).sort((x, y) => x[1] - y[1])[0];
-  return { best: best?.[0], rms: res, samples: pts.length };
+  const pts = []; for (let i = i0; i < vals.length; i++) pts.push([F[i].t, (vals[i] - v0) / (v1 - v0)]);
+  const frame = F[i0 + 1].t - F[i0].t, span = F[i1].t - F[i0].t;
+  const res = {}, dur = {};
+  for (const [name, css] of Object.entries(candidates)) {
+    const f = easingFn(css); if (!f) continue;
+    let best = [Infinity, null];
+    for (let off = 0; off <= 1.001; off += 0.25) for (let D = Math.max(16, span * 0.6); D <= span * 4; D *= 1.03) {
+      const tA = F[i0].t + off * frame;
+      let e = 0; for (const [t, p] of pts) { const u = Math.min(1, Math.max(0, (t - tA) / D)); e += (f(u) - p) ** 2; }
+      if (e < best[0]) best = [e, D];
+    }
+    res[name] = +Math.sqrt(best[0] / pts.length).toFixed(3); dur[name] = Math.round(best[1]);
+  }
+  const top = Object.entries(res).sort((x, y) => x[1] - y[1])[0];
+  return { best: top?.[0], rms: res, duration: dur, samples: pts.length };
 }
 /** Continuity at the moment of a second input (as in the lab's interruption test). */
 function continuity(frames, idx, ch, tInt) {
@@ -487,7 +506,7 @@ if (!a['no-audit']) {
       await page.mouse.move(p.x, p.y); await page.waitForTimeout(60);
       const changed = await page.evaluate((i) => { const e = window.__cands[i]; window.__mh.finishAll(e); return window.__mh.fingerprint(e) !== window.__base[i]; }, c.i);
       hoverRes.push({ ...c, changed });
-      if (!changed && c.control) flag('hover-none', c.sel, 'hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)', 'warn');
+      if (!changed && c.control) once('hover-none', c.sel, 'hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)', 'warn');
       await page.mouse.move(1, 1); await page.waitForTimeout(30);
     }
   }
@@ -498,7 +517,7 @@ if (!a['no-audit']) {
       const f = window.__mh.fingerprint(e); e.blur(); return f !== window.__base[i]; }, c.i);
     if (changed == null) continue;
     focusRes.push({ ...c, changed });
-    if (!changed) flag('focus-none', c.sel, 'keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)', 'warn');
+    if (!changed) once('focus-none', c.sel, 'keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)', 'warn');
   }
   // press: reload (hover and focus left state behind), hold the pointer down on each button, compare with its hover state
   await load(page);
@@ -513,7 +532,7 @@ if (!a['no-audit']) {
       const act = await page.evaluate((i) => { const e = window.__cands[i]; window.__mh.finishAll(e); return window.__mh.fingerprint(e); }, c.i);
       await page.mouse.move(1, 1); await page.mouse.up(); await page.keyboard.press('Escape'); await page.waitForTimeout(40);
       pressRes.push({ ...c, changed: hov !== act });
-      if (hov === act) flag('no-active', c.sel, 'no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered', 'warn');
+      if (hov === act) once('no-active', c.sel, 'no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered', 'warn');
     }
   }
   await ctx.close();
@@ -648,7 +667,7 @@ function analyse(entry, data) {
     perTarget.push({ stats: st, cls: classify(st) });
   }
   const vtFrames = data.frames.filter((f) => f.t >= tT && f.vt);
-  const vt = vtFrames.length ? { frames: vtFrames.length, moves: new Set(vtFrames.map((f) => f.vt.move)).size > 3, fades: new Set(vtFrames.map((f) => f.vt.fade)).size > 3, span: vtFrames.at(-1).t - vtFrames[0].t } : null;
+  const vt = vtFrames.length ? { frames: vtFrames.length, moves: new Set(vtFrames.map((f) => f.vt.move)).size > 3, fades: new Set(vtFrames.map((f) => f.vt.fade)).size > 3, span: Math.round(vtFrames.at(-1).t - vtFrames[0].t) } : null;
   const anims = data.anims.filter((x) => x.firstSeen >= tT - 20 || entry.trigger === 'load');
   const cls = perTarget.map((p) => p.cls);
   const state = cls.some((c) => c.state === 'animates') || (vt && (vt.moves || vt.fades)) ? 'animates' : cls.some((c) => c.state === 'instant') ? 'instant' : 'none';
@@ -659,8 +678,7 @@ function analyse(entry, data) {
   const docAnims = anims.filter((x) => x.timeline === 'document' && x.iterations !== Infinity && x.duration > 0);
   const declared = docAnims.length ? Math.max(...docAnims.map((x) => x.duration)) : null;
   const spans = perTarget.map((p) => { const ch = dominant(p.stats); const s = ch && p.stats[ch]; return s ? Math.round(s.last - s.firstFrameBefore) : null; }).filter((x) => x != null);
-  const textSpans = perTarget.map((p) => p.stats?.text).filter((t) => t && t.changes >= 3).map((t) => Math.round(t.last - t.firstFrameBefore));
-  const observed = spans.length ? Math.max(...spans) : textSpans.length ? Math.max(...textSpans) : vt ? Math.round(vt.span) : null;
+  const observed = spans.length ? Math.max(...spans) : vt ? Math.round(vt.span) : null; // first to last visible change: undercounts decelerating tails
   const starts = perTarget.map((p) => { const ch = dominant(p.stats); return ch ? p.stats[ch].firstFrameBefore : null; });
   const gaps = starts.filter((x) => x != null).map((x, i, arr) => (i ? x - arr[i - 1] : null)).filter((x) => x != null);
   // stagger: the declared per-element delays when the animations are CSS/WAAPI, else the sampled start times
@@ -669,13 +687,14 @@ function analyse(entry, data) {
   const stagger = dGaps.length && dGaps.some((x) => x > 0) ? Math.round(dGaps.reduce((s, x) => s + x, 0) / dGaps.length) : gaps.length ? Math.round(gaps.reduce((s, x) => s + x, 0) / gaps.length) : null;
   const staggerSource = dGaps.length && dGaps.some((x) => x > 0) ? 'declared' : gaps.length ? 'sampled' : null;
   const changedProps = new Set();
-  for (const p of perTarget) for (const [ch, s] of Object.entries(p.stats || {})) if (s.changes >= 3 || (s.changes && ch === 'text')) changedProps.add({ tx: 'transform', ty: 'transform', sx: 'transform', sy: 'transform', rot: 'transform', op: 'opacity', ow: 'width', oh: 'height', ol: 'left/margin', ot: 'top/margin', bg: 'background-color', color: 'color', shadow: 'box-shadow', filter: 'filter', clip: 'clip-path', outline: 'outline', text: 'text' }[ch]);
+  for (const p of perTarget) for (const [ch, s] of Object.entries(p.stats || {})) if ((s.changes >= 3 || (s.changes && ch === 'text')) && !['vis', 'num'].includes(ch)) changedProps.add({ tx: 'transform', ty: 'transform', sx: 'transform', sy: 'transform', rot: 'transform', op: 'opacity', ow: 'width', oh: 'height', ol: 'left/margin', ot: 'top/margin', bg: 'background-color', color: 'color', shadow: 'box-shadow', filter: 'filter', clip: 'clip-path', outline: 'outline', text: 'text' }[ch]);
   for (const x of anims) if (!x.pseudo.startsWith('::view-transition')) for (const pr of x.props) changedProps.add(pr); // a view-transition group always animates width/height
   const ch0 = dominant(perTarget[0]?.stats);
   const fin = data.frames.at(-1)?.v?.[0] || null;
   const scrollLinked = anims.some((x) => x.timeline !== 'document');
   const inViewAtStart = entry.trigger === 'scroll' && (data.inView || []).some(Boolean);
-  return { tT: Math.round(tT), state, moves, fades, layout, vt, declared, observed, stagger, staggerSource, scrollLinked, inViewAtStart, props: [...changedProps], anims: anims.slice(0, 8), dominant: ch0,
+  const jumps = [...new Set(perTarget.flatMap((p) => (p.cls.state === 'animates' || state === 'animates' ? p.cls.jumps : [])))];
+  return { tT: Math.round(tT), jumps, state, moves, fades, layout, vt, declared, observed, stagger, staggerSource, scrollLinked, inViewAtStart, props: [...changedProps], anims: anims.slice(0, 8), dominant: ch0,
     final: fin && { op: fin.op, vis: fin.vis, tx: fin.tx, ty: fin.ty, sx: fin.sx, text: fin.text }, targets: data.n, perTarget: perTarget.map((p) => p.cls.state),
     interrupt: entry.interrupt ? interruptInfo(entry, data, ch0, state) : null, frames: data.frames.length, ambient: [...ambient] };
 }
@@ -700,12 +719,15 @@ function judge(entry, n, r) {
   if (n.state === 'none') problems.push(`static: nothing changed after the trigger${n.inViewAtStart ? ' (the target was already in view before the scroll: it may have played at load)' : ''}`);
   else if (n.state === 'instant') problems.push('static: changed in one frame (no animation)');
   const dur = resolveDuration(entry.duration);
-  const durCheck = n.scrollLinked ? null : n.declared ?? n.observed;
+  // declared durations (CSS/WAAPI) are exact; for JavaScript-driven motion, the duration fitted with the best-fitting easing
+  const fitted = n.fit ? n.fit.duration[n.fit.best] : null;
+  const durCheck = n.scrollLinked ? null : n.declared ?? (entry.interrupt ? null : fitted); // an interrupted run holds two animations
   if (dur?.unknown) problems.push(`duration token "${dur.unknown}" not found`);
   else if (dur && n.state === 'animates' && durCheck != null) {
-    const tol = n.declared != null ? 0 : 34; // sampled spans are ± two frames
-    if (durCheck < dur.min - tol || durCheck > dur.max + tol) problems.push(`duration ${durCheck}ms${n.declared != null ? '' : ' (sampled)'} outside ${dur.label}`);
+    const lo = n.declared != null ? dur.min : dur.min * 0.85 - 17, hi = n.declared != null ? dur.max : dur.max * 1.15 + 17;
+    if (durCheck < lo || durCheck > hi) problems.push(`duration ${durCheck}ms${n.declared != null ? '' : ` (fitted to samples, ${n.fit.best === '__spec' ? 'spec easing' : n.fit.best})`} outside ${dur.label}`);
   }
+  if (n.jumps?.length && n.state === 'animates') problems.push(`layout jumps in one frame (${n.jumps.map((c) => ({ ow: 'width', oh: 'height', ol: 'left/margin', ot: 'top/margin' }[c])).join(', ')}): a layout property changed without transitioning`);
   const wantE = resolveEasing(entry.easing);
   let easing = null;
   if (wantE && n.state === 'animates' && !n.scrollLinked) {
@@ -736,7 +758,7 @@ function judge(entry, n, r) {
     if (lost) { ok = false; problems.push('reduced motion: the content ends in a different state (hidden or unfinished)'); }
     if (exp === 'keep' && r.state !== 'animates') { ok = false; problems.push(`reduced motion removed essential feedback (${outcome})`); }
     if (['fade', 'crossfade', 'instant', 'static', 'pause', 'none', 'off'].includes(exp) && r.moves) { ok = false; problems.push(`reduced motion: ${outcome} — spec says ${exp}`); }
-    if (exp === 'fade' && r.state === 'animates' && !r.moves && (r.declared ?? r.observed ?? 0) > 250) { ok = false; problems.push(`reduced motion: the fade takes ${r.declared ?? r.observed}ms (≤ 200 ms)`); }
+    if (exp === 'fade' && r.state === 'animates' && !r.moves && !entry.interrupt && (r.declared ?? r.observed ?? 0) > 250) { ok = false; problems.push(`reduced motion: the fade takes ${r.declared ?? r.observed}ms (≤ 200 ms)`); }
     if (['instant', 'static', 'pause', 'none', 'off'].includes(exp) && r.state === 'animates' && !r.moves) { ok = false; problems.push(`reduced motion: ${outcome} — spec says ${exp}`); }
     if (exp === 'static' && r.state === 'instant' && entry.trigger !== 'load') { ok = false; problems.push('reduced motion: the content was hidden until the trigger (spec says it is simply present)'); }
     reduced = { expected: exp || '—', outcome, ok, final: r.final };

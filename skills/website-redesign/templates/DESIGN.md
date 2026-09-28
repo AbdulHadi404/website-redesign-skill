@@ -6,7 +6,7 @@ Written <date>, before implementation. Benchmark for finish: <reference(s)>. Thi
 
 | Route / group | Category | Frequency | Stakes | Posture | Intensity |
 | --- | --- | --- | --- | --- | --- |
-| … | marketing / app / dashboard / commerce / enterprise / docs / fintech / mobile / field / content / service / signature | once · occasional · daily · all day | none · time · money · legal/health | expressive / productive / signature | refine / redesign / rethink (a first site: rethink, no baseline) |
+| … | marketing / app / dashboard / commerce / enterprise / docs / fintech / mobile / field / content / service / signature | once · occasional · weekly · daily · all day | none · time · money · legal/health | expressive / productive / signature | refine / redesign / rethink (a first site: rethink, no baseline) |
 
 If `PRODUCT.md` exists (`discovery.md` §5), the routes, top tasks and success measures come from it (its arrival situations and targets); the principles below are design principles — its product rules are not repeated.
 
@@ -21,7 +21,7 @@ If `PRODUCT.md` exists (`discovery.md` §5), the routes, top tasks and success m
 
 **Non-goals:** …
 
-**Constraints:** stack and component library (licence), contracts to preserve, surviving brand assets, legal copy, accessibility level, performance budget, languages/scripts/RTL.
+**Constraints:** stack and component library (licence; for a first site, the choice in `discovery/architecture.md`), contracts to preserve, surviving brand assets, legal copy, accessibility level, performance budget, languages/scripts/RTL.
 
 **Success measures** (per category, with the baseline where one exists): …
 
@@ -45,8 +45,9 @@ If `PRODUCT.md` exists (`discovery.md` §5), the routes, top tasks and success m
 
 **Why the current design fails** (specific, with severity): …
 
-**The five things a stranger notices first** (expressive + redesign only; all five change; a first site takes them from what the customer meets today and the category template):
+**The five things a stranger notices first** (expressive redesign or rethink, a first site included; each one changes except a documented brand asset kept under `art-direction.md` §4–§5; a first site takes them from what the customer meets today and the category template):
 1. … 2. … 3. … 4. … 5. …
+Kept, and why (a brand asset only — a face the brand family uses, the brand's hue family, assets that are the category's archetype): … (anything else kept makes this a refresh)
 
 ## References
 
@@ -148,7 +149,7 @@ Filled before any code (`accessibility.md` §2). WCAG 2.2 AA; aiming for 2.4.13 
 
 - **Contrast table** (above, in Colour) plus non-text pairs: input border, checkbox outline, switch track, focus ring, meaningful icons, chart marks — each ≥ 3:1 on its real ground, per theme.
 - **Focus token:** colour per surface, width, offset; sticky-UI heights → `scroll-padding`: …
-- **Targets:** 24 px floor, 44 px touch-primary; the dense-table action pattern: …
+- **Targets:** 24 px floor everywhere; every target 44 px on coarse pointers (hit area; `accessibility.md` §2); the dense-table action pattern on fine pointers: …
 - **320 px state:** nav, sidebars, toolbars, record lists (a name and a meta line), comparison tables (own scroll region), dialogs: …
 - **Colour independence:** the second cue for status, trend, required, error, selected, links, series: …
 - **Motion:** each move → its reduced-motion substitute; what auto-moves or auto-updates, and its pause control: …
@@ -171,7 +172,7 @@ Headline test: the hero sentence a stranger would understand alone — "…"
 
 **Keep:** … **Replace:** … **Remove:** … **Create:** …
 
-(Expressive + redesign: if *keep* is the longest list, the direction is still a refresh. Productive: keep what users have learned unless the audit shows it fails — and say which.)
+(Expressive redesign or rethink: if *keep* is not shorter than *replace + create*, the direction is still a refresh. Productive: keep what users have learned unless the audit shows it fails — and say which.)
 
 ## Secondary pages
 

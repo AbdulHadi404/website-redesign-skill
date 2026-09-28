@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why a step's target refused</title>
+<!-- states.mjs regression fixture: each control refuses a step for one known reason (tools/regress.mjs, group states). -->
+<style>
+  body { margin: 0; font: 16px sans-serif; }
+  .crumbs { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: #eee; z-index: 3; padding: 8px; }
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; height: 120px; background: #223; color: #fff; z-index: 5; padding: 8px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .clip { overflow: clip; width: 200px; height: 60px; position: relative; background: #fee; }
+  .clip input { position: absolute; left: 400px; top: 10px; }
+  #wrap { position: fixed; bottom: 40px; left: 20px; z-index: 1; }
+  main { padding: 80px 8px 160px; }
+</style></head>
+<body>
+<div class="crumbs">Home | Shop | Help | Account</div>
+<p style="position: fixed; top: 20px; left: 20px; z-index: 1; margin: 0"><input type="checkbox" id="undercrumbs" aria-label="Under the crumbs"></p>
+<main>
+  <details><summary>More options</summary><label><input type="checkbox" id="indet"> Newsletter</label></details>
+  <div hidden="until-found"><label><input type="checkbox" id="uf"> Until found</label></div>
+  <p><input type="checkbox" id="sr" class="sr"><label for="sr" style="display: inline-block; padding: 10px; border: 1px solid">Styled box</label></p>
+  <p><label>Size <select id="sel"><option value="s">Small</option><option value="m">Medium</option></select></label></p>
+  <p><label>Reference <input id="ro" readonly value="R-1"></label></p>
+  <div class="clip"><input type="checkbox" id="clipped" aria-label="Clipped"></div>
+  <div id="panel"><p>Step 1</p><button id="next" type="button" onclick="document.getElementById('panel').outerHTML = '<div id=panel2><p>Step 2</p></div>'">Next</button></div>
+</main>
+<div id="wrap"><button id="dbtn" disabled title="Fill in all fields first">Submit</button></div>
+<div class="bar">Cookie banner: we use cookies</div>
+</body></html>

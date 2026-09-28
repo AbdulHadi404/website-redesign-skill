@@ -8,7 +8,7 @@ Every animation names exactly one job; "it looks nice" is not a job on anything 
 
 | Job | Product example | Marketing example |
 | --- | --- | --- |
-| Orientation / spatial continuity | a row expands into a detail panel; a drawer slides from its edge | a page transition that keeps the nav still |
+| Orientation / spatial continuity | a detail panel opens beside the record it shows; a drawer slides from its edge | a page transition that keeps the nav still |
 | Feedback | press `scale(.97)`, toggle knob, drag lift; a validation nudge | form submit state |
 | State change | cart count ticks; item added | pricing toggle monthly/annual |
 | Causality | a filter narrows the list; remaining items move into place | before/after slider |
@@ -32,7 +32,7 @@ Run each candidate through these gates in order; the first "no" ends it.
 6. **Reduced motion** — the substitute is defined before shipping (§6).
 7. **Vestibular and attention** — anything that would move or auto-update for more than 5 s stops within 5 s or gets a pause control placed before it (WCAG 2.2.2, A) — and reduced motion is respected on top of that, never instead: large-area movement, zoom, spin, parallax and scroll-linked movement are off or crossfaded under reduce (§6); never three flashes a second (2.3.1).
 
-Write one line per animation into `DESIGN.md`: `trigger · job · properties · duration token · easing token · reduced-motion substitute` — e.g. `row click · orientation · transform, opacity · --dur-medium · --ease-out · crossfade 150 ms`.
+Write one line per animation into `DESIGN.md`: `trigger · job · properties · duration token · easing token · reduced-motion substitute` — e.g. `drawer open · orientation · transform, opacity · --dur-medium · --ease-out · crossfade 150 ms`.
 
 ## 3. Productive and expressive
 
@@ -56,7 +56,7 @@ Reconciled from Material 3, Carbon, Fluent 2, Kowalski and NN/g:
   --dur-0: 0ms;          /* keyboard-initiated or 100+/day */
   --dur-micro: 100ms;    /* press, toggle, checkbox, colour hover */
   --dur-small: 150ms;    /* tooltip, dropdown, menu, small expand */
-  --dur-medium: 240ms;   /* popover, toast, panel, drawer, row expand */
+  --dur-medium: 240ms;   /* popover, toast, panel, drawer */
   --dur-large: 300ms;    /* modal, sheet — the productive ceiling */
   /* expressive — rare moments only */
   --dur-page: 400ms;     /* page or view transition, large container transform */
@@ -122,8 +122,8 @@ dialog:not([open]), [popover]:not(:popover-open) { opacity: 0; transform: scale(
 - **FLIP / shared layout** — View Transitions for route changes (a matching `view-transition-name`); Motion's `layout`/`layoutId` for in-component reflow on a few elements (it measures layout — never on a 500-row table).
 - **Accordions** — `grid-template-rows: 0fr → 1fr` or `::details-content` (Baseline 2025); `interpolate-size` is Chromium-only.
 - **Gestures** — every drag has a single-pointer alternative (WCAG 2.5.7): reorder → up/down buttons or "Move to…"; swipe-to-delete → a visible delete button; carousel swipe → arrow buttons; slider → click on the track and arrow keys.
-- **Loading** — optimistic updates with a specific revert message; skeletons static under reduced motion; show nothing for waits under ~300 ms; spinners inside the pressed control.
-- **Scroll-jacking** — never in apps, docs, dashboards or checkout (NN/g found most people disoriented). `scroll-behavior: smooth` for anchor jumps, off under reduced motion. If a marketing site insists on smooth wheel scrolling, Lenis (MIT, 5.5 KB) runs on native scroll and switches itself off under reduced motion — but it breaks CSS scroll-snap and stops over iframes. Never on a site that frames a signature product experience — its motion budget goes to the stage and the hand-over (`art-direction.md` §4).
+- **Loading** — optimistic updates with a specific revert message; skeletons static under reduced motion. A container shows nothing for the first second, then a skeleton or an indeterminate indicator; an action's spinner sits inside the pressed control, appears after a 150–300 ms delay and stays at least 300–500 ms once shown (`app-ui.md` §8).
+- **Scroll-jacking and smooth-scroll libraries** — never site-wide; never in apps, docs, dashboards, checkout or content pages (NN/g found most people disoriented); never on a site that frames a signature product experience — its motion budget goes to the stage and the hand-over (`art-direction.md` §4). Elsewhere, only inside a contained, skippable story (`anti-patterns.md`, purpose-gated techniques). `scroll-behavior: smooth` for anchor jumps, off under reduced motion. If such a story needs smoothed wheel input, Lenis (MIT, 5.5 KB) runs on native scroll and switches itself off under reduced motion — but it breaks CSS scroll-snap and stops over iframes.
 
 ## 6. Reduced motion — substitute, don't delete
 

@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-28T21:41:43.223Z",
+  "date": "2026-09-28T22:10:41.405Z",
   "sources": "/tmp/s2-S6",
   "repos": {
     "2048": {
@@ -291,5 +291,41 @@
         "liveRegion": 0
       }
     }
+  },
+  "adarkroomPlay": {
+    "method": "greedy script, 5 simulated minutes at 2 s steps, fake clock; events answered with the first safe choice; world map (embark) not entered",
+    "controlsFirstSeen": [
+      {
+        "text": "light fire",
+        "firstSeenMin": 0
+      },
+      {
+        "text": "stoke fire",
+        "firstSeenMin": 0
+      },
+      {
+        "text": "gather wood",
+        "firstSeenMin": 1
+      }
+    ],
+    "placesFirstSeen": {
+      "A Dark Room": 0,
+      "A Firelit Room": 0.5,
+      "A Silent Forest": 1
+    },
+    "timeline": [
+      {
+        "minute": 0,
+        "controls": 2,
+        "places": 1,
+        "storeRows": 0
+      },
+      {
+        "minute": 5,
+        "controls": 3,
+        "places": 2,
+        "storeRows": 1
+      }
+    ]
   }
 }

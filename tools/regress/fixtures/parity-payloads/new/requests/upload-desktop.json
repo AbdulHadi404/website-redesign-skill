@@ -1,0 +1,18 @@
+{
+ "state": "upload",
+ "device": "desktop",
+ "label": null,
+ "base": "http://localhost:5843",
+ "requests": [
+  {
+   "method": "POST",
+   "url": "http://localhost:5843/api/upload",
+   "contentType": "multipart/form-data; boundary=----x",
+   "format": "multipart",
+   "body": {
+    "title": "Proof"
+   },
+   "raw": "--{boundary}\r\nContent-Disposition: form-data; name=\"title\"\r\n\r\nProof\r\n--{boundary}\r\nContent-Disposition: form-data; name=\"doc\"; filename=\"bill.pdf\"\r\nContent-Type: application/pdf\r\n\r\nBBBBBBBBBBBBBBBBBBB…(truncated)"
+  }
+ ]
+}

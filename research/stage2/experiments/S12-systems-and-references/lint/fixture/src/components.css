@@ -1,0 +1,46 @@
+/* Labelled fixture: every declaration line ends with expect:V (a token violation a reviewer
+   would reject) or expect:OK (legitimate in a token-disciplined codebase). */
+.card {
+  color: #ff0000; /* expect:V */
+  background: rgb(255 0 0); /* expect:V */
+  border: 1px solid #ddd; /* expect:V */
+  padding: 13px; /* expect:V */
+  margin: 0 24px; /* expect:V */
+  font-size: 15px; /* expect:V */
+  border-radius: 6px; /* expect:V */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* expect:V */
+  outline-color: red; /* expect:V */
+  background-color: hsl(200 50% 50%); /* expect:V */
+  gap: 1.25rem; /* expect:V */
+  border-color: oklch(0.6 0.2 30); /* expect:V */
+}
+.card-ok {
+  color: var(--color-text); /* expect:OK */
+  padding: var(--space-4) var(--space-6); /* expect:OK */
+  border: 1px solid var(--color-border); /* expect:OK */
+  margin: 0; /* expect:OK */
+  fill: currentColor; /* expect:OK */
+  background: transparent; /* expect:OK */
+  color: inherit; /* expect:OK */
+  width: 100%; /* expect:OK */
+  background-color: color-mix(in oklch, var(--accent) 88%, black); /* expect:OK */
+  line-height: 1.5; /* expect:OK */
+  z-index: 10; /* expect:OK */
+  transition: opacity 150ms var(--ease); /* expect:OK */
+  grid-template-columns: minmax(0, 1fr) 280px; /* expect:OK */
+  outline: 2px solid var(--focus); /* expect:OK */
+  border-width: 1px; /* expect:OK */
+  inset: 0; /* expect:OK */
+  transform: translateY(-1px); /* expect:OK */
+  box-shadow: var(--shadow-2); /* expect:OK */
+  font-weight: 600; /* expect:OK */
+  aspect-ratio: 16 / 9; /* expect:OK */
+  padding-inline: calc(var(--space-4) * 2); /* expect:OK */
+  background-image: url("data:image/svg+xml,%3Csvg fill='%23fff'/%3E"); /* expect:OK */
+  font-size: var(--text-body); /* expect:OK */
+  border-radius: var(--radius-2); /* expect:OK */
+  color: var(--color-text, #1c1d21); /* expect:OK */
+}
+@media (min-width: 768px) {
+  .card-ok { max-width: 720px; /* expect:OK */ }
+}

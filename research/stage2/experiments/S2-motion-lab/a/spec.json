@@ -1,0 +1,12 @@
+{
+  "_note": "The seven Part A interactions as a motion spec, for the held-out check of motion.mjs (c/run-heldout.mjs).",
+  "motion": [
+    { "id": "press", "trigger": "press", "on": "#press", "target": "#press", "properties": ["transform"], "duration": "micro", "easing": "out", "reduced": "keep" },
+    { "id": "list", "trigger": "click", "on": "#shuffle", "target": "#list [data-id=\"1\"]", "properties": ["transform"], "duration": "medium", "easing": "out", "reduced": "instant" },
+    { "id": "sheet", "trigger": "click", "on": "#sheet-toggle", "target": "#sheet", "properties": ["transform"], "duration": "large", "easing": "out", "reduced": "fade" },
+    { "id": "view", "trigger": "click", "on": "#swap", "target": "#stage .view", "properties": ["transform", "opacity"], "duration": "page", "easing": "out", "reduced": "fade" },
+    { "id": "scroll", "trigger": "scroll", "on": "#r2", "target": "#r2", "properties": ["transform", "opacity"], "duration": "medium", "easing": "out", "reduced": "static" },
+    { "id": "ticker", "trigger": "click", "on": "#tick-hi", "target": "#ticker", "properties": ["text"], "duration": 800, "easing": "out", "reduced": "instant" },
+    { "id": "grid", "trigger": "click", "on": "#grid-toggle", "target": "#grid .cell", "properties": ["transform", "opacity"], "duration": "medium", "easing": "out", "reduced": "fade", "stagger": 40 }
+  ]
+}

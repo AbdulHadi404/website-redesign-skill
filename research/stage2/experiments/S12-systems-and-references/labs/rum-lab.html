@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>RUM lab</title>
+<style>body{font:16px/1.5 system-ui;margin:24px} button,.fake{font:inherit;padding:10px 16px;margin:6px;display:inline-block} .fake{background:#1a3cf2;color:#fff;border-radius:6px;cursor:pointer}</style>
+<script src="../node_modules/web-vitals/dist/web-vitals.attribution.iife.js"></script>
+<script src="rum.js"></script>
+</head>
+<body>
+<h1>Checkout</h1>
+<p id="para">Your order ships in two days. Returns are free for thirty days from delivery.</p>
+<span id="dead" class="fake">Apply coupon</span>
+<button id="slow">Pay now</button>
+<button id="ok">Add note</button>
+<button id="jank">Recalculate</button>
+<button id="boom">Save address</button>
+<div id="out" aria-live="polite"></div>
+<script>
+const out = document.getElementById('out');
+document.getElementById('slow').addEventListener('click', () => setTimeout(() => { out.textContent = 'Payment accepted'; }, 1500));
+document.getElementById('ok').addEventListener('click', () => { out.textContent = 'Note added'; });
+document.getElementById('jank').addEventListener('click', () => { const t = performance.now(); while (performance.now() - t < 350) {} out.textContent = 'Total updated'; });
+document.getElementById('boom').addEventListener('click', () => { out.textContent = 'Saving…'; setTimeout(() => { throw new Error('address API 500'); }, 0); });
+</script>
+</body>
+</html>

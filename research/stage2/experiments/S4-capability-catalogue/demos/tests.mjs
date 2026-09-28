@@ -187,6 +187,8 @@ const flow = {
     c.nodeNameWhenAriaLabelSet = !!d.nodes.find((n) => n.id === 'a')?.label;
     c.edgesFocusable = d.edges.length > 0 && d.edges.every((e) => e.tabindex === '0');
     c.edgesHaveName = d.edges.every((e) => !!e.label);
+    c.edgeNamesUseNodeLabels = d.edges.every((e) => /Order placed|Payment|Shipped/.test(e.label || ''));
+    d.wrapperRole = await page.evaluate(() => document.querySelector('.react-flow')?.getAttribute('role') || document.querySelector('[role=application]')?.className || null);
     c.handlesKeyboardReachable = await page.evaluate(() => [...document.querySelectorAll('.react-flow__handle')].some((h) => h.tabIndex >= 0));
     c.controlsNamed = await page.evaluate(() => [...document.querySelectorAll('.react-flow__controls button')].every((b) => !!b.getAttribute('aria-label') || !!b.title));
     // Tab to the first node, select, move
@@ -284,6 +286,8 @@ const tldraw = {
     await press(page, ['Tab'], 500);
     d.afterTab = await page.evaluate((n) => window.__ann.slice(n), n0);
     c.selectionAnnounced = d.afterTab.some((a) => /of \d/.test(a));
+    d.firstAnnouncementInInsertedRegion = d.afterTab.some((a) => a.startsWith('[inserted]'));
+    d.watermarkText = await page.evaluate(() => document.querySelector('[class*=watermark]')?.innerText?.replace(/\s+/g, ' ').trim() || null);
     const before = await page.evaluate(() => JSON.stringify(window.editor?.getSelectedShapes().map((s) => [s.x, s.y])));
     await press(page, ['ArrowRight', 'ArrowRight'], 250);
     const after = await page.evaluate(() => JSON.stringify(window.editor?.getSelectedShapes().map((s) => [s.x, s.y])));

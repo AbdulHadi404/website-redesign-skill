@@ -61,19 +61,30 @@ export async function registry(name, cutoff = cutoffDate()) {
 }
 
 export async function adoption(name) {
-  const r = await fetch(`https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(name)}&size=20`).catch(() => null);
-  if (!r?.ok) return null;
+  // The search endpoint rate-limits bursts: retry with backoff instead of silently reporting nothing.
+  let r = null;
+  for (let i = 0; i < 4 && !r?.ok; i++) {
+    if (i) await new Promise((ok) => setTimeout(ok, 1500 * 2 ** i));
+    r = await fetch(`https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(name)}&size=20`).catch(() => null);
+  }
+  if (!r?.ok) return { error: 'npm search unavailable (HTTP ' + (r?.status ?? 'network') + ')' };
   const j = await r.json();
   const o = j.objects.find((x) => x.package.name === name);
   return o ? { weeklyDownloads: o.downloads?.weekly ?? null, monthlyDownloads: o.downloads?.monthly ?? null, dependents: o.dependents ?? null } : null;
 }
 
 export async function search(text, limit = 12) {
-  const r = await fetch(`https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(text)}&size=100`);
+  const r = await fetch(`https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(text)}&size=250`);
   const j = await r.json();
+  // npm's own score fields are constant (1/1/1) and its ranking mixes in huge unrelated utilities when sorted by
+  // downloads, so keep only packages whose name, description or keywords contain every query word (stemmed to
+  // its first 5 letters: "resizable" matches "resize"), then rank those by weekly downloads.
+  const words = text.toLowerCase().split(/\s+/).filter((w) => w.length > 2).map((w) => w.slice(0, 5));
   return j.objects
-    .map((o) => ({ name: o.package.name, version: o.package.version, date: (o.package.date || '').slice(0, 10), weekly: o.downloads?.weekly ?? 0, dependents: o.dependents ?? 0, description: (o.package.description || '').slice(0, 90) }))
-    .sort((a, b) => b.weekly - a.weekly).slice(0, limit);
+    .map((o) => ({ name: o.package.name, version: o.package.version, date: (o.package.date || '').slice(0, 10), weekly: o.downloads?.weekly ?? 0, dependents: o.dependents ?? 0, description: (o.package.description || '').slice(0, 90), hay: [o.package.name, o.package.description, ...(o.package.keywords || [])].join(' ').toLowerCase() }))
+    .filter((o) => words.every((w) => o.hay.includes(w)))
+    .sort((a, b) => b.weekly - a.weekly).slice(0, limit)
+    .map(({ hay, ...o }) => o);
 }
 
 // ── Licence text ────────────────────────────────────────────────────────────────────────────────
@@ -183,11 +194,18 @@ export async function activity(repo, cacheDir, cutoff = cutoffDate()) {
   const url = `https://github.com/${repo}`;
   await mkdir(cacheDir, { recursive: true });
   if (!existsSync(dir)) {
-    try { await run('git', ['clone', '-q', '--bare', '--single-branch', '--filter=tree:0', `--shallow-since=${cutoff}`, url, dir], { timeout: 240000 }); }
-    catch {
-      // No commit since the cutoff makes --shallow-since fail: fetch the last commit only.
+    let shallowOk = false;
+    for (let i = 0; i < 2 && !shallowOk; i++) {
+      try { await run('git', ['clone', '-q', '--bare', '--single-branch', '--filter=tree:0', `--shallow-since=${cutoff}`, url, dir], { timeout: 240000 }); shallowOk = true; }
+      catch { await rm(dir, { recursive: true, force: true }); }
+    }
+    if (!shallowOk) {
+      // No commit since the cutoff makes --shallow-since fail: fetch the last commit only. If that commit is
+      // inside the window, the first clone failed for another reason (network): report an error, not "0 commits".
       try { await run('git', ['clone', '-q', '--bare', '--single-branch', '--filter=tree:0', '--depth=1', url, dir], { timeout: 240000 }); }
       catch (e2) { return { repo, error: String(e2.stderr || e2.message).split('\n')[0] }; }
+      const lastIso = (await run('git', ['-C', dir, 'log', '-1', '--format=%cI'])).stdout.trim();
+      if (lastIso && lastIso.slice(0, 10) >= cutoff) { await rm(dir, { recursive: true, force: true }); return { repo, error: 'shallow clone failed although the repository has recent commits; re-run' }; }
     }
   }
   const { stdout } = await run('git', ['-C', dir, 'log', `--since=${cutoff}`, '--format=%an|%ae|%cI'], { maxBuffer: 64 << 20 });

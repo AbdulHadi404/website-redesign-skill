@@ -36,7 +36,7 @@ Then: **container queries** (Baseline widely since 2025-08) for components that 
 ## 4. Input modes
 
 - **Default to no hover.** Hover-only reveals (row actions, dropdowns) go inside `@media (hover: hover) and (pointer: fine)` and also show on `:focus-within`; `any-hover` / `any-pointer` for hybrids.
-- **Targets**: 44 px for touch (`@media (pointer: coarse)`), never below 24 px anywhere (WCAG 2.5.8); larger targets and spacing near the screen edges, where touch accuracy is worst.
+- **Targets**: every target 44 × 44 px on coarse pointers (`@media (pointer: coarse)`; a touch-first control may be drawn at 36–40 px with its hit area extended to 44), never below 24 px anywhere (WCAG 2.5.8; `accessibility.md` §2); larger targets and spacing near the screen edges, where touch accuracy is worst.
 - **Cascade trap (measured)**: a `@media (pointer: coarse) { .btn { min-block-size: 44px } }` placed *before* the base `.btn` rule is silently overridden (same specificity). Put input-mode overrides after the base rules or in a later cascade layer — and check the rendered height, not the source.
 - **Gestures are accelerators**: every swipe, long-press or drag has a visible tap alternative (WCAG 2.5.7).
 - **Keyboards**: `type` + `inputmode` + `autocomplete` + `enterkeyhint`; card numbers and one-time codes use `inputmode="numeric"` with `autocomplete="cc-number"` / `"one-time-code"`, never `type=number`; `field-sizing: content` for growing textareas.

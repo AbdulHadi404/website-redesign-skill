@@ -124,13 +124,14 @@ if (!process.argv.includes('--no-play')) {
   const seen = {}; const places = {}; const timeline = [];
   const snapshot = () => page.evaluate(() => {
     const vis = (e) => !!(e.offsetWidth || e.offsetHeight);
-    const btns = [...document.querySelectorAll('#outerSlider .button')].map((b) => ({ id: b.id, text: b.childNodes[0]?.textContent?.trim() || b.textContent.trim() }));
+    // controls the player can see (display:none ones, like "light fire" once lit, do not count)
+    const btns = [...document.querySelectorAll('#outerSlider .button')].filter((b) => b.offsetParent !== null).map((b) => ({ id: b.id, text: b.childNodes[0]?.textContent?.trim() || b.textContent.trim() }));
     const tabs = [...document.querySelectorAll('#header .headerButton')].map((h) => h.textContent.trim());
     const stores = document.querySelectorAll('#stores .storeRow').length;
     const menu = [...document.querySelectorAll('.menu .menuBtn, .menuBtn')].filter(vis).length;
     return { btns, tabs, stores, menu };
   });
-  // Greedy player: every simulated second, answer any event (sound: "disable audio"), then
+  // Greedy player: every step, answer any event (sound: "disable audio"), then
   // press every enabled control in every unlocked place except embarking into the world.
   const act = () => page.evaluate(() => {
     const ev = document.querySelector('#event');
@@ -146,7 +147,10 @@ if (!process.argv.includes('--no-play')) {
     }
     return 'play';
   });
-  for (let s = 0; s <= MINUTES * 60; s++) {
+  const STEP = 2; // simulated seconds per step; every cooldown in the game is >= 10 s
+  const t0 = Date.now();
+  for (let s = 0; s <= MINUTES * 60; s += STEP) {
+    if (s % 300 === 0) console.error(`adarkroom: ${s / 60} simulated min, ${Math.round((Date.now() - t0) / 1000)} s wall`);
     if (s % 30 === 0) {
       const snap = await snapshot();
       const t = +(s / 60).toFixed(1);
@@ -155,10 +159,10 @@ if (!process.argv.includes('--no-play')) {
       if (s % 300 === 0) timeline.push({ minute: t, controls: snap.btns.length, places: snap.tabs.length || 1, storeRows: snap.stores });
     }
     await act();
-    await page.clock.runFor(1000);
+    await page.clock.runFor(STEP * 1000);
   }
   out.adarkroomPlay = {
-    method: `greedy script, ${MINUTES} simulated minutes at 1 s steps, fake clock; events answered with the first safe choice; world map (embark) not entered`,
+    method: `greedy script, ${MINUTES} simulated minutes at ${STEP} s steps, fake clock; events answered with the first safe choice; world map (embark) not entered`,
     controlsFirstSeen: Object.values(seen).sort((a, b) => a.firstSeenMin - b.firstSeenMin),
     placesFirstSeen: places,
     timeline,

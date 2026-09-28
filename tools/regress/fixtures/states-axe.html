@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overlays for states.mjs --axe</title>
+<!-- states.mjs --axe regression fixture: clean when closed; each overlay adds one known axe violation only when open.
+     The drawer's close button has no name (button-name), the palette's input no label (label), and the "More" menu
+     sits outside every landmark (region) and closes when the page scrolls. -->
+<style>
+  body { margin: 0; font: 16px/1.5 sans-serif; color: #111; background: #fff; }
+  header { display: flex; gap: 12px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #ccc; }
+  header button { font: inherit; padding: 10px 14px; min-height: 44px; }
+  #drawer { position: fixed; top: 0; right: 0; bottom: 0; left: 20%; background: #fff; border-left: 1px solid #999; padding: 16px; }
+  #palette { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); width: 480px; background: #fff; border: 1px solid #999; padding: 16px; }
+  #more-menu { background: #fff; border: 1px solid #999; padding: 8px; }
+  [hidden] { display: none !important; }
+  main { padding: 16px; }
+  .tall { height: 2400px; }
+</style></head>
+<body>
+<header>
+  <button id="menu" type="button" aria-expanded="false" aria-controls="drawer">Menu</button>
+  <button id="more" type="button" aria-expanded="false" aria-controls="more-menu">More</button>
+</header>
+<nav id="drawer" aria-label="Main" hidden>
+  <ul><li><a href="#accounts">Accounts</a></li><li><a href="#billing">Billing</a></li></ul>
+  <button type="button" id="close"><svg width="16" height="16" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14" stroke="#000"/></svg></button>
+</nav>
+<div id="more-menu" hidden><a href="#settings">Settings</a></div>
+<div id="palette" role="dialog" aria-modal="true" aria-label="Command palette" hidden>
+  <input type="text" id="command">
+</div>
+<main>
+  <h1>Invoices</h1>
+  <p>Twelve invoices are due this week.</p>
+  <div class="tall"></div>
+</main>
+<script>
+  const menu = document.getElementById('menu'), drawer = document.getElementById('drawer');
+  menu.addEventListener('click', () => { const open = drawer.hidden; drawer.hidden = !open; menu.setAttribute('aria-expanded', String(open)); });
+  const more = document.getElementById('more'), moreMenu = document.getElementById('more-menu');
+  more.addEventListener('click', () => { moreMenu.hidden = false; more.setAttribute('aria-expanded', 'true'); });
+  addEventListener('scroll', () => { if (!moreMenu.hidden) { moreMenu.hidden = true; more.setAttribute('aria-expanded', 'false'); } });
+  const palette = document.getElementById('palette');
+  addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); palette.hidden = false; document.getElementById('command').focus(); } });
+</script>
+</body></html>

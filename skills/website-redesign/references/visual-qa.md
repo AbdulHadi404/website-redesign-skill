@@ -45,7 +45,7 @@ node scripts/audit.mjs --base http://localhost:3000 --paths / /pricing --widths 
 node scripts/audit.mjs --base http://localhost:3000 --paths /app /app/settings --kind app --out audit/after-app
 ```
 
-On a productive surface the app run covers every route (the route list, or `parity.mjs --crawl`), and every run takes `--themes light,dark` when the site has both. Compare with the Phase 1 run in `audit/before`. Every ✗ is fixed, or disproved as a false positive with its evidence (a capture, a probe) written in `DESIGN.md`; every warning is fixed or justified in writing; every ◆ signal is either gone or has a written reason (`anti-patterns.md`). Then run the accessibility pass — `states.mjs --axe` on every overlay and stepped state (the phone drawer included), `a11y.mjs` per key template, whose reflow, text-spacing, forced-colours and colour-vision PNGs join the captures you look at, and `widgets.mjs` per custom widget (`accessibility.md` §10–11) — the responsive pass (`responsive.md` §8) and a performance run (`performance.md` §6).
+On a productive surface the app run covers every route (the route list, from the router or pages directory or the sitemap), and every run takes `--themes light,dark` when the site has both. Compare with the Phase 1 run in `audit/before`. Every ✗ is fixed, or disproved as a false positive with its evidence (a capture, a probe) written in `DESIGN.md`; every warning is fixed or justified in writing; every ◆ signal is either gone or has a written reason (`anti-patterns.md`). Then run the accessibility pass — `states.mjs --axe` on every overlay and stepped state (the phone drawer included), `a11y.mjs` per key template, whose reflow, text-spacing, forced-colours and colour-vision PNGs join the captures you look at, and `widgets.mjs` per custom widget (`accessibility.md` §10–11) — the responsive pass (`responsive.md` §8) and a performance run (`performance.md` §6).
 
 ## What to check, per width
 
@@ -127,6 +127,8 @@ Fill `templates/critique.md` from the renders. The method:
 3. **Removal and swap tests** from the variant captures (`--variant all`): content-free, image-free, shadow-free; the name swap; headlines only; the blurred first viewport beside the old site and the last `ledger.md` project (`compare.mjs --grid … --blur 6`).
 4. **Evidence per answer**: a "yes" names the capture file and what in it shows the answer; hierarchy and clarity cannot be answered from source. Before hand-off, re-open each cited capture and try to prove the "yes" wrong.
 5. **Bounded rounds**: each round produces one batch of fixes and one full recapture, and re-scores the previous round's findings as resolved / partial / unresolved from the new captures (the builder's narration of a fix is not evidence). At most three rounds; if a "no" survives the third, or a round resolves nothing, stop and put the table in front of the user.
+
+**Signature routes.** Check 27 judges the experience itself against its written quality bar (`discovery.md` §5b), from captures and filmstrips taken on a real GPU ("3D and WebGL experiences" above, `motion.md` §7), with the measured frame rate and the renderer stated. Its chrome and controls answer the productive rows and get task walkthroughs.
 
 Expect at least one round of fixes; the first implementation almost always keeps something it should have replaced.
 

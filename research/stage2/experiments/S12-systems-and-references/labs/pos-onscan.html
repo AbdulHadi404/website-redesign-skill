@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>onscan.js lab</title></head>
+<body>
+<label>Search products <input id="search" autocomplete="off"></label>
+<script src="../node_modules/onscan.js/onscan.js"></script>
+<script>
+// onscan.js 1.5.2 with its defaults (avgTimeByChar 30, minLength 6, suffix Tab/Enter).
+window.scans = []; window.rejected = [];
+onScan.attachTo(document, { onScan: (code) => window.scans.push(code), onScanError: (e) => window.rejected.push(e.scanCode ?? '') });
+</script>
+</body>
+</html>

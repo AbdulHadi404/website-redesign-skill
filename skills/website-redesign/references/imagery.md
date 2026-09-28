@@ -1,6 +1,6 @@
-# Phase 4 — Imagery
+# Imagery
 
-Imagery is optional. Decide from the concept whether photography, product UI, illustration, diagrams or pure typography carries this brand — then execute that decision fully. What is never acceptable is imagery by default: a stock photo per section because sections "need something".
+Read in Phase 3 (the imagery strategy, `art-direction.md` §4) and Phase 5 (sourcing, processing and placing it). Imagery is optional. Decide from the concept whether photography, product UI, illustration, diagrams or pure typography carries this brand — then execute that decision fully. What is never acceptable is imagery by default: a stock photo per section because sections "need something".
 
 ## When photography earns its place
 
@@ -56,7 +56,7 @@ When the business's real work exists as social posts, it beats any library, with
 - **Bake the treatment, do not layer it**, for a set from mixed sources; a set that already shares a backdrop has its treatment and gets no filter on top. A duotone (or black-and-white, or a tint) applied in code to every frame — convert to luminance, autocontrast, map black and white to two brand colours — is what makes eight photographs from four sources read as one series. Export two widths (a desktop and a phone one) in a modern format and let the markup pick with `<source media>`; a treatment left to CSS filters costs paint time and cannot be checked in a still.
 - Apply one treatment to the whole set so it reads as a series: black and white, a duotone, a consistent crop, a consistent tint. Bake expensive treatments into the file; apply cheap ones (a colour overlay, a gradient fade) in CSS so they stay adjustable.
 - Serve through the framework's image pipeline (responsive widths, modern formats, explicit width and height to avoid layout shift). Hero image eager with high fetch priority; everything below the fold lazy.
-- Keep total image weight sane: one hero at ~150–300 KB in a modern format is normal; a page with several megabytes of photography is not.
+- Keep total image weight sane: the hero within the LCP-image budget and the first viewport within its image budget (`performance.md` §1); never several megabytes of photography on one page.
 - Record credits in a `CREDITS.md` next to the assets even when attribution is not required — source URL, author, licence and its class (A–D), and the credit text if one is owed. It is cheap and the user may need it later.
 
 ## Text over photographs

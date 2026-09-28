@@ -2,7 +2,7 @@
 
 What a marketing page is made of and how it is judged. Read at the end of Phase 3 (page narrative) and through Phase 5. Companions: `design-theory.md` (the visual system), `ui-ux.md` (interaction), `implementation.md` (composition rules), `technical-qa.md` (the checklist).
 
-**Surface modes inside one site.** Classify sections, not just sites: *persuade* (home, product, pricing — this file), *operate* (the product itself, account areas, checkout — `app-ui.md`), *read* (blog, docs, changelog, legal — measure 65–75 characters, generous leading, headings close to what follows, no hero theatre), *experience* (a portfolio or campaign — expressive by design). Product fragments rebuilt as HTML on a marketing page are *operate* surfaces: they get product copy and the product's own type size, not marketing voice.
+**Surface modes inside one site.** Classify sections, not just sites: *persuade* (home, product, pricing — this file), *operate* (the product itself, account areas, checkout — `app-ui.md`), *read* (blog, docs, changelog, legal — measure 60–70 characters and never over 75 (`design-theory.md` C1), generous leading, headings close to what follows, no hero theatre), *experience* (a portfolio or campaign — expressive by design). Product fragments rebuilt as HTML on a marketing page are *operate* surfaces: they get product copy and the product's own type size, not marketing voice.
 
 ## 1. What a homepage must do (NN/g's five principles)
 
@@ -56,7 +56,7 @@ The full method — intrinsic layout primitives, container queries, fluid type w
 
 - `<meta name="viewport" content="width=device-width, initial-scale=1">` (never `user-scalable=no`); relative units; fluid grids (`fr`, `minmax`, `auto-fit`); images `max-width: 100%` **with `width` and `height` attributes** so nothing shifts while they load.
 - **Breakpoints come from the content, not from devices**: design at ~360–390 first, widen until the layout has more space than it needs, add a breakpoint there. Major breakpoints change the layout; minor ones adjust margins, sizes and positions.
-- **Measure** is the usual trigger: when a text block passes ~70–80 characters, cap the column or add a column.
+- **Measure** is the usual trigger: before a text block passes 75 characters (`design-theory.md` C1), cap the column or add a column.
 - Do not hide content by screen size — information needs do not depend on the device; reorder, resize, collapse.
 - Test the mid widths (1024, 768) as carefully as the ends: two-column heroes squeeze there first.
 - Sticky header + anchors: `scroll-margin-top`. A `backdrop-filter` on a sticky header traps fixed descendants — put the blur on a pseudo-element.
@@ -66,8 +66,8 @@ The full method — intrinsic layout primitives, container queries, fluid type w
 Budgets per product type, the UI-decision → metric map and the measuring procedure are in `performance.md`. The essentials:
 
 - **Core Web Vitals** at the 75th percentile, mobile and desktop separately: **LCP ≤ 2.5 s** (needs improvement to 4 s; poor beyond), **INP ≤ 200 ms** (to 500), **CLS ≤ 0.1** (to 0.25). TTFB and FCP diagnose LCP.
-- The hero image or panel is the LCP candidate: eager, `fetchpriority="high"`, sized explicitly, modern format, ~150–300 KB; everything below the fold lazy.
-- Fonts: preconnect, only the weights used, swap; no layout shift from late fonts (matching fallback metrics or `size-adjust`).
+- The hero image or panel is the LCP candidate: eager, `fetchpriority="high"`, sized explicitly, modern format, within the LCP-image budget in `performance.md` §1; everything below the fold lazy.
+- Fonts: self-hosted WOFF2 (`performance.md` §4), at most two files preloaded, only the weights used, `swap` or `optional`; no layout shift from late fonts (matching fallback metrics or `size-adjust`).
 - No runtime framework for static content; client JS only where a route needs it (a live widget, a demo).
 - Third-party embeds (chat, analytics, captcha) are the usual CLS and INP culprits; load them late and reserve their space.
 
@@ -94,7 +94,7 @@ Unique `<title>` and description per page; canonical; Open Graph and Twitter tag
 - [ ] Every chapter has one job, one composition, one surface; no two adjacent alike; the accent field appears once.
 - [ ] Proof is real or absent; no stock filler; every image has a job.
 - [ ] Word count is short enough to be read (aim for headings and first sentences that carry the page alone).
-- [ ] 360/390, 768, 1024, 1280, 1440 rendered and looked at; no horizontal scroll; measure ≤ 80ch everywhere.
+- [ ] 360/390, 768, 1024, 1280, 1440 rendered and looked at; no horizontal scroll; measure 60–70ch and never over 75ch (`design-theory.md` C1).
 - [ ] LCP element eager and sized; fonts subset/swapped; CLS sources reserved.
 - [ ] Nav ≤ 7 items; mobile menu labelled and thumb-sized; primary action visible at every width, and secondary in the header while the hero's is on screen; theme switch (if any) in the header.
 - [ ] Footer lockup at footer size; no viewport-wide wordmark or mark in the footer or behind the hero.

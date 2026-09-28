@@ -14,11 +14,11 @@ Checked 2026-09-28. The scripts in this skill cover the common path; the rest ar
 | `perf.mjs` | How fast is each page on a throttled phone, old against new, when `npx lighthouse` is unavailable? |
 | `parity.mjs` | What did the redesign add without a source, drop, or break (routes, ids, form fields, metadata)? |
 | `contrast.mjs` | Does this text/ground pair pass WCAG 2, and what is its APCA Lc? |
-| `palette.mjs` | What colours are in the logo, and what role scales follow from the brand colour? |
+| `palette.mjs` | What colours are in the logo (or a photo set), and what role scales follow from the brand colour? |
 | `fonts.mjs` | Does this face have tabular figures, the scripts we need, the axes we want — in the file we will actually serve? |
 | `compare.mjs` | Before/after sheets, blurred squint sheets, pixel diffs |
 
-Traps they handle: a project-local Playwright newer than the installed browser (they fall back to any Chromium on disk; `CHROME_PATH` or `--chrome` to choose); behind a TLS-intercepting proxy web fonts may fail silently (the audit reports declared families that are not available). `CAPTURE_PROXY` opts into a proxy explicitly — Playwright 1.56 ignores the localhost bypass, so it is never taken from `HTTPS_PROXY` automatically.
+Traps they handle: a project-local Playwright newer than the installed browser (they fall back to any Chromium on disk; `CHROME_PATH` to choose, in every script that opens a browser, or `--chrome` in all of them but `a11y.mjs` and `widgets.mjs`); behind a TLS-intercepting proxy web fonts may fail silently (the audit reports declared families that are not available). `CAPTURE_PROXY` opts into a proxy explicitly — Playwright 1.56 ignores the localhost bypass, so it is never taken from `HTTPS_PROXY` automatically.
 
 ## Extracting a site's actual system
 
@@ -55,7 +55,7 @@ Playwright's `toHaveScreenshot` (in projects already on Playwright Test); pixelm
 
 ## Assets
 
-sharp (Apache-2.0) and squoosh for raster encoding (AVIF, WebP; build time or CDN); SVGO 4 (MIT; keep `viewBox`, remove exported titles); `@gltf-transform/cli` for 3D; `pyftsubset` (fontTools), glyphhanger and subfont for font subsetting; fontaine, Capsize and framework font modules for fallback metrics; node-vibrant or colorthief for photo palettes (not for logos — sample vectors with `palette.mjs`).
+sharp (Apache-2.0) and squoosh for raster encoding (AVIF, WebP; build time or CDN); SVGO 4 (MIT; keep `viewBox`, remove exported titles); `@gltf-transform/cli` for 3D; `pyftsubset` (fontTools), glyphhanger and subfont for font subsetting; fontaine, Capsize and framework font modules for fallback metrics; `palette.mjs --from` samples a vector or raster logo and a photo set alike (PNG; convert a JPEG first: `discovery.md` §2); node-vibrant or colorthief are optional alternatives for photo palettes, never for logos.
 
 ## Code hygiene around a redesign
 

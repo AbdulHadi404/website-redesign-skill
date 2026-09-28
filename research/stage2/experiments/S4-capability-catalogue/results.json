@@ -48,8 +48,6 @@
     "name": "cmdk",
     "latest": "1.1.1",
     "latestDate": "2025-03-14",
-    "lastStable": "1.1.1",
-    "lastStableDate": "2025-03-14",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
@@ -59,9 +57,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 81852,
+    "hasInstallScript": false,
     "repository": "https://github.com/pacocoursey/cmdk",
-    "firstPublished": "2020-10-08"
+    "firstPublished": "2020-10-08",
+    "weeklyDownloads": 52407397,
+    "monthlyDownloads": 160408745,
+    "dependents": "4173"
    },
    "readmeNotice": null,
    "licences": [
@@ -90,18 +91,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 53074,
     "entryGz": 18077,
-    "jsMin": 53074,
+    "initialGz": 18077,
     "jsGz": 18077,
+    "jsMin": 53074,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 26,
-    "initialMin": 53074,
-    "initialGz": 18077
-   }
+    "packages": 26
+   },
+   "theming": []
   },
   "kbar": {
    "id": "kbar",
@@ -118,8 +118,6 @@
     "name": "kbar",
     "latest": "1.0.0",
     "latestDate": "2026-08-10",
-    "lastStable": "1.0.0",
-    "lastStableDate": "2026-08-10",
     "releases12m": 1,
     "stableReleases12m": 1,
     "licenseField": "MIT",
@@ -129,9 +127,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 612573,
+    "hasInstallScript": false,
     "repository": "https://github.com/timc1/kbar",
-    "firstPublished": "2021-09-12"
+    "firstPublished": "2021-09-12",
+    "weeklyDownloads": 348815,
+    "monthlyDownloads": 1088802,
+    "dependents": "27"
    },
    "readmeNotice": null,
    "licences": [
@@ -160,18 +161,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 105125,
     "entryGz": 31723,
-    "jsMin": 105125,
+    "initialGz": 31723,
     "jsGz": 31723,
+    "jsMin": 105125,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 11,
-    "initialMin": 105125,
-    "initialGz": 31723
-   }
+    "packages": 11
+   },
+   "theming": []
   },
   "base-ui-autocomplete": {
    "id": "base-ui-autocomplete",
@@ -188,8 +188,6 @@
     "name": "@base-ui/react",
     "latest": "1.8.0",
     "latestDate": "2026-09-04",
-    "lastStable": "1.8.0",
-    "lastStableDate": "2026-09-04",
     "releases12m": 12,
     "stableReleases12m": 10,
     "licenseField": "MIT",
@@ -202,9 +200,12 @@
      "@date-fns/tz",
      "@types/react"
     ],
-    "unpackedSize": 9628362,
+    "hasInstallScript": false,
     "repository": "https://github.com/mui/base-ui",
-    "firstPublished": "2025-12-11"
+    "firstPublished": "2025-12-11",
+    "weeklyDownloads": 16848701,
+    "monthlyDownloads": 49363190,
+    "dependents": "1649"
    },
    "readmeNotice": null,
    "licences": [
@@ -233,18 +234,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 155450,
     "entryGz": 54281,
-    "jsMin": 155450,
+    "initialGz": 54281,
     "jsGz": 54281,
+    "jsMin": 155450,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 8,
-    "initialMin": 155450,
-    "initialGz": 54281
-   }
+    "packages": 8
+   },
+   "theming": []
   },
   "rac-autocomplete": {
    "id": "rac-autocomplete",
@@ -261,8 +261,6 @@
     "name": "react-aria-components",
     "latest": "1.21.1",
     "latestDate": "2026-09-04",
-    "lastStable": "1.21.1",
-    "lastStableDate": "2026-09-04",
     "releases12m": 254,
     "stableReleases12m": 11,
     "licenseField": "Apache-2.0",
@@ -272,9 +270,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 6586272,
+    "hasInstallScript": false,
     "repository": "https://github.com/adobe/react-spectrum",
-    "firstPublished": "2018-06-12"
+    "firstPublished": "2018-06-12",
+    "weeklyDownloads": 5263541,
+    "monthlyDownloads": 15411377,
+    "dependents": "720"
    },
    "readmeNotice": null,
    "licences": [
@@ -303,18 +304,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 153227,
     "entryGz": 48645,
-    "jsMin": 153227,
+    "initialGz": 48645,
     "jsGz": 48645,
+    "jsMin": 153227,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 9,
-    "initialMin": 153227,
-    "initialGz": 48645
-   }
+    "packages": 9
+   },
+   "theming": []
   },
   "bits-ui-command": {
    "id": "bits-ui-command",
@@ -331,8 +331,6 @@
     "name": "bits-ui",
     "latest": "2.19.3",
     "latestDate": "2026-09-22",
-    "lastStable": "2.19.3",
-    "lastStableDate": "2026-09-22",
     "releases12m": 38,
     "stableReleases12m": 38,
     "licenseField": "MIT",
@@ -342,9 +340,12 @@
      "svelte",
      "@internationalized/date"
     ],
-    "unpackedSize": 2028344,
+    "hasInstallScript": false,
     "repository": "https://github.com/huntabyte/bits-ui",
-    "firstPublished": "2023-08-17"
+    "firstPublished": "2023-08-17",
+    "weeklyDownloads": 1168964,
+    "monthlyDownloads": 3708891,
+    "dependents": "261"
    },
    "readmeNotice": null,
    "licences": [
@@ -371,7 +372,8 @@
     "topShare": 46,
     "lastCommit": "2026-09-22"
    },
-   "size": null
+   "size": null,
+   "theming": []
   },
   "ninja-keys": {
    "id": "ninja-keys",
@@ -388,17 +390,18 @@
     "name": "ninja-keys",
     "latest": "1.2.2",
     "latestDate": "2022-07-01",
-    "lastStable": "1.2.2",
-    "lastStableDate": "2022-07-01",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 3,
     "peerDeps": [],
-    "unpackedSize": 163330,
+    "hasInstallScript": false,
     "repository": "ssh://git@github.com/ssleptsov/ninja-keys",
-    "firstPublished": "2021-10-19"
+    "firstPublished": "2021-10-19",
+    "weeklyDownloads": 34172,
+    "monthlyDownloads": 103162,
+    "dependents": "4"
    },
    "readmeNotice": null,
    "licences": [
@@ -427,18 +430,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 49899,
     "entryGz": 16451,
-    "jsMin": 49899,
+    "initialGz": 16451,
     "jsGz": 16451,
+    "jsMin": 49899,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 8,
-    "initialMin": 49899,
-    "initialGz": 16451
-   }
+    "packages": 8
+   },
+   "theming": []
   },
   "dnd-kit-classic": {
    "id": "dnd-kit-classic",
@@ -457,8 +459,6 @@
     "name": "@dnd-kit/core",
     "latest": "6.3.1",
     "latestDate": "2024-12-05",
-    "lastStable": "6.3.1",
-    "lastStableDate": "2024-12-05",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
@@ -468,9 +468,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 1066148,
+    "hasInstallScript": false,
     "repository": "https://github.com/clauderic/dnd-kit",
-    "firstPublished": "2021-01-02"
+    "firstPublished": "2021-01-02",
+    "weeklyDownloads": 29595603,
+    "monthlyDownloads": 92360472,
+    "dependents": "3284"
    },
    "readmeNotice": null,
    "licences": [
@@ -525,18 +528,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 48414,
     "entryGz": 16570,
-    "jsMin": 48414,
+    "initialGz": 16570,
     "jsGz": 16570,
+    "jsMin": 48414,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 4,
-    "initialMin": 48414,
-    "initialGz": 16570
-   }
+    "packages": 4
+   },
+   "theming": []
   },
   "dnd-kit-react": {
    "id": "dnd-kit-react",
@@ -555,8 +557,6 @@
     "name": "@dnd-kit/react",
     "latest": "0.5.0",
     "latestDate": "2026-06-11",
-    "lastStable": "0.5.0",
-    "lastStableDate": "2026-06-11",
     "releases12m": 139,
     "stableReleases12m": 10,
     "licenseField": "MIT",
@@ -566,9 +566,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 240247,
+    "hasInstallScript": false,
     "repository": "https://github.com/clauderic/dnd-kit",
-    "firstPublished": "2024-06-03"
+    "firstPublished": "2024-06-03",
+    "weeklyDownloads": 1617709,
+    "monthlyDownloads": 4776858,
+    "dependents": "114"
    },
    "readmeNotice": null,
    "licences": [
@@ -623,18 +626,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 116607,
     "entryGz": 37762,
-    "jsMin": 116607,
+    "initialGz": 37762,
     "jsGz": 37762,
+    "jsMin": 116607,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 8,
-    "initialMin": 116607,
-    "initialGz": 37762
-   }
+    "packages": 8
+   },
+   "theming": []
   },
   "pragmatic-dnd": {
    "id": "pragmatic-dnd",
@@ -655,17 +657,18 @@
     "name": "@atlaskit/pragmatic-drag-and-drop",
     "latest": "4.0.0",
     "latestDate": "2026-09-24",
-    "lastStable": "4.0.0",
-    "lastStableDate": "2026-09-24",
     "releases12m": 11,
     "stableReleases12m": 11,
     "licenseField": "Apache-2.0",
     "deprecated": null,
     "deps": 3,
     "peerDeps": [],
-    "unpackedSize": 486498,
+    "hasInstallScript": false,
     "repository": "https://github.com/atlassian/pragmatic-drag-and-drop",
-    "firstPublished": "2023-05-09"
+    "firstPublished": "2023-05-09",
+    "weeklyDownloads": 1712560,
+    "monthlyDownloads": 5294553,
+    "dependents": "215"
    },
    "readmeNotice": null,
    "licences": [
@@ -746,18 +749,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 23491,
     "entryGz": 7297,
-    "jsMin": 23491,
+    "initialGz": 7297,
     "jsGz": 7297,
+    "jsMin": 23491,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 5,
-    "initialMin": 23491,
-    "initialGz": 7297
-   }
+    "packages": 5
+   },
+   "theming": []
   },
   "rac-dnd": {
    "id": "rac-dnd",
@@ -775,8 +777,6 @@
     "name": "react-aria-components",
     "latest": "1.21.1",
     "latestDate": "2026-09-04",
-    "lastStable": "1.21.1",
-    "lastStableDate": "2026-09-04",
     "releases12m": 254,
     "stableReleases12m": 11,
     "licenseField": "Apache-2.0",
@@ -786,9 +786,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 6586272,
+    "hasInstallScript": false,
     "repository": "https://github.com/adobe/react-spectrum",
-    "firstPublished": "2018-06-12"
+    "firstPublished": "2018-06-12",
+    "weeklyDownloads": 5263541,
+    "monthlyDownloads": 15411377,
+    "dependents": "720"
    },
    "readmeNotice": null,
    "licences": [
@@ -830,18 +833,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 313947,
     "entryGz": 74271,
-    "jsMin": 313947,
+    "initialGz": 74271,
     "jsGz": 74271,
+    "jsMin": 313947,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 9,
-    "initialMin": 313947,
-    "initialGz": 74271
-   }
+    "packages": 9
+   },
+   "theming": []
   },
   "hello-pangea-dnd": {
    "id": "hello-pangea-dnd",
@@ -858,8 +860,6 @@
     "name": "@hello-pangea/dnd",
     "latest": "18.0.1",
     "latestDate": "2025-02-09",
-    "lastStable": "18.0.1",
-    "lastStableDate": "2025-02-09",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "Apache-2.0",
@@ -869,9 +869,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 1263171,
+    "hasInstallScript": false,
     "repository": "https://github.com/hello-pangea/dnd",
-    "firstPublished": "2022-08-12"
+    "firstPublished": "2022-08-12",
+    "weeklyDownloads": 3477991,
+    "monthlyDownloads": 11290937,
+    "dependents": "395"
    },
    "readmeNotice": null,
    "licences": [
@@ -900,18 +903,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 98590,
     "entryGz": 31343,
-    "jsMin": 98590,
+    "initialGz": 31343,
     "jsGz": 31343,
+    "jsMin": 98590,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 8,
-    "initialMin": 98590,
-    "initialGz": 31343
-   }
+    "packages": 8
+   },
+   "theming": []
   },
   "react-dnd": {
    "id": "react-dnd",
@@ -929,8 +931,6 @@
     "name": "react-dnd",
     "latest": "16.0.1",
     "latestDate": "2022-04-19",
-    "lastStable": "16.0.1",
-    "lastStableDate": "2022-04-19",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
@@ -942,9 +942,12 @@
      "@types/react",
      "react"
     ],
-    "unpackedSize": 231379,
+    "hasInstallScript": false,
     "repository": "https://github.com/react-dnd/react-dnd",
-    "firstPublished": "2014-10-19"
+    "firstPublished": "2014-10-19",
+    "weeklyDownloads": 6293489,
+    "monthlyDownloads": 19654905,
+    "dependents": "3657"
    },
    "readmeNotice": null,
    "licences": [
@@ -986,18 +989,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 49580,
     "entryGz": 13425,
-    "jsMin": 49580,
+    "initialGz": 13425,
     "jsGz": 13425,
+    "jsMin": 49580,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 9,
-    "initialMin": 49580,
-    "initialGz": 13425
-   }
+    "packages": 9
+   },
+   "theming": []
   },
   "sortablejs": {
    "id": "sortablejs",
@@ -1014,17 +1016,18 @@
     "name": "sortablejs",
     "latest": "1.15.7",
     "latestDate": "2026-02-11",
-    "lastStable": "1.15.7",
-    "lastStableDate": "2026-02-11",
     "releases12m": 1,
     "stableReleases12m": 1,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 640152,
+    "hasInstallScript": false,
     "repository": "git://github.com/SortableJS/Sortable",
-    "firstPublished": "2014-11-25"
+    "firstPublished": "2014-11-25",
+    "weeklyDownloads": 4781511,
+    "monthlyDownloads": 15027373,
+    "dependents": "3520"
    },
    "readmeNotice": null,
    "licences": [
@@ -1053,18 +1056,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 36976,
     "entryGz": 12798,
-    "jsMin": 36976,
+    "initialGz": 12798,
     "jsGz": 12798,
+    "jsMin": 36976,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 36976,
-    "initialGz": 12798
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "formkit-dnd": {
    "id": "formkit-dnd",
@@ -1081,8 +1083,6 @@
     "name": "@formkit/drag-and-drop",
     "latest": "0.6.1",
     "latestDate": "2026-06-15",
-    "lastStable": "0.6.1",
-    "lastStableDate": "2026-06-15",
     "releases12m": 3,
     "stableReleases12m": 2,
     "licenseField": "MIT",
@@ -1091,9 +1091,12 @@
     "peerDeps": [
      "@marko/runtime-tags"
     ],
-    "unpackedSize": 909179,
+    "hasInstallScript": false,
     "repository": "https://github.com/formkit/drag-and-drop",
-    "firstPublished": "2023-12-06"
+    "firstPublished": "2023-12-06",
+    "weeklyDownloads": 124624,
+    "monthlyDownloads": 391591,
+    "dependents": "25"
    },
    "readmeNotice": null,
    "licences": [
@@ -1122,18 +1125,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 30667,
     "entryGz": 9026,
-    "jsMin": 30667,
+    "initialGz": 9026,
     "jsGz": 9026,
+    "jsMin": 30667,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 30667,
-    "initialGz": 9026
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "swapy": {
    "id": "swapy",
@@ -1150,17 +1152,18 @@
     "name": "swapy",
     "latest": "1.0.5",
     "latestDate": "2025-01-19",
-    "lastStable": "1.0.5",
-    "lastStableDate": "2025-01-19",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "GPL-3.0",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 99477,
+    "hasInstallScript": false,
     "repository": "",
-    "firstPublished": "2024-07-15"
+    "firstPublished": "2024-07-15",
+    "weeklyDownloads": 18254,
+    "monthlyDownloads": 69799,
+    "dependents": "9"
    },
    "readmeNotice": null,
    "licences": [
@@ -1189,18 +1192,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 23017,
     "entryGz": 7818,
-    "jsMin": 23017,
+    "initialGz": 7818,
     "jsGz": 7818,
+    "jsMin": 23017,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 23017,
-    "initialGz": 7818
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "vue-draggable-plus": {
    "id": "vue-draggable-plus",
@@ -1218,8 +1220,6 @@
     "name": "vue-draggable-plus",
     "latest": "0.6.1",
     "latestDate": "2026-01-11",
-    "lastStable": "0.6.1",
-    "lastStableDate": "2026-01-11",
     "releases12m": 1,
     "stableReleases12m": 1,
     "licenseField": "MIT",
@@ -1228,9 +1228,12 @@
     "peerDeps": [
      "@types/sortablejs"
     ],
-    "unpackedSize": 214831,
+    "hasInstallScript": false,
     "repository": "https://github.com/Alfred-Skyblue/vue-draggable-plus",
-    "firstPublished": "2023-03-23"
+    "firstPublished": "2023-03-23",
+    "weeklyDownloads": 328507,
+    "monthlyDownloads": 1056989,
+    "dependents": "258"
    },
    "readmeNotice": null,
    "licences": [
@@ -1272,18 +1275,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 42150,
     "entryGz": 14909,
-    "jsMin": 42150,
+    "initialGz": 14909,
     "jsGz": 14909,
+    "jsMin": 42150,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 42150,
-    "initialGz": 14909
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "svelte-dnd-action": {
    "id": "svelte-dnd-action",
@@ -1300,8 +1302,6 @@
     "name": "svelte-dnd-action",
     "latest": "0.9.79",
     "latestDate": "2026-08-21",
-    "lastStable": "0.9.79",
-    "lastStableDate": "2026-08-21",
     "releases12m": 14,
     "stableReleases12m": 14,
     "licenseField": "MIT",
@@ -1310,9 +1310,12 @@
     "peerDeps": [
      "svelte"
     ],
-    "unpackedSize": 414877,
+    "hasInstallScript": false,
     "repository": "https://github.com/isaacHagoel/svelte-dnd-action",
-    "firstPublished": "2020-05-13"
+    "firstPublished": "2020-05-13",
+    "weeklyDownloads": 312803,
+    "monthlyDownloads": 1087146,
+    "dependents": "51"
    },
    "readmeNotice": null,
    "licences": [
@@ -1341,18 +1344,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 38404,
     "entryGz": 12423,
-    "jsMin": 38404,
+    "initialGz": 12423,
     "jsGz": 12423,
+    "jsMin": 38404,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 38404,
-    "initialGz": 12423
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "rac-tree": {
    "id": "rac-tree",
@@ -1369,8 +1371,6 @@
     "name": "react-aria-components",
     "latest": "1.21.1",
     "latestDate": "2026-09-04",
-    "lastStable": "1.21.1",
-    "lastStableDate": "2026-09-04",
     "releases12m": 254,
     "stableReleases12m": 11,
     "licenseField": "Apache-2.0",
@@ -1380,9 +1380,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 6586272,
+    "hasInstallScript": false,
     "repository": "https://github.com/adobe/react-spectrum",
-    "firstPublished": "2018-06-12"
+    "firstPublished": "2018-06-12",
+    "weeklyDownloads": 5263541,
+    "monthlyDownloads": 15411377,
+    "dependents": "720"
    },
    "readmeNotice": null,
    "licences": [
@@ -1411,18 +1414,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 320388,
     "entryGz": 76260,
-    "jsMin": 320388,
+    "initialGz": 76260,
     "jsGz": 76260,
+    "jsMin": 320388,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 9,
-    "initialMin": 320388,
-    "initialGz": 76260
-   }
+    "packages": 9
+   },
+   "theming": []
   },
   "headless-tree": {
    "id": "headless-tree",
@@ -1440,17 +1442,18 @@
     "name": "@headless-tree/core",
     "latest": "1.7.0",
     "latestDate": "2026-05-17",
-    "lastStable": "1.7.0",
-    "lastStableDate": "2026-05-17",
     "releases12m": 23,
     "stableReleases12m": 7,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 536662,
+    "hasInstallScript": false,
     "repository": "ssh://git@github.com/lukasbach/headless-tree",
-    "firstPublished": "2023-05-18"
+    "firstPublished": "2023-05-18",
+    "weeklyDownloads": 405165,
+    "monthlyDownloads": 1266610,
+    "dependents": "37"
    },
    "readmeNotice": null,
    "licences": [
@@ -1492,18 +1495,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 30496,
     "entryGz": 9228,
-    "jsMin": 30496,
+    "initialGz": 9228,
     "jsGz": 9228,
+    "jsMin": 30496,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 2,
-    "initialMin": 30496,
-    "initialGz": 9228
-   }
+    "packages": 2
+   },
+   "theming": []
   },
   "react-complex-tree": {
    "id": "react-complex-tree",
@@ -1520,8 +1522,6 @@
     "name": "react-complex-tree",
     "latest": "2.6.4",
     "latestDate": "2026-08-24",
-    "lastStable": "2.6.4",
-    "lastStableDate": "2026-08-24",
     "releases12m": 4,
     "stableReleases12m": 4,
     "licenseField": "MIT",
@@ -1530,9 +1530,12 @@
     "peerDeps": [
      "react"
     ],
-    "unpackedSize": 1338720,
+    "hasInstallScript": false,
     "repository": "ssh://git@github.com/lukasbach/react-complex-tree",
-    "firstPublished": "2021-06-20"
+    "firstPublished": "2021-06-20",
+    "weeklyDownloads": 81407,
+    "monthlyDownloads": 447436,
+    "dependents": "24"
    },
    "readmeNotice": null,
    "licences": [
@@ -1561,18 +1564,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 69642,
     "entryGz": 18230,
-    "jsMin": 69642,
+    "initialGz": 18230,
     "jsGz": 18230,
+    "jsMin": 69642,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 69642,
-    "initialGz": 18230
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "react-complex-tree",
+     "cssFiles": 4,
+     "cssBytes": 22508,
+     "customProperties": 44,
+     "prefix": "--rct-*",
+     "structuralSheet": [],
+     "sample": [
+      "lib/style-modern.css",
+      "lib/style.css",
+      "src/style-modern.css",
+      "src/style.css"
+     ]
+    }
+   ]
   },
   "react-arborist": {
    "id": "react-arborist",
@@ -1589,8 +1606,6 @@
     "name": "react-arborist",
     "latest": "3.16.0",
     "latestDate": "2026-07-25",
-    "lastStable": "3.16.0",
-    "lastStableDate": "2026-07-25",
     "releases12m": 22,
     "stableReleases12m": 22,
     "licenseField": "MIT",
@@ -1600,9 +1615,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 594939,
+    "hasInstallScript": false,
     "repository": "https://github.com/jameskerr/react-arborist",
-    "firstPublished": "2021-09-02"
+    "firstPublished": "2021-09-02",
+    "weeklyDownloads": 813334,
+    "monthlyDownloads": 2492788,
+    "dependents": "80"
    },
    "readmeNotice": null,
    "licences": [
@@ -1631,18 +1649,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 130747,
     "entryGz": 33958,
-    "jsMin": 130747,
+    "initialGz": 33958,
     "jsGz": 33958,
+    "jsMin": 130747,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 15,
-    "initialMin": 130747,
-    "initialGz": 33958
-   }
+    "packages": 15
+   },
+   "theming": []
   },
   "react-grid-layout": {
    "id": "react-grid-layout",
@@ -1659,8 +1676,6 @@
     "name": "react-grid-layout",
     "latest": "2.2.4",
     "latestDate": "2026-07-29",
-    "lastStable": "2.2.4",
-    "lastStableDate": "2026-07-29",
     "releases12m": 10,
     "stableReleases12m": 10,
     "licenseField": "MIT",
@@ -1670,9 +1685,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 447579,
+    "hasInstallScript": false,
     "repository": "ssh://git@github.com/STRML/react-grid-layout",
-    "firstPublished": "2014-12-28"
+    "firstPublished": "2014-12-28",
+    "weeklyDownloads": 4313749,
+    "monthlyDownloads": 13778935,
+    "dependents": "928"
    },
    "readmeNotice": null,
    "licences": [
@@ -1701,18 +1719,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 66343,
     "entryGz": 21377,
-    "jsMin": 66343,
+    "initialGz": 21377,
     "jsGz": 21377,
+    "jsMin": 66343,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 6,
-    "initialMin": 66343,
-    "initialGz": 21377
-   }
+    "packages": 6
+   },
+   "theming": [
+    {
+     "pkg": "react-grid-layout",
+     "cssFiles": 1,
+     "cssBytes": 2709,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "css/styles.css"
+     ]
+    }
+   ]
   },
   "gridstack": {
    "id": "gridstack",
@@ -1729,17 +1758,18 @@
     "name": "gridstack",
     "latest": "14.0.0",
     "latestDate": "2026-09-21",
-    "lastStable": "14.0.0",
-    "lastStableDate": "2026-09-21",
     "releases12m": 14,
     "stableReleases12m": 14,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 2162392,
+    "hasInstallScript": false,
     "repository": "https://github.com/gridstack/gridstack.js",
-    "firstPublished": "2015-07-30"
+    "firstPublished": "2015-07-30",
+    "weeklyDownloads": 623342,
+    "monthlyDownloads": 1993221,
+    "dependents": "135"
    },
    "readmeNotice": null,
    "licences": [
@@ -1768,18 +1798,30 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 92192,
     "entryGz": 25391,
-    "jsMin": 92192,
+    "initialGz": 25391,
     "jsGz": 25391,
+    "jsMin": 92192,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 92192,
-    "initialGz": 25391
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "gridstack",
+     "cssFiles": 2,
+     "cssBytes": 16698,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "dist/gridstack.css",
+      "dist/gridstack.min.css"
+     ]
+    }
+   ]
   },
   "react-resizable-panels": {
    "id": "react-resizable-panels",
@@ -1796,8 +1838,6 @@
     "name": "react-resizable-panels",
     "latest": "4.14.1",
     "latestDate": "2026-09-27",
-    "lastStable": "4.14.1",
-    "lastStableDate": "2026-09-27",
     "releases12m": 91,
     "stableReleases12m": 69,
     "licenseField": "MIT",
@@ -1807,9 +1847,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 910424,
+    "hasInstallScript": false,
     "repository": "https://github.com/bvaughn/react-resizable-panels",
-    "firstPublished": "2022-12-22"
+    "firstPublished": "2022-12-22",
+    "weeklyDownloads": 41922056,
+    "monthlyDownloads": 128333700,
+    "dependents": "2592"
    },
    "readmeNotice": null,
    "licences": [
@@ -1838,18 +1881,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 58251,
     "entryGz": 19958,
-    "jsMin": 58251,
+    "initialGz": 19958,
     "jsGz": 19958,
+    "jsMin": 58251,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 58251,
-    "initialGz": 19958
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "ark-splitter": {
    "id": "ark-splitter",
@@ -1866,8 +1908,6 @@
     "name": "@ark-ui/react",
     "latest": "5.39.2",
     "latestDate": "2026-09-13",
-    "lastStable": "5.39.2",
-    "lastStableDate": "2026-09-13",
     "releases12m": 27,
     "stableReleases12m": 27,
     "licenseField": "MIT",
@@ -1877,9 +1917,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 3336128,
+    "hasInstallScript": false,
     "repository": "https://github.com/chakra-ui/ark",
-    "firstPublished": "2022-11-06"
+    "firstPublished": "2022-11-06",
+    "weeklyDownloads": 1098040,
+    "monthlyDownloads": 3624426,
+    "dependents": "196"
    },
    "readmeNotice": null,
    "licences": [
@@ -1908,18 +1951,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 50250,
     "entryGz": 17547,
-    "jsMin": 50250,
+    "initialGz": 17547,
     "jsGz": 17547,
+    "jsMin": 50250,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 8,
-    "initialMin": 50250,
-    "initialGz": 17547
-   }
+    "packages": 8
+   },
+   "theming": []
   },
   "allotment": {
    "id": "allotment",
@@ -1936,8 +1978,6 @@
     "name": "allotment",
     "latest": "1.20.5",
     "latestDate": "2025-12-19",
-    "lastStable": "1.20.5",
-    "lastStableDate": "2025-12-19",
     "releases12m": 1,
     "stableReleases12m": 1,
     "licenseField": "MIT",
@@ -1947,9 +1987,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 206403,
+    "hasInstallScript": false,
     "repository": "https://github.com/johnwalley/allotment",
-    "firstPublished": "2021-09-23"
+    "firstPublished": "2021-09-23",
+    "weeklyDownloads": 309622,
+    "monthlyDownloads": 893060,
+    "dependents": "94"
    },
    "readmeNotice": null,
    "licences": [
@@ -1978,18 +2021,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 32828,
     "entryGz": 10136,
-    "jsMin": 32828,
+    "initialGz": 10136,
     "jsGz": 10136,
+    "jsMin": 32828,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 32828,
-    "initialGz": 10136
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "allotment",
+     "cssFiles": 1,
+     "cssBytes": 6047,
+     "customProperties": 5,
+     "prefix": "--sash-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/style.css"
+     ]
+    }
+   ]
   },
   "split-js": {
    "id": "split-js",
@@ -2006,17 +2060,18 @@
     "name": "split.js",
     "latest": "1.6.5",
     "latestDate": "2022-01-07",
-    "lastStable": "1.6.5",
-    "lastStableDate": "2022-01-07",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 131365,
+    "hasInstallScript": false,
     "repository": "https://github.com/nathancahill/split",
-    "firstPublished": "2015-10-13"
+    "firstPublished": "2015-10-13",
+    "weeklyDownloads": 482416,
+    "monthlyDownloads": 1621690,
+    "dependents": "173"
    },
    "readmeNotice": null,
    "licences": [
@@ -2045,18 +2100,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 6096,
     "entryGz": 2447,
-    "jsMin": 6096,
+    "initialGz": 2447,
     "jsGz": 2447,
+    "jsMin": 6096,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 6096,
-    "initialGz": 2447
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "dockview": {
    "id": "dockview",
@@ -2075,17 +2129,18 @@
     "name": "dockview",
     "latest": "8.3.1",
     "latestDate": "2026-09-10",
-    "lastStable": "8.3.1",
-    "lastStableDate": "2026-09-10",
     "releases12m": 60,
     "stableReleases12m": 30,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 1,
     "peerDeps": [],
-    "unpackedSize": 1628220,
+    "hasInstallScript": false,
     "repository": "https://github.com/dockview/dockview",
-    "firstPublished": "2020-10-13"
+    "firstPublished": "2020-10-13",
+    "weeklyDownloads": 465259,
+    "monthlyDownloads": 1266830,
+    "dependents": "23"
    },
    "readmeNotice": null,
    "licences": [
@@ -2140,18 +2195,40 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 397912,
     "entryGz": 92002,
-    "jsMin": 397912,
+    "initialGz": 92002,
     "jsGz": 92002,
+    "jsMin": 397912,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 3,
-    "initialMin": 397912,
-    "initialGz": 92002
-   }
+    "packages": 3
+   },
+   "theming": [
+    {
+     "pkg": "dockview",
+     "cssFiles": 1,
+     "cssBytes": 150702,
+     "customProperties": 119,
+     "prefix": "--dv-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/styles/dockview.css"
+     ]
+    },
+    {
+     "pkg": "dockview-react",
+     "cssFiles": 1,
+     "cssBytes": 150702,
+     "customProperties": 119,
+     "prefix": "--dv-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/styles/dockview.css"
+     ]
+    }
+   ]
   },
   "dockview-enterprise": {
    "id": "dockview-enterprise",
@@ -2168,17 +2245,18 @@
     "name": "dockview-enterprise",
     "latest": "8.3.1",
     "latestDate": "2026-09-10",
-    "lastStable": "8.3.1",
-    "lastStableDate": "2026-09-10",
     "releases12m": 13,
     "stableReleases12m": 6,
     "licenseField": "SEE LICENSE IN LICENCE.md",
     "deprecated": null,
     "deps": 1,
     "peerDeps": [],
-    "unpackedSize": 930165,
+    "hasInstallScript": false,
     "repository": "https://github.com/dockview/dockview",
-    "firstPublished": "2026-07-03"
+    "firstPublished": "2026-07-03",
+    "weeklyDownloads": 118,
+    "monthlyDownloads": 699,
+    "dependents": 0
    },
    "readmeNotice": null,
    "licences": [
@@ -2215,7 +2293,20 @@
     "topShare": 75,
     "lastCommit": "2026-09-24"
    },
-   "size": null
+   "size": null,
+   "theming": [
+    {
+     "pkg": "dockview-enterprise",
+     "cssFiles": 1,
+     "cssBytes": 150702,
+     "customProperties": 119,
+     "prefix": "--dv-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/styles/dockview.css"
+     ]
+    }
+   ]
   },
   "flexlayout-react": {
    "id": "flexlayout-react",
@@ -2232,8 +2323,6 @@
     "name": "flexlayout-react",
     "latest": "0.11.1",
     "latestDate": "2026-09-26",
-    "lastStable": "0.11.1",
-    "lastStableDate": "2026-09-26",
     "releases12m": 16,
     "stableReleases12m": 16,
     "licenseField": "MIT",
@@ -2243,9 +2332,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 1886240,
+    "hasInstallScript": false,
     "repository": "https://github.com/caplin/FlexLayout",
-    "firstPublished": "2016-04-23"
+    "firstPublished": "2016-04-23",
+    "weeklyDownloads": 93240,
+    "monthlyDownloads": 308054,
+    "dependents": "25"
    },
    "readmeNotice": null,
    "licences": [
@@ -2274,18 +2366,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 195248,
     "entryGz": 50410,
-    "jsMin": 195248,
+    "initialGz": 50410,
     "jsGz": 50410,
+    "jsMin": 195248,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 195248,
-    "initialGz": 50410
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "flexlayout-react",
+     "cssFiles": 10,
+     "cssBytes": 360933,
+     "customProperties": 71,
+     "prefix": "--fl-*",
+     "structuralSheet": [],
+     "sample": [
+      "style/alpha_dark.css",
+      "style/alpha_light.css",
+      "style/alpha_rounded.css",
+      "style/aria.css"
+     ]
+    }
+   ]
   },
   "rc-dock": {
    "id": "rc-dock",
@@ -2302,8 +2408,6 @@
     "name": "rc-dock",
     "latest": "4.0.2",
     "latestDate": "2026-09-22",
-    "lastStable": "4.0.2",
-    "lastStableDate": "2026-09-22",
     "releases12m": 3,
     "stableReleases12m": 2,
     "licenseField": "Apache-2.0",
@@ -2313,9 +2417,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 451134,
+    "hasInstallScript": false,
     "repository": "https://github.com/ticlo/rc-dock",
-    "firstPublished": "2019-03-12"
+    "firstPublished": "2019-03-12",
+    "weeklyDownloads": 42453,
+    "monthlyDownloads": 120525,
+    "dependents": "9"
    },
    "readmeNotice": null,
    "licences": [
@@ -2344,18 +2451,30 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 194600,
     "entryGz": 61258,
-    "jsMin": 194600,
+    "initialGz": 61258,
     "jsGz": 61258,
+    "jsMin": 194600,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 18,
-    "initialMin": 194600,
-    "initialGz": 61258
-   }
+    "packages": 18
+   },
+   "theming": [
+    {
+     "pkg": "rc-dock",
+     "cssFiles": 2,
+     "cssBytes": 31248,
+     "customProperties": 1,
+     "prefix": "--default-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/rc-dock-dark.css",
+      "dist/rc-dock.css"
+     ]
+    }
+   ]
   },
   "react-mosaic": {
    "id": "react-mosaic",
@@ -2372,8 +2491,6 @@
     "name": "react-mosaic-component",
     "latest": "7.2.1",
     "latestDate": "2026-09-28",
-    "lastStable": "7.2.1",
-    "lastStableDate": "2026-09-28",
     "releases12m": 6,
     "stableReleases12m": 5,
     "licenseField": "Apache-2.0",
@@ -2382,9 +2499,12 @@
     "peerDeps": [
      "react"
     ],
-    "unpackedSize": 625036,
+    "hasInstallScript": false,
     "repository": "https://github.com/nomcopter/react-mosaic",
-    "firstPublished": "2017-03-24"
+    "firstPublished": "2017-03-24",
+    "weeklyDownloads": 83225,
+    "monthlyDownloads": 275200,
+    "dependents": "47"
    },
    "readmeNotice": null,
    "licences": [
@@ -2413,18 +2533,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 140910,
     "entryGz": 41187,
-    "jsMin": 140910,
+    "initialGz": 41187,
     "jsGz": 41187,
+    "jsMin": 140910,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 19,
-    "initialMin": 140910,
-    "initialGz": 41187
-   }
+    "packages": 19
+   },
+   "theming": [
+    {
+     "pkg": "react-mosaic-component",
+     "cssFiles": 1,
+     "cssBytes": 25349,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "react-mosaic-component.css"
+     ]
+    }
+   ]
   },
   "golden-layout": {
    "id": "golden-layout",
@@ -2441,17 +2572,18 @@
     "name": "golden-layout",
     "latest": "2.6.0",
     "latestDate": "2022-09-26",
-    "lastStable": "2.6.0",
-    "lastStableDate": "2022-09-26",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 2059600,
+    "hasInstallScript": false,
     "repository": "https://github.com/golden-layout/golden-layout",
-    "firstPublished": "2014-10-11"
+    "firstPublished": "2014-10-11",
+    "weeklyDownloads": 21877,
+    "monthlyDownloads": 66781,
+    "dependents": "45"
    },
    "readmeNotice": null,
    "licences": [
@@ -2480,18 +2612,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 128366,
     "entryGz": 30251,
-    "jsMin": 128366,
+    "initialGz": 30251,
     "jsGz": 30251,
+    "jsMin": 128366,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 128366,
-    "initialGz": 30251
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "golden-layout",
+     "cssFiles": 6,
+     "cssBytes": 23745,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "dist/css/goldenlayout-base.css",
+      "dist/css/themes/goldenlayout-borderless-dark-theme.css",
+      "dist/css/themes/goldenlayout-dark-theme.css",
+      "dist/css/themes/goldenlayout-light-theme.css"
+     ]
+    }
+   ]
   },
   "lumino": {
    "id": "lumino",
@@ -2508,17 +2654,18 @@
     "name": "@lumino/widgets",
     "latest": "2.9.0",
     "latestDate": "2026-07-03",
-    "lastStable": "2.9.0",
-    "lastStableDate": "2026-07-03",
     "releases12m": 6,
     "stableReleases12m": 6,
     "licenseField": "BSD-3-Clause",
     "deprecated": null,
     "deps": 11,
     "peerDeps": [],
-    "unpackedSize": 4748899,
+    "hasInstallScript": false,
     "repository": "https://github.com/jupyterlab/lumino",
-    "firstPublished": "2019-11-17"
+    "firstPublished": "2019-11-17",
+    "weeklyDownloads": 153556,
+    "monthlyDownloads": 490800,
+    "dependents": "565"
    },
    "readmeNotice": null,
    "licences": [
@@ -2547,18 +2694,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 190089,
     "entryGz": 48691,
-    "jsMin": 190089,
+    "initialGz": 48691,
     "jsGz": 48691,
+    "jsMin": 190089,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 13,
-    "initialMin": 190089,
-    "initialGz": 48691
-   }
+    "packages": 13
+   },
+   "theming": [
+    {
+     "pkg": "@lumino/widgets",
+     "cssFiles": 11,
+     "cssBytes": 12163,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "style/accordionpanel.css",
+      "style/commandpalette.css",
+      "style/dockpanel.css",
+      "style/index.css"
+     ]
+    }
+   ]
   },
   "xyflow-react": {
    "id": "xyflow-react",
@@ -2575,8 +2736,6 @@
     "name": "@xyflow/react",
     "latest": "12.12.0",
     "latestDate": "2026-09-24",
-    "lastStable": "12.12.0",
-    "lastStableDate": "2026-09-24",
     "releases12m": 15,
     "stableReleases12m": 15,
     "licenseField": "MIT",
@@ -2588,9 +2747,12 @@
      "@types/react",
      "@types/react-dom"
     ],
-    "unpackedSize": 1216196,
+    "hasInstallScript": false,
     "repository": "https://github.com/xyflow/xyflow",
-    "firstPublished": "2024-01-03"
+    "firstPublished": "2024-01-03",
+    "weeklyDownloads": 13668184,
+    "monthlyDownloads": 42498922,
+    "dependents": "995"
    },
    "readmeNotice": null,
    "licences": [
@@ -2619,18 +2781,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 179335,
     "entryGz": 59459,
-    "jsMin": 179335,
+    "initialGz": 59459,
     "jsGz": 59459,
+    "jsMin": 179335,
     "cssGz": 2658,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 14,
-    "initialMin": 179335,
-    "initialGz": 59459
-   }
+    "packages": 14
+   },
+   "theming": [
+    {
+     "pkg": "@xyflow/react",
+     "cssFiles": 2,
+     "cssBytes": 32181,
+     "customProperties": 38,
+     "prefix": "--xy-*",
+     "structuralSheet": [
+      "dist/base.css"
+     ],
+     "sample": [
+      "dist/base.css",
+      "dist/style.css"
+     ]
+    }
+   ]
   },
   "rete": {
    "id": "rete",
@@ -2652,17 +2828,18 @@
     "name": "rete",
     "latest": "2.0.6",
     "latestDate": "2025-06-30",
-    "lastStable": "2.0.6",
-    "lastStableDate": "2025-06-30",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 1,
     "peerDeps": [],
-    "unpackedSize": 225942,
+    "hasInstallScript": true,
     "repository": "https://github.com/retejs/rete",
-    "firstPublished": "2018-05-30"
+    "firstPublished": "2018-05-30",
+    "weeklyDownloads": 91290,
+    "monthlyDownloads": 256987,
+    "dependents": "19"
    },
    "readmeNotice": null,
    "licences": [
@@ -2756,18 +2933,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 124981,
     "entryGz": 37762,
-    "jsMin": 124981,
+    "initialGz": 37762,
     "jsGz": 37762,
+    "jsMin": 124981,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 10,
-    "initialMin": 124981,
-    "initialGz": 37762
-   }
+    "packages": 10
+   },
+   "theming": []
   },
   "jointjs": {
    "id": "jointjs",
@@ -2784,17 +2960,18 @@
     "name": "@joint/core",
     "latest": "4.3.3",
     "latestDate": "2026-09-04",
-    "lastStable": "4.3.3",
-    "lastStableDate": "2026-09-04",
     "releases12m": 16,
     "stableReleases12m": 10,
     "licenseField": "MPL-2.0",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 6233325,
+    "hasInstallScript": false,
     "repository": "https://github.com/clientIO/joint",
-    "firstPublished": "2024-02-01"
+    "firstPublished": "2024-02-01",
+    "weeklyDownloads": 55057,
+    "monthlyDownloads": 175986,
+    "dependents": "31"
    },
    "readmeNotice": null,
    "licences": [
@@ -2823,18 +3000,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 432427,
     "entryGz": 130637,
-    "jsMin": 432427,
+    "initialGz": 130637,
     "jsGz": 130637,
+    "jsMin": 432427,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 432427,
-    "initialGz": 130637
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "antv-x6": {
    "id": "antv-x6",
@@ -2851,17 +3027,18 @@
     "name": "@antv/x6",
     "latest": "3.1.8",
     "latestDate": "2026-08-11",
-    "lastStable": "3.1.8",
-    "lastStableDate": "2026-08-11",
     "releases12m": 22,
     "stableReleases12m": 13,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 4,
     "peerDeps": [],
-    "unpackedSize": 8563331,
+    "hasInstallScript": false,
     "repository": "https://github.com/antvis/x6",
-    "firstPublished": "2019-12-01"
+    "firstPublished": "2019-12-01",
+    "weeklyDownloads": 138884,
+    "monthlyDownloads": 435688,
+    "dependents": "378"
    },
    "readmeNotice": null,
    "licences": [
@@ -2890,18 +3067,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 595366,
     "entryGz": 172195,
-    "jsMin": 595366,
+    "initialGz": 172195,
     "jsGz": 172195,
+    "jsMin": 595366,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 5,
-    "initialMin": 595366,
-    "initialGz": 172195
-   }
+    "packages": 5
+   },
+   "theming": []
   },
   "maxgraph": {
    "id": "maxgraph",
@@ -2918,17 +3094,18 @@
     "name": "@maxgraph/core",
     "latest": "0.24.0",
     "latestDate": "2026-07-08",
-    "lastStable": "0.24.0",
-    "lastStableDate": "2026-07-08",
     "releases12m": 3,
     "stableReleases12m": 3,
     "licenseField": "Apache-2.0",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 7117167,
+    "hasInstallScript": false,
     "repository": "https://github.com/maxGraph/maxGraph",
-    "firstPublished": "2022-11-22"
+    "firstPublished": "2022-11-22",
+    "weeklyDownloads": 44488,
+    "monthlyDownloads": 100437,
+    "dependents": "5"
    },
    "readmeNotice": "maxGraph` continues the legacy of [mxGraph](https://github.com/jgraph/mxgraph) (archived in 2020) as its actively maintained successor.",
    "licences": [
@@ -2957,18 +3134,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 402397,
     "entryGz": 109983,
-    "jsMin": 402397,
+    "initialGz": 109983,
     "jsGz": 109983,
+    "jsMin": 402397,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 402397,
-    "initialGz": 109983
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "@maxgraph/core",
+     "cssFiles": 1,
+     "cssBytes": 4325,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "css/common.css"
+     ]
+    }
+   ]
   },
   "litegraph": {
    "id": "litegraph",
@@ -2985,17 +3173,18 @@
     "name": "litegraph.js",
     "latest": "0.7.18",
     "latestDate": "2024-01-08",
-    "lastStable": "0.7.18",
-    "lastStableDate": "2024-01-08",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 3195726,
+    "hasInstallScript": false,
     "repository": "https://github.com/jagenjo/litegraph.js",
-    "firstPublished": "2017-12-02"
+    "firstPublished": "2017-12-02",
+    "weeklyDownloads": 2342,
+    "monthlyDownloads": 6846,
+    "dependents": "14"
    },
    "readmeNotice": null,
    "licences": [
@@ -3024,18 +3213,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 501962,
     "entryGz": 123855,
-    "jsMin": 501962,
+    "initialGz": 123855,
     "jsGz": 123855,
+    "jsMin": 501962,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 501962,
-    "initialGz": 123855
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "litegraph.js",
+     "cssFiles": 1,
+     "cssBytes": 12820,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "css/litegraph.css"
+     ]
+    }
+   ]
   },
   "baklavajs": {
    "id": "baklavajs",
@@ -3053,17 +3253,18 @@
     "name": "baklavajs",
     "latest": "2.8.1",
     "latestDate": "2025-11-02",
-    "lastStable": "2.8.1",
-    "lastStableDate": "2025-11-02",
     "releases12m": 2,
     "stableReleases12m": 2,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 5,
     "peerDeps": [],
-    "unpackedSize": 1143107,
+    "hasInstallScript": false,
     "repository": "https://github.com/newcat/baklavajs",
-    "firstPublished": "2019-01-03"
+    "firstPublished": "2019-01-03",
+    "weeklyDownloads": 8728,
+    "monthlyDownloads": 22137,
+    "dependents": "4"
    },
    "readmeNotice": null,
    "licences": [
@@ -3105,18 +3306,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 80015,
     "entryGz": 24277,
-    "jsMin": 80015,
+    "initialGz": 24277,
     "jsGz": 24277,
+    "jsMin": 80015,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 7,
-    "initialMin": 80015,
-    "initialGz": 24277
-   }
+    "packages": 7
+   },
+   "theming": []
   },
   "gojs": {
    "id": "gojs",
@@ -3133,17 +3333,18 @@
     "name": "gojs",
     "latest": "4.0.4",
     "latestDate": "2026-09-14",
-    "lastStable": "4.0.4",
-    "lastStableDate": "2026-09-14",
     "releases12m": 20,
     "stableReleases12m": 18,
     "licenseField": "SEE LICENSE IN license.html",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 8221580,
+    "hasInstallScript": false,
     "repository": "https://github.com/NorthwoodsSoftware/GoJS",
-    "firstPublished": "2015-02-27"
+    "firstPublished": "2015-02-27",
+    "weeklyDownloads": 261867,
+    "monthlyDownloads": 695154,
+    "dependents": "88"
    },
    "readmeNotice": null,
    "licences": [
@@ -3174,18 +3375,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 1022948,
     "entryGz": 280655,
-    "jsMin": 1022948,
+    "initialGz": 280655,
     "jsGz": 280655,
+    "jsMin": 1022948,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 1022948,
-    "initialGz": 280655
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "mermaid": {
    "id": "mermaid",
@@ -3202,17 +3402,18 @@
     "name": "mermaid",
     "latest": "12.0.0",
     "latestDate": "2026-09-10",
-    "lastStable": "12.0.0",
-    "lastStableDate": "2026-09-10",
     "releases12m": 15,
     "stableReleases12m": 15,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 23,
     "peerDeps": [],
-    "unpackedSize": 124593065,
+    "hasInstallScript": false,
     "repository": "https://github.com/mermaid-js/mermaid",
-    "firstPublished": "2014-12-02"
+    "firstPublished": "2014-12-02",
+    "weeklyDownloads": 18381270,
+    "monthlyDownloads": 59401023,
+    "dependents": "2019"
    },
    "readmeNotice": null,
    "licences": [
@@ -3241,18 +3442,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 28478,
     "entryGz": 11300,
-    "jsMin": 5225572,
+    "initialGz": 183227,
     "jsGz": 1526102,
+    "jsMin": 5225572,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 106,
-    "packages": 63,
-    "initialMin": 708950,
-    "initialGz": 183227
-   }
+    "packages": 63
+   },
+   "theming": []
   },
   "dagre": {
    "id": "dagre",
@@ -3269,17 +3469,18 @@
     "name": "@dagrejs/dagre",
     "latest": "3.1.1",
     "latestDate": "2026-08-08",
-    "lastStable": "3.1.1",
-    "lastStableDate": "2026-08-08",
     "releases12m": 8,
     "stableReleases12m": 8,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 1,
     "peerDeps": [],
-    "unpackedSize": 1413014,
+    "hasInstallScript": false,
     "repository": "https://github.com/dagrejs/dagre",
-    "firstPublished": "2017-12-26"
+    "firstPublished": "2017-12-26",
+    "weeklyDownloads": 5189436,
+    "monthlyDownloads": 16089406,
+    "dependents": "412"
    },
    "readmeNotice": null,
    "licences": [
@@ -3308,18 +3509,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 48106,
     "entryGz": 16748,
-    "jsMin": 48106,
+    "initialGz": 16748,
     "jsGz": 16748,
+    "jsMin": 48106,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 48106,
-    "initialGz": 16748
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "elkjs": {
    "id": "elkjs",
@@ -3336,17 +3536,18 @@
     "name": "elkjs",
     "latest": "0.12.0",
     "latestDate": "2026-07-17",
-    "lastStable": "0.12.0",
-    "lastStableDate": "2026-07-17",
     "releases12m": 2,
     "stableReleases12m": 2,
     "licenseField": "EPL-2.0 OR GPL-3.0-or-later",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 8046232,
+    "hasInstallScript": false,
     "repository": "https://github.com/kieler/elkjs",
-    "firstPublished": "2017-07-18"
+    "firstPublished": "2017-07-18",
+    "weeklyDownloads": 9614616,
+    "monthlyDownloads": 28104612,
+    "dependents": "532"
    },
    "readmeNotice": null,
    "licences": [
@@ -3375,18 +3576,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 1460302,
     "entryGz": 440683,
-    "jsMin": 1460302,
+    "initialGz": 440683,
     "jsGz": 440683,
+    "jsMin": 1460302,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 1460302,
-    "initialGz": 440683
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "bpmn-js": {
    "id": "bpmn-js",
@@ -3403,17 +3603,18 @@
     "name": "bpmn-js",
     "latest": "18.30.1",
     "latestDate": "2026-09-24",
-    "lastStable": "18.30.1",
-    "lastStableDate": "2026-09-24",
     "releases12m": 35,
     "stableReleases12m": 35,
     "licenseField": "SEE LICENSE IN LICENSE",
     "deprecated": null,
     "deps": 8,
     "peerDeps": [],
-    "unpackedSize": 5276202,
+    "hasInstallScript": false,
     "repository": "https://github.com/bpmn-io/bpmn-js",
-    "firstPublished": "2014-05-08"
+    "firstPublished": "2014-05-08",
+    "weeklyDownloads": 293390,
+    "monthlyDownloads": 893101,
+    "dependents": "657"
    },
    "readmeNotice": null,
    "licences": [
@@ -3448,18 +3649,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 579174,
     "entryGz": 169366,
-    "jsMin": 579174,
+    "initialGz": 169366,
     "jsGz": 169366,
+    "jsMin": 579174,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 20,
-    "initialMin": 579174,
-    "initialGz": 169366
-   }
+    "packages": 20
+   },
+   "theming": [
+    {
+     "pkg": "bpmn-js",
+     "cssFiles": 5,
+     "cssBytes": 146260,
+     "customProperties": 117,
+     "prefix": "--bio-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/assets/bpmn-font/css/bpmn-codes.css",
+      "dist/assets/bpmn-font/css/bpmn-embedded.css",
+      "dist/assets/bpmn-font/css/bpmn.css",
+      "dist/assets/bpmn-js.css"
+     ]
+    }
+   ]
   },
   "excalidraw": {
    "id": "excalidraw",
@@ -3476,8 +3691,6 @@
     "name": "@excalidraw/excalidraw",
     "latest": "0.18.1",
     "latestDate": "2026-04-20",
-    "lastStable": "0.18.1",
-    "lastStableDate": "2026-04-20",
     "releases12m": 52,
     "stableReleases12m": 1,
     "licenseField": "MIT",
@@ -3487,9 +3700,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 46802783,
+    "hasInstallScript": false,
     "repository": "https://github.com/excalidraw/excalidraw",
-    "firstPublished": "2020-12-06"
+    "firstPublished": "2020-12-06",
+    "weeklyDownloads": 670028,
+    "monthlyDownloads": 2065044,
+    "dependents": "235"
    },
    "readmeNotice": null,
    "licences": [
@@ -3509,8 +3725,8 @@
    ],
    "activity": {
     "repo": "excalidraw/excalidraw",
-    "commits12m": 273,
-    "humanCommits12m": 273,
+    "commits12m": 274,
+    "humanCommits12m": 274,
     "authors12m": 44,
     "topAuthor": "David Luzar",
     "topShare": 50,
@@ -3518,18 +3734,30 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 588695,
     "entryGz": 184977,
-    "jsMin": 8180049,
+    "initialGz": 376339,
     "jsGz": 2569963,
+    "jsMin": 8180049,
     "cssGz": 22775,
     "assetsRaw": 81144,
     "assetsGz": 81251,
     "chunks": 179,
-    "packages": 127,
-    "initialMin": 1145013,
-    "initialGz": 376339
-   }
+    "packages": 127
+   },
+   "theming": [
+    {
+     "pkg": "@excalidraw/excalidraw",
+     "cssFiles": 2,
+     "cssBytes": 331141,
+     "customProperties": 209,
+     "prefix": "--color-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/dev/index.css",
+      "dist/prod/index.css"
+     ]
+    }
+   ]
   },
   "tldraw": {
    "id": "tldraw",
@@ -3546,8 +3774,6 @@
     "name": "tldraw",
     "latest": "5.4.2",
     "latestDate": "2026-09-10",
-    "lastStable": "5.4.2",
-    "lastStableDate": "2026-09-10",
     "releases12m": 1892,
     "stableReleases12m": 48,
     "licenseField": "SEE LICENSE IN LICENSE.md",
@@ -3557,9 +3783,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 14897195,
+    "hasInstallScript": false,
     "repository": "https://github.com/tldraw/tldraw",
-    "firstPublished": "2024-01-24"
+    "firstPublished": "2024-01-24",
+    "weeklyDownloads": 492721,
+    "monthlyDownloads": 1459837,
+    "dependents": "40"
    },
    "readmeNotice": null,
    "licences": [
@@ -3600,18 +3829,30 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 1954455,
     "entryGz": 580400,
-    "jsMin": 1962422,
+    "initialGz": 583686,
     "jsGz": 583767,
+    "jsMin": 1962422,
     "cssGz": 14490,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 3,
-    "packages": 125,
-    "initialMin": 1962356,
-    "initialGz": 583686
-   }
+    "packages": 125
+   },
+   "theming": [
+    {
+     "pkg": "tldraw",
+     "cssFiles": 2,
+     "cssBytes": 149890,
+     "customProperties": 128,
+     "prefix": "--tl-*",
+     "structuralSheet": [],
+     "sample": [
+      "src/lib/ui.css",
+      "tldraw.css"
+     ]
+    }
+   ]
   },
   "react-konva": {
    "id": "react-konva",
@@ -3629,8 +3870,6 @@
     "name": "konva",
     "latest": "10.7.0",
     "latestDate": "2026-09-23",
-    "lastStable": "10.7.0",
-    "lastStableDate": "2026-09-23",
     "releases12m": 24,
     "stableReleases12m": 24,
     "licenseField": "MIT",
@@ -3640,9 +3879,12 @@
      "canvas",
      "skia-canvas"
     ],
-    "unpackedSize": 1872405,
+    "hasInstallScript": false,
     "repository": "git://github.com/konvajs/konva",
-    "firstPublished": "2015-01-27"
+    "firstPublished": "2015-01-27",
+    "weeklyDownloads": 3126628,
+    "monthlyDownloads": 9738542,
+    "dependents": "1185"
    },
    "readmeNotice": null,
    "licences": [
@@ -3684,18 +3926,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 332457,
     "entryGz": 102073,
-    "jsMin": 332457,
+    "initialGz": 102073,
     "jsGz": 102073,
+    "jsMin": 332457,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 4,
-    "initialMin": 332457,
-    "initialGz": 102073
-   }
+    "packages": 4
+   },
+   "theming": []
   },
   "fabric": {
    "id": "fabric",
@@ -3712,17 +3953,18 @@
     "name": "fabric",
     "latest": "7.4.0",
     "latestDate": "2026-05-18",
-    "lastStable": "7.4.0",
-    "lastStableDate": "2026-05-18",
     "releases12m": 9,
     "stableReleases12m": 8,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 22222881,
+    "hasInstallScript": false,
     "repository": "https://github.com/fabricjs/fabric.js",
-    "firstPublished": "2011-08-16"
+    "firstPublished": "2011-08-16",
+    "weeklyDownloads": 1114809,
+    "monthlyDownloads": 3546130,
+    "dependents": "972"
    },
    "readmeNotice": null,
    "licences": [
@@ -3751,18 +3993,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 281749,
     "entryGz": 88119,
-    "jsMin": 281749,
+    "initialGz": 88119,
     "jsGz": 88119,
+    "jsMin": 281749,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 281749,
-    "initialGz": 88119
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "react-moveable": {
    "id": "react-moveable",
@@ -3779,17 +4020,18 @@
     "name": "react-moveable",
     "latest": "0.56.0",
     "latestDate": "2023-12-03",
-    "lastStable": "0.56.0",
-    "lastStableDate": "2023-12-03",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 13,
     "peerDeps": [],
-    "unpackedSize": 4622431,
+    "hasInstallScript": false,
     "repository": "https://github.com/daybrush/moveable/blob/master/packages/react-moveable",
-    "firstPublished": "2019-06-12"
+    "firstPublished": "2019-06-12",
+    "weeklyDownloads": 634484,
+    "monthlyDownloads": 2004071,
+    "dependents": "172"
    },
    "readmeNotice": null,
    "licences": [
@@ -3818,18 +4060,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 233339,
     "entryGz": 76097,
-    "jsMin": 233339,
+    "initialGz": 76097,
     "jsGz": 76097,
+    "jsMin": 233339,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 14,
-    "initialMin": 233339,
-    "initialGz": 76097
-   }
+    "packages": 14
+   },
+   "theming": []
   },
   "interactjs": {
    "id": "interactjs",
@@ -3846,17 +4087,18 @@
     "name": "interactjs",
     "latest": "1.10.28",
     "latestDate": "2026-08-01",
-    "lastStable": "1.10.28",
-    "lastStableDate": "2026-08-01",
     "releases12m": 1,
     "stableReleases12m": 1,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 1,
     "peerDeps": [],
-    "unpackedSize": 1398773,
+    "hasInstallScript": false,
     "repository": "https://github.com/taye/interact.js",
-    "firstPublished": "2016-11-30"
+    "firstPublished": "2016-11-30",
+    "weeklyDownloads": 770848,
+    "monthlyDownloads": 2430813,
+    "dependents": "560"
    },
    "readmeNotice": null,
    "licences": [
@@ -3885,18 +4127,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 98613,
     "entryGz": 29715,
-    "jsMin": 98613,
+    "initialGz": 29715,
     "jsGz": 29715,
+    "jsMin": 98613,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 98613,
-    "initialGz": 29715
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "polotno": {
    "id": "polotno",
@@ -3913,8 +4154,6 @@
     "name": "polotno",
     "latest": "4.14.1",
     "latestDate": "2026-09-25",
-    "lastStable": "3.14.1",
-    "lastStableDate": "2026-09-25",
     "releases12m": 158,
     "stableReleases12m": 104,
     "licenseField": "SEE LICENSE IN LICENSE.md",
@@ -3927,9 +4166,12 @@
      "@blueprintjs/icons",
      "@blueprintjs/select"
     ],
-    "unpackedSize": 5278545,
+    "hasInstallScript": false,
     "repository": "https://github.com/polotno-project/polotno",
-    "firstPublished": "2020-04-07"
+    "firstPublished": "2020-04-07",
+    "weeklyDownloads": 35104,
+    "monthlyDownloads": 102439,
+    "dependents": "11"
    },
    "readmeNotice": null,
    "licences": [
@@ -3949,11 +4191,24 @@
      ]
     }
    ],
-   "activity": {
-    "repo": "polotno-project/polotno",
-    "error": "fatal: could not read Username for 'https://github.com': terminal prompts disabled"
-   },
-   "size": null
+   "activity": null,
+   "size": null,
+   "theming": [
+    {
+     "pkg": "polotno",
+     "cssFiles": 5,
+     "cssBytes": 661759,
+     "customProperties": 400,
+     "prefix": "--bp-*",
+     "structuralSheet": [],
+     "sample": [
+      "blueprint.polotno.css",
+      "fonts.css",
+      "themes/blueprint.css",
+      "themes/carbon.css"
+     ]
+    }
+   ]
   },
   "tiptap": {
    "id": "tiptap",
@@ -3973,8 +4228,6 @@
     "name": "@tiptap/react",
     "latest": "3.31.3",
     "latestDate": "2026-09-04",
-    "lastStable": "3.31.3",
-    "lastStableDate": "2026-09-04",
     "releases12m": 85,
     "stableReleases12m": 85,
     "licenseField": "MIT",
@@ -3988,9 +4241,12 @@
      "@types/react",
      "@types/react-dom"
     ],
-    "unpackedSize": 566604,
+    "hasInstallScript": false,
     "repository": "https://github.com/ueberdosis/tiptap",
-    "firstPublished": "2021-02-26"
+    "firstPublished": "2021-02-26",
+    "weeklyDownloads": 17845549,
+    "monthlyDownloads": 56095149,
+    "dependents": "1987"
    },
    "readmeNotice": null,
    "licences": [
@@ -4058,18 +4314,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 398170,
     "entryGz": 126145,
-    "jsMin": 398170,
+    "initialGz": 126145,
     "jsGz": 126145,
+    "jsMin": 398170,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 36,
-    "initialMin": 398170,
-    "initialGz": 126145
-   }
+    "packages": 36
+   },
+   "theming": []
   },
   "lexical": {
    "id": "lexical",
@@ -4091,8 +4346,6 @@
     "name": "lexical",
     "latest": "0.52.0",
     "latestDate": "2026-09-28",
-    "lastStable": "0.52.0",
-    "lastStableDate": "2026-09-28",
     "releases12m": 249,
     "stableReleases12m": 19,
     "licenseField": "MIT",
@@ -4101,9 +4354,12 @@
     "peerDeps": [
      "typescript"
     ],
-    "unpackedSize": 3225842,
+    "hasInstallScript": false,
     "repository": "https://github.com/facebook/lexical",
-    "firstPublished": "2014-06-13"
+    "firstPublished": "2014-06-13",
+    "weeklyDownloads": 6681533,
+    "monthlyDownloads": 20222924,
+    "dependents": "849"
    },
    "readmeNotice": null,
    "licences": [
@@ -4197,18 +4453,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 268820,
     "entryGz": 86957,
-    "jsMin": 268820,
+    "initialGz": 86957,
     "jsGz": 86957,
+    "jsMin": 268820,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 15,
-    "initialMin": 268820,
-    "initialGz": 86957
-   }
+    "packages": 15
+   },
+   "theming": []
   },
   "prosemirror": {
    "id": "prosemirror",
@@ -4229,17 +4484,18 @@
     "name": "prosemirror-state",
     "latest": "1.4.4",
     "latestDate": "2025-10-23",
-    "lastStable": "1.4.4",
-    "lastStableDate": "2025-10-23",
     "releases12m": 1,
     "stableReleases12m": 1,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 3,
     "peerDeps": [],
-    "unpackedSize": 184018,
+    "hasInstallScript": false,
     "repository": "git://github.com/prosemirror/prosemirror-state",
-    "firstPublished": "2016-09-21"
+    "firstPublished": "2016-09-21",
+    "weeklyDownloads": 23253559,
+    "monthlyDownloads": 71699082,
+    "dependents": "1216"
    },
    "readmeNotice": null,
    "licences": [
@@ -4320,18 +4576,40 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 249179,
     "entryGz": 78000,
-    "jsMin": 249179,
+    "initialGz": 78000,
     "jsGz": 78000,
+    "jsMin": 249179,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 18,
-    "initialMin": 249179,
-    "initialGz": 78000
-   }
+    "packages": 18
+   },
+   "theming": [
+    {
+     "pkg": "prosemirror-view",
+     "cssFiles": 1,
+     "cssBytes": 1243,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "style/prosemirror.css"
+     ]
+    },
+    {
+     "pkg": "prosemirror-example-setup",
+     "cssFiles": 1,
+     "cssBytes": 1469,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "style/style.css"
+     ]
+    }
+   ]
   },
   "blocknote": {
    "id": "blocknote",
@@ -4350,8 +4628,6 @@
     "name": "@blocknote/core",
     "latest": "0.55.0",
     "latestDate": "2026-09-22",
-    "lastStable": "0.55.0",
-    "lastStableDate": "2026-09-22",
     "releases12m": 38,
     "stableReleases12m": 36,
     "licenseField": "MPL-2.0",
@@ -4365,9 +4641,12 @@
      "y-prosemirror",
      "@y/prosemirror"
     ],
-    "unpackedSize": 9316289,
+    "hasInstallScript": false,
     "repository": "https://github.com/TypeCellOS/BlockNote",
-    "firstPublished": "2022-08-23"
+    "firstPublished": "2022-08-23",
+    "weeklyDownloads": 636757,
+    "monthlyDownloads": 2135901,
+    "dependents": "106"
    },
    "readmeNotice": null,
    "licences": [
@@ -4422,18 +4701,57 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 1064598,
     "entryGz": 326642,
-    "jsMin": 1576892,
+    "initialGz": 327148,
     "jsGz": 435616,
+    "jsMin": 1576892,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 4,
-    "packages": 47,
-    "initialMin": 1065492,
-    "initialGz": 327148
-   }
+    "packages": 47
+   },
+   "theming": [
+    {
+     "pkg": "@blocknote/core",
+     "cssFiles": 5,
+     "cssBytes": 70837,
+     "customProperties": 10,
+     "prefix": "--prev-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/style.css",
+      "src/editor/Block.css",
+      "src/editor/editor.css",
+      "src/fonts/inter.css"
+     ]
+    },
+    {
+     "pkg": "@blocknote/react",
+     "cssFiles": 3,
+     "cssBytes": 57434,
+     "customProperties": 52,
+     "prefix": "--bn-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/style.css",
+      "src/editor/styles.css",
+      "src/style.css"
+     ]
+    },
+    {
+     "pkg": "@blocknote/shadcn",
+     "cssFiles": 2,
+     "cssBytes": 39292,
+     "customProperties": 52,
+     "prefix": "--bn-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/style.css",
+      "src/style.css"
+     ]
+    }
+   ]
   },
   "slate": {
    "id": "slate",
@@ -4453,17 +4771,18 @@
     "name": "slate",
     "latest": "0.126.2",
     "latestDate": "2026-08-08",
-    "lastStable": "0.126.2",
-    "lastStableDate": "2026-08-08",
     "releases12m": 16,
     "stableReleases12m": 7,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 2281743,
+    "hasInstallScript": false,
     "repository": "git://github.com/ianstormtaylor/slate",
-    "firstPublished": "2012-02-09"
+    "firstPublished": "2012-02-09",
+    "weeklyDownloads": 3130482,
+    "monthlyDownloads": 10180884,
+    "dependents": "1362"
    },
    "readmeNotice": null,
    "licences": [
@@ -4531,18 +4850,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 217505,
     "entryGz": 59059,
-    "jsMin": 217505,
+    "initialGz": 59059,
     "jsGz": 59059,
+    "jsMin": 217505,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 11,
-    "initialMin": 217505,
-    "initialGz": 59059
-   }
+    "packages": 11
+   },
+   "theming": []
   },
   "platejs": {
    "id": "platejs",
@@ -4559,8 +4877,6 @@
     "name": "platejs",
     "latest": "53.3.14",
     "latestDate": "2026-09-19",
-    "lastStable": "53.3.14",
-    "lastStableDate": "2026-09-19",
     "releases12m": 39,
     "stableReleases12m": 37,
     "licenseField": "MIT",
@@ -4570,9 +4886,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 3644,
+    "hasInstallScript": false,
     "repository": "https://github.com/udecode/plate",
-    "firstPublished": "2025-05-30"
+    "firstPublished": "2025-05-30",
+    "weeklyDownloads": 428307,
+    "monthlyDownloads": 1430122,
+    "dependents": "42"
    },
    "readmeNotice": null,
    "licences": [
@@ -4601,18 +4920,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 490334,
     "entryGz": 151325,
-    "jsMin": 490334,
+    "initialGz": 151325,
     "jsGz": 151325,
+    "jsMin": 490334,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 37,
-    "initialMin": 490334,
-    "initialGz": 151325
-   }
+    "packages": 37
+   },
+   "theming": []
   },
   "quill": {
    "id": "quill",
@@ -4629,17 +4947,18 @@
     "name": "quill",
     "latest": "2.0.3",
     "latestDate": "2024-11-30",
-    "lastStable": "2.0.3",
-    "lastStableDate": "2024-11-30",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "BSD-3-Clause",
     "deprecated": null,
     "deps": 4,
     "peerDeps": [],
-    "unpackedSize": 3036362,
+    "hasInstallScript": false,
     "repository": "https://github.com/slab/quill",
-    "firstPublished": "2012-03-25"
+    "firstPublished": "2012-03-25",
+    "weeklyDownloads": 7836803,
+    "monthlyDownloads": 26786866,
+    "dependents": "2335"
    },
    "readmeNotice": null,
    "licences": [
@@ -4668,18 +4987,33 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 204479,
     "entryGz": 59427,
-    "jsMin": 204479,
+    "initialGz": 59427,
     "jsGz": 59427,
+    "jsMin": 204479,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 8,
-    "initialMin": 204479,
-    "initialGz": 59427
-   }
+    "packages": 8
+   },
+   "theming": [
+    {
+     "pkg": "quill",
+     "cssFiles": 3,
+     "cssBytes": 60051,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [
+      "dist/quill.core.css"
+     ],
+     "sample": [
+      "dist/quill.bubble.css",
+      "dist/quill.core.css",
+      "dist/quill.snow.css"
+     ]
+    }
+   ]
   },
   "editorjs": {
    "id": "editorjs",
@@ -4696,17 +5030,18 @@
     "name": "@editorjs/editorjs",
     "latest": "2.31.7",
     "latestDate": "2026-09-17",
-    "lastStable": "2.31.7",
-    "lastStableDate": "2026-09-17",
     "releases12m": 7,
     "stableReleases12m": 7,
     "licenseField": "Apache-2.0",
     "deprecated": null,
     "deps": 3,
     "peerDeps": [],
-    "unpackedSize": 743648,
+    "hasInstallScript": false,
     "repository": "https://github.com/codex-team/editor.js",
-    "firstPublished": "2019-02-28"
+    "firstPublished": "2019-02-28",
+    "weeklyDownloads": 330953,
+    "monthlyDownloads": 1088920,
+    "dependents": "299"
    },
    "readmeNotice": null,
    "licences": [
@@ -4735,18 +5070,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 242887,
     "entryGz": 65571,
-    "jsMin": 242887,
+    "initialGz": 65571,
     "jsGz": 65571,
+    "jsMin": 242887,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 242887,
-    "initialGz": 65571
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "milkdown": {
    "id": "milkdown",
@@ -4763,17 +5097,18 @@
     "name": "@milkdown/kit",
     "latest": "7.22.2",
     "latestDate": "2026-09-23",
-    "lastStable": "7.22.2",
-    "lastStableDate": "2026-09-23",
     "releases12m": 16,
     "stableReleases12m": 16,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 21,
     "peerDeps": [],
-    "unpackedSize": 121709,
+    "hasInstallScript": false,
     "repository": "https://github.com/Milkdown/milkdown",
-    "firstPublished": "2024-08-02"
+    "firstPublished": "2024-08-02",
+    "weeklyDownloads": 449743,
+    "monthlyDownloads": 1301847,
+    "dependents": "60"
    },
    "readmeNotice": null,
    "licences": [
@@ -4802,18 +5137,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 363569,
     "entryGz": 110883,
-    "jsMin": 363569,
+    "initialGz": 110883,
     "jsGz": 110883,
+    "jsMin": 363569,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 62,
-    "initialMin": 363569,
-    "initialGz": 110883
-   }
+    "packages": 62
+   },
+   "theming": [
+    {
+     "pkg": "@milkdown/kit",
+     "cssFiles": 6,
+     "cssBytes": 1310,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "lib/prose/gapcursor/style/gapcursor.css",
+      "lib/prose/tables/style/tables.css",
+      "lib/prose/view/style/prosemirror.css",
+      "src/prose/gapcursor/style/gapcursor.css"
+     ]
+    }
+   ]
   },
   "ckeditor5": {
    "id": "ckeditor5",
@@ -4830,17 +5179,18 @@
     "name": "ckeditor5",
     "latest": "48.5.2",
     "latestDate": "2026-09-22",
-    "lastStable": "47.7.5",
-    "lastStableDate": "2026-09-22",
     "releases12m": 664,
     "stableReleases12m": 26,
     "licenseField": "SEE LICENSE IN LICENSE.md",
     "deprecated": null,
     "deps": 60,
     "peerDeps": [],
-    "unpackedSize": 42453332,
+    "hasInstallScript": false,
     "repository": "https://github.com/ckeditor/ckeditor5",
-    "firstPublished": "2017-02-02"
+    "firstPublished": "2017-02-02",
+    "weeklyDownloads": 1100925,
+    "monthlyDownloads": 3463802,
+    "dependents": "262"
    },
    "readmeNotice": null,
    "licences": [
@@ -4873,18 +5223,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 603995,
     "entryGz": 162433,
-    "jsMin": 603995,
+    "initialGz": 162433,
     "jsGz": 162433,
+    "jsMin": 603995,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 162,
-    "initialMin": 603995,
-    "initialGz": 162433
-   }
+    "packages": 162
+   },
+   "theming": [
+    {
+     "pkg": "ckeditor5",
+     "cssFiles": 6,
+     "cssBytes": 918389,
+     "customProperties": 333,
+     "prefix": "--ck-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/browser/ckeditor5-content.css",
+      "dist/browser/ckeditor5-editor.css",
+      "dist/browser/ckeditor5.css",
+      "dist/ckeditor5-content.css"
+     ]
+    }
+   ]
   },
   "tinymce": {
    "id": "tinymce",
@@ -4901,17 +5265,18 @@
     "name": "tinymce",
     "latest": "8.9.2",
     "latestDate": "2026-09-23",
-    "lastStable": "8.9.2",
-    "lastStableDate": "2026-09-23",
     "releases12m": 19,
     "stableReleases12m": 19,
     "licenseField": "SEE LICENSE IN license.md",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 12048000,
+    "hasInstallScript": false,
     "repository": "https://github.com/tinymce/tinymce",
-    "firstPublished": "2014-05-06"
+    "firstPublished": "2014-05-06",
+    "weeklyDownloads": 1257439,
+    "monthlyDownloads": 3966717,
+    "dependents": "1205"
    },
    "readmeNotice": null,
    "licences": [
@@ -4944,18 +5309,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 490679,
     "entryGz": 180094,
-    "jsMin": 490679,
+    "initialGz": 180094,
     "jsGz": 180094,
+    "jsMin": 490679,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 490679,
-    "initialGz": 180094
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "tinymce",
+     "cssFiles": 44,
+     "cssBytes": 2309806,
+     "customProperties": 64,
+     "prefix": "--tox-*",
+     "structuralSheet": [],
+     "sample": [
+      "skins/content/dark/content.css",
+      "skins/content/dark/content.min.css",
+      "skins/content/default/content.css",
+      "skins/content/default/content.min.css"
+     ]
+    }
+   ]
   },
   "cropperjs": {
    "id": "cropperjs",
@@ -4972,17 +5351,18 @@
     "name": "cropperjs",
     "latest": "2.2.0",
     "latestDate": "2026-08-23",
-    "lastStable": "2.2.0",
-    "lastStableDate": "2026-08-23",
     "releases12m": 4,
     "stableReleases12m": 4,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 2,
     "peerDeps": [],
-    "unpackedSize": 472907,
+    "hasInstallScript": false,
     "repository": "https://github.com/fengyuanchen/cropperjs",
-    "firstPublished": "2015-08-25"
+    "firstPublished": "2015-08-25",
+    "weeklyDownloads": 1884036,
+    "monthlyDownloads": 6126007,
+    "dependents": "996"
    },
    "readmeNotice": null,
    "licences": [
@@ -5011,18 +5391,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 42773,
     "entryGz": 12349,
-    "jsMin": 42773,
+    "initialGz": 12349,
     "jsGz": 12349,
+    "jsMin": 42773,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 12,
-    "initialMin": 42773,
-    "initialGz": 12349
-   }
+    "packages": 12
+   },
+   "theming": []
   },
   "react-easy-crop": {
    "id": "react-easy-crop",
@@ -5039,8 +5418,6 @@
     "name": "react-easy-crop",
     "latest": "6.2.3",
     "latestDate": "2026-07-24",
-    "lastStable": "6.2.3",
-    "lastStableDate": "2026-07-24",
     "releases12m": 44,
     "stableReleases12m": 14,
     "licenseField": "MIT",
@@ -5050,9 +5427,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 281101,
+    "hasInstallScript": false,
     "repository": "https://github.com/ValentinH/react-easy-crop",
-    "firstPublished": "2018-06-19"
+    "firstPublished": "2018-06-19",
+    "weeklyDownloads": 3725911,
+    "monthlyDownloads": 11997806,
+    "dependents": "420"
    },
    "readmeNotice": null,
    "licences": [
@@ -5081,18 +5461,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 26413,
     "entryGz": 7665,
-    "jsMin": 26413,
+    "initialGz": 7665,
     "jsGz": 7665,
+    "jsMin": 26413,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 2,
-    "initialMin": 26413,
-    "initialGz": 7665
-   }
+    "packages": 2
+   },
+   "theming": [
+    {
+     "pkg": "react-easy-crop",
+     "cssFiles": 1,
+     "cssBytes": 1578,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "react-easy-crop.css"
+     ]
+    }
+   ]
   },
   "react-image-crop": {
    "id": "react-image-crop",
@@ -5109,8 +5500,6 @@
     "name": "react-image-crop",
     "latest": "11.1.2",
     "latestDate": "2026-06-21",
-    "lastStable": "11.1.2",
-    "lastStableDate": "2026-06-21",
     "releases12m": 3,
     "stableReleases12m": 3,
     "licenseField": "ISC",
@@ -5119,9 +5508,12 @@
     "peerDeps": [
      "react"
     ],
-    "unpackedSize": 115367,
+    "hasInstallScript": false,
     "repository": "https://github.com/dominictobias/react-image-crop",
-    "firstPublished": "2015-10-10"
+    "firstPublished": "2015-10-10",
+    "weeklyDownloads": 2892274,
+    "monthlyDownloads": 9022263,
+    "dependents": "545"
    },
    "readmeNotice": null,
    "licences": [
@@ -5150,18 +5542,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 14320,
     "entryGz": 4041,
-    "jsMin": 14320,
+    "initialGz": 4041,
     "jsGz": 4041,
+    "jsMin": 14320,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 14320,
-    "initialGz": 4041
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "react-image-crop",
+     "cssFiles": 1,
+     "cssBytes": 4791,
+     "customProperties": 6,
+     "prefix": "--rc-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/ReactCrop.css"
+     ]
+    }
+   ]
   },
   "react-advanced-cropper": {
    "id": "react-advanced-cropper",
@@ -5178,8 +5581,6 @@
     "name": "react-advanced-cropper",
     "latest": "0.20.1",
     "latestDate": "2025-03-01",
-    "lastStable": "0.20.1",
-    "lastStableDate": "2025-03-01",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
@@ -5188,9 +5589,12 @@
     "peerDeps": [
      "react"
     ],
-    "unpackedSize": 1125449,
+    "hasInstallScript": false,
     "repository": "https://github.com/advanced-cropper/react-advanced-cropper",
-    "firstPublished": "2021-10-25"
+    "firstPublished": "2021-10-25",
+    "weeklyDownloads": 197050,
+    "monthlyDownloads": 574184,
+    "dependents": "38"
    },
    "readmeNotice": null,
    "licences": [
@@ -5219,18 +5623,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 90269,
     "entryGz": 25082,
-    "jsMin": 90269,
+    "initialGz": 25082,
     "jsGz": 25082,
+    "jsMin": 90269,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 4,
-    "initialMin": 90269,
-    "initialGz": 25082
-   }
+    "packages": 4
+   },
+   "theming": [
+    {
+     "pkg": "react-advanced-cropper",
+     "cssFiles": 6,
+     "cssBytes": 20963,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "dist/style.css",
+      "dist/themes/bubble.css",
+      "dist/themes/classic.css",
+      "dist/themes/compact.css"
+     ]
+    }
+   ]
   },
   "filerobot": {
    "id": "filerobot",
@@ -5250,8 +5668,6 @@
     "name": "react-filerobot-image-editor",
     "latest": "5.0.0-beta.159",
     "latestDate": "2026-06-02",
-    "lastStable": "4.9.1",
-    "lastStableDate": "2024-12-30",
     "releases12m": 51,
     "stableReleases12m": 0,
     "licenseField": "MIT",
@@ -5263,9 +5679,12 @@
      "react-konva",
      "styled-components"
     ],
-    "unpackedSize": 446283,
+    "hasInstallScript": false,
     "repository": "https://github.com/scaleflex/filerobot-image-editor.git#readme",
-    "firstPublished": "2021-12-02"
+    "firstPublished": "2021-12-02",
+    "weeklyDownloads": 65708,
+    "monthlyDownloads": 176738,
+    "dependents": "29"
    },
    "readmeNotice": null,
    "licences": [
@@ -5333,18 +5752,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 1171746,
     "entryGz": 347988,
-    "jsMin": 1171746,
+    "initialGz": 347988,
     "jsGz": 347988,
+    "jsMin": 1171746,
     "cssGz": 594,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 19,
-    "initialMin": 1171746,
-    "initialGz": 347988
-   }
+    "packages": 19
+   },
+   "theming": []
   },
   "tui-image-editor": {
    "id": "tui-image-editor",
@@ -5361,17 +5779,18 @@
     "name": "tui-image-editor",
     "latest": "3.15.3",
     "latestDate": "2022-04-25",
-    "lastStable": "3.15.3",
-    "lastStableDate": "2022-04-25",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 3,
     "peerDeps": [],
-    "unpackedSize": 3671947,
+    "hasInstallScript": false,
     "repository": "https://github.com/nhn/tui.image-editor",
-    "firstPublished": "2017-08-29"
+    "firstPublished": "2017-08-29",
+    "weeklyDownloads": 36257,
+    "monthlyDownloads": 123268,
+    "dependents": "82"
    },
    "readmeNotice": null,
    "licences": [
@@ -5400,18 +5819,30 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 723783,
     "entryGz": 199682,
-    "jsMin": 723783,
+    "initialGz": 199682,
     "jsGz": 199682,
+    "jsMin": 723783,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 2,
-    "initialMin": 723783,
-    "initialGz": 199682
-   }
+    "packages": 2
+   },
+   "theming": [
+    {
+     "pkg": "tui-image-editor",
+     "cssFiles": 2,
+     "cssBytes": 80580,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "dist/tui-image-editor.css",
+      "dist/tui-image-editor.min.css"
+     ]
+    }
+   ]
   },
   "pintura": {
    "id": "pintura",
@@ -5428,17 +5859,18 @@
     "name": "@pqina/pintura",
     "latest": "8.100.4",
     "latestDate": "2026-09-28",
-    "lastStable": "8.100.4",
-    "lastStableDate": "2026-09-28",
     "releases12m": 29,
     "stableReleases12m": 29,
     "licenseField": "https://pqina.nl/pintura/license",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 3012833,
+    "hasInstallScript": false,
     "repository": "",
-    "firstPublished": "2023-05-09"
+    "firstPublished": "2023-05-09",
+    "weeklyDownloads": 11005,
+    "monthlyDownloads": 44187,
+    "dependents": "19"
    },
    "readmeNotice": null,
    "licences": [
@@ -5446,11 +5878,26 @@
      "pkg": "@pqina/pintura",
      "source": "none",
      "file": null,
-     "classified": "NO LICENCE FILE (package or repo root)"
+     "classified": "NO LICENCE FILE (package or repo root)",
+     "flags": [],
+     "evidence": []
     }
    ],
    "activity": null,
-   "size": null
+   "size": null,
+   "theming": [
+    {
+     "pkg": "@pqina/pintura",
+     "cssFiles": 1,
+     "cssBytes": 97385,
+     "customProperties": 112,
+     "prefix": "--color-*",
+     "structuralSheet": [],
+     "sample": [
+      "pintura.css"
+     ]
+    }
+   ]
   },
   "imgly-bg-removal": {
    "id": "imgly-bg-removal",
@@ -5467,8 +5914,6 @@
     "name": "@imgly/background-removal",
     "latest": "1.7.0",
     "latestDate": "2025-07-18",
-    "lastStable": "1.7.0",
-    "lastStableDate": "2025-07-18",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "SEE LICENSE IN LICENSE.md",
@@ -5477,9 +5922,12 @@
     "peerDeps": [
      "onnxruntime-web"
     ],
-    "unpackedSize": 1113610,
+    "hasInstallScript": false,
     "repository": "https://github.com/imgly/background-removal-js",
-    "firstPublished": "2023-06-13"
+    "firstPublished": "2023-06-13",
+    "weeklyDownloads": 151063,
+    "monthlyDownloads": 526537,
+    "dependents": "61"
    },
    "readmeNotice": null,
    "licences": [
@@ -5506,7 +5954,8 @@
     "topShare": null,
     "lastCommit": "2025-07-18"
    },
-   "size": null
+   "size": null,
+   "theming": []
   },
   "react-colorful": {
    "id": "react-colorful",
@@ -5523,8 +5972,6 @@
     "name": "react-colorful",
     "latest": "5.8.1",
     "latestDate": "2026-09-01",
-    "lastStable": "5.8.1",
-    "lastStableDate": "2026-09-01",
     "releases12m": 4,
     "stableReleases12m": 4,
     "licenseField": "MIT",
@@ -5534,9 +5981,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 407942,
+    "hasInstallScript": false,
     "repository": "https://github.com/omgovich/react-colorful",
-    "firstPublished": "2020-08-05"
+    "firstPublished": "2020-08-05",
+    "weeklyDownloads": 6754688,
+    "monthlyDownloads": 21416387,
+    "dependents": "929"
    },
    "readmeNotice": null,
    "licences": [
@@ -5565,18 +6015,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 9330,
     "entryGz": 3884,
-    "jsMin": 9330,
+    "initialGz": 3884,
     "jsGz": 3884,
+    "jsMin": 9330,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 9330,
-    "initialGz": 3884
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "rac-color": {
    "id": "rac-color",
@@ -5593,8 +6042,6 @@
     "name": "react-aria-components",
     "latest": "1.21.1",
     "latestDate": "2026-09-04",
-    "lastStable": "1.21.1",
-    "lastStableDate": "2026-09-04",
     "releases12m": 254,
     "stableReleases12m": 11,
     "licenseField": "Apache-2.0",
@@ -5604,9 +6051,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 6586272,
+    "hasInstallScript": false,
     "repository": "https://github.com/adobe/react-spectrum",
-    "firstPublished": "2018-06-12"
+    "firstPublished": "2018-06-12",
+    "weeklyDownloads": 5263541,
+    "monthlyDownloads": 15411377,
+    "dependents": "720"
    },
    "readmeNotice": null,
    "licences": [
@@ -5635,18 +6085,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 259826,
     "entryGz": 76542,
-    "jsMin": 259826,
+    "initialGz": 76542,
     "jsGz": 76542,
+    "jsMin": 259826,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 9,
-    "initialMin": 259826,
-    "initialGz": 76542
-   }
+    "packages": 9
+   },
+   "theming": []
   },
   "vanilla-colorful": {
    "id": "vanilla-colorful",
@@ -5663,17 +6112,18 @@
     "name": "vanilla-colorful",
     "latest": "0.7.2",
     "latestDate": "2022-11-05",
-    "lastStable": "0.7.2",
-    "lastStableDate": "2022-11-05",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 376324,
+    "hasInstallScript": false,
     "repository": "https://github.com/web-padawan/vanilla-colorful",
-    "firstPublished": "2020-09-01"
+    "firstPublished": "2020-09-01",
+    "weeklyDownloads": 703519,
+    "monthlyDownloads": 2351285,
+    "dependents": "27"
    },
    "readmeNotice": null,
    "licences": [
@@ -5702,18 +6152,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 6222,
     "entryGz": 2856,
-    "jsMin": 6222,
+    "initialGz": 2856,
     "jsGz": 2856,
+    "jsMin": 6222,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 6222,
-    "initialGz": 2856
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "pickr": {
    "id": "pickr",
@@ -5730,17 +6179,18 @@
     "name": "@simonwep/pickr",
     "latest": "1.10.2",
     "latestDate": "2026-09-08",
-    "lastStable": "1.10.2",
-    "lastStableDate": "2026-09-08",
     "releases12m": 3,
     "stableReleases12m": 3,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 286993,
+    "hasInstallScript": false,
     "repository": "https://github.com/simonwep/pickr",
-    "firstPublished": "2019-02-22"
+    "firstPublished": "2019-02-22",
+    "weeklyDownloads": 271411,
+    "monthlyDownloads": 924673,
+    "dependents": "295"
    },
    "readmeNotice": null,
    "licences": [
@@ -5769,18 +6219,31 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 23002,
     "entryGz": 8241,
-    "jsMin": 23002,
+    "initialGz": 8241,
     "jsGz": 8241,
+    "jsMin": 23002,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 23002,
-    "initialGz": 8241
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "@simonwep/pickr",
+     "cssFiles": 3,
+     "cssBytes": 26707,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "dist/themes/classic.min.css",
+      "dist/themes/monolith.min.css",
+      "dist/themes/nano.min.css"
+     ]
+    }
+   ]
   },
   "iro": {
    "id": "iro",
@@ -5797,17 +6260,18 @@
     "name": "@jaames/iro",
     "latest": "5.5.2",
     "latestDate": "2021-07-05",
-    "lastStable": "5.5.2",
-    "lastStableDate": "2021-07-05",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MPL-2.0",
     "deprecated": null,
     "deps": 2,
     "peerDeps": [],
-    "unpackedSize": 236920,
+    "hasInstallScript": false,
     "repository": "https://github.com/jaames/iro.js",
-    "firstPublished": "2018-02-11"
+    "firstPublished": "2018-02-11",
+    "weeklyDownloads": 74609,
+    "monthlyDownloads": 223423,
+    "dependents": "59"
    },
    "readmeNotice": null,
    "licences": [
@@ -5836,18 +6300,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 28629,
     "entryGz": 10266,
-    "jsMin": 28629,
+    "initialGz": 10266,
     "jsGz": 10266,
+    "jsMin": 28629,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 28629,
-    "initialGz": 10266
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "coloris": {
    "id": "coloris",
@@ -5864,17 +6327,18 @@
     "name": "@melloware/coloris",
     "latest": "0.25.0",
     "latestDate": "2025-06-02",
-    "lastStable": "0.25.0",
-    "lastStableDate": "2025-06-02",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 157003,
+    "hasInstallScript": false,
     "repository": "https://github.com/melloware/coloris-npm",
-    "firstPublished": "2021-11-05"
+    "firstPublished": "2021-11-05",
+    "weeklyDownloads": 47891,
+    "monthlyDownloads": 172853,
+    "dependents": "14"
    },
    "readmeNotice": null,
    "licences": [
@@ -5903,18 +6367,30 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 14584,
     "entryGz": 5397,
-    "jsMin": 14584,
+    "initialGz": 5397,
     "jsGz": 5397,
+    "jsMin": 14584,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 14584,
-    "initialGz": 5397
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "@melloware/coloris",
+     "cssFiles": 2,
+     "cssBytes": 19449,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "dist/coloris.css",
+      "dist/coloris.min.css"
+     ]
+    }
+   ]
   },
   "uppy": {
    "id": "uppy",
@@ -5934,17 +6410,18 @@
     "name": "@uppy/core",
     "latest": "6.1.0",
     "latestDate": "2026-09-28",
-    "lastStable": "6.1.0",
-    "lastStableDate": "2026-09-28",
     "releases12m": 7,
     "stableReleases12m": 7,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 9,
     "peerDeps": [],
-    "unpackedSize": 1085386,
+    "hasInstallScript": false,
     "repository": "https://github.com/transloadit/uppy",
-    "firstPublished": "2018-06-28"
+    "firstPublished": "2018-06-28",
+    "weeklyDownloads": 1397848,
+    "monthlyDownloads": 4423211,
+    "dependents": "296"
    },
    "readmeNotice": null,
    "licences": [
@@ -6012,18 +6489,56 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 308106,
     "entryGz": 93521,
-    "jsMin": 308106,
+    "initialGz": 93521,
     "jsGz": 93521,
+    "jsMin": 308106,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 25,
-    "initialMin": 308106,
-    "initialGz": 93521
-   }
+    "packages": 25
+   },
+   "theming": [
+    {
+     "pkg": "@uppy/core",
+     "cssFiles": 4,
+     "cssBytes": 76393,
+     "customProperties": 2,
+     "prefix": "--grid-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/provider-views.css",
+      "dist/provider-views.min.css",
+      "dist/style.css",
+      "dist/style.min.css"
+     ]
+    },
+    {
+     "pkg": "@uppy/dashboard",
+     "cssFiles": 2,
+     "cssBytes": 172416,
+     "customProperties": 9,
+     "prefix": "--grid-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/style.css",
+      "dist/style.min.css"
+     ]
+    },
+    {
+     "pkg": "@uppy/react",
+     "cssFiles": 2,
+     "cssBytes": 22010,
+     "customProperties": 36,
+     "prefix": "--uppy-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/image-editor.css",
+      "dist/styles.css"
+     ]
+    }
+   ]
   },
   "filepond": {
    "id": "filepond",
@@ -6040,17 +6555,18 @@
     "name": "filepond",
     "latest": "4.32.12",
     "latestDate": "2026-03-02",
-    "lastStable": "4.32.12",
-    "lastStableDate": "2026-03-02",
     "releases12m": 89,
     "stableReleases12m": 3,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 1200982,
+    "hasInstallScript": false,
     "repository": "https://github.com/pqina/filepond",
-    "firstPublished": "2017-10-20"
+    "firstPublished": "2017-10-20",
+    "weeklyDownloads": 317638,
+    "monthlyDownloads": 1045041,
+    "dependents": "220"
    },
    "readmeNotice": null,
    "licences": [
@@ -6079,18 +6595,30 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 139996,
     "entryGz": 41469,
-    "jsMin": 139996,
+    "initialGz": 41469,
     "jsGz": 41469,
+    "jsMin": 139996,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 139996,
-    "initialGz": 41469
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "filepond",
+     "cssFiles": 2,
+     "cssBytes": 44238,
+     "customProperties": 8,
+     "prefix": "--panel-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/filepond.css",
+      "dist/filepond.min.css"
+     ]
+    }
+   ]
   },
   "react-dropzone": {
    "id": "react-dropzone",
@@ -6107,8 +6635,6 @@
     "name": "react-dropzone",
     "latest": "20.1.2",
     "latestDate": "2026-09-14",
-    "lastStable": "20.1.2",
-    "lastStableDate": "2026-09-14",
     "releases12m": 24,
     "stableReleases12m": 24,
     "licenseField": "MIT",
@@ -6118,9 +6644,12 @@
      "react",
      "@types/react"
     ],
-    "unpackedSize": 341097,
+    "hasInstallScript": false,
     "repository": "https://github.com/react-dropzone/react-dropzone",
-    "firstPublished": "2014-09-27"
+    "firstPublished": "2014-09-27",
+    "weeklyDownloads": 15025218,
+    "monthlyDownloads": 47323124,
+    "dependents": "4704"
    },
    "readmeNotice": null,
    "licences": [
@@ -6149,18 +6678,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 16653,
     "entryGz": 6373,
-    "jsMin": 16653,
+    "initialGz": 6373,
     "jsGz": 6373,
+    "jsMin": 16653,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 3,
-    "initialMin": 16653,
-    "initialGz": 6373
-   }
+    "packages": 3
+   },
+   "theming": []
   },
   "tus-js-client": {
    "id": "tus-js-client",
@@ -6177,17 +6705,18 @@
     "name": "tus-js-client",
     "latest": "4.3.1",
     "latestDate": "2025-01-16",
-    "lastStable": "4.3.1",
-    "lastStableDate": "2025-01-16",
     "releases12m": 1,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 7,
     "peerDeps": [],
-    "unpackedSize": 2563242,
+    "hasInstallScript": false,
     "repository": "https://github.com/tus/tus-js-client",
-    "firstPublished": "2015-08-20"
+    "firstPublished": "2015-08-20",
+    "weeklyDownloads": 2122158,
+    "monthlyDownloads": 6359531,
+    "dependents": "239"
    },
    "readmeNotice": null,
    "licences": [
@@ -6216,18 +6745,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 61706,
     "entryGz": 16047,
-    "jsMin": 61706,
+    "initialGz": 16047,
     "jsGz": 16047,
+    "jsMin": 61706,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 5,
-    "initialMin": 61706,
-    "initialGz": 16047
-   }
+    "packages": 5
+   },
+   "theming": []
   },
   "rac-dropzone": {
    "id": "rac-dropzone",
@@ -6244,8 +6772,6 @@
     "name": "react-aria-components",
     "latest": "1.21.1",
     "latestDate": "2026-09-04",
-    "lastStable": "1.21.1",
-    "lastStableDate": "2026-09-04",
     "releases12m": 254,
     "stableReleases12m": 11,
     "licenseField": "Apache-2.0",
@@ -6255,9 +6781,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 6586272,
+    "hasInstallScript": false,
     "repository": "https://github.com/adobe/react-spectrum",
-    "firstPublished": "2018-06-12"
+    "firstPublished": "2018-06-12",
+    "weeklyDownloads": 5263541,
+    "monthlyDownloads": 15411377,
+    "dependents": "720"
    },
    "readmeNotice": null,
    "licences": [
@@ -6286,18 +6815,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 177019,
     "entryGz": 36972,
-    "jsMin": 177019,
+    "initialGz": 36972,
     "jsGz": 36972,
+    "jsMin": 177019,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 9,
-    "initialMin": 177019,
-    "initialGz": 36972
-   }
+    "packages": 9
+   },
+   "theming": []
   },
   "dropzone": {
    "id": "dropzone",
@@ -6314,17 +6842,18 @@
     "name": "dropzone",
     "latest": "6.3.5",
     "latestDate": "2026-09-27",
-    "lastStable": "6.3.5",
-    "lastStableDate": "2026-09-27",
     "releases12m": 10,
     "stableReleases12m": 10,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 849493,
+    "hasInstallScript": false,
     "repository": "https://github.com/enyo/dropzone",
-    "firstPublished": "2012-05-18"
+    "firstPublished": "2012-05-18",
+    "weeklyDownloads": 676988,
+    "monthlyDownloads": 2181250,
+    "dependents": "471"
    },
    "readmeNotice": null,
    "licences": [
@@ -6353,18 +6882,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 38152,
     "entryGz": 11964,
-    "jsMin": 38152,
+    "initialGz": 11964,
     "jsGz": 11964,
+    "jsMin": 38152,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 38152,
-    "initialGz": 11964
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "dropzone",
+     "cssFiles": 4,
+     "cssBytes": 12261,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "dist/basic.css",
+      "dist/dropzone.css",
+      "src/basic.css",
+      "src/dropzone.css"
+     ]
+    }
+   ]
   },
   "tanstack-virtual": {
    "id": "tanstack-virtual",
@@ -6381,8 +6924,6 @@
     "name": "@tanstack/react-virtual",
     "latest": "3.14.13",
     "latestDate": "2026-09-14",
-    "lastStable": "3.14.13",
-    "lastStableDate": "2026-09-14",
     "releases12m": 28,
     "stableReleases12m": 28,
     "licenseField": "MIT",
@@ -6392,9 +6933,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 60900,
+    "hasInstallScript": false,
     "repository": "https://github.com/TanStack/virtual",
-    "firstPublished": "2022-02-07"
+    "firstPublished": "2022-02-07",
+    "weeklyDownloads": 27866317,
+    "monthlyDownloads": 86567025,
+    "dependents": "1765"
    },
    "readmeNotice": null,
    "licences": [
@@ -6423,18 +6967,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 26175,
     "entryGz": 7911,
-    "jsMin": 26175,
+    "initialGz": 7911,
     "jsGz": 7911,
+    "jsMin": 26175,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 2,
-    "initialMin": 26175,
-    "initialGz": 7911
-   }
+    "packages": 2
+   },
+   "theming": []
   },
   "react-window": {
    "id": "react-window",
@@ -6451,8 +6994,6 @@
     "name": "react-window",
     "latest": "2.3.3",
     "latestDate": "2026-09-22",
-    "lastStable": "2.3.3",
-    "lastStableDate": "2026-09-22",
     "releases12m": 18,
     "stableReleases12m": 12,
     "licenseField": "MIT",
@@ -6462,9 +7003,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 243381,
+    "hasInstallScript": false,
     "repository": "https://github.com/bvaughn/react-window",
-    "firstPublished": "2014-11-24"
+    "firstPublished": "2014-11-24",
+    "weeklyDownloads": 7597033,
+    "monthlyDownloads": 23725931,
+    "dependents": "2506"
    },
    "readmeNotice": null,
    "licences": [
@@ -6493,18 +7037,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 13462,
     "entryGz": 4837,
-    "jsMin": 13462,
+    "initialGz": 4837,
     "jsGz": 4837,
+    "jsMin": 13462,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 13462,
-    "initialGz": 4837
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "react-virtuoso": {
    "id": "react-virtuoso",
@@ -6521,8 +7064,6 @@
     "name": "react-virtuoso",
     "latest": "4.18.15",
     "latestDate": "2026-09-22",
-    "lastStable": "4.18.15",
-    "lastStableDate": "2026-09-22",
     "releases12m": 19,
     "stableReleases12m": 19,
     "licenseField": "MIT",
@@ -6532,9 +7073,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 243927,
+    "hasInstallScript": false,
     "repository": "https://github.com/petyosi/react-virtuoso",
-    "firstPublished": "2019-05-04"
+    "firstPublished": "2019-05-04",
+    "weeklyDownloads": 3847824,
+    "monthlyDownloads": 12080654,
+    "dependents": "647"
    },
    "readmeNotice": null,
    "licences": [
@@ -6563,18 +7107,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 60346,
     "entryGz": 20218,
-    "jsMin": 60346,
+    "initialGz": 20218,
     "jsGz": 20218,
+    "jsMin": 60346,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 60346,
-    "initialGz": 20218
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "virtua": {
    "id": "virtua",
@@ -6591,8 +7134,6 @@
     "name": "virtua",
     "latest": "0.52.8",
     "latestDate": "2026-09-28",
-    "lastStable": "0.52.8",
-    "lastStableDate": "2026-09-28",
     "releases12m": 53,
     "stableReleases12m": 53,
     "licenseField": "MIT",
@@ -6607,9 +7148,12 @@
      "@angular/core",
      "@angular/common"
     ],
-    "unpackedSize": 2248647,
+    "hasInstallScript": false,
     "repository": "https://github.com/inokawa/virtua",
-    "firstPublished": "2022-10-22"
+    "firstPublished": "2022-10-22",
+    "weeklyDownloads": 1207493,
+    "monthlyDownloads": 3771243,
+    "dependents": "102"
    },
    "readmeNotice": null,
    "licences": [
@@ -6638,18 +7182,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 8060,
     "entryGz": 4215,
-    "jsMin": 8060,
+    "initialGz": 4215,
     "jsGz": 4215,
+    "jsMin": 8060,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 8060,
-    "initialGz": 4215
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "rac-virtualizer": {
    "id": "rac-virtualizer",
@@ -6666,8 +7209,6 @@
     "name": "react-aria-components",
     "latest": "1.21.1",
     "latestDate": "2026-09-04",
-    "lastStable": "1.21.1",
-    "lastStableDate": "2026-09-04",
     "releases12m": 254,
     "stableReleases12m": 11,
     "licenseField": "Apache-2.0",
@@ -6677,9 +7218,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 6586272,
+    "hasInstallScript": false,
     "repository": "https://github.com/adobe/react-spectrum",
-    "firstPublished": "2018-06-12"
+    "firstPublished": "2018-06-12",
+    "weeklyDownloads": 5263541,
+    "monthlyDownloads": 15411377,
+    "dependents": "720"
    },
    "readmeNotice": null,
    "licences": [
@@ -6708,18 +7252,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 147449,
     "entryGz": 44092,
-    "jsMin": 147449,
+    "initialGz": 44092,
     "jsGz": 44092,
+    "jsMin": 147449,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 9,
-    "initialMin": 147449,
-    "initialGz": 44092
-   }
+    "packages": 9
+   },
+   "theming": []
   },
   "virtuoso-message-list": {
    "id": "virtuoso-message-list",
@@ -6736,8 +7279,6 @@
     "name": "@virtuoso.dev/message-list",
     "latest": "1.18.1",
     "latestDate": "2026-09-25",
-    "lastStable": "1.18.1",
-    "lastStableDate": "2026-09-25",
     "releases12m": 28,
     "stableReleases12m": 23,
     "licenseField": "Commercial",
@@ -6747,9 +7288,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 145869,
+    "hasInstallScript": false,
     "repository": "https://github.com/virtuoso-dev/message-list",
-    "firstPublished": "2024-04-03"
+    "firstPublished": "2024-04-03",
+    "weeklyDownloads": 21741,
+    "monthlyDownloads": 100701,
+    "dependents": "5"
    },
    "readmeNotice": null,
    "licences": [
@@ -6772,7 +7316,8 @@
     }
    ],
    "activity": null,
-   "size": null
+   "size": null,
+   "theming": []
   },
   "react-data-grid": {
    "id": "react-data-grid",
@@ -6789,8 +7334,6 @@
     "name": "react-data-grid",
     "latest": "7.0.0-beta.61",
     "latestDate": "2026-07-14",
-    "lastStable": "6.1.0",
-    "lastStableDate": "2019-04-03",
     "releases12m": 4,
     "stableReleases12m": 0,
     "licenseField": "MIT",
@@ -6800,9 +7343,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 372846,
+    "hasInstallScript": false,
     "repository": "https://github.com/Comcast/react-data-grid",
-    "firstPublished": "2015-03-12"
+    "firstPublished": "2015-03-12",
+    "weeklyDownloads": 675906,
+    "monthlyDownloads": 2077849,
+    "dependents": "293"
    },
    "readmeNotice": null,
    "licences": [
@@ -6831,18 +7377,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 39372,
     "entryGz": 14235,
-    "jsMin": 39372,
+    "initialGz": 14235,
     "jsGz": 14235,
+    "jsMin": 39372,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 39372,
-    "initialGz": 14235
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "react-data-grid",
+     "cssFiles": 1,
+     "cssBytes": 8813,
+     "customProperties": 16,
+     "prefix": "--rdg-*",
+     "structuralSheet": [],
+     "sample": [
+      "lib/styles.css"
+     ]
+    }
+   ]
   },
   "ag-grid": {
    "id": "ag-grid",
@@ -6860,17 +7417,18 @@
     "name": "ag-grid-community",
     "latest": "36.2.0",
     "latestDate": "2026-09-16",
-    "lastStable": "36.2.0",
-    "lastStableDate": "2026-09-16",
     "releases12m": 14,
     "stableReleases12m": 14,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 2,
     "peerDeps": [],
-    "unpackedSize": 21636306,
+    "hasInstallScript": false,
     "repository": "https://github.com/ag-grid/ag-grid",
-    "firstPublished": "2018-08-21"
+    "firstPublished": "2018-08-21",
+    "weeklyDownloads": 3776883,
+    "monthlyDownloads": 11763335,
+    "dependents": "858"
    },
    "readmeNotice": null,
    "licences": [
@@ -6912,18 +7470,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 709850,
     "entryGz": 202885,
-    "jsMin": 709850,
+    "initialGz": 202885,
     "jsGz": 202885,
+    "jsMin": 709850,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 3,
-    "initialMin": 709850,
-    "initialGz": 202885
-   }
+    "packages": 3
+   },
+   "theming": [
+    {
+     "pkg": "ag-grid-community",
+     "cssFiles": 30,
+     "cssBytes": 1685361,
+     "customProperties": 213,
+     "prefix": "--ag-*",
+     "structuralSheet": [],
+     "sample": [
+      "styles/ag-grid-no-native-widgets.css",
+      "styles/ag-grid-no-native-widgets.min.css",
+      "styles/ag-grid.css",
+      "styles/ag-grid.min.css"
+     ]
+    }
+   ]
   },
   "tabulator": {
    "id": "tabulator",
@@ -6940,17 +7512,18 @@
     "name": "tabulator-tables",
     "latest": "6.5.3",
     "latestDate": "2026-09-15",
-    "lastStable": "6.5.3",
-    "lastStableDate": "2026-09-15",
     "releases12m": 5,
     "stableReleases12m": 5,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 29590257,
+    "hasInstallScript": false,
     "repository": "https://github.com/tabulator-tables/tabulator",
-    "firstPublished": "2018-09-23"
+    "firstPublished": "2018-09-23",
+    "weeklyDownloads": 197711,
+    "monthlyDownloads": 641186,
+    "dependents": "128"
    },
    "readmeNotice": null,
    "licences": [
@@ -6979,18 +7552,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 451332,
     "entryGz": 104143,
-    "jsMin": 451332,
+    "initialGz": 104143,
     "jsGz": 104143,
+    "jsMin": 451332,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 451332,
-    "initialGz": 104143
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "tabulator-tables",
+     "cssFiles": 24,
+     "cssBytes": 906293,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "dist/css/tabulator.css",
+      "dist/css/tabulator.min.css",
+      "dist/css/tabulator_bootstrap3.css",
+      "dist/css/tabulator_bootstrap3.min.css"
+     ]
+    }
+   ]
   },
   "revogrid": {
    "id": "revogrid",
@@ -7007,17 +7594,18 @@
     "name": "@revolist/revogrid",
     "latest": "4.28.2",
     "latestDate": "2026-09-27",
-    "lastStable": "4.28.2",
-    "lastStableDate": "2026-09-27",
     "releases12m": 73,
     "stableReleases12m": 73,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 7521150,
+    "hasInstallScript": false,
     "repository": "https://github.com/revolist/revogrid",
-    "firstPublished": "2020-05-04"
+    "firstPublished": "2020-05-04",
+    "weeklyDownloads": 38067,
+    "monthlyDownloads": 121469,
+    "dependents": "20"
    },
    "readmeNotice": null,
    "licences": [
@@ -7046,18 +7634,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 6841,
     "entryGz": 2252,
-    "jsMin": 360953,
+    "initialGz": 27472,
     "jsGz": 110752,
+    "jsMin": 360953,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 16,
-    "packages": 1,
-    "initialMin": 77254,
-    "initialGz": 27472
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "@revolist/revogrid",
+     "cssFiles": 10,
+     "cssBytes": 64692,
+     "customProperties": 116,
+     "prefix": "--rg-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/collection/components/data/revogr-data-style.css",
+      "dist/collection/components/editors/revogr-edit-style.css",
+      "dist/collection/components/header/revogr-header-style.css",
+      "dist/collection/components/overlay/revogr-overlay-style.css"
+     ]
+    }
+   ]
   },
   "handsontable": {
    "id": "handsontable",
@@ -7074,17 +7676,18 @@
     "name": "handsontable",
     "latest": "18.1.1",
     "latestDate": "2026-09-15",
-    "lastStable": "18.1.1",
-    "lastStableDate": "2026-09-15",
     "releases12m": 740,
     "stableReleases12m": 7,
     "licenseField": "SEE LICENSE IN LICENSE.txt",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 34611008,
+    "hasInstallScript": false,
     "repository": "https://github.com/handsontable/handsontable",
-    "firstPublished": "2016-03-04"
+    "firstPublished": "2016-03-04",
+    "weeklyDownloads": 347255,
+    "monthlyDownloads": 1123254,
+    "dependents": "229"
    },
    "readmeNotice": null,
    "licences": [
@@ -7119,18 +7722,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 750206,
     "entryGz": 166313,
-    "jsMin": 750206,
+    "initialGz": 166313,
     "jsGz": 166313,
+    "jsMin": 750206,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 750206,
-    "initialGz": 166313
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "handsontable",
+     "cssFiles": 18,
+     "cssBytes": 799804,
+     "customProperties": 348,
+     "prefix": "--ht-*",
+     "structuralSheet": [],
+     "sample": [
+      "styles/handsontable.css",
+      "styles/handsontable.min.css",
+      "styles/ht-icons-horizon.css",
+      "styles/ht-icons-horizon.min.css"
+     ]
+    }
+   ]
   },
   "jspreadsheet-ce": {
    "id": "jspreadsheet-ce",
@@ -7147,17 +7764,18 @@
     "name": "jspreadsheet-ce",
     "latest": "5.0.4",
     "latestDate": "2025-08-25",
-    "lastStable": "5.0.4",
-    "lastStableDate": "2025-08-25",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": null,
     "deprecated": null,
     "deps": 2,
     "peerDeps": [],
-    "unpackedSize": 310798,
+    "hasInstallScript": false,
     "repository": "https://github.com/jspreadsheet/ce",
-    "firstPublished": "2021-02-14"
+    "firstPublished": "2021-02-14",
+    "weeklyDownloads": 75282,
+    "monthlyDownloads": 258882,
+    "dependents": "9"
    },
    "readmeNotice": null,
    "licences": [
@@ -7186,18 +7804,30 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 486262,
     "entryGz": 132151,
-    "jsMin": 486262,
+    "initialGz": 132151,
     "jsGz": 132151,
+    "jsMin": 486262,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 3,
-    "initialMin": 486262,
-    "initialGz": 132151
-   }
+    "packages": 3
+   },
+   "theming": [
+    {
+     "pkg": "jspreadsheet-ce",
+     "cssFiles": 2,
+     "cssBytes": 23518,
+     "customProperties": 1,
+     "prefix": "--jss-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/jspreadsheet.css",
+      "dist/jspreadsheet.themes.css"
+     ]
+    }
+   ]
   },
   "univer": {
    "id": "univer",
@@ -7214,17 +7844,18 @@
     "name": "@univerjs/presets",
     "latest": "1.0.2",
     "latestDate": "2026-09-24",
-    "lastStable": "1.0.2",
-    "lastStableDate": "2026-09-24",
     "releases12m": 119,
     "stableReleases12m": 36,
     "licenseField": "Apache-2.0",
     "deprecated": null,
     "deps": 9,
     "peerDeps": [],
-    "unpackedSize": 20655,
+    "hasInstallScript": false,
     "repository": "https://github.com/dream-num/univer",
-    "firstPublished": "2024-11-17"
+    "firstPublished": "2024-11-17",
+    "weeklyDownloads": 350568,
+    "monthlyDownloads": 1014870,
+    "dependents": "34"
    },
    "readmeNotice": null,
    "licences": [
@@ -7251,7 +7882,8 @@
     "topShare": 31,
     "lastCommit": "2026-09-28"
    },
-   "size": null
+   "size": null,
+   "theming": []
   },
   "vis-timeline": {
    "id": "vis-timeline",
@@ -7269,8 +7901,6 @@
     "name": "vis-timeline",
     "latest": "8.5.4",
     "latestDate": "2026-08-12",
-    "lastStable": "8.5.4",
-    "lastStableDate": "2026-08-12",
     "releases12m": 7,
     "stableReleases12m": 7,
     "licenseField": "(Apache-2.0 OR MIT)",
@@ -7287,9 +7917,12 @@
      "vis-util",
      "xss"
     ],
-    "unpackedSize": 77798262,
+    "hasInstallScript": false,
     "repository": "https://github.com/visjs/vis-timeline",
-    "firstPublished": "2019-07-19"
+    "firstPublished": "2019-07-19",
+    "weeklyDownloads": 286044,
+    "monthlyDownloads": 919807,
+    "dependents": "69"
    },
    "readmeNotice": null,
    "licences": [
@@ -7333,18 +7966,32 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 570055,
     "entryGz": 163031,
-    "jsMin": 570055,
+    "initialGz": 163031,
     "jsGz": 163031,
+    "jsMin": 570055,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 570055,
-    "initialGz": 163031
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "vis-timeline",
+     "cssFiles": 4,
+     "cssBytes": 91802,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "dist/vis-timeline-graph2d.css",
+      "dist/vis-timeline-graph2d.min.css",
+      "styles/vis-timeline-graph2d.css",
+      "styles/vis-timeline-graph2d.min.css"
+     ]
+    }
+   ]
   },
   "frappe-gantt": {
    "id": "frappe-gantt",
@@ -7361,17 +8008,18 @@
     "name": "frappe-gantt",
     "latest": "1.2.2",
     "latestDate": "2026-02-25",
-    "lastStable": "1.2.2",
-    "lastStableDate": "2026-02-25",
     "releases12m": 5,
     "stableReleases12m": 5,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 249631,
+    "hasInstallScript": false,
     "repository": "https://github.com/frappe/gantt",
-    "firstPublished": "2016-12-28"
+    "firstPublished": "2016-12-28",
+    "weeklyDownloads": 235024,
+    "monthlyDownloads": 634782,
+    "dependents": "27"
    },
    "readmeNotice": null,
    "licences": [
@@ -7400,18 +8048,31 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 47708,
     "entryGz": 13297,
-    "jsMin": 47708,
+    "initialGz": 13297,
     "jsGz": 13297,
+    "jsMin": 47708,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 47708,
-    "initialGz": 13297
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "frappe-gantt",
+     "cssFiles": 3,
+     "cssBytes": 15993,
+     "customProperties": 20,
+     "prefix": "--g-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/frappe-gantt.css",
+      "src/styles/gantt.css",
+      "src/styles/themes.css"
+     ]
+    }
+   ]
   },
   "svar-gantt": {
    "id": "svar-gantt",
@@ -7428,8 +8089,6 @@
     "name": "@svar-ui/react-gantt",
     "latest": "2.7.3",
     "latestDate": "2026-09-09",
-    "lastStable": "2.7.3",
-    "lastStableDate": "2026-09-09",
     "releases12m": 14,
     "stableReleases12m": 14,
     "licenseField": "MIT",
@@ -7439,9 +8098,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 952858,
+    "hasInstallScript": false,
     "repository": "https://github.com/svar-widgets/react-gantt",
-    "firstPublished": "2025-10-22"
+    "firstPublished": "2025-10-22",
+    "weeklyDownloads": 112334,
+    "monthlyDownloads": 298708,
+    "dependents": "5"
    },
    "readmeNotice": null,
    "licences": [
@@ -7470,18 +8132,30 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 243342,
     "entryGz": 83207,
-    "jsMin": 243342,
+    "initialGz": 83207,
     "jsGz": 83207,
+    "jsMin": 243342,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 14,
-    "initialMin": 243342,
-    "initialGz": 83207
-   }
+    "packages": 14
+   },
+   "theming": [
+    {
+     "pkg": "@svar-ui/react-gantt",
+     "cssFiles": 2,
+     "cssBytes": 184974,
+     "customProperties": 304,
+     "prefix": "--wx-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/index.css",
+      "dist-full/index.css"
+     ]
+    }
+   ]
   },
   "dhtmlx-gantt": {
    "id": "dhtmlx-gantt",
@@ -7498,17 +8172,18 @@
     "name": "dhtmlx-gantt",
     "latest": "10.0.3",
     "latestDate": "2026-09-03",
-    "lastStable": "10.0.3",
-    "lastStableDate": "2026-09-03",
     "releases12m": 9,
     "stableReleases12m": 9,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 6612312,
+    "hasInstallScript": false,
     "repository": "https://github.com/DHTMLX/gantt",
-    "firstPublished": "2016-04-29"
+    "firstPublished": "2016-04-29",
+    "weeklyDownloads": 42838,
+    "monthlyDownloads": 153019,
+    "dependents": "81"
    },
    "readmeNotice": null,
    "licences": [
@@ -7537,18 +8212,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 664876,
     "entryGz": 178458,
-    "jsMin": 664876,
+    "initialGz": 178458,
     "jsGz": 178458,
+    "jsMin": 664876,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 664876,
-    "initialGz": 178458
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "dhtmlx-gantt",
+     "cssFiles": 1,
+     "cssBytes": 142729,
+     "customProperties": 187,
+     "prefix": "--dhx-*",
+     "structuralSheet": [],
+     "sample": [
+      "codebase/dhtmlxgantt.css"
+     ]
+    }
+   ]
   },
   "bryntum-gantt": {
    "id": "bryntum-gantt",
@@ -7565,29 +8251,33 @@
     "name": "@bryntum/gantt",
     "latest": "7.3.7",
     "latestDate": "2026-09-24",
-    "lastStable": "7.3.7",
-    "lastStableDate": "2026-09-24",
     "releases12m": 15,
     "stableReleases12m": 15,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 13840,
+    "hasInstallScript": true,
     "repository": "",
-    "firstPublished": "2024-03-11"
+    "firstPublished": "2024-03-11",
+    "weeklyDownloads": 97,
+    "monthlyDownloads": 548,
+    "dependents": "0"
    },
-   "readmeNotice": null,
+   "readmeNotice": "# Bryntum Gantt placeholder package",
    "licences": [
     {
      "pkg": "@bryntum/gantt",
      "source": "none",
      "file": null,
-     "classified": "NO LICENCE FILE (package or repo root)"
+     "classified": "NO LICENCE FILE (package or repo root)",
+     "flags": [],
+     "evidence": []
     }
    ],
    "activity": null,
-   "size": null
+   "size": null,
+   "theming": []
   },
   "xzdarcy-timeline": {
    "id": "xzdarcy-timeline",
@@ -7604,8 +8294,6 @@
     "name": "@xzdarcy/react-timeline-editor",
     "latest": "1.0.0",
     "latestDate": "2026-01-25",
-    "lastStable": "1.0.0",
-    "lastStableDate": "2026-01-25",
     "releases12m": 2,
     "stableReleases12m": 1,
     "licenseField": "MIT",
@@ -7615,9 +8303,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 1061564,
+    "hasInstallScript": false,
     "repository": "https://github.com/xzdarcy/react-timeline-editor",
-    "firstPublished": "2022-02-19"
+    "firstPublished": "2022-02-19",
+    "weeklyDownloads": 11222,
+    "monthlyDownloads": 36561,
+    "dependents": "5"
    },
    "readmeNotice": null,
    "licences": [
@@ -7646,18 +8337,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 247491,
     "entryGz": 67372,
-    "jsMin": 247491,
+    "initialGz": 67372,
     "jsGz": 67372,
+    "jsMin": 247491,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 247491,
-    "initialGz": 67372
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "@xzdarcy/react-timeline-editor",
+     "cssFiles": 1,
+     "cssBytes": 4648,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "dist/react-timeline-editor.css"
+     ]
+    }
+   ]
   },
   "wavesurfer": {
    "id": "wavesurfer",
@@ -7674,17 +8376,18 @@
     "name": "wavesurfer.js",
     "latest": "8.0.1",
     "latestDate": "2026-09-24",
-    "lastStable": "8.0.1",
-    "lastStableDate": "2026-09-24",
     "releases12m": 22,
     "stableReleases12m": 17,
     "licenseField": "BSD-3-Clause",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 1553651,
+    "hasInstallScript": false,
     "repository": "ssh://git@github.com/katspaugh/wavesurfer.js",
-    "firstPublished": "2014-03-14"
+    "firstPublished": "2014-03-14",
+    "weeklyDownloads": 1516110,
+    "monthlyDownloads": 4706352,
+    "dependents": "304"
    },
    "readmeNotice": "which is now deprecated in favor of the merged option above — it's kept working",
    "licences": [
@@ -7713,18 +8416,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 79015,
     "entryGz": 22374,
-    "jsMin": 79015,
+    "initialGz": 22374,
     "jsGz": 22374,
+    "jsMin": 79015,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 79015,
-    "initialGz": 22374
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "fullcalendar": {
    "id": "fullcalendar",
@@ -7744,8 +8446,6 @@
     "name": "fullcalendar",
     "latest": "7.1.0",
     "latestDate": "2026-09-05",
-    "lastStable": "7.1.0",
-    "lastStableDate": "2026-09-05",
     "releases12m": 14,
     "stableReleases12m": 6,
     "licenseField": "MIT",
@@ -7754,9 +8454,12 @@
     "peerDeps": [
      "temporal-polyfill"
     ],
-    "unpackedSize": 2353890,
+    "hasInstallScript": false,
     "repository": "https://github.com/fullcalendar/fullcalendar",
-    "firstPublished": "2015-03-09"
+    "firstPublished": "2015-03-09",
+    "weeklyDownloads": 290519,
+    "monthlyDownloads": 970933,
+    "dependents": "236"
    },
    "readmeNotice": null,
    "licences": [
@@ -7824,18 +8527,34 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 263099,
     "entryGz": 77001,
-    "jsMin": 263099,
+    "initialGz": 77001,
     "jsGz": 77001,
+    "jsMin": 263099,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 5,
-    "initialMin": 263099,
-    "initialGz": 77001
-   }
+    "packages": 5
+   },
+   "theming": [
+    {
+     "pkg": "fullcalendar",
+     "cssFiles": 24,
+     "cssBytes": 126901,
+     "customProperties": 157,
+     "prefix": "--fc-*",
+     "structuralSheet": [
+      "skeleton.css"
+     ],
+     "sample": [
+      "skeleton.css",
+      "themes/breezy/palettes/amber.css",
+      "themes/breezy/palettes/emerald.css",
+      "themes/breezy/palettes/indigo.css"
+     ]
+    }
+   ]
   },
   "fullcalendar-premium": {
    "id": "fullcalendar-premium",
@@ -7852,8 +8571,6 @@
     "name": "@fullcalendar/resource-timeline",
     "latest": "6.1.21",
     "latestDate": "2026-06-18",
-    "lastStable": "6.1.21",
-    "lastStableDate": "2026-06-18",
     "releases12m": 4,
     "stableReleases12m": 2,
     "licenseField": "SEE LICENSE IN LICENSE.md",
@@ -7863,9 +8580,12 @@
      "@fullcalendar/core",
      "@fullcalendar/resource"
     ],
-    "unpackedSize": 183921,
+    "hasInstallScript": false,
     "repository": "https://github.com/fullcalendar/fullcalendar-workspace",
-    "firstPublished": "2019-02-06"
+    "firstPublished": "2019-02-06",
+    "weeklyDownloads": 298434,
+    "monthlyDownloads": 936114,
+    "dependents": "72"
    },
    "readmeNotice": null,
    "licences": [
@@ -7898,7 +8618,8 @@
     "topShare": 98,
     "lastCommit": "2026-09-05"
    },
-   "size": null
+   "size": null,
+   "theming": []
   },
   "schedule-x": {
    "id": "schedule-x",
@@ -7918,8 +8639,6 @@
     "name": "@schedule-x/calendar",
     "latest": "4.9.0",
     "latestDate": "2026-09-28",
-    "lastStable": "4.9.0",
-    "lastStableDate": "2026-09-28",
     "releases12m": 25,
     "stableReleases12m": 25,
     "licenseField": "MIT",
@@ -7930,9 +8649,12 @@
      "@preact/signals",
      "temporal-polyfill"
     ],
-    "unpackedSize": 1072419,
+    "hasInstallScript": false,
     "repository": "https://github.com/schedule-x/schedule-x",
-    "firstPublished": "2023-08-09"
+    "firstPublished": "2023-08-09",
+    "weeklyDownloads": 176140,
+    "monthlyDownloads": 596813,
+    "dependents": "5"
    },
    "readmeNotice": null,
    "licences": [
@@ -8000,18 +8722,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 190497,
     "entryGz": 50258,
-    "jsMin": 190497,
+    "initialGz": 50258,
     "jsGz": 50258,
+    "jsMin": 190497,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 4,
-    "initialMin": 190497,
-    "initialGz": 50258
-   }
+    "packages": 4
+   },
+   "theming": []
   },
   "react-big-calendar": {
    "id": "react-big-calendar",
@@ -8028,8 +8749,6 @@
     "name": "react-big-calendar",
     "latest": "1.20.0",
     "latestDate": "2026-06-01",
-    "lastStable": "1.20.0",
-    "lastStableDate": "2026-06-01",
     "releases12m": 2,
     "stableReleases12m": 2,
     "licenseField": "MIT",
@@ -8039,9 +8758,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 1767972,
+    "hasInstallScript": false,
     "repository": "https://github.com/bigcalendar/react-big-calendar",
-    "firstPublished": "2015-09-03"
+    "firstPublished": "2015-09-03",
+    "weeklyDownloads": 1471023,
+    "monthlyDownloads": 4426310,
+    "dependents": "337"
    },
    "readmeNotice": null,
    "licences": [
@@ -8070,18 +8792,30 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 181102,
     "entryGz": 56468,
-    "jsMin": 181102,
+    "initialGz": 56468,
     "jsGz": 56468,
+    "jsMin": 181102,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 16,
-    "initialMin": 181102,
-    "initialGz": 56468
-   }
+    "packages": 16
+   },
+   "theming": [
+    {
+     "pkg": "react-big-calendar",
+     "cssFiles": 2,
+     "cssBytes": 20184,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "lib/addons/dragAndDrop/styles.css",
+      "lib/css/react-big-calendar.css"
+     ]
+    }
+   ]
   },
   "remotion-player": {
    "id": "remotion-player",
@@ -8099,8 +8833,6 @@
     "name": "@remotion/player",
     "latest": "4.0.529",
     "latestDate": "2026-09-25",
-    "lastStable": "4.0.529",
-    "lastStableDate": "2026-09-25",
     "releases12m": 171,
     "stableReleases12m": 171,
     "licenseField": "SEE LICENSE IN LICENSE.md",
@@ -8110,9 +8842,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 334459,
+    "hasInstallScript": false,
     "repository": "https://github.com/remotion-dev/remotion/tree/main/packages/player",
-    "firstPublished": "2021-05-06"
+    "firstPublished": "2021-05-06",
+    "weeklyDownloads": 1725510,
+    "monthlyDownloads": 5631975,
+    "dependents": "77"
    },
    "readmeNotice": null,
    "licences": [
@@ -8166,18 +8901,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 311633,
     "entryGz": 100252,
-    "jsMin": 311633,
+    "initialGz": 100252,
     "jsGz": 100252,
+    "jsMin": 311633,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 2,
-    "initialMin": 311633,
-    "initialGz": 100252
-   }
+    "packages": 2
+   },
+   "theming": []
   },
   "tinykeys": {
    "id": "tinykeys",
@@ -8194,17 +8928,18 @@
     "name": "tinykeys",
     "latest": "4.0.1",
     "latestDate": "2026-09-25",
-    "lastStable": "4.0.1",
-    "lastStableDate": "2026-09-25",
     "releases12m": 3,
     "stableReleases12m": 3,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 77523,
+    "hasInstallScript": false,
     "repository": "https://github.com/jamiebuilds/tinykeys",
-    "firstPublished": "2020-07-27"
+    "firstPublished": "2020-07-27",
+    "weeklyDownloads": 402343,
+    "monthlyDownloads": 1180078,
+    "dependents": "63"
    },
    "readmeNotice": null,
    "licences": [
@@ -8233,18 +8968,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 1777,
     "entryGz": 999,
-    "jsMin": 1777,
+    "initialGz": 999,
     "jsGz": 999,
+    "jsMin": 1777,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 1777,
-    "initialGz": 999
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "tanstack-hotkeys": {
    "id": "tanstack-hotkeys",
@@ -8261,8 +8995,6 @@
     "name": "@tanstack/react-hotkeys",
     "latest": "0.12.1",
     "latestDate": "2026-09-27",
-    "lastStable": "0.12.1",
-    "lastStableDate": "2026-09-27",
     "releases12m": 30,
     "stableReleases12m": 30,
     "licenseField": "MIT",
@@ -8272,9 +9004,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 56073,
+    "hasInstallScript": false,
     "repository": "https://github.com/TanStack/hotkeys",
-    "firstPublished": "2026-02-10"
+    "firstPublished": "2026-02-10",
+    "weeklyDownloads": 1211421,
+    "monthlyDownloads": 3028742,
+    "dependents": "39"
    },
    "readmeNotice": null,
    "licences": [
@@ -8303,18 +9038,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 45804,
     "entryGz": 14787,
-    "jsMin": 45804,
+    "initialGz": 14787,
     "jsGz": 14787,
+    "jsMin": 45804,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 5,
-    "initialMin": 45804,
-    "initialGz": 14787
-   }
+    "packages": 5
+   },
+   "theming": []
   },
   "react-hotkeys-hook": {
    "id": "react-hotkeys-hook",
@@ -8331,8 +9065,6 @@
     "name": "react-hotkeys-hook",
     "latest": "5.3.3",
     "latestDate": "2026-06-26",
-    "lastStable": "5.3.3",
-    "lastStableDate": "2026-06-26",
     "releases12m": 9,
     "stableReleases12m": 9,
     "licenseField": "MIT",
@@ -8342,9 +9074,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 31030,
+    "hasInstallScript": false,
     "repository": "https://github.com/JohannesKlauss/react-keymap-hook",
-    "firstPublished": "2019-01-15"
+    "firstPublished": "2019-01-15",
+    "weeklyDownloads": 5100097,
+    "monthlyDownloads": 15873670,
+    "dependents": "799"
    },
    "readmeNotice": null,
    "licences": [
@@ -8373,18 +9108,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 6404,
     "entryGz": 2563,
-    "jsMin": 6404,
+    "initialGz": 2563,
     "jsGz": 2563,
+    "jsMin": 6404,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 6404,
-    "initialGz": 2563
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "hotkeys-js": {
    "id": "hotkeys-js",
@@ -8401,17 +9135,18 @@
     "name": "hotkeys-js",
     "latest": "4.0.8",
     "latestDate": "2026-09-09",
-    "lastStable": "4.0.8",
-    "lastStableDate": "2026-09-09",
     "releases12m": 16,
     "stableReleases12m": 9,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 4932456,
+    "hasInstallScript": false,
     "repository": "https://github.com/jaywcjlove/hotkeys-js",
-    "firstPublished": "2015-05-18"
+    "firstPublished": "2015-05-18",
+    "weeklyDownloads": 1734578,
+    "monthlyDownloads": 5099676,
+    "dependents": "656"
    },
    "readmeNotice": null,
    "licences": [
@@ -8440,18 +9175,34 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 7820,
     "entryGz": 3467,
-    "jsMin": 7820,
+    "initialGz": 3467,
     "jsGz": 3467,
+    "jsMin": 7820,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 7820,
-    "initialGz": 3467
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "hotkeys-js",
+     "cssFiles": 5,
+     "cssBytes": 41167,
+     "customProperties": 51,
+     "prefix": "--color-*",
+     "structuralSheet": [
+      "doc/lcov-report/base.css"
+     ],
+     "sample": [
+      "doc/assets/index-pcuUP4TT.css",
+      "doc/assets/markdown-vendor-gyt9TyUT.css",
+      "doc/assets/uiw-components-BymBbYXS.css",
+      "doc/lcov-report/base.css"
+     ]
+    }
+   ]
   },
   "github-hotkey": {
    "id": "github-hotkey",
@@ -8468,17 +9219,18 @@
     "name": "@github/hotkey",
     "latest": "3.1.4",
     "latestDate": "2026-03-16",
-    "lastStable": "3.1.4",
-    "lastStableDate": "2026-03-16",
     "releases12m": 2,
     "stableReleases12m": 2,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 33447,
+    "hasInstallScript": false,
     "repository": "https://github.com/github/hotkey",
-    "firstPublished": "2019-01-21"
+    "firstPublished": "2019-01-21",
+    "weeklyDownloads": 30281,
+    "monthlyDownloads": 105070,
+    "dependents": "11"
    },
    "readmeNotice": null,
    "licences": [
@@ -8507,18 +9259,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 5160,
     "entryGz": 2361,
-    "jsMin": 5160,
+    "initialGz": 2361,
     "jsGz": 2361,
+    "jsMin": 5160,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 5160,
-    "initialGz": 2361
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "mousetrap": {
    "id": "mousetrap",
@@ -8535,17 +9286,18 @@
     "name": "mousetrap",
     "latest": "1.6.5",
     "latestDate": "2020-01-23",
-    "lastStable": "1.6.5",
-    "lastStableDate": "2020-01-23",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "Apache-2.0 WITH LLVM-exception",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 195929,
+    "hasInstallScript": false,
     "repository": "git://github.com/ccampbell/mousetrap",
-    "firstPublished": "2012-08-01"
+    "firstPublished": "2012-08-01",
+    "weeklyDownloads": 1061759,
+    "monthlyDownloads": 3424686,
+    "dependents": "690"
    },
    "readmeNotice": null,
    "licences": [
@@ -8574,18 +9326,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 5818,
     "entryGz": 2724,
-    "jsMin": 5818,
+    "initialGz": 2724,
     "jsGz": 2724,
+    "jsMin": 5818,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 5818,
-    "initialGz": 2724
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "mousetrap",
+     "cssFiles": 1,
+     "cssBytes": 280,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "plugins/record/tests/jelly.css"
+     ]
+    }
+   ]
   },
   "use-gesture": {
    "id": "use-gesture",
@@ -8602,8 +9365,6 @@
     "name": "@use-gesture/react",
     "latest": "10.3.1",
     "latestDate": "2024-03-21",
-    "lastStable": "10.3.1",
-    "lastStableDate": "2024-03-21",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
@@ -8612,9 +9373,12 @@
     "peerDeps": [
      "react"
     ],
-    "unpackedSize": 37189,
+    "hasInstallScript": false,
     "repository": "https://github.com/pmndrs/use-gesture",
-    "firstPublished": "2021-05-08"
+    "firstPublished": "2021-05-08",
+    "weeklyDownloads": 7751387,
+    "monthlyDownloads": 24607893,
+    "dependents": "543"
    },
    "readmeNotice": null,
    "licences": [
@@ -8643,18 +9407,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 31767,
     "entryGz": 9863,
-    "jsMin": 31767,
+    "initialGz": 9863,
     "jsGz": 9863,
+    "jsMin": 31767,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 2,
-    "initialMin": 31767,
-    "initialGz": 9863
-   }
+    "packages": 2
+   },
+   "theming": []
   },
   "motion-drag": {
    "id": "motion-drag",
@@ -8671,8 +9434,6 @@
     "name": "motion",
     "latest": "13.4.4",
     "latestDate": "2026-09-25",
-    "lastStable": "13.4.4",
-    "lastStableDate": "2026-09-25",
     "releases12m": 87,
     "stableReleases12m": 72,
     "licenseField": "MIT",
@@ -8682,9 +9443,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 759250,
+    "hasInstallScript": false,
     "repository": "https://github.com/motiondivision/motion",
-    "firstPublished": "2013-12-26"
+    "firstPublished": "2013-12-26",
+    "weeklyDownloads": 25372590,
+    "monthlyDownloads": 78207353,
+    "dependents": "2134"
    },
    "readmeNotice": null,
    "licences": [
@@ -8713,18 +9477,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 127136,
     "entryGz": 42039,
-    "jsMin": 127136,
+    "initialGz": 42039,
     "jsGz": 42039,
+    "jsMin": 127136,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 4,
-    "initialMin": 127136,
-    "initialGz": 42039
-   }
+    "packages": 4
+   },
+   "theming": []
   },
   "neodrag": {
    "id": "neodrag",
@@ -8741,17 +9504,18 @@
     "name": "@neodrag/vanilla",
     "latest": "2.3.1",
     "latestDate": "2025-06-18",
-    "lastStable": "2.3.1",
-    "lastStableDate": "2025-06-18",
     "releases12m": 3,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 55870,
+    "hasInstallScript": false,
     "repository": "https://github.com/PuruVJ/neodrag",
-    "firstPublished": "2022-09-27"
+    "firstPublished": "2022-09-27",
+    "weeklyDownloads": 3574,
+    "monthlyDownloads": 10388,
+    "dependents": "10"
    },
    "readmeNotice": null,
    "licences": [
@@ -8780,18 +9544,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 5213,
     "entryGz": 2404,
-    "jsMin": 5213,
+    "initialGz": 2404,
     "jsGz": 2404,
+    "jsMin": 5213,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 5213,
-    "initialGz": 2404
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "hammerjs": {
    "id": "hammerjs",
@@ -8808,17 +9571,18 @@
     "name": "hammerjs",
     "latest": "2.0.8",
     "latestDate": "2016-04-22",
-    "lastStable": "2.0.8",
-    "lastStableDate": "2016-04-22",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": null,
+    "hasInstallScript": false,
     "repository": "git://github.com/hammerjs/hammer.js",
-    "firstPublished": "2013-02-27"
+    "firstPublished": "2013-02-27",
+    "weeklyDownloads": 2213635,
+    "monthlyDownloads": 6843821,
+    "dependents": "2084"
    },
    "readmeNotice": null,
    "licences": [
@@ -8847,18 +9611,30 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 21106,
     "entryGz": 7480,
-    "jsMin": 21106,
+    "initialGz": 7480,
     "jsGz": 7480,
+    "jsMin": 21106,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 21106,
-    "initialGz": 7480
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "hammerjs",
+     "cssFiles": 2,
+     "cssBytes": 5087,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "tests/manual/assets/style.css",
+      "tests/unit/assets/qunit.css"
+     ]
+    }
+   ]
   },
   "react-zoom-pan-pinch": {
    "id": "react-zoom-pan-pinch",
@@ -8875,8 +9651,6 @@
     "name": "react-zoom-pan-pinch",
     "latest": "4.2.0",
     "latestDate": "2026-09-03",
-    "lastStable": "4.2.0",
-    "lastStableDate": "2026-09-03",
     "releases12m": 11,
     "stableReleases12m": 11,
     "licenseField": "MIT",
@@ -8886,9 +9660,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 1198474,
+    "hasInstallScript": false,
     "repository": "https://github.com/BetterTyped/react-zoom-pan-pinch",
-    "firstPublished": "2019-07-15"
+    "firstPublished": "2019-07-15",
+    "weeklyDownloads": 2843820,
+    "monthlyDownloads": 9058105,
+    "dependents": "396"
    },
    "readmeNotice": null,
    "licences": [
@@ -8917,18 +9694,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 47835,
     "entryGz": 14551,
-    "jsMin": 47835,
+    "initialGz": 14551,
     "jsGz": 14551,
+    "jsMin": 47835,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 47835,
-    "initialGz": 14551
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "react-zoom-pan-pinch",
+     "cssFiles": 1,
+     "cssBytes": 137,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "src/styles.css"
+     ]
+    }
+   ]
   },
   "panzoom-timmywil": {
    "id": "panzoom-timmywil",
@@ -8945,17 +9733,18 @@
     "name": "@panzoom/panzoom",
     "latest": "4.6.2",
     "latestDate": "2026-04-02",
-    "lastStable": "4.6.2",
-    "lastStableDate": "2026-04-02",
     "releases12m": 2,
     "stableReleases12m": 2,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 161576,
+    "hasInstallScript": false,
     "repository": "https://github.com/timmywil/panzoom",
-    "firstPublished": "2019-12-16"
+    "firstPublished": "2019-12-16",
+    "weeklyDownloads": 1010353,
+    "monthlyDownloads": 2994935,
+    "dependents": "83"
    },
    "readmeNotice": null,
    "licences": [
@@ -8984,18 +9773,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 9593,
     "entryGz": 3664,
-    "jsMin": 9593,
+    "initialGz": 3664,
     "jsGz": 3664,
+    "jsMin": 9593,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 9593,
-    "initialGz": 3664
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "panzoom-anvaka": {
    "id": "panzoom-anvaka",
@@ -9012,17 +9800,18 @@
     "name": "panzoom",
     "latest": "9.4.4",
     "latestDate": "2026-03-26",
-    "lastStable": "9.4.4",
-    "lastStableDate": "2026-03-26",
     "releases12m": 1,
     "stableReleases12m": 1,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 3,
     "peerDeps": [],
-    "unpackedSize": 719295,
+    "hasInstallScript": false,
     "repository": "https://github.com/anvaka/panzoom",
-    "firstPublished": "2016-04-03"
+    "firstPublished": "2016-04-03",
+    "weeklyDownloads": 165446,
+    "monthlyDownloads": 596913,
+    "dependents": "109"
    },
    "readmeNotice": null,
    "licences": [
@@ -9051,18 +9840,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 17798,
     "entryGz": 7114,
-    "jsMin": 17798,
+    "initialGz": 7114,
     "jsGz": 7114,
+    "jsMin": 17798,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 5,
-    "initialMin": 17798,
-    "initialGz": 7114
-   }
+    "packages": 5
+   },
+   "theming": []
   },
   "d3-zoom": {
    "id": "d3-zoom",
@@ -9080,17 +9868,18 @@
     "name": "d3-zoom",
     "latest": "3.0.0",
     "latestDate": "2021-06-10",
-    "lastStable": "3.0.0",
-    "lastStableDate": "2021-06-10",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "ISC",
     "deprecated": null,
     "deps": 5,
     "peerDeps": [],
-    "unpackedSize": 86878,
+    "hasInstallScript": false,
     "repository": "https://github.com/d3/d3-zoom",
-    "firstPublished": "2016-05-02"
+    "firstPublished": "2016-05-02",
+    "weeklyDownloads": 35530106,
+    "monthlyDownloads": 113728510,
+    "dependents": "595"
    },
    "readmeNotice": null,
    "licences": [
@@ -9132,18 +9921,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 48077,
     "entryGz": 16270,
-    "jsMin": 48077,
+    "initialGz": 16270,
     "jsGz": 16270,
+    "jsMin": 48077,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 9,
-    "initialMin": 48077,
-    "initialGz": 16270
-   }
+    "packages": 9
+   },
+   "theming": []
   },
   "svg-pan-zoom": {
    "id": "svg-pan-zoom",
@@ -9160,17 +9948,18 @@
     "name": "svg-pan-zoom",
     "latest": "3.6.2",
     "latestDate": "2024-10-20",
-    "lastStable": "3.6.2",
-    "lastStableDate": "2024-10-20",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "BSD-2-Clause",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 1971573,
+    "hasInstallScript": false,
     "repository": "https://github.com/bumbu/svg-pan-zoom",
-    "firstPublished": "2014-11-29"
+    "firstPublished": "2014-11-29",
+    "weeklyDownloads": 828553,
+    "monthlyDownloads": 2549589,
+    "dependents": "121"
    },
    "readmeNotice": null,
    "licences": [
@@ -9199,18 +9988,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 29512,
     "entryGz": 8357,
-    "jsMin": 29512,
+    "initialGz": 8357,
     "jsGz": 8357,
+    "jsMin": 29512,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 29512,
-    "initialGz": 8357
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "svg-pan-zoom",
+     "cssFiles": 1,
+     "cssBytes": 4356,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "tests/assets/qunit.css"
+     ]
+    }
+   ]
   },
   "photoswipe": {
    "id": "photoswipe",
@@ -9227,17 +10027,18 @@
     "name": "photoswipe",
     "latest": "5.4.4",
     "latestDate": "2024-05-24",
-    "lastStable": "5.4.4",
-    "lastStableDate": "2024-05-24",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 1205024,
+    "hasInstallScript": false,
     "repository": "git://github.com/dimsemenov/Photoswipe",
-    "firstPublished": "2014-12-09"
+    "firstPublished": "2014-12-09",
+    "weeklyDownloads": 612142,
+    "monthlyDownloads": 1943124,
+    "dependents": "389"
    },
    "readmeNotice": null,
    "licences": [
@@ -9266,18 +10067,30 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 14880,
     "entryGz": 4566,
-    "jsMin": 74855,
+    "initialGz": 4566,
     "jsGz": 21853,
+    "jsMin": 74855,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 2,
-    "packages": 1,
-    "initialMin": 14880,
-    "initialGz": 4566
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "photoswipe",
+     "cssFiles": 2,
+     "cssBytes": 14846,
+     "customProperties": 12,
+     "prefix": "--pswp-*",
+     "structuralSheet": [],
+     "sample": [
+      "dist/photoswipe.css",
+      "src/photoswipe.css"
+     ]
+    }
+   ]
   },
   "viselect": {
    "id": "viselect",
@@ -9295,17 +10108,18 @@
     "name": "@viselect/vanilla",
     "latest": "3.10.1",
     "latestDate": "2026-09-04",
-    "lastStable": "3.10.1",
-    "lastStableDate": "2026-09-04",
     "releases12m": 2,
     "stableReleases12m": 2,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 155368,
+    "hasInstallScript": false,
     "repository": "https://github.com/simonwep/viselect",
-    "firstPublished": "2021-06-15"
+    "firstPublished": "2021-06-15",
+    "weeklyDownloads": 40712,
+    "monthlyDownloads": 170056,
+    "dependents": "18"
    },
    "readmeNotice": null,
    "licences": [
@@ -9347,18 +10161,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 13688,
     "entryGz": 4666,
-    "jsMin": 13688,
+    "initialGz": 4666,
     "jsGz": 4666,
+    "jsMin": 13688,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 13688,
-    "initialGz": 4666
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "selecto": {
    "id": "selecto",
@@ -9375,17 +10188,18 @@
     "name": "selecto",
     "latest": "1.26.3",
     "latestDate": "2023-12-03",
-    "lastStable": "1.26.3",
-    "lastStableDate": "2023-12-03",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 10,
     "peerDeps": [],
-    "unpackedSize": 910936,
+    "hasInstallScript": false,
     "repository": "https://github.com/daybrush/selecto",
-    "firstPublished": "2019-12-28"
+    "firstPublished": "2019-12-28",
+    "weeklyDownloads": 666368,
+    "monthlyDownloads": 2119343,
+    "dependents": "27"
    },
    "readmeNotice": null,
    "licences": [
@@ -9414,18 +10228,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 61601,
     "entryGz": 19391,
-    "jsMin": 61601,
+    "initialGz": 19391,
     "jsGz": 19391,
+    "jsMin": 61601,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 13,
-    "initialMin": 61601,
-    "initialGz": 19391
-   }
+    "packages": 13
+   },
+   "theming": []
   },
   "dragselect": {
    "id": "dragselect",
@@ -9442,17 +10255,18 @@
     "name": "dragselect",
     "latest": "3.1.2",
     "latestDate": "2025-10-24",
-    "lastStable": "3.1.2",
-    "lastStableDate": "2025-10-24",
     "releases12m": 1,
     "stableReleases12m": 1,
     "licenseField": "GPL-3.0",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 648089,
+    "hasInstallScript": false,
     "repository": "https://github.com/ThibaultJanBeyer/DragSelect",
-    "firstPublished": "2017-08-18"
+    "firstPublished": "2017-08-18",
+    "weeklyDownloads": 12182,
+    "monthlyDownloads": 42415,
+    "dependents": "29"
    },
    "readmeNotice": null,
    "licences": [
@@ -9485,18 +10299,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 46403,
     "entryGz": 11037,
-    "jsMin": 46403,
+    "initialGz": 11037,
     "jsGz": 11037,
+    "jsMin": 46403,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 46403,
-    "initialGz": 11037
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "air-drag-to-select": {
    "id": "air-drag-to-select",
@@ -9513,8 +10326,6 @@
     "name": "@air/react-drag-to-select",
     "latest": "5.0.11",
     "latestDate": "2025-06-24",
-    "lastStable": "5.0.11",
-    "lastStableDate": "2025-06-24",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
@@ -9524,9 +10335,12 @@
      "react",
      "react-dom"
     ],
-    "unpackedSize": 113681,
+    "hasInstallScript": false,
     "repository": "https://github.com/AirLabsTeam/react-drag-to-select",
-    "firstPublished": "2021-10-15"
+    "firstPublished": "2021-10-15",
+    "weeklyDownloads": 48116,
+    "monthlyDownloads": 162226,
+    "dependents": "5"
    },
    "readmeNotice": null,
    "licences": [
@@ -9555,18 +10369,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 6555,
     "entryGz": 2721,
-    "jsMin": 6555,
+    "initialGz": 2721,
     "jsGz": 2721,
+    "jsMin": 6555,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 2,
-    "initialMin": 6555,
-    "initialGz": 2721
-   }
+    "packages": 2
+   },
+   "theming": []
   },
   "d3-polygon": {
    "id": "d3-polygon",
@@ -9583,17 +10396,18 @@
     "name": "d3-polygon",
     "latest": "3.0.1",
     "latestDate": "2021-06-05",
-    "lastStable": "3.0.1",
-    "lastStableDate": "2021-06-05",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "ISC",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 14827,
+    "hasInstallScript": false,
     "repository": "https://github.com/d3/d3-polygon",
-    "firstPublished": "2015-07-07"
+    "firstPublished": "2015-07-07",
+    "weeklyDownloads": 23774055,
+    "monthlyDownloads": 76064403,
+    "dependents": "94"
    },
    "readmeNotice": null,
    "licences": [
@@ -9622,18 +10436,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 201,
     "entryGz": 178,
-    "jsMin": 201,
+    "initialGz": 178,
     "jsGz": 178,
+    "jsMin": 201,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 201,
-    "initialGz": 178
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "perfect-freehand": {
    "id": "perfect-freehand",
@@ -9650,17 +10463,18 @@
     "name": "perfect-freehand",
     "latest": "1.2.3",
     "latestDate": "2026-02-01",
-    "lastStable": "1.2.3",
-    "lastStableDate": "2026-02-01",
     "releases12m": 1,
     "stableReleases12m": 1,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 112085,
+    "hasInstallScript": false,
     "repository": "https://github.com/steveruizok/perfect-freehand",
-    "firstPublished": "2021-02-19"
+    "firstPublished": "2021-02-19",
+    "weeklyDownloads": 3034818,
+    "monthlyDownloads": 9042882,
+    "dependents": "309"
    },
    "readmeNotice": null,
    "licences": [
@@ -9689,18 +10503,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 4499,
     "entryGz": 1970,
-    "jsMin": 4499,
+    "initialGz": 1970,
     "jsGz": 1970,
+    "jsMin": 4499,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 4499,
-    "initialGz": 1970
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "signature-pad": {
    "id": "signature-pad",
@@ -9717,17 +10530,18 @@
     "name": "signature_pad",
     "latest": "5.1.4",
     "latestDate": "2026-07-31",
-    "lastStable": "5.1.4",
-    "lastStableDate": "2026-07-31",
     "releases12m": 3,
     "stableReleases12m": 3,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 465984,
+    "hasInstallScript": false,
     "repository": "https://github.com/szimek/signature_pad",
-    "firstPublished": "2014-09-29"
+    "firstPublished": "2014-09-29",
+    "weeklyDownloads": 2949597,
+    "monthlyDownloads": 9269775,
+    "dependents": "531"
    },
    "readmeNotice": null,
    "licences": [
@@ -9756,18 +10570,29 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 15411,
     "entryGz": 4539,
-    "jsMin": 15411,
+    "initialGz": 4539,
     "jsGz": 4539,
+    "jsMin": 15411,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 15411,
-    "initialGz": 4539
-   }
+    "packages": 1
+   },
+   "theming": [
+    {
+     "pkg": "signature_pad",
+     "cssFiles": 1,
+     "cssBytes": 12855,
+     "customProperties": 0,
+     "prefix": null,
+     "structuralSheet": [],
+     "sample": [
+      "docs/css/signature-pad.css"
+     ]
+    }
+   ]
   },
   "yjs-websocket": {
    "id": "yjs-websocket",
@@ -9785,17 +10610,18 @@
     "name": "yjs",
     "latest": "13.6.33",
     "latestDate": "2026-09-23",
-    "lastStable": "13.6.33",
-    "lastStableDate": "2026-09-23",
     "releases12m": 14,
     "stableReleases12m": 6,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 1,
     "peerDeps": [],
-    "unpackedSize": 2308376,
+    "hasInstallScript": false,
     "repository": "https://github.com/yjs/yjs",
-    "firstPublished": "2015-01-26"
+    "firstPublished": "2015-01-26",
+    "weeklyDownloads": 10463060,
+    "monthlyDownloads": 32054570,
+    "dependents": "1255"
    },
    "readmeNotice": null,
    "licences": [
@@ -9828,27 +10654,26 @@
    ],
    "activity": {
     "repo": "yjs/yjs",
-    "commits12m": 223,
-    "humanCommits12m": 223,
+    "commits12m": 225,
+    "humanCommits12m": 225,
     "authors12m": 9,
     "topAuthor": "Kevin Jahns",
     "topShare": 93,
-    "lastCommit": "2026-09-22"
+    "lastCommit": "2026-09-28"
    },
    "size": {
     "ok": true,
-    "entryMin": 100928,
     "entryGz": 31163,
-    "jsMin": 100928,
+    "initialGz": 31163,
     "jsGz": 31163,
+    "jsMin": 100928,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 4,
-    "initialMin": 100928,
-    "initialGz": 31163
-   }
+    "packages": 4
+   },
+   "theming": []
   },
   "hocuspocus": {
    "id": "hocuspocus",
@@ -9866,8 +10691,6 @@
     "name": "@hocuspocus/provider",
     "latest": "4.7.0",
     "latestDate": "2026-09-09",
-    "lastStable": "4.7.0",
-    "lastStableDate": "2026-09-09",
     "releases12m": 32,
     "stableReleases12m": 20,
     "licenseField": "MIT",
@@ -9877,9 +10700,12 @@
      "yjs",
      "y-protocols"
     ],
-    "unpackedSize": 298233,
+    "hasInstallScript": false,
     "repository": "https://github.com/ueberdosis/hocuspocus",
-    "firstPublished": "2021-06-09"
+    "firstPublished": "2021-06-09",
+    "weeklyDownloads": 1405846,
+    "monthlyDownloads": 4386405,
+    "dependents": "133"
    },
    "readmeNotice": null,
    "licences": [
@@ -9921,18 +10747,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 115759,
     "entryGz": 33074,
-    "jsMin": 115759,
+    "initialGz": 33074,
     "jsGz": 33074,
+    "jsMin": 115759,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 6,
-    "initialMin": 115759,
-    "initialGz": 33074
-   }
+    "packages": 6
+   },
+   "theming": []
   },
   "automerge": {
    "id": "automerge",
@@ -9949,17 +10774,18 @@
     "name": "@automerge/automerge",
     "latest": "3.5.0",
     "latestDate": "2026-09-16",
-    "lastStable": "3.5.0",
-    "lastStableDate": "2026-09-16",
     "releases12m": 21,
     "stableReleases12m": 13,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 47529812,
+    "hasInstallScript": false,
     "repository": "https://github.com/automerge/automerge",
-    "firstPublished": "2022-10-04"
+    "firstPublished": "2022-10-04",
+    "weeklyDownloads": 72736,
+    "monthlyDownloads": 246478,
+    "dependents": "105"
    },
    "readmeNotice": null,
    "licences": [
@@ -9988,18 +10814,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 46348,
     "entryGz": 9339,
-    "jsMin": 46348,
+    "initialGz": 9339,
     "jsGz": 9339,
+    "jsMin": 46348,
     "cssGz": 0,
     "assetsRaw": 3644225,
     "assetsGz": 1143961,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 46348,
-    "initialGz": 9339
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "loro": {
    "id": "loro",
@@ -10016,17 +10841,18 @@
     "name": "loro-crdt",
     "latest": "1.16.3",
     "latestDate": "2026-09-21",
-    "lastStable": "1.16.3",
-    "lastStableDate": "2026-09-21",
     "releases12m": 44,
     "stableReleases12m": 44,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 0,
     "peerDeps": [],
-    "unpackedSize": 20033458,
+    "hasInstallScript": false,
     "repository": "https://github.com/loro-dev/loro",
-    "firstPublished": "2023-04-07"
+    "firstPublished": "2023-04-07",
+    "weeklyDownloads": 147593,
+    "monthlyDownloads": 560926,
+    "dependents": "45"
    },
    "readmeNotice": null,
    "licences": [
@@ -10055,18 +10881,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 87934,
     "entryGz": 12903,
-    "jsMin": 87934,
+    "initialGz": 12903,
     "jsGz": 12903,
+    "jsMin": 87934,
     "cssGz": 0,
     "assetsRaw": 3269100,
     "assetsGz": 1078367,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 87934,
-    "initialGz": 12903
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "liveblocks": {
    "id": "liveblocks",
@@ -10084,17 +10909,18 @@
     "name": "@liveblocks/client",
     "latest": "3.24.2",
     "latestDate": "2026-09-21",
-    "lastStable": "3.24.2",
-    "lastStableDate": "2026-09-21",
     "releases12m": 151,
     "stableReleases12m": 48,
     "licenseField": "Apache-2.0",
     "deprecated": null,
     "deps": 1,
     "peerDeps": [],
-    "unpackedSize": 15165,
+    "hasInstallScript": false,
     "repository": "https://github.com/liveblocks/liveblocks",
-    "firstPublished": "2021-03-15"
+    "firstPublished": "2021-03-15",
+    "weeklyDownloads": 446993,
+    "monthlyDownloads": 1389493,
+    "dependents": "33"
    },
    "readmeNotice": null,
    "licences": [
@@ -10138,18 +10964,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 223679,
     "entryGz": 67801,
-    "jsMin": 223679,
+    "initialGz": 67801,
     "jsGz": 67801,
+    "jsMin": 223679,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 3,
-    "initialMin": 223679,
-    "initialGz": 67801
-   }
+    "packages": 3
+   },
+   "theming": []
   },
   "partysocket": {
    "id": "partysocket",
@@ -10166,8 +10991,6 @@
     "name": "partysocket",
     "latest": "1.3.0",
     "latestDate": "2026-06-23",
-    "lastStable": "1.3.0",
-    "lastStableDate": "2026-06-23",
     "releases12m": 23,
     "stableReleases12m": 15,
     "licenseField": "MIT",
@@ -10176,9 +10999,12 @@
     "peerDeps": [
      "react"
     ],
-    "unpackedSize": 210330,
+    "hasInstallScript": false,
     "repository": "https://github.com/cloudflare/partykit",
-    "firstPublished": "2023-01-02"
+    "firstPublished": "2023-01-02",
+    "weeklyDownloads": 3453718,
+    "monthlyDownloads": 16257634,
+    "dependents": "158"
    },
    "readmeNotice": null,
    "licences": [
@@ -10198,7 +11024,7 @@
    ],
    "activity": {
     "repo": "cloudflare/partykit",
-    "commits12m": 179,
+    "commits12m": 178,
     "humanCommits12m": 138,
     "authors12m": 10,
     "topAuthor": "Sunil Pai",
@@ -10207,18 +11033,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 11693,
     "entryGz": 4061,
-    "jsMin": 11693,
+    "initialGz": 4061,
     "jsGz": 4061,
+    "jsMin": 11693,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 11693,
-    "initialGz": 4061
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "tinybase": {
    "id": "tinybase",
@@ -10235,8 +11060,6 @@
     "name": "tinybase",
     "latest": "10.0.1",
     "latestDate": "2026-09-24",
-    "lastStable": "10.0.1",
-    "lastStableDate": "2026-09-24",
     "releases12m": 101,
     "stableReleases12m": 40,
     "licenseField": "MIT",
@@ -10275,9 +11098,12 @@
      "@capacitor-community/sqlite",
      "react-native-sqlite-storage"
     ],
-    "unpackedSize": 15989603,
+    "hasInstallScript": false,
     "repository": "https://github.com/tinyplex/tinybase",
-    "firstPublished": "2021-12-31"
+    "firstPublished": "2021-12-31",
+    "weeklyDownloads": 18170,
+    "monthlyDownloads": 54940,
+    "dependents": "17"
    },
    "readmeNotice": null,
    "licences": [
@@ -10306,18 +11132,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 41129,
     "entryGz": 18351,
-    "jsMin": 41129,
+    "initialGz": 18351,
     "jsGz": 18351,
+    "jsMin": 41129,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 41129,
-    "initialGz": 18351
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "perfect-cursors": {
    "id": "perfect-cursors",
@@ -10334,17 +11159,18 @@
     "name": "perfect-cursors",
     "latest": "1.0.5",
     "latestDate": "2022-01-08",
-    "lastStable": "1.0.5",
-    "lastStableDate": "2022-01-08",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "MIT",
     "deprecated": null,
     "deps": 1,
     "peerDeps": [],
-    "unpackedSize": 82319,
+    "hasInstallScript": false,
     "repository": "https://github.com/steveruizok/perfect-cursors/perfect-cursors",
-    "firstPublished": "2022-01-07"
+    "firstPublished": "2022-01-07",
+    "weeklyDownloads": 136250,
+    "monthlyDownloads": 330342,
+    "dependents": "6"
    },
    "readmeNotice": null,
    "licences": [
@@ -10373,18 +11199,17 @@
    },
    "size": {
     "ok": true,
-    "entryMin": 5233,
     "entryGz": 1900,
-    "jsMin": 5233,
+    "initialGz": 1900,
     "jsGz": 1900,
+    "jsMin": 5233,
     "cssGz": 0,
     "assetsRaw": 0,
     "assetsGz": 0,
     "chunks": 1,
-    "packages": 1,
-    "initialMin": 5233,
-    "initialGz": 1900
-   }
+    "packages": 1
+   },
+   "theming": []
   },
   "zero": {
    "id": "zero",
@@ -10401,17 +11226,18 @@
     "name": "@rocicorp/zero",
     "latest": "1.9.0",
     "latestDate": "2026-08-14",
-    "lastStable": "1.9.0",
-    "lastStableDate": "2026-08-14",
     "releases12m": 580,
     "stableReleases12m": 48,
     "licenseField": "Apache-2.0",
     "deprecated": null,
     "deps": 49,
     "peerDeps": [],
-    "unpackedSize": 8588971,
+    "hasInstallScript": false,
     "repository": "https://github.com/rocicorp/mono",
-    "firstPublished": "2024-10-03"
+    "firstPublished": "2024-10-03",
+    "weeklyDownloads": 242572,
+    "monthlyDownloads": 627137,
+    "dependents": "8"
    },
    "readmeNotice": null,
    "licences": [
@@ -10438,7 +11264,8 @@
     "topShare": 26,
     "lastCommit": "2026-09-28"
    },
-   "size": null
+   "size": null,
+   "theming": []
   },
   "replicache": {
    "id": "replicache",
@@ -10455,17 +11282,18 @@
     "name": "replicache",
     "latest": "15.3.0",
     "latestDate": "2025-07-02",
-    "lastStable": "15.3.0",
-    "lastStableDate": "2025-07-02",
     "releases12m": 0,
     "stableReleases12m": 0,
     "licenseField": "https://roci.dev/terms.html",
     "deprecated": null,
     "deps": 4,
     "peerDeps": [],
-    "unpackedSize": 198021,
+    "hasInstallScript": false,
     "repository": "https://github.com/rocicorp/replicache",
-    "firstPublished": "2020-07-01"
+    "firstPublished": "2020-07-01",
+    "weeklyDownloads": 11696,
+    "monthlyDownloads": 36134,
+    "dependents": "6"
    },
    "readmeNotice": null,
    "licences": [
@@ -10490,27 +11318,29 @@
     "topShare": null,
     "lastCommit": "2022-04-21"
    },
-   "size": null
+   "size": null,
+   "theming": []
   }
  },
  "a11y": {
   "palette-cmdk": {
    "library": "cmdk",
    "checks": {
-    "opensFromKeyboard": "1/1",
-    "focusInSearchField": "1/1",
-    "dialogHasName": "1/1",
+    "opensFromKeyboard": "5/5",
+    "focusInSearchField": "5/5",
+    "dialogHasName": "5/5",
+    "backgroundHiddenWhileOpen": "5/5",
     "inputRole": "combobox",
-    "groupHeadingsExposed": "1/1",
+    "groupHeadingsExposed": "5/5",
     "optionsAfterFilter": 4,
-    "activeItemExposed": "1/1",
-    "enterRunsActiveCommand": "1/1",
-    "closesAfterRun": "1/1",
-    "focusReturnsToTrigger": "0/1",
-    "emptyStateShown": "1/1",
-    "resultCountOrEmptyAnnounced": "0/1",
-    "escapeCloses": "1/1",
-    "escapeReturnsFocus": "0/1"
+    "activeItemExposed": "5/5",
+    "enterRunsActiveCommand": "5/5",
+    "closesAfterRun": "5/5",
+    "focusReturnsToTrigger": "0/5",
+    "emptyStateShown": "5/5",
+    "resultCountOrEmptyAnnounced": "0/5",
+    "escapeCloses": "5/5",
+    "escapeReturnsFocus": "0/5"
    },
    "detail": {
     "trigger": {
@@ -10531,6 +11361,7 @@
      "activedescendant": null,
      "describedby": null
     },
+    "ariaSnapshotListsBackground": false,
     "treeOpen": "- dialog \"Command palette\":\n  - text: Command palette\n  - combobox \"Command palette\" [expanded]\n  - listbox \"Suggestions\":\n    - group \"Create\":\n      - option \"New invoice\" [selected]\n      - option \"New client\"\n      - option \"New project\"\n    - group \"Navigate\":\n      - option \"Go to dashboard\"\n      - option \"Go to invoices\"\n      - option \"Go to settings\"\n    - group \"Preferences\":\n      - option \"Switch theme\"\n      - option \"Sign out\"",
     "afterType": {
      "tag": "input",
@@ -10566,20 +11397,21 @@
   "palette-rac": {
    "library": "react-aria-components Autocomplete + Menu",
    "checks": {
-    "opensFromKeyboard": "1/1",
-    "focusInSearchField": "1/1",
-    "dialogHasName": "1/1",
+    "opensFromKeyboard": "5/5",
+    "focusInSearchField": "5/5",
+    "dialogHasName": "5/5",
+    "backgroundHiddenWhileOpen": "5/5",
     "inputRole": "search",
-    "groupHeadingsExposed": "1/1",
+    "groupHeadingsExposed": "5/5",
     "optionsAfterFilter": 3,
-    "activeItemExposed": "0/1",
-    "enterRunsActiveCommand": "1/1",
-    "closesAfterRun": "1/1",
-    "focusReturnsToTrigger": "1/1",
-    "emptyStateShown": "1/1",
-    "resultCountOrEmptyAnnounced": "0/1",
-    "escapeCloses": "0/1",
-    "escapeReturnsFocus": "0/1"
+    "activeItemExposed": "5/5",
+    "enterRunsActiveCommand": "5/5",
+    "closesAfterRun": "5/5",
+    "focusReturnsToTrigger": "5/5",
+    "emptyStateShown": "5/5",
+    "resultCountOrEmptyAnnounced": "0/5",
+    "escapeCloses": "0/5",
+    "escapeReturnsFocus": "5/5"
    },
    "detail": {
     "trigger": {
@@ -10600,6 +11432,7 @@
      "activedescendant": null,
      "describedby": null
     },
+    "ariaSnapshotListsBackground": true,
     "treeOpen": "- dialog \"Command palette\":\n  - searchbox \"Search commands\"\n  - menu \"Suggestions\":\n    - group \"Create\":\n      - text: Create\n      - menuitem \"New invoice\"\n      - menuitem \"New client\"\n      - menuitem \"New project\"\n    - group \"Navigate\":\n      - text: Navigate\n      - menuitem \"Go to dashboard\"\n      - menuitem \"Go to invoices\"\n      - menuitem \"Go to settings\"\n    - group \"Preferences\":\n      - text: Preferences\n      - menuitem \"Switch theme\"\n      - menuitem \"Sign out\"",
     "afterType": {
      "tag": "input",
@@ -10616,7 +11449,7 @@
      "label": "Search commands",
      "text": "go",
      "roledescription": null,
-     "activedescendant": null,
+     "activedescendant": "Go to invoices",
      "describedby": null
     },
     "activeItem": "Go to invoices",
@@ -10631,13 +11464,14 @@
      "describedby": null
     },
     "emptyAnnouncements": [],
+    "secondEscapeCloses": true,
     "focusAfterEscape": {
-     "tag": "input",
+     "tag": "button",
      "role": null,
-     "label": "Search commands",
-     "text": "",
+     "label": null,
+     "text": "Open command palette",
      "roledescription": null,
-     "activedescendant": "New invoice",
+     "activedescendant": null,
      "describedby": null
     }
    },
@@ -10647,20 +11481,21 @@
   "palette-baseui": {
    "library": "@base-ui/react Autocomplete (inline) + Dialog",
    "checks": {
-    "opensFromKeyboard": "1/1",
-    "focusInSearchField": "1/1",
-    "dialogHasName": "1/1",
+    "opensFromKeyboard": "5/5",
+    "focusInSearchField": "5/5",
+    "dialogHasName": "5/5",
+    "backgroundHiddenWhileOpen": "5/5",
     "inputRole": "combobox",
-    "groupHeadingsExposed": "1/1",
+    "groupHeadingsExposed": "5/5",
     "optionsAfterFilter": 3,
-    "activeItemExposed": "1/1",
-    "enterRunsActiveCommand": "1/1",
-    "closesAfterRun": "1/1",
-    "focusReturnsToTrigger": "1/1",
-    "emptyStateShown": "1/1",
-    "resultCountOrEmptyAnnounced": "1/1",
-    "escapeCloses": "1/1",
-    "escapeReturnsFocus": "1/1"
+    "activeItemExposed": "5/5",
+    "enterRunsActiveCommand": "5/5",
+    "closesAfterRun": "5/5",
+    "focusReturnsToTrigger": "5/5",
+    "emptyStateShown": "5/5",
+    "resultCountOrEmptyAnnounced": "5/5",
+    "escapeCloses": "5/5",
+    "escapeReturnsFocus": "5/5"
    },
    "detail": {
     "trigger": {
@@ -10681,6 +11516,7 @@
      "activedescendant": null,
      "describedby": null
     },
+    "ariaSnapshotListsBackground": false,
     "treeOpen": "- dialog \"Command palette\":\n  - combobox \"Search commands\" [expanded]\n  - status\n  - listbox:\n    - group \"Create\":\n      - option \"New invoice\"\n      - option \"New client\"\n      - option \"New project\"\n    - group \"Navigate\":\n      - option \"Go to dashboard\"\n      - option \"Go to invoices\"\n      - option \"Go to settings\"\n    - group \"Preferences\":\n      - option \"Switch theme\"\n      - option \"Sign out\"",
     "afterType": {
      "tag": "input",
@@ -10732,21 +11568,22 @@
   "palette-kbar": {
    "library": "kbar",
    "checks": {
-    "opensFromKeyboard": "1/1",
-    "focusInSearchField": "1/1",
-    "dialogHasName": "0/1",
+    "opensFromKeyboard": "5/5",
+    "focusInSearchField": "5/5",
+    "dialogHasName": "0/5",
+    "backgroundHiddenWhileOpen": "0/5",
     "inputRole": "combobox",
-    "groupHeadingsExposed": "1/1",
+    "groupHeadingsExposed": "5/5",
     "optionsAfterFilter": 4,
-    "activeItemExposed": "1/1",
-    "enterRunsActiveCommand": "1/1",
-    "closesAfterRun": "1/1",
-    "focusReturnsToTrigger": "1/1",
-    "emptyStateShown": "0/1",
-    "resultCountOrEmptyAnnounced": "0/1",
-    "escapeCloses": "1/1",
-    "escapeReturnsFocus": "1/1",
-    "globalShortcutOpens": "1/1"
+    "activeItemExposed": "5/5",
+    "enterRunsActiveCommand": "5/5",
+    "closesAfterRun": "5/5",
+    "focusReturnsToTrigger": "5/5",
+    "emptyStateShown": "0/5",
+    "resultCountOrEmptyAnnounced": "0/5",
+    "escapeCloses": "5/5",
+    "escapeReturnsFocus": "5/5",
+    "globalShortcutOpens": "5/5"
    },
    "detail": {
     "trigger": {
@@ -10767,6 +11604,7 @@
      "activedescendant": "New invoice",
      "describedby": null
     },
+    "ariaSnapshotListsBackground": true,
     "treeOpen": "- button \"Before the demo\"\n- main:\n  - heading \"palette-kbar\" [level=1]\n  - button \"Open command palette\"\n- button \"After the demo\"\n- combobox \"Type a command or search…\" [expanded]\n- listbox:\n  - option \"Create\"\n  - option \"New invoice\" [selected]\n  - option \"New client\"\n  - option \"New project\"\n  - option \"Navigate\"\n  - option \"Go to dashboard\"\n  - option \"Go to invoices\"\n  - option \"Go to settings\"\n  - option \"Preferences\"\n  - option \"Switch theme\"\n  - option \"Sign out\"",
     "afterType": {
      "tag": "input",
@@ -10814,10 +11652,10 @@
   "dnd-dndkit": {
    "library": "@dnd-kit/core + @dnd-kit/sortable (defaults)",
    "checks": {
-    "dragHandleHasName": "1/1",
-    "instructionsAttached": "1/1",
-    "keyboardReorders": "1/1",
-    "focusStaysOnMovedItem": "1/1"
+    "dragHandleHasName": "5/5",
+    "instructionsAttached": "5/5",
+    "keyboardReorders": "5/5",
+    "focusStaysOnMovedItem": "5/5"
    },
    "detail": {
     "orderBefore": "[\"Brief\",\"Wireframes\",\"Visual design\",\"Build\",\"Launch\"]",
@@ -10861,10 +11699,10 @@
   "dnd-dndkit-react": {
    "library": "@dnd-kit/react (defaults)",
    "checks": {
-    "dragHandleHasName": "1/1",
-    "instructionsAttached": "1/1",
-    "keyboardReorders": "1/1",
-    "focusStaysOnMovedItem": "1/1"
+    "dragHandleHasName": "5/5",
+    "instructionsAttached": "5/5",
+    "keyboardReorders": "5/5",
+    "focusStaysOnMovedItem": "5/5"
    },
    "detail": {
     "orderBefore": "[\"Brief\",\"Wireframes\",\"Visual design\",\"Build\",\"Launch\"]",
@@ -10906,10 +11744,10 @@
   "dnd-rac": {
    "library": "react-aria-components GridList + useDragAndDrop",
    "checks": {
-    "dragHandleHasName": "1/1",
-    "instructionsAttached": "0/1",
-    "keyboardReorders": "1/1",
-    "focusStaysOnMovedItem": "1/1"
+    "dragHandleHasName": "5/5",
+    "instructionsAttached": "0/5",
+    "keyboardReorders": "5/5",
+    "focusStaysOnMovedItem": "5/5"
    },
    "detail": {
     "orderBefore": "[\"Brief\",\"Wireframes\",\"Visual design\",\"Build\",\"Launch\"]",
@@ -10980,10 +11818,10 @@
   "dnd-pragmatic": {
    "library": "@atlaskit/pragmatic-drag-and-drop + an action menu (the library's documented keyboard alternative)",
    "checks": {
-    "dragHandleHasName": "1/1",
-    "instructionsAttached": "0/1",
-    "keyboardReorders": "1/1",
-    "focusStaysOnMovedItem": "1/1"
+    "dragHandleHasName": "5/5",
+    "instructionsAttached": "0/5",
+    "keyboardReorders": "5/5",
+    "focusStaysOnMovedItem": "5/5"
    },
    "detail": {
     "orderBefore": "[\"Brief\",\"Wireframes\",\"Visual design\",\"Build\",\"Launch\"]",
@@ -11017,16 +11855,18 @@
      "describedby": null
     }
    },
-   "announcements": [],
+   "announcements": [
+    "Brief moved to position 3 of 5"
+   ],
    "pageErrors": []
   },
   "dnd-pangea": {
    "library": "@hello-pangea/dnd",
    "checks": {
-    "dragHandleHasName": "1/1",
-    "instructionsAttached": "1/1",
-    "keyboardReorders": "1/1",
-    "focusStaysOnMovedItem": "1/1"
+    "dragHandleHasName": "5/5",
+    "instructionsAttached": "5/5",
+    "keyboardReorders": "5/5",
+    "focusStaysOnMovedItem": "5/5"
    },
    "detail": {
     "orderBefore": "[\"Brief\",\"Wireframes\",\"Visual design\",\"Build\",\"Launch\"]",
@@ -11070,14 +11910,14 @@
   "panels-rrp": {
    "library": "react-resizable-panels",
    "checks": {
-    "pointerResizes": "1/1",
-    "separatorFocusable": "1/1",
-    "roleSeparator": "1/1",
-    "hasValueNow": "1/1",
-    "hasName": "1/1",
-    "arrowsResize": "1/1",
-    "homeKey": "1/1",
-    "enterTogglesCollapse": "1/1"
+    "pointerResizes": "5/5",
+    "separatorFocusable": "5/5",
+    "roleSeparator": "5/5",
+    "hasValueNow": "5/5",
+    "hasName": "5/5",
+    "arrowsResize": "5/5",
+    "homeKey": "5/5",
+    "enterTogglesCollapse": "5/5"
    },
    "detail": {
     "widthStart": 268,
@@ -11115,14 +11955,14 @@
   "panels-ark": {
    "library": "@ark-ui/react Splitter",
    "checks": {
-    "pointerResizes": "1/1",
-    "separatorFocusable": "1/1",
-    "roleSeparator": "1/1",
-    "hasValueNow": "1/1",
-    "hasName": "1/1",
-    "arrowsResize": "1/1",
-    "homeKey": "1/1",
-    "enterTogglesCollapse": "1/1"
+    "pointerResizes": "5/5",
+    "separatorFocusable": "5/5",
+    "roleSeparator": "5/5",
+    "hasValueNow": "5/5",
+    "hasName": "5/5",
+    "arrowsResize": "5/5",
+    "homeKey": "5/5",
+    "enterTogglesCollapse": "5/5"
    },
    "detail": {
     "widthStart": 268,
@@ -11160,14 +12000,14 @@
   "panels-allotment": {
    "library": "allotment",
    "checks": {
-    "pointerResizes": "1/1",
-    "separatorFocusable": "0/1",
-    "roleSeparator": "0/1",
-    "hasValueNow": "0/1",
-    "hasName": "0/1",
-    "arrowsResize": "0/1",
-    "homeKey": "0/1",
-    "enterTogglesCollapse": "0/1"
+    "pointerResizes": "5/5",
+    "separatorFocusable": "0/5",
+    "roleSeparator": "0/5",
+    "hasValueNow": "0/5",
+    "hasName": "0/5",
+    "arrowsResize": "0/5",
+    "homeKey": "0/5",
+    "enterTogglesCollapse": "0/5"
    },
    "detail": {
     "widthStart": 270,
@@ -11196,18 +12036,19 @@
   "flow-xyflow": {
    "library": "@xyflow/react",
    "checks": {
-    "nodesFocusable": "1/1",
-    "nodesHaveNameByDefault": "0/1",
-    "nodeNameWhenAriaLabelSet": "1/1",
-    "edgesFocusable": "1/1",
-    "edgesHaveName": "1/1",
-    "handlesKeyboardReachable": "0/1",
-    "controlsNamed": "1/1",
-    "tabReachesNode": "1/1",
-    "enterSelects": "1/1",
-    "arrowsMoveSelectedNode": "1/1",
-    "deleteKeyRemovesNode": "1/1",
-    "focusSurvivesDelete": "0/1"
+    "nodesFocusable": "5/5",
+    "nodesHaveNameByDefault": "0/5",
+    "nodeNameWhenAriaLabelSet": "5/5",
+    "edgesFocusable": "5/5",
+    "edgesHaveName": "5/5",
+    "edgeNamesUseNodeLabels": "0/5",
+    "handlesKeyboardReachable": "0/5",
+    "controlsNamed": "5/5",
+    "tabReachesNode": "5/5",
+    "enterSelects": "5/5",
+    "arrowsMoveSelectedNode": "5/5",
+    "deleteKeyRemovesNode": "5/5",
+    "focusSurvivesDelete": "0/5"
    },
    "detail": {
     "tree": "- application:\n  - img:\n    - group \"Edge from a to b\"\n  - img:\n    - group \"Edge from b to c\"\n  - group \"Order placed\"\n  - group: Payment captured\n  - group: Shipped\n  - img\n  - button \"Zoom In\":\n    - img\n  - button \"Zoom Out\":\n    - img\n  - button \"Fit View\":\n    - img\n  - button \"Toggle Interactivity\":\n    - img\n  - link \"React Flow attribution\":\n    - /url: https://reactflow.dev?utm_source=attribution\n    - text: React Flow",
@@ -11251,6 +12092,7 @@
       "roledescription": "edge"
      }
     ],
+    "wrapperRole": "application",
     "focusedNode": {
      "tag": "div",
      "role": "group",
@@ -11278,9 +12120,9 @@
   "canvas-konva": {
    "library": "konva + react-konva (Transformer), no extra work",
    "checks": {
-    "shapesInAccessibilityTree": "0/1",
-    "anyFocusableInCanvas": "0/1",
-    "tabLeavesCanvasImmediately": "1/1"
+    "shapesInAccessibilityTree": "0/5",
+    "anyFocusableInCanvas": "0/5",
+    "tabLeavesCanvasImmediately": "5/5"
    },
    "detail": {
     "tree": "",
@@ -11301,12 +12143,12 @@
   "canvas-konva-a11y": {
    "library": "konva + react-konva + an accessible layers list and inspector (this lab)",
    "checks": {
-    "shapesInAccessibilityTree": "1/1",
-    "tabReachesLayers": "1/1",
-    "arrowSelectsShape": "1/1",
-    "inspectorFieldMovesShape": "1/1",
-    "deleteRemovesShape": "1/1",
-    "focusStaysInList": "1/1"
+    "shapesInAccessibilityTree": "5/5",
+    "tabReachesLayers": "5/5",
+    "arrowSelectsShape": "5/5",
+    "inspectorFieldMovesShape": "5/5",
+    "deleteRemovesShape": "5/5",
+    "focusStaysInList": "5/5"
    },
    "detail": {
     "tree": "- heading \"Layers\" [level=2]\n- listbox \"Layers\":\n  - option \"Label background, 200 by 120 at 40, 40\" [selected]\n  - option \"Logo block, 120 by 80 at 280, 60\"\n  - option \"Price badge, 90 by 90 at 440, 120\"\n- group \"Position of Label background\":\n  - text: Position of Label background X\n  - spinbutton \"X\": \"40\"\n  - text: \"Y\"\n  - spinbutton \"Y\": \"40\"\n- status\n- img",
@@ -11356,10 +12198,10 @@
   "canvas-tldraw": {
    "library": "tldraw (evaluated in a development environment; production needs a licence key)",
    "checks": {
-    "shapesInAccessibilityTree": "0/1",
-    "skipToCanvasButton": "1/1",
-    "selectionAnnounced": "1/1",
-    "arrowsMoveSelection": "1/1"
+    "shapesInAccessibilityTree": "0/5",
+    "skipToCanvasButton": "5/5",
+    "selectionAnnounced": "5/5",
+    "arrowsMoveSelection": "5/5"
    },
    "detail": {
     "watermark": true,
@@ -11380,6 +12222,8 @@
      "[inserted] Brief, Rectangle. 1 of 3",
      "Build, Ellipse. 2 of 3"
     ],
+    "firstAnnouncementInInsertedRegion": true,
+    "watermarkText": "Get a license for production",
     "move": [
      "[[320,80]]",
      "[[322,80]]"
@@ -11397,10 +12241,10 @@
   "canvas-excalidraw": {
    "library": "@excalidraw/excalidraw",
    "checks": {
-    "shapesInAccessibilityTree": "0/1",
-    "toolbarNamed": "1/1",
-    "tabSelectsAnElement": "0/1",
-    "arrowsMoveSelection": "1/1"
+    "shapesInAccessibilityTree": "0/5",
+    "toolbarNamed": "5/5",
+    "tabSelectsAnElement": "0/5",
+    "arrowsMoveSelection": "5/5"
    },
    "detail": {
     "tree": "- region \"Shapes\":\n  - heading \"Shapes\" [level=2]\n  - radio \"Selection\" [checked]\n  - radio \"Rectangle\"\n  - radio \"Diamond\"\n  - radio \"Ellipse\"\n  - radio \"Arrow\"\n  - radio \"Line\"\n  - radio \"Draw\"\n  - radio \"Text\"\n  - radio \"Insert image\"\n  - radio \"Eraser\"\n  - button \"More tools\"\n  - checkbox \"Library\"\n  - checkbox \"Keep selected tool active after drawing\"\n  - radio \"Hand (panning tool) — H\"\n- button\n- button \"Undo\" [disabled]\n- button \"Redo\" [disabled]\n- img\n- text: Drawing canvas",
@@ -11422,5 +12266,219 @@
    "announcements": [],
    "pageErrors": []
   }
- }
+ },
+ "discovery": [
+  {
+   "query": "command palette",
+   "leaders": [
+    "cmdk",
+    "@base-ui/react",
+    "react-aria-components"
+   ],
+   "found": [],
+   "top": [
+    "kbar (348815/wk, 2026-08-10)",
+    "react-cmdk (90267/wk, 2023-04-18)",
+    "react-command-palette (9153/wk, 2026-01-17)",
+    "@kurajs/ctrlk (4443/wk, 2026-07-10)",
+    "@types/react-command-palette (4004/wk, 2023-11-07)",
+    "@tmikeladze/react-cmdk (3433/wk, 2024-06-03)"
+   ]
+  },
+  {
+   "query": "drag drop sortable",
+   "leaders": [
+    "@dnd-kit/core",
+    "@dnd-kit/react",
+    "@atlaskit/pragmatic-drag-and-drop"
+   ],
+   "found": [],
+   "top": [
+    "sortablejs (4781511/wk, 2026-02-11)",
+    "@hello-pangea/dnd (3477991/wk, 2025-02-09)",
+    "vuedraggable (1575299/wk, 2020-10-25)",
+    "react-native-draggable-flatlist (488356/wk, 2025-05-06)",
+    "vue-draggable-plus (328507/wk, 2026-01-11)",
+    "svelte-dnd-action (312803/wk, 2026-08-21)"
+   ]
+  },
+  {
+   "query": "resizable panels",
+   "leaders": [
+    "react-resizable-panels"
+   ],
+   "found": [
+    "react-resizable-panels"
+   ],
+   "top": [
+    "react-resizable-panels (41922056/wk, 2026-09-27)",
+    "dockview (465259/wk, 2026-09-10)",
+    "dockview-react (329904/wk, 2026-09-10)",
+    "motion-panels (39221/wk, 2026-09-24)",
+    "svelte-splitpanes (15990/wk, 2025-11-25)",
+    "react-resize-panel-ts (10212/wk, 2020-12-09)"
+   ]
+  },
+  {
+   "query": "split view",
+   "leaders": [
+    "react-resizable-panels"
+   ],
+   "found": [],
+   "top": [
+    "split.js (482416/wk, 2022-01-07)",
+    "dockview (465259/wk, 2026-09-10)",
+    "dockview-react (329904/wk, 2026-09-10)",
+    "allotment (309622/wk, 2025-12-19)",
+    "angular-split (144234/wk, 2025-07-21)",
+    "@devbookhq/splitter (14536/wk, 2023-08-05)"
+   ]
+  },
+  {
+   "query": "node editor",
+   "leaders": [
+    "@xyflow/react"
+   ],
+   "found": [],
+   "top": [
+    "@inquirer/external-editor (47719195/wk, 2026-09-02)",
+    "@inquirer/editor (39667390/wk, 2026-09-07)",
+    "prosemirror-trailing-node (7158824/wk, 2024-07-30)",
+    "@node-red/editor-client (68651/wk, 2026-09-08)",
+    "@node-red/editor-api (65004/wk, 2026-09-08)",
+    "@foblex/flow (61231/wk, 2026-09-27)"
+   ]
+  },
+  {
+   "query": "flow diagram react",
+   "leaders": [
+    "@xyflow/react"
+   ],
+   "found": [
+    "@xyflow/react"
+   ],
+   "top": [
+    "@xyflow/system (14121720/wk, 2026-09-24)",
+    "@xyflow/react (13668184/wk, 2026-09-24)",
+    "@reactflow/core (2532664/wk, 2024-06-20)",
+    "reactflow (2524256/wk, 2024-06-20)",
+    "@reactflow/background (2518731/wk, 2024-06-20)",
+    "@reactflow/controls (2518480/wk, 2024-06-20)"
+   ]
+  },
+  {
+   "query": "rich text editor",
+   "leaders": [
+    "@tiptap/core",
+    "lexical"
+   ],
+   "found": [
+    "@tiptap/core"
+   ],
+   "top": [
+    "@tiptap/core (21910716/wk, 2026-09-04)",
+    "quill (7836803/wk, 2024-11-30)",
+    "react-quill (4519482/wk, 2022-08-03)",
+    "@ckeditor/ckeditor5-core (1408368/wk, 2026-09-22)",
+    "@ckeditor/ckeditor5-engine (1401236/wk, 2026-09-22)",
+    "react-quill-new (681738/wk, 2026-02-02)"
+   ]
+  },
+  {
+   "query": "virtual list",
+   "leaders": [
+    "@tanstack/react-virtual",
+    "react-window",
+    "virtua"
+   ],
+   "found": [
+    "virtua"
+   ],
+   "top": [
+    "rc-virtual-list (2887267/wk, 2025-09-10)",
+    "@rc-component/virtual-list (1440600/wk, 2026-09-17)",
+    "virtua (1207493/wk, 2026-09-28)",
+    "react-tiny-virtual-list (130545/wk, 2018-07-31)",
+    "vue-virtual-scroll-list (75019/wk, 2023-05-29)",
+    "vxe-table (68299/wk, 2026-09-21)"
+   ]
+  },
+  {
+   "query": "image crop",
+   "leaders": [
+    "react-image-crop",
+    "react-easy-crop",
+    "cropperjs"
+   ],
+   "found": [
+    "react-image-crop",
+    "react-easy-crop"
+   ],
+   "top": [
+    "jimp (3870776/wk, 2026-04-07)",
+    "@jimp/plugin-crop (3797570/wk, 2026-04-07)",
+    "react-easy-crop (3725911/wk, 2026-07-24)",
+    "react-image-crop (2892274/wk, 2026-06-21)",
+    "expo-image-manipulator (2523139/wk, 2026-09-24)",
+    "blueimp-load-image (505305/wk, 2021-10-20)"
+   ]
+  },
+  {
+   "query": "gantt",
+   "leaders": [
+    "@svar-ui/react-gantt",
+    "dhtmlx-gantt",
+    "frappe-gantt"
+   ],
+   "found": [
+    "@svar-ui/react-gantt",
+    "dhtmlx-gantt",
+    "frappe-gantt"
+   ],
+   "top": [
+    "mermaid (18381270/wk, 2026-09-10)",
+    "devexpress-gantt (255201/wk, 2026-09-02)",
+    "frappe-gantt (235024/wk, 2026-02-25)",
+    "gantt-task-react (202549/wk, 2022-07-10)",
+    "@svar-ui/gantt-locales (117769/wk, 2026-09-09)",
+    "@svar-ui/gantt-store (117645/wk, 2026-09-09)"
+   ]
+  },
+  {
+   "query": "color picker",
+   "leaders": [
+    "react-colorful"
+   ],
+   "found": [
+    "react-colorful"
+   ],
+   "top": [
+    "react-colorful (6754688/wk, 2026-09-01)",
+    "@rc-component/color-picker (3118538/wk, 2026-02-27)",
+    "@replit/codemirror-css-color-picker (1338157/wk, 2024-11-05)",
+    "@zag-js/color-picker (1179516/wk, 2026-09-13)",
+    "vanilla-colorful (703519/wk, 2022-11-05)",
+    "vanilla-picker (658594/wk, 2024-03-23)"
+   ]
+  },
+  {
+   "query": "file upload resumable",
+   "leaders": [
+    "@uppy/core",
+    "tus-js-client"
+   ],
+   "found": [
+    "@uppy/core",
+    "tus-js-client"
+   ],
+   "top": [
+    "tus-js-client (2122158/wk, 2025-01-16)",
+    "@uppy/core (1397848/wk, 2026-09-28)",
+    "@mux/upchunk (380839/wk, 2025-02-19)",
+    "@uppy/tus (345532/wk, 2026-08-26)",
+    "blueimp-file-upload (123681/wk, 2021-09-25)",
+    "evaporate (53365/wk, 2017-10-08)"
+   ]
+  }
+ ]
 }

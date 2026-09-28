@@ -48,7 +48,7 @@ Two unrelated companies should land in different places. If the last three outpu
 
 Fill `templates/DESIGN.md`. The decisions that matter most:
 
-**Typography.** A face the whole brand family already uses (`audit.md` §4) is a documented brand asset: keep it and re-set it unless the user says the identity is the problem — distance comes from surfaces, composition, imagery and scale, not from swapping to a fashionable face. A monospace face is the exception: a sibling site that uses one does not make it transferable (`audit.md` §4). Otherwise (no family face to keep, or only a mono one):
+**Typography.** A face the whole brand family already uses (`audit.md` §4) is a documented brand asset: keep it and re-set it, named as kept among the five first-notice things in `DESIGN.md`, unless the user says the identity is the problem — distance comes from surfaces, composition, imagery and scale, not from swapping to a fashionable face. A monospace face is the exception: a sibling site that uses one does not make it transferable (`audit.md` §4). Otherwise (no family face to keep, or only a mono one):
 
 1. Name the voice from the attributes and the wordmark's construction (`design-theory.md` C3).
 2. Shortlist three faces per role (display, text/UI, code only if the audience reads code) from `resources/type-and-colour.md` and the wider catalogues — **not** from memory, which returns the saturated list.
@@ -86,7 +86,7 @@ When the site frames a **signature product experience** (`framing.md` §1: a bui
 Write each into `DESIGN.md`. On **productive** routes they apply to the brand layer only (§6) — type, colour roles, marks, status vocabulary, tone, empty and success moments; the interaction model is judged by the top tasks and by what users have learned, and "a competitor's app works the same way" is often the right answer, not a failure. A passing productive answer reads like: "the layout follows the task (exceptions first, search pinned); the brand layer — logo palette, wordmark face, droplet status marks — would not fit a competitor".
 
 - **Similar-brief test**: one line describing what this plan would be for a different company in the same category. Same plan → it is the prior.
-- **Category test**: guessable from the category alone, or from the category plus "avoid the obvious"? Rework until neither is obvious. **When the brand's own assets are the category's archetype** (a tile shop called Azul whose mark is cobalt and white), the assets win: keep them, and take the distance from composition, content and the product itself. Say so in this test rather than repainting the brand to escape its own category.
+- **Category test**: guessable from the category alone, or from the category plus "avoid the obvious"? Rework until neither is obvious. **When the brand's own assets are the category's archetype** (a tile shop called Azul whose mark is cobalt and white), the assets win: keep them, and take the distance from composition, content and the product itself. Say so in this test, and name them as kept among the five first-notice things in `DESIGN.md`, rather than repainting the brand to escape its own category.
 - **Second-order test**: any choice justified only as the opposite of a default? A reason must point at the company.
 - **House-recipe and ledger check**: the direction in one sentence — surfaces, display face and emphasis device, label device, dark-chapter colour, accent — compared with the recipe in `anti-patterns.md` and the rows in `ledger.md` (and any `DESIGN.md` in the user's other projects). If the sentence fits both, change the family: different surfaces, a display face chosen from the wordmark, a label device that is not mono uppercase, an accent from the logo.
 - **Breaks if** (three things that would betray the direction) and the **memory test** (what a visitor describes an hour later).
@@ -116,7 +116,7 @@ Keep what users have learned unless the audit shows it fails; say which learned 
 - **Remove**: decorative gradients, textures, card grids, chips, badges, icon grids, animations without meaning, placeholder copy, anything invented.
 - **Create**: new primitives (chapter wrapper, heading pattern, button variants), product fragments, diagrams, the graphics layer, imagery pipeline, missing states, `SYSTEM.md` for product UI.
 
-Expressive + redesign: if **keep** is the longest list, the direction is still a refresh — go back to the concept before writing code.
+Expressive redesign or rethink (a first site included): if **keep** is not shorter than **replace + create**, the direction is still a refresh — go back to the concept before writing code. Of the five first-notice things, only a documented brand asset kept under §4 or §5 may stay, named with its reason.
 
 ## 8. Page narrative (expressive routes)
 

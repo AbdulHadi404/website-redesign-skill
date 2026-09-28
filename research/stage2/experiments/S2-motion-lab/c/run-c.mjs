@@ -8,7 +8,7 @@ import { buildC, VARIANTS } from './build-c.mjs';
 const scripts = path.resolve(labRoot, '../../../../skills/website-redesign/scripts');
 const SPEC = { static: 'c/specs/DESIGN.md', good: 'c/specs/DESIGN.md', over: 'c/specs/motion.json', gsap: 'c/specs/motion.json' };
 const SHOTS = { good: ['features-reveal', 'sheet-open'], static: ['sheet-open'], over: ['plan-hover', 'panel-swap'], gsap: ['features-reveal'] };
-const CATS = [['static', /^static/], ['duration', /^duration/], ['easing', /easing|curve fits/], ['props', /properties|layout box/], ['stagger', /^stagger/], ['reduced', /^reduced motion/], ['interrupt', /^interrupted/]];
+const CATS = [['static', /^static/], ['duration', /^duration/], ['easing', /easing|curve fits/], ['props', /propert|layout/], ['stagger', /^stagger/], ['reduced', /^reduced motion/], ['interrupt', /^interrupted/]];
 const catOf = (p) => (CATS.find(([, re]) => re.test(p)) || ['other'])[0];
 const run = (args) => new Promise((res) => { const t0 = Date.now(); const c = spawn(process.execPath, ['motion.mjs', ...args], { cwd: scripts, stdio: ['ignore', 'pipe', 'pipe'] });
   let out = ''; c.stdout.on('data', (d) => { out += d; }); c.stderr.on('data', (d) => { out += d; }); c.on('close', (code) => res({ code, out, ms: Date.now() - t0 })); });
@@ -42,6 +42,8 @@ export async function runC() {
   await close();
   const pr = (x) => ({ precision: +(x.tp / (x.tp + x.fp.length) || 0).toFixed(3), recall: +(x.tp / (x.tp + x.fn.length) || 0).toFixed(3), tp: x.tp, fp: x.fp, fn: x.fn });
   res.totals = { specFindings: pr(allSpec), flags: pr(allFlag), entryVerdicts: `${verdictOk}/${entries}` };
+  // held-out: the Part A pages, compared with the Part A runner's own sampler (needs captures/a-results.json)
+  try { const { runHeldout } = await import('./run-heldout.mjs'); const h = await runHeldout(); res.heldout = { agreementNormal: h.agreementNormal, agreementReduce: h.agreementReduce, disagreements: h.disagreements }; } catch (e) { res.heldout = { error: e.message }; }
   await writeFile(path.join(labRoot, 'captures/c-results.json'), JSON.stringify(res, null, 1));
   return res;
 }

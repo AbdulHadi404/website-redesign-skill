@@ -63,7 +63,7 @@ Measured reference points: Primer body 14 px with 3 type sizes on an issues page
 
 - **Docs structure** (Diátaxis): tutorials (learning), how-to guides (goals), reference (information), explanation (understanding). Mixing them is the main failure.
 - **Good:** Stripe's three columns (navigation, prose, live code); the user's own keys when signed in; copy buttons; a first successful call within minutes; ⌘K search; an on-page table of contents; a version switch.
-- **Numbers:** prose 15–16 px at 60–75 characters; code 13–14 px monospace. Monospace belongs here — and, per commitment 5 in `SKILL.md`, essentially only here.
+- **Numbers:** prose 15–16 px at 60–70 characters (75 at most); code 13–14 px monospace. Monospace belongs here — and, per commitment 5 in `SKILL.md`, essentially only here.
 - The dev tool's *marketing* can be expressive, but it shows real code and real UI.
 
 ## Fintech and banking
@@ -93,14 +93,14 @@ Farm, warehouse, clinical, site, retail-floor and delivery tools: a phone or rug
 ## Content and editorial
 
 - **Goal:** read, understand, come back. Weight belongs to the article.
-- **Good:** 17–21 px body at 45–75 characters; generous leading; a strong heading hierarchy; real bylines and dates; related content that is related; brand expressed through typography and per-story art direction.
+- **Good:** 17–21 px body at 60–70 characters (75 at most, `design-theory.md` C1); generous leading; a strong heading hierarchy; real bylines and dates; related content that is related; brand expressed through typography and per-story art direction.
 - **Ads**, if any: the Coalition for Better Ads caps mobile ad density at 30% of the main content height; pop-ups, prestitials, autoplay video with sound and large sticky ads fail its standard.
 
 ## Public services
 
 - **Goal:** complete a mandatory task first time, whoever you are.
 - **Principles** (GOV.UK): start with user needs; do less; do the hard work to make it simple; this is for everyone; be consistent, not uniform.
-- **Hard constraints:** one thing per page to start with (the question is the `h1`, inside the legend); an error summary at the top, focused on submit, linking to each field; a back link; plain words; "Continue" as the button; no decoration. Brand expression is effectively zero, by principle.
+- **Hard constraints:** one thing per page to start with (the question is the `h1`, inside the legend); an error summary at the top even for one error (GOV.UK; product forms use the three-error threshold in `app-ui.md` §6), focused on submit, linking to each field; a back link; plain words; "Continue" as the button; no decoration. Brand expression is effectively zero, by principle.
 
 ## Signature experiences (builders, configurators, studios, 3D viewers)
 

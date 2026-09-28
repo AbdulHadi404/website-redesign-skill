@@ -146,7 +146,7 @@ Green = succeeded / available, red = failed / danger, amber = attention — and 
 
 ### C1. The rules with numbers (Bringhurst, Butterick, the web adaptations)
 
-- **Body size** 15–25px on the web (16 is the default and a fine baseline); **line spacing** 120–145% (1.5 for a long measure); **measure** 45–90 characters including spaces — aim 60–70 (the "69 characters" middle); **ragged right**, never justified on the web (rivers, hyphenation).
+- **Body size** is a category dial (`categories.md`): 16–20px on marketing pages (16 is the default and a fine baseline), up to 21px for long reading; product UI 13–14px (C2). **Line spacing** for body text 1.4–1.55, 1.5 by default (Latin; Arabic, CJK and Devanagari take more: `multilingual.md`); **measure** 60–70 characters including spaces (the "69 characters" middle), 75 at most, 45 the floor for a narrow column; **ragged right**, never justified on the web (rivers, hyphenation).
 - **Paragraphs**: space *or* indent, never both; one line-height between paragraphs, or a 1-en indent on every paragraph after the first.
 - **Capitals**: letterspace all strings of capitals and small caps by 5–12%; all-caps only for less than a line; **never letterspace lower case** without a reason. In product UI, capitals only for labels of one or two words in isolation (column heads, one-word nav-group labels) at 12 px (11 px only for a single word) in the UI face, never a condensed or hard grotesk, tracked 0.05–0.06 em; NN/g found uppercase faster for a word or two and slower for anything read in sequence, so statuses, multi-word strings and anything scanned down a column stay in sentence case (`app-ui.md` §3).
 - **Figures**: tabular figures — fixed-width digits in the text face (`font-variant-numeric: tabular-nums`), not a monospace font — in tables and anywhere numbers align; proportional elsewhere. Titling figures with full caps, text figures otherwise.
@@ -157,7 +157,7 @@ Green = succeeded / available, red = failed / danger, amber = attention — and 
 ### C2. Scale and rhythm
 
 - "Don't compose without a scale" (Bringhurst 3.1.1). Build sizes from a ratio and use every step you define. The classic scale doubles every five steps: `f = f₀ · 2^(i/5)` → 12 · 14 · 16 · 18 · 21 · 24 · 30 · 36 · 42 · 48 · 55 · 63 · 72 · 96. Alternatives: 1.25 (calm), 1.333–1.5 (editorial), 1.618 (very few, very large steps).
-- Line-height falls as size rises: 1.5 for body, 1.3 for subheads, 1.05–1.15 for display, 0.95–1.0 only for very large single lines.
+- Line-height falls as size rises: 1.5 for body (1.4–1.55, C1), 1.3 for subheads, 1.05–1.15 for display, 0.95–1.0 only for very large single lines.
 - **Vertical rhythm**: pick the body line-height as the unit and set every vertical margin and padding to a multiple of it; heading line-heights are chosen so they add up to whole units.
 - **Fluid type** on the web: `clamp(min, rem + vw, max)` between the phone and desktop steps, so headings scale with the viewport without a breakpoint per size — with a rem part in the preferred value and **max ≤ 2.5 × min**, or zoom cannot enlarge it enough (WCAG 1.4.4; a 32 → 120 px hero clamp fails, a `5vw` headline does not grow at all when zoomed — `responsive.md` §2).
 - **Two sets on one system** when a repo holds marketing and product: an *expressive* set (16 px base or more, fluid, ratio 1.25–1.5+) and a *productive* set (13–14 px base, fixed sizes, ratio 1.125–1.2, role names — page title, section heading, small heading, body, label and caption, metric, and code only when the users read code, as in C3). Carbon's rule: expressive styles never inside a container. One scale stretched over both is wrong for both (`design-systems.md` §3).
@@ -198,7 +198,7 @@ Green = succeeded / available, red = failed / danger, amber = attention — and 
 **Typography**
 
 - [ ] Scale ratio stated; sizes listed; every step used.
-- [ ] Body 15–25px, line-height 1.4–1.55, measure 60–70ch, ragged right.
+- [ ] Body size from the category dial (`categories.md`; product UI 13–14px), line-height 1.4–1.55 (1.5 by default), measure 60–70ch and never over 75ch, ragged right (C1).
 - [ ] Display face justified by the wordmark's construction; pairing contrasts in classification, concords in proportion.
 - [ ] At most one caps/tracked device; caps tracked 5–12%; nothing typeset to look like machine output.
 - [ ] Only the weights used are loaded; swap; self-hosted; no layout shift from fonts.

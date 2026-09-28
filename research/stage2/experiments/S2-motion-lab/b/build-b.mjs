@@ -10,9 +10,9 @@ import { fetchAssets } from '../fetch-assets.mjs';
 const out = path.join(labRoot, 'captures/b');
 const nm = (p) => path.join(labRoot, 'node_modules', p);
 export const WASM = { 'rive-canvas.wasm': '@rive-app/canvas/rive.wasm', 'rive-canvas-lite.wasm': '@rive-app/canvas-lite/rive.wasm', 'rive-webgl2.wasm': '@rive-app/webgl2/rive.wasm', 'dotlottie-player.wasm': '@lottiefiles/dotlottie-web/dist/dotlottie-player.wasm' };
-const USES = { 'rive-canvas': 'rive-canvas.wasm', 'rive-canvas-lite': 'rive-canvas-lite.wasm', 'rive-webgl2': 'rive-webgl2.wasm', 'rive-react': 'rive-canvas.wasm', dotlottie: 'dotlottie-player.wasm',
+const USES = { 'rive-canvas': 'rive-canvas.wasm', 'rive-canvas-lite': 'rive-canvas-lite.wasm', 'rive-webgl2': 'rive-webgl2.wasm', 'rive-react': 'rive-canvas.wasm', dotlottie: 'dotlottie-player.wasm', 'dotlottie-worker': 'dotlottie-player.wasm',
   'loop-rive': 'rive-canvas.wasm', 'loop-dotlottie': 'dotlottie-player.wasm', 'loop-dotlottie-worker': 'dotlottie-player.wasm', 'rive-semantics': 'rive-canvas.wasm' };
-const ASSET = { 'rive-canvas': 'switch.riv', 'rive-canvas-lite': 'switch.riv', 'rive-webgl2': 'switch.riv', 'rive-react': 'switch.riv', 'lottie-svg': 'toggle.json', 'lottie-light': 'toggle.json', dotlottie: 'toggle-sm.lottie', sprite: '../b/sprite.webp',
+const ASSET = { 'rive-canvas': 'switch.riv', 'rive-canvas-lite': 'switch.riv', 'rive-webgl2': 'switch.riv', 'rive-react': 'switch.riv', 'lottie-svg': 'toggle.json', 'lottie-light': 'toggle.json', dotlottie: 'toggle-sm.lottie', 'dotlottie-worker': 'toggle-sm.lottie', sprite: '../b/sprite.webp',
   'loop-rive': 'truck.riv', 'loop-lottie-svg': 'hamster.json', 'loop-lottie-canvas': 'hamster.json', 'loop-dotlottie': 'hamster.lottie', 'loop-dotlottie-worker': 'hamster.lottie', 'rive-semantics': 'semantic.riv' };
 const gz = (b) => gzipSync(b, { level: 9 }).length, br = (b) => brotliCompressSync(b, { params: { [constants.BROTLI_PARAM_QUALITY]: 11 } }).length;
 const common = { bundle: true, format: 'esm', platform: 'browser', target: 'es2022', jsx: 'automatic', minify: true, logLevel: 'silent', define: { 'process.env.NODE_ENV': '"production"' } };

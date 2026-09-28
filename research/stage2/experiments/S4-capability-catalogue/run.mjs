@@ -3,18 +3,22 @@
 //
 //   npm install --legacy-peer-deps --ignore-scripts     (once; versions are pinned in package.json)
 //   NODE_USE_ENV_PROXY=1 node run.mjs                   all steps
-//   node run.mjs --only size,a11y                      a subset: meta, licence, activity, size, theming, a11y
-//   node run.mjs --runs 5                              repetitions per a11y demo (median of timings; pass/fail must agree)
+//   node run.mjs --only size,a11y                      a subset: meta, licence, activity, size, theming, discovery, a11y
+//   node run.mjs --runs 5                              repetitions per a11y demo; each check is reported as passes/runs
 //
 // Steps
-//   meta      npm registry: latest version and date, releases in the last 12 months, deps, deprecation
-//   licence   the LICENSE file shipped in each installed package, classified from its text (not the package.json field)
+//   meta      npm registry: latest version and date, releases in the last 12 months, deps, deprecation, weekly downloads
+//   licence   the LICENSE file shipped in each installed package, classified from its text (not the package.json field);
+//             a missing or pointer-only file falls back to the repository's root licence (raw.githubusercontent.com)
 //   activity  GitHub over git (treeless, shallow since 2025-09-28): commits, human authors, top author share
 //   size      esbuild minimal usage per candidate (React/Vue/Svelte external), gzip -9; initial vs lazy JS, CSS, WASM
 //   theming   CSS files the package ships and the custom properties they define (how it takes a design system)
+//   discovery whether a plain npm search (libcheck --search) finds each category's leader
 //   a11y      demos/*.jsx built with React and driven by Playwright: keyboard operation and the accessibility tree
 //
-// Network: meta and activity need the npm registry and github.com; size, licence and a11y run offline.
+// Network: meta, discovery, activity and the licence fallback need registry.npmjs.org and github.com; size, theming and a11y run offline.
+// Everything else the lab contains: catalogue.mjs (the 142 candidates), libcheck.mjs (the proposed skill script),
+// demos/ (sources + tests.mjs + run-a11y.mjs), lib/table.mjs (prints the catalogue tables from results.json).
 import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import os from 'node:os';
@@ -24,10 +28,11 @@ import { categories, candidates } from './catalogue.mjs';
 import { registry, licence, activity, readmeNotice, CUTOFF } from './lib/meta.mjs';
 import { measure } from './lib/size.mjs';
 import { theming } from './lib/theming.mjs';
+import { search } from './libcheck.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
-const only = argv.includes('--only') ? argv[argv.indexOf('--only') + 1].split(',') : ['meta', 'licence', 'activity', 'size', 'theming', 'a11y'];
+const only = argv.includes('--only') ? argv[argv.indexOf('--only') + 1].split(',') : ['meta', 'licence', 'activity', 'size', 'theming', 'discovery', 'a11y'];
 const RUNS = argv.includes('--runs') ? +argv[argv.indexOf('--runs') + 1] : 5;
 const WORK = process.env.S4_WORK || path.join(os.tmpdir(), 's2-S4');
 const resultsFile = path.join(here, 'results.json');
@@ -50,7 +55,7 @@ for (const c of candidates) {
 
 if (only.includes('meta')) {
   console.log('== meta (npm registry)');
-  const metas = await pool(candidates, 8, (c) => registry(c.pkgs[0]));
+  const metas = await pool(candidates, 3, (c) => registry(c.pkgs[0]));
   candidates.forEach((c, i) => { results.candidates[c.id].registry = metas[i]; });
   const notices = await pool(candidates, 8, (c) => readmeNotice(here, c.pkgs[0]));
   candidates.forEach((c, i) => { results.candidates[c.id].readmeNotice = notices[i]; });
@@ -91,6 +96,27 @@ if (only.includes('theming')) {
     const t = [];
     for (const p of c.pkgs) { const r = await theming(here, p); if (r && r.cssFiles) t.push({ pkg: p, ...r }); }
     results.candidates[c.id].theming = t;
+  }
+}
+
+if (only.includes('discovery')) {
+  // Does a plain npm search find the category leader? Query words a designer would type; the leader is the
+  // library this catalogue recommends. libcheck --search keeps results containing every word, ranked by downloads.
+  console.log('== discovery (npm search)');
+  const probes = [
+    ['command palette', ['cmdk', '@base-ui/react', 'react-aria-components']], ['drag drop sortable', ['@dnd-kit/core', '@dnd-kit/react', '@atlaskit/pragmatic-drag-and-drop']],
+    ['resizable panels', ['react-resizable-panels']], ['split view', ['react-resizable-panels']], ['node editor', ['@xyflow/react']],
+    ['flow diagram react', ['@xyflow/react']], ['rich text editor', ['@tiptap/core', 'lexical']], ['virtual list', ['@tanstack/react-virtual', 'react-window', 'virtua']],
+    ['image crop', ['react-image-crop', 'react-easy-crop', 'cropperjs']], ['gantt', ['@svar-ui/react-gantt', 'dhtmlx-gantt', 'frappe-gantt']],
+    ['color picker', ['react-colorful']], ['file upload resumable', ['@uppy/core', 'tus-js-client']],
+  ];
+  results.discovery = [];
+  for (const [q, leaders] of probes) {
+    const rows = await search(q, 12);
+    await new Promise((ok) => setTimeout(ok, 800));
+    const names = rows.map((r) => r.name);
+    results.discovery.push({ query: q, leaders, found: leaders.filter((l) => names.includes(l)), top: rows.slice(0, 6).map((r) => `${r.name} (${r.weekly}/wk, ${r.date})`) });
+    console.log(' ', q.padEnd(22), 'leaders found:', leaders.filter((l) => names.includes(l)).join(', ') || 'none');
   }
 }
 

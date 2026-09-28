@@ -4,7 +4,7 @@
  *
  *   node parity.mjs --before http://localhost:4000 --after http://localhost:3000 \
  *        [--paths / /pricing /about | --crawl 40] [--source src content README.md] [--out parity.md]
- *        [--derived "days late" "/^\d+ days$/" …]   values computed from the data (listed, not failed)
+ *        [--derived "days late" "/^\d{1,3} days$/" …]   values computed from the data (listed, not failed)
  *        [--removed "10 minutes" "#human" "captcha" "/old-page/" …]   deliberate removals (listed, not warned)
  *   node parity.mjs --greenfield --after http://localhost:3000 --source discovery src \
  *        [--paths …|--crawl 40] [--derived …] [--out parity.md]   a first site: no old build
@@ -31,10 +31,10 @@
  * or "£35.00" is not) or beside its own unit or currency in the same block and sentence ("Council minutes" in one
  * footer item does not keep "10 minutes" for the "Zone 10" in the next).
  * --removed declares what was taken out on purpose; each is listed as "declared removed" (DESIGN.md "Remove" lists
- * it) instead of warned about. One pattern per argument, commas kept. A string matches by kind: one with a digit
- * matches a claim that contains it as whole words or states the same figure ("£35" matches "£35.00", not "£350");
- * three or more words match a quotation that contains them; an id ("#human" or "human"), a field ("name" or
- * "form › name") or a route ("/old/page") matches only exactly. A /regex/ needs a regex character in it
+ * it) instead of warned about. One pattern per argument, commas kept (--derived too). A string matches by kind: one
+ * with a digit matches a claim that contains it as whole words or states the same figure ("£35" matches "£35.00",
+ * not "£350"); three or more words match a quotation that contains them; an id ("#human" or "human"), a field
+ * ("name" or "form › name") or a route ("/old/page") matches only exactly. A /regex/ needs a regex character in it
  * (\ ^ $ * + ? ( ) [ ] { } |) and tests all of them, so "/old/page" and "/about/us" stay routes: write /^about/i.
  * A pattern that matched nothing is reported.
  *
@@ -45,15 +45,17 @@
  * submissions and metadata have nothing to be compared with; the report says so at the top.
  *
  * --payloads: the payload contract, what a form actually sends. states.mjs records requests ("record" on a route
- * or a state) into <out>/requests/; run the same answers through the old and the new build, then pass both out
- * dirs. States pair by name (devices may differ), requests by method and path in the order sent, then by path (the
- * method changed), then by method (the endpoint moved). Per request: byte-identical, or keys removed/added, key
- * order, value types and values that changed, plus a changed method, path, query or Content-Type. A recording is
- * never compared with itself: one folder given twice is split by its --label before / --label after recordings,
- * and a pair that is the same file, or has the same label and base URL, is refused. A body the recording cut off
- * (…(truncated)) cannot be compared in full and is never called identical. Values that change on every submission
- * (CSRF tokens, nonces, idempotency keys, captcha responses; --ignore <key…> for more, such as a timestamp) are
- * checked for presence and type only. No browser is started.
+ * or a state) into <out>/requests/, one folder per --label (requests/<label>/); run the same answers through the old
+ * and the new build, then pass the two folders (an out dir, its requests/ or one label's folder). States pair by name
+ * (devices may differ), requests by method and path in the order sent, then by path (the method changed), then by
+ * method (the endpoint moved). Per request: byte-identical (by SHA-256 when the recording has it), or keys
+ * removed/added, key order, value types and values that changed, plus a changed method, path, query or Content-Type.
+ * A recording is never compared with itself: one out dir given twice is split into its --label before and --label
+ * after runs (old/new also work), a side holding several runs is refused, and so is a pair that is the same file or
+ * has the same label and base URL. A body an older recording cut off (…(truncated)) cannot be compared in full and is
+ * never called identical; a binary body kept only as its size and hash is compared by hash. Values that change on
+ * every submission (CSRF tokens, nonces, idempotency keys, captcha responses; --ignore <key…> for more, such as a
+ * timestamp or a cache-busting query value) are checked for presence and type only. No browser is started.
  * Eastern Arabic and Persian digits are normalised first, so claims on an Arabic page are compared too.
  * This turns "never invent proof" and the audit's preserved-list into checks.
  * It cannot tell a true claim from a false one — only whether it has a source.
@@ -256,8 +258,12 @@ let paths = asList(a.paths, ['/']);
 // test() stateful). --derived never names a route, so any /…/ there is a regex.
 const regexOf = (opt, d, strict) => {
   const m = d.match(/^\/(.+)\/([a-z]*)$/);
-  if (!m || (strict && (!/[\\^$*+?()[\]{}|]/.test(m[1]) || !/^(?!.*(.).*\1)[dgimsuyv]*$/.test(m[2])))) return null;
-  try { return new RegExp(m[1], m[2].replace(/[gy]/g, '')); } catch (e) { console.error(`--${opt} "${d}": not a valid regular expression (${e.message.split(': ').pop()}). A route is written "/old/page", a regex "/^old/i".`); process.exit(2); }
+  if (!m) return null;
+  const flagsOk = /^(?!.*(.).*\1)[dgimsuyv]*$/.test(m[2]);
+  if (strict && (!/[\\^$*+?()[\]{}|]/.test(m[1]) || !flagsOk)) return null;
+  const fail = (why) => { console.error(`--${opt} "${d}": not a valid regular expression (${why}). ${strict ? 'A route is written "/old/page", a regex "/^old/i".' : 'Write a regex as "/^\\d+ days$/i".'}`); process.exit(2); };
+  if (!flagsOk) fail(`"${m[2]}" are not regex flags`);
+  try { return new RegExp(m[1], m[2].replace(/[gy]/g, '')); } catch (e) { return fail(e.message.split(': ').pop()); }
 };
 const removedPats = each(a.removed).map((d) => ({ d, re: regexOf('removed', d, true) }));
 const derivedPats = each(a.derived).map((d) => regexOf('derived', d, false) || d.toLowerCase());
@@ -291,9 +297,9 @@ function extract() {
   // One digit system for comparison: Eastern Arabic and Persian digits, Arabic separators and bidi marks are
   // normalised, so a claim written ٥٥٬٤٨٤ on the old Arabic page is the same claim as 55,484 on the new one.
   const text = (document.body.innerText || '')
-    .replace(/[٠-٩]/g, (d) => d.charCodeAt(0) - 0x660).replace(/[۰-۹]/g, (d) => d.charCodeAt(0) - 0x6F0)
-    .replace(/٫/g, '.').replace(/٬/g, ',').replace(/٪/g, '%').replace(/−/g, '-')
-    .replace(/[‎‏؜‪-‮⁦-⁩]/g, '');
+    .replace(/[\u0660-\u0669]/g, (d) => d.charCodeAt(0) - 0x660).replace(/[\u06F0-\u06F9]/g, (d) => d.charCodeAt(0) - 0x6F0)
+    .replace(/\u066B/g, '.').replace(/\u066C/g, ',').replace(/\u066A/g, '%').replace(/\u2212/g, '-')
+    .replace(/[\u200E\u200F\u061C\u202A-\u202E\u2066-\u2069]/g, '');
   // A claim keeps the noun it counts ("12,000+ teams"): the same number counting something else is a new claim.
   // Same-line spaces only: "4\nReview and pay" is a step number beside a heading, not "4 reviews".
   const NOUN = '(?:[ \\t\\u00a0](?:active\\s|happy\\s|paying\\s|monthly\\s)?(?:users?|customers?|clients?|teams?|companies|businesses|brands|countries|languages|integrations|reviews?|ratings?|stars?|downloads|installs|employees|people|members|subscribers|developers|partners|farms|stores|shops|orders|projects|sites|websites|apps|hours?|days?|weeks?|months?|years?|minutes?|seconds?))';
@@ -358,7 +364,7 @@ if (crawlN) {
 
 // Whitespace collapses to one space (never removed: "05:31", "daysInMilk" must not read as "31 days");
 // thousands separators go; quotes and × are unified.
-const norm = (s) => s.toLowerCase().replace(/(\d)[,  ](?=\d{3}\b)/g, '$1').replace(/[“”"']/g, '').replace(/×/g, 'x').replace(/\s+/g, ' ');
+const norm = (s) => s.toLowerCase().replace(/(\d)[,\u202f\u00a0](?=\d{3}\b)/g, '$1').replace(/[“”"']/g, '').replace(/×/g, 'x').replace(/\s+/g, ' ');
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
 // A claim is present only as a whole token run: "31 days" does not match inside "31 daysinmilk".
 // Edges depend on the claim: a noun at the end needs a word boundary; a digit or symbol only needs no digit next to it

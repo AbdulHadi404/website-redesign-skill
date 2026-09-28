@@ -1,0 +1,23 @@
+{
+ "state": "submit",
+ "device": "desktop",
+ "label": null,
+ "base": "http://localhost:5841",
+ "requests": [
+  {
+   "method": "POST",
+   "url": "http://localhost:5841/api/apply",
+   "contentType": "application/json",
+   "format": "json",
+   "body": {
+    "full_name": "Aoife Byrne",
+    "permit_zone": "B",
+    "blue_badge": true,
+    "csrfmiddlewaretoken": "i15b1dw6fp"
+   },
+   "raw": "{\"full_name\":\"Aoife Byrne\",\"permit_zone\":\"B\",\"blue_badge\":true,\"csrfmiddlewaretoken\":\"i15b1dw6fp\"}",
+   "bytes": 98,
+   "sha256": "db3c299e6601499ba977c5efe519b177ca479709c235cda1ee7f1d2a7d4c00fb"
+  }
+ ]
+}

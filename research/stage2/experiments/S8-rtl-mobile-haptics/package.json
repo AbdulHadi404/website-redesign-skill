@@ -1,0 +1,15 @@
+{
+  "name": "s8-rtl-mobile-haptics",
+  "private": true,
+  "type": "module",
+  "description": "Stage-2 stream S8: RTL component checks, Arabic vertical metrics, mobile emulation checks, haptics support data.",
+  "scripts": {
+    "fetch": "bash fetch.sh",
+    "run": "node run.mjs"
+  },
+  "dependencies": {
+    "@mdn/browser-compat-data": "*",
+    "chart.js": "^4.3.2",
+    "web-features": "*"
+  }
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مفاتيح الأسهم في الاتجاه من اليمين إلى اليسار</title>
+<style>
+  body { font: 16px/1.6 system-ui, sans-serif; margin: 24px; }
+  [role=tablist] { display: flex; gap: 4px; margin-block: 8px; }
+  [role=tab] { padding: 6px 12px; border: 1px solid #888; background: #fff; font: inherit; }
+  [role=tab][aria-selected=true] { background: #222; color: #fff; }
+  fieldset { display: flex; gap: 12px; border: 1px solid #ccc; }
+</style>
+</head>
+<body>
+<h1>مفاتيح الأسهم</h1>
+<!-- Tabs whose arrow keys follow the visual direction: in RTL, ArrowLeft moves to the next tab (Radix, React Aria, MUI do this). -->
+<div id="tabs-aware" role="tablist" aria-label="حسب الاتجاه" data-aware="1">
+  <button role="tab" id="a1" aria-selected="true" aria-controls="pa1">الطلبات</button>
+  <button role="tab" id="a2" aria-selected="false" aria-controls="pa2" tabindex="-1">الفواتير</button>
+  <button role="tab" id="a3" aria-selected="false" aria-controls="pa3" tabindex="-1">الإعدادات</button>
+</div>
+<div role="tabpanel" id="pa1">١</div><div role="tabpanel" id="pa2" hidden>٢</div><div role="tabpanel" id="pa3" hidden>٣</div>
+<!-- Tabs copied from an LTR implementation: ArrowRight always means 'next in DOM order', so in RTL pressing ArrowRight moves focus to the tab on the LEFT, against the arrow. -->
+<div id="tabs-naive" role="tablist" aria-label="ثابت" data-aware="0">
+  <button role="tab" id="n1" aria-selected="true" aria-controls="pn1">الطلبات</button>
+  <button role="tab" id="n2" aria-selected="false" aria-controls="pn2" tabindex="-1">الفواتير</button>
+  <button role="tab" id="n3" aria-selected="false" aria-controls="pn3" tabindex="-1">الإعدادات</button>
+</div>
+<div role="tabpanel" id="pn1">١</div><div role="tabpanel" id="pn2" hidden>٢</div><div role="tabpanel" id="pn3" hidden>٣</div>
+
+<label>المبلغ <input id="range" type="range" min="0" max="100" value="50"></label>
+<fieldset id="radios"><legend>التوصيل</legend>
+  <label><input type="radio" name="d" value="1" checked> عادي</label>
+  <label><input type="radio" name="d" value="2"> سريع</label>
+  <label><input type="radio" name="d" value="3"> استلام</label>
+</fieldset>
+<script>
+for (const list of document.querySelectorAll('[role=tablist]')) {
+  const tabs = [...list.querySelectorAll('[role=tab]')];
+  const aware = list.dataset.aware === '1';
+  const select = (t) => { for (const x of tabs) { const on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; } t.focus(); };
+  list.addEventListener('keydown', (e) => {
+    const i = tabs.indexOf(document.activeElement); if (i < 0) return;
+    const rtl = aware && getComputedStyle(list).direction === 'rtl';
+    const next = rtl ? 'ArrowLeft' : 'ArrowRight', prev = rtl ? 'ArrowRight' : 'ArrowLeft';
+    let j = null;
+    if (e.key === next) j = (i + 1) % tabs.length; else if (e.key === prev) j = (i - 1 + tabs.length) % tabs.length;
+    else if (e.key === 'Home') j = 0; else if (e.key === 'End') j = tabs.length - 1;
+    if (j !== null) { e.preventDefault(); select(tabs[j]); }
+  });
+  for (const t of tabs) t.addEventListener('click', () => select(t));
+}
+</script>
+</body>
+</html>

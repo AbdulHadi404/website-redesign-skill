@@ -1,10 +1,7 @@
 // dotLottie web: the .lottie toggle with its embedded state machine (PointerDown toggles OnOffSwitch).
-import { DotLottie, DotLottieWorker } from '@lottiefiles/dotlottie-web';
+import { DotLottie } from '@lottiefiles/dotlottie-web';
 DotLottie.setWasmUrl('/captures/b/wasm/dotlottie-player.wasm'); // self-host: the default is jsDelivr/unpkg
-if (DotLottieWorker.setWasmUrl) DotLottieWorker.setWasmUrl('/captures/b/wasm/dotlottie-player.wasm');
-const W = new URLSearchParams(location.search).has('worker');
-const canvas = document.getElementById('c');
-const d = new (W ? DotLottieWorker : DotLottie)({ canvas, src: '/captures/b-assets/toggle-sm.lottie', autoplay: false, stateMachineId: 'toggle' });
-d.addEventListener('load', async () => { window.__loaded = performance.now(); await d.stateMachineLoad?.('toggle'); await d.stateMachineStart?.(); });
+const d = new DotLottie({ canvas: document.getElementById('c'), src: '/captures/b-assets/toggle-sm.lottie', autoplay: false });
+d.addEventListener('load', () => { window.__loaded = performance.now(); d.stateMachineLoad('toggle'); d.stateMachineStart(); });
 window.__d = d;
-window.__toggle = async () => { const v = await d.stateMachineGetBooleanInput('OnOffSwitch'); await d.stateMachineSetBooleanInput('OnOffSwitch', !v); };
+window.__toggle = () => d.stateMachineSetBooleanInput('OnOffSwitch', !d.stateMachineGetBooleanInput('OnOffSwitch'));

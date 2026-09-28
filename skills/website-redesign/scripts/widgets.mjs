@@ -29,10 +29,12 @@
  * live: the message counts as announced when it reaches a live region, or when focus moves (off the trigger) to the
  * message itself — a blocking error summary, accessibility.md §7.6 — so that what a screen reader says on focus
  * carries at least half of the new text. What it says is the focused element's accessible name, description and
- * value from Chromium's accessibility tree, the name and description of a dialog or named group focus entered, and
- * the text inside a focused static container (tabindex="-1") only when that container is mostly new text. So a link
- * or button inside a silent box reads only its own name, a wrapper of old text does not count, and a description that
- * changes on the element that keeps focus is not re-read. Focus moved to a toast fails (§7.4: never).
+ * value from Chromium's accessibility tree (and its aria-errormessage when invalid), the name of a dialog, named group
+ * or landmark focus entered (and a dialog's description), and the text inside a focused static container
+ * (tabindex="-1") only when that container is mostly new text. So a link or button inside a silent box reads only its
+ * own name, a wrapper of old text does not count, and a description that changes on the element that keeps focus is
+ * not re-read. Focus moved to a toast fails (§7.4: never). A trigger that loads a new page (a server-rendered form) is
+ * judged on that page, where text already there at load is not announced.
  *
  * Every step is keyboard-first. When a trigger cannot be reached or activated by keyboard the
  * test records the FAIL, then falls back to a mouse click so the rest of the contract is still checked.
@@ -90,7 +92,7 @@ const RECORDER = () => {
   addEventListener('focusin', e => window.__focus.push(e.target.outerHTML.slice(0, 60)));
 };
 
-const active = (page) => page.evaluate(() => { const a = document.activeElement; return a && a !== document.body ? `${a.id ? '#' + a.id : a.tagName.toLowerCase()} ${(a.innerText || a.getAttribute('aria-label') || '').replace(/\s+/g, ' ').trim().slice(0, 30)}`.trim() : 'body'; });
+const active = (page) => page.evaluate(() => { const a = document.activeElement; return a && a !== document.body ? `${a.id ? '#' + a.id : a.tagName.toLowerCase()} ${(a.innerText || a.getAttribute('aria-label') || '').replace(/\s+/g, ' ').trim().slice(0, 30)}`.trim() : 'body'; }).catch(() => '?');
 async function activate(page, sel, r, keys = ['Enter']) {
   const loc = page.locator(sel).first();
   await loc.waitFor({ state: 'attached', timeout: 3000 });
@@ -122,9 +124,9 @@ const NAMED_ROLES = new Set(['button', 'link', 'textbox', 'searchbox', 'combobox
 const ENTERED_ROLES = new Set(['dialog', 'alertdialog', 'group', 'region', 'radiogroup', 'form', 'main', 'navigation', 'complementary', 'banner', 'contentinfo', 'search', 'table', 'grid', 'tabpanel']);
 
 /**
- * What a screen reader is told when focus has moved off the trigger (live contracts): the new text on screen, and what
- * it says on reaching the focused element. `t` is the trigger's handle (null after a new page loaded), `shown` every
- * visible text run before activation. Returns null when focus is on <body>, the trigger or nothing.
+ * What a screen reader says when focus has moved off the trigger (live contracts), and whether that carries at least
+ * half of the new text on screen. `t` is the trigger's handle (null after a new page loaded), `shown` every visible
+ * text run before activation. Null when focus is on <body>, on the trigger or unreadable.
  */
 async function focusHeard(page, t, shown, label) {
   const dom = await page.evaluate(({ t, shown, label }) => {
@@ -139,8 +141,7 @@ async function focusHeard(page, t, shown, label) {
       if (own && own !== label && !set.has(own) && !(t && t.contains(e)) && vis(e)) fresh.push([e, own]);
     }
     const f = document.activeElement;
-    const res = { fresh: fresh.map(([, s]) => s) };
-    if (!f || f === document.body || f === document.documentElement || f === t) return res;
+    if (!f || f === document.body || f === document.documentElement || f === t) return null;
     const freshIn = (el) => fresh.reduce((n, [e, s]) => n + (el.contains(e) ? s.length : 0), 0);
     const mostlyNew = (el) => { const all = norm(el.innerText); return all.length > 0 && freshIn(el) >= all.length / 2; };
     // The boxes focus entered: the focused element and its ancestors short of one that holds the trigger.
@@ -149,10 +150,12 @@ async function focusHeard(page, t, shown, label) {
     // A toast: a new, small fixed layer (or one named toast/snackbar) that is not a dialog or menu.
     const layer = chain.find(e => getComputedStyle(e).position === 'fixed') || chain.find(e => /toast|snack/i.test(`${e.getAttribute('class') || ''} ${e.id}`));
     const toast = layer && mostlyNew(layer) && !f.closest('dialog,[role=dialog],[role=alertdialog],[aria-modal=true],[role=menu],[role=listbox]') && layer.getBoundingClientRect().height < innerHeight * 0.4;
+    // aria-errormessage is read on an invalid field (the ARIA rule), outside the description Chromium reports.
+    const errmsg = f.getAttribute('aria-invalid') === 'true' ? (f.getAttribute('aria-errormessage') || '').split(/\s+/).map(i => i && document.getElementById(i)).filter(Boolean).map(e => norm(e.innerText)).join(' ') : '';
     window.__wcAx = chain;
-    return { ...res, who: who(f), n: chain.length, content: norm(f.innerText), mostlyNew: mostlyNew(f), toast: toast ? `${who(layer)} "${norm(layer.innerText).slice(0, 60)}"` : null };
+    return { fresh: fresh.map(([, s]) => s), who: who(f), n: chain.length, content: norm(f.innerText), errmsg, mostlyNew: mostlyNew(f), toast: toast ? `${who(layer)} "${norm(layer.innerText).slice(0, 60)}"` : null };
   }, { t, shown, label }).catch(() => null);
-  if (!dom?.who) return dom && { fresh: dom.fresh };
+  if (!dom) return null;
   // Names and descriptions from Chromium's own accessibility tree (aria-labelledby, <label>, aria-describedby …).
   const cdp = await page.context().newCDPSession(page);
   const ax = [];
@@ -167,12 +170,13 @@ async function focusHeard(page, t, shown, label) {
   await cdp.detach().catch(() => {});
   const v = (x) => (x?.value != null ? String(x.value) : '');
   const [f = {}, ...up] = ax;
-  const parts = [v(f.name), v(f.description), v(f.value)];
+  const parts = [v(f.name), v(f.description), v(f.value), dom.errmsg];
   const via = [];
   if (v(f.description)) via.push('its description');
+  if (dom.errmsg) via.push('its error message');
   // A focused static container that is itself the new message is read out; a wrapper of mostly old text is not.
   const container = !NAMED_ROLES.has(v(f.role));
-  if (!f.ignored && container && dom.mostlyNew) { parts.push(dom.content); via.push('its text'); }
+  if (!f.ignored && container && dom.mostlyNew) { if (!v(f.name).includes(dom.content)) parts.push(dom.content); via.push('its text'); }
   for (const a of up) {
     const role = v(a.role);
     if (a.ignored || !ENTERED_ROLES.has(role) || !(v(a.name) || v(a.description))) continue;
@@ -183,7 +187,7 @@ async function focusHeard(page, t, shown, label) {
   const low = heard.toLowerCase();
   const total = dom.fresh.reduce((n, s) => n + s.length, 0);
   const got = dom.fresh.reduce((n, s) => n + (low.includes(s.toLowerCase()) ? s.length : 0), 0);
-  return { fresh: dom.fresh, who: dom.who, heard, via: via.join(', '), toast: dom.toast, wrapper: container && !dom.mostlyNew, carries: total > 0 && got >= total / 2 };
+  return { who: dom.who, heard, via: via.join(', '), toast: dom.toast, wrapper: container && !dom.mostlyNew, carries: total > 0 && got >= total / 2 };
 }
 
 function recorder(type, target) {
@@ -336,9 +340,9 @@ const tests = {
       return r;
     }
     const label1 = await label();
-    const appeared = (await texts()).filter(t => !seen0.has(t) && t !== label1);
+    const appeared = (await texts().catch(() => [])).filter(t => !seen0.has(t) && t !== label1);
     await page.waitForTimeout(800);
-    const { announced } = await page.evaluate(() => ({ announced: [...new Set(window.__announced)] }));
+    const { announced } = await page.evaluate(() => ({ announced: [...new Set(window.__announced)] })).catch(() => ({ announced: [] }));
     // Focus moved to the message itself (a focused error summary, accessibility.md §7.6) announces it too, when what a
     // screen reader says on that focus carries the new text: see focusHeard() and the header. Focus that stays on the
     // re-rendered trigger has not moved.
@@ -355,7 +359,7 @@ const tests = {
         : `focus moved to ${heard.who}, which reads ${heard.heard ? `only "${heard.heard.slice(0, 80)}"` : 'nothing'}`;
       r.fail('4.1.3', `Nothing announced${silent.length ? `; visible message not in a live region, and ${focus}: "${silent.join(' / ')}"` : ''}${newPage ? '; the trigger loaded a new page, where text already there at load is not announced' : ''}${relabel}`);
     }
-    const regionsAtLoad = await page.evaluate(() => document.querySelectorAll('[aria-live]:not([aria-live="off"]),[role=status],[role=alert],[role=log]').length);
+    const regionsAtLoad = await page.evaluate(() => document.querySelectorAll('[aria-live]:not([aria-live="off"]),[role=status],[role=alert],[role=log]').length).catch(() => '?');
     r.ok(`${regionsAtLoad} live region(s) in the DOM`);
     return r;
   },

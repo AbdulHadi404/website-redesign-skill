@@ -1,0 +1,3428 @@
+{
+ "versions": {
+  "stylelint": "17.15.0",
+  "stylelint-declaration-strict-value": "1.12.1",
+  "eslint": "10.11.0",
+  "@atlaskit/eslint-plugin-design-system": "16.13.2",
+  "eslint-plugin-better-tailwindcss": "4.7.0",
+  "eslint-plugin-tailwindcss": "4.4.0",
+  "tailwindcss": "4.3.3"
+ },
+ "stylelint": {
+  "css-A-builtins": {
+   "note": "stylelint core rules only: color-no-hex, color-named, function-disallowed-list, declaration-property-unit-disallowed-list",
+   "violations": 12,
+   "ok": 26,
+   "caught": 12,
+   "missed": 0,
+   "falsePositives": 2,
+   "recall": 100,
+   "precision": 85.7,
+   "missLines": [],
+   "falsePositiveLines": [
+    26,
+    42
+   ],
+   "unlabelledLinesFlagged": [],
+   "messages": [
+    "12: color-named",
+    "26: color-named",
+    "4: color-no-hex",
+    "6: color-no-hex",
+    "42: color-no-hex",
+    "7: declaration-property-unit-disallowed-list",
+    "8: declaration-property-unit-disallowed-list",
+    "9: declaration-property-unit-disallowed-list",
+    "10: declaration-property-unit-disallowed-list",
+    "14: declaration-property-unit-disallowed-list",
+    "5: function-disallowed-list",
+    "11: function-disallowed-list",
+    "13: function-disallowed-list",
+    "15: function-disallowed-list"
+   ]
+  },
+  "css-D-builtins-bare-lengths": {
+   "note": "revised after the held-out run (so its held-out numbers are not blind): A, but lengths are flagged only when bare (no var(), not zero, not em)",
+   "violations": 12,
+   "ok": 26,
+   "caught": 12,
+   "missed": 0,
+   "falsePositives": 2,
+   "recall": 100,
+   "precision": 85.7,
+   "missLines": [],
+   "falsePositiveLines": [
+    26,
+    42
+   ],
+   "unlabelledLinesFlagged": [],
+   "messages": [
+    "12: color-named",
+    "26: color-named",
+    "4: color-no-hex",
+    "6: color-no-hex",
+    "42: color-no-hex",
+    "7: declaration-property-value-disallowed-list",
+    "8: declaration-property-value-disallowed-list",
+    "9: declaration-property-value-disallowed-list",
+    "10: declaration-property-value-disallowed-list",
+    "14: declaration-property-value-disallowed-list",
+    "5: function-disallowed-list",
+    "11: function-disallowed-list",
+    "13: function-disallowed-list",
+    "15: function-disallowed-list"
+   ]
+  },
+  "css-B1-strict-value-defaults": {
+   "note": "stylelint-declaration-strict-value with its default ignoreFunctions: true",
+   "violations": 12,
+   "ok": 26,
+   "caught": 9,
+   "missed": 3,
+   "falsePositives": 0,
+   "recall": 75,
+   "precision": 100,
+   "missLines": [
+    5,
+    13,
+    15
+   ],
+   "falsePositiveLines": [],
+   "unlabelledLinesFlagged": [],
+   "messages": [
+    "4: scale-unlimited/declaration-strict-value",
+    "6: scale-unlimited/declaration-strict-value",
+    "12: scale-unlimited/declaration-strict-value",
+    "11: scale-unlimited/declaration-strict-value",
+    "7: scale-unlimited/declaration-strict-value",
+    "8: scale-unlimited/declaration-strict-value",
+    "14: scale-unlimited/declaration-strict-value",
+    "9: scale-unlimited/declaration-strict-value",
+    "10: scale-unlimited/declaration-strict-value"
+   ]
+  },
+  "css-B2-strict-value-no-functions": {
+   "note": "stylelint-declaration-strict-value with ignoreFunctions: false (functions other than var() are flagged)",
+   "violations": 12,
+   "ok": 26,
+   "caught": 12,
+   "missed": 0,
+   "falsePositives": 2,
+   "recall": 100,
+   "precision": 85.7,
+   "missLines": [],
+   "falsePositiveLines": [
+    26,
+    38
+   ],
+   "unlabelledLinesFlagged": [],
+   "messages": [
+    "4: scale-unlimited/declaration-strict-value",
+    "5: scale-unlimited/declaration-strict-value",
+    "6: scale-unlimited/declaration-strict-value",
+    "12: scale-unlimited/declaration-strict-value",
+    "13: scale-unlimited/declaration-strict-value",
+    "15: scale-unlimited/declaration-strict-value",
+    "26: scale-unlimited/declaration-strict-value",
+    "5: scale-unlimited/declaration-strict-value",
+    "11: scale-unlimited/declaration-strict-value",
+    "7: scale-unlimited/declaration-strict-value",
+    "38: scale-unlimited/declaration-strict-value",
+    "8: scale-unlimited/declaration-strict-value",
+    "14: scale-unlimited/declaration-strict-value",
+    "9: scale-unlimited/declaration-strict-value",
+    "10: scale-unlimited/declaration-strict-value"
+   ]
+  },
+  "css-C-builtins-plus-strict-value": {
+   "note": "A + B1 together",
+   "violations": 12,
+   "ok": 26,
+   "caught": 12,
+   "missed": 0,
+   "falsePositives": 2,
+   "recall": 100,
+   "precision": 85.7,
+   "missLines": [],
+   "falsePositiveLines": [
+    26,
+    42
+   ],
+   "unlabelledLinesFlagged": [],
+   "messages": [
+    "4: scale-unlimited/declaration-strict-value",
+    "6: scale-unlimited/declaration-strict-value",
+    "12: scale-unlimited/declaration-strict-value",
+    "11: scale-unlimited/declaration-strict-value",
+    "7: scale-unlimited/declaration-strict-value",
+    "8: scale-unlimited/declaration-strict-value",
+    "14: scale-unlimited/declaration-strict-value",
+    "9: scale-unlimited/declaration-strict-value",
+    "10: scale-unlimited/declaration-strict-value",
+    "12: color-named",
+    "26: color-named",
+    "4: color-no-hex",
+    "6: color-no-hex",
+    "42: color-no-hex",
+    "7: declaration-property-unit-disallowed-list",
+    "8: declaration-property-unit-disallowed-list",
+    "9: declaration-property-unit-disallowed-list",
+    "10: declaration-property-unit-disallowed-list",
+    "14: declaration-property-unit-disallowed-list",
+    "5: function-disallowed-list",
+    "11: function-disallowed-list",
+    "13: function-disallowed-list",
+    "15: function-disallowed-list"
+   ]
+  }
+ },
+ "eslint": {
+  "js-E1-core-no-restricted-syntax": {
+   "note": "ESLint core rule with AST selectors, zero dependencies",
+   "lintMs": 87,
+   "fatal": [],
+   "violations": 11,
+   "ok": 16,
+   "caught": 10,
+   "missed": 1,
+   "falsePositives": 2,
+   "recall": 90.9,
+   "precision": 83.3,
+   "missLines": [
+    21
+   ],
+   "falsePositiveLines": [
+    6,
+    27
+   ],
+   "unlabelledLinesFlagged": [],
+   "messages": [
+    "5: no-restricted-syntax: Raw hex colour: use a colour token.",
+    "6: no-restricted-syntax: Raw hex colour: use a colour token.",
+    "8: no-restricted-syntax: Raw colour in a CSS-in-JS template: use a token.",
+    "10: no-restricted-syntax: Named colour: use a colour token.",
+    "10: no-restricted-syntax: Raw length: use a spacing, type or radius token.",
+    "16: no-restricted-syntax: Raw hex colour: use a colour token.",
+    "17: no-restricted-syntax: Raw length: use a spacing, type or radius token.",
+    "18: no-restricted-syntax: Raw length: use a spacing, type or radius token.",
+    "19: no-restricted-syntax: Arbitrary Tailwind value for a token-owned property.",
+    "20: no-restricted-syntax: Arbitrary Tailwind value for a token-owned property.",
+    "22: no-restricted-syntax: Arbitrary Tailwind value for a token-owned property.",
+    "23: no-restricted-syntax: Raw hex colour: use a colour token.",
+    "27: no-restricted-syntax: Raw hex colour: use a colour token."
+   ]
+  },
+  "js-E2-atlaskit-ensure-design-token-usage": {
+   "note": "@atlaskit/eslint-plugin-design-system ensure-design-token-usage (domains color + spacing)",
+   "lintMs": 41,
+   "fatal": [],
+   "violations": 11,
+   "ok": 16,
+   "caught": 7,
+   "missed": 4,
+   "falsePositives": 2,
+   "recall": 63.6,
+   "precision": 77.8,
+   "missLines": [
+    5,
+    20,
+    22,
+    23
+   ],
+   "falsePositiveLines": [
+    11,
+    26
+   ],
+   "unlabelledLinesFlagged": [],
+   "messages": [
+    "8: @atlaskit/design-system/ensure-design-token-usage: Colors can be sourced from the global theme using the token function.",
+    "10: @atlaskit/design-system/ensure-design-token-usage: Colors can be sourced from the global theme using the token function.",
+    "10: @atlaskit/design-system/ensure-design-token-usage: The use of spacing primitives or tokens is preferred over the direct application of spacin",
+    "11: @atlaskit/design-system/ensure-design-token-usage: The use of spacing primitives or tokens is preferred over the direct application of spacin",
+    "16: @atlaskit/design-system/ensure-design-token-usage: Colors can be sourced from the global theme using the token function.",
+    "17: @atlaskit/design-system/ensure-design-token-usage: The use of spacing primitives or tokens is preferred over the direct application of spacin",
+    "18: @atlaskit/design-system/ensure-design-token-usage: The use of spacing primitives or tokens is preferred over the direct application of spacin",
+    "18: @atlaskit/design-system/ensure-design-token-usage: The use of spacing primitives or tokens is preferred over the direct application of spacin",
+    "19: @atlaskit/design-system/ensure-design-token-usage: Colors can be sourced from the global theme using the token function.",
+    "21: @atlaskit/design-system/ensure-design-token-usage: Colors can be sourced from the global theme using the token function.",
+    "26: @atlaskit/design-system/ensure-design-token-usage: Colors can be sourced from the global theme using the token function."
+   ]
+  },
+  "js-E3-better-tailwindcss-locked": {
+   "note": "eslint-plugin-better-tailwindcss: no-unknown-classes against the locked @theme + no-restricted-classes for arbitrary token-owned values",
+   "lintMs": 542,
+   "fatal": [],
+   "violations": 11,
+   "ok": 16,
+   "caught": 4,
+   "missed": 7,
+   "falsePositives": 0,
+   "recall": 36.4,
+   "precision": 100,
+   "missLines": [
+    5,
+    8,
+    10,
+    16,
+    17,
+    18,
+    23
+   ],
+   "falsePositiveLines": [],
+   "unlabelledLinesFlagged": [],
+   "messages": [
+    "19: better-tailwindcss/no-restricted-classes: Arbitrary value for a token-owned property: text-[#ff0000]",
+    "20: better-tailwindcss/no-restricted-classes: Arbitrary value for a token-owned property: p-[13px]",
+    "21: better-tailwindcss/no-unknown-classes: Unknown class detected: bg-red-500",
+    "22: better-tailwindcss/no-restricted-classes: Arbitrary value for a token-owned property: rounded-[6px]",
+    "22: better-tailwindcss/no-restricted-classes: Arbitrary value for a token-owned property: text-[15px]"
+   ]
+  },
+  "js-E4-tailwindcss-plugin-locked": {
+   "note": "eslint-plugin-tailwindcss v4: no-arbitrary-value + no-custom-classname against the locked @theme",
+   "lintMs": 109,
+   "fatal": [],
+   "violations": 11,
+   "ok": 16,
+   "caught": 4,
+   "missed": 7,
+   "falsePositives": 1,
+   "recall": 36.4,
+   "precision": 80,
+   "missLines": [
+    5,
+    8,
+    10,
+    16,
+    17,
+    18,
+    23
+   ],
+   "falsePositiveLines": [
+    30
+   ],
+   "unlabelledLinesFlagged": [],
+   "messages": [
+    "19: tailwindcss/no-arbitrary-value: Arbitrary value detected in 'text-[#ff0000]'",
+    "20: tailwindcss/no-arbitrary-value: Arbitrary value detected in 'p-[13px]'",
+    "21: tailwindcss/no-custom-classname: Classname 'bg-red-500' is not a Tailwind CSS class",
+    "22: tailwindcss/no-arbitrary-value: Arbitrary value detected in 'rounded-[6px]'",
+    "22: tailwindcss/no-arbitrary-value: Arbitrary value detected in 'text-[15px]'",
+    "30: tailwindcss/no-arbitrary-value: Arbitrary value detected in 'grid-cols-[minmax(0,1fr)_280px]'"
+   ]
+  },
+  "js-E1s-core-scoped-hex": {
+   "note": "E1 with hex strings reported only in colour positions (property value, colour attribute, colour-named variable)",
+   "lintMs": 71,
+   "fatal": [],
+   "violations": 11,
+   "ok": 16,
+   "caught": 10,
+   "missed": 1,
+   "falsePositives": 0,
+   "recall": 90.9,
+   "precision": 100,
+   "missLines": [
+    21
+   ],
+   "falsePositiveLines": [],
+   "unlabelledLinesFlagged": [],
+   "messages": [
+    "5: no-restricted-syntax: Raw hex colour: use a colour token.",
+    "8: no-restricted-syntax: Raw colour in a CSS-in-JS template: use a token.",
+    "10: no-restricted-syntax: Named colour: use a colour token.",
+    "10: no-restricted-syntax: Raw length: use a spacing, type or radius token.",
+    "16: no-restricted-syntax: Raw hex colour: use a colour token.",
+    "17: no-restricted-syntax: Raw length: use a spacing, type or radius token.",
+    "18: no-restricted-syntax: Raw length: use a spacing, type or radius token.",
+    "19: no-restricted-syntax: Arbitrary Tailwind value for a token-owned property.",
+    "20: no-restricted-syntax: Arbitrary Tailwind value for a token-owned property.",
+    "22: no-restricted-syntax: Arbitrary Tailwind value for a token-owned property.",
+    "23: no-restricted-syntax: Raw hex colour: use a colour token."
+   ]
+  },
+  "js-E5-core-plus-better-tailwindcss": {
+   "note": "E1s + E3 (recommended hand-over for a Tailwind React codebase)",
+   "lintMs": 39,
+   "fatal": [],
+   "violations": 11,
+   "ok": 16,
+   "caught": 11,
+   "missed": 0,
+   "falsePositives": 0,
+   "recall": 100,
+   "precision": 100,
+   "missLines": [],
+   "falsePositiveLines": [],
+   "unlabelledLinesFlagged": [],
+   "messages": [
+    "5: no-restricted-syntax: Raw hex colour: use a colour token.",
+    "8: no-restricted-syntax: Raw colour in a CSS-in-JS template: use a token.",
+    "10: no-restricted-syntax: Named colour: use a colour token.",
+    "10: no-restricted-syntax: Raw length: use a spacing, type or radius token.",
+    "16: no-restricted-syntax: Raw hex colour: use a colour token.",
+    "17: no-restricted-syntax: Raw length: use a spacing, type or radius token.",
+    "18: no-restricted-syntax: Raw length: use a spacing, type or radius token.",
+    "19: no-restricted-syntax: Arbitrary Tailwind value for a token-owned property.",
+    "19: better-tailwindcss/no-restricted-classes: Arbitrary value for a token-owned property: text-[#ff0000]",
+    "20: no-restricted-syntax: Arbitrary Tailwind value for a token-owned property.",
+    "20: better-tailwindcss/no-restricted-classes: Arbitrary value for a token-owned property: p-[13px]",
+    "21: better-tailwindcss/no-unknown-classes: Unknown class detected: bg-red-500",
+    "22: no-restricted-syntax: Arbitrary Tailwind value for a token-owned property.",
+    "22: better-tailwindcss/no-restricted-classes: Arbitrary value for a token-owned property: rounded-[6px]",
+    "22: better-tailwindcss/no-restricted-classes: Arbitrary value for a token-owned property: text-[15px]",
+    "23: no-restricted-syntax: Raw hex colour: use a colour token."
+   ]
+  }
+ },
+ "tailwind": {
+  "candidates": [
+   "bg-red-500",
+   "p-4",
+   "p-13",
+   "text-sm",
+   "rounded-md",
+   "shadow-lg",
+   "text-[#ff0000]",
+   "p-[13px]",
+   "rounded-[6px]",
+   "text-[15px]",
+   "bg-accent",
+   "bg-accent/50",
+   "p-sm",
+   "rounded-card",
+   "text-fg"
+  ],
+  "generated": {
+   "open": {
+    "bg-red-500": true,
+    "p-4": true,
+    "p-13": true,
+    "text-sm": true,
+    "rounded-md": true,
+    "shadow-lg": true,
+    "text-[#ff0000]": true,
+    "p-[13px]": true,
+    "rounded-[6px]": true,
+    "text-[15px]": true,
+    "bg-accent": true,
+    "bg-accent/50": true,
+    "p-sm": true,
+    "rounded-card": false,
+    "text-fg": true
+   },
+   "locked": {
+    "bg-red-500": false,
+    "p-4": false,
+    "p-13": false,
+    "text-sm": false,
+    "rounded-md": false,
+    "shadow-lg": false,
+    "text-[#ff0000]": true,
+    "p-[13px]": true,
+    "rounded-[6px]": true,
+    "text-[15px]": true,
+    "bg-accent": true,
+    "bg-accent/50": true,
+    "p-sm": true,
+    "rounded-card": true,
+    "text-fg": true
+   }
+  },
+  "tailwindVersion": "4.3.3"
+ },
+ "heldOut": {
+  "tsxFiles": 163,
+  "cssFiles": 61,
+  "eslint": {
+   "js-E1-core-no-restricted-syntax": {
+    "flags": 10,
+    "filesFlagged": 7,
+    "sample": [
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/chart.tsx",
+      "line": 224,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "\"shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)\","
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/chart.tsx",
+      "line": 228,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "\"w-0 border-[1.5px] border-dashed bg-transparent\":"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/chart.tsx",
+      "line": 315,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "className=\"h-2 w-2 shrink-0 rounded-[2px]\""
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/checkbox.tsx",
+      "line": 16,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "\"peer size-4 shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow outline-none focus-visible:border-ring focus-visible:rin"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/native-select.tsx",
+      "line": 42,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "className={cn(\"bg-[Canvas] text-[CanvasText]\", className)}"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/native-select.tsx",
+      "line": 55,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "className={cn(\"bg-[Canvas] text-[CanvasText]\", className)}"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/scroll-area.tsx",
+      "line": 20,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "className=\"size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/toggle-group.tsx",
+      "line": 39,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "\"group/toggle-group flex w-fit items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=default]:data-[variant=outline]:shadow-xs\","
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/tooltip.tsx",
+      "line": 50,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "<TooltipPrimitive.Arrow className=\"z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px] bg-foreground fill-foreground\" />"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/blocks/dashboard-01/components/data-table.tsx",
+      "line": 685,
+      "rule": "Raw length: use a spacing, type or radius token.",
+      "text": "right: 10,"
+     }
+    ]
+   },
+   "js-E1s-core-scoped-hex": {
+    "flags": 10,
+    "filesFlagged": 7,
+    "sample": [
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/chart.tsx",
+      "line": 224,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "\"shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)\","
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/chart.tsx",
+      "line": 228,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "\"w-0 border-[1.5px] border-dashed bg-transparent\":"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/chart.tsx",
+      "line": 315,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "className=\"h-2 w-2 shrink-0 rounded-[2px]\""
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/checkbox.tsx",
+      "line": 16,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "\"peer size-4 shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow outline-none focus-visible:border-ring focus-visible:rin"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/native-select.tsx",
+      "line": 42,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "className={cn(\"bg-[Canvas] text-[CanvasText]\", className)}"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/native-select.tsx",
+      "line": 55,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "className={cn(\"bg-[Canvas] text-[CanvasText]\", className)}"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/scroll-area.tsx",
+      "line": 20,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "className=\"size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/toggle-group.tsx",
+      "line": 39,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "\"group/toggle-group flex w-fit items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=default]:data-[variant=outline]:shadow-xs\","
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/tooltip.tsx",
+      "line": 50,
+      "rule": "Arbitrary Tailwind value for a token-owned property.",
+      "text": "<TooltipPrimitive.Arrow className=\"z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px] bg-foreground fill-foreground\" />"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/blocks/dashboard-01/components/data-table.tsx",
+      "line": 685,
+      "rule": "Raw length: use a spacing, type or radius token.",
+      "text": "right: 10,"
+     }
+    ]
+   },
+   "js-E3r-better-tailwindcss-restricted-only": {
+    "flags": 37,
+    "filesFlagged": 22,
+    "sample": [
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/accordion.tsx",
+      "line": 37,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline foc",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/badge.tsx",
+      "line": 7,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-0.5 text-xs fon",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/button.tsx",
+      "line": 7,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-v",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/calendar.tsx",
+      "line": 77,
+      "rule": "Arbitrary value for a token-owned property: has-focus:ring-[3px]",
+      "text": "\"relative rounded-md border border-input shadow-xs has-focus:border-ring has-focus:ring-[3px] has-focus:ring-ring/50\",",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/calendar.tsx",
+      "line": 94,
+      "rule": "Arbitrary value for a token-owned property: text-[0.8rem]",
+      "text": "\"flex-1 rounded-md text-[0.8rem] font-normal text-muted-foreground select-none\",",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/calendar.tsx",
+      "line": 103,
+      "rule": "Arbitrary value for a token-owned property: text-[0.8rem]",
+      "text": "\"text-[0.8rem] text-muted-foreground select-none\",",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/chart.tsx",
+      "line": 224,
+      "rule": "Arbitrary value for a token-owned property: rounded-[2px]",
+      "text": "\"shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)\",",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/chart.tsx",
+      "line": 228,
+      "rule": "Arbitrary value for a token-owned property: border-[1.5px]",
+      "text": "\"w-0 border-[1.5px] border-dashed bg-transparent\":",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/chart.tsx",
+      "line": 315,
+      "rule": "Arbitrary value for a token-owned property: rounded-[2px]",
+      "text": "className=\"h-2 w-2 shrink-0 rounded-[2px]\"",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/checkbox.tsx",
+      "line": 16,
+      "rule": "Arbitrary value for a token-owned property: rounded-[4px]",
+      "text": "\"peer size-4 shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow outline-none focus-visible:border-ring focus-visible:rin",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/checkbox.tsx",
+      "line": 16,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"peer size-4 shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow outline-none focus-visible:border-ring focus-visible:rin",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/combobox.tsx",
+      "line": 236,
+      "rule": "Arbitrary value for a token-owned property: focus-within:ring-[3px]",
+      "text": "\"flex min-h-9 flex-wrap items-center gap-1.5 rounded-md border border-input bg-transparent bg-clip-padding px-2.5 py-1.5 text-sm shadow-xs t",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/combobox.tsx",
+      "line": 236,
+      "rule": "Arbitrary value for a token-owned property: has-aria-invalid:ring-[3px]",
+      "text": "\"flex min-h-9 flex-wrap items-center gap-1.5 rounded-md border border-input bg-transparent bg-clip-padding px-2.5 py-1.5 text-sm shadow-xs t",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/input-group.tsx",
+      "line": 87,
+      "rule": "Arbitrary value for a token-owned property: rounded-[calc(var(--radius)-5px)]",
+      "text": "xs: \"h-6 gap-1 rounded-[calc(var(--radius)-5px)] px-2 has-[>svg]:px-2 [&>svg:not([class*='size-'])]:size-3.5\",",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/input-group.tsx",
+      "line": 90,
+      "rule": "Arbitrary value for a token-owned property: rounded-[calc(var(--radius)-5px)]",
+      "text": "\"size-6 rounded-[calc(var(--radius)-5px)] p-0 has-[>svg]:p-0\",",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/input.tsx",
+      "line": 11,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50\",",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/item.tsx",
+      "line": 34,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"group/item flex flex-wrap items-center rounded-md border border-transparent text-sm transition-colors duration-100 outline-none focus-visib",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/native-select.tsx",
+      "line": 20,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50\",",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/native-select.tsx",
+      "line": 42,
+      "rule": "Arbitrary value for a token-owned property: bg-[Canvas]",
+      "text": "className={cn(\"bg-[Canvas] text-[CanvasText]\", className)}",
+      "category": "keyword"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/native-select.tsx",
+      "line": 42,
+      "rule": "Arbitrary value for a token-owned property: text-[CanvasText]",
+      "text": "className={cn(\"bg-[Canvas] text-[CanvasText]\", className)}",
+      "category": "keyword"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/native-select.tsx",
+      "line": 55,
+      "rule": "Arbitrary value for a token-owned property: bg-[Canvas]",
+      "text": "className={cn(\"bg-[Canvas] text-[CanvasText]\", className)}",
+      "category": "keyword"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/native-select.tsx",
+      "line": 55,
+      "rule": "Arbitrary value for a token-owned property: text-[CanvasText]",
+      "text": "className={cn(\"bg-[Canvas] text-[CanvasText]\", className)}",
+      "category": "keyword"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/navigation-menu.tsx",
+      "line": 61,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-[color,box-shadow",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/navigation-menu.tsx",
+      "line": 131,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"flex flex-col gap-1 rounded-sm p-2 text-sm transition-all outline-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:t",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/radio-group.tsx",
+      "line": 29,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"aspect-square size-4 shrink-0 rounded-full border border-input text-primary shadow-xs transition-[color,box-shadow] outline-none focus-visi",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/scroll-area.tsx",
+      "line": 20,
+      "rule": "Arbitrary value for a token-owned property: rounded-[inherit]",
+      "text": "className=\"size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-",
+      "category": "keyword"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/scroll-area.tsx",
+      "line": 20,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "className=\"size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/select.tsx",
+      "line": 39,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"flex w-fit items-center justify-between gap-2 rounded-md border border-input bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs t",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/sidebar.tsx",
+      "line": 483,
+      "rule": "Arbitrary value for a token-owned property: shadow-[0_0_0_1px_var(--sidebar-border)]",
+      "text": "\"bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/sidebar.tsx",
+      "line": 483,
+      "rule": "Arbitrary value for a token-owned property: hover:shadow-[0_0_0_1px_var(--sidebar-accent)]",
+      "text": "\"bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/switch.tsx",
+      "line": 19,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"peer group/switch inline-flex shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visi",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/tabs.tsx",
+      "line": 28,
+      "rule": "Arbitrary value for a token-owned property: p-[3px]",
+      "text": "\"group/tabs-list inline-flex w-fit items-center justify-center rounded-lg p-[3px] text-muted-foreground group-data-[orientation=horizontal]/",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/tabs.tsx",
+      "line": 66,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm f",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/textarea.tsx",
+      "line": 9,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"flex field-sizing-content min-h-16 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/toggle-group.tsx",
+      "line": 39,
+      "rule": "Arbitrary value for a token-owned property: gap-[--spacing(var(--gap))]",
+      "text": "\"group/toggle-group flex w-fit items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=default]:data-[variant=outline]:shadow-xs\",",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/toggle.tsx",
+      "line": 9,
+      "rule": "Arbitrary value for a token-owned property: focus-visible:ring-[3px]",
+      "text": "\"inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-none h",
+      "category": "raw-literal"
+     },
+     {
+      "file": "shadcn/apps/v4/registry/new-york-v4/ui/tooltip.tsx",
+      "line": 50,
+      "rule": "Arbitrary value for a token-owned property: rounded-[2px]",
+      "text": "<TooltipPrimitive.Arrow className=\"z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px] bg-foreground fill-foreground\" />",
+      "category": "raw-literal"
+     }
+    ],
+    "categories": {
+     "raw-literal": 27,
+     "derived-from-var": 5,
+     "keyword": 5
+    }
+   }
+  },
+  "stylelint": {
+   "css-A-builtins": {
+    "flags": 51,
+    "byRule": {
+     "declaration-property-unit-disallowed-list": 49,
+     "color-named": 2
+    },
+    "sample": [
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-menu.css",
+      "line": 58,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "margin-right: calc(-2px * var(--scaling));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/blockquote.css",
+      "line": 4,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-left: min(var(--space-5), max(var(--space-3), 0.5em));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/checkbox-group.css",
+      "line": 9,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "gap: 0.5em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 7,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "font-size: calc(var(--code-variant-font-size-adjust) * 1em);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 12,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-radius: calc((0.5px + 0.2em) * var(--radius-factor));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 12,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-radius: calc((0.5px + 0.2em) * var(--radius-factor));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/em.css",
+      "line": 4,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "font-size: calc(var(--em-font-size-adjust) * 1em);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 56,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-bottom-left-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 57,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-bottom-right-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 64,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-top-left-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 65,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-top-right-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 75,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-top-right-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 77,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-bottom-right-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 84,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-top-left-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 86,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-bottom-left-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 94,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 101,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 38,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "top: -0.03em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 40,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "font-size: 0.75em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 44,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-left: 0.5em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 45,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-right: 0.5em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 46,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-bottom: 0.05em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 48,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-radius: calc(var(--radius-factor) * 0.35em);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 88,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-top: 0.05em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/link.css",
+      "line": 13,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-radius: calc(0.07em * var(--radius-factor));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/quote.css",
+      "line": 4,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "font-size: calc(var(--quote-font-size-adjust) * 1em);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/radio-group.css",
+      "line": 9,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "gap: 0.5em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/section.css",
+      "line": 21,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-top: calc(80px * var(--scaling));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/section.css",
+      "line": 22,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-bottom: calc(80px * var(--scaling));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 108,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "margin-top: 3px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 109,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "margin-bottom: 3px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 110,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "margin-left: -0.5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 111,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "margin-right: -0.5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 152,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "inset: 1px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 154,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-radius: max(0.5px, calc(var(--segmented-control-border-radius) - 1px));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 154,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-radius: max(0.5px, calc(var(--segmented-control-border-radius) - 1px));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 167,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "inset: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 82,
+      "rule": "color-named",
+      "text": "background-color: white;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/strong.css",
+      "line": 3,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "font-size: calc(var(--strong-font-size-adjust) * 1em);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 77,
+      "rule": "color-named",
+      "text": "background-color: white;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/table.css",
+      "line": 9,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-radius: calc(var(--table-border-radius) - 1px);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 76,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "border-radius: calc(var(--text-field-border-radius) - 2px);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 205,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-bottom: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 209,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-right: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 210,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "margin-right: -2px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 226,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-bottom: 0.5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 230,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-right: 2px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 231,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "margin-right: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 252,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-bottom: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 256,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "padding-right: 5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 257,
+      "rule": "declaration-property-unit-disallowed-list",
+      "text": "margin-right: 0px;",
+      "category": "zero-with-unit"
+     }
+    ],
+    "categories": {
+     "derived-from-var": 16,
+     "em-relative": 8,
+     "zero-with-unit": 16,
+     "raw-literal": 11
+    }
+   },
+   "css-D-builtins-bare-lengths": {
+    "flags": 11,
+    "byRule": {
+     "declaration-property-value-disallowed-list": 9,
+     "color-named": 2
+    },
+    "sample": [
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 108,
+      "rule": "declaration-property-value-disallowed-list",
+      "text": "margin-top: 3px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 109,
+      "rule": "declaration-property-value-disallowed-list",
+      "text": "margin-bottom: 3px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 110,
+      "rule": "declaration-property-value-disallowed-list",
+      "text": "margin-left: -0.5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 111,
+      "rule": "declaration-property-value-disallowed-list",
+      "text": "margin-right: -0.5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 152,
+      "rule": "declaration-property-value-disallowed-list",
+      "text": "inset: 1px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 82,
+      "rule": "color-named",
+      "text": "background-color: white;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 77,
+      "rule": "color-named",
+      "text": "background-color: white;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 210,
+      "rule": "declaration-property-value-disallowed-list",
+      "text": "margin-right: -2px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 226,
+      "rule": "declaration-property-value-disallowed-list",
+      "text": "padding-bottom: 0.5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 230,
+      "rule": "declaration-property-value-disallowed-list",
+      "text": "padding-right: 2px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 256,
+      "rule": "declaration-property-value-disallowed-list",
+      "text": "padding-right: 5px;",
+      "category": "raw-literal"
+     }
+    ],
+    "categories": {
+     "raw-literal": 11
+    }
+   },
+   "css-B1-strict-value-defaults": {
+    "flags": 110,
+    "byRule": {
+     "scale-unlimited/declaration-strict-value": 110
+    },
+    "sample": [
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 122,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 138,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 2px 3px -1px var(--white-a4);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 150,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 204,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 224,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 381,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 400,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 407,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 416,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 421,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 425,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 429,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 440,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-checkbox.css",
+      "line": 76,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-checkbox.css",
+      "line": 100,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-checkbox.css",
+      "line": 115,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-checkbox.css",
+      "line": 125,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-radio.css",
+      "line": 83,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-radio.css",
+      "line": 102,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-radio.css",
+      "line": 115,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-radio.css",
+      "line": 122,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-radio.css",
+      "line": 27,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: 100%;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-radio.css",
+      "line": 35,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: 100%;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-tab-list.css",
+      "line": 106,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 -1px 0 0 var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 82,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 103,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 106,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/callout.css",
+      "line": 73,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/callout.css",
+      "line": 80,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/checkbox-group.css",
+      "line": 9,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "gap: 0.5em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 168,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 max(1px, 0.033em) var(--accent-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 172,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 56,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-bottom-left-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 57,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-bottom-right-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 64,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-top-left-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 65,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-top-right-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 75,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-top-right-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 77,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-bottom-right-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 84,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-top-left-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 86,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-bottom-left-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 94,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 101,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 75,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 83,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 92,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 44,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-left: 0.5em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 45,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-right: 0.5em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 46,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-bottom: 0.05em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 88,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-top: 0.05em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 40,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: 0.75em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/progress.css",
+      "line": 135,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a4);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/radio-group.css",
+      "line": 9,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "gap: 0.5em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 298,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: 0 0 0 1px var(--gray-a4);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 108,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-top: 3px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 109,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-bottom: 3px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 110,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-left: -0.5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 111,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-right: -0.5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 299,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 303,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 307,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 312,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 365,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 377,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 82,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "background-color: white;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 89,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 131,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 134,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a4);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 141,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 149,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: 0 0 0 1px var(--gray-6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 176,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 183,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 199,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: 0 0 0 1px var(--gray-6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 231,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: 0 0 0 1px var(--gray-5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 77,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "background-color: white;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 136,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 162,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a3);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 168,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 174,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 182,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 191,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 220,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 231,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 259,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 265,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 273,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 282,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 337,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 345,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 355,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-area.css",
+      "line": 132,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 var(--text-area-border-width) var(--gray-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-area.css",
+      "line": 145,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--focus-a5), inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-area.css",
+      "line": 151,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 var(--text-area-border-width) var(--gray-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-area.css",
+      "line": 175,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--focus-a5), inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-area.css",
+      "line": 210,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a5), inset 0 0 0 1px var(--gray-a4);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 286,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 var(--text-field-border-width) var(--gray-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 307,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--focus-a5), inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 313,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 var(--text-field-border-width) var(--gray-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 348,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--focus-a5), inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 385,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a5), inset 0 0 0 1px var(--gray-a4);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 205,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-bottom: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 209,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-right: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 226,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-bottom: 0.5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 230,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-right: 2px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 252,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-bottom: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 256,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-right: 5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 210,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-right: -2px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 231,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-right: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 257,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-right: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/theme-panel.css",
+      "line": 51,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: 0 0 0 1px var(--gray-7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/theme-panel.css",
+      "line": 29,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: 100%;",
+      "category": "raw-literal"
+     }
+    ],
+    "categories": {
+     "raw-literal": 45,
+     "derived-from-var": 43,
+     "em-relative": 7,
+     "zero-with-unit": 15
+    }
+   },
+   "css-B2-strict-value-no-functions": {
+    "flags": 189,
+    "byRule": {
+     "scale-unlimited/declaration-strict-value": 189
+    },
+    "sample": [
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 122,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 138,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 2px 3px -1px var(--white-a4);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 150,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 204,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 224,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 381,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 400,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 407,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 416,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 421,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 425,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 429,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 440,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 45,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-1), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 50,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-2), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 55,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-3), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "line": 60,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-4), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-card.css",
+      "line": 44,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: calc(var(--base-card-border-radius) - var(--base-card-border-width));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-checkbox.css",
+      "line": 76,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-checkbox.css",
+      "line": 100,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-checkbox.css",
+      "line": 115,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-checkbox.css",
+      "line": 125,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-dialog.css",
+      "line": 24,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-bottom: max(var(--space-6), 6vh);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-menu.css",
+      "line": 58,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-right: calc(-2px * var(--scaling));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-radio.css",
+      "line": 83,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-radio.css",
+      "line": 102,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-radio.css",
+      "line": 115,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-radio.css",
+      "line": 122,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-radio.css",
+      "line": 27,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: 100%;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-radio.css",
+      "line": 35,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: 100%;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-tab-list.css",
+      "line": 106,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 -1px 0 0 var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/avatar.css",
+      "line": 57,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-2), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/avatar.css",
+      "line": 64,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-2), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/avatar.css",
+      "line": 71,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-3), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/avatar.css",
+      "line": 78,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-3), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/avatar.css",
+      "line": 84,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-4), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/avatar.css",
+      "line": 90,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-5), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/avatar.css",
+      "line": 96,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-5), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/avatar.css",
+      "line": 102,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-6), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/avatar.css",
+      "line": 108,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-6), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 82,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 103,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 106,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 27,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding: calc(var(--space-1) * 0.5) calc(var(--space-1) * 1.5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 43,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding: var(--space-1) calc(var(--space-2) * 1.25);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 28,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "gap: calc(var(--space-1) * 1.5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 36,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "gap: calc(var(--space-1) * 1.5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 29,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-1), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 37,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-2), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/badge.css",
+      "line": 45,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-2), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/blockquote.css",
+      "line": 4,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-left: min(var(--space-5), max(var(--space-3), 0.5em));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/callout.css",
+      "line": 73,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/callout.css",
+      "line": 80,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/checkbox-group.css",
+      "line": 9,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "gap: 0.5em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 168,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 max(1px, 0.033em) var(--accent-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 172,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 7,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--code-variant-font-size-adjust) * 1em);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 37,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-1) * var(--code-variant-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 42,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-2) * var(--code-variant-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 47,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-3) * var(--code-variant-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 52,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-4) * var(--code-variant-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 57,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-5) * var(--code-variant-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 62,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-6) * var(--code-variant-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 67,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-7) * var(--code-variant-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 72,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-8) * var(--code-variant-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 77,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-9) * var(--code-variant-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/code.css",
+      "line": 12,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: calc((0.5px + 0.2em) * var(--radius-factor));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/data-list.css",
+      "line": 85,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "gap: calc(var(--space-4) * 1.25);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/em.css",
+      "line": 4,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--em-font-size-adjust) * 1em);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/heading.css",
+      "line": 32,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-1) * var(--heading-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/heading.css",
+      "line": 37,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-2) * var(--heading-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/heading.css",
+      "line": 42,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-3) * var(--heading-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/heading.css",
+      "line": 47,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-4) * var(--heading-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/heading.css",
+      "line": 52,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-5) * var(--heading-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/heading.css",
+      "line": 57,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-6) * var(--heading-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/heading.css",
+      "line": 62,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-7) * var(--heading-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/heading.css",
+      "line": 67,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-8) * var(--heading-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/heading.css",
+      "line": 72,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-9) * var(--heading-font-size-adjust));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 56,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-bottom-left-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 57,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-bottom-right-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 64,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-top-left-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 65,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-top-right-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 75,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-top-right-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 77,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-bottom-right-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 84,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-top-left-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 86,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-bottom-left-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 94,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/inset.css",
+      "line": 101,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 75,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 83,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 92,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 44,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-left: 0.5em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 45,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-right: 0.5em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 46,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-bottom: 0.05em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 88,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-top: 0.05em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 40,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: 0.75em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 132,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-1) * 0.8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 136,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-2) * 0.8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 140,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-3) * 0.8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 144,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-4) * 0.8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 148,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-5) * 0.8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 152,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-6) * 0.8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 156,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-7) * 0.8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 160,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-8) * 0.8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 164,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--font-size-9) * 0.8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/kbd.css",
+      "line": 48,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: calc(var(--radius-factor) * 0.35em);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/link.css",
+      "line": 41,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "text-decoration-color: color-mix(in oklab, var(--accent-a5), var(--gray-a6));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/link.css",
+      "line": 66,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "text-decoration-color: color-mix(in oklab, var(--accent-a6), var(--gray-a6));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/link.css",
+      "line": 13,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: calc(0.07em * var(--radius-factor));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/progress.css",
+      "line": 135,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a4);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/progress.css",
+      "line": 10,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/quote.css",
+      "line": 4,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--quote-font-size-adjust) * 1em);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/radio-group.css",
+      "line": 9,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "gap: 0.5em;",
+      "category": "em-relative"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/section.css",
+      "line": 21,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-top: calc(80px * var(--scaling));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/section.css",
+      "line": 22,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-bottom: calc(80px * var(--scaling));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 298,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: 0 0 0 1px var(--gray-a4);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 108,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-top: 3px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 109,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-bottom: 3px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 110,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-left: -0.5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 111,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-right: -0.5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
+      "line": 154,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(0.5px, calc(var(--segmented-control-border-radius) - 1px));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 299,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 303,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 307,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a8);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 312,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 365,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 377,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 178,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "gap: calc(var(--space-1) * 1.5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 165,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-1), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 182,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-2), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/select.css",
+      "line": 199,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-3), var(--radius-full));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 82,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "background-color: white;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 89,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 131,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 134,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a4);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 141,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 149,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: 0 0 0 1px var(--gray-6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 176,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 183,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 199,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: 0 0 0 1px var(--gray-6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 231,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: 0 0 0 1px var(--gray-5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 9,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/slider.css",
+      "line": 83,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: max(var(--radius-1), var(--radius-thumb));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/strong.css",
+      "line": 3,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "font-size: calc(var(--strong-font-size-adjust) * 1em);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 77,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "background-color: white;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 136,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 162,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--gray-a3);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 168,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 174,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 182,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 191,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 220,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 231,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 259,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 265,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 273,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 282,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 337,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 345,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 355,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow:",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/switch.css",
+      "line": 82,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: calc(var(--switch-border-radius) - var(--switch-thumb-inset));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/table.css",
+      "line": 114,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-color: color-mix(in oklab, var(--gray-a5), var(--gray-6));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/table.css",
+      "line": 9,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: calc(var(--table-border-radius) - 1px);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-area.css",
+      "line": 132,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 var(--text-area-border-width) var(--gray-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-area.css",
+      "line": 145,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--focus-a5), inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-area.css",
+      "line": 151,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 var(--text-area-border-width) var(--gray-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-area.css",
+      "line": 175,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--focus-a5), inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-area.css",
+      "line": 210,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a5), inset 0 0 0 1px var(--gray-a4);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 286,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 var(--text-field-border-width) var(--gray-a7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 307,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--focus-a5), inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 313,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 var(--text-field-border-width) var(--gray-a6);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 348,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--focus-a5), inset 0 0 0 1px var(--gray-a5);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 385,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: inset 0 0 0 1px var(--accent-a5), inset 0 0 0 1px var(--gray-a4);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 205,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-bottom: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 209,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-right: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 226,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-bottom: 0.5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 230,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-right: 2px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 252,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-bottom: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 256,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "padding-right: 5px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 75,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-right: calc(var(--space-1) * -1);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 125,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-left: calc(var(--text-field-border-width) * -1);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 137,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-right: calc(var(--text-field-border-width) * -1);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 210,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-right: -2px;",
+      "category": "raw-literal"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 231,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-right: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 257,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "margin-right: 0px;",
+      "category": "zero-with-unit"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 76,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: calc(var(--text-field-border-radius) - 2px);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/text-field.css",
+      "line": 155,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: calc(var(--text-field-border-radius) - var(--text-field-border-width));",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/theme-panel.css",
+      "line": 51,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "box-shadow: 0 0 0 1px var(--gray-7);",
+      "category": "derived-from-var"
+     },
+     {
+      "file": "radix-themes/packages/radix-ui-themes/src/components/theme-panel.css",
+      "line": 29,
+      "rule": "scale-unlimited/declaration-strict-value",
+      "text": "border-radius: 100%;",
+      "category": "raw-literal"
+     }
+    ],
+    "categories": {
+     "raw-literal": 47,
+     "derived-from-var": 120,
+     "em-relative": 7,
+     "zero-with-unit": 15
+    }
+   }
+  },
+  "tsxLines": 16911,
+  "cssLines": 7380
+ }
+}

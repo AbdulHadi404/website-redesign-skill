@@ -52,7 +52,7 @@ Measured first-component cost: Radix Dialog 13.4 KB, Headless UI 16.4, Ariakit 1
 
 ## Motion
 
-CSS and the Web Animations API first (0 KB). Then: `motion/mini` (3.8 KB), anime.js `waapi` (4.7 KB), AutoAnimate (3.1 KB, respects reduced motion), Motion for React with `LazyMotion` + `domAnimation` (27.5 KB; **defaults to ignoring reduced motion** — wrap in `MotionConfig reducedMotion="user"`), GSAP core 27 KB / + ScrollTrigger 44 KB (free for commercial use incl. all plugins since 3.13, not OSI; barred in no-code tools competing with Webflow), Lenis 5.5 KB (smooth scroll — marketing only), dotLottie 13.5 KB + **485 KB WASM**, Rive 56 KB + **787 KB WASM**, lottie-web 77 KB. Theatre.js studio is AGPL and unmaintained. Details: `motion.md` §8.
+CSS and the Web Animations API first (0 KB). Then: `motion/mini` (3.8 KB), anime.js `waapi` (4.7 KB), AutoAnimate (3.1 KB, respects reduced motion), Motion for React with `LazyMotion` + `domAnimation` (27.5 KB; **defaults to ignoring reduced motion** — wrap in `MotionConfig reducedMotion="user"`), GSAP core 27 KB / + ScrollTrigger 44 KB (free for commercial use incl. all plugins since 3.13, not OSI; barred in no-code tools competing with Webflow), Lenis 5.5 KB (smooth scroll — only inside a contained, skippable story on a marketing page, never site-wide: `motion.md` §5), dotLottie 13.5 KB + **485 KB WASM**, Rive 56 KB + **787 KB WASM**, lottie-web 77 KB. Theatre.js studio is AGPL and unmaintained. Details: `motion.md` §8.
 
 ## 3D
 

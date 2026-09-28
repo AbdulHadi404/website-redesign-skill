@@ -60,8 +60,8 @@
  * disabled or read-only (only for steps that need it: hover does not); outside the viewport; ignoring the pointer
  * (pointer-events: none); covered (by what) or cut off (by which overflow); a select with no such option (and the
  * options it has); else Playwright's own reason. When the step itself worked and the capture after it failed, it
- * says that instead. Every failure on a phone page laid out wider than the screen ends with "the page is 940 px wide
- * at a 390 px viewport — the layout overflows, itself a finding", or, without <meta name="viewport"
+ * says that instead. Every failed step on a page laid out wider than the screen ends with "the page is 940 px wide
+ * at a 390 px viewport — the layout overflows, itself a finding", or, on a phone page without <meta name="viewport"
  * content="width=device-width">, with that finding: both are about the product, not the scenario. On such a page
  * Playwright's own pointer check (check, click, hover) can miss a target nothing covers; that is the test tool, not
  * the product, and the message says so: a "tap" step acts on the target at the same device.
@@ -270,7 +270,7 @@ async function whyNot(page, sel, e, op, want) {
     let cut = '';
     if (hit && hit !== el && hit.contains(el)) for (let x = el.parentElement; x && x !== hit.parentElement && !cut; x = x.parentElement) {
       const b = x.getBoundingClientRect(), o = `${cs(x).overflowX}/${cs(x).overflowY}`;
-      if (o !== 'visible/visible' && (cx < b.left || cx > b.right || cy < b.top || cy > b.bottom)) cut = `${tag(x)} (overflow: ${cs(x).overflowX === cs(x).overflowY ? cs(x).overflowX : o})`;
+      if (o !== 'visible/visible' && (cx < b.left || cx > b.right || cy < b.top || cy > b.bottom)) cut = `${tag(x)}, overflow: ${cs(x).overflowX === cs(x).overflowY ? cs(x).overflowX : o}`;
     }
     const opts = el.tagName === 'SELECT' ? [...el.options].map((o) => [o.value, o.label.trim()]) : null;
     return {
@@ -568,5 +568,5 @@ if (walked.length) md.push('', '## Steps', '', ...walked.flatMap((r) => [`**${r.
 await writeFile(path.join(outDir, `states${label}.md`), md.join('\n') + '\n');
 const scanned = results.filter((r) => r.axe), axeFailed = scanned.filter((r) => r.axe.fail);
 console.log(`\n${results.filter((r) => r.file).length}/${results.length} captured${scanned.length ? ` · axe: ${axeFailed.length ? `${axeFailed.length} of ${scanned.length} scanned state(s) fail (${axeFailed.map((r) => r.name).join(', ')})` : `${scanned.length} scanned, none with a critical or serious violation`}` : ''} · summary ${path.join(outDir, `states${label}.md`)} · sheet: node compare.mjs --grid ${outDir}/*.png --out ${outDir}/sheet.png`);
-if (anyRecorded) console.log(`requests: ${reqDir} · diff with the other build's: node parity.mjs --payloads ${a.label ? `${path.join(outDir, 'requests', '<old label>')} ${reqDir}` : '<old out dir> <new out dir>'}`);
+if (anyRecorded) console.log(`requests: ${reqDir} · diff two builds' recordings: node parity.mjs --payloads ${a.label ? `${path.join(outDir, 'requests', '<old label>')} ${path.join(outDir, 'requests', '<new label>')}` : '<old out dir> <new out dir>'}`);
 process.exitCode = results.some((r) => !r.file || r.axe?.fail) || (axeWanted && !axePath) ? 1 : 0;

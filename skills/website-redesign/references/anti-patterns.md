@@ -10,7 +10,7 @@ Three kinds of entry:
 
 ## The refresh disguised as a redesign
 
-For expressive surfaces under a redesign brief (`framing.md`). The most important failure there, because it feels like success from the inside: the display face, palette and hero composition survive "because they work"; new components arrive while nav, footer and section grammar stay the same; the before/after captures look like one site after a good week of polish. The test: name the five things a stranger notices first on the old site; if the new site keeps three, it is a refresh. Fix it at the direction stage. (On a productive surface the opposite is true: keeping what users have learned is a feature, see `framing.md`.)
+For expressive surfaces under a redesign or rethink brief, a first site included (`framing.md`). The most important failure there, because it feels like success from the inside: the display face, palette and hero composition survive "because they work"; new components arrive while nav, footer and section grammar stay the same; the before/after captures look like one site after a good week of polish. The test: name the five things a stranger notices first on the old site. Each one the new site keeps must be a documented brand asset kept on purpose (`art-direction.md` §4–§5: a face the brand family uses, the brand's hue family, assets that are the category's archetype) and named in `DESIGN.md` with its reason; any other survivor makes it a refresh. Fix it at the direction stage. (On a productive surface the opposite is true: keeping what users have learned is a feature, see `framing.md`.)
 
 ## The model's prior (and this skill's house style)
 
@@ -194,7 +194,7 @@ Illustration you draw yourself fails in ways stock imagery never does. Each read
 ## Motion
 
 - Fade-and-slide-up on every section at the same delay; hover transitions on every card.
-- Motion on things done tens or hundreds of times a day; any animation on keyboard-triggered actions.
+- Motion on things done a hundred or more times a day, or more than a ≤ 150 ms colour or opacity change on things done tens of times a day (`motion.md` §2); any animation on keyboard-triggered actions.
 - Bounce or elastic easing on UI; `ease-in` on entrances; entrances from `scale(0)` (start at 0.9–0.97 with opacity); `transition: all`.
 - Parallax, particles, counters or looping animations that carry no meaning; animation that shifts layout or makes scrolling heavy; hover motion on touch devices.
 - No reduced-motion handling — or reduced motion that deletes content instead of the movement.

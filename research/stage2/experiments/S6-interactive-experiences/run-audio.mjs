@@ -10,7 +10,7 @@
  *      APIs a game-like page leans on (version_added per browser, with notes);
  *   3. browser (skipped with --no-browser): what Chromium actually does with an
  *      AudioContext and navigator.vibrate() before and after a user gesture, under
- *      the default headless policy and under --autoplay-policy=user-gesture-required.
+ *      the default policy and under --autoplay-policy=no-user-gesture-required (a common test-harness flag).
  *
  *   node run-audio.mjs [--no-browser]     writes results/audio.json
  */
@@ -88,12 +88,13 @@ if (!process.argv.includes('--no-browser')) {
   const { browser: b0, chromium } = await launch();
   const version = b0.version(); await b0.close();
   const { existsSync, readdirSync } = await import('node:fs');
-  const cache = path.join(process.env.HOME || '', '.cache/ms-playwright');
-  const exes = [process.env.CHROME_PATH, ...(existsSync(cache) ? readdirSync(cache).filter((d) => /^chromium-\d+/.test(d)).sort().reverse().map((d) => path.join(cache, d, 'chrome-linux/chrome')) : [])].filter((p) => p && existsSync(p));
+  const roots = [process.env.PLAYWRIGHT_BROWSERS_PATH, path.join(process.env.HOME || '', '.cache/ms-playwright')].filter((d) => d && existsSync(d));
+  const exes = [process.env.CHROME_PATH, ...roots.flatMap((d) => readdirSync(d).filter((s) => /^chromium(-|_headless_shell-)\d+/.test(s)).sort().reverse()
+    .flatMap((s) => ['chrome-linux/chrome', 'chrome-linux/headless_shell', 'chrome-headless-shell-linux64/chrome-headless-shell'].map((b) => path.join(d, s, b))))].filter((p) => p && existsSync(p));
   const relaunch = async (args) => {
     const base = { headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage', ...args] };
     try { return await chromium.launch(base); } catch { /* try a binary on disk */ }
-    for (const executablePath of exes) { try { return await chromium.launch({ ...base, executablePath }); } catch { /* next */ } }
+    for (const executablePath of exes) { try { const b = await chromium.launch({ ...base, executablePath }); b.__exe = executablePath; return b; } catch { /* next */ } }
     throw new Error('no Chromium');
   };
   const probe = async (extraArgs) => {
@@ -102,22 +103,33 @@ if (!process.argv.includes('--no-browser')) {
     const page = await ctx.newPage();
     const msgs = [];
     page.on('console', (m) => msgs.push(m.text()));
-    await page.setContent('<button id=b>Sound on</button>');
-    const before = await page.evaluate(() => {
+    // Measured by the page's own scripts: Playwright's evaluate() runs with a user gesture,
+    // which would grant activation and hide exactly what is being measured.
+    const html = `<!doctype html><button id=b>Sound on</button><script>
+      const r = window.__r = {};
       const ac = new AudioContext();
-      window.__ac = ac;
-      return { audioContextState: ac.state, hasBeenActive: navigator.userActivation?.hasBeenActive ?? null, vibrateReturned: 'vibrate' in navigator ? navigator.vibrate(30) : 'absent', switchAttribute: 'switch' in HTMLInputElement.prototype };
-    });
+      const now = () => ({ audioContextState: ac.state, hasBeenActive: navigator.userActivation ? navigator.userActivation.hasBeenActive : null });
+      r.atLoad = { ...now(), vibrateReturned: 'vibrate' in navigator ? navigator.vibrate(30) : 'absent', switchAttribute: 'switch' in HTMLInputElement.prototype };
+      setTimeout(() => { r.after500msNoGesture = now(); }, 500);
+      document.getElementById('b').addEventListener('click', async () => {
+        const v = 'vibrate' in navigator ? navigator.vibrate(30) : 'absent';
+        await ac.resume();
+        r.afterClick = { ...now(), vibrateReturned: v };
+      });
+    <\/script>`;
+    await page.route('http://s6.test/audio.html', (route) => route.fulfill({ contentType: 'text/html', body: html }));
+    await page.goto('http://s6.test/audio.html');
+    await page.waitForTimeout(700);
     await page.click('#b');
-    const after = await page.evaluate(async () => {
-      await window.__ac.resume().catch(() => {});
-      return { audioContextState: window.__ac.state, hasBeenActive: navigator.userActivation?.hasBeenActive ?? null, vibrateReturned: 'vibrate' in navigator ? navigator.vibrate(30) : 'absent' };
-    });
-    const res = { chromium: browser.version() || version, args: extraArgs, beforeGesture: before, afterGesture: after, console: msgs.filter((m) => /vibrat|AudioContext|autoplay/i.test(m)).slice(0, 4) };
+    await page.waitForTimeout(300);
+    const r = await page.evaluate(() => window.__r);
+    const before = { ...r.atLoad, after500ms: r.after500msNoGesture };
+    const after = r.afterClick;
+    const res = { chromium: browser.version() || version, executable: browser.__exe || 'playwright default', args: extraArgs, beforeGesture: before, afterGesture: after, console: msgs.filter((m) => /vibrat|AudioContext|autoplay/i.test(m)).slice(0, 4) };
     await browser.close();
     return res;
   };
-  out.browser = [await probe([]), await probe(['--autoplay-policy=user-gesture-required'])];
+  out.browser = [await probe([]), await probe(['--autoplay-policy=no-user-gesture-required'])]; // the second is what test harnesses often pass
 }
 
 await writeFile(path.join(here, 'results', 'audio.json'), JSON.stringify(out, null, 2));

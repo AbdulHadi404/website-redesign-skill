@@ -20,7 +20,7 @@ node scripts/parity.mjs --before http://localhost:4000 --after http://localhost:
 - **Ids and form fields**: anchors, script and analytics hooks and field names from the audit's preserved-list are all still present.
 - **Metadata**: title, description, canonical, Open Graph image, one h1 per page.
 
-**A first site has no old build.** What the customer meets today (the social profile, a competitor's template, a PDF menu) plays the old site in the other checks, but parity has nothing to crawl. Run `node scripts/parity.mjs --greenfield --after http://localhost:3000 --crawl 40 --source discovery src --out parity.md`: it checks every claim against the sources only and reports route, id, field and metadata parity as not applicable (the new site's metadata is still checked under "SEO and metadata"). Transcribe social highlights, customer messages and the owner's answers into `discovery/` first (`discovery.md` §2), or every real testimonial and price is flagged as unsourced. Checks measured against the old build (the performance baseline, accessibility counts before and after) use the stand-in's `audit.mjs` run where one was made (`discovery.md` "When there is no old site"); where none was, report them as not applicable and hold the new site to the gates and the `DESIGN.md` budget (`performance.md` §1) alone.
+**A first site has no old build.** What the customer meets today (the social profile, a competitor's template, a PDF menu) plays the old site in the other checks, but parity has nothing to crawl. Run `node scripts/parity.mjs --greenfield --after http://localhost:3000 --crawl 40 --source discovery src --out parity.md`: it checks every claim against the sources only and reports route, id, field and metadata parity as not applicable (the new site's metadata is still checked under "SEO and metadata"). Transcribe social highlights, customer messages and the owner's answers into `discovery/` first (`discovery.md` §2), or every real testimonial and price is flagged as unsourced. Checks measured against the old build use the stand-in when it is a page you may load (`discovery.md` "When there is no old site"): the accessibility counts before and after come from its `audit.mjs` run, and the performance baseline from `perf.mjs --base <new> --before <stand-in URL> --paths /` ("Performance" below). Where it could not be loaded, report them as not applicable and hold the new site to the gates and the `DESIGN.md` budget (`performance.md` §1) alone.
 
 ## Functional checks
 
@@ -30,7 +30,7 @@ Exercise, don't inspect: every nav link, footer link, in-page anchor and call to
 
 ## Accessibility
 
-WCAG 2.2 AA is the floor. `audit.mjs` (axe-core plus measured contrast, focus and targets) on every route (the route list or `parity.mjs --crawl`) at 1440 and 390 in every theme the site has (`--themes light,dark`, plus `--theme-key` when the site stores the choice); `states.mjs --axe` with the mobile menu, dialogs, the palette and panels open, at phone width as well as desktop; `a11y.mjs` on each key template; `widgets.mjs` on every custom widget; then the manual procedure in `accessibility.md` §11 (keyboard walk, names and states, announcements, forms, zoom and reflow, text spacing, forced colours, colour vision, motion, content, cross-page consistency, a screen-reader smoke test or an explicit deferral). **Gates**: no `audit.mjs` fail (no critical or serious axe violation, no rendered monospace unless `--allow-mono` for users who read code — commitment 5 in `SKILL.md`), every moderate or minor finding fixed or justified in writing; `a11y.mjs` 0 FAIL with every WARN triaged; every widget contract passing. Report tool versions and counts before and after, and what still needs real assistive-technology testing.
+WCAG 2.2 AA is the floor. `audit.mjs` (axe-core plus measured contrast, focus and targets) on every route (the route list, from the router or pages directory or the sitemap) at 1440 and 390 in every theme the site has (`--themes light,dark`, plus `--theme-key` when the site stores the choice); `states.mjs --axe` with the mobile menu, dialogs, the palette and panels open, at phone width as well as desktop; `a11y.mjs` on each key template; `widgets.mjs` on every custom widget; then the manual procedure in `accessibility.md` §11 (keyboard walk, names and states, announcements, forms, zoom and reflow, text spacing, forced colours, colour vision, motion, content, cross-page consistency, a screen-reader smoke test or an explicit deferral). **Gates**: no `audit.mjs` fail (no critical or serious axe violation, no rendered monospace unless `--allow-mono` for users who read code — commitment 5 in `SKILL.md`), every moderate or minor finding fixed or justified in writing; `a11y.mjs` 0 FAIL with every WARN triaged; every widget contract passing. Report tool versions and counts before and after, and what still needs real assistive-technology testing.
 
 Also check:
 
@@ -52,7 +52,7 @@ For routes that Phase 0 classified as used rather than visited, whatever the cat
 
 ## Performance
 
-Lighthouse at phone emulation (or `perf.mjs --before` where Lighthouse cannot run), median of 3–5 runs, same version as the baseline, LCP *element* checked; the budget in `DESIGN.md` met; the redesign not slower than the audit baseline (`performance.md` §6).
+Lighthouse at phone emulation (or `perf.mjs --before` where Lighthouse cannot run), median of 3–5 runs, same version as the baseline, LCP *element* checked; the budget in `DESIGN.md` met; the redesign not slower than the audit baseline (`performance.md` §6). On a first site, the baseline is the stand-in when it could be loaded (`perf.mjs --before <stand-in URL>`); otherwise the `performance.md` §1 budgets alone.
 
 ## Implementation checks
 
@@ -83,7 +83,7 @@ Unique title and description per page; canonical URLs; Open Graph and Twitter ta
 
 ## Hand-off
 
-- Commit on the branch with a message that explains the direction and the notable engineering decisions. Push. Share the preview URL if the project has previews. Do not merge or deploy to production unless asked.
+- Commit on the branch with a message that explains the direction and the notable engineering decisions. Push the working branch when the remote is the project's own (`SKILL.md` Phase 8; a local mirror or a test fixture is not); a first push of a new repository to a remote belongs to the user (`discovery.md` §8). Share the preview URL if the project has previews. Do not merge or deploy to production unless asked.
 - Report: what changed and why; what was verified and how (widths rendered, scripts run and their results, flows exercised, commands passed); what was left out and why; what the user must decide.
-- Leave the repo documented: `PRODUCT.md` where one was written, `DESIGN.md`, `SYSTEM.md` for product UI, `CREDITS.md`, the `discovery/` write-ups (never `discovery/raw/`), any README changes.
-- Add a row to `references/ledger.md` — faces, palette, strategy, hero form, the user's verdicts.
+- Leave the repo documented: `PRODUCT.md` where one was written, `DESIGN.md`, `SYSTEM.md` for product UI, `CREDITS.md`, the `discovery/` write-ups, the architecture decision (`discovery/architecture.md`) included on a first site (never `discovery/raw/`), any README changes.
+- Add a row to `references/ledger.md` — faces, palette, strategy, hero form, the user's verdicts — or, when the skill is installed read-only or shared by a team, put the row (and any lesson) in the report for its maintainer (`SKILL.md` Phase 8).

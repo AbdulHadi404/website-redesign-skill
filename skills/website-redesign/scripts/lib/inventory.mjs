@@ -92,7 +92,15 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   const MONO = /\bmono\b|mono(space|\s)|\bcode\b|courier|consolas|menlo|monaco|sfmono|inconsolata|iosevka|anonymous pro|monaspace|lucida console|lucida sans typewriter|nanum gothic coding|pragmata|fixedsys|^hack$/i;
   const families1 = (stack) => stack.split(',').map((f) => f.replace(/["']/g, '').trim()).filter(Boolean);
   const monoCand = []; // { el, text, stack, tag } whose rendered face is resolved once `probe` exists (below)
-  const srOnly = (el, box = el.getBoundingClientRect()) => { const c = getComputedStyle(el); return (box.width <= 2 && box.height <= 2) || c.clip === 'rect(0px, 0px, 0px, 0px)' || /inset\(50%\)/.test(c.clipPath); };
+  // Visually hidden (the 1×1 clip pattern, on the element or a wrapper): read by screen readers, not seen.
+  const srOnly = (el, box = el.getBoundingClientRect()) => {
+    if (box.width <= 2 && box.height <= 2) return true;
+    for (let e = el; e && e !== document.body; e = e.parentElement) {
+      const c = getComputedStyle(e);
+      if (c.clip === 'rect(0px, 0px, 0px, 0px)' || /inset\(50%\)/.test(c.clipPath)) return true;
+    }
+    return false;
+  };
   let totalChars = 0;
   for (const [el, raw] of textEls) {
     if (!visible(el)) continue;
@@ -105,7 +113,8 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     const fam = cs.fontFamily.split(',')[0].replace(/["']/g, '').trim();
     families.set(fam, (families.get(fam) || 0) + n);
     weights.set(cs.fontWeight, (weights.get(cs.fontWeight) || 0) + n);
-    if (!srOnly(el)) monoCand.push({ el, text, stack: cs.fontFamily, tag: el.tagName.toLowerCase() });
+    // Form controls are read below, from their value or placeholder (a textarea's text is its value).
+    if (!srOnly(el) && !/^(TEXTAREA|SELECT|OPTION|OPTGROUP)$/.test(el.tagName)) monoCand.push({ el, text, stack: cs.fontFamily, tag: el.tagName.toLowerCase() });
     // The product-UI caps rule allows a one- or two-word uppercase label at 11px (a status, a column head); anything
     // else under 12px is reported.
     const capsLabel = px >= 11 && (cs.textTransform === 'uppercase' || (text === text.toUpperCase() && text !== text.toLowerCase())) && text.split(' ').length <= 2;
@@ -577,7 +586,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     // When every value paints the same width both edges coincide and paint cannot tell: the text-align of the box
     // that lays out the digits decides, or, in a flex or grid cell (where text-align does not place the items), the
     // side with the clearly larger gap.
-    const DIGIT = /[\d٠-٩۰-۹]/;
+    const DIGIT = /[\d\u0660-\u0669\u06F0-\u06F9]/;
     const digitBox = (cell) => {
       const cs = getComputedStyle(cell), b = cell.getBoundingClientRect();
       const L = b.left + parseFloat(cs.borderLeftWidth) + parseFloat(cs.paddingLeft), R = b.right - parseFloat(cs.borderRightWidth) - parseFloat(cs.paddingRight);
