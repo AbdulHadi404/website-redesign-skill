@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bilingual components</title>
+<script>
+  // ?lang=ar → Arabic strings and dir=rtl, set before first paint (no direction flash).
+  // ?variant=broken → the same markup with the mistakes RTL builds usually ship.
+  const q = new URLSearchParams(location.search);
+  window.LANG = q.get('lang') === 'ar' ? 'ar' : 'en';
+  window.BROKEN = q.get('variant') === 'broken';
+  document.documentElement.lang = LANG; document.documentElement.dir = LANG === 'ar' ? 'rtl' : 'ltr';
+  document.write(`<link rel="stylesheet" href="/fixtures/${BROKEN ? 'bilingual-broken' : 'bilingual'}.css">`);
+</script>
+<script src="/fixtures/icons.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const T = {
+  en: { brand: 'Sanad', nav: ['Orders', 'Invoices', 'Customers'], lang: 'العربية', langHref: '?lang=ar', search: 'Search orders', crumbs: ['Home', 'Orders', 'Order 1042'],
+    tabs: ['Details', 'Items', 'History'], steps: ['Cart', 'Delivery', 'Payment'], eyebrow: 'New order', title: 'Order 1042', lede: 'Placed by <em>Sara Ahmed</em> on 28 September.',
+    form: { name: 'Full name', email: 'Email', phone: 'Mobile', iban: 'IBAN', code: 'Discount code', hintPhone: 'We text you when the courier leaves.', err: 'Enter an IBAN that starts with SA', save: 'Save changes' },
+    table: { cap: 'Recent orders', cols: ['Order', 'Customer', 'Status', 'Amount'], rows: [['1042', 'Sara Ahmed', 'Paid', '1,250.00'], ['1041', 'Omar Khalid', 'Refunded', '-310.50'], ['1040', 'Layla Hassan', 'Pending', '88.00']], open: 'Open' },
+    pager: ['Previous', 'Next'], media: ['Play', 'Skip forward'], upload: 'Uploading invoice.pdf', slider: 'Budget', chart: 'Orders per month', months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    actions: { undo: 'Undo', redo: 'Redo', reply: 'Reply', send: 'Send', ext: 'Open in new tab', help: 'Help', logout: 'Sign out', refresh: 'Refresh', clock: 'Due in 2 days' },
+    toast: 'Order saved', drawer: 'Menu', rail: 'Recommended', vocal: 'Order note', vocalText: 'Deliver to reception' },
+  ar: { brand: 'سند', nav: ['الطلبات', 'الفواتير', 'العملاء'], lang: 'English', langHref: '?lang=en', search: 'ابحث في الطلبات', crumbs: ['الرئيسية', 'الطلبات', 'الطلب ١٠٤٢'],
+    tabs: ['التفاصيل', 'المنتجات', 'السجل'], steps: ['السلة', 'التوصيل', 'الدفع'], eyebrow: 'طلب جديد', title: 'الطلب ١٠٤٢', lede: 'أنشأته <em>سارة أحمد</em> في ٢٨ سبتمبر.',
+    form: { name: 'الاسم الكامل', email: 'البريد الإلكتروني', phone: 'الجوال', iban: 'رقم الآيبان', code: 'رمز الخصم', hintPhone: 'نرسل لك رسالة عند خروج المندوب.', err: 'أدخل رقم آيبان يبدأ بـ SA', save: 'حفظ التغييرات' },
+    table: { cap: 'أحدث الطلبات', cols: ['الطلب', 'العميل', 'الحالة', 'المبلغ'], rows: [['١٠٤٢', 'سارة أحمد', 'مدفوع', '1,250.00'], ['١٠٤١', 'عمر خالد', 'مسترد', '-310.50'], ['١٠٤٠', 'ليلى حسن', 'قيد الانتظار', '88.00']], open: 'فتح' },
+    pager: ['السابق', 'التالي'], media: ['تشغيل', 'تقديم'], upload: 'جارٍ رفع الفاتورة invoice.pdf', slider: 'الميزانية', chart: 'الطلبات شهرياً', months: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
+    actions: { undo: 'تراجع', redo: 'إعادة', reply: 'رد', send: 'إرسال', ext: 'فتح في علامة تبويب جديدة', help: 'مساعدة', logout: 'تسجيل الخروج', refresh: 'تحديث', clock: 'مستحق خلال يومين' },
+    toast: 'تم حفظ الطلب', drawer: 'القائمة', rail: 'مقترحات', vocal: 'ملاحظة الطلب', vocalText: 'سَلِّمْ إِلَى الاسْتِقْبَالِ لِأَنَّ المَكْتَبَ مُغْلَقٌ' },
+}[LANG];
+const ltr = BROKEN ? '' : ' dir="ltr"';
+const amount = (s) => BROKEN ? s : `<bdi dir="ltr">${s}</bdi>`;
+document.getElementById('app').innerHTML = `
+<header class="bar">
+  <button class="icon-btn" id="menu-btn" aria-label="${T.drawer}" aria-expanded="false">${icon('menu')}</button>
+  <a class="brand" href="#">${T.brand}</a>
+  <nav aria-label="${T.drawer}"><ul class="navlist">${T.nav.map((n, i) => `<li><a href="#" ${i === 0 ? 'aria-current="page"' : ''}>${n}</a></li>`).join('')}</ul></nav>
+  <form class="search" role="search"><label class="sr" for="q">${T.search}</label>${icon('search')}<input id="q" type="search" placeholder="${T.search}"></form>
+  <a class="lang" href="${T.langHref}" lang="${LANG === 'ar' ? 'en' : 'ar'}">${T.lang}</a>
+  <button class="icon-btn" aria-label="Cart">${icon('cart')}<span class="badge">3</span></button>
+</header>
+<aside class="drawer" id="drawer" aria-label="${T.drawer}"><ul>${T.nav.map((n) => `<li><a href="#">${n}${icon('chevron-right')}</a></li>`).join('')}</ul></aside>
+<main>
+  <ol class="crumbs">${T.crumbs.map((c, i) => `<li>${i < T.crumbs.length - 1 ? `<a href="#">${c}</a>${icon('chevron-right')}` : `<span aria-current="page">${c}</span>`}</li>`).join('')}</ol>
+  <p class="eyebrow">${T.eyebrow}</p>
+  <h1>${T.title}</h1>
+  <p class="lede">${T.lede}</p>
+  <div class="toolbar" role="toolbar" aria-label="Actions">
+    ${['undo', 'redo', 'reply', 'send', 'external-link', 'help', 'logout', 'refresh'].map((k) => `<button class="icon-btn" tabindex="${k === 'undo' ? 0 : -1}" aria-label="${T.actions[{ 'external-link': 'ext' }[k] || k]}">${icon(k)}</button>`).join('')}
+    <span class="due">${icon('clock')}${T.actions.clock}</span>
+  </div>
+  <ol class="stepper">${T.steps.map((s, i) => `<li class="${i < 2 ? 'done' : 'current'}">${i < 2 ? icon('check') : `<span class="num">${i + 1}</span>`}<span>${s}</span></li>`).join(`<li class="sep" aria-hidden="true">${icon('arrow-right')}</li>`)}</ol>
+  <div role="tablist" class="tabs" aria-label="Order">${T.tabs.map((t, i) => `<button role="tab" id="tab${i}" aria-controls="panel${i}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${t}</button>`).join('')}</div>
+  <div role="tabpanel" id="panel0" aria-labelledby="tab0">
+    <form class="form" novalidate>
+      <div class="field"><label for="f-name">${T.form.name}</label><input id="f-name" autocomplete="name" value="${LANG === 'ar' ? 'سارة أحمد' : 'Sara Ahmed'}"></div>
+      <div class="field"><label for="f-email">${T.form.email}</label><input id="f-email" type="email" autocomplete="email"${ltr} value="2024.sara@example.sa"></div>
+      <div class="field"><label for="f-phone">${T.form.phone}</label><input id="f-phone" type="${BROKEN ? 'text' : 'tel'}" inputmode="tel" autocomplete="tel"${ltr} value="+966 50 123 4567"><p class="hint">${T.form.hintPhone}</p></div>
+      <div class="field invalid"><label for="f-iban">${T.form.iban}</label><div class="with-icon"><input id="f-iban" autocomplete="off"${ltr} value="GB29 NWBK 6016 1331 9268 19" aria-invalid="true" aria-describedby="e-iban">${icon('alert')}</div><p class="error" id="e-iban">${T.form.err}</p></div>
+      <div class="field"><label for="f-code">${T.form.code}</label><input id="f-code" class="truncate-tight" autocomplete="off" value="${T.vocalText}"></div>
+      <label class="range">${T.slider} <input type="range" min="0" max="100" value="30"></label>
+      <button class="primary" type="submit">${T.form.save}${icon('arrow-right')}</button>
+    </form>
+  </div>
+  <div role="tabpanel" id="panel1" aria-labelledby="tab1" hidden></div><div role="tabpanel" id="panel2" aria-labelledby="tab2" hidden></div>
+  <p class="note"><strong>${T.vocal}:</strong> <span class="note-text">${T.vocalText}</span></p>
+  <table class="orders"><caption>${T.table.cap}</caption>
+    <thead><tr>${T.table.cols.map((c, i) => `<th scope="col" class="${i === 3 ? 'num' : ''}"${i === 3 ? ' aria-sort="descending"' : ''}>${c}${i === 3 ? icon('sort-desc') : ''}</th>`).join('')}<th><span class="sr">${T.table.open}</span></th></tr></thead>
+    <tbody>${T.table.rows.map((r) => `<tr><td>${r[0]}</td><td><div class="cell-name">${r[1]}</div></td><td>${r[2]}</td><td class="num">${amount(r[3])}</td><td><a href="#" class="row-open" aria-label="${T.table.open} ${r[0]}">${icon('chevron-right')}</a></td></tr>`).join('')}</tbody>
+  </table>
+  <nav class="pager" aria-label="Pagination"><a href="#" rel="prev">${icon('arrow-left')}${T.pager[0]}</a><a href="#" rel="next">${T.pager[1]}${icon('arrow-right')}</a></nav>
+  <section class="reel-wrap" aria-labelledby="rail-h"><h2 id="rail-h">${T.rail}</h2>
+    <div class="reel" role="region" tabindex="0" aria-labelledby="rail-h">${[1, 2, 3, 4, 5, 6].map((i) => `<div class="tile">${i}</div>`).join('')}</div>
+    <div class="reel-ctrl"><button class="icon-btn" aria-label="${T.pager[0]}">${icon('chevron-left')}</button><button class="icon-btn" aria-label="${T.pager[1]}">${icon('chevron-right')}</button></div>
+  </section>
+  <div class="media" dir="ltr"><button class="icon-btn" aria-label="${T.media[0]}">${icon('play')}</button><div class="track"><div class="played"></div></div><button class="icon-btn" aria-label="${T.media[1]}">${icon('skip-forward')}</button><span class="time">1:05 / 3:40</span></div>
+  <div class="upload"><span>${T.upload}</span><div class="progress" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"><div class="bar-fill"></div></div></div>
+  <figure class="chart"><figcaption>${T.chart}</figcaption>
+    <svg viewBox="0 0 300 120" width="300" height="120" role="img" aria-label="${T.chart}" dir="ltr">${[30, 45, 38, 60, 72, 90].map((v, i) => `<rect x="${20 + i * 45}" y="${100 - v}" width="28" height="${v}" fill="currentColor" opacity=".7"/><text x="${34 + i * 45}" y="115" text-anchor="middle" font-size="10">${T.months[i]}</text>`).join('')}</svg>
+  </figure>
+  <div class="card">${T.title}</div>
+</main>
+<div class="toast" role="status">${icon('check')}${T.toast}</div>
+`;
+// Tabs: arrow keys follow the visual direction (fixed variant) or DOM order (broken variant)
+const tabs = [...document.querySelectorAll('[role=tab]')];
+document.querySelector('[role=tablist]').addEventListener('keydown', (e) => {
+  const i = tabs.indexOf(document.activeElement); if (i < 0) return;
+  const rtl = !BROKEN && getComputedStyle(e.currentTarget).direction === 'rtl';
+  const d = e.key === (rtl ? 'ArrowLeft' : 'ArrowRight') ? 1 : e.key === (rtl ? 'ArrowRight' : 'ArrowLeft') ? -1 : 0;
+  if (!d) return; e.preventDefault();
+  const t = tabs[(i + d + tabs.length) % tabs.length];
+  for (const x of tabs) { const on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }
+  t.focus();
+});
+const tb = [...document.querySelectorAll('.toolbar button')];
+document.querySelector('.toolbar').addEventListener('keydown', (e) => {
+  const i = tb.indexOf(document.activeElement); if (i < 0) return;
+  const rtl = !BROKEN && getComputedStyle(e.currentTarget).direction === 'rtl';
+  const d = e.key === (rtl ? 'ArrowLeft' : 'ArrowRight') ? 1 : e.key === (rtl ? 'ArrowRight' : 'ArrowLeft') ? -1 : 0;
+  if (!d) return; e.preventDefault(); const t = tb[(i + d + tb.length) % tb.length]; tb.forEach((b) => (b.tabIndex = b === t ? 0 : -1)); t.focus();
+});
+document.getElementById('menu-btn').addEventListener('click', (e) => { const o = document.body.classList.toggle('drawer-open'); e.currentTarget.setAttribute('aria-expanded', o); });
+</script>
+</body>
+</html>
