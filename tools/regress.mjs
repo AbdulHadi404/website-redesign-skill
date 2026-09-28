@@ -77,12 +77,14 @@ const cases = [
       const must = (s, re, label) => [re.test(s), label];
       return [
         ...['Invisible without JavaScript', 'Contrast below WCAG AA', 'No visible focus change', 'No lang attribute', 'images without an alt', 'Lazy-loaded image in the first viewport',
-          'Phone layout viewport widened', 'Horizontal overflow', 'targets under 24×24px', 'Gradient-filled text', 'Violet/indigo gradients', 'icon tiles', 'Cliché copy', 'Big-number claims', 'pill badge']
+          'Phone layout viewport widened', 'Horizontal overflow', 'Gradient-filled text', 'Violet/indigo gradients', 'icon tiles', 'Cliché copy', 'Big-number claims', 'pill badge']
           .map((t) => must(slop, new RegExp(t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), `slop: "${t}"`)),
         [count(/^- ◆/gm, slop) >= 24, `slop: ≥ 24 generic-look signals over two widths (got ${count(/^- ◆/gm, slop)})`],
         // The clean page: only the missing GDS Transport font files (not shipped here) may fail.
         [!/✗ (?!Declared font families|Console\/page errors)/.test(gov), `govuk: no ✗ other than the unshipped fonts${(gov.match(/✗ (?!Declared font families|Console\/page errors)[^\n]{0,80}/) || [''])[0] ? ` (got: ${(gov.match(/✗ (?!Declared font families|Console\/page errors)[^\n]{0,80}/) || [''])[0]})` : ''}`],
-        // Wrapping on slop.html depends on the machine's fonts; finish.html's 14ch monospace headline does not.
+        // Wrapping and text-sized targets on slop.html depend on the machine's fonts (CI loads Inter; the sandbox
+        // cannot), so those expectations live on finish.html, whose monospace headline and icon links do not.
+        must(fin, /targets under 24×24px[^\n]*div\.icons|targets under 24×24px[^\n]*span\.icons/, 'finish: 16px icon links 4px apart fail 2.5.8'),
         must(fin, /Nested corners not concentric: `div\.card > a\.swollen`/, 'finish: swollen inner radius reported'),
         [!/a\.concentric/.test(fin), 'finish: the concentric nesting is not reported'],
         must(fin, /Dead bands at 1440px[^\n]*div\.hero/, 'finish: tall hero reported as a dead band'),
