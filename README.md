@@ -54,13 +54,14 @@ Measurement replaces guesswork wherever something can be measured. All are in `s
 | Script | Answers |
 | --- | --- |
 | `capture.mjs` | What does every page look like at each width, with reveals finished and images decoded? Also: element shots, reduced-motion, dark, no-JS and forced-colours renders, and removal-test variants. |
-| `audit.mjs` | What is measurably wrong? Checks overflow and phone zoom-out, contrast on the painted ground, invisible focus, targets, fake controls, clipped text, colour-only status, hidden content, fonts that never loaded, LCP/CLS, axe-core, and generic-look signals. |
+| `audit.mjs` | What is measurably wrong, judged by the rules for `--kind` marketing, app, field, commerce, docs or service? Checks overflow and phone zoom-out, contrast on the painted ground, invisible focus, targets, fake controls, clipped text, colour-only status, hidden content, fonts that never loaded, LCP/CLS, axe-core, and generic-look signals. |
 | `a11y.mjs` | What would keyboard, screen-reader, zoom, forced-colours or colour-blind users hit that rule engines miss? |
 | `widgets.mjs` | Do custom widgets keep their keyboard contracts (dialog, tabs, disclosure, live region, form errors, menu button)? |
-| `parity.mjs` | Did the redesign add unsourced claims, or drop routes, ids, form fields or metadata? |
+| `states.mjs` | What does each widget look like loading, empty, failing, offline, stale, with 200 items, open or focused? It drives these states from mocked routes and steps, and flags a scenario that changed nothing. |
+| `parity.mjs` | Did the redesign add unsourced claims, or drop routes, ids, form fields, analytics `data-*` hooks, form submissions or metadata? |
 | `contrast.mjs` | WCAG 2 and APCA for any colours or token file. |
 | `palette.mjs` | Samples a logo's colours and builds 12-step OKLCH role scales with solved text steps. |
-| `fonts.mjs` | What can this font file actually do? Axes, tabular figures, features, scripts. |
+| `fonts.mjs` | What can this font file actually do? Axes, tabular figures per digit system (Latin, Eastern Arabic, Persian), features, scripts; `--fallback` prints a metric-matched fallback `@font-face`. |
 | `compare.mjs` | Before/after sheets, blurred squint sheets, pixel diffs. |
 
 Requirements: Node ≥ 18, `npm install` in `skills/website-redesign/scripts/`, and a Chromium. The scripts find Playwright's browsers on disk; set `CHROME_PATH` to choose one, or run `npm run browser`. They work offline against a local dev server.
@@ -130,7 +131,8 @@ skills/website-redesign/
     resources/             licence-checked components, assets, type and colour, libraries, tools, inspiration
   templates/               DESIGN.md, SYSTEM.md, critique.md
   scripts/                 the measurement scripts above
-research/                  the evidence behind 2.0: audit, research streams, experiments and labs
+research/                  the evidence behind 2.0: audit, research streams, experiments, labs, blind evaluations
+tools/check-skill.mjs      repository check (frontmatter, cross-references, script syntax), run in CI
 ```
 
 ## Licence
