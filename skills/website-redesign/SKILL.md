@@ -39,8 +39,8 @@ Work through the phases in order; each has a reference with the detailed method.
 Three gates sit inside this sequence:
 
 - **Before Phase 3 (direction):** the brief exists. Every route has a category and an intensity; top tasks are confirmed by the user or written down as assumptions.
-- **Before Phase 5 (build):** `DESIGN.md` passes its own checks — for expressive redesigns, all five first-notice things change and *keep* is shorter than *replace + create*; for every direction, the similar-brief test, the category test and the ledger comparison are written down (`art-direction.md`). A direction that fails them only gets more expensive to discover later.
-- **Before Phase 8 (hand-off):** the critique has no remaining "no"; `audit.mjs` shows no fail you have not fixed or justified in writing; `parity.mjs` shows no unsourced claim and no lost route, id or form field.
+- **Before Phase 5 (build):** `DESIGN.md` passes its own checks — for expressive redesigns, all five first-notice things change and *keep* is shorter than *replace + create*; for every direction, the similar-brief test, the category test and the ledger comparison are written down (`art-direction.md`); the Accessibility block is filled — no palette without its contrast table, no component without its native element or APG pattern, no motion without its reduced-motion substitute (`accessibility.md` §2). A direction that fails them only gets more expensive to discover later.
+- **Before Phase 8 (hand-off):** the critique has no remaining "no"; `audit.mjs` and `a11y.mjs` show no fail you have not fixed or justified in writing, and every widget contract passes; `parity.mjs` shows no unsourced claim and no lost route, id or form field.
 
 Do not skip to implementation because the direction "feels obvious". The direction that feels obvious before the audit is usually the generic one; the one that feels obvious after several redesigns is usually this skill's own habit.
 
@@ -50,7 +50,7 @@ Classify each route (marketing, SaaS app, dashboard, commerce, enterprise, docs/
 
 ### Phase 1 — Audit (understand before judging)
 
-Read the repository the way a new design lead would on day one: routes, layouts, shared components, styling system and tokens, fonts, colours, logo and brand family, imagery, motion, SEO/meta, analytics, forms and integrations, and the UI libraries in use with their versions and licences. Run the product and **look at it**, then **measure it**: `scripts/audit.mjs` (contrast on the real ground, focus, targets, overflow, type and spacing inventory, hidden and clipped content, generic-look signals) and, where available, `dembrandt` for the site's actual token set. Then answer, in writing: what the company sells and to whom; who uses the product, how often, on what device, for which top tasks; what real proof exists; what must be preserved; and why the current design fails — named specifically and rated by severity.
+Read the repository the way a new design lead would on day one: routes, layouts, shared components, styling system and tokens, fonts, colours, logo and brand family, imagery, motion, SEO/meta, analytics, forms and integrations, and the UI libraries in use with their versions and licences. Run the product and **look at it**, then **measure it**: `scripts/audit.mjs` (contrast on the real ground, focus, targets, overflow, type and spacing inventory, hidden and clipped content, generic-look signals) and, where available, `dembrandt` for the site's actual token set. Run `scripts/a11y.mjs` on each key template and note which accessibility features already work, so the redesign keeps them. Then answer, in writing: what the company sells and to whom; who uses the product, how often, on what device, for which top tasks; what real proof exists; what must be preserved; and why the current design fails — named specifically and rated by severity.
 
 ### Phase 2 — Research (look at real things, chosen by problem)
 
@@ -70,7 +70,7 @@ Work on a branch. Tokens → base → motion → primitives → product fragment
 
 ### Phase 6 — Verify (renders and measurements)
 
-Capture every page at 1440, 1280, 1024, 768 and 390 with `scripts/capture.mjs`, plus element shots of artwork and every state of every widget; look at the captures. Run `scripts/audit.mjs` at 1440 and 390 with the right `--kind`, then the manual accessibility pass (keyboard, zoom and reflow, screen-reader names, forced colours, reduced motion), the responsive pass and a performance run. Fix and re-capture; do not close a loop on the assumption that a change did what you intended.
+Capture every page at 1440, 1280, 1024, 768 and 390 with `scripts/capture.mjs`, plus element shots of artwork and every state of every widget; look at the captures. Run `scripts/audit.mjs` at 1440 and 390 with the right `--kind`, `scripts/a11y.mjs` on each key template and `scripts/widgets.mjs` on each custom widget, then the manual accessibility pass (`accessibility.md` §11), the responsive pass and a performance run. Fix and re-capture; do not close a loop on the assumption that a change did what you intended.
 
 ### Phase 7 — Critique (the honest pass)
 
@@ -86,8 +86,10 @@ All in `scripts/` (run `npm install` there once; Playwright-based; each prints w
 
 | Script | Use it for |
 | --- | --- |
-| `capture.mjs` | Full-page and first-viewport captures at several widths; element shots at 3× for artwork; `--reduced-motion`, `--dark`, `--no-js` variants |
+| `capture.mjs` | Full-page and first-viewport captures at several widths; element shots at 3× for artwork; `--reduced-motion`, `--dark`, `--no-js`, `--forced-colors` renders; `--variant` removal tests (no text, no images, no shadows) |
 | `audit.mjs` | Measured audit of a rendered page (`--kind marketing|app|commerce|content|docs|service`): overflow and zoom-out, contrast on the painted ground, invisible focus, targets, fake controls, clipped content, colour-only status, headings/landmarks, images, no-JS and reduced-motion hidden content, console errors, type/spacing/radius inventory, unavailable fonts, LCP/CLS, axe-core, generic-look signals |
+| `a11y.mjs` | What rule engines miss: keyboard walk with focus visibility, focus hidden under sticky UI, traps, pointer-only controls, names from the accessibility tree, form-control contrast, autocomplete, reflow at 320/640, text spacing, forced colours, colour-vision renders, motion |
+| `widgets.mjs` | Keyboard contracts of custom widgets — dialog, tabs, disclosure, live region, form errors, menu button — from a small JSON of selectors |
 | `parity.mjs` | Old site vs new: unsourced and dropped claims, missing routes, lost ids and form fields, metadata |
 | `contrast.mjs` | WCAG 2 and APCA for any CSS colours or token files |
 | `palette.mjs` | Sample a logo's colours; build 12-step OKLCH role scales (light/dark) with solved text steps |

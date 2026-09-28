@@ -1,59 +1,65 @@
 # Phase 8 — Technical QA and hand-off
 
-Goal: prove the site still works, is accessible, fast and indexable, and hand it over in a way the user can act on.
+Goal: prove the product still works, tells the truth, is accessible, fast and indexable — and hand it over in a way the user can act on.
 
 ## Project checks
 
-Run the project's own commands and report their real output:
+Run the project's own commands and report their real output: typecheck / lint, production build (including image generation, CMS fetches, embedded app bundles), tests. Do not skip a failing test; fix it or explain exactly why it fails.
 
-- Typecheck / lint (`typecheck`, `check`, `lint`).
-- Production build — including any image generation, CMS fetch or embedded app bundle the build performs.
-- Tests. Do not skip a failing test; fix it or explain exactly why it fails.
+## Parity with the old site
+
+Run the old build (main) and the new one side by side:
+
+```bash
+node scripts/parity.mjs --before http://localhost:4000 --after http://localhost:3000 --crawl 40 --source src content --out parity.md
+```
+
+- **Unsourced claims** (numbers, prices, percentages, ratings, quotes on the new site found neither on the old site nor in the sources): find the source or remove them.
+- **Dropped claims**: each is a deliberate "Remove" in `DESIGN.md`, or restored.
+- **Routes**: every old route answers, or redirects.
+- **Ids and form fields**: anchors, script and analytics hooks and field names from the audit's preserved-list are all still present.
+- **Metadata**: title, description, canonical, Open Graph image, one h1 per page.
 
 ## Functional checks
 
-Exercise, not inspect:
-
-- Every nav link, footer link, in-page anchor and CTA, on desktop and in the open mobile menu.
-- Every form: fields, validation, honeypot/captcha presence, submission path, success and error states.
-- Every interactive widget through every state; drive it with a script when a backend is unavailable.
-- External links open the right target; `mailto:` links carry the right address and subject.
-- Routes that existed before still exist; redirects and anchors other pages depend on still resolve.
-- Analytics hooks, consent banners and third-party embeds still load where they did.
+Exercise, don't inspect: every nav link, footer link, in-page anchor and call to action, on desktop and in the open mobile menu; every form — fields, validation (on submit, then live), error summary, honeypot or captcha, success and error states, no double submission; every widget through every state (script it when a backend is unavailable); external links and `mailto:` addresses; analytics hooks, consent banners and embeds still load where they did; unsaved-changes warnings on long forms.
 
 ## Accessibility
 
-- Landmarks (`header`, `nav`, `main`, `footer`), a skip link, one `h1`, ordered heading levels.
-- Labels on every input; names on every button and icon-only control.
-- Keyboard: tab order, visible focus, Escape closes overlays, tabs and menus operable with arrows.
-- Custom widgets use the right roles and states (`role=tablist`, `aria-selected`, `aria-expanded`, `aria-controls`).
-- Contrast at small sizes on every surface, including tinted and image chapters.
-- `prefers-reduced-motion` disables decorative motion; nothing essential depends on animation.
-- Decorative SVGs and images marked `aria-hidden`; meaningful images have alt text.
-
-WCAG 2.2 additions to check explicitly: target size ≥ 24 × 24 CSS px (2.5.8); focus never fully obscured by sticky bars or overlays (2.4.11); focus ring ≥ 2 px and 3:1 (2.4.13, aim for it); no drag-only interactions (2.5.7); help in the same place on every page (3.2.6); nothing asked twice in one process (3.3.7); no puzzle to sign in (3.3.8).
+WCAG 2.2 AA is the floor. `audit.mjs` (axe-core plus measured contrast, focus and targets) at 1440 and 390; `a11y.mjs` on each key template; `widgets.mjs` on every custom widget; then the manual procedure in `accessibility.md` §11 (keyboard walk, names and states, announcements, forms, zoom and reflow, text spacing, forced colours, colour vision, motion, content, cross-page consistency, a screen-reader smoke test or an explicit deferral). **Gates**: axe 0 violations; `a11y.mjs` 0 FAIL with every WARN triaged; every widget contract passing. Report tool versions and counts before and after, and what still needs real assistive-technology testing.
 
 ## Performance
 
-Targets at the 75th percentile, mobile and desktop: LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1. Run Lighthouse on the built site at phone emulation and compare with the audit baseline; the redesign must not be slower.
+Lighthouse at phone emulation, median of 3–5 runs, same version as the baseline, LCP *element* checked; the budget in `DESIGN.md` met; the redesign not slower than the audit baseline (`performance.md` §6).
 
+## Implementation checks
 
-- No runtime framework shipped for static content; client JS limited to what routes need.
-- Images responsive with explicit dimensions; hero eager with high fetch priority; below-the-fold lazy; total page weight sane.
-- Fonts: only the weights used, `display: swap` or equivalent, preconnect to the font host.
-- Animation uses transform and opacity; nothing animates layout; scrolling stays smooth on a low-power device.
-- No layout shift from late fonts, images or injected widgets that you can avoid.
+Many adapted from Vercel's Web Interface Guidelines (MIT):
+
+- No `transition: all`; animations on `transform`/`opacity`; reduced-motion guard on View Transitions (`animation-name: none` on the group); Motion wrapped in `MotionConfig reducedMotion="user"`; chart animations off or short.
+- `color-scheme` and `<meta name="theme-color">` set; themed browser surfaces (`::selection`, `accent-color`, `caret-color`, `text-underline-offset`); `tabular-nums` where figures align; `text-wrap: balance` on headings.
+- `scroll-margin-top` on anchors under a sticky header; `overscroll-behavior: contain` in drawers and mobile menus; `env(safe-area-inset-*)` on fixed bars; `touch-action: manipulation` on controls; hover effects inside `@media (hover: hover)`.
+- Inputs with `type`, `inputmode`, `autocomplete`; ≥ 16 px on phones; paste allowed; placeholders show an example and are never the label.
+- Typography: curly quotes and apostrophes, `…` not `...`, non-breaking spaces in `10&nbsp;MB` and brand names, `translate="no"` on brand names.
+- `min-width: 0` on flex children that must truncate; no `100vw` widths (the scrollbar makes them overflow).
+- No undefined CSS custom properties, no console errors or uncaught exceptions (`audit.mjs` reports both).
+- Forced-colours render (`capture.mjs` with a forced-colours context, or DevTools rendering emulation): focus rings drawn with `box-shadow` alone disappear — add a transparent outline.
+
+## Assets and licences
+
+- Every third-party asset in `CREDITS.md` with source, licence class and credit text; class B assets credited visibly; no class C or D assets without a recorded decision (`resources/README.md`).
+- No placeholder hosts: grep for `placehold|picsum|placeholder\.com|via\.placeholder|dummyimage|loremflickr|source\.unsplash\.com`.
+- No Fontshare FFL font files committed to a public repository; OpenType features used in CSS exist in the served files (`fonts.mjs`); fonts self-hosted for EU clients.
+- Material Symbols requested with `&icon_names=`; icons imported by name; no third-party CDN for WASM or decoders where a CSP or privacy commitment exists.
+- No Remix Icon glyph used as a mark; no AI-generated people presented as real.
 
 ## SEO and metadata
 
-- Unique title and description per page; canonical URLs; Open Graph and Twitter tags with a regenerated social image that matches the new identity.
-- Structured data if it existed before (Organization, Product) still valid.
-- Sitemap and robots correct; admin or utility routes excluded.
-- Favicon and theme colour updated to the new identity.
+Unique title and description per page; canonical URLs; Open Graph and Twitter tags with a social image regenerated in the new identity; structured data still valid if it existed; sitemap and robots correct (a review build is `noindex`); favicon set and theme colour updated.
 
 ## Hand-off
 
-- Commit on the branch with a message that explains the direction and the notable engineering decisions.
-- Push. If the project has preview deployments, share the preview URL. Do not merge or deploy to production unless the user asked.
-- Report: what changed and why; what was verified and how (widths rendered, flows exercised, commands run with results); what was deliberately left out (missing proof, assets, capabilities) and what the user must decide (production, unresolved facts, brand assets).
-- Leave the repo documented: the art-direction document, credits for assets, and any README changes the new system needs.
+- Commit on the branch with a message that explains the direction and the notable engineering decisions. Push. Share the preview URL if the project has previews. Do not merge or deploy to production unless asked.
+- Report: what changed and why; what was verified and how (widths rendered, scripts run and their results, flows exercised, commands passed); what was left out and why; what the user must decide.
+- Leave the repo documented: `DESIGN.md`, `SYSTEM.md` for product UI, `CREDITS.md`, any README changes.
+- Add a row to `references/ledger.md` — faces, palette, strategy, hero form, the user's verdicts.

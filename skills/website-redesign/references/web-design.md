@@ -2,6 +2,8 @@
 
 What a marketing page is made of and how it is judged. Read at the end of Phase 3 (page narrative) and through Phase 5. Companions: `design-theory.md` (the visual system), `ui-ux.md` (interaction), `implementation.md` (composition rules), `technical-qa.md` (the checklist).
 
+**Surface modes inside one site.** Classify sections, not just sites: *persuade* (home, product, pricing — this file), *operate* (the product itself, account areas, checkout — `app-ui.md`), *read* (blog, docs, changelog, legal — measure 65–75 characters, generous leading, headings close to what follows, no hero theatre), *experience* (a portfolio or campaign — expressive by design). Product fragments rebuilt as HTML on a marketing page are *operate* surfaces: they get product copy and the product's own type size, not marketing voice.
+
 ## 1. What a homepage must do (NN/g's five principles)
 
 1. **Be reachable**: the logo links home from every page; the URL is predictable; the homepage looks different from inner pages.
@@ -50,7 +52,9 @@ No two adjacent chapters share a composition; surfaces alternate (white → grey
 
 ## 4. Responsive strategy
 
-- `<meta name="viewport" content="width=device-width, initial-scale=1">`; relative units; fluid grids (`fr`, `minmax`, `auto-fit`); images `max-width: 100%` **with `width` and `height` attributes** so nothing shifts while they load.
+The full method — intrinsic layout primitives, container queries, fluid type within the zoom limit, navigation transformation, tables, test widths — is in `responsive.md`. The basics:
+
+- `<meta name="viewport" content="width=device-width, initial-scale=1">` (never `user-scalable=no`); relative units; fluid grids (`fr`, `minmax`, `auto-fit`); images `max-width: 100%` **with `width` and `height` attributes** so nothing shifts while they load.
 - **Breakpoints come from the content, not from devices**: design at ~360–390 first, widen until the layout has more space than it needs, add a breakpoint there. Major breakpoints change the layout; minor ones adjust margins, sizes and positions.
 - **Measure** is the usual trigger: when a text block passes ~70–80 characters, cap the column or add a column.
 - Do not hide content by screen size — information needs do not depend on the device; reorder, resize, collapse.
@@ -58,6 +62,8 @@ No two adjacent chapters share a composition; surfaces alternate (white → grey
 - Sticky header + anchors: `scroll-margin-top`. A `backdrop-filter` on a sticky header traps fixed descendants — put the blur on a pseudo-element.
 
 ## 5. Performance is design
+
+Budgets per product type, the UI-decision → metric map and the measuring procedure are in `performance.md`. The essentials:
 
 - **Core Web Vitals** at the 75th percentile, mobile and desktop separately: **LCP ≤ 2.5 s** (needs improvement to 4 s; poor beyond), **INP ≤ 200 ms** (to 500), **CLS ≤ 0.1** (to 0.25). TTFB and FCP diagnose LCP.
 - The hero image or panel is the LCP candidate: eager, `fetchpriority="high"`, sized explicitly, modern format, ~150–300 KB; everything below the fold lazy.

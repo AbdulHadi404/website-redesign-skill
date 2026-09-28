@@ -13,6 +13,7 @@
  *   --label        suffix for file names, e.g. "before" / "after"
  *   --reduced-motion   capture with prefers-reduced-motion: reduce
  *   --dark         capture with prefers-color-scheme: dark
+ *   --forced-colors  capture in forced-colors mode (Windows High Contrast)
  *   --no-js        capture with JavaScript disabled (shows what fails without it)
  *   --element sel  also capture each element matching the selector(s) at DPR 3
  *                  (use for drawn artwork, diagrams, product fragments)
@@ -115,6 +116,7 @@ try {
         hasTouch: mobile,
         reducedMotion: a['reduced-motion'] ? 'reduce' : 'no-preference',
         colorScheme: a.dark ? 'dark' : 'light',
+        forcedColors: a['forced-colors'] ? 'active' : 'none',
         javaScriptEnabled: !a['no-js'],
       });
       const page = await context.newPage();

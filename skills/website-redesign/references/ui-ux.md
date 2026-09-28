@@ -49,8 +49,9 @@ A landing page is an interface: a nav, forms, widgets, links, states, motion, an
 ## 4. Feedback, time and states
 
 - **Response-time limits** (Nielsen): **0.1 s** feels instantaneous (direct manipulation — hover, press, toggle); **1 s** keeps the flow of thought (a spinner is unnecessary but the delay is noticed); **10 s** is the limit of attention — beyond it, a percent-done indicator with an estimate. Between 2 and 10 s, quiet feedback (a busy state on the control, a subtle progress line).
-- **Skeleton screens beat spinners**: a spinner draws attention to the wait; a skeleton that fills in draws attention to progress. Use skeletons for content areas, spinners only inside the control that was pressed.
-- **Every widget has five states** — idle, loading, active/success, empty, error — and every one is designed, not defaulted. Render each during QA (`visual-qa.md`).
+- **Loading thresholds** (Primer, consistent with the limits above): under 1 s show nothing; 1–3 s an indeterminate spinner or skeleton; 3–10 s determinate progress; beyond 10 s a background task the user can leave. Delay indicators ~150–300 ms and keep them ~300–500 ms once shown, so they never flash.
+- **Skeleton screens beat spinners** for content areas: a skeleton that fills in draws attention to progress. Skeletons only for containers (tables, lists, tiles), shaped like the final layout; spinners only inside the control that was pressed.
+- **Every component fills its state matrix** — interaction (rest, hover, focus-visible, pressed), selection, validation, availability (disabled, inactive, read-only), async (loading, empty, degraded) — and every applicable row is designed and rendered, not defaulted (`app-ui.md` §2, `visual-qa.md`).
 - **Empty states** (first use, nothing configured, no results, cleared): say *why* it is empty, teach the feature in one line ("Star a job to keep it here"), and offer the next action; never a blank container, never "No records" that later fills in.
 - **Error messages**: next to the source; colour *and* icon *and* text (never colour alone); plain language; the precise problem; a constructive next step; the entered text preserved; no blame words ("invalid", "illegal"), no humour, no codes. Validate inline only fields that are error-prone; validate the rest on submit. Modal dialogs only for errors that block progress.
 - **Progressive disclosure**: show what most people need most of the time; put the rest one click away with an obvious label; **never more than two levels** — people get lost between three.
@@ -72,19 +73,23 @@ NN/g's ten, plus the research on actions:
 
 Actions (LukeW's eye-tracking study): primary and secondary actions **left-aligned with the fields** on a strong vertical axis; the secondary action visually recessive (a link or a quiet button) so it cannot be hit by mistake — people care more about not losing their data than about speed. One primary action per form.
 
+Validation and errors — the design-system consensus (GOV.UK, Primer, Carbon, USWDS): **validate on submit**, not on blur or while typing; after a failed submit, re-validate live as the field is fixed ("reward early, punish late"). For three or more errors, an **error summary** at the top — focused, the page title prefixed "Error:", each item linking to its field — plus the message beside each field; fewer errors, focus the first invalid field. Mark **whichever is the minority** — "(optional)" or "(required)" — in words, not a lone asterisk. Never disable the submit button to signal an invalid form. Details: `app-ui.md` §6.
+
 ## 6. Targets, thumbs, navigation
 
 - **Target size**: WCAG 2.2 minimum **24 × 24 CSS px** (AA); Apple **44 × 44 pt**; Material **48 dp with 8 dp spacing**. Design to 44 and never below 24; keep 8 px between adjacent targets.
 - **How phones are held** (Hoober, 1,333 observations): one-handed **49%**, cradled **36%**, two-handed **15%**; grips change every few seconds. Primary actions and the mobile nav go where a thumb reaches without repositioning — the lower two-thirds, never the top corners; test on a real device.
-- **Mobile navigation**: visible tabs or a bar work up to **5 items**; more than that, a menu. A hamburger is low-discoverability ("out of sight is out of mind") — label it **"Menu"** (slightly better recognised than the icon alone), keep the primary action outside it, and make the open menu large-type and finger-sized.
+- **Mobile navigation**: visible tabs or a bar work up to **5 items**; more than that, a menu. A hamburger is low-discoverability ("out of sight is out of mind") — label it **"Menu"** (slightly better recognised than the icon alone), keep the primary action outside it, and make the open menu large-type and finger-sized. How navigation transforms per product type and item count: `responsive.md` §5.
 - **Desktop nav**: ≤ 7 items, the primary action at the right end, the logo at the left linking home, the current section marked.
 - **Carousels**: auto-rotation is banner blindness on wheels — the first frame gets most of the attention and animated things are read as ads (animated ads are looked at 27% of the time). If one must exist: ≤ 5 frames, manual on mobile, visible arrows and position dots, big controls, pause on hover — and the important content also lives somewhere static.
 
 ## 7. Motion
 
-- Durations (NN/g): **~100 ms** for feedback on small controls (toggle, checkbox); **200–300 ms** for moderate transitions (a modal, a panel); **≤ 400 ms** for the largest moves; **≥ 500 ms** reads as a delay. Enter slower than exit (300 in / 200–250 out). *Ease-out* for entering (fast start, settle), *ease-in* for leaving; never linear.
-- Motion carries meaning or it goes: where a thing came from, what changed, what to look at next. Frequent motions are subtler and shorter than rare ones.
-- Animate transform and opacity only; never layout. `prefers-reduced-motion` switches decorative motion off entirely and keeps essential feedback.
+- Durations (NN/g): **~100 ms** for feedback on small controls (toggle, checkbox); **200–300 ms** for moderate transitions (a modal, a panel); **≤ 400 ms** for the largest moves; **≥ 500 ms** reads as a delay. Exits softer and shorter than entrances.
+- **Frequency decides**: anything keyboard-triggered or done 100+ times a day does not animate; tens of times a day, ≤ 150 ms colour or opacity at most; occasional moments get standard motion; only rare moments may be expressive.
+- *Ease-out* (decelerate) for anything entering or anything the user is waiting to see — never *ease-in* there; an exit may accelerate only when it is short and nobody waits on it. Never linear for movement; never enter from `scale(0)`.
+- Motion carries meaning or it goes: where a thing came from, what changed, what to look at next.
+- Animate transform and opacity only; never layout. `prefers-reduced-motion` substitutes (a crossfade for a slide) rather than deleting, and never removes content. Tokens, techniques and library defaults: `motion.md`.
 
 ## 8. Accessibility — the WCAG 2.2 additions on top of 2.1 AA
 
@@ -96,7 +101,7 @@ Actions (LukeW's eye-tracking study): primary and secondary actions **left-align
 - **3.3.7 Redundant entry (A)**: never ask for the same information twice in one process.
 - **3.3.8 Accessible authentication (AA)**: no puzzles or transcription to sign in (paste and autofill allowed).
 
-Still from 2.1 AA and always checked: contrast (`design-theory.md` B6), keyboard operability with visible focus and a logical order, a skip link, landmarks, one `h1` and ordered headings, labels on every input, names on every icon-only control, `aria-*` states on custom widgets (tabs, menus, accordions), no information by colour alone, reduced-motion respected, no content that flashes, captions/alt where media carries meaning.
+The full procedure — design decisions, implementation rules, automated and manual tests — is in `accessibility.md`. Still from 2.1 AA and always checked: contrast (`design-theory.md` B6), keyboard operability with visible focus and a logical order, a skip link, landmarks, one `h1` and ordered headings, labels on every input, names on every icon-only control, `aria-*` states on custom widgets (tabs, menus, accordions), no information by colour alone, reduced-motion respected, no content that flashes, captions/alt where media carries meaning.
 
 ## 9. Writing
 

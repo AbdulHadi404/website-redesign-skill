@@ -48,6 +48,10 @@ Symptoms: the palette was chosen from taste rather than sampled from the logo; a
 - **Copy on the busy part of a photograph**; grey text on a coloured ground (use the same hue at low chroma).
 - **Dark patterns**: confirmshaming, fake urgency or scarcity, pre-ticked consent, hidden costs, roach motels (`ui-ux.md` §10).
 
+- **Removing the focus ring** (`outline: none`, `*:focus { outline: 0 }`) without an equally visible replacement — or replacing it with a faint box-shadow, which forced colours deletes.
+- **Placeholder as the only label**; a clickable `div`, `span` or `<a>` without `href` standing in for a button; `role="menu"` on site navigation; custom checkboxes drawn with backgrounds and shadows; information that lives only in a hover tooltip; `user-scalable=no` or `maximum-scale=1`; fixed-height text cards that clip when text grows. `a11y.mjs` catches all of these except the tooltip, which needs a look.
+- **"Accessibility overlay" widgets** offered as the fix.
+
 ## Purpose-gated techniques (allowed with a written reason)
 
 | Technique | Allowed when | Otherwise |

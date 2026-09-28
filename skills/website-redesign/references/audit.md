@@ -50,9 +50,10 @@ Run the project and look at every page at desktop and phone width (`visual-qa.md
 ```bash
 node scripts/audit.mjs --base http://localhost:3000 --paths / /pricing /app --widths 1440,390 --kind marketing --out audit/before
 npx dembrandt http://localhost:3000 --wcag --save-output      # optional: the site's actual token set
+node scripts/a11y.mjs http://localhost:3000/ --out audit/before-a11y   # per key template
 ```
 
-`audit.mjs` gives the baseline: type sizes in use and their shares, families and whether they load, contrast failures on the real ground, invisible focus, targets, overflow and phone zoom-out, clipped and colour-only content, content hidden without JavaScript or under reduced motion, headings and landmarks, image problems, console errors, LCP/CLS, axe-core, and the generic-look signals. dembrandt (MIT; `BROWSER_CDP_ENDPOINT` connects it to an existing Chromium) extracts the token set actually in use — palette with roles, type styles, spacing, radii, shadows, motion — which is the objective version of "the five things a stranger notices first". Treat its role labels as guesses.
+`audit.mjs` gives the baseline: type sizes in use and their shares, families and whether they load, contrast failures on the real ground, invisible focus, targets, overflow and phone zoom-out, clipped and colour-only content, content hidden without JavaScript or under reduced motion, headings and landmarks, image problems, console errors, LCP/CLS, axe-core, and the generic-look signals. dembrandt (MIT; `BROWSER_CDP_ENDPOINT` connects it to an existing Chromium) extracts the token set actually in use — palette with roles, type styles, spacing, radii, shadows, motion — which is the objective version of "the five things a stranger notices first". Treat its role labels as guesses. `a11y.mjs` adds the keyboard, focus, zoom, spacing, forced-colours and colour-vision baseline. List the barriers *and the accessibility features that already work* (skip link, live regions, labels, error pattern, reduced-motion code, `lang`, captions) — the redesign must not lose them (`accessibility.md` §1).
 
 Then name the weaknesses specifically — vague diagnoses produce vague fixes:
 

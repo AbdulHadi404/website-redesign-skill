@@ -175,8 +175,9 @@ try {
       if (axePath) {
         await page.addScriptTag({ path: axePath });
         axe = await page.evaluate(async () => {
-          const r = await window.axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'] }, resultTypes: ['violations'] });
-          return r.violations.map((v) => ({ id: v.id, impact: v.impact, help: v.help, count: v.nodes.length, targets: v.nodes.slice(0, 3).map((n) => n.target.join(' ')) }));
+          // Two experimental rules earn their place (tables without headers, name ≠ visible label); they report as warnings.
+          const r = await window.axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'] }, rules: { 'td-has-header': { enabled: true }, 'label-content-name-mismatch': { enabled: true } }, resultTypes: ['violations'] });
+          return r.violations.map((v) => ({ id: v.id, impact: v.impact, help: v.help, experimental: v.tags.includes('experimental'), count: v.nodes.length, targets: v.nodes.slice(0, 3).map((n) => n.target.join(' ')) }));
         });
       }
       await ctx.close();
@@ -240,8 +241,10 @@ try {
       const kb = (n) => `${Math.round(n / 1024)} KB`;
       W.push(`Transfer: ${[...Object.entries(perf.bytes).filter(([, v]) => v > 0).map(([k, v]) => `${k} ${kb(v)}`), perf.html ? `html ${kb(perf.html)}` : null].filter(Boolean).join(', ') || 'n/a'}; web fonts loaded: ${perf.fonts.length ? [...new Set(perf.fonts)].join(', ') : 'none'}.`);
       if (axe) {
-        const serious = axe.filter((v) => v.impact === 'critical' || v.impact === 'serious');
-        if (axe.length) (serious.length ? F : W).push(`axe-core: ${axe.map((v) => `${v.id} (${v.impact}, ${v.count})`).join(', ')}`);
+        const std = axe.filter((v) => !v.experimental), exp = axe.filter((v) => v.experimental);
+        const serious = std.filter((v) => v.impact === 'critical' || v.impact === 'serious');
+        if (std.length) (serious.length ? F : W).push(`axe-core: ${std.map((v) => `${v.id} (${v.impact}, ${v.count})`).join(', ')}`);
+        if (exp.length) W.push(`axe-core experimental (review each): ${exp.map((v) => `${v.id} (${v.count}: ${v.targets.join(', ')})`).join('; ')}`);
       } else if (!a['no-axe']) W.push('axe-core not installed — run `npm install` in the scripts folder for the automated WCAG rules.');
       const sg = inv.signals;
       if (sg.gradientText.length) S.push(`Gradient-filled text ×${sg.gradientText.length}: ${sg.gradientText.slice(0, 3).map((g) => `"${g.text}"`).join(', ')}`);

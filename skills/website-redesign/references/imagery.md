@@ -17,7 +17,11 @@ Imagery is optional. Decide from the concept whether photography, product UI, il
 
 ## Sourcing
 
-Use sources whose licence permits commercial use without attribution obligations you cannot meet. Unsplash (the standard Unsplash License), Pexels and Pixabay are the usual free options; check each site's current licence text before relying on it, and record it.
+Use sources whose licence permits commercial use without attribution obligations you cannot meet (licence classes and the full list: `resources/README.md`, `resources/assets.md`). Unsplash (the standard Unsplash License), Pexels and Pixabay are the usual free options; check each site's current licence text before relying on it, and record it. Pixabay now accepts AI-generated uploads (filter them out) and its images showing trademarks cannot be used commercially; Kaboompics "Editorial Use Only" images are excluded from marketing; the Unsplash *API* requires hotlinking and credit, unlike a downloaded image used under the licence.
+
+**The antidote to stock sameness is the archive.** Museum open-access collections — the Met, the Smithsonian, the Rijksmuseum (CC0 for marked works), the Library of Congress "Free to Use" sets — hold engravings, maps, botanical plates, industrial photography and posters. Under one baked treatment they read as art direction rather than stock, and suit editorial, heritage and industrial brands. NASA imagery is generally public domain (its insignia is not); ESA/Hubble and ESA/Webb images are CC BY 4.0 with a mandatory visible credit.
+
+**AI-generated imagery**: never customers, team members, testimonials, offices or product results — it is dishonest, it is not copyrightable (US Copyright Office, 2025), and realistic AI images of real people, places or events must be disclosed in the EU from August 2026. Acceptable: abstract textures the brand owns the idea of, labelled as such.
 
 Watch for paid tiers mixed into results: on Unsplash, files served from `plus.unsplash.com` (`premium_photo-…`) are Unsplash+ and not free — only `images.unsplash.com/photo-…` files are under the free licence. Other sources have similar splits.
 
@@ -40,7 +44,7 @@ If none of that is possible, say so and name the capability that would help; do 
 - Apply one treatment to the whole set so it reads as a series: black and white, a duotone, a consistent crop, a consistent tint. Bake expensive treatments into the file; apply cheap ones (a colour overlay, a gradient fade) in CSS so they stay adjustable.
 - Serve through the framework's image pipeline (responsive widths, modern formats, explicit width and height to avoid layout shift). Hero image eager with high fetch priority; everything below the fold lazy.
 - Keep total image weight sane: one hero at ~150–300 KB in a modern format is normal; a page with several megabytes of photography is not.
-- Record credits and licence in a `CREDITS.md` next to the assets even when attribution is not required — it is cheap and the user may need it later.
+- Record credits in a `CREDITS.md` next to the assets even when attribution is not required — source URL, author, licence and its class (A–D), and the credit text if one is owed. It is cheap and the user may need it later.
 
 ## Text over photographs
 
@@ -59,6 +63,7 @@ Say so, name the capability that would help (a browser tool to search and previe
 ## Other visual assets
 
 - **Product UI**: prefer real screenshots captured from the running product; otherwise rebuild real screens as HTML fragments with obviously illustrative sample data.
-- **Illustration / 3D**: only with real assets or a clear plan to produce them; never a mismatched free illustration set.
+- **Illustration**: decide in this order — none (photography, product, type); drawn in SVG from the brand's own geometry; commissioned when illustration is the identity; a library only as raw material, restyled into one stroke, palette and radius (`resources/assets.md`). Never a library scene as-is.
+- **3D**: only when the object is the product or the data is spatial, with a real poster image as the LCP and the checklist in `motion.md` §9.
 - **Diagrams**: draw the actual mechanism (what flows where); animate the flow if it helps understanding.
 - **Logos and marks**: keep a motif with meaning, recolour it into the new system; regenerate favicon and social image so the identity is consistent everywhere.

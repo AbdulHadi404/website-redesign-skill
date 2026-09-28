@@ -1,0 +1,13 @@
+# Ledger — every finished output
+
+Read at the start of Phase 3 and cited in `DESIGN.md` ("Convergence checks"). `lessons.md` records *mistakes*; this file records *outputs*, because the house-style failure was a failure of outputs: each looked fine alone and they looked like siblings together. Human designers remember what they have already done and try to do something new; this is that memory.
+
+Append one row per finished redesign (Phase 8). Never prune. Record only what was actually shipped or agreed; leave unknown fields blank rather than guessing.
+
+| Date | Project | Category / intensity | Display · text faces | Palette (ground · ink · accent) and strategy | Hero form and signature devices | User's verdicts |
+| --- | --- | --- | --- | --- | --- | --- |
+| before 2026-09-07 | brio3.com | marketing / redesign | serif display with italic emphasis · mono uppercase eyebrows | paper ground · near-black ink chapters · one warm accent | — | recorded as the look later recognised as this skill's house style |
+| 2026-09-07 | Brandigade (brandigade.com → Astro) | marketing / redesign | first direction Instrument Serif + JetBrains Mono labels (rejected); final set without mono | first direction paper + green (rejected); final built from the logo's blues | calendar hero on a sky panel with a faint calendar grid and the layered mark; drawn timeline with milestone art; spot illustrations; Intent Finder widget | rejected: sibling of brio3, mono labels, accent-stripe cards, stepper timeline, flat hero ground, broken artwork; liked: the logo-derived palette, a real timeline, "many beautiful components, design graphics" |
+| 2026-09-10 | CleoHR Passport (front-door prototypes, Astro) | marketing / redesign within a brand family | Bricolage Grotesque kept as the family's documented display face | parent blue `#1A3CF2`; orange as three full-bleed fields rejected | eight free-licence photographs of the customers' world under one baked duotone; the mark as a tilted stamp in the parent's tile + single-stroke construction | rejected: condensed tracked caps ("code kinda font"), an MRZ strip, two marks, the second prototype; accepted direction came from the brand family |
+
+A new row reads, for example: `2026-10-02 | Acme Freight | marketing redesign + app refine | Archivo (wdth 75) · Source Sans 3 | concrete grey #EEEDEA · #1C1F22 · safety orange #E8590C, Restrained | full-bleed yard photography, split hero with the live tracking fragment; route-line motif | liked the tracking fragment; asked for less orange`.

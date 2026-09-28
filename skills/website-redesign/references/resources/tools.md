@@ -6,8 +6,10 @@ Checked 2026-09-28. The scripts in this skill cover the common path; the rest ar
 
 | Script | What it answers |
 | --- | --- |
-| `capture.mjs` | What does every page look like at each width, fold and full, with reveals finished and images decoded? Element shots at 3× for artwork; `--variant no-text,no-images,no-shadows` for the removal tests; `--reduced-motion`, `--dark`, `--no-js`; self-checks for images that painted flat |
+| `capture.mjs` | What does every page look like at each width, fold and full, with reveals finished and images decoded? Element shots at 3× for artwork; `--variant no-text,no-images,no-shadows` for the removal tests; `--reduced-motion`, `--dark`, `--no-js`, `--forced-colors`; self-checks for images that painted flat |
 | `audit.mjs` | What is measurably wrong, and which generic-look signals are present? (`--kind` switches marketing vs app rules) |
+| `a11y.mjs` | What would a keyboard, screen-reader, zoom, forced-colours or colour-blind user hit that rule engines cannot see? |
+| `widgets.mjs` | Does each custom widget keep its keyboard contract (dialog, tabs, disclosure, live region, form errors, menu button)? |
 | `parity.mjs` | What did the redesign add without a source, drop, or break (routes, ids, form fields, metadata)? |
 | `contrast.mjs` | Does this text/ground pair pass WCAG 2, and what is its APCA Lc? |
 | `palette.mjs` | What colours are in the logo, and what role scales follow from the brand colour? |
@@ -27,16 +29,19 @@ Traps they handle: a project-local Playwright newer than the installed browser (
 
 ## Accessibility
 
+Three layers, because each misses what the next one catches (`accessibility.md` §10 has the measurements):
+
 | Tool | Licence | Use |
 | --- | --- | --- |
-| axe-core (injected by `audit.mjs`; `@axe-core/playwright`) | MPL-2.0 | the standard rule engine; zero false positives on the GOV.UK baseline in our tests; catches contrast, names, alt, lang, landmarks, target size, heading order |
-| pa11y (htmlcs + axe runners) | LGPL-3.0 | CLI and CI runs over many URLs |
-| IBM Equal Access checker (`accessibility-checker`) | Apache-2.0 | a second rule set |
-| Lighthouse accessibility category | Apache-2.0 | a subset of axe |
-| Playwright `ariaSnapshot()` / accessibility tree | Apache-2.0 | what a screen reader will be told: names, roles, states — test it like any other output |
+| axe-core (injected by `audit.mjs`; `@axe-core/playwright`) | MPL-2.0 | the standard rule engine and the one to gate on: no false positives at default tags on any page we tested. Catches contrast, names, alt, lang, landmarks, target size (its only WCAG 2.2 rule), heading order. `audit.mjs` also runs two experimental rules worth having — `td-has-header`, `label-content-name-mismatch` — as warnings. **Passes placeholder-as-label.** `@axe-core/playwright` needs a page from `browser.newContext()` |
+| `a11y.mjs` + `widgets.mjs` (this skill) | — | the scripted layer: keyboard walk with pixel-diff focus detection, focus obscured, reflow, text spacing, forced colours, colour-vision renders, motion, names from Chromium's accessibility tree; keyboard contracts for custom widgets. With axe, they raised 85% of 60 seeded defects as failures (rule engines together: 55%) |
+| IBM Equal Access engine (`accessibility-checker-engine`, inject `ace.js`) | Apache-2.0 | the best second opinion on keyboard and widget heuristics (clickable `div`s, untabbable widgets, unlabelled SVG charts, tables without headers). Noisy: skip link "not in a landmark", `tabindex="0"` on a scroll region and `clip-path`-only hidden labels are false positives. Its CLI downloads the engine from a CDN at runtime; the npm engine works offline |
+| pa11y (htmlcs + axe runners) | LGPL-3.0 | CI runs over many URLs; htmlcs adds placeholder-only labels (F68) and onclick-without-keyboard warnings. Set `levelCapWhenNeedsReview: "warning"` (the default promotes axe's needs-review items to errors), and note its axe runner skips `wcag22aa` |
+| Lighthouse accessibility category | Apache-2.0 | a subset of axe with a weighted score — not a conformance measure (46 → 100 between two pages sixty defects apart) |
+| Playwright `ariaSnapshot()`, CDP `Accessibility.getFullAXTree` | Apache-2.0 | what a screen reader will be told: names, roles, states. Playwright computes its own tree; cross-check surprises with CDP (it reported `<summary>` as text) |
 | Community-Access accessibility-agents | MIT | specialist prompts (forced colours, cognitive, ARIA) |
 
-Automated tools find a minority of issues (estimates range from about a third to a little over half of real problems). Keyboard, focus order, zoom and reflow, screen-reader names in context, cognitive load and content quality stay manual — `accessibility.md` has the procedure.
+Rule engines alone surface roughly a third to a half of distinct barriers (axe ~30% of GOV.UK's 142 barriers; Deque's 57% is by issue volume). Meaning, order logic, screen-reader experience, cross-page consistency and flows stay manual — `accessibility.md` §11 has the procedure. Install with `--ignore-scripts` (or `PUPPETEER_SKIP_DOWNLOAD=1`) where browser downloads are blocked, and point every tool at the Chromium on disk.
 
 ## Performance
 
