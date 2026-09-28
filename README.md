@@ -1,25 +1,69 @@
 # website-redesign — a Claude Code skill
 
-A skill that makes Claude Code approach a marketing-site redesign the way a good design studio would: investigate the company, research live references, derive an art direction from the company's own truth, decide what to keep / replace / remove / create, rebuild the visual system in the existing stack, render the result at five widths, critique it honestly, iterate, and only then run technical QA.
+A skill that makes Claude Code redesign an existing website **or web product** the way a good studio or product team would. It covers marketing sites, SaaS apps, dashboards, ecommerce, docs, fintech, public services and mobile-first products. The loop:
 
-It encodes one hard-won lesson: the default outcome of "redesign this site" is a *refresh* — same fonts, same palette, same hero shape, nicer components. This skill is built to make that outcome hard to reach by accident, and to make the result specific to each company rather than to one house style.
+1. Frame the problem.
+2. Audit and measure what exists.
+3. Research by problem.
+4. Derive a direction from the company's own truth.
+5. Build a token and component system.
+6. Rebuild in the existing stack.
+7. Verify renders, accessibility, responsiveness, performance and truth-parity.
+8. Critique against objectives, and iterate.
 
 > Preserve the company's truth and its functionality — not its existing visual implementation.
 
+It is built against three failures:
+
+- **The refresh disguised as a redesign.** On a marketing site: same fonts, same palette, same hero, nicer components.
+- **The model's prior.** The look every generated site converges on: the SaaS card kit, AI purple, or the "tasteful" cream, serif and mono recipe this skill itself used to produce. Two companies run through the skill should not come out as siblings.
+- **Judging a work tool like a landing page.** A dashboard used all day, a checkout and a government form are measured by task success, errors, time and accessibility, not by how different they look. The skill classifies every route before it designs anything.
+
 ## What it does
 
-- **Audit** the repository and the rendered site: product, audience, proof that actually exists, everything that must be preserved (routes, ids wired to scripts, forms, integrations), and *specific* reasons the current design reads as weak.
-- **Research** live reference sites when a browser is available, extracting principles rather than sections.
-- **A knowledge base** written from the primary sources, stated as checkable rules with their numbers: design fundamentals, colour and typography (`references/design-theory.md`), interaction and accessibility (`references/ui-ux.md`), pages and performance (`references/web-design.md`), marks and identity (`references/logo-design.md`).
-- **Design and colour theory** as a working reference (`references/design-theory.md`): harmony and the 60/30/10 budget, perceptual (OKLCH) scales and the 12-step role scale, WCAG and APCA contrast, typographic scale and caps rules, Gestalt, logo construction — with a palette checklist that must be complete before any code.
-- **Art direction** written down before code: a concept derived from the company, typography, a colour system, layout philosophy, hero concept, product visualisation, imagery strategy, motion — and explicit keep / replace / remove / create lists, with a check that flags a plan that is still a refresh.
-- **Imagery** only when it carries the concept: licensed sources, localised and optimised assets, one consistent treatment, credits — or a deliberate decision to use product UI, diagrams or typography instead.
-- **Implementation** in the existing framework, tokens upward, with functionality untouched and composition varied chapter by chapter.
-- **Lessons log** (`references/lessons.md`): every user correction becomes a rule somewhere in the skill, so the next run does not repeat it.
-- **Visual QA** from full-page renders at 1440 / 1280 / 1024 / 768 / 390, then a **self-critique** whose every "no" becomes a fix and a re-render.
-- **Technical QA**: typecheck, build, tests, links, forms, widgets, accessibility, performance, SEO — and a hand-off that reports what was verified and what the user must decide.
+| Phase | What happens |
+| --- | --- |
+| 0. Frame | Each route is classified: category, how often it is used, stakes, expressive or productive. Intensity is chosen (refine / redesign / rethink). A brief with top tasks, constraints and success measures goes at the top of `DESIGN.md`. |
+| 1. Audit | Read the repo like a new design lead. Run the product and **measure** it with the scripts. List what must be preserved (routes, ids, form fields, analytics, legal copy) and which accessibility features already work. |
+| 2. Research | References are chosen by the problem they solve, and principles go into a take/leave table. |
+| 3. Direction | **Expressive:** concept, candidates, typography, a named colour strategy, composition, imagery, motion. **Productive:** interaction model, density, navigation and elevation. Convergence checks run against the model's prior and against the ledger of past outputs. The accessibility decisions are made here too. |
+| 4. System | Three-tier tokens, type sets per surface, a state matrix, and `SYSTEM.md` for product UI. |
+| 5. Build | On a branch, in the existing framework and component library, with functionality untouched. |
+| 6. Verify | Captures at five widths plus states and artwork. Measured audit, scripted accessibility checks and widget keyboard contracts, then responsive and performance passes. |
+| 7. Critique | A fresh-context reviewer works from the renders only, in at most three rounds. |
+| 8. Hand-off | Build and tests, then `parity.mjs` against the old site (no unsourced claims, no lost routes or fields). Then commit, report, and add a row to the ledger. |
 
-Two unrelated companies run through this skill should produce two clearly different websites.
+The knowledge base behind it is written as checkable rules with their numbers and sources:
+
+- design, colour and type theory
+- UI/UX heuristics
+- product-UI patterns (states, density, tables, forms, notifications, dashboards)
+- design systems
+- WCAG 2.2 accessibility decided at design time
+- responsive and performance budgets
+- motion
+- data visualisation
+- Arabic and multilingual typography
+- logo construction
+- a curated, licence-checked resource layer: components, icons, illustration, photography, fonts, colour tools, motion and chart libraries, QA tools
+
+## The scripts
+
+Measurement replaces guesswork wherever something can be measured. All are in `skills/website-redesign/scripts/`, built on Playwright:
+
+| Script | Answers |
+| --- | --- |
+| `capture.mjs` | What does every page look like at each width, with reveals finished and images decoded? Also: element shots, reduced-motion, dark, no-JS and forced-colours renders, and removal-test variants. |
+| `audit.mjs` | What is measurably wrong? Checks overflow and phone zoom-out, contrast on the painted ground, invisible focus, targets, fake controls, clipped text, colour-only status, hidden content, fonts that never loaded, LCP/CLS, axe-core, and generic-look signals. |
+| `a11y.mjs` | What would keyboard, screen-reader, zoom, forced-colours or colour-blind users hit that rule engines miss? |
+| `widgets.mjs` | Do custom widgets keep their keyboard contracts (dialog, tabs, disclosure, live region, form errors, menu button)? |
+| `parity.mjs` | Did the redesign add unsourced claims, or drop routes, ids, form fields or metadata? |
+| `contrast.mjs` | WCAG 2 and APCA for any colours or token file. |
+| `palette.mjs` | Samples a logo's colours and builds 12-step OKLCH role scales with solved text steps. |
+| `fonts.mjs` | What can this font file actually do? Axes, tabular figures, features, scripts. |
+| `compare.mjs` | Before/after sheets, blurred squint sheets, pixel diffs. |
+
+Requirements: Node ≥ 18, `npm install` in `skills/website-redesign/scripts/`, and a Chromium. The scripts find Playwright's browsers on disk; set `CHROME_PATH` to choose one, or run `npm run browser`. They work offline against a local dev server.
 
 ## Install
 
@@ -28,9 +72,10 @@ Two unrelated companies run through this skill should produce two clearly differ
 ```bash
 git clone https://github.com/AbdulHadi404/website-redesign-skill.git
 cp -r website-redesign-skill/skills/website-redesign ~/.claude/skills/website-redesign
+cd ~/.claude/skills/website-redesign/scripts && npm install
 ```
 
-Or into one project only: copy it to `<repo>/.claude/skills/website-redesign`.
+To install for one project only, copy it to `<repo>/.claude/skills/website-redesign` instead.
 
 **Or as a plugin** (Claude Code plugin marketplace):
 
@@ -43,53 +88,51 @@ Restart the session (or open a new one) so the skill is listed.
 
 ## Use
 
-Ask in plain language; the skill triggers on redesign / rebrand / "make it premium" / "looks generic" requests, or invoke it directly:
+Ask in plain language. The skill triggers on redesign, rebrand, "make it premium", "looks generic" and "fix the UX" requests. You can also invoke it directly:
 
 ```
-Use the website redesign skill to completely redesign this marketing site.
-Benchmark quality against https://www.example.com but keep our facts and forms.
-```
-
-```
-/website-redesign — the homepage feels templated. Audit it, research a few premium
-sites in our category, propose a new direction and implement it.
+Use the website redesign skill to redesign our marketing site. We sell fleet
+insurance to logistics companies; don't invent stats we don't have.
 ```
 
 ```
-Rebrand this landing page. We sell fleet insurance to logistics companies; our
-customers are dispatch managers. Don't invent stats we don't have.
+/website-redesign — our admin dashboard is cluttered and people miss alerts.
+Audit it and fix the UX without touching the API.
 ```
 
-Claude then works through audit → research → art direction (it writes a `DESIGN.md` in the repo) → implementation on a branch → renders and critique → iteration → technical QA, and reports with before/after captures. It stops to ask only for things you own: credentials, a capability the environment lacks, a fact the repo cannot answer, or a production deployment.
+```
+Our checkout converts badly on phones. Redesign the flow; keep the payment
+integration and analytics events exactly as they are.
+```
 
-## Prerequisites and optional capabilities
+Claude writes a `DESIGN.md` (and a `SYSTEM.md` for product UI) in the repo, works on a branch, and reports with before/after captures and the measured results. It stops to ask only for things you own: credentials, a capability the environment lacks, a fact the repo cannot answer, a paid resource, a component-library migration, or a production deployment.
 
-- A repository with a runnable marketing site (any framework; the skill works inside the existing stack).
-- **Recommended:** a browser capability in Claude Code — the built-in preview browser, or a browser MCP — so references can be inspected live and the result rendered. Without it the skill says so and works from the audit alone.
-- **Recommended for photography:** the ability to fetch files (a fetch-capable runtime such as Node, or a browser tool). Imagery is optional; the skill explains what to enable if it is missing rather than shipping placeholders.
-- **Optional:** `puppeteer-core` and a local Chrome for `scripts/capture.mjs`, the bundled full-page capture helper used in visual QA.
+**Recommended:** a browser capability so live references can be inspected, and network access to image sources for photography. Without them the skill says what it could not do rather than faking it.
 
 ## Layout
 
 ```
 skills/website-redesign/
-  SKILL.md                 the workflow and its commitments (read on trigger)
+  SKILL.md                 the workflow, commitments, gates, scripts and knowledge-base map
   references/
-    audit.md               repository, company and rendered-site audit
-    research.md            how to inspect references and extract principles
-    art-direction.md       deriving a direction; direction families; keep/replace/remove/create
-    anti-patterns.md       what makes a site read as generated — incl. the "refresh" failure
-    imagery.md             sourcing, licences, localising, treatment, text-over-photo rules
-    implementation.md      order of work, composition rules, engineering discipline, rendering traps
-    visual-qa.md           capture methods, per-width checks, the self-critique
-    technical-qa.md        functional, accessibility, performance, SEO, hand-off
-  templates/
-    DESIGN.md              the art-direction document the skill writes into the repo
-    critique.md            the self-critique scorecard
-  scripts/
-    capture.mjs            full-page captures at several widths (puppeteer-core)
+    framing.md             classifying surfaces, intensity, the brief, the question bank
+    categories.md          category dials and playbooks (marketing, app, dashboard, commerce, …)
+    audit.md, research.md, art-direction.md
+    design-theory.md       fundamentals, colour, typography — with numbers
+    design-systems.md      tokens, reuse before reinvention, component libraries
+    app-ui.md              product UI: states, density, navigation, tables, forms, dashboards
+    ui-ux.md, web-design.md
+    accessibility.md       WCAG 2.2 AA by decision point, native-first map, scripted + manual checks
+    responsive.md, performance.md, motion.md, dataviz.md, multilingual.md
+    imagery.md, logo-design.md, implementation.md, visual-qa.md, technical-qa.md
+    anti-patterns.md       the model's prior, hard bans, purpose-gated techniques, tells
+    lessons.md, ledger.md  every correction so far; every finished output
+    resources/             licence-checked components, assets, type and colour, libraries, tools, inspiration
+  templates/               DESIGN.md, SYSTEM.md, critique.md
+  scripts/                 the measurement scripts above
+research/                  the evidence behind 2.0: audit, research streams, experiments and labs
 ```
 
 ## Licence
 
-MIT.
+MIT. Some rules are paraphrased from other open-source design skills and guidelines; see `NOTICE.md`.
