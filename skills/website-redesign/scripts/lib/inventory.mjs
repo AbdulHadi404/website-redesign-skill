@@ -111,13 +111,19 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       continue;
     }
     // Sample the painted ground under the middle of the element's first line box.
+    // Sample the element's own text, not its descendants': a clipped screen-reader-only span inside a button still
+    // lays out a full-width line box beside it, and sampling there reads the page behind the button.
     const range = document.createRange();
-    range.selectNodeContents(el);
+    const ownText = [...el.childNodes].find((c) => c.nodeType === 3 && c.nodeValue.trim());
+    if (ownText) range.selectNodeContents(ownText); else range.selectNodeContents(el);
     const firstBox = () => [...range.getClientRects()].find((r) => r.width > 1 && r.height > 1) || el.getBoundingClientRect();
     let box = firstBox();
     // elementsFromPoint only sees the viewport: bring text below a capped viewport into view first
     // (instant, so a CSS scroll-behavior: smooth does not leave the sample in mid-scroll).
     if (box.top >= innerHeight || box.bottom <= 0) { scrollTo({ top: scrollY + box.top - innerHeight / 2, behavior: 'instant' }); box = firstBox(); }
+    // Not seen, so not a contrast pair: screen-reader-only text, and fixed things parked off-screen until focus (skip links).
+    const ecs = getComputedStyle(el);
+    if ((box.width <= 2 && box.height <= 2) || ecs.clip === 'rect(0px, 0px, 0px, 0px)' || /inset\(50%\)/.test(ecs.clipPath) || box.top >= innerHeight || box.bottom <= 0 || box.right <= 0 || box.left >= innerWidth) continue;
     const cx = Math.min(Math.max(box.left + Math.min(box.width / 2, 20), 1), innerWidth - 1);
     const cy = Math.min(Math.max(box.top + box.height / 2, 1), innerHeight - 1);
     const stack = document.elementsFromPoint(cx, cy);
@@ -238,6 +244,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     if (r.width <= 2 || r.height <= 2) continue; // visually-hidden text
     for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
       const pc = getComputedStyle(p);
+      if (['auto', 'scroll'].includes(pc.overflowX) || ['auto', 'scroll'].includes(pc.overflowY)) break; // scrollable: reachable, not cut off
       const cx = ['hidden', 'clip'].includes(pc.overflowX), cy = ['hidden', 'clip'].includes(pc.overflowY);
       if (!cx && !cy) continue;
       const q = p.getBoundingClientRect();
@@ -424,7 +431,10 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   for (const el of document.querySelectorAll('[style]')) cssText += el.getAttribute('style') + ';\n';
   const surfaces = { selection: /::selection/.test(cssText), 'accent-color': /accent-color\s*:/.test(cssText), 'text-underline-offset': /text-underline-offset\s*:/.test(cssText), 'tabular numerals': /tabular-nums|"tnum"/.test(cssText), 'focus-visible': /:focus-visible/.test(cssText), 'color-scheme': /color-scheme\s*:/.test(cssText) || !!document.querySelector('meta[name="color-scheme"]') };
   const defined = new Set([...cssText.matchAll(/(--[\w-]+)\s*:/g)].map((m) => m[1]));
-  const undefinedVars = [...new Set([...cssText.matchAll(/var\(\s*(--[\w-]+)\s*\)/g)].map((m) => m[1]).filter((v) => !defined.has(v)))];
+  // Component libraries set some custom properties from script only while a component is open (Radix popper sizes,
+  // Floating UI, carousels, shadcn skeleton/sidebar widths); they are not typos.
+  const RUNTIME_VARS = /^--(radix|reka|headlessui|floating|bits|kb|ark|zag|base-ui|mantine|chakra|tw|skeleton|sidebar|embla|vaul|sonner|cmdk|swiper|motion|framer)-/;
+  const undefinedVars = [...new Set([...cssText.matchAll(/var\(\s*(--[\w-]+)\s*\)/g)].map((m) => m[1]).filter((v) => !defined.has(v) && !RUNTIME_VARS.test(v)))];
   const transitionAll = /transition(-property)?\s*:\s*all\b/.test(cssText);
 
   // ---- app-surface tells (reported only for --kind app) ---------------------

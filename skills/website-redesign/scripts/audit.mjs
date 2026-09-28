@@ -80,7 +80,10 @@ async function focusWalk(page, limit = focusLimit) {
       const r = await page.evaluate(() => {
         const el = document.activeElement;
         if (!el || el === document.body) return null;
-        const fp = (e) => { const cs = getComputedStyle(e); return [cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0 ? cs.outlineWidth + cs.outlineColor : 'none', cs.boxShadow, cs.borderColor, cs.backgroundColor, cs.color, cs.textDecorationLine]; };
+        // Finish the element's transitions before each read: with `transition: all` (shadcn, many kits) the ring fades
+        // in, and reading mid-transition before and after blur gives the same interpolated value — "no change".
+        const settleEl = (e) => { for (const a of e.getAnimations?.({ subtree: true }) ?? []) { try { a.finish(); } catch { /* infinite */ } } };
+        const fp = (e) => { settleEl(e); const cs = getComputedStyle(e); return [cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0 ? cs.outlineWidth + cs.outlineColor : 'none', cs.boxShadow, cs.borderColor, cs.backgroundColor, cs.color, cs.textDecorationLine]; };
         const focused = fp(el);
         const id = el.id ? `#${el.id}` : el.tagName.toLowerCase() + [...el.classList].slice(0, 2).map((c) => '.' + c).join('') + (el.textContent.trim() ? ` "${el.textContent.trim().replace(/\s+/g, ' ').slice(0, 24)}"` : el.getAttribute('aria-label') ? ` [${el.getAttribute('aria-label')}]` : ' (no name)');
         const key = el.outerHTML.slice(0, 200) + el.getBoundingClientRect().top;
@@ -224,7 +227,7 @@ try {
       if (!lm.skipLink && width === widths[0]) W.push('No skip link as the first focusable element.');
       if (!inv.lang) F.push('No lang attribute on <html>.');
       if (errors.length) F.push(`Console/page errors (${errors.length}): ${[...new Set(errors)].slice(0, 4).join(' | ')}`);
-      if (inv.css.undefinedVars.length) F.push(`CSS custom properties used but never defined (no fallback): ${inv.css.undefinedVars.join(', ')}`);
+      if (inv.css.undefinedVars.length) W.push(`CSS custom properties used with no definition and no fallback: ${inv.css.undefinedVars.join(', ')} — a typo here breaks a style silently; ignore any that a script sets at runtime.`);
       const imgs = inv.images.filter((i) => i.visible);
       const noAlt = imgs.filter((i) => i.alt === null && !i.decorative);
       if (noAlt.length) F.push(`${noAlt.length} images without an alt attribute: ${noAlt.slice(0, 4).map((i) => i.src).join(', ')}`);

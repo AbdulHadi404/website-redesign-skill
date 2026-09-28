@@ -43,6 +43,27 @@
 
 After the fixes all four plants are caught (both claims, the route, the field on its three pages) and nothing else is reported except the two claims that genuinely disappeared with `/about`.
 
+**`audit.mjs --kind app` on a real product UI**: [satnaing/shadcn-admin](https://github.com/satnaing/shadcn-admin) (MIT, commit `e16c87f`), a React 19, Vite, Tailwind 4 and shadcn/Radix admin dashboard. It was built and served with `vite preview`, and it is also the "SaaS kit" look the skill calls the model's prior. It produced five more process errors:
+
+| # | Symptom | Cause | Fix |
+| --- | --- | --- | --- |
+| 17 | "No visible focus change" on 7 of 24 controls whose focus ring is plainly visible | `transition: all` on shadcn buttons: the box-shadow ring fades in. The check read the style mid-transition, blurred, and read again mid-transition: same interpolated value both times. | The element's transitions are finished before each read. (`a11y.mjs` was already safe, because its screenshots use `animations: 'disabled'`.) |
+| 18 | "#f8fafc on #ffffff = 1.05:1" on a dark pagination button, and on a skip link | The sampled line box belonged to the button's clipped **screen-reader-only** span, which lays out a full-width text box beside the button. The skip link is parked off-screen until focused. | Only the element's own text nodes are sampled. Visually hidden text (a 1 px box, `clip: rect(0 0 0 0)`, `clip-path: inset(50%)`) and text that cannot be brought into view are skipped. |
+| 19 | 21–43 "text cut off" findings in the users and tasks tables at 390 | The table scrolls inside an `overflow-x: auto` container that sits in an `overflow: hidden` rounded wrapper. The walk up the tree passed the scroller and blamed the wrapper. | The walk stops at the first scroll container. That content is reachable, not cut off. |
+| 20 | "CSS custom properties never defined" as a ✗ failure: `--radix-select-trigger-height`, `--skeleton-width`, … | Component libraries set these from script, only while a popover is open or a skeleton is rendered | Known runtime prefixes are excluded (Radix, Floating UI, Headless UI, Ark/Zag, shadcn sidebar and skeleton, Embla, Vaul, …). The rest is a warning, "a typo breaks a style silently", not a failure. |
+| 21 | (checked, not a bug) `oklch()` colours | Tailwind 4 and shadcn computed styles stay in `oklch()`. The inventory converts any colour syntax through a canvas, and this was verified to give `oklch(0.208 0.042 265.755)` → rgb(15, 23, 43). | — |
+
+The remaining shadcn-admin findings are genuine:
+
+- **No `h1` on the list pages.** The page titles are `h2`.
+- **An unnamed icon button.**
+- **Red badge text on pink at 3.97:1**, which axe also reports.
+- **Tab triggers at 3.73:1.**
+- **A focusable tab panel with no focus indicator.**
+- **Box-shadow-only focus rings**, which forced colours removes.
+- **Inter at 100%**, flagged as a saturated face.
+- **Card containers holding 59% of the text, and KPI tiles with % deltas.** These are the app tells the skill describes.
+
 **Real-site FAIL counts after the fixes:**
 
 - `a11y.mjs`: 5, down from 33.
