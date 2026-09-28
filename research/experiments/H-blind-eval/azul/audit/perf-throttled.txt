@@ -1,0 +1,12 @@
+BEFORE (old site, port 5832)
+/  LCP 604 ms (H1)  CLS 0.000  transfer 18 KB
+/collection/  LCP 1008 ms (IMG)  CLS 0.000  transfer 25 KB
+/product/?id=AZ-101  LCP 912 ms (IMG#p-img)  CLS 0.000  transfer 15 KB
+/cart/  LCP 584 ms (DIV)  CLS 0.000  transfer 14 KB
+/checkout/  LCP 608 ms (H2)  CLS 0.000  transfer 15 KB
+AFTER (redesign, port 5831)
+/  LCP 1152 ms (H1#hero-h)  CLS 0.000  transfer 174 KB
+/collection/  LCP 1424 ms (IMG)  CLS 0.000  transfer 173 KB
+/product/?id=AZ-101  LCP 1132 ms (P.wrap)  CLS 0.000  transfer 167 KB
+/cart/  LCP 1108 ms (P.aside-note)  CLS 0.000  transfer 164 KB
+/checkout/  LCP 1148 ms (P)  CLS 0.000  transfer 168 KB

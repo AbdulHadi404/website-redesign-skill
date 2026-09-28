@@ -1,0 +1,9 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><title>Test fixture: seed a basket</title></head><body>
+<p>Test fixture only (not part of the shop): puts two lines in the basket, then opens the page named in ?to=.</p>
+<script>
+localStorage.setItem('azul-cart', JSON.stringify([
+  { id: 'AZ-101', name: 'Alfama Star', size: '15 × 15 cm', finish: 'Gloss', qty: 12, price: 6.5 },
+  { id: 'AZ-106', name: 'Tavira Lattice', size: '13 × 13 cm', finish: 'Matt', qty: 4, price: 7 }
+]));
+location.replace(new URLSearchParams(location.search).get('to') || '/cart/');
+</script></body></html>

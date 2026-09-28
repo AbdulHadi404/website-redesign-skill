@@ -1,0 +1,5 @@
+1440px: 7 columns; 21 tiles at least partly visible (7 cut by the wall's bottom edge); 15 fully clipped by overflow:hidden
+1280px: 6 columns; 12 tiles at least partly visible (6 cut by the wall's bottom edge); 24 fully clipped by overflow:hidden
+1024px: 5 columns; 10 tiles at least partly visible (5 cut by the wall's bottom edge); 26 fully clipped by overflow:hidden
+768px: 4 columns; 8 tiles at least partly visible (4 cut by the wall's bottom edge); 28 fully clipped by overflow:hidden
+390px: 3 columns; 9 tiles at least partly visible (3 cut by the wall's bottom edge); 27 fully clipped by overflow:hidden
