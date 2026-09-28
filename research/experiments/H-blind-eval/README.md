@@ -156,6 +156,25 @@ The agent took about 2 hours; the environment refused `npx` (Lighthouse, dembran
 - **The type list was wrong about figures.** Gloock was listed with tabular figures. Every family in the shortlist was then checked with `fonts.mjs --google`: Gloock, Piazzolla and Fredoka have none.
 - **Smaller:** the candidate count (three real ones, never padded); the font budget moved into the typography step; search only for catalogues too big to browse; a maker's own product never shown in stock photography; middle dots allowed in product specifications; `DESIGN.md` and `SYSTEM.md` each own their half.
 
-## Across the three rounds
+## Round 4 (frozen snapshot `c31805f`)
+
+| Run | Surface | Result | Evidence |
+| --- | --- | --- | --- |
+| `permit/` | Harbourside Council resident parking permits: a public-service start page and a one-page application, with field names, analytics events and printed URLs frozen | Phase 0 classified the start page as a service, not a marketing page, and that was the biggest single effect: cost, what you need, every zone with its streets and prices, and what happens next, all rendered from the nightly `zones.json`. The form became six question pages, street first, with the zone answered on selection and the price before any personal detail; GOV.UK error pattern; no timer, no mouse-only "robot" check. Colours from the 2019 crest (harbour blue action, gold only as the focus fill); Atkinson Hyperlegible Next for registration numbers and references. The POSTed body is byte-identical to the old build's. axe 5–6 rule types per page → 0; `a11y.mjs` FAILs 24 → 0; lowest text contrast 2.35 → 7.02:1; the phone layout stopped loading zoomed out. | `permit/REPORT.md`, `EVAL-NOTES.md`, `DESIGN.md`, `SYSTEM.md`, `CRITIQUE.md`, `captures/`, `audit/`, `qa/` |
+
+The agent took about 2½ hours. Its own write of `REPORT.md` was refused by the harness's rule that subagents return reports as text, and it did not work around it; the report was saved from its hand-back.
+
+### What it found, and what changed
+
+- **Rules that drifted apart across files.** Four files disagreed on when to show an error summary; the prose said focus announces a blocking error while `widgets.mjs` required a live region. *Changed:* one rule everywhere (a summary for three or more errors, for any error on a public service, focus to the first invalid field otherwise), and `widgets.mjs` accepts a focus move to the message itself for blocking errors, while a toast that takes focus is a finding.
+- **The job's central contract had no tool.** "What the server receives" was a stated deploy blocker that nothing checked. *Changed:* `states.mjs` records request bodies (`"record": true`, full bodies, per label) and `parity.mjs --payloads` diffs them; `--removed` declares deliberate removals so they stop being warnings.
+- **Scripts assumed one page is one state and one load.** `a11y.mjs` warned about fields in hidden wizard steps and about `autocomplete` on a file input; the marked accessibility tree failed after a navigation (refs gain a frame prefix); `perf.mjs` was silent about a baseline that never loaded its fonts and about 58 KB of growth; `audit.mjs --kind service` still asked for a nav landmark and a display voice and read numeric alignment from CSS rather than paint. *Changed:* each fixed, then attacked by a skeptic on pages it was not developed on and repaired, with regression cases in `tools/regress.mjs`.
+- **Silences.** What to do with "the same scenario file on both builds" when the flow is rethought (one file per build, same state names); whether to classify a route by what it is or how it looks (by its job); whether one restyled flow is a small job (scope decides); where the accessibility statement goes (Phase 8 and the report); a public-service performance budget; a short `SYSTEM.md` for a small service; the reference quota when one canonical system answers the problem; how to write a probe.
+
+## Across the four rounds
+
+Round 4 is the first whose answer was restraint: no hero, one face, colour only for action, focus and errors. The ledger now holds five outputs from five brands; the blue count is four (Milkline twice, Azul, Harbourside), each from the brand's own mark. Rounds 2–4 found no direction problem the skill's method did not already catch; what they found was friction in the tools and rules that had drifted apart between files, which is where the fixes went.
+
+## Across the first three rounds
 
 The four outputs (`references/ledger/`, blurred side by side) read as four different products. Three use a deep blue: the two Milkline surfaces from Milkline's navy mark, and Azul's cobalt from its own. Each is the brand's own logo colour, so this is recorded to watch rather than counted as convergence: a fourth blue from a brand whose mark is not blue would be the prior. Each round found less wrong with the direction and more wrong with the tools. By round 3 the design method needed only tie-breakers, and the rest was verification friction, which is where the fixes went.
