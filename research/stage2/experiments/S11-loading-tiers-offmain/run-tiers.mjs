@@ -47,9 +47,9 @@ for (const cond of CONDS) for (const cpu of THROTTLES) for (let i = 0; i < RUNS;
 
 // Governor: continuous scene, throttle 1x → 6x at 6 s → 1x at 18 s, observed to 40 s; on-demand scene at 1x, 24 s;
 // each with the governor's rules and with a naive one (every interval counts, no settle time).
-async function governor(mode, naive, schedule, total) {
+async function governor(mode, kind, schedule, total) {
   const { ctx, page, cdp } = await newPage(browser, {});
-  await page.goto(`${srv.url}/tiers/governor.html?mode=${mode}&naive=${naive ? 1 : 0}`);
+  await page.goto(`${srv.url}/tiers/governor.html?mode=${mode}&gov=${kind}`);
   const t0 = Date.now();
   const marks = [];
   for (const [at, rate] of schedule) {
@@ -69,15 +69,15 @@ async function governor(mode, naive, schedule, total) {
     const inS = f.filter(([t]) => t - t00 >= s * 1000 && t - t00 < (s + 1) * 1000);
     perSec.push([inS.length, inS.length ? inS[inS.length - 1][1] : null]);
   }
-  return { mode, naive, marks, log: g.log.map((e) => ({ ...e, t: e.t - t00 })), refresh: r1(g.refresh), perSec, loadavg1: load()[0] };
+  return { mode, kind, marks, log: g.log.map((e) => ({ ...e, t: e.t - t00 })), refresh: r1(g.refresh), perSec, loadavg1: load()[0] };
 }
 const GRUNS = smoke ? 1 : 3;
 for (let i = 0; i < GRUNS; i++) {
-  out.governor.push(await governor('continuous', false, [[0, 1], [6000, 6], [18000, 1]], smoke ? 20000 : 40000));
-  out.governor.push(await governor('continuous', true, [[0, 1], [6000, 6], [18000, 1]], smoke ? 20000 : 40000));
-  out.governor.push(await governor('ondemand', false, [[0, 1]], smoke ? 10000 : 24000));
-  out.governor.push(await governor('ondemand', true, [[0, 1]], smoke ? 10000 : 24000));
-  console.log('governor run', i, out.governor.slice(-4).map((g) => `${g.mode}${g.naive ? '-naive' : ''}: ${g.log.map((e) => `${e.t}ms ${e.from}→${e.to}`).join(', ')}`).join(' | '));
+  out.governor.push(await governor('continuous', 'rules', [[0, 1], [6000, 6], [18000, 1]], smoke ? 20000 : 40000));
+  out.governor.push(await governor('continuous', 'fpsavg', [[0, 1], [6000, 6], [18000, 1]], smoke ? 20000 : 40000));
+  out.governor.push(await governor('ondemand', 'rules', [[0, 1]], smoke ? 10000 : 24000));
+  out.governor.push(await governor('ondemand', 'fpsavg', [[0, 1]], smoke ? 10000 : 24000));
+  console.log('governor run', i, out.governor.slice(-4).map((g) => `${g.mode}-${g.kind}: ${g.log.map((e) => `${e.t}ms ${e.from}→${e.to}`).join(', ')}`).join(' | '));
 }
 
 await browser.close();
@@ -134,9 +134,9 @@ for (const cond of CONDS) for (const cpu of THROTTLES) {
   analysis.byCell[`${cond}|${cpu}x`] = cell;
 }
 // governor summary
-analysis.governor = ['continuous|rules', 'continuous|naive', 'ondemand|rules', 'ondemand|naive'].map((k) => {
+analysis.governor = ['continuous|rules', 'continuous|fpsavg', 'ondemand|rules', 'ondemand|fpsavg'].map((k) => {
   const [mode, kind] = k.split('|');
-  const gs = out.governor.filter((g) => g.mode === mode && g.naive === (kind === 'naive'));
+  const gs = out.governor.filter((g) => g.mode === mode && g.kind === kind);
   return {
     k, runs: gs.length,
     changes: gs.map((g) => g.log.length),
