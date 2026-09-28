@@ -51,6 +51,15 @@ Fill `templates/DESIGN.md`. The decisions that matter most:
 
 **Motion language.** Two or three moves that carry the concept (a masked photo reveal, a word-rise on serif headlines, dots travelling a diagram, a live transcript), plus quiet scroll reveals. Nothing that exists only to move. All of it off under `prefers-reduced-motion`.
 
+When the site frames a **signature product experience** (a full-screen configurator, game, tool), decide the motion as a short list of *signature moments* rather than a reveal system, and research them first (the best sites in the category, the tool per effect, the hand-over into the product, mobile cost). What that research has found so far, generalised:
+
+- **One stage per page.** Each page gets one thing that responds (the hero object, an assembly, the gallery). Fade-ups on every section cancel each other; the premium sites in most categories barely animate and win on photography and restraint.
+- **The world moves around the photograph, never the photograph.** Light, shadow, frames, ornaments and captions may respond to the pointer or the scroll; the product photo stays put from first paint (it is the LCP and the evidence).
+- **Continuity beats transition.** One shared element (the product's own picture) morphs from the page into the experience and back; the way back lands on the element it left (scroll the destination into view, otherwise the morph flies off-screen), and the experience's boot time hides behind a still that is pixel-identical to its first live frame. No loaders.
+- **Scroll storytelling is position-mapped and reversible**, drawn from the product's own parts (layers rendered by the product's pipeline, not mock-ups), pinned for at most ~2.5 screens, with the finished state as the fallback and as the reduced-motion state. The essential object is visible before the scroll starts.
+- **A template that reacts on the page** (recolour, swap a part) is the strongest bridge into a configurator: the page shows what the visitor could make beside what the company has made, then hands the choice into the product through the URL.
+- **Tools, in order:** CSS transitions, scroll-driven animations (`view()`/`scroll()` timelines, `position: sticky` pinning) and the View Transitions API (React's `<ViewTransition>` in React 19.3+/Next 16) before any library; no WebGL on marketing pages; no smooth-scroll; a phone budget (LCP ≤ 2.0 s lab, INP ≤ 150 ms, CLS ≤ 0.05, zero `requestAnimationFrame` at rest, ≤ 6 composited layers moving per frame). Judge on a phone and on the real GPU (filmstrips of the transitions, not screenshots), not on a desktop jury's monitor.
+
 ## Keep / replace / remove / create
 
 List each explicitly:

@@ -87,6 +87,19 @@ When the triage finds a feature that is meant to *be* the differentiator (a stud
 
 The trap this prevents: a builder, configurator or studio that was meant to be the reason the business is remembered, reduced to "a step-by-step form with a small preview" because it had to fit between two website sections.
 
+## 5c. When an experimental prototype overtakes the original
+
+A signature experience sometimes gets a second, deliberately different attempt (a new visual direction, a new engine, a new interaction model) built beside the working one as an experiment with an honest comparison at the end. When the user looks at both and chooses the experiment, it stops being an experiment. Promote it the way a product team would, not the way a hackathon would:
+
+1. **Preserve the original temporarily.** Move it to an unlisted route, keep its code, data shape and tests, and say so in the project memory. It is the fallback until the new one is verified where it matters (real devices, the real order flow), and it is the reference for behaviour the experiment skipped.
+2. **Promote the prototype deliberately.** Inspect before moving: routes, the design/order data model, save and load, order submission, templates, and every screenshot and sentence on the site that describes the old version. Write the migration as a list before changing a line.
+3. **Transfer the business functionality, not just the front end.** The experiment proved the experience; the product still needs the structured document behind it (what the business receives), persistence by id, the hand-off into the request or checkout flow, admin views, share links and previews, and tests. A version field on the saved document lets both shapes live in one table while the old one is retired.
+4. **Replace the outdated marketing material.** Screenshots, renders, illustrations, copy and CTAs that showed the old version now misrepresent the product. Regenerate them from the new one (real captures, not mock-ups) and audit every page for stale wording.
+5. **Re-evaluate the surrounding website, because the product's quality bar has changed.** A signature experience with strong visual personality raises what visitors expect of the pages around it. The site should share its art direction, motion personality and small motifs without turning into the product's UI, and should use its own strength (real photography, story, trust) to lead people into it. Plan that pass explicitly rather than assuming the old site still fits.
+6. **Remove the original only after the migration is verified.** Not before the new one is integrated, tested on desktop and mobile, and clearly working inside the real product.
+
+The principle behind it: a signature product experience changes the visual expectations of the brand website around it. The marketing experience must evolve to represent the product customers actually receive, or the site and the product read as two different companies.
+
 ## 6. Greenfield architecture, decided not defaulted
 
 Before scaffolding, write a requirements table (what the *product* needs: static SEO pages, an interactive client, uploads, auth for whom, capacity rules, notifications, cost at the business's scale, who maintains it), then compare real options, including "use an existing product". Record the choice and why each major alternative lost. Check the facts that bite small businesses: **free hosting tiers that forbid commercial use**, databases that pause when idle, adapters that drop image optimisation. Keep the core portable (standard runtime, an ORM, a storage interface) so hosting stays a later, reversible decision that needs the user's approval.
