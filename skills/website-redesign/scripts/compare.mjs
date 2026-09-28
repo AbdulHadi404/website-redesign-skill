@@ -4,7 +4,8 @@
  * regressions while iterating.
  *
  *   node compare.mjs --before caps/home-1440-before-fold.png --after caps/home-1440-after-fold.png --out cmp/home-1440.png
- *   node compare.mjs --dir captures            # pairs every *-before*.png with its *-after*.png
+ *   node compare.mjs --dir captures            # pairs *-before*.png with *-after*.png, or before/ with after/
+ *   node compare.mjs --before captures/old --after captures/new --out cmp   # two folders, same file names
  *   node compare.mjs --before a.png --after b.png --diff cmp/diff.png   # changed pixels in red
  *   node compare.mjs --grid a.png b.png c.png --labels old new ref --out sheet.png [--blur 6]
  *
@@ -16,7 +17,7 @@
  * between captures of the same page at the same width — a regression check,
  * not a way to judge a redesign.
  */
-import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, readdir, mkdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { parseArgs, asList, launch, importModule } from './lib/env.mjs';
 
@@ -62,15 +63,22 @@ async function diff(before, after, out) {
 if (a.grid) {
   const files = asList(a.grid);
   await sheet(files, asList(a.labels), a.out || 'sheet.png');
-} else if (a.dir) {
-  const dir = String(a.dir);
-  const files = await readdir(dir);
+} else if (a.dir || (a.before && a.after && (await stat(String(a.before)).catch(() => null))?.isDirectory())) {
+  // Pairs by name with the -before/-after label removed, from one folder (the --label convention), from
+  // before/ and after/ subfolders, or from --before <dir> --after <dir>.
+  const dir = String(a.dir || '.');
+  const pngs = async (d) => (await readdir(d).catch(() => [])).filter((x) => x.endsWith('.png')).map((x) => path.join(d, x));
+  let olds, news;
+  if (a.before && a.after) [olds, news] = [await pngs(String(a.before)), await pngs(String(a.after))];
+  else if ((await stat(path.join(dir, 'before')).catch(() => null))?.isDirectory()) [olds, news] = [await pngs(path.join(dir, 'before')), await pngs(path.join(dir, 'after'))];
+  else { const all = await pngs(dir); [olds, news] = [all.filter((f) => /-before(?=[-.])/.test(path.basename(f))), all.filter((f) => /-after(?=[-.])/.test(path.basename(f)))]; }
+  const key = (f) => path.basename(f).replace(/-(before|after)(?=[-.])/, '');
+  const byKey = new Map(news.map((f) => [key(f), f]));
   const outDir = a.out || path.join(dir, 'compare');
-  for (const f of files.filter((x) => /-before(-fold)?\.png$/.test(x))) {
-    const g = f.replace('-before', '-after');
-    if (!files.includes(g)) continue;
-    await sheet([path.join(dir, f), path.join(dir, g)], ['Before', 'After'], path.join(outDir, f.replace('-before', '')));
-  }
+  let n = 0;
+  for (const f of olds) { const g = byKey.get(key(f)); if (!g) continue; await sheet([f, g], ['Before', 'After'], path.join(outDir, key(f))); n++; }
+  if (!n) { console.error(`No before/after pairs found (${olds.length} before, ${news.length} after). Name captures with --label before / --label after in one folder, or put them in before/ and after/ with the same file names.`); process.exit(1); }
+  console.log(`${n} before/after sheet(s) in ${outDir}`);
 } else if (a.before && a.after) {
   if (a.diff) await diff(a.before, a.after, a.diff);
   if (a.out || !a.diff) await sheet([a.before, a.after], asList(a.labels, ['Before', 'After']), a.out || 'compare.png');

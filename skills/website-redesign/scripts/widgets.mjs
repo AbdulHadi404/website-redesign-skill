@@ -28,9 +28,10 @@ const results = [];
 
 // Records what a screen reader would be told: live-region changes and focus moves.
 const RECORDER = () => {
-  window.__announced = []; window.__silent = []; window.__focus = [];
+  window.__announced = []; window.__silent = []; window.__focus = []; window.__mut = 0;
   const liveSel = '[aria-live]:not([aria-live="off"]),[role=status],[role=alert],[role=log],output';
   const start = () => new MutationObserver(ms => {
+    window.__mut += ms.length;
     for (const m of ms) {
       const el = m.target.nodeType === 1 ? m.target : m.target.parentElement; if (!el) continue;
       const region = el.closest(liveSel);
@@ -60,10 +61,15 @@ async function activate(page, sel, r, keys = ['Enter']) {
   if (!focusable) { r.fail('2.1.1', 'Trigger cannot receive keyboard focus'); await loc.click(); return 'click'; }
   const sig = () => page.evaluate(() => { const all = [...document.querySelectorAll('body *')]; return document.documentElement.innerHTML.length + '|' + all.map((e, i) => (e.matches('[open],[aria-expanded=true]') ? i : '')).join('') + '|' + all.filter(e => (e.checkVisibility ? e.checkVisibility({ visibilityProperty: true }) : e.getClientRects().length)).length; });
   const before = await sig();
+  let requests = 0; const onReq = () => { requests++; }; page.on('request', onReq);
+  const mut0 = await page.evaluate(() => window.__mut || 0);
   for (const k of keys) await page.keyboard.press(k);
   await page.waitForTimeout(350);
   const after = await sig();
-  if (before === after) { r.fail('2.1.1', `${keys.join('+')} on the focused trigger does nothing — falling back to click`); await loc.click(); await page.waitForTimeout(350); return 'click'; }
+  const mut1 = await page.evaluate(() => window.__mut || 0);
+  page.off('request', onReq);
+  // Something happened if the page changed, the DOM was rewritten (a refresh re-rendering identical text), or it fetched.
+  if (before === after && mut1 === mut0 && requests === 0) { r.fail('2.1.1', `${keys.join('+')} on the focused trigger does nothing — falling back to click`); await loc.click(); await page.waitForTimeout(350); return 'click'; }
   return 'keyboard';
 }
 function recorder(type, target) {
@@ -211,7 +217,8 @@ const tests = {
     await page.evaluate(() => { window.__announced = []; window.__silent = []; });
     const form = page.locator(c.form).first();
     const title0 = await page.title();
-    await activate(page, `${c.form} ${c.submit}`, r);
+    const scoped = `${c.form} ${c.submit}`;
+    await activate(page, (await page.locator(scoped).count()) ? scoped : c.submit, r);
     await page.waitForTimeout(500);
     const res = await page.evaluate((formSel) => {
       const form = document.querySelector(formSel);

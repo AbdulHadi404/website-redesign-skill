@@ -208,7 +208,9 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     });
     small.push({ selector: sel(t.el), w: Math.round(r.width), h: Math.round(r.height), name: short(t.el.getAttribute('aria-label') || t.el.textContent || t.el.getAttribute('title') || '', 30), spacingException: !crowded });
   }
-  const under44 = targets.filter((t) => !t.inline && (t.r.width < 44 || t.r.height < 44)).length;
+  const under44Els = targets.filter((t) => !t.inline && (t.r.width < 44 || t.r.height < 44));
+  const under44 = under44Els.length;
+  const under44List = under44Els.slice(0, 6).map((t) => ({ selector: sel(t.el), w: Math.round(t.r.width), h: Math.round(t.r.height), name: short(t.el.getAttribute('aria-label') || t.el.textContent || '', 24) }));
 
   // Pointer cursor on something that is not a control: a div with onclick.
   const fakeControls = [];
@@ -479,7 +481,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     contrast: { failing: Object.values(contrast.filter((c) => c.ratio < c.need).reduce((acc, c) => { const k = c.selector + c.fg + c.bg; acc[k] = acc[k] ? { ...acc[k], times: acc[k].times + 1 } : { ...c, times: 1 }; return acc; }, {})).sort((a, b) => a.ratio - b.ratio), failingCount: contrast.filter((c) => c.ratio < c.need).length, checked: contrast.length, unknownGround: unknownGround.slice(0, 15), unknownCount: unknownGround.length },
     headings, skippedLevels: skipped, landmarks,
     title: document.title, lang: document.documentElement.lang || null,
-    targets: { total: targets.length, under24: small.filter((s) => !s.spacingException), under24SpacingOk: small.filter((s) => s.spacingException).length, under44 },
+    targets: { total: targets.length, under24: small.filter((s) => !s.spacingException), under24SpacingOk: small.filter((s) => s.spacingException).length, under44, under44List },
     fakeControls: fakeControls.slice(0, 15), fakeControlCount: fakeControls.length,
     clippedText: clippedText.slice(0, 10), clippedCount: clippedText.length, colourOnly: colourOnly.slice(0, 10), colourOnlyCount: colourOnly.length, bareEmpty, unavailableFamilies,
     images,

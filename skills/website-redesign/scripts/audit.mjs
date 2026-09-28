@@ -5,7 +5,8 @@
  * inputs to judgement, and a clean report is not a good design.
  *
  *   node audit.mjs --base http://localhost:3000 --paths / /pricing \
- *        [--widths 1440,390] [--out ./audit] [--no-axe] [--focus 40]
+ *        [--kind marketing|app|commerce|content|docs|service] [--widths 1440,390]
+ *        [--out ./audit] [--no-axe] [--focus 40]
  *
  * Per page and width it measures:
  *  - layout: horizontal overflow and the element causing it; phone zoom-out
@@ -83,7 +84,9 @@ async function focusWalk(page, limit = focusLimit) {
         // Finish the element's transitions before each read: with `transition: all` (shadcn, many kits) the ring fades
         // in, and reading mid-transition before and after blur gives the same interpolated value — "no change".
         const settleEl = (e) => { for (const a of e.getAnimations?.({ subtree: true }) ?? []) { try { a.finish(); } catch { /* infinite */ } } };
-        const fp = (e) => { settleEl(e); const cs = getComputedStyle(e); return [cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0 ? cs.outlineWidth + cs.outlineColor : 'none', cs.boxShadow, cs.borderColor, cs.backgroundColor, cs.color, cs.textDecorationLine]; };
+        const ring = (cs) => [cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0 ? cs.outlineWidth + cs.outlineColor : 'none', cs.boxShadow, cs.borderColor, cs.backgroundColor, cs.color, cs.textDecorationLine];
+        // A ring drawn on ::before/::after (the stretched-link pattern) counts too: pseudo styles are folded into each property.
+        const fp = (e) => { settleEl(e); const own = ring(getComputedStyle(e)); const pseudo = ['::before', '::after'].map((p) => { const c = getComputedStyle(e, p); return c.content === 'none' || c.content === 'normal' ? null : ring(c).concat(c.opacity); }); return own.map((v, i) => [v, ...pseudo.map((q) => (q ? q[i] : ''))].join('|')).concat(pseudo.map((q) => (q ? q[6] : '')).join('|')); };
         const focused = fp(el);
         const id = el.id ? `#${el.id}` : el.tagName.toLowerCase() + [...el.classList].slice(0, 2).map((c) => '.' + c).join('') + (el.textContent.trim() ? ` "${el.textContent.trim().replace(/\s+/g, ' ').slice(0, 24)}"` : el.getAttribute('aria-label') ? ` [${el.getAttribute('aria-label')}]` : ' (no name)');
         const key = el.outerHTML.slice(0, 200) + el.getBoundingClientRect().top;
@@ -100,9 +103,12 @@ async function focusWalk(page, limit = focusLimit) {
           const q = o.getBoundingClientRect();
           const ix = Math.max(0, Math.min(r.right, q.right) - Math.max(r.left, q.left));
           const iy = Math.max(0, Math.min(r.bottom, q.bottom) - Math.max(r.top, q.top));
-          if (r.width * r.height > 0 && ix * iy >= r.width * r.height * 0.9) { coveredBy = o.tagName.toLowerCase() + [...o.classList].slice(0, 1).map((c) => '.' + c).join(''); break; }
+          if (r.width * r.height > 0 && ix * iy >= r.width * r.height * 0.9) {
+            const top = document.elementFromPoint(Math.min(Math.max(r.left + r.width / 2, 0), innerWidth - 1), Math.min(Math.max(r.top + r.height / 2, 0), innerHeight - 1));
+            if (top && o.contains(top) && !el.contains(top)) { coveredBy = o.tagName.toLowerCase() + [...o.classList].slice(0, 1).map((c) => '.' + c).join(''); break; }
+          }
         }
-        const names = ['outline', 'box-shadow', 'border', 'background', 'colour', 'underline'];
+        const names = ['outline', 'box-shadow', 'border', 'background', 'colour', 'underline', 'pseudo-element opacity'];
         const changed = names.filter((n, i) => focused[i] !== unfocused[i]);
         return { id, key, visibleChange: changed.length > 0, changed, coveredBy };
       });
@@ -216,13 +222,13 @@ try {
       if (hiddenFocus.length) F.push(`Focused control hidden under a fixed/sticky element: ${hiddenFocus.slice(0, 4).map((f) => `${f.id} under ${f.coveredBy}`).join(', ')}`);
       if (focus.length === 0) W.push('Tab reached no controls — check the page is keyboard-operable.');
       if (inv.targets.under24.length) F.push(`${inv.targets.under24.length} targets under 24×24px without spacing (WCAG 2.5.8): ${inv.targets.under24.slice(0, 5).map((t) => `\`${t.selector}\` ${t.w}×${t.h}${t.name ? ` "${t.name}"` : ''}`).join(', ')}`);
-      if (mobile && inv.targets.under44) W.push(`${inv.targets.under44} of ${inv.targets.total} controls are under 44px in one dimension (fine for inline links; not for primary actions or nav).`);
+      if (mobile && inv.targets.under44) W.push(`${inv.targets.under44} of ${inv.targets.total} controls are under 44px in one dimension (fine for inline links; not for primary actions or nav): ${inv.targets.under44List.map((u) => `\`${u.selector}\` ${u.w}×${u.h}${u.name ? ` "${u.name}"` : ''}`).join(', ')}${inv.targets.under44 > inv.targets.under44List.length ? ', …' : ''}`);
       if (inv.fakeControlCount) F.push(`${inv.fakeControlCount} pointer-cursor elements that are not controls (no role, ${inv.fakeControls.filter((c) => !c.keyboard).length} unreachable by keyboard): ${inv.fakeControls.slice(0, 5).map((c) => `\`${c.selector}\``).join(', ')}`);
       const h1 = inv.headings.filter((h) => h.level === 1).length;
       if (h1 !== 1) F.push(`${h1} h1 elements (expect exactly one).`);
       if (inv.skippedLevels.length) W.push(`Heading levels skipped: ${inv.skippedLevels.slice(0, 4).join('; ')}`);
       const lm = inv.landmarks;
-      const missing = ['main', 'nav', 'header', 'footer'].filter((k) => !lm[k]);
+      const missing = (kind === 'app' ? ['main', 'nav'] : ['main', 'nav', 'header', 'footer']).filter((k) => !lm[k]);
       if (missing.length) W.push(`Missing landmarks: ${missing.join(', ')}.`);
       if (!lm.skipLink && width === widths[0]) W.push('No skip link as the first focusable element.');
       if (!inv.lang) F.push('No lang attribute on <html>.');
@@ -239,7 +245,7 @@ try {
       if (big.length) W.push(`${big.length} images served much larger than rendered: ${big.slice(0, 3).map((i) => `${i.src} ${i.natural[0]}px for ${i.rendered[0]}px`).join(', ')}`);
       const t = inv.type;
       const sizesInUse = t.sizes.filter((s) => s.chars / Math.max(inv.totalChars, 1) >= 0.005);
-      W.push(`Type sizes carrying text: ${sizesInUse.map((s) => s.px).join(' · ')} px (${t.sizes.length} distinct). Families: ${t.families.map((f) => `${f.family} ${f.share}%`).join(', ')}. Weights: ${t.weights.map((w) => `${w.weight} ${w.share}%`).join(', ')}.`);
+      W.push(`Type sizes carrying text: ${sizesInUse.map((s) => s.px).join(' · ')} px (${t.sizes.length} distinct). Families (declared): ${t.families.map((f) => `${f.family} ${f.share}%${inv.unavailableFamilies.includes(f.family) ? ' — not loaded, a fallback rendered' : ''}`).join(', ')}. Weights: ${t.weights.map((w) => `${w.weight} ${w.share}%`).join(', ')}.`);
       if (t.measure.length) W.push(`Long measure (> 85 characters per line): ${t.measure.slice(0, 4).map((m) => `\`${m.selector}\` ~${m.charsPerLine}`).join(', ')}`);
       if (t.centred.length) W.push(`Centred text of 3+ lines: ${t.centred.slice(0, 4).map((m) => `\`${m.selector}\` (${m.lines} lines)`).join(', ')}`);
       if (t.justified.length) W.push(`Justified text: ${t.justified.map((m) => `\`${m.selector}\``).join(', ')}`);

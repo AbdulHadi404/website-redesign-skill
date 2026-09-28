@@ -123,7 +123,7 @@ try {
       const page = await context.newPage();
       const url = urlFor(base, p);
       await open(page, url);
-      await settle(page);
+      await settle(page, { js: !a['no-js'] });
       const slug = slugFor(p);
       const stem = path.join(outDir, `${slug}-${width}${label}`);
 
@@ -137,7 +137,7 @@ try {
         fullH = await page.evaluate(() => document.documentElement.scrollHeight);
       }
       await finishMotion(page);
-      await decodeImages(page);
+      if (!a['no-js']) await decodeImages(page); // its in-page timers never fire without JavaScript
       await page.screenshot({ path: `${stem}.png`, fullPage: mode === 'fullpage' || fullH > MAX_H });
       const dpr = Number(a.dpr) || (mobile ? 2 : 1);
       const flat = await flatImages(page, `${stem}.png`, dpr).catch(() => null);
@@ -169,7 +169,7 @@ try {
         const hi = await browser.newContext({ viewport: { width, height: h0 }, deviceScaleFactor: 3, isMobile: mobile, hasTouch: mobile });
         const ep = await hi.newPage();
         await open(ep, url);
-        await settle(ep);
+        await settle(ep, { js: !a['no-js'] });
         for (const sel of selectors) {
           const els = await ep.$$(sel);
           for (const [i, el] of els.entries()) {

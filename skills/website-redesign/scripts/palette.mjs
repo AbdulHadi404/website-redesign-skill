@@ -86,7 +86,7 @@ const brand = new Color(String(a.brand)).to('oklch');
 const [BL, BC, BH0] = brand.coords;
 const BH = BH0 ?? 0;
 const name = a.name || 'brand';
-const ROLES = ['app background', 'subtle background', 'component', 'component hover', 'component active', 'subtle border', 'border', 'strong border / focus', 'solid (brand)', 'solid hover', 'text (low contrast)', 'text (high contrast)'];
+const ROLES = ['app background', 'subtle background', 'component', 'component hover', 'component active', 'subtle border', 'border', 'strong border', 'solid', 'solid hover', 'text (low contrast)', 'text (high contrast)'];
 
 function mk(l, c, h = BH) { return new Color('oklch', [l, c, h]).toGamut({ space: 'srgb', method: 'oklch.c' }); }
 
@@ -122,6 +122,11 @@ function table(title, s, dark) {
     const w = wcag(ground, c), p = apca(ground, c);
     console.log(`${String(i + 1).padStart(4)}  ${ROLES[i].padEnd(23)}  ${toHex(c)}  ${oklch(c).padEnd(28)}  ${w.toFixed(2).padStart(6)}:1  ${p.toFixed(0).padStart(5)}`);
   });
+  // Non-text contrast (WCAG 1.4.11): the lightest step that reaches 3:1 against both grounds — for the focus ring
+  // and for control borders that carry meaning (inputs, checkboxes). Decorative borders may stay lighter.
+  const ok = s.map((c, i) => [i, Math.min(wcag(s[0], c), wcag(s[1], c))]).filter(([, r]) => r >= 3).sort((x, y) => x[1] - y[1]);
+  const threeToOne = ok.length ? ok[0][0] : 11;
+  console.log(`\n  focus ring and meaningful control borders (≥ 3:1 on steps 1 and 2): step ${threeToOne + 1} ${toHex(s[threeToOne])} (${wcag(s[1], s[threeToOne]).toFixed(2)}:1)${threeToOne > 7 ? ' — steps 6–8 are for decorative borders only' : ''}`);
   const onSolid = [white, black].sort((x, y) => Math.abs(apca(s[8], y)) - Math.abs(apca(s[8], x)))[0];
   console.log(`\n  text on step 9: ${toHex(onSolid)} (WCAG ${wcag(s[8], onSolid).toFixed(2)}:1, APCA ${apca(s[8], onSolid).toFixed(0)})${wcag(s[8], onSolid) < 4.5 ? ' — below 4.5:1: use step 9 for large text, icons and fills; darken to step 10/11 for small text' : ''}`);
   console.log();
