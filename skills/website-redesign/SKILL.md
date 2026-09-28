@@ -58,7 +58,7 @@ Choose references by the problem they solve (show a complex product simply; buil
 
 ### Phase 3 — Direction (derive it, do not pick it)
 
-For **expressive** surfaces: derive a concept from the company's moment, material and assets; list 5–7 candidates across at least three material families; state what the direction refuses (the page this category always ships, and its predictable opposite); decide typography, a named colour strategy, composition, the first viewport exactly, imagery and motion. For **productive** surfaces: decide the interaction model, density, navigation model, elevation model and state language; brand shows in type, colour roles, tone and a few considered moments, not in custom controls. Either way, run the similar-brief test, the category test and the ledger comparison before writing code. Then write keep / replace / remove / create.
+For **expressive** surfaces: derive a concept from the company's moment, material and assets; list 5–7 candidates across at least three material families; state what the direction refuses (the page this category always ships, and its predictable opposite); decide typography, a named colour strategy, composition, the first viewport exactly, imagery and motion. For **productive** surfaces: decide the interaction model, density, navigation model, elevation model and state language; brand shows in type, colour roles, tone and a few considered moments, not in custom controls. Before writing code, run the similar-brief test, the category test and the ledger comparison — on the whole direction for expressive routes, on the brand layer for productive ones. Then write keep / replace / remove / create.
 
 ### Phase 4 — System (tokens upward)
 
@@ -70,15 +70,15 @@ Work on a branch. Tokens → base → motion → primitives → product fragment
 
 ### Phase 6 — Verify (renders and measurements)
 
-Capture every page at 1440, 1280, 1024, 768 and 390 with `scripts/capture.mjs`, plus element shots of artwork and every state of every widget; look at the captures. Run `scripts/audit.mjs` at 1440 and 390 with the right `--kind`, `scripts/a11y.mjs` on each key template and `scripts/widgets.mjs` on each custom widget, then the manual accessibility pass (`accessibility.md` §11), the responsive pass and a performance run. Fix and re-capture; do not close a loop on the assumption that a change did what you intended.
+Capture every page at 1440, 1280, 1024, 768 and 390 with `scripts/capture.mjs`, element shots of artwork, and every state of every widget with `scripts/states.mjs` (the same scenario file on the old and the new build); look at the captures. Run `scripts/audit.mjs` at 1440 and 390 with the right `--kind`, `scripts/a11y.mjs` on each key template and `scripts/widgets.mjs` on each custom widget, then the manual accessibility pass (`accessibility.md` §11), the responsive pass and a performance run. Fix and re-capture; do not close a loop on the assumption that a change did what you intended.
 
 ### Phase 7 — Critique (the honest pass)
 
-Fill `templates/critique.md` from the renders: objective → element → effect → why, removal and swap tests, the category fit, the tells. Prefer a fresh-context reviewer (a subagent given only the brief, `DESIGN.md` and the capture paths) — the builder's account of its own fixes is not evidence. Every "no" becomes a fix and a re-render. At most three rounds; if a "no" survives the third, or a round resolves nothing, put the table in front of the user.
+Fill `templates/critique.md` from the renders: objective → element → effect → why, removal and swap tests, the category fit, the tells. Prefer a fresh-context reviewer (a subagent given only the brief, `DESIGN.md` and the capture paths) — the builder's account of its own fixes is not evidence. Without one, say so, and write the first impression from the blurred sheet before re-reading your own direction. For a productive route, a walkthrough is stronger evidence than opinion: attempt each top task through `states.mjs --aria` steps, judging from the captures, and count steps and doubts on the old and the new build. Every "no" becomes a fix and a re-render. At most three rounds; if a "no" survives the third, or a round resolves nothing, put the table in front of the user.
 
 ### Phase 8 — Hand-off
 
-Typecheck, lint, build and test with the project's own commands. Run `scripts/parity.mjs` against the old build: every new number and quote sourced, every dropped fact deliberate, every old route, id and form field accounted for. Click every link, submit every form, check metadata and the social image. Commit with a message that explains the direction; push the branch when the remote is the project's own (a local mirror or a test fixture is not), and use the project's preview mechanism if it has one. Do not deploy to production unless asked. Add a row to `references/ledger.md` — or, when this skill is installed read-only or shared by a team, put the row and any lesson in the report for its maintainer instead of editing it mid-job.
+Typecheck, lint, build and test with the project's own commands. Run `scripts/parity.mjs` against the old build: every new number and quote sourced, every dropped fact deliberate, every old route, id, form field, form submission and `data-*` analytics hook accounted for. Click every link, submit every form, check metadata and the social image. Commit with a message that explains the direction; push the branch when the remote is the project's own (a local mirror or a test fixture is not), and use the project's preview mechanism if it has one. Do not deploy to production unless asked. Add a row to `references/ledger.md` — or, when this skill is installed read-only or shared by a team, put the row and any lesson in the report for its maintainer instead of editing it mid-job.
 
 ## Scripts
 
@@ -94,7 +94,7 @@ All in `scripts/` (run `npm install` there once; Playwright-based; each prints w
 | `parity.mjs` | Old site vs new: unsourced and dropped claims, missing routes, lost ids, form fields, `data-*` analytics hooks and form submissions, metadata |
 | `contrast.mjs` | WCAG 2 and APCA for any CSS colours or token files |
 | `palette.mjs` | Sample a logo's colours; build 12-step OKLCH role scales (light/dark) with solved text steps |
-| `fonts.mjs` | What a font can do before you choose it: axes, tabular figures, features, script coverage, x-height |
+| `fonts.mjs` | What a font can do before you choose it: axes, tabular figures per digit system (Latin, Eastern Arabic, Persian), features, script coverage, x-height; `--fallback arial` prints a metric-matched fallback `@font-face` |
 | `compare.mjs` | Before/after sheets, blurred squint sheets, pixel diffs for regressions |
 
 Scripts report facts, not taste. A clean audit is not a good design, and a signal is a question to answer, not a rule to obey.
@@ -105,8 +105,8 @@ References cite evidence as `research/…`: that folder lives in the skill's rep
 
 | File | Holds | Read at |
 | --- | --- | --- |
-| `references/framing.md`, `references/categories.md` | classifying surfaces, intensity, the brief, the question bank; the category dials and ten playbooks | Phase 0 |
-| `references/design-theory.md` | Rams, Vignelli, Gestalt, hierarchy, space and grids; colour theory, strategies, OKLCH scales, contrast; typography rules, scales, pairing, product vs marketing type | Phases 3–4 |
+| `references/framing.md`, `references/categories.md` | classifying surfaces, intensity, the brief, the question bank; the category dials and eleven playbooks (field and frontline tools included) | Phase 0 |
+| `references/design-theory.md` | colour theory, strategies, OKLCH scales, contrast; typography rules, scales, pairing, product vs marketing type; checklists (Parts B–D gate the work); Rams, Vignelli, Gestalt, hierarchy and grids as background (Part A) | Phases 3–4 |
 | `references/design-systems.md`, `references/app-ui.md` | tokens, reuse before reinvention, component libraries and when to use them, state matrix, `SYSTEM.md`; product-UI density, navigation, tables, forms, notifications, loading/empty/error, dashboards | Phases 3–5 (product surfaces) |
 | `references/ui-ux.md`, `references/web-design.md` | heuristics, laws with numbers, reading, feedback, forms, targets, writing, dark patterns; homepage and landing-page craft, chapters | Phases 3–5 |
 | `references/accessibility.md`, `references/responsive.md`, `references/performance.md`, `references/motion.md`, `references/dataviz.md`, `references/multilingual.md` | the specialist passes | when the phase or the product calls for them |
