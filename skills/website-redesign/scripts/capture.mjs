@@ -22,7 +22,18 @@
  *                  background images hidden), no-shadows (box/text shadows off);
  *                  comma list or "all"
  *   --mode m       grow (default) or fullpage — see below
+ *   --gpu          ask for hardware WebGL: full Chromium with the GPU blocklist ignored and GPU
+ *                  rasterisation on (ANGLE on Windows and macOS); needs a machine with a GPU
+ *   --headed       run a visible browser window (needs a display; on a Linux server, xvfb-run)
  *   --chrome path  Chromium binary (or CHROME_PATH)
+ *
+ * In Git Bash on Windows pass paths without the leading slash or set MSYS_NO_PATHCONV=1 (the scripts warn).
+ *
+ * WebGL: the first page of a run that has a <canvas> (or the first page at all, with --gpu or --headed)
+ * prints `renderer: <vendor> / <renderer>`. A software renderer (SwiftShader, llvmpipe) draws a 3D page
+ * correctly but slowly, so its speed and motion cannot be judged from that run (visual-qa.md, "3D and
+ * WebGL experiences"): capture again with --gpu or --headed on a machine with a GPU. Pages without a
+ * canvas print nothing.
  *
  * Why it works the way it does (each of these was a real failure):
  * - In some environments `fullPage: true` does not rasterise images that were
@@ -43,11 +54,14 @@
  *   painted flat is reported — either the page covers it, or the capture
  *   failed to rasterise it (a grey box). (Needs pngjs; cross-origin images are skipped.)
  * Outputs <slug>-<width>[-label].png (full) and …-fold.png (first viewport),
- * and prints overflow warnings with the offending elements.
+ * and prints overflow warnings with the offending elements: horizontal
+ * overflow (the document is wider than the viewport), and text that runs past
+ * the viewport edge where the page clips itself (overflow-x: hidden or clip on
+ * html or body), which hides it without making the page any wider.
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { parseArgs, asList, launch, open, settle, decodeImages, finishMotion, growToDocument, slugFor, urlFor, importModule } from './lib/env.mjs';
+import { parseArgs, asList, launch, open, settle, decodeImages, finishMotion, growToDocument, slugFor, urlFor, importModule, rendererInfo } from './lib/env.mjs';
 import { overflowCulprits } from './lib/probes.mjs';
 
 const a = parseArgs();
@@ -115,8 +129,36 @@ async function flatImages(page, file, dpr) {
   return out;
 }
 
+/** A <canvas> anywhere in the page, open shadow roots included (3D viewers draw inside web components). */
+const hasCanvas = (page) => page.evaluate(() => {
+  const find = (root) => !!root.querySelector('canvas') || [...root.querySelectorAll('*')].some((e) => e.shadowRoot && find(e.shadowRoot));
+  return find(document);
+}).catch(() => false);
+
+/**
+ * One line per run naming the WebGL renderer, so a 3D page captured in software is not judged for speed or motion.
+ * Asked in a blank tab of the same context: the renderer belongs to the browser, and the page under capture then
+ * gets no extra WebGL context (Chromium drops the oldest one past its limit).
+ */
+async function printRenderer(context) {
+  const probe = await context.newPage();
+  try {
+    const r = await rendererInfo(probe);
+    console.log(r
+      ? `renderer: ${r.vendor} / ${r.renderer}${r.software ? ' — software rendering: WebGL speed and motion cannot be judged from this run (visual-qa.md, "3D and WebGL experiences"; try --gpu or --headed on a machine with a GPU)' : ''}`
+      : 'renderer: none — WebGL is unavailable in this browser, so a WebGL canvas shows its fallback or nothing (try --gpu or --headed on a machine with a GPU)');
+  } finally {
+    await probe.close().catch(() => {});
+  }
+}
+
 await mkdir(outDir, { recursive: true });
-const { browser } = await launch({ chrome: a.chrome });
+if (a.headed && process.platform === 'linux' && !process.env.DISPLAY && !process.env.WAYLAND_DISPLAY) {
+  console.error('--headed needs a display and none is set (DISPLAY is empty): run under xvfb-run, or drop --headed');
+}
+const { browser } = await launch({ chrome: a.chrome, gpu: !!a.gpu, headless: !a.headed });
+const askRenderer = !!(a.gpu || a.headed);
+let rendererShown = false;
 
 try {
   for (const p of paths) {
@@ -186,9 +228,14 @@ try {
       await page.setViewportSize({ width, height: h0 });
       const over = await page.evaluate(overflowCulprits);
       const layoutW = await page.evaluate(() => innerWidth);
+      if (!rendererShown && (askRenderer || await hasCanvas(page))) {
+        rendererShown = true;
+        await printRenderer(context);
+      }
       const note = [`${fullH}px tall`, pinned ? `${pinned} viewport-height elements pinned` : null,
         mobile && layoutW > width ? `⚠ layout viewport widened to ${layoutW}px — phones show this page zoomed out` : null,
         over.overflow ? `⚠ horizontal overflow by ${over.by}px: ${over.culprits.map((c) => c.selector).join(', ')}` : null,
+        over.cutAtEdge?.length ? `⚠ text past the viewport under a page-level clip: ${over.cutAtEdge.map((c) => `${c.selector} (${Math.round(c.past ?? c.right - over.viewport)}px)`).join(', ')}` : null,
         flat?.length ? `⚠ ${flat.length} image(s) painted flat (${flat.slice(0, 3).join(', ')}) — either something on the page covers them, or the capture failed to rasterise them: check in a browser, or retry with --mode ${mode === 'grow' ? 'fullpage' : 'grow'}` : null,
         variants.length ? `variants: ${variants.join(', ')}` : null].filter(Boolean).join(' · ');
       console.log(`${stem}.png  (${note})`);

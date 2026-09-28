@@ -133,13 +133,13 @@ async function interruptRun(browser, base, v, name) {
 // ---------- single-trigger runs: does it move, fade or change instantly (for reduced-motion comparison) ----------
 const SINGLE = {
   press: { keys: ['press'], ms: 500, act: async (p, c) => { await p.mouse.move(c.press.x, c.press.y); await p.mouse.down(); await p.waitForTimeout(250); await p.mouse.up(); },
-    classify: (S) => ({ moves: S.some((s) => s.press < 0.995), fades: false, final: S.at(-1).press > 0.995 }) },
+    classify: (S) => ({ moves: S.some((s) => s.press > 0.9705 && s.press < 0.9995), fades: false, final: S.at(-1).press > 0.995 }) }, // moves = intermediate values, not just the end states
   list: { keys: ['list'], ms: 700, act: async (p, c) => click(p, c.shuffle),
     classify: (S) => ({ moves: S.some((s) => s.list > 2 && s.list < 126), fades: false, final: Math.abs(S.at(-1).list - 128) < 2 }) },
   sheet: { keys: ['sheet', 'sheetOp'], ms: 800, act: async (p, c) => click(p, c.sheet),
     classify: (S) => ({ moves: S.some((s) => s.sheet > 2 && s.sheet < 278), fades: S.some((s) => s.sheetOp > 0.03 && s.sheetOp < 0.97), final: S.at(-1).sheet < 1 && S.at(-1).sheetOp > 0.99 }) },
   view: { keys: ['viewMix', 'viewX'], ms: 900, act: async (p, c) => click(p, c.swap),
-    classify: (S) => ({ moves: S.some((s) => s.viewX > 1), fades: S.some((s) => s.viewMix > 0.03 && s.viewMix < 0.97), final: S.at(-1).viewMix > 0.97 }) },
+    classify: (S) => ({ moves: S.some((s) => s.viewX > 1 && s.viewX < 23), fades: S.some((s) => s.viewMix > 0.03 && s.viewMix < 0.97), final: S.at(-1).viewMix > 0.97 }) },
   // A 500 ms user-like scroll (one scrollTo per frame) that brings reveal #2 fully into view.
   scroll: { keys: ['reveal2', 'reveal2y', 'progress', 'scrollFrac'], ms: 1300, act: async (p) => { await p.evaluate(() => new Promise((res) => {
       const y1 = document.querySelector('#r2').getBoundingClientRect().top + scrollY - 500; const t0 = performance.now();
@@ -147,7 +147,7 @@ const SINGLE = {
       requestAnimationFrame(step); })); },
     classify: (S) => { const during = S.filter((s) => s.scrollFrac > 0.01);
       const err = during.map((s) => Math.abs((s.progress ?? 0) - s.scrollFrac));
-      return { moves: during.some((s) => Math.abs(s.reveal2y) > 0.5), fades: during.some((s) => s.reveal2 > 0.03 && s.reveal2 < 0.97), final: S.at(-1).reveal2 > 0.99,
+      return { moves: during.some((s) => Math.abs(s.reveal2y) > 0.5 && Math.abs(s.reveal2y) < 15.5), fades: during.some((s) => s.reveal2 > 0.03 && s.reveal2 < 0.97), final: S.at(-1).reveal2 > 0.99,
         progressErrMean: err.length ? round(err.reduce((a, b) => a + b, 0) / err.length, 4) : null, progressErrMax: err.length ? round(Math.max(...err), 4) : null }; } },
   ticker: { keys: ['ticker'], ms: 1100, act: async (p, c) => click(p, c.hi),
     classify: (S) => ({ moves: new Set(S.map((s) => s.ticker)).size > 3, fades: false, final: S.at(-1).ticker === 1000 }) },
