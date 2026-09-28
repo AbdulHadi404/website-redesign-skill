@@ -48,7 +48,7 @@ Compare with the Phase 1 run in `audit/before`. Every ✗ is fixed or justified 
 - Horizontal overflow and which element causes it (`audit.mjs` names it; `100vw` plus padding overflows at every desktop width — delete `100vw`, block elements are already full width).
 - Headline wrapping: no orphaned single words (`audit.mjs` reports headings whose last line holds one word, per width), no break inside an emphasised phrase, nothing overlapping the subject of a photograph.
 - Photo crops: the subject visible and not decapitated; copy on its own ground.
-- Whitespace: no dead bands (a `100svh` hero on a tall screen — cap it with `min(100svh, 56rem)` — a parallax gap, an empty column).
+- Whitespace: no dead bands (a `100svh` hero on a tall screen — cap it with `min(100svh, 56rem)` — a parallax gap, an empty column). `audit.mjs` reports horizontal strips taller than about half a screen with no text, media, controls or background image, and the element they sit in; when a hero is viewport-sized, run it once more at `--widths 1440 --height 1600` for tall screens.
 - Alignment: columns, rules and baselines line up; concentric radii; nothing a few pixels off. `audit.mjs` reports text blocks whose left edges sit 1–4 px apart (usually two copies of one component with drifted spacing) and rounded elements close inside a rounded parent whose radius is more than 4 px above the outer radius minus the gap.
 - Sizing: nothing tiny at 390 (tables, diagrams, labels); nothing absurd at 1440.
 - Sticky and fixed elements: header state on scroll; the **open** mobile menu; overlays; body scroll lock releases; focus never hidden under a sticky bar.

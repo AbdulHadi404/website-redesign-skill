@@ -472,6 +472,51 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   const byLevel = {};
   for (const h of headings) if (h.level) byLevel[h.level] = Math.max(byLevel[h.level] || 0, h.px);
   const lv = Object.keys(byLevel).map(Number).sort((p, q) => p - q);
+  // ---- dead bands: tall horizontal strips with nothing in them ----------------------------------------
+  // Occupancy of the document height by text, media, controls and background images, in 8px strips. A run of
+  // empty strips taller than about half a screen is a dead band (a 100svh hero on a tall screen, a parallax gap,
+  // a spacer), unless a background image fills it.
+  const deadBands = [];
+  {
+    const sy = scrollY, STEP = 8;
+    const docH = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    const occ = new Uint8Array(Math.ceil(docH / STEP) + 1);
+    const fill = (top, bottom) => { for (let y = Math.max(0, Math.floor((top + sy) / STEP)); y <= Math.min(occ.length - 1, Math.floor((bottom + sy) / STEP)); y++) occ[y] = 1; };
+    const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n = tw.nextNode(); n; n = tw.nextNode()) {
+      if (!n.data.trim() || !n.parentElement || !visible(n.parentElement)) continue;
+      const rg = document.createRange(); rg.selectNodeContents(n);
+      for (const b of rg.getClientRects()) if (b.width > 0) fill(b.top, b.bottom);
+    }
+    for (const el of document.body.querySelectorAll('*')) {
+      const media = /^(IMG|SVG|VIDEO|CANVAS|IFRAME|INPUT|SELECT|TEXTAREA|BUTTON|PICTURE|OBJECT|EMBED)$/i.test(el.tagName);
+      if (!media && !getComputedStyle(el).backgroundImage.includes('url(')) continue;
+      if (!visible(el)) continue;
+      const b = el.getBoundingClientRect();
+      if (b.width >= 8 && b.height >= 8) fill(b.top, b.bottom);
+    }
+    const minRun = Math.max(360, (initialViewportHeight || 900) * 0.45);
+    let start = null;
+    for (let i = 0; i <= occ.length; i++) {
+      const empty = i < occ.length && !occ[i];
+      if (empty && start === null) start = i;
+      else if (!empty && start !== null) {
+        const top = start * STEP, h = (i - start) * STEP;
+        // Leading and trailing space (above the first content, below the footer) is not a band between things.
+        if (h >= minRun && start > 0 && i < occ.length) {
+          let owner = null;
+          for (const el of document.body.querySelectorAll('section, header, main > *, body > *, div')) {
+            const b = el.getBoundingClientRect();
+            if (b.top + sy <= top && b.bottom + sy >= top + h && b.width >= innerWidth * 0.5 && (!owner || b.height < owner.h)) owner = { el, h: b.height };
+          }
+          deadBands.push(`${Math.round(h)}px empty from y=${Math.round(top)}${owner ? ` inside \`${sel(owner.el)}\`` : ''}`);
+        }
+        start = null;
+      }
+      if (deadBands.length >= 4) break;
+    }
+  }
+
   // ---- headline widows: a heading whose last line holds one word -----------------------------------
   // Measured per word with Range rects, so it is the wrap this width actually produced.
   const widows = [];
@@ -569,7 +614,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       gradientText, emoji: emoji.slice(0, 10), cliches: [...cliches], statClaims: statClaims.slice(0, 10), gradients: gradients.length, violetGradients: gradients.filter((g) => g.violet).length,
       backdropBlur: blur, cards, pills, buttonsLike, iconTiles, domNodes: all.length,
       mainGround, creamGround, eyebrows, eyebrowExamples, sectionCount, accentedHeadlines: accentedHeadlines.slice(0, 5), sideStripes, stripeExamples, glows, oneRadius, centredShare, nearMisses, leftEdges: edges.length, radiusMismatch,
-      emDashes, middleDots, arrowCtas, aphorisms, headingRatio, bodyPx, flatSteps, headingInversions, widows,
+      emDashes, middleDots, arrowCtas, aphorisms, headingRatio, bodyPx, flatSteps, headingInversions, widows, deadBands,
       cardTextShare: Math.round((charsInCards / pageChars) * 100), outerCards: outerCards.length, kpiTiles, greeting, iconOnly, unlabelledCharts: charts,
       controlHeights: [...new Set(controls)].sort((x, y) => x - y), maxPx, hoverMoves, badgeAboveH1,
     },
