@@ -10,9 +10,12 @@
  * Per page, the median of the runs (and the range) for:
  *   FCP, LCP (and its element), CLS (largest session window), TBT (long tasks between FCP and load settling,
  *   the lab stand-in for INP), transfer by type, requests, DOM nodes.
- * Flags against the "good" thresholds: LCP ≤ 2.5 s, CLS ≤ 0.1, TBT ≤ 200 ms; with --before, any page that got
- * slower. A local server has no real network distance: the throttling adds it back, roughly. Lab numbers rank
- * builds; they do not predict field data (performance.md §6).
+ * Flags (⚠) against the "good" thresholds: LCP ≤ 2.5 s, CLS ≤ 0.1, TBT ≤ 200 ms; with --before, any page that got
+ * slower or shifts more. Notes (◇, questions for the report, not failures), with --before: a broken baseline, every
+ * time an old page's font requests failed here (named by page and error: its transfer and LCP are not production
+ * figures); and transfer growth to more than double the old page and more than 50 KB more (by type: what does it
+ * buy — fonts self-hosted and subset, scripts this page needs?). A local server has no real network distance: the
+ * throttling adds it back, roughly. Lab numbers rank builds; they do not predict field data (performance.md §6).
  */
 import { writeFile } from 'node:fs/promises';
 import { parseArgs, asList, launch, urlFor } from './lib/env.mjs';
@@ -60,9 +63,11 @@ async function measure(url) {
   if (net) await cdp.send('Network.emulateNetworkConditions', { offline: false, ...net });
   if (cpu > 1) await cdp.send('Emulation.setCPUThrottlingRate', { rate: cpu });
   const t0 = Date.now();
-  let status = 0, fontsFailed = 0;
-  page.on('requestfailed', (r) => { if (r.resourceType() === 'font' || /fonts\.googleapis|\.woff2?(\?|$)/.test(r.url())) fontsFailed++; });
-  page.on('response', (r) => { if (r.status() >= 400 && (r.request().resourceType() === 'font' || /fonts\.googleapis/.test(r.url()))) fontsFailed++; });
+  let status = 0, fontsFailed = 0, fontsWhy = '';
+  // Kept with the first reason (host and error) so a broken baseline can be named, not just counted.
+  const fontFail = (u, why) => { fontsFailed++; fontsWhy ||= `${new URL(u).host || u.slice(0, 40)}: ${why}`; };
+  page.on('requestfailed', (r) => { if (r.resourceType() === 'font' || /fonts\.googleapis|\.woff2?(\?|$)/.test(r.url())) fontFail(r.url(), r.failure()?.errorText || 'failed'); });
+  page.on('response', (r) => { if (r.status() >= 400 && (r.request().resourceType() === 'font' || /fonts\.googleapis/.test(r.url()))) fontFail(r.url(), `HTTP ${r.status()}`); });
   try {
     const res = await page.goto(url, { waitUntil: 'load', timeout: 90000 });
     status = res?.status() || 0;
@@ -91,11 +96,14 @@ async function measure(url) {
     return { fcp: P.fcp, lcp: P.lcp || P.fcp, lcpEl: P.lcpEl, cls, tbt, bytes, requests: requests + 1, nodes: document.getElementsByTagName('*').length };
   });
   await ctx.close();
-  return { ...m, status, fontsFailed, wall: Date.now() - t0 };
+  return { ...m, status, fontsFailed, fontsWhy, wall: Date.now() - t0 };
 }
 
 const median = (xs) => { const s = [...xs].sort((p, q) => p - q); return s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2; };
 const kb = (b) => `${Math.round(b / 1024)} KB`;
+// Transfer growth worth a question: more than double the old page AND more than 50 KB more (under that it is about
+// a quarter second on slow 4G, and a tiny old page doubles on one icon). A question for the report, not a failure.
+const GROW = { ratio: 2, bytes: 50 * 1024 };
 
 async function site(base) {
   const out = [];
@@ -111,9 +119,10 @@ async function site(base) {
       p, lcp: median(pick('lcp')), lcpRange: [Math.min(...pick('lcp')), Math.max(...pick('lcp'))], lcpEl: ok[0].lcpEl,
       fcp: median(pick('fcp')), cls: median(pick('cls')), clsMax: Math.max(...pick('cls')), tbt: median(pick('tbt')),
       bytes: ok[0].bytes, total: median(ok.map(total)), requests: ok[0].requests, nodes: ok[0].nodes, runs: ok.length, fontsFailed: Math.max(...pick('fontsFailed')),
+      fontsWhy: pick('fontsWhy').find(Boolean) || '',
     };
     out.push(res);
-    console.log(`${res.lcp > 2500 || res.cls > 0.1 || res.tbt > 200 ? '⚠' : '✓'} ${p}  LCP ${Math.round(res.lcp)} ms (${res.lcpEl || '?'})  CLS ${res.cls.toFixed(3)}${res.clsMax > res.cls + 0.05 ? ` (up to ${res.clsMax.toFixed(2)})` : ''}  TBT ${Math.round(res.tbt)} ms  ${kb(res.total)}`);
+    console.log(`${res.lcp > 2500 || res.cls > 0.1 || res.tbt > 200 ? '⚠' : '✓'} ${p}  LCP ${Math.round(res.lcp)} ms (${res.lcpEl || '?'})  CLS ${res.cls.toFixed(3)}${res.clsMax > res.cls + 0.05 ? ` (up to ${res.clsMax.toFixed(2)})` : ''}  TBT ${Math.round(res.tbt)} ms  ${kb(res.total)}${res.fontsFailed ? `  ⚠ ${res.fontsFailed} font request(s) failed (${res.fontsWhy}): measured without its fonts` : ''}`);
   }
   return out;
 }
@@ -135,20 +144,31 @@ const flags = after.filter((r) => !r.error).flatMap((r) => [
   r.clsMax > 0.1 && r.cls <= 0.1 && `${r.p}: CLS reached ${r.clsMax.toFixed(2)} in one run — intermittent; find the late element`,
   r.tbt > 200 && `${r.p}: TBT ${Math.round(r.tbt)} ms over 200 ms (long main-thread tasks: INP risk)`,
 ].filter(Boolean));
+const notes = []; // ◇ questions and caveats for the report, not failures
 if (before) {
+  // Said whenever the baseline lost font requests, not only when it would excuse a regression: it skews every
+  // comparison (the old pages look lighter and faster than the live site), including a new build that "got heavier".
+  const broken = before.filter((b) => !b.error && b.fontsFailed);
+  if (broken.length) notes.push(`broken baseline on ${broken.map((b) => b.p).join(', ')}: ${broken.reduce((s, b) => s + b.fontsFailed, 0)} font request(s) failed here (${[...new Set(broken.map((b) => b.fontsWhy))].join('; ')}), so the old build was measured there without the fonts it downloads in production. Its transfer and LCP on ${broken.length > 1 ? 'those pages' : 'that page'} are not production figures: lighter and faster than the live site. Judge the new build against the budget as well as the baseline, and say so in the report`);
   md.push('', '## Against the baseline', '', '| Page | LCP | CLS | TBT | Transfer |', '| --- | --- | --- | --- | --- |');
   for (const r of after) {
     const b = before.find((x) => x.p === r.p);
     if (!b || b.error || r.error) continue;
     const d = (x, y, u = 'ms') => `${Math.round(y)} → ${Math.round(x)} ${u}`;
-    md.push(`| ${r.p} | ${d(r.lcp, b.lcp)} | ${b.cls.toFixed(3)} → ${r.cls.toFixed(3)} | ${d(r.tbt, b.tbt)} | ${kb(b.total)} → ${kb(r.total)} |`);
+    md.push(`| ${r.p}${b.fontsFailed ? ' (baseline broken)' : ''} | ${d(r.lcp, b.lcp)} | ${b.cls.toFixed(3)} → ${r.cls.toFixed(3)} | ${d(r.tbt, b.tbt)} | ${kb(b.total)} → ${kb(r.total)} |`);
     if (r.lcp > b.lcp * 1.1 + 100) flags.push(b.fontsFailed
-      ? `${r.p}: slower than the baseline (LCP ${Math.round(b.lcp)} → ${Math.round(r.lcp)} ms), but the baseline is broken: ${b.fontsFailed} of its font request(s) failed here, so the old page never paid for its fonts. Judge the new build against the budget, and say so in the report`
+      ? `${r.p}: slower than the baseline (LCP ${Math.round(b.lcp)} → ${Math.round(r.lcp)} ms), but the baseline is broken (see its note): the old page never paid for its fonts. Judge this page against the budget`
       : `${r.p}: slower than the baseline (LCP ${Math.round(b.lcp)} → ${Math.round(r.lcp)} ms) — within budget is not enough when the old build was faster`);
     if (r.cls > b.cls + 0.05) flags.push(`${r.p}: more layout shift than the baseline (${b.cls.toFixed(3)} → ${r.cls.toFixed(3)})`);
+    if (r.total > b.total * GROW.ratio && r.total - b.total > GROW.bytes) {
+      // Where the growth is, by type (first run of each; ≥ 5 KB), so the question points at something.
+      const by = [...new Set([...Object.keys(r.bytes), ...Object.keys(b.bytes)])].map((k) => [k, (r.bytes[k] || 0) - (b.bytes[k] || 0)])
+        .filter(([, v]) => v >= 5 * 1024).sort((p, q) => q[1] - p[1]);
+      notes.push(`${r.p}: transfer ${kb(b.total)} → ${kb(r.total)} (+${kb(r.total - b.total)}${by.length ? `: ${by.map(([k, v]) => `${k} +${kb(v)}`).join(', ')}` : ''}) — what does it buy? Are the fonts self-hosted, woff2, subset and only the weights used; is every script needed on this page; are images sized to their box? Growth can be right; answer it in the report${b.fontsFailed ? ' (part of the gap is the fonts the broken baseline never downloaded)' : ''}`);
+    }
   }
 }
-md.push('', '## Flags', '', ...(flags.length ? flags.map((f) => `- ⚠ ${f}`) : ['- ✓ none']));
+md.push('', '## Flags', '', ...(flags.length || notes.length ? [...flags.map((f) => `- ⚠ ${f}`), ...notes.map((n) => `- ◇ ${n}`)] : ['- ✓ none']));
 const outFile = String(a.out || 'perf.md');
 await writeFile(outFile, md.join('\n') + '\n');
-console.log(`\n${flags.length ? `${flags.length} flag(s)` : 'no flags'} · ${outFile}`);
+console.log(`\n${flags.length ? `${flags.length} flag(s)` : 'no flags'}${notes.length ? `, ${notes.length} note(s) to answer in the report (◇)` : ''} · ${outFile}`);
