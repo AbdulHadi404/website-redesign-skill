@@ -113,6 +113,20 @@ A trailing Arabic-convention minus (Eastern digits) shifts negatives by one char
 - give every value a sign (`signDisplay: 'always'`)
 - put direction in its own column or as a word
 
+### 8. The date calendar differs between engines
+
+`new Intl.DateTimeFormat('ar-SA')` resolves to `islamic-umalqura` in Chromium 141: `١٧‏/٤‏/١٤٤٨ هـ` for 28 Sept 2026. In Node 22.22 (ICU 78.2, CLDR 48) it resolves to `gregory`: `٢٨‏/٠٩‏/٢٠٢٦`. (`cal.mjs` in the session scratchpad; both results are in the table below.) Every other Arabic locale tested (`ar`, `ar-AE`, `ar-EG`) defaults to Gregorian in both engines.
+
+| Locale | Chromium 141 | Node 22 / ICU 78 |
+| --- | --- | --- |
+| `ar-SA` | islamic-umalqura, arab digits | gregory, arab digits |
+| `ar-SA-u-ca-gregory-nu-latn` | gregory, latn | gregory, latn |
+| `fa-IR` | persian, arabext | persian, arabext |
+
+**Rule:** name the calendar and the digit system in the locale tag whenever dates matter. This covers invoices, due dates, reports, anything rendered on both the server and the client.
+
+The Sanad fixture (`research/experiments/H-blind-eval/`) was built with a bare `toLocaleDateString('ar-SA')`, and its Arabic view showed Hijri dates on a Gregorian invoicing product.
+
 ## What changed in the skill
 
 `references/multilingual.md`:
