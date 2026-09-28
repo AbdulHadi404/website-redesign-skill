@@ -1,6 +1,6 @@
 {
  "meta": {
-  "date": "2026-09-28T21:37:28.136Z",
+  "date": "2026-09-28T21:41:05.209Z",
   "node": "v22.22.2",
   "cpus": 4,
   "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
@@ -309,21 +309,21 @@
    "name": "three",
    "label": "three.js (mesh per item)",
    "total": {
-    "min": 539684,
-    "gzip": 136956,
-    "br": 113270
+    "min": 539703,
+    "gzip": 136966,
+    "br": 113215
    },
    "files": {
     "app.js": {
-     "min": 539684,
-     "gzip": 136956,
-     "br": 113270
+     "min": 539703,
+     "gzip": 136966,
+     "br": 113215
     }
    },
    "worker": null,
    "app": {
-    "min": 8012,
-    "gzip": 3639,
+    "min": 8031,
+    "gzip": 3649,
     "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
    },
    "runtime": {
@@ -338,26 +338,26 @@
    "name": "three-instanced",
    "label": "three.js (one InstancedMesh)",
    "total": {
-    "min": 543316,
-    "gzip": 138004,
-    "br": 114094
+    "min": 543335,
+    "gzip": 138016,
+    "br": 113874
    },
    "files": {
     "app.js": {
-     "min": 543316,
-     "gzip": 138004,
-     "br": 114094
+     "min": 543335,
+     "gzip": 138016,
+     "br": 113874
     }
    },
    "worker": null,
    "app": {
-    "min": 8522,
-    "gzip": 3967,
+    "min": 8541,
+    "gzip": 3977,
     "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
    },
    "runtime": {
     "min": 534793,
-    "gzipApprox": 134037,
+    "gzipApprox": 134039,
     "packages": {
      "three": 534793
     }
