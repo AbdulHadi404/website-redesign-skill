@@ -13,6 +13,7 @@
  *                                                             Frontend page (govuk-frontend 6.5.1, MIT, CSS only),
  *                                                             finish defects (radii, widows, dead band)
  *   research/experiments/H-blind-eval/fixture/                the Milkline fixture (herd app for the walkthrough driver)
+ *   research/experiments/H-blind-eval/sanad/fixture/          the old Sanad bilingual dashboard (numbers, scripts, states)
  *
  * If a change is meant to alter a result, update the expectation here in the same commit and say why.
  */
@@ -53,6 +54,7 @@ const run = (file, args) => new Promise((resolve) => {
 // ---- the cases ----------------------------------------------------------------------------------------
 const lab = `${base}/research/experiments/a11y-lab/pages`;
 const fx = `${base}/tools/regress/fixtures`;
+const sanad = `${base}/research/experiments/H-blind-eval/sanad/fixture`;
 const contracts = (n) => path.join(root, `research/experiments/a11y-lab/contracts-${n}.json`);
 const count = (re, s) => (s.match(re) || []).length;
 const section = (md, page) => { const i = md.indexOf(`## ${page}`); if (i < 0) return ''; const j = md.indexOf('\n## ', i + 3); return md.slice(i, j < 0 ? undefined : j); };
@@ -115,6 +117,43 @@ const cases = [
       [/cut off by #herd/.test(tree), 'marked tree: herd columns cut off by #herd'],
       [/Alerts[^\n]*\n[^\n]*No data/.test(tree) || /No data/.test(tree), 'marked tree lists the Alerts panel'],
       [/broken-phone-failed\.png/.test(out), 'a failing step leaves a capture'],
+    ] },
+  { group: 'audit', name: 'audit.mjs --kind dashboard: the old Sanad bilingual dashboard', run: async () => {
+      const r = await run('audit.mjs', ['--base', sanad, '--paths', '/', '/?lang=en', '--widths', '1440', '--kind', 'dashboard', '--no-axe', '--out', `${tmp}/audit-sanad`]);
+      return { ...r, md: await readFile(`${tmp}/audit-sanad/audit.md`, 'utf8').catch(() => '') };
+    },
+    check: ({ md }) => {
+      const ar = section(md, '/  '), en = section(md, '/?lang=en');
+      return [
+        [/## \/  \(app, as dashboard\)/.test(md), '--kind dashboard maps to the app rules'],
+        [/✗ Two digit systems in one row/.test(ar), 'Arabic page: two digit systems in one row'],
+        [/✗ 1 <input type="number"> on a right-to-left page/.test(ar), 'Arabic page: type=number on RTL'],
+        [/Numeric columns:[^\n]*aligned left[^\n]*no tabular-nums[^\n]*decimals vary/.test(ar), 'Arabic page: numeric columns misaligned, proportional, mixed decimals'],
+        [/A greeting/.test(ar), 'Arabic greeting detected'],
+        [/Arabic-script text on a Latin-script page[^\n]*فاتورة جديدة/.test(en), 'English page: untranslated Arabic strings'],
+      ];
+    } },
+  { group: 'a11y', name: 'a11y.mjs: old Sanad, English page (reflow clipping, language of parts)', run: () => run('a11y.mjs', [`${sanad}/?lang=en`, '--out', `${tmp}/a11y-sanad`]),
+    check: ({ out }) => [
+      [/FAIL reflow\s+1\.4\.10\s+1 control\(s\) cut off at 320px/.test(out), 'the New-invoice button cut off at 320px'],
+      [/FAIL reflow\s+1\.4\.10\s+\d+ text element\(s\) cut off at 320px/.test(out), 'table text cut off at 320px'],
+      [/3\.1\.2[^\n]*العربية/.test(out), 'language switcher "العربية" without lang'],
+    ] },
+  { group: 'states', name: 'states.mjs: identical pairs and a missing fixture on the old Sanad', run: async () => {
+      const spec = path.join(tmp, 'sanad-states.json');
+      await (await import('node:fs/promises')).writeFile(spec, JSON.stringify({ path: '/', device: 'desktop', states: [
+        { name: 'idle' },
+        { name: 'loading', route: { url: '**/data/invoices.json', delay: 6000 }, steps: [{ wait: 1500 }] },
+        { name: 'error', route: { url: '**/data/invoices.json', status: 500, body: '{}' } },
+        { name: 'offline', route: { url: '**/data/invoices.json', abort: true } },
+        { name: 'missing', route: { url: '**/data/invoices.json', file: 'nope.json' } },
+      ] }));
+      return run('states.mjs', [spec, '--base', sanad, '--out', `${tmp}/sanad-states`]);
+    },
+    check: ({ out }) => [
+      [/error \(desktop\)[^\n]*\n\s+⚠ identical to "loading"/.test(out), 'error renders identical to loading'],
+      [/offline \(desktop\)[^\n]*\n\s+⚠ identical to "(loading|error)"/.test(out), 'offline renders identical to loading'],
+      [/✗ missing[^\n]*\n\s+⚠ failed: fixture file not found/.test(out), 'a missing fixture file fails only its state'],
     ] },
   { group: 'parity', name: 'parity.mjs: Arabic digits, reformatted values, --derived', run: async () => {
       const r = await run('parity.mjs', ['--before', `${fx}/parity/old`, '--after', `${fx}/parity/new`, '--paths', '/', '--out', `${tmp}/parity.md`, '--derived', '/^\\d+ days$/']);
