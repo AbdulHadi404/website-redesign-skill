@@ -111,6 +111,44 @@ Fill `templates/critique.md` from the renders. The method:
 
 Expect at least one round of fixes; the first implementation almost always keeps something it should have replaced.
 
+## Task walkthroughs (productive routes)
+
+On a work tool, "can the user do the task?" is answered by attempting it, not by looking at the screen. Do it on the old build and the new one, with the same tasks, on the device the user holds.
+
+1. **Write each top task as the user would say it, with the answer they need.** For example: "Which cows do I check before letting them out?" Do not write "use the alerts panel": naming the route gives the answer away.
+2. **Start from a scenario with no steps** and look at the capture:
+   `node scripts/states.mjs walk.json --aria --each --out captures/walk/new`
+   Beside each capture, `--aria` writes the accessibility tree. Every node a sighted user cannot read on that screen is marked: ⟨below⟩, ⟨cut off by …⟩, ⟨in a sideways scroller: …⟩, ⟨covered by …⟩, ⟨transparent⟩. The header counts what is named but not readable.
+3. **Choose the next step from what the capture shows**, the way the user would:
+   - `tap` a point you can see, or a visible control's role and name
+   - `swipe` to scroll
+   - `fill` what a keyboard would type
+
+   Never `scroll` to a selector. It reaches content no finger can, such as a column cut off by `overflow: hidden`. Never act on a marked node until a step has brought it on screen. Append the step and run again: every run replays from a fresh load, and `--each` gives the whole path as numbered captures, with a ring where each tap landed.
+4. **Stop when you can state the answer the user needed**, or when three steps in a row make no progress (a failure). The driver reports:
+   - "changed nothing on screen" for a dead tap or a swipe on something that does not scroll
+   - what each tap hit and its size
+   - a capture of where a failing step stopped
+5. **Record per task and build:**
+   - the result: yes / partial / no, with the answer as you would give it
+   - the number of user actions
+   - the dead taps
+   - the doubts: each one a capture and the moment a user would hesitate
+   - what was named but not readable
+
+   An answer you had to assemble by cross-referencing screens (counting rows across four captures, matching dots to names) is "partial". A model reads more patiently than someone at 5 am.
+6. **Say what it cannot show.** Reach, tap accuracy, gloves, glare, fatigue and real assistive technology are outside it. It is a walkthrough, not a usability test with users, and the report says so.
+
+The first run of this method compared an old and a redesigned field-tool screen on a phone (research experiment K; four attempts, about six minutes). It found things no checklist asks about:
+
+- a KPI tile saying "Alerts 5" above an Alerts panel saying "No data"
+- the answer to the first task sitting in a clipped column
+- the cow's name scrolling away exactly when the status came into view
+- a backdrop tap that opened another record instead of closing the sheet
+- a reading with no time on it
+
+It also overstated the old build's success. The tester had used the tree to find hidden columns and a selector scroll to reveal them, which no user could do. The ⟨…⟩ marks, touch swipes and dead-tap reports exist because of that.
+
 ## Reporting captures
 
 Send the user the before/after sheets (first viewport and full page at desktop, full page at phone) and the removal-test sheet if it made a point. Large images may need splitting or recompressing to upload; keep the originals.

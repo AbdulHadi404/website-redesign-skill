@@ -55,6 +55,14 @@ export function resolveModule(name) {
   return null;
 }
 
+/** Resolve the first of several packages, root by root: the project's own copy beats this folder's, which beats a global one. */
+export function resolveFirst(names) {
+  for (const from of roots()) for (const name of names) {
+    try { return createRequire(from).resolve(name); } catch { /* next */ }
+  }
+  return null;
+}
+
 /** Import a package from the first root that has it; null if none does. */
 export async function importModule(name) {
   const p = resolveModule(name);
@@ -84,7 +92,9 @@ function chromiumCandidates(explicit) {
 
 /** Launch Chromium through Playwright. Returns { browser, chromium }. */
 export async function launch({ chrome, headless = true } = {}) {
-  const pw = (await importModule('playwright')) ?? (await importModule('playwright-core'));
+  // Root by root, not package by package: a stale global \`playwright\` must not shadow the \`playwright-core\` pinned here.
+  const pwPath = resolveFirst(['playwright', 'playwright-core']);
+  const pw = pwPath ? await import(pathToFileURL(pwPath).href).then((m) => m.default ?? m) : null;
   if (!pw) {
     console.error('Playwright not found. Run `npm install` in ' + scriptsDir + ' (or `npm i -D playwright-core` in the project).');
     process.exit(1);

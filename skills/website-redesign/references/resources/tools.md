@@ -10,7 +10,7 @@ Checked 2026-09-28. The scripts in this skill cover the common path; the rest ar
 | `audit.mjs` | What is measurably wrong, and which generic-look signals are present? (`--kind` switches marketing, app and field rules) |
 | `a11y.mjs` | What would a keyboard, screen-reader, zoom, forced-colours or colour-blind user hit that rule engines cannot see? |
 | `widgets.mjs` | Does each custom widget keep its keyboard contract (dialog, tabs, disclosure, live region, form errors, menu button)? |
-| `states.mjs` | What does each widget look like loading, empty, failing, offline, stale, with 200 items, open, focused — driven by mocked routes and steps, not imagined? |
+| `states.mjs` | What does each widget look like loading, empty, failing, offline, stale, with 200 items, open, focused — driven by mocked routes and steps, not imagined? With `--aria --each`: can a user do the top task from what is on screen (`visual-qa.md`, "Task walkthroughs")? |
 | `parity.mjs` | What did the redesign add without a source, drop, or break (routes, ids, form fields, metadata)? |
 | `contrast.mjs` | Does this text/ground pair pass WCAG 2, and what is its APCA Lc? |
 | `palette.mjs` | What colours are in the logo, and what role scales follow from the brand colour? |

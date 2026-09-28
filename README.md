@@ -57,7 +57,7 @@ Measurement replaces guesswork wherever something can be measured. All are in `s
 | `audit.mjs` | What is measurably wrong, judged by the rules for `--kind` marketing, app, field, commerce, docs or service? Checks overflow and phone zoom-out, contrast on the painted ground, invisible focus, targets, fake controls, clipped text, colour-only status, hidden content, fonts that never loaded, LCP/CLS, axe-core, and generic-look signals. |
 | `a11y.mjs` | What would keyboard, screen-reader, zoom, forced-colours or colour-blind users hit that rule engines miss? |
 | `widgets.mjs` | Do custom widgets keep their keyboard contracts (dialog, tabs, disclosure, live region, form errors, menu button)? |
-| `states.mjs` | What does each widget look like loading, empty, failing, offline, stale, with 200 items, open or focused? It drives these states from mocked routes and steps, and flags a scenario that changed nothing. |
+| `states.mjs` | What does each widget look like loading, empty, failing, offline, stale, with 200 items, open or focused? It drives these states from mocked routes and steps, and flags a scenario or step that changed nothing. With `--aria --each` it drives task walkthroughs: touch taps and swipes, a capture per step, and the accessibility tree marked with what a sighted user cannot read on that screen. |
 | `parity.mjs` | Did the redesign add unsourced claims, or drop routes, ids, form fields, analytics `data-*` hooks, form submissions or metadata? |
 | `contrast.mjs` | WCAG 2 and APCA for any colours or token file. |
 | `palette.mjs` | Samples a logo's colours and builds 12-step OKLCH role scales with solved text steps. |

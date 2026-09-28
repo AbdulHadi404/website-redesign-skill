@@ -44,6 +44,15 @@ One line per point: **objective → element → effect → why** (principle or e
 | 21 | Copy short enough to be read; no happy talk, no clichés, product UI written as product UI; one label per intent? | all | | | |
 | 22 | Would it hold up beside the Phase 2 references — in finish, restraint and hierarchy? | all | | | |
 
+## Task walkthroughs (productive routes)
+
+The evidence for check 2. Follow `visual-qa.md`, "Task walkthroughs": the same tasks on the old and the new build, on the user's device, judged from the captures.
+
+| Task (in the user's words) | Build | Result: yes / partial / no, and the answer given | User actions | Dead taps | Doubts (capture, moment) | Named but not readable |
+| --- | --- | --- | --- | --- | --- | --- |
+| | old | | | | | |
+| | new | | | | | |
+
 **Weakest screen or chapter and why:** …
 
 **Fixes made in this round** (one batch; then one full recapture): …

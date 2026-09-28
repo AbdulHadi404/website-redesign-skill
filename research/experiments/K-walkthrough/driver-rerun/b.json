@@ -1,0 +1,32 @@
+{
+ "path": "/app/",
+ "device": "phone",
+ "states": [
+  {
+   "name": "new-task2",
+   "steps": [
+    {
+     "tap": "role=button[name=/Hazel/] >> nth=0"
+    },
+    {
+     "press": "Escape"
+    },
+    {
+     "swipe": {
+      "dx": 0,
+      "dy": -600
+     }
+    },
+    {
+     "tap": "role=searchbox"
+    },
+    {
+     "fill": [
+      "role=searchbox",
+      "1629"
+     ]
+    }
+   ]
+  }
+ ]
+}

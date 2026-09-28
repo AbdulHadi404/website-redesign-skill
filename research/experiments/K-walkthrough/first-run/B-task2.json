@@ -1,0 +1,3 @@
+{ "path": "/app/", "device": "phone", "states": [
+  { "name": "c3", "steps": [ { "scroll": 800 } ] }
+] }
