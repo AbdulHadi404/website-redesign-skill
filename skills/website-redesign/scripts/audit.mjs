@@ -302,6 +302,7 @@ try {
       if (sg.headingRatio && sg.headingRatio < 2 && !mobile && kind === 'marketing') S.push(`Largest heading is only ${sg.headingRatio}× the body size (${sg.bodyPx}px) — a flat scale for a marketing page (fine for product UI).`);
       if (sg.radiusMismatch?.length) W.push(`Nested corners not concentric: ${sg.radiusMismatch.slice(0, 4).join('; ')} — an inner radius near its parent's corner should be about the outer radius minus the gap, or the corners read as two shapes.`);
       if (sg.nearMisses?.length) W.push(`Near-miss alignment — text blocks whose left edges sit 1–4px apart (${sg.leftEdges} shared edges in all): ${sg.nearMisses.slice(0, 5).join('; ')} — put them on one edge or separate them deliberately.`);
+      if (sg.widows?.length) W.push(`Headline widows at ${width}px: ${sg.widows.slice(0, 4).join('; ')} — \`text-wrap: balance\` (or \`pretty\`), a \`max-width\` in \`ch\`, or a rewrite.`);
       if (sg.headingInversions?.length) W.push(`Heading sizes inverted: ${sg.headingInversions.join(', ')} — the visual outline contradicts the document outline.`);
       if (sg.flatSteps.length) W.push(`Heading sizes closer than 1.2× apart: ${sg.flatSteps.join(', ')} — levels that do not read as different.`);
       const perChars = inv.totalChars / Math.max(sg.emDashes, 1);

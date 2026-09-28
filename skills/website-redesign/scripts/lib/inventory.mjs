@@ -472,6 +472,31 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   const byLevel = {};
   for (const h of headings) if (h.level) byLevel[h.level] = Math.max(byLevel[h.level] || 0, h.px);
   const lv = Object.keys(byLevel).map(Number).sort((p, q) => p - q);
+  // ---- headline widows: a heading whose last line holds one word -----------------------------------
+  // Measured per word with Range rects, so it is the wrap this width actually produced.
+  const widows = [];
+  for (const h of document.querySelectorAll('h1, h2, h3, [role=heading]')) {
+    if (!visible(h) || widows.length >= 6) continue;
+    const words = [];
+    const walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      for (const m of n.data.matchAll(/\S+/g)) {
+        const r = document.createRange(); r.setStart(n, m.index); r.setEnd(n, m.index + m[0].length);
+        const b = r.getClientRects()[0];
+        if (b && b.width > 0) words.push({ w: m[0], top: b.top, h: b.height });
+      }
+    }
+    if (words.length < 4) continue;
+    const lines = [];
+    for (const w of words) { const l = lines.find((x) => Math.abs(x.top - w.top) < w.h * 0.5); if (l) l.words.push(w.w); else lines.push({ top: w.top, words: [w.w] }); }
+    lines.sort((x, y) => x.top - y.top);
+    const last = lines[lines.length - 1];
+    // A lone short word ("it.", "AI") is the classic widow; a single long compound can be deliberate.
+    if (lines.length >= 2 && last.words.length === 1 && last.words[0].replace(/\W/g, '').length <= 12) {
+      widows.push(`${h.tagName.toLowerCase()} "${words.slice(0, 6).map((w) => w.w).join(' ')}${words.length > 6 ? ' …' : ''}" ends with "${last.words[0]}" alone on line ${lines.length}`);
+    }
+  }
+
   const headingInversions = [];
   for (let i = 0; i < lv.length; i++) for (let j = i + 1; j < lv.length; j++) if (byLevel[lv[j]] > byLevel[lv[i]] + 1) headingInversions.push(`h${lv[j]} ${Math.round(byLevel[lv[j]])}px > h${lv[i]} ${Math.round(byLevel[lv[i]])}px`);
 
@@ -544,7 +569,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       gradientText, emoji: emoji.slice(0, 10), cliches: [...cliches], statClaims: statClaims.slice(0, 10), gradients: gradients.length, violetGradients: gradients.filter((g) => g.violet).length,
       backdropBlur: blur, cards, pills, buttonsLike, iconTiles, domNodes: all.length,
       mainGround, creamGround, eyebrows, eyebrowExamples, sectionCount, accentedHeadlines: accentedHeadlines.slice(0, 5), sideStripes, stripeExamples, glows, oneRadius, centredShare, nearMisses, leftEdges: edges.length, radiusMismatch,
-      emDashes, middleDots, arrowCtas, aphorisms, headingRatio, bodyPx, flatSteps, headingInversions,
+      emDashes, middleDots, arrowCtas, aphorisms, headingRatio, bodyPx, flatSteps, headingInversions, widows,
       cardTextShare: Math.round((charsInCards / pageChars) * 100), outerCards: outerCards.length, kpiTiles, greeting, iconOnly, unlabelledCharts: charts,
       controlHeights: [...new Set(controls)].sort((x, y) => x - y), maxPx, hoverMoves, badgeAboveH1,
     },

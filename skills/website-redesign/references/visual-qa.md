@@ -46,7 +46,7 @@ Compare with the Phase 1 run in `audit/before`. Every ✗ is fixed or justified 
 ## What to check, per width
 
 - Horizontal overflow and which element causes it (`audit.mjs` names it; `100vw` plus padding overflows at every desktop width — delete `100vw`, block elements are already full width).
-- Headline wrapping: no orphaned single words, no break inside an emphasised phrase, nothing overlapping the subject of a photograph.
+- Headline wrapping: no orphaned single words (`audit.mjs` reports headings whose last line holds one word, per width), no break inside an emphasised phrase, nothing overlapping the subject of a photograph.
 - Photo crops: the subject visible and not decapitated; copy on its own ground.
 - Whitespace: no dead bands (a `100svh` hero on a tall screen — cap it with `min(100svh, 56rem)` — a parallax gap, an empty column).
 - Alignment: columns, rules and baselines line up; concentric radii; nothing a few pixels off. `audit.mjs` reports text blocks whose left edges sit 1–4 px apart (usually two copies of one component with drifted spacing) and rounded elements close inside a rounded parent whose radius is more than 4 px above the outer radius minus the gap.
