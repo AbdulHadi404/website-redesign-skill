@@ -1,0 +1,7 @@
+[
+  { "type": "dialog", "trigger": "text=Invite teammates →" },
+  { "type": "tabs", "tablist": "[role=tablist]" },
+  { "type": "disclosure", "button": "text=Advanced filters" },
+  { "type": "live", "trigger": "text=Export CSV" },
+  { "type": "form-errors", "form": "form", "submit": "button[type=submit]" }
+]

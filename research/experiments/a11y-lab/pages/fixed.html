@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard – Acme Analytics</title>
+<style>
+  :root {
+    --bg: #ffffff; --surface: #f4f5f7; --text: #1d2330; --text-muted: #555d6e; /* 7.1:1 on white, 6.4:1 on surface */
+    --line: #8a93a3;          /* control boundaries: 3.2:1 on white (1.4.11) */
+    --line-soft: #e3e6eb;     /* decorative dividers only */
+    --accent: #1f5fd1;        /* 5.6:1 on white: usable as text and fill */
+    --on-accent: #ffffff;
+    --danger: #b3261e;        /* 6.5:1 on white */
+    --success: #1c7a34;       /* 5.3:1 on white */
+    --focus: #1f5fd1;         /* focus ring: >= 3:1 against white and surface */
+    --header-bg: #0b1b3a; --header-text: #dfe6f5; --header-link: #b9c7e6;
+    --header-h: 64px;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #11151c; --surface: #1a2029; --text: #e7eaf0; --text-muted: #a9b1bf;
+      --line: #7c8698; --line-soft: #2a313c; --accent: #7fa8ff; --on-accent: #0b1320;
+      --danger: #ff8a80; --success: #6fd38a; --focus: #9ec0ff;
+    }
+  }
+  @media (prefers-contrast: more) {
+    :root { --text-muted: var(--text); --line: currentColor; }
+  }
+  * { box-sizing: border-box; }
+  /* 2.4.11: sticky header never hides the focused element */
+  html { scroll-padding-top: calc(var(--header-h) + 16px); }
+  body { margin: 0; font: 1rem/1.5 system-ui, sans-serif; color: var(--text); background: var(--bg); }
+  /* 2.4.7 / 2.4.13: one visible focus style; outline survives forced-colors mode */
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .visually-hidden { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .skip { position: absolute; left: 8px; top: -100px; z-index: 100; background: var(--bg); color: var(--accent); padding: 12px 16px; font-weight: 600; }
+  .skip:focus { top: 8px; }
+  header.top { position: sticky; top: 0; z-index: 10; min-height: var(--header-h); background: var(--header-bg); color: var(--header-text); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding: 8px 16px; }
+  header.top :focus-visible { outline-color: #ffffff; }
+  .logo { font-weight: 700; color: var(--header-text); text-decoration: none; }
+  .primary-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; padding: 0; }
+  .primary-nav a { color: var(--header-link); text-decoration: none; display: inline-block; padding: 10px 4px; }
+  .primary-nav a[aria-current="page"] { color: #fff; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; }
+  .header-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+  .icon-link, .icon-btn { display: inline-grid; place-items: center; min-width: 44px; min-height: 44px; color: inherit; background: transparent; border: 1px solid transparent; border-radius: 8px; cursor: pointer; }
+  .icon-link svg, .icon-btn svg { width: 20px; height: 20px; fill: currentColor; }  /* currentColor → follows forced colors */
+  .btn { font: inherit; background: var(--accent); color: var(--on-accent); border: 2px solid transparent; padding: 10px 16px; min-height: 44px; border-radius: 8px; cursor: pointer; }
+  .btn.secondary { background: transparent; color: var(--accent); border-color: var(--accent); }
+  .announce { background: #fff6d6; color: #3d3000; padding: 8px 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .announce p { margin: 0; }
+  .layout { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); max-width: 80rem; }
+  @media (max-width: 48rem) { .layout { grid-template-columns: minmax(0, 1fr); } }
+  aside.side { background: var(--surface); padding: 16px; }
+  aside.side ul { list-style: none; margin: 0; padding: 0; }
+  aside.side a { color: var(--accent); display: block; padding: 10px 0; }
+  main { padding: 16px 24px; min-width: 0; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 12px; list-style: none; padding: 0; margin: 0; }
+  .kpi { border: 1px solid var(--line); border-radius: 8px; padding: 12px; } /* no fixed height: survives 1.4.12 text spacing */
+  .kpi .label { color: var(--text-muted); margin: 0; }
+  .kpi .big { font-size: 1.625rem; font-weight: 700; margin: 0; }
+  .trend-up { color: var(--success); } .trend-down { color: var(--danger); }
+  .card-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  figure { margin: 0; }
+  .chart svg { max-width: 100%; height: auto; }
+  .legend { display: flex; gap: 16px; list-style: none; padding: 0; flex-wrap: wrap; }
+  .swatch { display: inline-block; width: 24px; height: 0; border-top: 3px solid; vertical-align: middle; margin-right: 6px; }
+  .table-wrap { overflow-x: auto; }  /* 1.4.10 exception: data tables may scroll in one direction */
+  .table-wrap:focus-visible { outline: 3px solid var(--focus); }
+  table { border-collapse: collapse; width: 100%; }
+  caption { text-align: left; font-weight: 600; padding: 4px 0 8px; }
+  th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--line-soft); }
+  thead th { background: var(--surface); }
+  th button { font: inherit; font-weight: 700; background: none; border: 1px solid transparent; /* shows in forced colors */ padding: 4px; color: inherit; cursor: pointer; display: inline-flex; gap: 4px; align-items: center; min-height: 24px; }
+  th[aria-sort] button::after { content: ""; }
+  th[aria-sort="ascending"] button::after { content: "▲"; }
+  th[aria-sort="descending"] button::after { content: "▼"; }
+  p a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+  .row-actions { display: flex; gap: 8px; }
+  .row-actions .icon-btn { border-color: var(--line); color: var(--text); }
+  [role=tablist] { display: flex; gap: 4px; border-bottom: 1px solid var(--line); }
+  [role=tab] { font: inherit; background: none; border: 0; border-bottom: 3px solid transparent; padding: 10px 14px; color: var(--text); cursor: pointer; }
+  [role=tab][aria-selected="true"] { border-bottom-color: var(--accent); font-weight: 700; }
+  [role=tabpanel] { padding: 12px 0; }
+  form .field { margin: 0 0 20px; max-width: 28rem; }
+  label, legend { display: block; font-weight: 600; margin-bottom: 4px; }
+  .hint { color: var(--text-muted); margin: 0 0 4px; font-size: .9375rem; }
+  input[type=text], input[type=email], input[type=tel], input[type=password], select { width: 100%; font: inherit; padding: 10px; border: 2px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); }
+  input[aria-invalid="true"] { border-color: var(--danger); }
+  .error-message { color: var(--danger); font-weight: 600; margin: 0 0 4px; }
+  .error-message::before { content: "⚠ "; } /* icon + text, not colour alone */
+  .error-summary { border: 4px solid var(--danger); padding: 16px; margin-bottom: 24px; }
+  .error-summary h2 { margin-top: 0; font-size: 1.25rem; }
+  .error-summary a { color: var(--danger); font-weight: 600; }
+  fieldset { border: 0; padding: 0; margin: 0 0 20px; }
+  .choice { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+  .choice input { width: 24px; height: 24px; accent-color: var(--accent); margin: 0; }
+  dialog { border: 1px solid var(--line); border-radius: 12px; padding: 24px; max-width: min(32rem, calc(100vw - 32px)); background: var(--bg); color: var(--text); }
+  dialog::backdrop { background: rgb(0 0 0 / .5); }
+  dialog .close { position: absolute; top: 8px; right: 8px; }
+  .toast-region { position: fixed; bottom: 16px; right: 16px; left: 16px; display: flex; justify-content: flex-end; pointer-events: none; }
+  .toast-region:not(:empty) > * { background: var(--text); color: var(--bg); padding: 12px 16px; border-radius: 8px; pointer-events: auto; }
+  .spinner { width: 14px; height: 14px; border: 2px solid currentColor; border-top-color: transparent; border-radius: 50%; display: inline-block; animation: sp 1s linear infinite; vertical-align: middle; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+  iframe, img, video { max-width: 100%; }  /* 1.4.10: embeds never force horizontal scroll */
+  footer { padding: 16px; color: var(--text-muted); border-top: 1px solid var(--line-soft); }
+  /* Motion: essential spinner kept but slowed; decorative motion removed */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    .spinner { animation: none; border-top-color: currentColor; border-style: dotted; }
+  }
+  /* Forced colors (Windows High Contrast): restore boundaries that relied on background/box-shadow */
+  @media (forced-colors: active) {
+    .btn, [role=tab][aria-selected="true"], .kpi { border: 2px solid ButtonText; }
+    [role=tab][aria-selected="true"] { border-bottom-width: 4px; border-bottom-color: Highlight; }
+    .skip:focus, :focus-visible { outline-color: Highlight; }
+    .swatch { forced-color-adjust: none; }  /* keep series colours, which also differ by dash pattern */
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="top">
+  <a class="logo" href="/">Acme Analytics</a>
+  <nav class="primary-nav" aria-label="Primary">
+    <ul>
+      <li><a href="/" aria-current="page">Dashboard</a></li>
+      <li><a href="/reports">Reports</a></li>
+      <li><a href="/settings">Settings</a></li>
+    </ul>
+  </nav>
+  <div class="header-actions">
+    <a class="icon-link" href="/notifications"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 2a6 6 0 0 0-6 6v4l-2 2h16l-2-2V8a6 6 0 0 0-6-6z"/></svg><span class="visually-hidden">Notifications (3 unread)</span></a>
+    <button class="icon-btn" type="button" aria-label="Account menu"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6"/></svg></button>
+    <form role="search" action="/search" class="header-search">
+      <label class="visually-hidden" for="q">Search reports</label>
+      <input id="q" name="q" type="search" style="min-height:44px;padding:8px;border:2px solid #8a93a3;border-radius:6px">
+      <button class="btn" type="submit">Search</button>
+    </form>
+  </div>
+</header>
+
+<section class="announce" aria-label="What's new">
+  <p id="news" aria-live="off">New: export to CSV</p>
+  <button class="btn secondary" type="button" id="news-toggle" aria-pressed="false">Pause updates</button>
+</section>
+
+<div class="layout">
+  <aside class="side">
+    <nav aria-label="Dashboards">
+      <ul>
+        <li><a href="/overview">Overview</a></li>
+        <li><a href="/revenue">Revenue</a></li>
+        <li><a href="/churn">Churn</a></li>
+        <li><a href="/help">Help centre</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main" tabindex="-1">
+    <h1>Dashboard</h1>
+
+    <section aria-labelledby="kpi-h">
+      <h2 id="kpi-h">Key metrics</h2>
+      <ul class="kpis">
+        <li class="kpi"><p class="label">Monthly recurring revenue (all regions, net of refunds)</p><p class="big">$48,210</p><p class="trend-up"><span aria-hidden="true">▲</span> up 4.2% vs August</p></li>
+        <li class="kpi"><p class="label">Active users</p><p class="big">1,284</p><p class="trend-down"><span aria-hidden="true">▼</span> down 1.1% vs August</p></li>
+        <li class="kpi"><p class="label">Churn</p><p class="big">2.1%</p><p>no change</p></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="trend-h">
+      <h2 id="trend-h">Revenue trend</h2>
+      <figure class="chart">
+        <svg viewBox="0 0 480 160" role="img" aria-labelledby="chart-title chart-desc" width="480" height="160">
+          <title id="chart-title">Revenue vs refunds, March to September 2026</title>
+          <desc id="chart-desc">Revenue rises steadily from $31k to $48k; refunds stay flat at about $3k.</desc>
+          <polyline fill="none" stroke="#1f5fd1" stroke-width="3" points="0,140 80,120 160,125 240,90 320,70 400,60 480,30"/>
+          <polyline fill="none" stroke="#b3261e" stroke-width="3" stroke-dasharray="8 5" points="0,100 80,110 160,95 240,105 320,100 400,110 480,108"/>
+        </svg>
+        <figcaption>
+          <ul class="legend">
+            <li><span class="swatch" style="border-color:#1f5fd1"></span>Revenue (solid)</li>
+            <li><span class="swatch" style="border-color:#b3261e;border-top-style:dashed"></span>Refunds (dashed)</li>
+          </ul>
+          <details>
+            <summary>Show chart data as a table</summary>
+            <table>
+              <caption>Monthly revenue and refunds, 2026</caption>
+              <thead><tr><th scope="col">Month</th><th scope="col">Revenue</th><th scope="col">Refunds</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Mar</th><td>$31k</td><td>$3.4k</td></tr>
+                <tr><th scope="row">Sep</th><td>$48k</td><td>$3.1k</td></tr>
+              </tbody>
+            </table>
+          </details>
+        </figcaption>
+      </figure>
+      <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='4'><rect width='40' height='4' fill='%23eee'/></svg>" alt="">
+    </section>
+
+    <section aria-labelledby="inv-h">
+      <h2 id="inv-h">Recent invoices</h2>
+      <div class="table-wrap" role="region" aria-labelledby="inv-caption" tabindex="0">
+        <table id="invoices">
+          <caption id="inv-caption">Recent invoices, sortable by customer or amount</caption>
+          <thead>
+            <tr>
+              <th scope="col" aria-sort="ascending"><button type="button" data-col="0">Customer</button></th>
+              <th scope="col">Plan</th>
+              <th scope="col"><button type="button" data-col="2">Amount</button></th>
+              <th scope="col">Status</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Contoso</td><td>Team</td><td>$640</td><td>Paid</td><td class="row-actions">
+              <button class="icon-btn" type="button" aria-label="Edit Contoso invoice"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 12v2h2l8-8-2-2z"/></svg></button>
+              <button class="icon-btn" type="button" aria-label="Delete Contoso invoice"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 4h8l-1 10H5z"/></svg></button></td></tr>
+            <tr><td>Fabrikam</td><td>Pro</td><td>$1,200</td><td>Paid</td><td class="row-actions">
+              <button class="icon-btn" type="button" aria-label="Edit Fabrikam invoice"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 12v2h2l8-8-2-2z"/></svg></button>
+              <button class="icon-btn" type="button" aria-label="Delete Fabrikam invoice"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 4h8l-1 10H5z"/></svg></button></td></tr>
+            <tr><td>Northwind</td><td>Pro</td><td>$1,200</td><td>Overdue</td><td class="row-actions">
+              <button class="icon-btn" type="button" aria-label="Edit Northwind invoice"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 12v2h2l8-8-2-2z"/></svg></button>
+              <button class="icon-btn" type="button" aria-label="Delete Northwind invoice"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 4h8l-1 10H5z"/></svg></button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p id="sort-status" class="visually-hidden" role="status"></p>
+    </section>
+
+    <section aria-labelledby="act-h">
+      <h2 id="act-h">Actions</h2>
+      <div class="card-row">
+        <button class="btn" type="button" id="invite-open">Invite teammates</button>
+        <button class="btn secondary" type="button" id="export">Export CSV</button>
+        <button class="btn secondary" type="button" aria-expanded="false" aria-controls="adv" id="adv-toggle">Advanced filters</button>
+      </div>
+      <div id="adv" hidden><p>Region: all</p></div>
+      <p>Revenue grew 12% this quarter (<a href="/r/q3">Q3 revenue report</a>). Churn fell (<a href="/r/churn">churn report</a>). Read the <a href="/docs">methodology notes</a> for details.</p>
+      <p>Our motto: <em><span lang="de">Qualität über alles</span>, <span lang="fr">toujours</span></em>.</p>
+    </section>
+
+    <section aria-labelledby="period-h">
+      <h2 id="period-h">Period</h2>
+      <div role="tablist" aria-labelledby="period-h">
+        <button role="tab" type="button" id="tab-d" aria-selected="true" aria-controls="panel-d" tabindex="0">Daily</button>
+        <button role="tab" type="button" id="tab-w" aria-selected="false" aria-controls="panel-w" tabindex="-1">Weekly</button>
+        <button role="tab" type="button" id="tab-m" aria-selected="false" aria-controls="panel-m" tabindex="-1">Monthly</button>
+      </div>
+      <div role="tabpanel" id="panel-d" aria-labelledby="tab-d" tabindex="0">Daily view</div>
+      <div role="tabpanel" id="panel-w" aria-labelledby="tab-w" tabindex="0" hidden>Weekly view</div>
+      <div role="tabpanel" id="panel-m" aria-labelledby="tab-m" tabindex="0" hidden>Monthly view</div>
+    </section>
+
+    <section aria-labelledby="acct-h">
+      <h2 id="acct-h">Account settings</h2>
+      <div class="error-summary" id="error-summary" tabindex="-1" hidden>
+        <h2 id="es-title">There is a problem</h2>
+        <ul id="error-list"></ul>
+      </div>
+      <form id="settings" novalidate>
+        <div class="field">
+          <label for="name">Full name</label>
+          <p class="error-message" id="name-err" hidden></p>
+          <input type="text" id="name" name="name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email address</label>
+          <p class="hint" id="email-hint">We send invoices here.</p>
+          <p class="error-message" id="email-err" hidden></p>
+          <input type="email" id="email" name="email" autocomplete="email" spellcheck="false" aria-describedby="email-hint" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone number <span class="hint">(optional)</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="pw">New password</label>
+          <p class="hint" id="pw-hint">At least 12 characters. You can paste from a password manager.</p>
+          <input type="password" id="pw" name="pw" autocomplete="new-password" aria-describedby="pw-hint">
+          <label class="choice" style="font-weight:400"><input type="checkbox" id="pw-show"> Show password</label>
+        </div>
+        <div class="field">
+          <label for="billing">Billing period</label>
+          <select id="billing" name="billing" autocomplete="off"><option>Monthly</option><option>Yearly</option></select>
+        </div>
+        <fieldset>
+          <legend>Notify me by</legend>
+          <label class="choice" style="font-weight:400"><input type="radio" name="notify" value="email" checked> Email</label>
+          <label class="choice" style="font-weight:400"><input type="radio" name="notify" value="sms"> SMS</label>
+        </fieldset>
+        <label class="choice" style="font-weight:400"><input type="checkbox" name="digest"> Send weekly digest</label>
+        <button class="btn" type="submit">Save changes</button>
+      </form>
+    </section>
+
+    <iframe src="about:blank" width="300" height="60" title="Embedded usage report (empty)"></iframe>
+
+    <p role="status"><span class="spinner" aria-hidden="true"></span> Syncing…</p>
+  </main>
+</div>
+
+<footer>© 2026 Acme · <a href="/help">Help</a> · <a href="/accessibility">Accessibility statement</a></footer>
+
+<dialog id="invite" aria-labelledby="invite-title">
+  <h2 id="invite-title">Invite teammates</h2>
+  <form method="dialog">
+    <label for="invite-email">Work email</label>
+    <input type="email" id="invite-email" autocomplete="off">
+    <p><button class="btn" value="send">Send invite</button></p>
+  </form>
+  <button class="icon-btn close" type="button" aria-label="Close" onclick="this.closest('dialog').close()"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2"/></svg></button>
+</dialog>
+
+<!-- Live region exists (empty) at load; content injected later is announced -->
+<div class="toast-region" role="status" aria-live="polite" id="toasts"></div>
+
+<script>
+// Dialog: native showModal() gives focus move, inert background, Esc, and focus return on close.
+document.getElementById('invite-open').addEventListener('click', () => document.getElementById('invite').showModal());
+
+// Toast via polite live region
+document.getElementById('export').addEventListener('click', () => {
+  const r = document.getElementById('toasts');
+  r.innerHTML = '<p>Export started. We’ll email the file when it’s ready.</p>';
+  setTimeout(() => { r.innerHTML = ''; }, 8000);
+});
+
+// Disclosure
+const advBtn = document.getElementById('adv-toggle');
+advBtn.addEventListener('click', () => {
+  const open = advBtn.getAttribute('aria-expanded') === 'true';
+  advBtn.setAttribute('aria-expanded', String(!open));
+  document.getElementById('adv').hidden = open;
+});
+
+// Pausable announcement rotation (2.2.2); no rotation under reduced motion
+const news = ['New: export to CSV', 'Scheduled reports now available', 'Dark mode beta'];
+let ni = 0, paused = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const tgl = document.getElementById('news-toggle');
+if (paused) { tgl.setAttribute('aria-pressed', 'true'); tgl.textContent = 'Resume updates'; }
+setInterval(() => { if (!paused) document.getElementById('news').textContent = news[++ni % news.length]; }, 6000);
+tgl.addEventListener('click', () => { paused = !paused; tgl.setAttribute('aria-pressed', String(paused)); tgl.textContent = paused ? 'Resume updates' : 'Pause updates'; });
+
+// Tabs: APG pattern, automatic activation, roving tabindex
+const tabs = [...document.querySelectorAll('[role=tab]')];
+function selectTab(t) {
+  tabs.forEach(x => { const on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; });
+  t.focus();
+}
+tabs.forEach((t, i) => {
+  t.addEventListener('click', () => selectTab(t));
+  t.addEventListener('keydown', e => {
+    const k = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+    if (k === undefined) return;
+    e.preventDefault(); selectTab(tabs[(k + tabs.length) % tabs.length]);
+  });
+});
+
+// Sortable table: aria-sort on the <th>, a real <button> inside, status message
+document.querySelectorAll('#invoices th button').forEach(b => b.addEventListener('click', () => {
+  const th = b.closest('th'); const dir = th.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending';
+  document.querySelectorAll('#invoices th[aria-sort]').forEach(x => x.removeAttribute('aria-sort'));
+  th.setAttribute('aria-sort', dir);
+  const col = +b.dataset.col, tb = document.querySelector('#invoices tbody');
+  const rows = [...tb.rows].sort((a, c) => a.cells[col].textContent.localeCompare(c.cells[col].textContent, undefined, { numeric: true }) * (dir === 'ascending' ? 1 : -1));
+  rows.forEach(r => tb.appendChild(r));
+  document.getElementById('sort-status').textContent = `Sorted by ${b.textContent}, ${dir}`;
+}));
+
+// Show password
+document.getElementById('pw-show').addEventListener('change', e => { document.getElementById('pw').type = e.target.checked ? 'text' : 'password'; });
+
+// Form validation: GOV.UK error summary pattern — summary at top (focused), message beside each field
+function setError(id, msg) {
+  const f = document.getElementById(id), m = document.getElementById(id + '-err');
+  const hint = f.dataset.hint ?? (f.dataset.hint = f.getAttribute('aria-describedby') || '');
+  if (msg) {
+    m.innerHTML = '<span class="visually-hidden">Error:</span> ' + msg; m.hidden = false;
+    f.setAttribute('aria-invalid', 'true'); f.setAttribute('aria-describedby', (hint + ' ' + id + '-err').trim());
+  } else {
+    m.hidden = true; f.removeAttribute('aria-invalid');
+    hint ? f.setAttribute('aria-describedby', hint) : f.removeAttribute('aria-describedby');
+  }
+}
+document.getElementById('settings').addEventListener('submit', e => {
+  e.preventDefault();
+  const errs = [];
+  const name = document.getElementById('name').value.trim(), email = document.getElementById('email').value.trim();
+  const nameMsg = name ? '' : 'Enter your full name';
+  const emailMsg = !email ? 'Enter your email address' : !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) ? 'Enter an email address in the correct format, like name@example.com' : '';
+  setError('name', nameMsg); setError('email', emailMsg);
+  if (nameMsg) errs.push(['name', nameMsg]);
+  if (emailMsg) errs.push(['email', emailMsg]);
+  const sum = document.getElementById('error-summary');
+  if (errs.length) {
+    document.getElementById('error-list').innerHTML = errs.map(([id, m]) => `<li><a href="#${id}">${m}</a></li>`).join('');
+    sum.hidden = false; document.title = 'Error: Dashboard – Acme Analytics'; sum.focus();
+  } else { sum.hidden = true; document.title = 'Dashboard – Acme Analytics'; document.getElementById('toasts').innerHTML = '<p>Settings saved.</p>'; }
+});
+document.getElementById('error-list').addEventListener('click', e => {
+  const a = e.target.closest('a'); if (!a) return; e.preventDefault();
+  const f = document.getElementById(a.hash.slice(1)); f.focus();
+});
+</script>
+</body>
+</html>

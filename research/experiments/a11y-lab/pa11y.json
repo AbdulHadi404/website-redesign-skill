@@ -1,0 +1,16 @@
+{
+  "chromeLaunchConfig": {
+    "executablePath": "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+    "args": [
+      "--no-sandbox"
+    ]
+  },
+  "standard": "WCAG2AA",
+  "runners": [
+    "htmlcs",
+    "axe"
+  ],
+  "includeWarnings": true,
+  "timeout": 60000,
+  "levelCapWhenNeedsReview": "warning"
+}

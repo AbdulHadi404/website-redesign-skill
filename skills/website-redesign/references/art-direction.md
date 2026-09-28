@@ -1,74 +1,106 @@
-# Phase 3 — Art direction
+# Phase 3 — Direction
 
-Goal: a written direction, specific to this company, that decides the visual system before any code is touched — and that would be recognisably wrong for a different company.
+Goal: a written direction, specific to this company and these users, that decides the visual and interaction system before any code is touched — and that would be recognisably wrong for a different company. Read `lessons.md` and `ledger.md` first, then `anti-patterns.md` ("The model's prior").
 
-## Derive the concept from the company
+Expressive surfaces (marketing, brand, editorial) get an **art direction**: a concept, and every visual layer derived from it. Productive surfaces (apps, dashboards, checkout, services) get an **interaction direction**: model, density, navigation, elevation and state language, with brand expressed through type, colour roles, tone and a few rare moments (§6). Most repos need both, on one token system.
 
-Start from the audit, not from a style you like. Read `lessons.md` first. Useful prompts:
+## 1. Position before form
 
-- What do the **logo and wordmark** already say? Their colours are the palette's first candidates; their letterform construction points at a display face (a geometric techno wordmark wants a geometric grotesk, not a serif). The mark can become a system: label glyph, list marker, watermark, the hero object.
+1. **Onlyness.** Write one sentence: *"Our [offering] is the only [category] that [benefit] for [who]"*. If it cannot be written honestly, the site cannot be distinctive honestly — say so in the report, and let clarity carry the design.
+2. **Attributes as sliders, not adjectives.** Three to five axes of *this, not that*, each with a concrete example of copy, type or image: "precise, not clinical", "warm, not cute", "confident, not loud". These become the principles in the brief; each must be able to say no.
+3. **Sources of form that belong to the company** — every one of these is richer than a style you like:
+   - the **logo and wordmark**: sampled colours are the palette's first candidates; letterform construction points at a display face (a geometric techno wordmark wants a geometric grotesk, not a serif); the mark can become a system (label glyph, list marker, watermark, the hero object);
+   - the **moment** the product serves (a call answered, a shipment scanned, a contract signed, a number updating live): concepts built from moments produce imagery, motion and copy that point the same way;
+   - the **material** of the business (paper, steel, code, voice, money, soil, light) — surfaces, textures and palettes;
+   - the **posture** the buyer needs (safe, fast, expert, calm, ambitious) — typography and pacing;
+   - the **customers' world** — photography of it is the cheapest way to make a site *theirs*;
+   - the **product itself** — real UI rendered from its real tokens, with obviously fictional data;
+   - the **vernacular of the industry** (its documents, instruments, signage) — as reference, never costume.
 
-- What is the **moment** the product serves? (a call answered, a shipment scanned, a contract signed, a dashboard updating). Concepts built from a moment produce imagery, motion and copy that all point the same way.
-- What is the **material** of the business? (paper, steel, code, voice, money, people, light). Materials suggest surfaces, textures and palettes.
-- What is the **posture** the buyer needs to feel? (safe, fast, expert, calm, ambitious, precise). Posture suggests typography and pacing.
-- What **real assets** exist? A product with a beautiful UI wants to be shown large. A service business with no UI wants photography or typography. A data product wants its data.
+## 2. Candidates, then one
 
-Write the concept as one line a founder would recognise as theirs, then a paragraph on how it translates to surfaces, type, imagery and motion. If the line would fit a random SaaS company ("modern, clean, trustworthy"), it is not a concept yet.
+List **five to seven candidate concepts** drawn from the sources above, spanning at least three material families (if more than three share one family — all "paper", all "signal" — dig further). Name **what the direction refuses**: the page this category always ships, *and* its predictable opposite (both are ruts). Develop two or three into **style tiles** (type, colour, a few UI elements, one image — no layout) or **element collages** (real fragments: a nav, a card, a chart, a headline), differing in *family* — surfaces, type voice, imagery strategy, composition — not in values. Critique them against the brief and the category dials, pick one whole, and record why the others lost. Never merge parts of two directions: blending averages them back to the default.
 
-## Direction families (examples, not templates)
+If subagents are available, one or two can propose independent directions from the audit and brief alone (never your draft); compare on company-specificity and clarity, pick one whole.
 
-The right answer differs per company. Some families that regularly produce strong, distinct results — choose from the audit, mix with intent, and never default:
+Write the concept as one line a founder would recognise as theirs ("the moment the phone rings", "the ledger", "the workshop floor"), then a paragraph on how it translates to surfaces, type, imagery and motion. If the line would fit any SaaS company ("modern, clean, trustworthy"), it is not a concept yet.
 
-- **Editorial** — serif display, generous measure, chapters, photography treated like a magazine.
-- **Typography-driven** — oversized statements, hairline grids, few or no images; the type is the identity.
+## 3. Direction families (vocabulary, not templates)
+
+Families that regularly produce strong, distinct results — choose from the audit, mix with intent, never default:
+
+- **Editorial** — serif or high-contrast display, generous measure, chapters, photography treated like a magazine. *Now the model's default for anything warm or "premium" — needs a reason from the brand.*
+- **Typography-driven** — oversized statements, hairline grids, few or no images.
 - **Product-driven** — the UI is the hero and recurs at large size; everything else is quiet.
-- **Photographic / cinematic** — full-bleed imagery of the customer's world with a strong consistent treatment; copy on its own solid ground.
-- **Technical / instrument** — monospace details, dense data, dark surfaces, diagrams that actually explain the system.
+- **Photographic / cinematic** — full-bleed imagery of the customer's world, one strong treatment, copy on its own ground.
+- **Technical / instrument** — dense data, diagrams that explain the system; monospace only if the product is technical. *Near-black + acid accent is a model default.*
 - **Brutalist / raw** — heavy type, hard edges, exposed structure, black and white with one colour.
-- **Bright and spacious** — white, air, one accent, soft imagery; for approachable consumer-facing products.
-- **Corporate-premium** — restrained palette, precise grid, proof-forward, serif or humanist grotesk.
-- **Playful / illustrated** — bespoke illustration or 3D as the identity; needs real illustration assets or a clear plan to create them.
-- **Luxury** — extreme whitespace, minimal copy, product or material photography, small type.
+- **Bright and spacious** — white, air, one accent, soft imagery; approachable consumer products.
+- **Corporate-premium** — restrained palette, precise grid, proof-forward.
+- **Playful / illustrated** — bespoke illustration or 3D as the identity; needs real assets or a plan to draw them.
+- **Luxury** — extreme whitespace, minimal copy, material photography, small type; carried by scale and restraint more than by the face.
 - **Data-oriented** — charts and live numbers as visual language; only when the numbers are real.
 
-Two unrelated companies should land in different places on this list. If the last three redesigns you did all landed in the same family, be suspicious of yourself.
+Two unrelated companies should land in different places. If the last three outputs in `ledger.md` share a family, be suspicious of yourself.
 
-## Decide every layer, in writing
+## 4. Decide every layer, in writing
 
 Fill `templates/DESIGN.md`. The decisions that matter most:
 
-**Typography.** A face the whole brand family already uses (`audit.md` §2b) is a documented brand asset: keep it and re-set it, unless the user says the identity itself is the problem. "Distance from the old site" is never a reason to drop it — distance comes from surfaces, composition, imagery and scale, not from swapping to whatever face is fashionable. Apply `design-theory.md` §2: a scale with a stated ratio, hierarchy by weight and colour before size, caps tracked and brief, and — for any company that is not a developer or infrastructure product — no condensed tracked capitals as a label system, which read as code even without a monospace face. Choose new families unless the existing ones are a documented brand asset with a reason to survive. Match the voice to the business: monospace belongs to developer and infrastructure products; a sales, services, consumer or manufacturing company gets its data in the sans or display face with tabular figures. Emphasis can be weight contrast, colour or size — the serif italic is one option, not the default. Decide display and body (and a data/mono face if the concept wants one), weights, tracking at display sizes, line heights, uppercase usage, and a real scale (hero › chapter › statement › panel › h3 › body › small › label) where every level gets used. Typography alone should make the new site read as a different generation. Free sources with proper licences: Google Fonts, Fontshare, Fontsource; check each family's licence before using it.
+**Typography.** A face the whole brand family already uses (`audit.md` §4) is a documented brand asset: keep it and re-set it unless the user says the identity is the problem — distance comes from surfaces, composition, imagery and scale, not from swapping to a fashionable face. Otherwise:
 
-**Colour.** Work through `design-theory.md` §1 and its checklist: name the harmony, budget the page 60/30/10 (accent fields count as accent), build the scales perceptually (OKLCH), tint the neutrals, keep one action colour everywhere, and keep labels and numerals off the accent. Start from the sampled logo colours and build outward — deepen or lighten them for contrast, derive the surfaces as tints, and keep the brand's hue family unless the user says the identity is the problem. Build a system, not a swatch: background surfaces (at least two, so chapters can alternate), elevated surface, text at three strengths, line colour, one accent used for action and emphasis only, and the accent's darker variant for small text on light surfaces (contrast). Avoid the reflexive purple/blue gradient unless the brand genuinely owns it. Keep brand recognition where it helps — a logo motif, a colour the customers know — and rebuild everything around it.
+1. Name the voice from the attributes and the wordmark's construction (`design-theory.md` C3).
+2. Shortlist three faces per role (display, text/UI, data or code if needed) from `resources/type-and-colour.md` and the wider catalogues — **not** from memory, which returns the saturated list.
+3. Check each with `scripts/fonts.mjs`: the features you rely on (tabular figures for any numbers that align; slashed zero; optical sizes), scripts you need, x-height for small UI sizes — and that the file you will actually serve keeps them (Google Fonts and Fontsource strip optional features).
+4. Verify the exact family name, weights, licence (OFL/Apache for public repos; Fontshare's FFL fonts must not be committed to a public repository) and loading route. Omit anything you cannot verify.
+5. A face on `scripts/lib/saturated-fonts.json` needs a written reason no other face could satisfy.
 
-**Layout philosophy.** Apply `design-theory.md` Part A: a spacing scale, a grid and baseline rhythm, hierarchy limits (three sizes, two big things), Gestalt-explainable chapters, one deliberate grid break. Container widths, gutters, vertical rhythm per chapter, how surfaces change between chapters, how much asymmetry, whether cards exist at all (often: no).
+Then set the scales (`design-theory.md` C2, C5): an expressive set for marketing routes, a productive set for product routes; hierarchy by weight and colour before size; caps tracked and brief; at most one small-caps device. Monospace only for developer and infrastructure products — a sales, services, consumer or manufacturing company sets its data in the sans with tabular figures, and no condensed tracked capitals as a label system (they read as code without a mono face). Emphasis can be weight, colour or size — the serif italic is one option, not the default.
 
-**Hero concept.** Not headline + paragraph + two buttons + screenshot. Options that work depending on the company: oversized editorial statement over a photograph with copy on its own ground; the product itself, large, doing the thing; a live demo the visitor can use in the first viewport; a split composition; typography interacting with an image; a full-width composition of product fragments. Pick the one the concept demands.
+**Colour.** Name the strategy first (`design-theory.md` B3): **Restrained** (60/30/10 — the default for most sites), **Committed** (one saturated brand hue carries 30–60% of the surface), **Full palette** (several hues with jobs — playful and consumer brands, data-rich sites), or **Drenched** (the page *is* the colour). Decide light or dark from one sentence of physical use scene, never from the category. Start from the sampled logo colours (`palette.mjs --from`) and build outward (`palette.mjs --brand`): tinted neutrals, one action colour everywhere, status colours reserved, a data palette separate from the brand scale, every text pair measured on its real ground (`contrast.mjs`). Keep the brand's hue family unless the user says the identity is the problem; avoid the reflexive purple/blue gradient unless the brand genuinely owns it.
 
-**Product visualisation.** Real screenshots if they exist. Otherwise faithful HTML fragments of real screens with sample data that is obviously illustrative (never customer names). Never a fabricated capability. Show state and flow — a row expanding into a transcript, a pipeline filling, a number changing — rather than a static frame.
+**Layout philosophy.** `design-theory.md` Part A: a spacing scale, a grid and baseline rhythm, hierarchy limits, Gestalt-explainable chapters, one deliberate grid break. Containers, gutters, rhythm per chapter, how surfaces change, how much asymmetry, whether cards exist at all (often: not).
 
-**Imagery strategy.** Photography, product, illustration, diagrams, or none — chosen and justified (see `imagery.md`). **If the company's world is photographable and free-licence photography of it exists, "none" has to be argued, not defaulted to.** A page of type, rules and drawn tiles is disciplined and forgettable; the customer's own world on the page is the cheapest way to make a site *theirs*. "None" never means *no graphics*: plan a drawn graphics layer in the brand's line style (milestone art, spot illustrations, glyphs, a watermark family from the logo) so the page has visual events between the type.
+**Hero concept and first viewport.** Describe the first viewport *exactly*: what is where, at what scale, where the primary action sits, and what the sticky header costs it. Not headline + paragraph + two buttons + screenshot. Options: an oversized statement over a photograph with copy on its own ground; the product itself, large, doing the thing; a live demo usable in the first viewport; a split; typography interacting with an image; a composition of product fragments.
 
-**Motion language.** Two or three moves that carry the concept (a masked photo reveal, a word-rise on serif headlines, dots travelling a diagram, a live transcript), plus quiet scroll reveals. Nothing that exists only to move. All of it off under `prefers-reduced-motion`.
+**Product visualisation.** Real screenshots if they exist; otherwise faithful HTML fragments of real screens, at the product's real type size and tokens, with obviously illustrative data (never customer names). Show state and flow — a row expanding, a pipeline filling, a number changing. Never a capability that does not exist.
 
-## Keep / replace / remove / create
+**Imagery strategy.** Photography, product, illustration, diagrams, or none — chosen and argued (`imagery.md`). If the company's world is photographable and free-licence photography of it exists, "none" has to be argued, not defaulted to. "None" never means no graphics: plan a drawn graphics layer in the brand's line style (milestone art, spot illustrations, glyphs, a motif-based watermark family) so the page has visual events between the type.
 
-List each explicitly:
+**Motion language.** Two or three moves that carry the concept, plus quiet reveals written to fail visible — or, on productive surfaces, only motion that explains change (`motion.md`). All of it substituted, not deleted, under `prefers-reduced-motion`.
 
-- **Keep**: facts and copy structure; functional widgets and their ids; routes and anchors; server contracts; a logo motif if it has meaning; the framework.
-- **Replace**: fonts, palette, hero, nav, footer, section grammar, product presentation, secondary pages, the social image, the favicon if the identity changes.
-- **Remove**: decorative gradients, textures, card grids, chips, badges, icon grids, animations without meaning, placeholder copy that leaked into production.
-- **Create**: new primitives (chapter wrapper, heading pattern, button variants), product fragments, diagrams, imagery pipeline, new components the concept needs.
+## 5. Convergence checks (before code)
 
-If **keep** is the longest list, the direction is still a refresh. Go back to the concept before writing code.
+Write each into `DESIGN.md`:
 
-## House-recipe check (before writing code)
+- **Similar-brief test**: one line describing what this plan would be for a different company in the same category. Same plan → it is the prior.
+- **Category test**: guessable from the category alone, or from the category plus "avoid the obvious"? Rework until neither is obvious.
+- **Second-order test**: any choice justified only as the opposite of a default? A reason must point at the company.
+- **House-recipe and ledger check**: the direction in one sentence — surfaces, display face and emphasis device, label device, dark-chapter colour, accent — compared with the recipe in `anti-patterns.md` and the rows in `ledger.md` (and any `DESIGN.md` in the user's other projects). If the sentence fits both, change the family: different surfaces, a display face chosen from the wordmark, a label device that is not mono uppercase, an accent from the logo.
+- **Breaks if** (three things that would betray the direction) and the **memory test** (what a visitor describes an hour later).
 
-Write the direction in one sentence: surfaces, display face and emphasis device, label device, dark-chapter colour, accent. Compare it with the recipe in `anti-patterns.md` ("The skill's own house style") and with any other site the user has built with this skill (look for a `DESIGN.md` in their other projects). If the sentence would fit both, change the family: different surfaces, a display face chosen from the wordmark, a label device that is not mono uppercase, an accent from the logo. Record the comparison in `DESIGN.md` under "Distance from the house recipe".
+## 6. Productive surfaces: the interaction direction
 
-## Page narrative
+For apps, dashboards, admin, checkout and services, decide in writing (`app-ui.md`, `categories.md`):
 
-Use the chapter kinds and the landing-page formula in `web-design.md` §2–3, and run the headline test on the hero before writing anything else.
+- **Interaction model** — what the user manipulates (records, documents, a canvas, a queue), and how: inline editing vs forms vs side panels; optimistic updates with undo; keyboard shortcuts for top tasks; a command palette if actions are many.
+- **Navigation model** — places (sidebar, ≤ two levels), views of one object (tabs), commands (palette), with state in the URL.
+- **Density** — body and control sizes from the category dials; whether density modes are offered, to whom.
+- **Elevation model** — canvas → surfaces → layers, named, with the nesting rule; cards only for independent objects.
+- **State language** — the state matrix rows every component needs, and how loading, empty and error read in this product's voice.
+- **Where brand shows** — type, colour roles, empty states, onboarding, success moments, marketing-to-product seams. Not in custom controls, not in motion on frequent actions.
 
+Keep what users have learned unless the audit shows it fails; say which learned things change and why.
 
-Reorganise the homepage from scratch around what a visitor must understand in seconds: what it is, who it is for, why it matters, why to trust it, what to do next. For every section ask why it deserves to exist and whether it is the most *visual* way to say it. Vary composition chapter by chapter so the page has rhythm: a typographic chapter, a product chapter, a photographic chapter, a split, an index, a closing. Real proof gets a compact chapter; missing proof gets no chapter.
+## 7. Keep / replace / remove / create
+
+- **Keep**: facts and copy structure; functional widgets and their ids; routes and anchors; contracts; a logo motif with meaning; the framework and component library; learned locations and flows on productive surfaces.
+- **Replace**: fonts, palette, hero, nav, footer, section grammar, product presentation, secondary pages, social image, favicon if the identity changes — on expressive surfaces; tokens, density, states and whatever the audit rated 3–4 on productive ones.
+- **Remove**: decorative gradients, textures, card grids, chips, badges, icon grids, animations without meaning, placeholder copy, anything invented.
+- **Create**: new primitives (chapter wrapper, heading pattern, button variants), product fragments, diagrams, the graphics layer, imagery pipeline, missing states, `SYSTEM.md` for product UI.
+
+Expressive + redesign: if **keep** is the longest list, the direction is still a refresh — go back to the concept before writing code.
+
+## 8. Page narrative (expressive routes)
+
+Use the chapter kinds and the landing-page formula in `web-design.md` §2–3, and run the headline test on the hero before writing anything else. Reorganise the homepage around what a visitor must understand in seconds: what it is, who it is for, why it matters, why to trust it, what to do next. For every section ask why it deserves to exist and whether it is the most *visual* way to say it. Vary composition chapter by chapter — typographic, product, photographic, split, index, closing. Real proof gets a compact chapter; missing proof gets no chapter.

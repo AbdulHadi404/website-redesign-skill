@@ -1,0 +1,1 @@
+[ { "type": "dialog", "trigger": "#ex1 button >> nth=0" } ]

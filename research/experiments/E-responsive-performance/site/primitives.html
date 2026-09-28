@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Layout primitives — tested</title>
+<style>
+/* ---------- tokens (fluid, rem-anchored: zoom-safe) ---------- */
+:root {
+  --step-0: clamp(1rem, 0.9375rem + 0.2778vi, 1.1875rem);
+  --step-3: clamp(1.728rem, 1.3664rem + 1.607vi, 2.8127rem);
+  --space-s: clamp(1rem, 0.9375rem + 0.2778vi, 1.1875rem);
+  --space-m: clamp(1.5rem, 1.3958rem + 0.463vi, 1.8125rem);
+  --space-l: clamp(2rem, 1.875rem + 0.5556vi, 2.375rem);
+  --measure: 65ch;
+  --tap: 44px;
+  --nav-h: 64px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { margin: 0; font: var(--step-0)/1.5 system-ui, sans-serif; color: #1b1b1b; background: #fff; }
+img, svg, video { max-inline-size: 100%; block-size: auto; }
+h1 { font-size: var(--step-3); line-height: 1.1; margin: 0; text-wrap: balance; }
+
+/* ---------- Every Layout-style primitives ---------- */
+/* Stack: vertical rhythm owned by the parent */
+.stack { display: flex; flex-direction: column; justify-content: flex-start; }
+.stack > * { margin-block: 0; }
+.stack > * + * { margin-block-start: var(--space, var(--space-m)); }
+/* Center: measure-capped column with gutters */
+.center { box-sizing: content-box; max-inline-size: var(--measure); margin-inline: auto; padding-inline: var(--space-s); }
+.center.wide { max-inline-size: 72rem; }
+/* Cluster: wrapping row of things (tags, buttons, nav links) */
+.cluster { display: flex; flex-wrap: wrap; gap: var(--gap, var(--space-s)); align-items: center; }
+/* Sidebar: side-by-side until the content would be squeezed below 50% */
+.with-sidebar { display: flex; flex-wrap: wrap; gap: var(--space-m); }
+.with-sidebar > :first-child { flex-basis: 16rem; flex-grow: 1; }
+.with-sidebar > :last-child { flex-basis: 0; flex-grow: 999; min-inline-size: 55%; }
+/* Switcher: all-in-a-row above a threshold, all-stacked below it (no intermediate orphan) */
+.switcher { display: flex; flex-wrap: wrap; gap: var(--space-s); --threshold: 40rem; }
+.switcher > * { flex-grow: 1; flex-basis: calc((var(--threshold) - 100%) * 999); }
+.switcher > :nth-last-child(n + 5), .switcher > :nth-last-child(n + 5) ~ * { flex-basis: 100%; } /* >4 items: always stack */
+/* Grid: as many columns as fit, never overflowing (min() guards narrow containers) */
+.grid { display: grid; gap: var(--space-s); grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr)); }
+/* Cover: a vertically centred principal element in at least a small-viewport-high box */
+.cover { display: flex; flex-direction: column; min-block-size: 100svh; padding: var(--space-s); }
+.cover > * { margin-block: var(--space-s); }
+.cover > .principal { margin-block: auto; }
+/* Reel: horizontal scroller with snap; keyboard-focusable and labelled in HTML */
+.reel { display: flex; gap: var(--space-s); overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; padding-block-end: .5rem; }
+.reel > * { flex: 0 0 min(80%, 18rem); scroll-snap-align: start; }
+/* Frame: fixed aspect media */
+.frame { aspect-ratio: 16 / 9; overflow: hidden; } .frame > img { inline-size: 100%; block-size: 100%; object-fit: cover; }
+
+/* ---------- Container-query component: a card that changes layout by ITS width ---------- */
+.card-host { container-type: inline-size; }
+.card { display: grid; gap: var(--space-s); padding: var(--space-s); border: 1px solid #ddd; border-radius: 12px; }
+.card .media { aspect-ratio: 4 / 3; background: #e7eef5; border-radius: 8px; }
+@container (min-width: 30rem) { .card { grid-template-columns: 12rem 1fr; align-items: start; } }
+.card h3 { margin: 0; font-size: clamp(1.1rem, 0.9rem + 2cqi, 1.5rem); } /* container-relative fluid type */
+
+/* ---------- Responsive data table: region scroll + sticky first column ---------- */
+.table-scroll { overflow-x: auto; }
+.table-scroll:focus-visible { outline: 2px solid #1a56db; outline-offset: 2px; }
+.table-scroll table { border-collapse: separate; border-spacing: 0; min-inline-size: 40rem; }
+.table-scroll th, .table-scroll td { padding: .5rem .75rem; border-block-end: 1px solid #ddd; text-align: start; }
+.table-scroll td:first-child, .table-scroll th:first-child { position: sticky; inset-inline-start: 0; background: #fff; }
+.table-scroll td.num { text-align: end; font-variant-numeric: tabular-nums; }
+
+/* ---------- Same data, transformed to cards when the CONTAINER is narrow (keeps table semantics) ---------- */
+.list-host { container-type: inline-size; }
+@container (max-width: 34rem) {
+  .stacking thead { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
+  .stacking tr { display: grid; grid-template-columns: 1fr 1fr; gap: .25rem 1rem; padding: .75rem 0; border-block-end: 1px solid #ddd; }
+  .stacking td, .stacking th[scope=row] { display: block; padding: 0; border: 0; }
+  .stacking th[scope=row] { grid-column: 1 / -1; font-weight: 600; text-align: start; }
+  .stacking td::before { content: attr(data-label) ": "; color: #555; }
+}
+
+/* ---------- Mobile bottom navigation (≤5 destinations), safe-area aware ---------- */
+.bottom-nav { position: fixed; inset: auto 0 0 0; display: none; background: #fff; border-block-start: 1px solid #ddd;
+  padding-block-end: env(safe-area-inset-bottom); padding-inline: env(safe-area-inset-left) env(safe-area-inset-right); }
+.bottom-nav ul { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; margin: 0; padding: 0; list-style: none; }
+.bottom-nav a { display: grid; place-items: center; min-block-size: var(--nav-h); font-size: .75rem; text-decoration: none; color: inherit; }
+.bottom-nav a[aria-current=page] { font-weight: 700; }
+@media (max-width: 40rem) { .bottom-nav { display: block; } body { padding-block-end: calc(var(--nav-h) + env(safe-area-inset-bottom)); } .top-links { display: none; } }
+
+/* ---------- Hover only where hover exists ---------- */
+.tip { position: relative; }
+@media (hover: hover) and (pointer: fine) { .row-actions { opacity: 0; } tr:hover .row-actions, tr:focus-within .row-actions { opacity: 1; } }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-block-size: 36px; padding: .25rem .75rem; font: inherit; }
+/* Coarse pointers get bigger targets — AFTER the base rule, or the cascade silently undoes it */
+@media (pointer: coarse) { .btn { min-block-size: var(--tap); padding-inline: 1rem; } }
+/* Sticky header: anchor targets clear it; focus not obscured (WCAG 2.4.11) */
+header.site { position: sticky; top: 0; background: #fff; border-block-end: 1px solid #eee; z-index: 2; }
+:target, [id] { scroll-margin-top: 5rem; }
+html { scroll-padding-top: 5rem; }
+</style>
+</head>
+<body>
+<header class="site"><div class="center wide cluster" style="justify-content:space-between;padding-block:.5rem">
+  <strong>Acme</strong>
+  <nav aria-label="Main" class="cluster top-links"><a class="btn" href="#">Orders</a><a class="btn" href="#">Customers</a><a class="btn" href="#">Reports</a><a class="btn" href="#">Settings</a></nav>
+</div></header>
+<main class="center wide stack" style="--space: var(--space-l)">
+  <section class="cover" style="min-block-size: 60svh"><div class="principal stack"><h1>Every layout primitive, tested at 320–1920</h1><p>Intrinsic layouts respond to available space, not to device names.</p></div></section>
+
+  <section class="with-sidebar">
+    <aside class="stack"><h2>Filters</h2><div class="cluster"><button class="btn">Open</button><button class="btn">Overdue</button><button class="btn">Paid</button><button class="btn">Draft</button></div></aside>
+    <div class="stack">
+      <h2>Switcher</h2>
+      <div class="switcher"><div style="background:#f3f3f3;padding:1rem">Revenue £12,400</div><div style="background:#f3f3f3;padding:1rem">Orders 318</div><div style="background:#f3f3f3;padding:1rem">Refunds 4</div></div>
+    </div>
+  </section>
+
+  <section class="stack"><h2>Grid of container-query cards</h2>
+    <div class="grid">
+      <div class="card-host"><article class="card"><div class="media"></div><div class="stack" style="--space:.5rem"><h3>Card in a narrow slot</h3><p>Stacks by its own width.</p></div></article></div>
+      <div class="card-host"><article class="card"><div class="media"></div><div class="stack" style="--space:.5rem"><h3>Another card</h3><p>Same component, any slot.</p></div></article></div>
+    </div>
+    <div class="card-host"><article class="card"><div class="media"></div><div class="stack" style="--space:.5rem"><h3>Same card in a wide slot</h3><p>Goes side-by-side above 30rem of container width.</p></div></article></div>
+  </section>
+
+  <section class="stack"><h2 id="t1">Scrolling table, sticky first column</h2>
+    <div class="table-scroll" role="region" aria-labelledby="t1" tabindex="0">
+      <table><thead><tr><th scope="col">Invoice</th><th scope="col">Customer</th><th scope="col">Issued</th><th scope="col">Due</th><th scope="col">Status</th><th scope="col" class="num">Amount</th><th scope="col">Actions</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">INV-1042</th><td>Northwind Ltd</td><td>2026-09-01</td><td>2026-10-01</td><td>Open</td><td class="num">£1,240.00</td><td><span class="row-actions"><button class="btn">View</button></span></td></tr>
+        <tr><th scope="row">INV-1043</th><td>Contoso</td><td>2026-09-03</td><td>2026-10-03</td><td>Overdue</td><td class="num">£86.50</td><td><span class="row-actions"><button class="btn">View</button></span></td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <section class="stack list-host"><h2 id="t2">Stacking table (cards below 34rem of container)</h2>
+    <table class="stacking" aria-labelledby="t2" style="border-collapse:collapse;inline-size:100%">
+      <thead><tr><th scope="col">Invoice</th><th scope="col">Customer</th><th scope="col">Due</th><th scope="col">Amount</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">INV-1042</th><td data-label="Customer">Northwind Ltd</td><td data-label="Due">1 Oct</td><td data-label="Amount">£1,240.00</td></tr>
+        <tr><th scope="row">INV-1043</th><td data-label="Customer">Contoso</td><td data-label="Due">3 Oct</td><td data-label="Amount">£86.50</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="stack"><h2 id="r1">Reel</h2>
+    <div class="reel" role="region" aria-labelledby="r1" tabindex="0"><div class="frame" style="background:#dde">1</div><div class="frame" style="background:#ede">2</div><div class="frame" style="background:#eed">3</div><div class="frame" style="background:#ded">4</div></div>
+  </section>
+  <p style="block-size: 40vh">…</p>
+</main>
+<nav class="bottom-nav" aria-label="Main (mobile)"><ul>
+  <li><a href="#" aria-current="page">Orders</a></li><li><a href="#">Customers</a></li><li><a href="#">Reports</a></li><li><a href="#">Search</a></li><li><a href="#">More</a></li>
+</ul></nav>
+</body>
+</html>

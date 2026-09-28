@@ -412,6 +412,35 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   const undefinedVars = [...new Set([...cssText.matchAll(/var\(\s*(--[\w-]+)\s*\)/g)].map((m) => m[1]).filter((v) => !defined.has(v)))];
   const transitionAll = /transition(-property)?\s*:\s*all\b/.test(cssText);
 
+  // ---- app-surface tells (reported only for --kind app) ---------------------
+  const cardEls = all.filter((el) => {
+    if (['BUTTON', 'A', 'INPUT', 'IMG', 'TD', 'TH', 'TR', 'LI'].includes(el.tagName)) return false;
+    const cs = getComputedStyle(el); const r = el.getBoundingClientRect();
+    const bordered = parseFloat(cs.borderTopWidth) > 0 && parseFloat(cs.borderLeftWidth) > 0;
+    return parseFloat(cs.borderTopLeftRadius) >= 8 && (cs.boxShadow !== 'none' || bordered) && r.width >= 120 && r.height >= 60 && parseFloat(cs.paddingTop) >= 12;
+  });
+  const outerCards = cardEls.filter((c) => !cardEls.some((o) => o !== c && o.contains(c)));
+  const charsInCards = outerCards.reduce((n, c) => n + (c.innerText || '').replace(/\s+/g, '').length, 0);
+  const pageChars = Math.max(1, (document.body.innerText || '').replace(/\s+/g, '').length);
+  const kpiTiles = cardEls.filter((c) => /[+−-]?\d+(\.\d+)?\s?%/.test(c.innerText || '') && [...c.querySelectorAll('*')].some((x) => parseFloat(getComputedStyle(x).fontSize) >= 24)).length;
+  const greeting = /\b(welcome back|good (morning|afternoon|evening)|hello|hi),?\s+\w+/i.test(hs.map((h) => h.textContent).join(' ') + ' ' + [...document.querySelectorAll('h1, [class*=title]')].slice(0, 3).map((e) => e.textContent).join(' '));
+  const iconOnly = [...document.querySelectorAll('button, [role=button], a')].filter((b) => visible(b) && !b.textContent.trim() && b.getBoundingClientRect().width <= 48).length;
+  const charts = [...document.querySelectorAll('svg, canvas')].filter((g) => {
+    const r = g.getBoundingClientRect();
+    if (r.width < 60 || r.height < 24 || !visible(g)) return false;
+    const hasData = g.tagName === 'svg' && g.querySelector('path, rect, polyline, circle');
+    const labelled = g.querySelector?.('text') || g.getAttribute('aria-label') || g.querySelector?.('title') || (g.parentElement && /\d/.test([...g.parentElement.querySelectorAll('[class*=axis], [class*=tick], [class*=legend]')].map((x) => x.textContent).join('')));
+    return (hasData || g.tagName === 'CANVAS') && !labelled;
+  }).length;
+  const controls = [...document.querySelectorAll('button, input:not([type=checkbox]):not([type=radio]):not([type=hidden]), select')].filter(visible).map((c) => Math.round(c.getBoundingClientRect().height));
+  const maxPx = Math.max(...[...sizes.keys()], 0);
+  const hoverMoves = (cssText.match(/:hover[^{]*\{[^}]*transform\s*:\s*(translate|scale)/g) || []).length;
+  const h1el = document.querySelector('h1');
+  const badgeAboveH1 = !!h1el && [h1el.previousElementSibling, h1el.parentElement?.previousElementSibling].some((p) => {
+    if (!p) return false; const r = p.getBoundingClientRect(); const cs = getComputedStyle(p);
+    return r.height > 0 && r.height < 44 && parseFloat(cs.borderTopLeftRadius) >= r.height / 2 - 1 && p.textContent.trim().length > 0;
+  });
+
   const spacingVals = [...spacing.keys()];
   return {
     totalChars,
@@ -438,6 +467,8 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       backdropBlur: blur, cards, pills, buttonsLike, iconTiles, domNodes: all.length,
       mainGround, creamGround, eyebrows, eyebrowExamples, sectionCount, accentedHeadlines: accentedHeadlines.slice(0, 5), sideStripes, stripeExamples, glows, oneRadius, centredShare,
       emDashes, middleDots, arrowCtas, aphorisms, headingRatio, bodyPx, flatSteps,
+      cardTextShare: Math.round((charsInCards / pageChars) * 100), outerCards: outerCards.length, kpiTiles, greeting, iconOnly, unlabelledCharts: charts,
+      controlHeights: [...new Set(controls)].sort((x, y) => x - y), maxPx, hoverMoves, badgeAboveH1,
     },
     css: { surfaces, undefinedVars: undefinedVars.slice(0, 12), transitionAll, unreadableSheets: blocked.filter(Boolean).length },
   };

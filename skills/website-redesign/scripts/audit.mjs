@@ -44,6 +44,9 @@ const paths = asList(a.paths, ['/']);
 const widths = asList(a.widths, ['1440', '390']).map(Number);
 const outDir = a.out || './audit';
 const focusLimit = Number(a.focus) || 40;
+// What kind of surface this is (from the framing step): marketing | app | commerce | content | docs | service.
+// It changes which signals are reported: an app is judged by density and task rules, not by hero rules.
+const kind = a.kind || 'marketing';
 const axePath = a['no-axe'] ? null : resolveModule('axe-core/axe.min.js');
 const saturatedFile = JSON.parse(await readFile(path.join(scriptsDir, 'lib/saturated-fonts.json'), 'utf8'));
 
@@ -117,7 +120,7 @@ try {
   for (const p of paths) {
     const url = urlFor(base, p);
     const slug = slugFor(p);
-    md(`## ${p}`);
+    md(`## ${p}  (${kind})`);
     md();
     {
       const ctx = await browser.newContext({ viewport: { width: widths[0], height: 900 }, javaScriptEnabled: false });
@@ -257,8 +260,21 @@ try {
       if (sg.sideStripes) S.push(`Coloured side-stripe borders ×${sg.sideStripes}: ${sg.stripeExamples.join(', ')} — the accent-stripe card.`);
       if (sg.glows) S.push(`Zero-offset coloured glow shadows ×${sg.glows}.`);
       if (sg.oneRadius) S.push(`One radius (${sg.oneRadius}px) on over 80% of rounded elements — the card-kit look.`);
-      if (sg.centredShare > 60) S.push(`${sg.centredShare}% of text blocks are centred.`);
-      if (sg.headingRatio && sg.headingRatio < 2 && !mobile) S.push(`Largest heading is only ${sg.headingRatio}× the body size (${sg.bodyPx}px) — a flat scale for a marketing page (fine for product UI).`);
+      if (sg.centredShare > 60 && kind !== 'app') S.push(`${sg.centredShare}% of text blocks are centred.`);
+      if (kind === 'app') {
+        if (sg.maxPx >= 32) S.push(`Largest text is ${sg.maxPx}px in an app view — work tools rarely need more than 24–28px; the page title names the place and scope.`);
+        if (sg.greeting) S.push('A greeting ("Welcome back, …", "Good morning, …") sits in the title slot.');
+        if (sg.outerCards >= 6 && sg.cardTextShare > 45) S.push(`${sg.outerCards} card containers hold ${sg.cardTextShare}% of the text — collections belong in tables and lists; name one elevation model.`);
+        if (sg.kpiTiles >= 3) S.push(`${sg.kpiTiles} KPI tiles with % deltas — does each number drive a decision, with a target and a real comparison period?`);
+        if (sg.unlabelledCharts) S.push(`${sg.unlabelledCharts} chart(s) with no text, title or axis labels — a picture of data, not data.`);
+        if (sg.iconOnly >= 3) S.push(`${sg.iconOnly} icon-only controls — visible labels for anything not universal; tooltip and shortcut on desktop.`);
+        const minCtl = sg.controlHeights.length ? Math.min(...sg.controlHeights) : 0;
+        if (sg.bodyPx >= 16 && minCtl >= 40) S.push(`Body ${sg.bodyPx}px with controls ≥ ${minCtl}px — marketing density in a work tool (apps: 13–14px body, 28–32px controls).`);
+      } else {
+        if (sg.badgeAboveH1) S.push('A pill badge sits directly above the headline ("✨ New …").');
+        if (sg.hoverMoves >= 3) S.push(`${sg.hoverMoves} :hover rules that move or scale — hover should change contrast; lift only what can be picked up.`);
+      }
+      if (sg.headingRatio && sg.headingRatio < 2 && !mobile && kind === 'marketing') S.push(`Largest heading is only ${sg.headingRatio}× the body size (${sg.bodyPx}px) — a flat scale for a marketing page (fine for product UI).`);
       if (sg.flatSteps.length) W.push(`Heading sizes closer than 1.2× apart: ${sg.flatSteps.join(', ')} — levels that do not read as different.`);
       const perChars = inv.totalChars / Math.max(sg.emDashes, 1);
       if (sg.emDashes >= 8 && perChars < 500) S.push(`${sg.emDashes} em dashes (one per ${Math.round(perChars)} characters) — a machine cadence in copy.`);

@@ -1,0 +1,26 @@
+{
+  "ci": {
+    "collect": {
+      "url": ["http://localhost:5055/good", "http://localhost:5055/bad"],
+      "numberOfRuns": 3,
+      "chromePath": "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+      "settings": { "onlyCategories": ["performance"], "chromeFlags": "--headless=new --no-sandbox --disable-gpu" }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["error", { "minScore": 0.9 }],
+        "largest-contentful-paint": ["error", { "maxNumericValue": 2500, "aggregationMethod": "median-run" }],
+        "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }],
+        "total-blocking-time": ["warn", { "maxNumericValue": 200 }],
+        "total-byte-weight": ["warn", { "maxNumericValue": 1000000 }],
+        "resource-summary:script:size": ["error", { "maxNumericValue": 150000 }],
+        "resource-summary:font:size": ["warn", { "maxNumericValue": 100000 }],
+        "resource-summary:image:size": ["warn", { "maxNumericValue": 500000 }],
+        "resource-summary:third-party:count": ["warn", { "maxNumericValue": 5 }],
+        "unsized-images": "error",
+        "lcp-discovery-insight": "error"
+      }
+    },
+    "upload": { "target": "filesystem", "outputDir": "./reports/lhci" }
+  }
+}

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bad page — every common mistake</title>
+<!-- Mistake: render-blocking synchronous script in head, 500 KB, burns CPU on evaluation -->
+<script src="app-bad.js"></script>
+<style>
+  /* Mistake: font-display: block, no preload, no metric-matched fallback */
+  @font-face { font-family: Display; src: url(fonts/display.ttf) format("truetype"); font-display: block; }
+  body { margin: 0; font: 16px/1.5 system-ui, sans-serif; color: #1a1a1a; }
+  header { display: flex; gap: 24px; padding: 16px 24px; align-items: center; }
+  header nav a { margin-right: 18px; }
+  /* Mistake: hover-only dropdown */
+  .dd { position: relative; } .dd ul { display: none; position: absolute; } .dd:hover ul { display: block; }
+  h1 { font-family: Display, serif; font-size: 5vw; line-height: 1.05; margin: 24px; } /* Mistake: vw-only type */
+  .hero img { width: 100%; } /* Mistake: no height reservation */
+  /* Mistake: 100vw + padding overflows on any page with a vertical scrollbar, and always with padding */
+  .promo { width: 100vw; padding: 24px; background: #f4e6d0; }
+  table { min-width: 900px; border-collapse: collapse; } td, th { padding: 8px 12px; border-bottom: 1px solid #ddd; text-align: left; }
+  .card { box-shadow: 0 30px 120px rgba(0,0,0,.35); backdrop-filter: blur(30px); padding: 24px; margin: 24px; }
+  .banner { background: #222; color: #fff; padding: 20px 24px; }
+  .btn { font-size: 13px; padding: 4px 8px; } /* Mistake: tiny touch target */
+</style>
+</head>
+<body>
+<header>
+  <strong>Acme</strong>
+  <nav><a href="#">Product</a><span class="dd"><a href="#">Solutions</a><ul><li><a href="#">Teams</a></li></ul></span><a href="#">Pricing</a><a href="#">Docs</a><a href="#">Company</a><a href="#">Blog</a><a href="#">Sign in</a></nav>
+</header>
+<main>
+  <h1>Groceries delivered in an hour, anywhere in town</h1>
+  <!-- Mistake: LCP image lazy-loaded, no dimensions, 8 MB PNG -->
+  <div class="hero"><img src="img/hero-raw.png" loading="lazy" alt="Hero"></div>
+  <div class="promo">Free delivery on your first order — this block is 100vw wide plus padding.</div>
+  <section class="card">
+    <p>Order in two taps. <button class="btn" id="buy">Add to basket</button> <span id="count">0</span> items.</p>
+  </section>
+  <table>
+    <thead><tr><th>Plan</th><th>Price</th><th>Deliveries</th><th>Slots</th><th>Support</th><th>Returns</th><th>Contract</th></tr></thead>
+    <tbody>
+      <tr><td>Basic</td><td>£0</td><td>Pay per order</td><td>Standard</td><td>Email</td><td>7 days</td><td>None</td></tr>
+      <tr><td>Plus</td><td>£7/mo</td><td>Unlimited over £30</td><td>Priority</td><td>Chat</td><td>30 days</td><td>Monthly</td></tr>
+      <tr><td>Family</td><td>£12/mo</td><td>Unlimited</td><td>Priority + evening</td><td>Phone</td><td>30 days</td><td>Annual</td></tr>
+    </tbody>
+  </table>
+  <p style="height:1200px">Long content…</p>
+</main>
+<script>
+  // Mistake: late-injected banner at the top of the document pushes everything down (CLS)
+  setTimeout(() => {
+    const b = document.createElement('div'); b.className = 'banner';
+    b.textContent = 'We use cookies. By continuing you accept them.';
+    document.body.prepend(b);
+  }, 900);
+  // Mistake: click handler does 350 ms of synchronous work before the UI updates (INP)
+  document.getElementById('buy').addEventListener('click', () => {
+    const t = performance.now(); while (performance.now() - t < 350) {}
+    const c = document.getElementById('count'); c.textContent = +c.textContent + 1;
+  });
+</script>
+</body>
+</html>

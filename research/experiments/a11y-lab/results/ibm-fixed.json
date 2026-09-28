@@ -1,0 +1,298 @@
+{
+  "results": [
+    {
+      "ruleId": "style_color_misuse",
+      "reasonId": "Potential_1",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/head[1]/style[1]",
+      "message": "Verify color is not used as the only visual means of conveying information"
+    },
+    {
+      "ruleId": "style_highcontrast_visible",
+      "reasonId": "Manual_1",
+      "level": "VIOLATION_MANUAL",
+      "xpath": "/html[1]/head[1]/style[1]",
+      "message": "Confirm Windows high contrast mode is supported when using CSS to include, position or alter non-decorative content"
+    },
+    {
+      "ruleId": "aria_content_in_landmark",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/a[1]",
+      "message": "Content is not within a landmark element"
+    },
+    {
+      "ruleId": "element_tabbable_visible",
+      "reasonId": "potential_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/a[1]",
+      "message": "Confirm the element should be tabbable and if so, it becomes visible when it has keyboard focus"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/header[1]/div[1]/a[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/header[1]/div[1]/button[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "input_label_visible",
+      "reasonId": "potential_no_label",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/header[1]/div[1]/button[1]",
+      "message": "The input element does not have an associated visible label"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/header[1]/div[1]/form[1]/input[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "input_label_exists",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/header[1]/div[1]/form[1]/input[1]",
+      "message": "Form control element <input> has no associated label"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/header[1]/div[1]/form[1]/button[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/section[1]/button[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "aria_complementary_labelled",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[1]/aside[1]",
+      "message": "Element with \"complementary\" role does not have a label"
+    },
+    {
+      "ruleId": "text_block_heading",
+      "reasonId": "potential_heading",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[1]/ul[1]/li[1]/p[2]",
+      "message": "Confirm this text '$48,210' is used as a heading and if so, modify to use a heading element or role"
+    },
+    {
+      "ruleId": "text_block_heading",
+      "reasonId": "potential_heading",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[1]/ul[1]/li[2]/p[2]",
+      "message": "Confirm this text '1,284' is used as a heading and if so, modify to use a heading element or role"
+    },
+    {
+      "ruleId": "text_block_heading",
+      "reasonId": "potential_heading",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[1]/ul[1]/li[3]/p[2]",
+      "message": "Confirm this text '2.1%' is used as a heading and if so, modify to use a heading element or role"
+    },
+    {
+      "ruleId": "element_tabbable_role_valid",
+      "reasonId": "fail_invalid_role",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[3]/div[1]",
+      "message": "The tabbable element's role 'region' is not a widget role"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[3]/div[1]/table[1]/thead[1]/tr[1]/th[1]/button[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[3]/div[1]/table[1]/thead[1]/tr[1]/th[3]/button[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[3]/div[1]/table[1]/tbody[1]/tr[1]/td[5]/button[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[3]/div[1]/table[1]/tbody[1]/tr[1]/td[5]/button[2]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[3]/div[1]/table[1]/tbody[1]/tr[2]/td[5]/button[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[3]/div[1]/table[1]/tbody[1]/tr[2]/td[5]/button[2]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[3]/div[1]/table[1]/tbody[1]/tr[3]/td[5]/button[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[3]/div[1]/table[1]/tbody[1]/tr[3]/td[5]/button[2]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[4]/div[1]/button[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[4]/div[1]/button[2]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[4]/div[1]/button[3]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "aria_keyboard_handler_exists",
+      "reasonId": "potential_no_keyboard_access",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[5]/div[1]",
+      "message": "Verify the <div> element with \"tablist\" role has keyboard access"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[5]/div[1]/button[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "input_fields_grouped",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[6]/form[1]/div[1]/input[1]",
+      "message": "Use the <fieldset> element to group logically related input elements"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[6]/form[1]/div[1]/input[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[6]/form[1]/div[2]/input[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[6]/form[1]/div[3]/input[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "input_fields_grouped",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[6]/form[1]/div[4]/input[1]",
+      "message": "Use the <fieldset> element to group logically related input elements"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[6]/form[1]/div[4]/input[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "input_fields_grouped",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[6]/form[1]/div[5]/select[1]",
+      "message": "Use the <fieldset> element to group logically related input elements"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[6]/form[1]/div[5]/select[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "input_checkboxes_grouped",
+      "reasonId": "potential_lonecheckbox",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[6]/form[1]/label[1]/input[1]",
+      "message": "Verify that this ungrouped checkbox input is not related to other checkboxes"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/section[6]/form[1]/button[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "frame_src_valid",
+      "reasonId": "Potential_1",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/iframe[1]",
+      "message": "Verify <frame> content is accessible"
+    },
+    {
+      "ruleId": "html_lang_exists",
+      "reasonId": "Fail_3",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/iframe[1]/html[1]",
+      "message": "Page detected as HTML, but does not have a 'lang' attribute"
+    },
+    {
+      "ruleId": "html_skipnav_exists",
+      "reasonId": "Potential_1",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/main[1]/iframe[1]/html[1]",
+      "message": "Verify there is a way to bypass blocks of content that are repeated on multiple Web pages"
+    }
+  ]
+}

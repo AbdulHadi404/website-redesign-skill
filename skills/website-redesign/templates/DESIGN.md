@@ -1,136 +1,145 @@
-# <Company> — art direction
+# <Company> — design direction
 
-Written <date>, before implementation. Benchmark for finish: <reference site(s)>. This must read as *this company's* work — not the references', and not the previous site's.
+Written <date>, before implementation. Benchmark for finish: <reference(s)>. This must read as *this company's* work — not the references', not the previous site's, and not the model's default.
+
+## Brief
+
+| Route / group | Category | Frequency | Stakes | Posture | Intensity |
+| --- | --- | --- | --- | --- | --- |
+| … | marketing / app / dashboard / commerce / enterprise / docs / fintech / mobile / content / service | once · occasional · daily · all day | none · time · money · legal/health | expressive / productive | refine / redesign / rethink |
+
+**Audience and context:** who, doing what, on which device, under what pressure.
+
+**Top tasks** (≤ 5, ranked; evidence or "assumption"):
+1. …
+
+**Problems** (ranked by severity 0–4 × task importance; each traced to an audit finding): …
+
+**Principles** (3–5 that can say no — a reasonable team could hold the opposite): …
+
+**Non-goals:** …
+
+**Constraints:** stack and component library (licence), contracts to preserve, surviving brand assets, legal copy, accessibility level, performance budget, languages/scripts/RTL.
+
+**Success measures** (per category, with baselines): …
 
 ## Audit
 
 **What the company sells, to whom:** …
 
-**The one thing a visitor should remember:** …
+**The one thing a visitor or user should remember / be able to do:** …
 
 **Real proof that exists:** … (customers, numbers, product UI, demo, awards — only what is real)
 
-**Logo colours sampled:** … (hex values from the actual files; wordmark construction: geometric / humanist / serif / techno)
+**Brand assets sampled:** logo colours (`palette.mjs --from`), wordmark construction (geometric / humanist / serif / techno / condensed), brand family (parent and sibling surfaces: marks, faces, palettes).
+
+**Measured baseline** (`audit.mjs`, dembrandt): type sizes in use, families, contrast failures, focus, targets, overflow, signals, LCP/CLS.
 
 **Must be preserved (functionality and truth):**
 - Routes / anchors: …
-- Element ids, data attributes and form fields wired to scripts: …
-- Server contracts / integrations / analytics: …
+- Element ids, data attributes and form fields wired to scripts or analytics: …
+- Server contracts / integrations / analytics events: …
 - Legal copy: …
 
-**Why the current site reads as weak (specific):**
-- …
-- …
+**Why the current design fails** (specific, with severity): …
 
-**The five things a stranger notices first on the current site** (all five change in the redesign):
-1. …
-2. …
-3. …
-4. …
-5. …
+**The five things a stranger notices first** (expressive + redesign only; all five change):
+1. … 2. … 3. … 4. … 5. …
 
 ## References
 
-| Site | What it does well | Taken (conceptually) | Deliberately not taken |
+| Reference | Problem it solves | Taken (as a principle) | Deliberately not taken |
 | --- | --- | --- | --- |
 | … | … | … | … |
 
-Principles extracted: …
+(If references could not be inspected live, say so, and name what was measured instead — design-system repos, open-source product code.)
 
-(If references could not be inspected live, say so here.)
+## Direction
 
-## Concept
+**Concept** (expressive surfaces) — one line a founder would recognise as theirs: **"…"**
 
-One line a founder would recognise as theirs: **“…”**
+**Candidates considered** (5–7 from the company's own world — its moment, material, customers' world, product, industry vernacular — spanning at least three material families), and why each lost: …
 
-How it translates: surfaces …; typography …; imagery …; motion …
+**Refuses:** the page this category always ships — and its predictable opposite.
 
-Why this is *not* the obvious direction for a generic company in this category: …
+**First viewport, exactly:** what is where, at what scale, and where the primary action sits (for product routes: the top-task screen, same level of detail).
 
-**Distance from the house recipe:** the direction in one sentence, and why it is not "paper + serif italic + mono eyebrows + ink chapters + one accent". Other sites this user built with the skill that were checked: …
+**Productive surfaces** (if any): interaction model; navigation model; density (and density modes); elevation model (canvas / surface / layer); state language; where brand is allowed to show.
+
+**Breaks if:** three things that would betray this direction.
+
+**Memory test:** what a visitor describes an hour later. (If the answer is a mood, the direction is not decided yet.)
+
+**Convergence checks:**
+- Similar-brief test — this plan for a different company in the category would be: … (must differ)
+- Category test — guessable from the category, or from category + "avoid the obvious"? …
+- Second-order test — any choice justified only as the opposite of a default? …
+- Ledger — the direction in one sentence (surfaces, display voice and emphasis device, label device, dark-chapter colour, accent): … compared with `ledger.md` rows and this user's other sites: …
 
 ## Typography
 
-- Scale ratio and the full set of sizes (every step used somewhere).
-- Caps/tracked-label device: at most one, and which it is. Nothing typeset to look like machine output.
-- Display: family, weights, tracking, line height, optical size; where it appears — and why it matches the wordmark's construction.
-- Body / UI: family, weights, measure.
-- Data / labels: family (if any).
-- Scale: hero › chapter › statement › panel › h3 › body › small › label — with sizes.
-- Licence / source for each family.
+- Type sets: expressive (marketing) and/or productive (app), each with its ratio and every size listed — every step used somewhere.
+- Display: family, weights, axes (opsz, wdth), tracking at display sizes, line height — and why it matches the wordmark's construction or the brand family.
+- Text / UI: family, weights, measure; tabular figures available (`fonts.mjs`)?
+- Data / code face, if any, and why.
+- Caps/tracked-label device: at most one, and which. Nothing typeset to look like machine output.
+- Scripts and languages: companion faces (`multilingual.md`), size adjustment, RTL.
+- Licence, source and loading for each family (self-hosted? features preserved? no FFL fonts in a public repo).
 
 ## Colour
 
-**Harmony:** … (which scheme; which hue dominates, supports, accents — from the sampled logo hues)
+**Strategy:** Restrained (60/30/10) / Committed (one saturated hue carries 30–60%) / Full palette / Drenched — and why.
 
-**Budget (60 / 30 / 10):** … (per page: dominant surface / secondary or dark / accent — count accent-coloured fields; the primary action is one colour everywhere)
+**Harmony and sources:** which hue dominates, supports, accents — from the sampled logo hues.
 
-**Scale method:** … (OKLCH: H fixed, L stepped, C shaped; neutral tint hue and chroma)
+**Use scene** (light / dark / both): one sentence of physical scene.
 
-**Contrast table:** every text/ground pair actually used, with WCAG ratio and APCA Lc on the real ground.
+**Scales:** OKLCH, H fixed, L stepped, C shaped (`palette.mjs`); neutral tint hue and chroma; status colours reserved; data palette separate (`dataviz.md`).
 
-| Token | Value | Use |
+**Contrast table:** every text/ground pair actually used, WCAG ratio and APCA Lc on the real ground (`contrast.mjs`).
+
+| Token (role) | Value | Use |
 | --- | --- | --- |
-| surface primary | … | … |
-| surface alternate | … | … |
-| surface dark / elevated | … | … |
-| text strong / regular / muted | … | … |
-| line | … | … |
-| accent | … | action and emphasis only |
-| accent (small text) | … | contrast-safe variant |
+| surface / surface-alt / surface-raised | … | … |
+| text-strong / text / text-muted | … | … |
+| border / border-strong | … | … |
+| accent (action) / accent-hover / accent-text | … | action and emphasis only; contrast-safe variant for small text |
+| selected | … | neutral, not accent |
+| status: danger / warning / success / info | … | state only — never decoration |
+| focus ring | … | ≥ 3:1 against both the control and its ground |
 
-## Layout philosophy
+## Layout and space
 
-Containers, gutters, rhythm per chapter, how surfaces alternate, use of asymmetry, whether cards exist.
+Containers, grid and gutters per breakpoint; spacing scale; vertical rhythm per chapter; how surfaces change between chapters (expressive) or how panels divide (productive); asymmetry; whether cards exist, and for what.
 
-## Hero concept
+## Imagery and graphics
 
-What fills the first viewport and why; where copy sits; what the product or image does; what the visitor can do.
+Photography / product UI / illustration / diagrams / typography-only — chosen and argued (if the company's world is photographable, "none" must be argued). Source, licence class, treatment, pipeline, credits location. The drawn graphics layer: its line style and the motif it comes from.
 
-## Product visualisation
+## Motion
 
-Real screenshots / faithful fragments / diagrams / demo — and how state and flow are shown. Sample data policy.
-
-## Imagery strategy
-
-Photography / product / illustration / diagrams / none — with the reason. Source, licence, treatment, pipeline, credits location.
-
-## Motion language
-
-The two or three concept moves; the reveal system; reduced-motion behaviour.
+Productive vs expressive tokens (durations, easings); the two or three concept moves (expressive surfaces only); the reveal system (finished by default); reduced-motion substitutions; what never moves.
 
 ## Interaction
 
-- Primary action (label, colour, where it appears): …
-- Widgets and their five states: …
-- Forms: fields kept, label placement, validation timing, action alignment: …
-- Targets, thumb zone and the mobile menu: …
-- Motion: the moves, durations, easing, reduced-motion behaviour: …
-- Performance budget: LCP element, fonts, third parties: …
+- Primary action per key screen (label, colour, placement): …
+- Components and the state-matrix rows each needs (see `SYSTEM.md` for product UI): …
+- Forms: fields kept, labels, validation timing (on submit, then live), error summary, required/optional marking: …
+- Targets, thumb zone, mobile navigation: …
+- Performance budget: LCP element, fonts, JS, third parties: …
 
-## Page narrative (home)
+## Page narrative (expressive routes)
 
-(Headline test result: … — the hero sentence a stranger would understand alone.)
+Headline test: the hero sentence a stranger would understand alone — "…"
 
-
-1. …
-2. …
-3. …
-
-For each: why it exists, and why this composition rather than heading → paragraph → cards.
+1. … (why this chapter exists; why this composition rather than heading → paragraph → cards)
 
 ## Keep / replace / remove / create
 
-**Keep:** …
+**Keep:** … **Replace:** … **Remove:** … **Create:** …
 
-**Replace:** …
-
-**Remove:** …
-
-**Create:** …
-
-(If *keep* is the longest list, the direction is a refresh — revisit the concept.)
+(Expressive + redesign: if *keep* is the longest list, the direction is still a refresh. Productive: keep what users have learned unless the audit shows it fails — and say which.)
 
 ## Secondary pages
 
-How each page adopts the system; what changes structurally (e.g. plan cards → comparison table; timeline grid → editorial list).
+How each page adopts the system; what changes structurally.

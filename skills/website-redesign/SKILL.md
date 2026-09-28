@@ -1,107 +1,127 @@
 ---
 name: website-redesign
-description: Redesign an existing marketing website into a genuinely new, premium, brand-specific design — not a refresh. Runs the full loop — audit the repo and the rendered site, research live reference sites, derive an art direction from the company's own truth, decide keep / replace / remove / create, rebuild the visual system in the existing stack, source licensed imagery when it earns its place, render and inspect at desktop/laptop/tablet/phone, self-critique, iterate, then functional and technical QA. Use this whenever a user asks to redesign, rebrand, "make premium", "make it look like a real design agency did it", modernise, overhaul, or "level up" a marketing site, landing page or homepage — even if they only say "the site looks generic/dated/templated" or name a reference site they admire. Not for small tweaks (one colour, one component) or for application UI inside a product.
+description: Redesign an existing website or web product so it is genuinely better for its users and genuinely its own — marketing sites and landing pages, SaaS apps, dashboards, ecommerce, docs, fintech, public services and mobile-first products. Runs the full loop — frame the problem (what kind of surface, how often it is used, how far to change it), audit the repo and the rendered product with measurement scripts, research by problem, derive a direction from the company's own truth, build a token and component system, implement in the existing stack, then verify renders, accessibility, responsiveness, performance and truth-parity with the old site, critique against objectives, and iterate. Use whenever a user asks to redesign, rebrand, modernise, overhaul, "make premium", "make it look professional", "level up" or "fix the UX" of a site, landing page, app, dashboard or storefront — even if they only say it looks generic, dated, templated, AI-made, cluttered or hard to use, or name a reference they admire. Not for a one-component tweak or a colour change.
 ---
 
-# Website redesign
+# Website and product redesign
 
-The job is to turn a company's existing marketing site into one that looks like an excellent design studio rebuilt it around that company — while keeping every fact, route, form and integration intact. The core principle:
+The job is to turn an existing site or product into one that an excellent studio or product team would have built for *this* company and *these* users — while keeping every fact, route, form, contract and integration intact.
 
 > Preserve the company's truth and its functionality — not its existing visual implementation.
 
-This skill exists because the natural failure mode is subtle and common: keep the fonts, keep the palette, keep the hero shape, add nicer components, and call it a redesign. Everyone involved can see the improvement, and nobody can see the difference. The workflow below is built to make that outcome hard to reach by accident.
+Two failures are common and both feel like success from the inside. On a marketing site: keep the fonts, the palette and the hero, add nicer components, and call it a redesign (a *refresh*). On anything: produce the model's default look — the centre of every design the model has seen — instead of a look derived from the company. This skill is built to make both hard to reach by accident, and to judge a working tool by whether its users get their work done, not by how different it looks.
 
-## Two commitments before you start
+## Commitments
 
-1. **The distance test.** Write down the five things a stranger notices first on the current site (typeface, palette, hero composition, section rhythm, imagery or its absence). A redesign changes what those five things *are*. If your plan keeps three of them, it is a refresh; stop and rethink the direction before writing code.
-2. **Truth is not negotiable.** Product capabilities, prices, claims, customers, numbers, legal text: only what exists in the repo or from the user. Never invent testimonials, logos, statistics, integrations or features to fill a layout. When proof does not exist, design a page that does not need it.
-3. **The brand's own assets come first; the skill's habits come last.** Sample the logo and wordmark before choosing a single colour or typeface, and build from them unless the user says the identity itself is the problem. Then run the house-recipe check in `references/anti-patterns.md` ("The skill's own house style"): if the direction can be described as paper surfaces + serif display with italic emphasis + mono uppercase eyebrows + dark chapters + one accent, it is the skill's default, not this company's design. Two companies run through this skill by the same user must not come out looking like siblings — check against their other sites, not only against the old one.
+1. **Frame before you design.** Every route is classified (`references/framing.md`): what kind of surface it is, how often people use it, what is at stake, and how far this redesign should move it. A marketing page, a dashboard used all day and a checkout are judged by different rules; the rules below say which apply where.
+2. **Truth is not negotiable.** Product capabilities, prices, claims, customers, numbers, quotes, legal text: only what exists in the repo or from the user. Never invent testimonials, logos, statistics, integrations or features to fill a layout; when proof does not exist, design a page that does not need it. `scripts/parity.mjs` checks this against the old site before hand-off.
+3. **The brand's own assets first; the model's prior last.** Sample the logo and wordmark and look at the brand family before choosing any colour or typeface. Then check the direction against the known defaults in `references/anti-patterns.md` ("The model's prior"): the SaaS kit, AI purple, and the "tasteful" recipe this skill itself used to produce (cream paper + serif display with an italic accent + mono uppercase eyebrows + ink chapters + one warm accent). Two companies run through this skill must not come out looking like siblings — check `references/ledger.md`.
+4. **Measure what can be measured; render what cannot.** Contrast, targets, focus, overflow, type scale, clipped content, hidden content, claims and routes are measured by the scripts in `scripts/`. Hierarchy, rhythm, fit and finish are judged only from renders you have looked at — never from source.
+
+**Distance, used where it belongs.** On an *expressive* surface under a *redesign* brief (most marketing sites), write down the five things a stranger notices first on the current site (typeface, palette, hero composition, section rhythm, imagery); a redesign changes what those five things are, and a plan that keeps three is a refresh. On a *productive* surface (an app used daily, a checkout, a government form), familiarity is an asset: keep locations, labels and flows people have learned unless the evidence says they fail, and measure the redesign by task success, errors, time and accessibility.
 
 ## Workflow
 
-Work through the phases in order. Each phase has a reference file with the detailed checklist — read it when you reach that phase, not all at once.
+Work through the phases in order; each has a reference with the detailed method. Read a reference when you reach its phase, not all at once. Small jobs take the fast path: 0 → 1 → 4 → 5 → 6 → 8, never skipping 0 or 6.
 
 | Phase | Output | Read |
 | --- | --- | --- |
-| 1. Audit | A written audit: what the company sells, to whom, what the site gets wrong | `references/audit.md` |
-| 2. Research | 4–8 live reference sites inspected, principles extracted (never sections copied) | `references/research.md` |
-| 3. Art direction | `DESIGN.md` in the repo from `templates/DESIGN.md`, including keep / replace / remove / create | `references/art-direction.md`, `references/design-theory.md`, `references/web-design.md`, `references/logo-design.md` (if a mark is in scope), `references/anti-patterns.md`, `references/lessons.md` |
-| 4. Imagery | Licensed assets localised and optimised, or a deliberate decision not to use photography | `references/imagery.md` |
-| 5. Implementation | The redesign in the existing stack, on a branch | `references/implementation.md`, `references/ui-ux.md` |
-| 6. Visual QA | Full-page renders at 1440 / 1280 / 1024 / 768 / 390, defects fixed | `references/visual-qa.md` |
-| 7. Self-critique | `templates/critique.md` filled honestly, weak areas fixed, re-rendered | `references/visual-qa.md` |
-| 8. Technical QA | Typecheck, build, tests, links, forms, a11y, performance, SEO | `references/technical-qa.md`, `references/ui-ux.md` §8 |
+| 0. Frame | The brief at the top of `DESIGN.md`: route → category map, frequency, stakes, intensity, top tasks, constraints, success measures | `references/framing.md`, `references/categories.md` |
+| 1. Audit | Written audit: company, users and tasks, preserved-list, measured baseline (`audit.mjs`, dembrandt), heuristic findings with severity, UI stack inventory | `references/audit.md` |
+| 2. Research | 4–8 references chosen by problem, principles extracted, a take/leave table | `references/research.md`, `references/resources/README.md` |
+| 3. Direction | Expressive: concept, candidates, typography, colour strategy, composition, imagery, motion. Productive: interaction model, density, navigation, elevation model. Keep / replace / remove / create | `references/art-direction.md`, `references/design-theory.md`, `references/anti-patterns.md`, `references/lessons.md`, `references/ledger.md`; `references/logo-design.md` if a mark is in scope |
+| 4. System | Tokens (colour roles, type sets, spacing, radii, elevation, motion), component inventory, state matrix; `SYSTEM.md` for product UI | `references/design-systems.md`, `references/app-ui.md` (product surfaces), `references/multilingual.md` (RTL / non-Latin) |
+| 5. Build | The redesign in the existing stack on a branch; assets licensed and localised | `references/implementation.md`, `references/ui-ux.md`, `references/imagery.md`, `references/motion.md`, `references/resources/` |
+| 6. Verify | Renders at 1440 / 1280 / 1024 / 768 / 390 (+ element shots, states); `audit.mjs` clean or justified; accessibility, responsive and performance passes | `references/visual-qa.md`, `references/accessibility.md`, `references/responsive.md`, `references/performance.md` |
+| 7. Critique | `templates/critique.md` filled from renders, ideally by a fresh-context reviewer; every "no" fixed and re-rendered | `references/visual-qa.md` §Critique |
+| 8. Hand-off | Build, tests, `parity.mjs` against the old site, links, forms, metadata; commit, push, report | `references/technical-qa.md` |
 
-Two gates sit inside this sequence. **Before implementation**, `DESIGN.md` must show all five first-notice things changed and a keep list shorter than replace + create; if it does not, the direction is a refresh and writing code now only makes that expensive to discover. **Before technical QA**, the critique must have no remaining "no" — a weakness you can see in a render is a task, not a caveat for the report.
+Three gates sit inside this sequence:
 
-Do not skip to implementation because the direction "feels obvious". The direction that feels obvious before the audit is usually the generic one — and the direction that feels obvious *after* several redesigns is usually the skill's own habit.
+- **Before Phase 3 (direction):** the brief exists. Every route has a category and an intensity; top tasks are confirmed by the user or written down as assumptions.
+- **Before Phase 5 (build):** `DESIGN.md` passes its own checks — for expressive redesigns, all five first-notice things change and *keep* is shorter than *replace + create*; for every direction, the similar-brief test, the category test and the ledger comparison are written down (`art-direction.md`). A direction that fails them only gets more expensive to discover later.
+- **Before Phase 8 (hand-off):** the critique has no remaining "no"; `audit.mjs` shows no fail you have not fixed or justified in writing; `parity.mjs` shows no unsourced claim and no lost route, id or form field.
+
+Do not skip to implementation because the direction "feels obvious". The direction that feels obvious before the audit is usually the generic one; the one that feels obvious after several redesigns is usually this skill's own habit.
+
+### Phase 0 — Frame
+
+Classify each route (marketing, SaaS app, dashboard, commerce, enterprise, docs/dev tool, fintech, mobile-first consumer, content, public service), note how often people use it and what is at stake, and choose the intensity: **refine** (fix problems inside the current identity), **redesign** (new visual system, same information architecture and flows), or **rethink** (structure, flows and system). The user's words set the starting point ("make it look premium" is a redesign of an expressive surface; "our dashboard is hard to use" is a refine or rethink of a productive one); the evidence can argue for more or less. Write the brief (`framing.md`). The category sets the dials for everything after: body size and density, motion and novelty budget, what colour is for, what gets visual weight, and which metrics define success (`categories.md`).
 
 ### Phase 1 — Audit (understand before judging)
 
-Read the repository the way a new design lead would on day one: every page and route, the layout and shared components, the styling system, fonts, colours, logo and icon assets, existing imagery, animation code, SEO/meta, analytics hooks, forms and any server-side behaviour behind them. Then **run the site and look at it** — a screenshot at desktop and phone width of every page. Code tells you what exists; the render tells you what it feels like.
+Read the repository the way a new design lead would on day one: routes, layouts, shared components, styling system and tokens, fonts, colours, logo and brand family, imagery, motion, SEO/meta, analytics, forms and integrations, and the UI libraries in use with their versions and licences. Run the product and **look at it**, then **measure it**: `scripts/audit.mjs` (contrast on the real ground, focus, targets, overflow, type and spacing inventory, hidden and clipped content, generic-look signals) and, where available, `dembrandt` for the site's actual token set. Then answer, in writing: what the company sells and to whom; who uses the product, how often, on what device, for which top tasks; what real proof exists; what must be preserved; and why the current design fails — named specifically and rated by severity.
 
-Write the audit down before forming an opinion about the fix. It should answer: what does the company actually sell, who buys it, what is the one thing a visitor should remember, what real proof exists (customers, numbers, product UI, demos), what must be preserved (functional widgets, anchors other pages link to, form ids wired to scripts, API contracts), and why the current design reads as weak — named specifically ("every h2 is the same size", "three identical card grids", "hero is headline + paragraph + two buttons + screenshot").
+### Phase 2 — Research (look at real things, chosen by problem)
 
-### Phase 2 — Research (look at real sites, not memory)
+Choose references by the problem they solve (show a complex product simply; build trust without logos; make a dense table scannable), not by category glamour. Mix competitors, adjacent categories, one contrary reference, and — for product UI — mature open-source design systems and open-source products whose tokens you can read. Extract principles into a take/leave table; put the references away while you make. If no browser is available, say so and use design-system repos, npm packages and open-source product code as measurable references.
 
-If a browser tool is available, open the user's reference site and several premium sites relevant to this company's category and audience — competitors, adjacent categories, and a couple of best-in-class sites outside the category. Screenshot the first viewport of each and note what makes it feel finished: type scale, whitespace, how the product is shown, the role of imagery, section pacing, restraint. Extract *principles*. Copying a reference section-by-section produces a cheaper imitation of someone else's brand, which is a worse outcome than a mediocre original.
+### Phase 3 — Direction (derive it, do not pick it)
 
-If there is no browser access, say so plainly, name what would help (a browser MCP or the built-in preview browser), and continue from the audit — but state in `DESIGN.md` that references were not inspected live.
+For **expressive** surfaces: derive a concept from the company's moment, material and assets; list 5–7 candidates across at least three material families; state what the direction refuses (the page this category always ships, and its predictable opposite); decide typography, a named colour strategy, composition, the first viewport exactly, imagery and motion. For **productive** surfaces: decide the interaction model, density, navigation model, elevation model and state language; brand shows in type, colour roles, tone and a few considered moments, not in custom controls. Either way, run the similar-brief test, the category test and the ledger comparison before writing code. Then write keep / replace / remove / create.
 
-### Phase 3 — Art direction (derive it, do not pick it)
+### Phase 4 — System (tokens upward)
 
-The direction must come from the company: what it sells, the emotion of the moment it serves, who is buying, and the assets that actually exist — starting with the logo. Extract its colours and the construction of its wordmark (geometric, humanist, serif, techno) and let those drive the palette and the display face; a logo motif can become a system (labels, markers, watermarks, the hero object). Dropping the brand's own colours for a "nicer" accent is a rebrand the user did not ask for. Name the concept in one line that a founder would recognise as *theirs* ("the moment the phone rings", "the ledger", "the workshop floor") and let that drive every choice. Two unrelated companies run through this skill should produce two clearly different sites; if your direction would fit any SaaS company, it is not a direction yet.
+Detect what the codebase already has — its component library, tokens, primitives — and restyle rather than replace it; switching component libraries is a separate project the user must approve. Build tokens in three tiers (primitive → semantic → component) with role names, type sets per surface (expressive and productive), a spacing and radius scale, an elevation model, motion tokens, and the state matrix every interactive component must fill. For product UI, write `templates/SYSTEM.md`.
 
-Decide, in writing, each of: display and body typography (new families unless the existing ones are a genuine, documented brand asset); a palette built as a system (surfaces, text, lines, one accent); composition philosophy; the hero concept; the product visualisation strategy; the imagery strategy (photography, product UI, illustration, typography-only — chosen, not defaulted); the motion language. Then the four lists: **keep**, **replace**, **remove**, **create**. If `keep` is the longest list, the direction is too conservative — revisit it now, while it is cheap.
+### Phase 5 — Build (rebuild the system, not the app)
 
-Read `references/design-theory.md` before deciding the palette and the type scale — it holds the colour and typography rules the direction has to satisfy (harmony, the 60/30/10 budget, perceptual scales, contrast, caps and tracking, logo construction) and the palette checklist that has to be complete before code. Then read `references/anti-patterns.md` before finalising the direction and again before implementation. It is the list of things that make a site read as generated.
+Work on a branch. Tokens → base → motion → primitives → product fragments → pages → secondary pages → identity assets. Keep business logic, routes, forms, ids and contracts exactly as they are. Stay in the existing framework; add a dependency only when a capability genuinely needs it and its licence, size and maintenance are checked (`resources/`). Content is finished by default and motion only removes the hidden start state (`implementation.md`, "The reveal, written safely"). Show the product instead of describing it; text always sits on its own ground.
 
-### Phase 4 — Imagery (optional, but never accidental)
+### Phase 6 — Verify (renders and measurements)
 
-Photography earns its place when it carries the concept (people in the moment the product serves, the environment the customer works in, an abstract that embodies the idea). It does not earn its place as decoration. When you do use it: only genuinely free-licensed sources (watch for paid tiers mixed into search results), download originals into the project's asset system, apply one consistent treatment so the set reads as a series, serve through the framework's image pipeline with explicit dimensions, and record credits. If you cannot fetch images, tell the user exactly which capability to enable rather than shipping placeholders. Product UI rebuilt as faithful fragments, diagrams and pure typography are equally valid choices — often stronger for technical products.
+Capture every page at 1440, 1280, 1024, 768 and 390 with `scripts/capture.mjs`, plus element shots of artwork and every state of every widget; look at the captures. Run `scripts/audit.mjs` at 1440 and 390 with the right `--kind`, then the manual accessibility pass (keyboard, zoom and reflow, screen-reader names, forced colours, reduced motion), the responsive pass and a performance run. Fix and re-capture; do not close a loop on the assumption that a change did what you intended.
 
-### Phase 5 — Implementation (rebuild the system, not the app)
+### Phase 7 — Critique (the honest pass)
 
-Work on a branch. Rebuild the visual system from tokens upward — type scale, palette, spacing rhythm, surfaces, motion — then the shared primitives (nav, footer, buttons, section wrappers, headings), then pages. Keep business logic, routes, forms, ids and server contracts exactly as they are; restyle around them. Stay in the existing framework and add dependencies only when a capability genuinely needs one. Give the page rhythm through *different compositions per chapter* (typographic, product-dominated, photographic, split, index, closing) instead of one section template repeated. Show the product instead of describing it: real screens as HTML fragments with clearly illustrative sample data, a live demo if the product has one. Text always gets its own solid ground — never sit copy on the busy part of a photograph.
+Fill `templates/critique.md` from the renders: objective → element → effect → why, removal and swap tests, the category fit, the tells. Prefer a fresh-context reviewer (a subagent given only the brief, `DESIGN.md` and the capture paths) — the builder's account of its own fixes is not evidence. Every "no" becomes a fix and a re-render. At most three rounds; if a "no" survives the third, or a round resolves nothing, put the table in front of the user.
 
-### Phase 6 — Visual QA (you cannot judge a redesign from source)
+### Phase 8 — Hand-off
 
-Run the site and capture full pages at 1440, 1280, 1024, 768 and 390. Look at the captures, not the code. Check overflow, wrapping, cropping, alignment, whitespace, sticky and fixed elements, the open mobile menu, hover and reveal states, and every interactive widget in each of its states. Fix what you find and re-capture. `references/visual-qa.md` covers reliable capture methods and the rendering traps that bite most often.
+Typecheck, lint, build and test with the project's own commands. Run `scripts/parity.mjs` against the old build: every new number and quote sourced, every dropped fact deliberate, every old route, id and form field accounted for. Click every link, submit every form, check metadata and the social image. Commit with a message that explains the direction, push the branch, use the project's preview mechanism if it has one. Do not deploy to production unless asked. Add a row to `references/ledger.md`.
 
-### Phase 7 — Self-critique (the honest pass)
+## Scripts
 
-Put the old first viewport next to the new one and ask whether a stranger would call them two generations of the same site or two different companies' work. Fill `templates/critique.md`: memorable first viewport, distinctive typography, visual rhythm, repetition, card count, purposeful imagery, product shown not described, anything that reads as AI-generated, intentional mobile, credible next to the researched references. Every "no" becomes a fix, not a sentence in the final report. Re-render after the fixes. It is normal for the first implementation to fail this pass; the skill expects at least one iteration.
+All in `scripts/` (run `npm install` there once; Playwright-based; each prints what it found and why it matters):
 
-### Phase 8 — Technical QA and hand-off
+| Script | Use it for |
+| --- | --- |
+| `capture.mjs` | Full-page and first-viewport captures at several widths; element shots at 3× for artwork; `--reduced-motion`, `--dark`, `--no-js` variants |
+| `audit.mjs` | Measured audit of a rendered page (`--kind marketing|app|commerce|content|docs|service`): overflow and zoom-out, contrast on the painted ground, invisible focus, targets, fake controls, clipped content, colour-only status, headings/landmarks, images, no-JS and reduced-motion hidden content, console errors, type/spacing/radius inventory, unavailable fonts, LCP/CLS, axe-core, generic-look signals |
+| `parity.mjs` | Old site vs new: unsourced and dropped claims, missing routes, lost ids and form fields, metadata |
+| `contrast.mjs` | WCAG 2 and APCA for any CSS colours or token files |
+| `palette.mjs` | Sample a logo's colours; build 12-step OKLCH role scales (light/dark) with solved text steps |
+| `fonts.mjs` | What a font can do before you choose it: axes, tabular figures, features, script coverage, x-height |
+| `compare.mjs` | Before/after sheets, blurred squint sheets, pixel diffs for regressions |
 
-Typecheck, lint, build and test with the project's own commands. Click every nav link, CTA and footer link; submit every form; exercise every widget; check the mobile menu, keyboard focus, contrast, reduced-motion behaviour, image loading (lazy below the fold, eager for the hero), metadata and social image, analytics hooks. Commit with a message that explains the direction, push the branch, and use the project's preview mechanism if it has one. Do not deploy to production unless the user asks.
+Scripts report facts, not taste. A clean audit is not a good design, and a signal is a question to answer, not a rule to obey.
 
 ## The knowledge base
 
-Five references hold the theory the skill works to, written from the primary sources and stated as checkable rules with their numbers. They are not optional reading for the phase that names them:
-
 | File | Holds | Read at |
 | --- | --- | --- |
-| `references/design-theory.md` | Rams, Vignelli, Rand; Gestalt; visual hierarchy limits; whitespace, grids, spacing scales, rhythm; Albers and Itten; harmony, the 60/30/10 budget, perceptual (HCT/OKLCH) scales, the 12-step roles, WCAG + APCA, colour-blindness numbers, dark mode; Bringhurst/Butterick typography, scale, pairing, voice; Part D checklists | Phase 3, and before any token file |
-| `references/ui-ux.md` | Nielsen's heuristics, Norman's vocabulary, the laws with numbers, reading/scanning research, response times and states, forms, targets and thumb zones, navigation, motion durations, WCAG 2.2 additions, writing, dark patterns, credibility | Phases 5 and 8 |
-| `references/web-design.md` | homepage principles, the landing-page formula and headline test, chapter kinds and rhythm, content-driven breakpoints, Core Web Vitals thresholds, header/footer/nav, imagery, metadata; the page checklist | Phase 3 (narrative) and Phase 5 |
-| `references/logo-design.md` | what a mark is for (Rand, Haviv, Airey), kinds, clichés, the seven tests, construction and optical correction, identity deliverables, presenting five or six directions | whenever a mark is in scope |
-| `references/anti-patterns.md` + `references/lessons.md` | what makes a site read as generated; every correction so far and the rule it produced | Phase 3 and before Phase 5 |
+| `references/framing.md`, `references/categories.md` | classifying surfaces, intensity, the brief, the question bank; the category dials and ten playbooks | Phase 0 |
+| `references/design-theory.md` | Rams, Vignelli, Gestalt, hierarchy, space and grids; colour theory, strategies, OKLCH scales, contrast; typography rules, scales, pairing, product vs marketing type | Phases 3–4 |
+| `references/design-systems.md`, `references/app-ui.md` | tokens, reuse before reinvention, component libraries and when to use them, state matrix, `SYSTEM.md`; product-UI density, navigation, tables, forms, notifications, loading/empty/error, dashboards | Phases 3–5 (product surfaces) |
+| `references/ui-ux.md`, `references/web-design.md` | heuristics, laws with numbers, reading, feedback, forms, targets, writing, dark patterns; homepage and landing-page craft, chapters | Phases 3–5 |
+| `references/accessibility.md`, `references/responsive.md`, `references/performance.md`, `references/motion.md`, `references/dataviz.md`, `references/multilingual.md` | the specialist passes | when the phase or the product calls for them |
+| `references/anti-patterns.md`, `references/lessons.md`, `references/ledger.md` | the model's prior and the tells; every correction so far; every past output | Phase 3 and before Phase 5 |
+| `references/resources/` | where to find components, icons, illustration, photography, fonts, colour tools, motion, 3D and chart libraries, QA tools and inspiration — with licences checked and dated | whenever you need an asset or a library |
 
 ## Learning from corrections
 
-Every revision or correction the user asks for is evidence that something in this skill let the mistake through. Before or right after fixing the work, do all three:
+Every revision the user asks for is evidence that something in this skill let the mistake through. Before or right after fixing the work:
 
-1. Name the root cause in one line — not the symptom ("green looked wrong") but the missing rule ("the audit never sampled the logo's colours").
-2. Update the skill itself so the same issue is less likely next time: the relevant phase reference, `references/anti-patterns.md`, or a template field. Prefer a check that runs at the cheapest point (audit or art direction) over a warning at the end.
-3. Log it in `references/lessons.md` (date, what went wrong, what changed), and read that file at the start of Phase 3 so the lessons are actually applied.
+1. Name the root cause in one line — the missing rule, not the symptom.
+2. Change the skill so it is less likely next time, at the cheapest point (framing, audit or direction beats a warning at the end). If the lesson is mechanical, put it in a script — prose that describes a check the tools do not perform is how the capture bug survived three lessons.
+3. Log it in `references/lessons.md`; record the finished output in `references/ledger.md`.
 
-Do this proactively — do not wait to be asked to "make the skill learn". Tell the user what was changed in the skill in the final report.
+Do this proactively and tell the user what changed in the skill.
 
 ## Reporting
 
-Lead with what changed and why, in the user's language. State what was verified and how (renders at which widths, which flows exercised, which commands passed). State plainly what was left out and why (missing proof, missing assets, missing capability). Share the before/after captures. Ask for a decision only where the user genuinely owns it: production deployment, unresolved facts, brand assets only they have.
+Lead with what changed and why, in the user's language. State what was verified and how (widths rendered, scripts run and their results, flows exercised, commands passed). State plainly what was left out and why (missing proof, assets, capability, network access). Share before/after captures. Ask for a decision only where the user owns it: production deployment, unresolved facts, brand assets only they have, a component-library migration, a paid resource.
 
 ## When to stop and ask
 
-Only when blocked by something the user must do: credentials, a paid resource, a capability the environment lacks (browser, image download) that the result materially depends on, or a factual question the repo cannot answer (a price, a claim, a legal line). Everything else — including the creative direction — is your call to make and defend.
+Only when blocked by something the user must decide or provide: credentials, a paid resource or licence, a capability the environment lacks that the result depends on (browser, network access to a host, image download), the top tasks when there is no evidence for them, or a fact the repo cannot answer (a price, a claim, a legal line). Everything else — including the creative direction — is your call to make and defend.

@@ -1,0 +1,169 @@
+- link "Skip to main content":
+  - /url: "#main"
+- banner:
+  - link "Acme Analytics":
+    - /url: /
+  - navigation "Primary":
+    - list:
+      - listitem:
+        - link "Dashboard":
+          - /url: /
+      - listitem:
+        - link "Reports":
+          - /url: /reports
+      - listitem:
+        - link "Settings":
+          - /url: /settings
+  - link "Notifications (3 unread)":
+    - /url: /notifications
+  - button "Account menu"
+  - search:
+    - text: Search reports
+    - searchbox "Search reports"
+    - button "Search"
+- region "What's new":
+  - paragraph: "New: export to CSV"
+  - button "Pause updates"
+- complementary:
+  - navigation "Dashboards":
+    - list:
+      - listitem:
+        - link "Overview":
+          - /url: /overview
+      - listitem:
+        - link "Revenue":
+          - /url: /revenue
+      - listitem:
+        - link "Churn":
+          - /url: /churn
+      - listitem:
+        - link "Help centre":
+          - /url: /help
+- main:
+  - heading "Dashboard" [level=1]
+  - region "Key metrics":
+    - heading "Key metrics" [level=2]
+    - list:
+      - listitem:
+        - paragraph: Monthly recurring revenue (all regions, net of refunds)
+        - paragraph: $48,210
+        - paragraph: up 4.2% vs August
+      - listitem:
+        - paragraph: Active users
+        - paragraph: 1,284
+        - paragraph: down 1.1% vs August
+      - listitem:
+        - paragraph: Churn
+        - paragraph: 2.1%
+        - paragraph: no change
+  - region "Revenue trend":
+    - heading "Revenue trend" [level=2]
+    - figure "Revenue (solid) Refunds (dashed) Show chart data as a table":
+      - img "Revenue vs refunds, March to September 2026 Revenue rises steadily from $31k to $48k; refunds stay flat at about $3k."
+      - list:
+        - listitem: Revenue (solid)
+        - listitem: Refunds (dashed)
+      - group: Show chart data as a table
+  - region "Recent invoices":
+    - heading "Recent invoices" [level=2]
+    - region "Recent invoices, sortable by customer or amount":
+      - table "Recent invoices, sortable by customer or amount":
+        - caption: Recent invoices, sortable by customer or amount
+        - rowgroup:
+          - row "Customer ▲ Plan Amount Status Actions":
+            - columnheader "Customer ▲":
+              - button "Customer ▲"
+            - columnheader "Plan"
+            - columnheader "Amount":
+              - button "Amount"
+            - columnheader "Status"
+            - columnheader "Actions"
+        - rowgroup:
+          - row "Contoso Team $640 Paid Edit Contoso invoice Delete Contoso invoice":
+            - cell "Contoso"
+            - cell "Team"
+            - cell "$640"
+            - cell "Paid"
+            - cell "Edit Contoso invoice Delete Contoso invoice":
+              - button "Edit Contoso invoice"
+              - button "Delete Contoso invoice"
+          - row "Fabrikam Pro $1,200 Paid Edit Fabrikam invoice Delete Fabrikam invoice":
+            - cell "Fabrikam"
+            - cell "Pro"
+            - cell "$1,200"
+            - cell "Paid"
+            - cell "Edit Fabrikam invoice Delete Fabrikam invoice":
+              - button "Edit Fabrikam invoice"
+              - button "Delete Fabrikam invoice"
+          - row "Northwind Pro $1,200 Overdue Edit Northwind invoice Delete Northwind invoice":
+            - cell "Northwind"
+            - cell "Pro"
+            - cell "$1,200"
+            - cell "Overdue"
+            - cell "Edit Northwind invoice Delete Northwind invoice":
+              - button "Edit Northwind invoice"
+              - button "Delete Northwind invoice"
+    - status
+  - region "Actions":
+    - heading "Actions" [level=2]
+    - button "Invite teammates"
+    - button "Export CSV"
+    - button "Advanced filters"
+    - paragraph:
+      - text: Revenue grew 12% this quarter (
+      - link "Q3 revenue report":
+        - /url: /r/q3
+      - text: ). Churn fell (
+      - link "churn report":
+        - /url: /r/churn
+      - text: ). Read the
+      - link "methodology notes":
+        - /url: /docs
+      - text: for details.
+    - paragraph:
+      - text: "Our motto:"
+      - emphasis: Qualität über alles, toujours
+      - text: .
+  - region "Period":
+    - heading "Period" [level=2]
+    - tablist "Period":
+      - tab "Daily" [selected]
+      - tab "Weekly"
+      - tab "Monthly"
+    - tabpanel "Daily": Daily view
+  - region "Account settings":
+    - heading "Account settings" [level=2]
+    - text: Full name
+    - textbox "Full name"
+    - text: Email address
+    - paragraph: We send invoices here.
+    - textbox "Email address"
+    - text: Phone number (optional)
+    - textbox "Phone number (optional)"
+    - text: New password
+    - paragraph: At least 12 characters. You can paste from a password manager.
+    - textbox "New password"
+    - checkbox "Show password"
+    - text: Show password Billing period
+    - combobox "Billing period":
+      - option "Monthly" [selected]
+      - option "Yearly"
+    - group "Notify me by":
+      - text: Notify me by
+      - radio "Email" [checked]
+      - text: Email
+      - radio "SMS"
+      - text: SMS
+    - checkbox "Send weekly digest"
+    - text: Send weekly digest
+    - button "Save changes"
+  - iframe
+  - status: Syncing…
+- contentinfo:
+  - text: © 2026 Acme ·
+  - link "Help":
+    - /url: /help
+  - text: ·
+  - link "Accessibility statement":
+    - /url: /accessibility
+- status
