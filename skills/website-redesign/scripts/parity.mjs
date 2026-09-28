@@ -37,8 +37,8 @@ function extract() {
   const text = document.body.innerText || '';
   // A claim keeps the noun it counts ("12,000+ teams"): the same number counting something else is a new claim.
   const NOUN = '(?:\\s(?:active\\s|happy\\s|paying\\s|monthly\\s)?(?:users?|customers?|clients?|teams?|companies|businesses|brands|countries|languages|integrations|reviews?|ratings?|stars?|downloads|installs|employees|people|members|subscribers|developers|partners|farms|stores|shops|orders|projects|sites|websites|apps|hours?|days?|weeks?|months?|years?|minutes?|seconds?))';
-  const claimRe = new RegExp(`(?:\\b\\d(?:\\.\\d)?\\s?\\/\\s?(?:5|10)\\b|\\b\\d(?:\\.\\d)?\\s?(?:out of|of)\\s?(?:5|10)\\b|[$€£¥₹]\\s?\\d[\\d,.]*(?:\\s?(?:k|m|bn|million|billion))?(?:\\s?\\/\\s?\\w+)?|\\b\\d[\\d,.]*\\s?(?:%|x\\b|×|\\+|k\\+?\\b|m\\+?\\b|ms\\b)${NOUN}?|\\b\\d[\\d,.]*${NOUN}\\b|\\b(?:since|founded in|est\\.?)\\s+\\d{4}\\b)`, 'gi');
-  const claims = [...new Set([...text.matchAll(claimRe)].map((m) => m[0].replace(/\s+/g, ' ').trim()))];
+  const claimRe = new RegExp(`(?:\\b\\d(?:\\.\\d)?\\s?\\/\\s?(?:5|10)\\b|\\b\\d(?:\\.\\d)?\\s?(?:out of|of)\\s?(?:5|10)\\b|[$€£¥₹]\\s?\\d[\\d,.]*(?:\\s?(?:k|m|bn|million|billion))?(?:\\s?\\/\\s?\\w+)?|\\b\\d[\\d,.]*\\s?(?:%|x\\b|×|\\+(?!\\s?\\d)|k\\+?\\b|m\\+?\\b|ms\\b(?!\\/)|(?:L|kg|km|kWh|GB|TB|lb|mph|km\\/h)\\b)${NOUN}?|\\b\\d[\\d,.]*${NOUN}\\b|[↑↓▲▼]\\s?[+−-]?\\d[\\d,.]*\\s?%?|\\b(?:since|founded in|est\\.?)\\s+\\d{4}\\b)`, 'gi');
+  const claims = [...new Set([...text.matchAll(claimRe)].map((m) => m[0].replace(/\s+/g, ' ').trim()).filter((c) => !/\dmS$|\d mS$/.test(c)))];
   const quotes = [...new Set([
     ...[...document.querySelectorAll('blockquote, q')].map((q) => q.innerText.replace(/\s+/g, ' ').trim()),
     ...[...text.matchAll(/[“"]([^”"\n]{25,280})[”"]/g)].map((m) => m[1].trim()),
@@ -46,6 +46,10 @@ function extract() {
   const links = [...new Set([...document.querySelectorAll('a[href]')].map((l) => { try { const u = new URL(l.href, location.href); return u.origin === location.origin ? u.pathname.replace(/\/$/, '') || '/' : null; } catch { return null; } }).filter(Boolean))];
   const ids = [...new Set([...document.querySelectorAll('[id]')].map((e) => e.id).filter((id) => id && !/^(__|radix-|headlessui-|react-|:r|mui-|astro-|svelte-)/.test(id) && !/[0-9a-f]{6,}/.test(id)))];
   const fields = [...new Set([...document.querySelectorAll('form [name]')].map((e) => `${e.closest('form')?.getAttribute('action') || e.closest('form')?.id || 'form'} › ${e.getAttribute('name')}`))];
+  // Analytics and script hooks: data-* attributes (name=value) on forms and controls; form action + method.
+  const hooks = [...new Set([...document.querySelectorAll('form, a[href], button, input, select, textarea, [role=button]')].flatMap((e) =>
+    [...e.attributes].filter((at) => at.name.startsWith('data-') && !/^data-(astro|v-|reactroot|radix|state|orientation|slot|headlessui|aria|theme|testid$)/.test(at.name) && !/[0-9a-f]{8,}/.test(at.value)).map((at) => `${at.name}="${at.value.slice(0, 60)}"`)))];
+  const forms = [...document.querySelectorAll('form')].map((f) => `${f.id ? '#' + f.id : 'form'} ${String(f.getAttribute('method') || 'get').toLowerCase()} ${f.getAttribute('action') || '(same page)'}`);
   const meta = {
     title: document.title,
     description: document.querySelector('meta[name="description"]')?.content || null,
@@ -53,7 +57,7 @@ function extract() {
     ogImage: document.querySelector('meta[property="og:image"]')?.content || null,
     h1: [...document.querySelectorAll('h1')].map((h) => h.innerText.trim()).join(' | ') || null,
   };
-  return { text, claims, quotes, links, ids, fields, meta };
+  return { text, claims, quotes, links, ids, fields, hooks, forms, meta };
 }
 
 async function load(base, p) {
@@ -90,7 +94,19 @@ if (crawlN) {
   paths = [...seen];
 }
 
-const norm = (s) => s.toLowerCase().replace(/[\s,]/g, '').replace(/[“”"']/g, '').replace(/×/g, 'x');
+// Whitespace collapses to one space (never removed: "05:31", "daysInMilk" must not read as "31 days");
+// thousands separators go; quotes and × are unified.
+const norm = (s) => s.toLowerCase().replace(/(\d)[,\u202f\u00a0](?=\d{3}\b)/g, '$1').replace(/[“”"']/g, '').replace(/×/g, 'x').replace(/\s+/g, ' ');
+const esc = (s) => s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
+// A claim is present only as a whole token run: "31 days" does not match inside "31 daysinmilk".
+// Edges depend on the claim: a noun at the end needs a word boundary; a digit or symbol only needs no digit next to it
+// (innerText runs "€79" into "per month" when a <small> follows, and "9.9%" must not match inside "99.9%").
+const has = (text, claim) => {
+  const c = norm(claim).trim(); if (!c) return false;
+  const before = /^[\p{L}]/u.test(c) ? '(^|[^\\p{L}\\p{N}])' : '(^|[^\\p{N}.,])';
+  const after = /[\p{L}]$/u.test(c) ? '(?![\\p{L}\\p{N}])' : '(?![\\p{N}]|[.,]\\p{N})';
+  return new RegExp(`${before}${esc(c)}${after}`, 'u').test(text);
+};
 let sourceText = '';
 for (const dir of asList(a.source)) {
   const walk = async (d) => {
@@ -142,17 +158,23 @@ if (orphaned.length) md(`- ⚠ linked from the old pages but not from any new pa
 md();
 
 md('## Claims on the new site with no source');
-const unsourced = [...newAll.claims].filter((c) => !oldNorm.includes(norm(c)) && !(sourceNorm && sourceNorm.includes(norm(c))));
+const unsourcedAll = [...newAll.claims].filter((c) => !has(oldNorm, c) && !(sourceNorm && has(sourceNorm, c)));
+// A number that appears in the source files without its unit (sample data in JSON, a figure in a CMS field) is likely
+// sourced; it is listed for a look rather than failed.
+const bareNumber = (c) => (c.match(/\d[\d,.]*/) || [''])[0].replace(/,/g, '');
+const numberInSources = unsourcedAll.filter((c) => sourceNorm && bareNumber(c).length >= 2 && new RegExp(`(^|[^\\d.])${bareNumber(c).replace('.', '\\.')}([^\\d]|$)`).test(sourceNorm));
+const unsourced = unsourcedAll.filter((c) => !numberInSources.includes(c));
 const unsourcedQuotes = [...newAll.quotes].filter((q) => !oldNorm.includes(norm(q).slice(0, 60)) && !(sourceNorm && sourceNorm.includes(norm(q).slice(0, 60))));
 md(unsourced.length || unsourcedQuotes.length ? [
   ...unsourced.map((c) => `- ✗ "${c}"`),
   ...unsourcedQuotes.map((q) => `- ✗ quotation: “${q.slice(0, 140)}${q.length > 140 ? '…' : ''}”`),
 ].join('\n') + '\n\nEach needs a source (the user, the repo, a document) or it comes out. Sample data in a product fragment must read as obviously illustrative.' : '- ✓ none — every number and quotation on the new site exists on the old site or in the sources.');
+if (numberInSources.length) md(`\n- ⚠ the number (without its unit) appears in the source files — check it is the same figure: ${numberInSources.map((c) => `"${c}"`).join(', ')}`);
 md();
 
 if (changingAll.size) { md(`Changing values (timers, clocks, count-up animations) left out of the comparison: ${[...changingAll].slice(0, 8).map((c) => `"${c.replace(/\s+/g, ' ')}"`).join(', ')}`); md(); }
 md('## Claims on the old site missing from the new one');
-const dropped = [...oldAll.claims].filter((c) => !newNorm.includes(norm(c)) && !changingAll.has(c));
+const dropped = [...oldAll.claims].filter((c) => !has(newNorm, c) && !changingAll.has(c));
 const droppedQuotes = [...oldAll.quotes].filter((q) => !newNorm.includes(norm(q).slice(0, 60)));
 md(dropped.length || droppedQuotes.length ? [
   ...dropped.map((c) => `- ⚠ "${c}"`),
@@ -168,12 +190,18 @@ for (const { p, o, n } of perPage) {
   if (lostIds.length) lines.push(`- ⚠ ids gone (anchors, script or analytics hooks?): ${lostIds.slice(0, 15).map((x) => `#${x}`).join(', ')}${lostIds.length > 15 ? ` +${lostIds.length - 15}` : ''}`);
   const lostFields = o.fields.filter((f) => !n.fields.includes(f));
   if (lostFields.length) lines.push(`- ✗ form fields renamed or removed: ${lostFields.join(', ')}`);
+  const lostHooks = (o.hooks || []).filter((h) => !(n.hooks || []).includes(h));
+  if (lostHooks.length) lines.push(`- ✗ data-* hooks gone (analytics, tests, scripts?): ${lostHooks.slice(0, 12).join(', ')}`);
+  const lostForms = (o.forms || []).filter((f) => !(n.forms || []).includes(f));
+  if (lostForms.length) lines.push(`- ✗ form submission changed (id, method or action): ${lostForms.join(', ')} → now ${(n.forms || []).join(', ') || 'no form'}`);
   for (const k of ['title', 'description', 'canonical', 'ogImage']) {
     if (o.meta[k] && !n.meta[k]) lines.push(`- ✗ ${k} missing (was "${String(o.meta[k]).slice(0, 80)}")`);
   }
-  if (!n.meta.h1) lines.push('- ✗ no h1');
+  // Only regressions are the redesign's: a page that never had an h1 is reported as a note, not a loss.
+  if (!n.meta.h1) lines.push(o.meta.h1 ? '- ✗ no h1 (the old page had one)' : '- ⚠ no h1 (the old page had none either — fix it now)');
   if (lines.length) { md(`### ${p}`); lines.forEach((l) => md(l)); md(); }
 }
+if (!perPage.some(({ o, n }) => o.text && n.text && ((o.ids || []).some((id) => !n.ids.includes(id)) || o.fields.some((f) => !n.fields.includes(f)) || (o.hooks || []).some((h) => !(n.hooks || []).includes(h)) || !n.meta.h1))) md('- ✓ every id, form field, data-* hook, form submission and piece of metadata is still there.');
 
 await browser.close();
 const report = out.join('\n');

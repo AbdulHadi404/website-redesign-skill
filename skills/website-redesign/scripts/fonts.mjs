@@ -64,7 +64,12 @@ async function inspect(buf, label, extra = {}) {
     Arabic: cover('ابجدهوز'), 'Arabic-Indic digits': cover('٠١٢٣'), Hebrew: cover('אבג'), Devanagari: cover('अआक'),
   };
   console.log(`\n${label}`);
-  console.log(`  ${font.familyName} — ${font.subfamilyName}${extra.subsets ? ` · Google subsets: ${extra.subsets.join(', ')}` : ''}`);
+  // Typographic names (IDs 16/17) where present — legacy ID 1/2 names turn a static 400 into "ExtraLight — Regular" —
+  // plus the usWeightClass the file actually carries.
+  const nm = (id) => { try { return font.getName?.(id) || null; } catch { return null; } };
+  const fam = nm('preferredFamily') || font.familyName, sub = nm('preferredSubfamily') || font.subfamilyName;
+  const wt = font['OS/2']?.usWeightClass;
+  console.log(`  ${fam} — ${sub}${wt ? ` (weight ${wt}${Object.keys(font.variationAxes || {}).length ? ', default instance' : ''})` : ''}${extra.subsets ? ` · Google subsets: ${extra.subsets.join(', ')}` : ''}`);
   console.log(`  ${extra.bytes ? `${Math.round(extra.bytes / 1024)} KB` : ''}${extra.format ? ` ${extra.format}` : ''} · ${font.numGlyphs} glyphs · upm ${upm}`);
   if (Object.keys(axes).length) console.log(`  variable: ${Object.entries(axes).map(([k, v]) => `${k} ${v.min}–${v.max} (default ${v.default})`).join(', ')}`);
   console.log(`  x-height ${(font.xHeight / upm).toFixed(3)} em · cap height ${(font.capHeight / upm).toFixed(3)} em · x/cap ${(font.xHeight / font.capHeight).toFixed(2)}`);

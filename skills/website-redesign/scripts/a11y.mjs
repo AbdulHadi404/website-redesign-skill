@@ -176,7 +176,7 @@ async function newPage(opts = {}) {
     if (el.closest('h1,h2,h3,h4,h5,h6,[role=heading],button,a,label,th,legend,caption,summary')) return false;
     const t = (el.innerText || '').trim(); if (!t || t.length > 60 || el.children.length > 1) return false;
     const cs = getComputedStyle(el); const body = parseFloat(getComputedStyle(document.body).fontSize);
-    return parseFloat(cs.fontSize) >= body * 1.25 && +cs.fontWeight >= 600 && !/^[~<>]?[\d$€£¥%.,\s▲▼+\-−×xKkMmBb]+$/.test(t) && cs.display === 'block';
+    return parseFloat(cs.fontSize) >= body * 1.25 && +cs.fontWeight >= 600 && !/^[~<>]?[\d$€£¥%.,\s▲▼+\-−×xKkMmBb]+$/.test(t) && !(/\d/.test(t) && t.length <= 16 && t.split(/\s+/).length <= 3) && cs.display === 'block';
   }).map(el => el.innerText.trim()));
   for (const t of fakeHeadings) add('WARN', 'outline', '1.3.1', `Looks like a heading but is not marked up as one: "${t}"`);
   const outline = await page.locator('body').ariaSnapshot();
@@ -406,7 +406,9 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
   }
   for (let i = 1; i < real.length; i++) {
     const a = real[i - 1], b = real[i];
-    if (b.rect.y < a.rect.y - 150 && Math.abs(b.rect.x - a.rect.x) < 400) add('WARN', 'keyboard', '2.4.3', `Focus jumps back up the page (${a.where} → ${b.where}) — check order matches reading order`);
+    // Only within one column: moving from the end of a left column to the top of the right one is reading order.
+    const sameColumn = b.rect.x < a.rect.x + a.rect.w && b.rect.x + b.rect.w > a.rect.x;
+    if (b.rect.y < a.rect.y - 150 && sameColumn) add('WARN', 'keyboard', '2.4.3', `Focus jumps back up the page (${a.where} → ${b.where}) — check order matches reading order`);
   }
   const last = stops[stops.length - 1];
   if (!last?.repeat && !last?.body && real.length >= maxTabs) add('INFO', 'keyboard', '—', `Stopped after ${maxTabs} Tab presses without cycling (raise --tabs)`);
@@ -508,7 +510,7 @@ for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
   for (const n of r.bgIcons) add('FAIL', 'forced', '1.1.1/1.4.11', 'Icon drawn with background-image only; forced colors may hide it and it has no text', n);
   for (const n of r.adjustNone.slice(0, 5)) add('INFO', 'forced', '—', 'forced-color-adjust:none — verify this is deliberate (e.g. chart swatches)', n);
   const fstops = await keyboardWalk(page, { label: 'forced', limit: Math.min(maxTabs, 40) });
-  for (const s of fstops.filter(s => s.indicator && s.indicator.changed === 0)) add('FAIL', 'forced', '2.4.7', 'No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)', s.where);
+  for (const s of fstops.filter(s => s.indicator && s.indicator.changed === 0)) add('FAIL', 'forced', '2.4.7', 'No visible focus in forced-colors mode (box-shadow rings are removed there and `outline: none` leaves nothing — draw focus with an outline, transparent in normal mode if the design uses a ring)', s.where);
   await page.context().close();
 }
 

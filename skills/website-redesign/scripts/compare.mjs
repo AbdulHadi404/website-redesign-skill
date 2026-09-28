@@ -23,6 +23,8 @@ import { parseArgs, asList, launch, importModule } from './lib/env.mjs';
 
 const a = parseArgs();
 const blur = Number(a.blur) || 0;
+// Several --labels arguments are several labels, commas and all; a single argument may list them with commas.
+const labelList = (v, def = []) => (Array.isArray(v) ? v : v && v !== true ? asList(v) : def);
 
 async function sheet(files, labels, out) {
   const imgs = await Promise.all(files.map(async (f) => `data:image/png;base64,${(await readFile(f)).toString('base64')}`));
@@ -62,7 +64,7 @@ async function diff(before, after, out) {
 
 if (a.grid) {
   const files = asList(a.grid);
-  await sheet(files, asList(a.labels), a.out || 'sheet.png');
+  await sheet(files, labelList(a.labels), a.out || 'sheet.png');
 } else if (a.dir || (a.before && a.after && (await stat(String(a.before)).catch(() => null))?.isDirectory())) {
   // Pairs by name with the -before/-after label removed, from one folder (the --label convention), from
   // before/ and after/ subfolders, or from --before <dir> --after <dir>.
@@ -81,7 +83,7 @@ if (a.grid) {
   console.log(`${n} before/after sheet(s) in ${outDir}`);
 } else if (a.before && a.after) {
   if (a.diff) await diff(a.before, a.after, a.diff);
-  if (a.out || !a.diff) await sheet([a.before, a.after], asList(a.labels, ['Before', 'After']), a.out || 'compare.png');
+  if (a.out || !a.diff) await sheet([a.before, a.after], labelList(a.labels, ['Before', 'After']), a.out || 'compare.png');
 } else {
   console.error('Usage: --before a.png --after b.png [--out sheet.png] [--diff diff.png] | --dir captures | --grid a.png b.png --labels x y');
   process.exit(1);

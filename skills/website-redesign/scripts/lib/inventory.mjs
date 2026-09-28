@@ -423,6 +423,12 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   const hSizes = [...new Set(headings.map((h) => Math.round(h.px)))].sort((p, q) => q - p);
   const headingRatio = hSizes.length ? Math.round((hSizes[0] / bodyPx) * 100) / 100 : null;
   const flatSteps = hSizes.slice(1).map((v, i) => [hSizes[i], v]).filter(([a, b]) => a / b < 1.2).map(([a, b]) => `${a}→${b}`);
+  // A lower-rank heading set larger than a higher-rank one (an h2 bigger than the h1) inverts the outline visually.
+  const byLevel = {};
+  for (const h of headings) if (h.level) byLevel[h.level] = Math.max(byLevel[h.level] || 0, h.px);
+  const lv = Object.keys(byLevel).map(Number).sort((p, q) => p - q);
+  const headingInversions = [];
+  for (let i = 0; i < lv.length; i++) for (let j = i + 1; j < lv.length; j++) if (byLevel[lv[j]] > byLevel[lv[i]] + 1) headingInversions.push(`h${lv[j]} ${Math.round(byLevel[lv[j]])}px > h${lv[i]} ${Math.round(byLevel[lv[i]])}px`);
 
   // Browser surfaces left at their defaults; custom properties used but never defined.
   let cssText = '';
@@ -493,7 +499,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       gradientText, emoji: emoji.slice(0, 10), cliches: [...cliches], statClaims: statClaims.slice(0, 10), gradients: gradients.length, violetGradients: gradients.filter((g) => g.violet).length,
       backdropBlur: blur, cards, pills, buttonsLike, iconTiles, domNodes: all.length,
       mainGround, creamGround, eyebrows, eyebrowExamples, sectionCount, accentedHeadlines: accentedHeadlines.slice(0, 5), sideStripes, stripeExamples, glows, oneRadius, centredShare,
-      emDashes, middleDots, arrowCtas, aphorisms, headingRatio, bodyPx, flatSteps,
+      emDashes, middleDots, arrowCtas, aphorisms, headingRatio, bodyPx, flatSteps, headingInversions,
       cardTextShare: Math.round((charsInCards / pageChars) * 100), outerCards: outerCards.length, kpiTiles, greeting, iconOnly, unlabelledCharts: charts,
       controlHeights: [...new Set(controls)].sort((x, y) => x - y), maxPx, hoverMoves, badgeAboveH1,
     },

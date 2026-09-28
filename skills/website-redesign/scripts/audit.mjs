@@ -295,6 +295,7 @@ try {
         if (sg.hoverMoves >= 3) S.push(`${sg.hoverMoves} :hover rules that move or scale — hover should change contrast; lift only what can be picked up.`);
       }
       if (sg.headingRatio && sg.headingRatio < 2 && !mobile && kind === 'marketing') S.push(`Largest heading is only ${sg.headingRatio}× the body size (${sg.bodyPx}px) — a flat scale for a marketing page (fine for product UI).`);
+      if (sg.headingInversions?.length) W.push(`Heading sizes inverted: ${sg.headingInversions.join(', ')} — the visual outline contradicts the document outline.`);
       if (sg.flatSteps.length) W.push(`Heading sizes closer than 1.2× apart: ${sg.flatSteps.join(', ')} — levels that do not read as different.`);
       const perChars = inv.totalChars / Math.max(sg.emDashes, 1);
       if (sg.emDashes >= 8 && perChars < 500) S.push(`${sg.emDashes} em dashes (one per ${Math.round(perChars)} characters) — a machine cadence in copy.`);

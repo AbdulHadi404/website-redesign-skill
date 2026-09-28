@@ -59,7 +59,9 @@ const label = a.label ? `-${a.label}` : '';
 const MAX_H = 16000;
 const mode = a.mode === 'fullpage' ? 'fullpage' : 'grow';
 const VARIANTS = {
-  'no-text': '*, *::before, *::after { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; }',
+  // Text goes; icons drawn in currentColor keep their colour (SVG is excluded) and the logo is hidden, as the
+  // critique's content-free test asks.
+  'no-text': ':where(*:not(svg, svg *)), ::before, ::after { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; } svg text { fill: transparent !important; } [class*="logo" i], [id*="logo" i], [aria-label*="logo" i], header a[href="/"] img, header a[href="/"] svg, a[rel="home"] img, a[rel="home"] svg { visibility: hidden !important; }',
   'no-images': 'img, picture, video, canvas, svg image { visibility: hidden !important; } * { background-image: none !important; }',
   'no-shadows': '*, *::before, *::after { box-shadow: none !important; text-shadow: none !important; filter: none !important; }',
 };
@@ -142,9 +144,20 @@ try {
       const dpr = Number(a.dpr) || (mobile ? 2 : 1);
       const flat = await flatImages(page, `${stem}.png`, dpr).catch(() => null);
       for (const v of variants) {
+        // Pin colours first: once text is transparent, currentColor resolves to transparent too.
+        if (v === 'no-text') await page.evaluate(() => {
+          for (const el of document.querySelectorAll('body *')) {
+            const cs = getComputedStyle(el);
+            if ((cs.webkitBackgroundClip || cs.backgroundClip) === 'text') { el.style.setProperty('background', 'none', 'important'); continue; }
+            // Everything drawn in currentColor that is not a glyph keeps its colour: SVG keeps its own `color`
+            // (icons, marks), other elements keep their background, border and outline colours (masked shapes).
+            if (el.closest('symbol, defs')) continue; // sprite sources: <use> clones inherit from where they are used
+            const props = el instanceof SVGElement ? ['color'] : ['background-color', 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', 'outline-color'];
+            for (const prop of props) el.style.setProperty(prop, cs.getPropertyValue(prop), 'important');
+          }
+        });
         const tag = await page.addStyleTag({ content: VARIANTS[v] });
         // Gradient text is painted as a clipped background, which CSS colour cannot remove.
-        if (v === 'no-text') await page.evaluate(() => { for (const el of document.querySelectorAll('body *')) { const cs = getComputedStyle(el); if ((cs.webkitBackgroundClip || cs.backgroundClip) === 'text') el.style.setProperty('background', 'none', 'important'); } });
         await page.waitForTimeout(100);
         await page.screenshot({ path: `${stem}-${v}.png`, fullPage: mode === 'fullpage' || fullH > MAX_H });
         await tag.evaluate((n) => n.remove());
@@ -174,7 +187,10 @@ try {
           const els = await ep.$$(sel);
           for (const [i, el] of els.entries()) {
             const f = `${stem}-el-${sel.replace(/[^a-z0-9]+/gi, '_').replace(/^_|_$/g, '')}-${i + 1}.png`;
+            // Sticky and fixed bars that are not part of the element would be painted across it.
+            await el.evaluate((t) => { for (const o of document.querySelectorAll('body *')) { const p = getComputedStyle(o).position; if ((p === 'fixed' || p === 'sticky') && !o.contains(t) && !t.contains(o)) { o.dataset.capHidden = o.style.visibility; o.style.visibility = 'hidden'; } } });
             const ok = await el.screenshot({ path: f }).then(() => true, () => false);
+            await el.evaluate(() => { for (const o of document.querySelectorAll('[data-cap-hidden]')) { o.style.visibility = o.dataset.capHidden; delete o.dataset.capHidden; } });
             if (ok) console.log(`  ${f}`);
           }
         }
