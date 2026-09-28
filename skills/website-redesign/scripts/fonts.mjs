@@ -8,7 +8,7 @@
  * Reports per face: format and size, weight/style, variable axes (wght, opsz,
  * wdth, slnt…), glyph count, scripts in the layout tables, script subsets
  * offered (Google), OpenType features relevant to design decisions —
- * tabular/lining/oldstyle figures (tnum/lnum/onum), slashed zero, case-
+ * tabular/lining/oldstyle figures (tnum/lnum/onum) — per digit system (Latin, Eastern Arabic, Persian), slashed zero, case-
  * sensitive forms, fractions, small caps, stylistic sets and character
  * variants — whether the *default* figures are already tabular, and
  * x-height and cap-height as a share of the em (large x-height = legible at
@@ -43,9 +43,6 @@ async function inspect(buf, label, extra = {}) {
   let font = fontkit.create(buf);
   if (font.fonts) font = font.fonts[0]; // collection
   const feats = new Set(font.availableFeatures || []);
-  const figs = '0123456789'.split('').map((d) => font.glyphForCodePoint(d.codePointAt(0))?.advanceWidth ?? null);
-  const hasDigits = figs.every((w) => w);
-  const defaultTabular = hasDigits && new Set(figs).size === 1;
   const scripts = new Set();
   for (const t of [font.GSUB, font.GPOS]) for (const s of t?.scriptList || []) scripts.add(s.tag.trim());
   const upm = font.unitsPerEm;
@@ -54,6 +51,14 @@ async function inspect(buf, label, extra = {}) {
   const cv = [...feats].filter((f) => /^cv\d\d$/.test(f));
   const named = Object.keys(FEATURES).filter((f) => feats.has(f) && !/^ss01$|^cv01$/.test(f));
   const cover = (s) => [...s].every((ch) => font.hasGlyphForCodePoint?.(ch.codePointAt(0)) ?? font.characterSet.includes(ch.codePointAt(0)));
+  // Each digit system is checked on its own: many Arabic faces have tabular Latin digits and proportional Eastern ones.
+  const figures = [];
+  for (const [name, set] of Object.entries({ 'Latin 0–9': '0123456789', 'Eastern Arabic ٠–٩': '٠١٢٣٤٥٦٧٨٩', 'Persian ۰–۹': '۰۱۲۳۴۵۶۷۸۹' })) {
+    if (!cover(set)) continue;
+    const widths = (f) => { try { return font.layout(set, f).glyphs.map((g) => g.advanceWidth); } catch { return [...set].map((c) => font.glyphForCodePoint(c.codePointAt(0)).advanceWidth); } };
+    const byDefault = new Set(widths({})).size === 1, withTnum = new Set(widths({ tnum: true })).size === 1;
+    figures.push(`${name} ${byDefault ? 'tabular by default' : withTnum ? 'proportional; tabular with tnum' : '✗ proportional even with tnum — columns of these digits will not align'}`);
+  }
   const coverage = {
     'Latin (basic)': cover('AaZz09'), 'Latin ext.': cover('ĄąŁłŐőȘș'), Vietnamese: cover('ơưạ'), Greek: cover('ΑαΩω'), Cyrillic: cover('ДдЖж'),
     Arabic: cover('ابجدهوز'), 'Arabic-Indic digits': cover('٠١٢٣'), Hebrew: cover('אבג'), Devanagari: cover('अआक'),
@@ -63,7 +68,7 @@ async function inspect(buf, label, extra = {}) {
   console.log(`  ${extra.bytes ? `${Math.round(extra.bytes / 1024)} KB` : ''}${extra.format ? ` ${extra.format}` : ''} · ${font.numGlyphs} glyphs · upm ${upm}`);
   if (Object.keys(axes).length) console.log(`  variable: ${Object.entries(axes).map(([k, v]) => `${k} ${v.min}–${v.max} (default ${v.default})`).join(', ')}`);
   console.log(`  x-height ${(font.xHeight / upm).toFixed(3)} em · cap height ${(font.capHeight / upm).toFixed(3)} em · x/cap ${(font.xHeight / font.capHeight).toFixed(2)}`);
-  console.log(`  figures: ${hasDigits ? (defaultTabular ? 'tabular by default' : 'proportional by default') : 'no digits'}${feats.has('tnum') ? ' · tnum available' : hasDigits && !defaultTabular ? ' · ✗ no tnum — columns of numbers will not align' : ''}${feats.has('zero') ? ' · slashed zero' : ''}`);
+  console.log(`  figures: ${figures.join(' · ') || 'no digits'}${feats.has('zero') ? ' · slashed zero' : ''}`);
   console.log(`  features: ${named.map((f) => f).join(' ')}${ss.length ? ` · stylistic sets ${ss.join(' ')}` : ''}${cv.length ? ` · character variants ${cv.length}` : ''}`);
   console.log(`  layout scripts: ${[...scripts].join(' ') || '—'} · covers: ${Object.entries(coverage).filter(([, v]) => v).map(([k]) => k).join(', ')}`);
 }

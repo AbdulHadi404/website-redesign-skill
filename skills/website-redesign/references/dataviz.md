@@ -55,7 +55,7 @@ Read whenever a surface shows numbers as charts or KPI tiles. If the environment
 - Marks ≥ 3:1 against the background, text ≥ 4.5:1, chart text ≥ 12 px.
 - Dark mode: re-tune, don't invert — lighter, slightly desaturated hues, lower gridline contrast, marks still ≥ 3:1.
 - Titles state the finding in explanatory charts ("Churn halved after the onboarding redesign"); dashboards name the metric plainly. A subtitle for measure and unit; a source line.
-- Numbers through `Intl.NumberFormat` with the locale; compact notation on axes and tiles ("1.2M"), full precision in tables and tooltips; consistent decimals per column; percentages vs percentage points distinguished; a true minus sign.
+- Numbers through `Intl.NumberFormat` with the locale; compact notation on axes and tiles ("1.2M"), full precision in tables and tooltips; consistent decimals per column; percentages vs percentage points distinguished; a true minus sign. Arabic and Persian interfaces: the digit system set in code, no hand-built number strings in RTL, digits that are tabular in the font actually used, numeric columns right-aligned (`multilingual.md` §2a).
 - Bars start at zero; lines may not (say so); about five round ticks; dates formatted for the range.
 
 ## 6. Responsive charts

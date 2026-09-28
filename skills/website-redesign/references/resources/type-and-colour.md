@@ -34,7 +34,7 @@ The defaults — Inter, Geist, Roboto, Open Sans, Poppins, Montserrat, DM Sans, 
 | Monospace (developer and infrastructure products only) | JetBrains Mono, IBM Plex Mono, Martian Mono, Azeret Mono, Spline Sans Mono, Red Hat Mono, Atkinson Hyperlegible Mono | — |
 | Arabic, CJK, Devanagari | see `multilingual.md` | — |
 
-**No tabular figures at all** (never for prices, tables, dashboards): DM Sans, Poppins, Fraunces, Instrument Serif, DM Serif Display, Albert Sans, Be Vietnam Pro, Libre Franklin, Urbanist, League Spartan, Oswald, Big Shoulders, Playfair Display, Libre Baskerville, and the Arabic faces Tajawal, Almarai, El Messiri, Changa, Markazi Text.
+**No tabular figures at all** (never for prices, tables, dashboards): DM Sans, Poppins, Fraunces, Instrument Serif, DM Serif Display, Albert Sans, Be Vietnam Pro, Libre Franklin, Urbanist, League Spartan, Oswald, Big Shoulders, Playfair Display, Libre Baskerville; for Latin digits, the Arabic families Tajawal, Almarai, El Messiri, Changa, Markazi Text, Readex Pro and Reem Kufi. **Eastern Arabic digits (٠–٩) are a separate question**: they are proportional, with no `tnum`, in most Arabic families — IBM Plex Sans Arabic and Cairo included — and tabular in the Noto Arabic families, Mada, Amiri, Markazi Text, Harmattan and Scheherazade New (`multilingual.md` §2a).
 
 **Pairing**: concord in x-height matters most when faces share a line (measured x-height/em: Inter 0.546, Plex 0.516, Source Sans 3 0.478, Literata 0.507, Newsreader 0.426, Cormorant 0.386) — correct a mismatch with `font-size-adjust: ex-height 0.52` (Baseline 2024) or by size. Superfamilies are the safest pairing: Plex Sans + Serif, Source Sans 3 + Serif 4, Alegreya Sans + Alegreya, Red Hat Display + Text, Noto Sans + Serif.
 

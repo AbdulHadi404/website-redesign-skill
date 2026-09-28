@@ -105,7 +105,7 @@ Symptoms: the palette was chosen from taste rather than sampled from the logo; a
 - **Typesetting an object that looks like machine output** (an MRZ strip, a hash, a serial block) as "authenticity": it reads as code. Draw the object (a signature line, a seal) or leave it out.
 - Display over ~6 rem on a long headline; tracking tighter than −0.04 em; `tracking-tighter` on 800+ weights as "the AI hero recipe"; italic descenders clipped by `line-height: 1` (italic words with g, j, p, q, y need ≥ 1.1 and room below).
 - Em-dash saturation in the copy (eight or more at roughly one per 500 characters); Title Case Headings where the brand writes in sentence case.
-- A face with no tabular figures used for prices, tables or dashboards (`fonts.mjs` tells you; DM Sans, Poppins, Fraunces, Instrument Serif, Tajawal and Almarai have none).
+- A face with no tabular figures used for prices, tables or dashboards (`fonts.mjs` tells you, per digit system; DM Sans, Poppins, Fraunces, Instrument Serif, Tajawal and Almarai have none, and most Arabic families — Plex Sans Arabic and Cairo included — have proportional Eastern Arabic digits).
 
 ## App-UI tells
 

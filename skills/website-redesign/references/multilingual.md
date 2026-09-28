@@ -15,19 +15,21 @@ Read when the product serves more than one language or script, and always for Ar
 
 **Prefer a family designed as a bilingual system** — matching stroke logic matters more than matching style names:
 
-| Family (Arabic) | Voice | Latin companion | Numerals | Good for |
+| Family (Arabic) | Voice | Latin companion | Digits: Latin 0–9 / Eastern ٠–٩ | Good for |
 | --- | --- | --- | --- | --- |
-| IBM Plex Sans Arabic | engineered, Naskh structure | IBM Plex Sans | tabular by default; Eastern Arabic and Persian digits | fintech, government tech, bilingual product UI (static weights 100–700) |
-| Noto Sans / Kufi / Naskh Arabic | neutral, widest coverage; Kufi for headlines, Naskh for reading | Noto Sans / Serif | tnum, tabular default | neutral multilingual systems (large files — subset) |
-| Readex Pro | readability-led, geometric | Lexend | slashed zero; no Persian digits | education, accessibility-led brands |
-| Alexandria | geometric | Montserrat (built in) | tnum, onum | a geometric brand voice |
-| Cairo | compact Kufi-based; very common in the region | Titillium Web | tabular by default | compact UI and headlines (variable 200–1000) |
-| Beiruti (2024) | modern geometric | built-in harmonised Latin | tabular default, tnum | a fresher alternative to Tajawal/Almarai |
-| Vazirmatn | Persian/Arabic UI sans | Roboto-based | tabular default, tnum | Persian-first sites, app UI |
-| Rubik | rounded, friendly; Arabic + Hebrew + Cyrillic | same family | tnum | playful multi-script brands |
-| Mada | modernist, road-sign heritage | Source Sans (modified) | tabular default | small UI sizes |
-| Markazi Text / Amiri | Naskh text / classical book Naskh | built in | Amiri tabular; Markazi no tnum | editorial / literary text, not UI |
-| Tajawal, Almarai | very common geometric (Gulf, Saudi) | built in | **no tabular figures** (Tajawal also lacks Persian digits) | simple consumer sites — never data |
+| IBM Plex Sans Arabic | engineered, Naskh structure | IBM Plex Sans | tabular / **proportional, no `tnum`** | fintech, government tech, bilingual product UI (static weights 100–700); borrow Eastern digits for data (§2a) |
+| Noto Sans / Kufi / Naskh Arabic | neutral, widest coverage; Kufi for headlines, Naskh for reading | Noto Sans / Serif | tabular / tabular | neutral multilingual systems; the safe choice for Eastern-digit data (large files — subset) |
+| Readex Pro | readability-led, geometric | Lexend | proportional even with `tnum` / proportional; no Persian digits | education, accessibility-led brands — not data |
+| Alexandria | geometric | Montserrat (built in) | `tnum` / proportional | a geometric brand voice |
+| Cairo | compact Kufi-based; very common in the region | Titillium Web | tabular / **proportional, no `tnum`** | compact UI and headlines (variable 200–1000) |
+| Beiruti (2024) | modern geometric | built-in harmonised Latin | tabular / proportional | a fresher alternative to Tajawal/Almarai |
+| Vazirmatn | Persian/Arabic UI sans | Roboto-based | tabular / `tnum` | Persian-first sites, app UI, data |
+| Rubik | rounded, friendly; Arabic + Hebrew + Cyrillic | same family | `tnum` / proportional | playful multi-script brands |
+| Mada | modernist, road-sign heritage | Source Sans (modified) | tabular / tabular | small UI sizes, data |
+| Markazi Text / Amiri | Naskh text / classical book Naskh | built in | Markazi proportional / tabular; Amiri tabular / tabular | editorial / literary text, not UI |
+| Tajawal, Almarai | very common geometric (Gulf, Saudi) | built in | proportional even with `tnum` / proportional (Tajawal lacks Persian digits) | simple consumer sites — never data |
+
+"Tabular" was measured from the font files as served (Google Fonts and the foundries' npm releases, 2026-09-28; `research/experiments/I-arabic-numerals/`). Latin and Eastern Arabic digits are separate glyphs with separate widths — a family can align one set and not the other.
 
 Display extras (one moment, never body): Reem Kufi (reads historical/Islamic by design), El Messiri, Changa, Lalezar, Rakkas, Aref Ruqaa.
 
@@ -50,9 +52,35 @@ body { font-family: "Brand", system-ui, sans-serif; }
 ```
 
    Without `unicode-range`, order matters: every Arabic family tested includes Latin glyphs, so listing it first gives English text the Arabic font's Latin.
-5. **Numerals are the client's decision**: Western digits (0–9) are common across the Maghreb and many Gulf and Levant products; Eastern Arabic (٠–٩) in parts of Egypt and the Gulf; Persian (۰–۹) for Farsi and Urdu. Set the system explicitly (`Intl.NumberFormat('ar-EG-u-nu-latn')` or `'…-u-nu-arab'`), check the font has the glyphs, and keep `tabular-nums` for alignment.
+5. **Numerals are the client's decision**: Western digits (0–9) are common across the Maghreb and many Gulf and Levant products; Eastern Arabic (٠–٩) in parts of Egypt and the Gulf; Persian (۰–۹) for Farsi and Urdu. Set the system explicitly — the locale alone no longer implies it (§2a).
 6. **Subsetting keeps shaping**: `--layout-features='*'` — Arabic needs `init`, `medi`, `fina`, `rlig`, `mark`.
 7. **Display tracking, uppercase and small caps don't exist** in Arabic; a design whose hierarchy relies on them needs another device (weight, size, colour) on the Arabic side.
+
+## 2a. Numbers in data (dashboards, tables, prices, forms)
+
+Measured in Chromium 141 and ICU 78 (`research/experiments/I-arabic-numerals/`):
+
+- **Say which digits, in code.** `Intl.NumberFormat('ar')` now gives Western digits; `ar-EG` and `ar-SA` give Eastern Arabic, `ar-AE` Western, `ar-MA` Western with a decimal comma, `fa-IR` Persian. Write `ar-SA-u-nu-latn` or `ar-SA-u-nu-arab` — never rely on the region.
+- **Never build a number string by hand in RTL.** `"-4.2%"` in an RTL cell renders as `4.2%-`. `Intl` output carries invisible bidi marks (LRM, or ALM for Eastern digits) that put the sign on the right side; a Western-digit value outside `Intl` goes in `<bdi dir="ltr">`. Strip those marks (`/[\u061C\u200E\u200F]/g`) from anything machine-read: CSV exports, test assertions, parsers.
+- **Tabular digits for the digits you show.** Most Arabic families have *proportional* Eastern Arabic digits and no `tnum` (table above) — `tabular-nums` does nothing. Either choose a family with tabular Eastern digits for data, or borrow only the digits under the same family name:
+
+```css
+@font-face { font-family: "Brand"; src: url(/fonts/plex-arabic.woff2) format("woff2");
+  unicode-range: U+0600-065F, U+066A, U+066D-06EF, U+06FA-06FF, U+FB50-FDFF, U+FE70-FEFF; }
+@font-face { font-family: "Brand"; src: url(/fonts/noto-sans-arabic-digits.woff2) format("woff2");
+  unicode-range: U+0660-0669, U+066B-066C, U+06F0-06F9; }   /* ٠–٩ ٫ ٬ ۰–۹ from a tabular face */
+```
+
+  Check the borrowed digits' weight and stroke against the text by eye; `scripts/fonts.mjs` reports whether a file's digits are tabular.
+- **Numeric columns are `text-align: right` in both directions** (not `end`): numbers are written with the units digit on the right in every digit system, so right alignment lines up place values. Headers of numeric columns align with their numbers. A trailing Arabic-convention minus shifts negatives by one digit — give every value a sign (`signDisplay: 'always'`) or show direction in its own column or word.
+- **Inputs: never `type="number"` for Arabic or Persian users.** Chromium drops typed `١٢٣` silently — `value` is empty and nothing is flagged invalid. Use `type="text" inputmode="numeric"` (or `"decimal"`), accept every digit system and normalise before validating:
+
+```js
+const toLatn = (s) => s.replace(/[٠-٩]/g, (d) => d.charCodeAt(0) - 0x660).replace(/[۰-۹]/g, (d) => d.charCodeAt(0) - 0x6F0)
+  .replace(/٫/g, '.').replace(/[٬،]/g, '').replace(/[\u061C\u200E\u200F]/g, '');
+```
+
+- **Charts**: axis labels, tooltips and data labels through the same formatter; a time axis keeps its reading direction decision recorded in `SYSTEM.md` (mirrored with the layout, or left-to-right as in most Arabic financial products — pick one and apply it everywhere).
 
 ## 3. Other scripts (brief)
 
@@ -64,5 +92,6 @@ body { font-family: "Brand", system-ui, sans-serif; }
 
 - [ ] `lang` and `dir` set; logical properties throughout; the RTL render captured at phone and desktop widths (`capture.mjs` against the RTL route or with `dir` toggled).
 - [ ] Directional icons mirrored, non-directional ones not; composition mirrored, photographs not.
-- [ ] Arabic text: no tracking, no synthetic italic, size and leading adjusted, numerals as decided, tabular where aligned.
+- [ ] Arabic text: no tracking, no synthetic italic, size and leading adjusted, numerals as decided.
+- [ ] Data: digit system set in code; no hand-built number strings; the digits actually shown are tabular (measured, not assumed); numeric columns right-aligned; numeric inputs are text inputs that accept Arabic and Persian digits.
 - [ ] Long translations fit: buttons, nav, tables, headings (no truncated labels).
