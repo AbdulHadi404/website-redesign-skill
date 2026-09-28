@@ -3,9 +3,10 @@ import { createRoot } from 'react-dom/client';
 import { useState } from 'react';
 import { animated, useSpring, useSprings, useTransition, useScroll, useInView, easings } from '@react-spring/web';
 import { Shell, items } from './react-shell.jsx';
-import { T, reduceGuard } from '../tokens.js';
-// The skill's productive spring (motion.md §4: stiffness 700, damping 47.6) — react-spring calls them tension and friction
-const productive = { tension: 700, friction: 47.6 };
+import { T, SLOW, reduceGuard } from '../tokens.js';
+// The skill's productive spring (motion.md §4: stiffness 700, damping 47.6) — react-spring calls them tension and friction.
+// ?slow=K slows the spring K times with the same damping ratio: mass K², friction K×.
+const productive = { tension: 700, friction: 47.6 * SLOW, mass: SLOW * SLOW };
 // react-spring ships named easings only; the token curve needs a bezier function
 const bez = ([x1, y1, x2, y2]) => (t) => { let lo = 0, hi = 1, u = t; for (let i = 0; i < 20; i++) { u = (lo + hi) / 2; const x = 3 * (1 - u) ** 2 * u * x1 + 3 * (1 - u) * u * u * x2 + u ** 3; if (x < t) lo = u; else hi = u; } return 3 * (1 - u) ** 2 * u * y1 + 3 * (1 - u) * u * u * y2 + u ** 3; };
 const ease = bez(T.ease.out);

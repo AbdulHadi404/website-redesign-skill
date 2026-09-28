@@ -8,7 +8,7 @@ Read in Phase 0 after classifying the routes, and again in Phase 3. The numbers 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Frequency | once to a few visits | daily, hours | daily, glance or deep-dive | occasional, task-driven | all day | often, in bursts | daily glance; rare high-stakes acts | many short sessions | daily to occasional | rare |
 | Body text | 16–20 px | 13–14 px | 12–14 px | 14–16 px | 13–14 px | 15–16 px prose, 13–14 code | 14–17 px | 16–17 px | 17–21 px | 19 px (16 on phones) |
-| Largest text | 48–120 px | 20–28 px (32 for a lone home-screen title) | 24–32 px (a few key numbers) | 24–40 px | 20–28 px | 32–48 px | 28–40 px (the balance) | 28–34 px | 32–56 px | 48 px (32 on phones) |
+| Largest text | 48–120 px | 20–28 px (32 for a dashboard or home-screen title that stands alone) | 24–32 px (a few key numbers) | 24–40 px | 20–28 px | 32–48 px | 28–40 px (the balance) | 28–34 px | 32–56 px | 48 px (32 on phones) |
 | Density | low | medium–high | high | medium | very high | medium | medium–low | medium | low | low |
 | Motion | 1–3 orchestrated moments + quiet reveals | only to explain change; none on keyboard actions | none except live-data updates | micro-feedback, image zoom | none | none in docs | confirmation moments | gesture-driven, physical | none | none |
 | Novelty | high, in one place | low | very low | medium (in imagery) | very low | low | low | medium | medium (in typography) | zero |
@@ -108,8 +108,9 @@ Posture *signature* (`framing.md` §1): expressive in fidelity and interaction f
 
 - **Goal:** the experience the business is remembered for, which also removes real ambiguity from ordering.
 - **Good:** a written experiential quality bar in the user's words; one vertical slice proved before breadth; a full-screen route or app of its own that shares the brand layer (type, colour roles, motion tokens, tone), not the website's layout; direct manipulation (`ui-ux.md` §7b); quality tiers that keep the look (`realtime-3d.md` §6).
-- **Numbers:** its own column in the performance budget (`performance.md` §1); frame time measured on a real GPU (`visual-qa.md` "3D and WebGL experiences").
+- **Numbers:** its own performance budget (`performance.md` §1); frame time measured on a real GPU (`visual-qa.md` "3D and WebGL experiences").
 - **Typical failures:** shrunk to a stepper with a thumbnail between two sections; spectacle that does not improve understanding, confidence, sharing or ordering.
+- **The pages around it:** no smooth-scroll library (`motion.md` §5); when the product is live 3D, no WebGL either — stills rendered by the product, then a hand-over into it (`realtime-3d.md` §7).
 - Details: `discovery.md` §5b, `realtime-3d.md`.
 
 ## When a repo holds several categories

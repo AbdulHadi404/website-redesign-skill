@@ -28,6 +28,7 @@ export function loc(src) {
     if (inBlock) { if (l.includes('*/')) inBlock = false; continue; }
     if (!l || l.startsWith('//')) continue;
     if (l.startsWith('/*')) { if (!l.includes('*/')) inBlock = true; else if (l.endsWith('*/') && !/\*\/.+/.test(l) && l.replace(/\/\*.*?\*\//g, '').trim() === '') continue; }
+    if (/\/\/ (harness|variant)\b|\{\/\* variant \*\/\}/.test(l)) continue; // test-only lines are not part of the set
     code++; if (/\/\/ rm\b|\/\* rm \*\//.test(l)) rm++;
   }
   return { code, rm };

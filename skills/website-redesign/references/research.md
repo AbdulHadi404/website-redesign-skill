@@ -36,7 +36,6 @@ Per reference, two or three lines:
 - **Proof**: how customers, numbers and testimonials appear, and how sparingly.
 - **Motion**: what moves, when, and whether it carries meaning.
 - **States and edges** (product UI): empty, loading, error, long content, mobile.
-- **Interaction** (configure, quote, book, personalise; a signature experience): direct manipulation, selection, feedback, constraints, loading, and how it works on a phone.
 - **Restraint**: what they chose *not* to do.
 
 ## Extract principles, then put the references away
@@ -49,7 +48,7 @@ Turn notes into principles independent of any one site's look:
 - "Photography of the customer's world, one treatment, always beside a solid surface for copy."
 - "Display type does the branding; UI type stays neutral."
 
-Record in `DESIGN.md` ("References") the problem each reference solves, what was taken *as a principle*, and what was deliberately not taken. A list of URLs is not research. Stop researching a problem when it has changed a decision and further reading would not change another; a reference that changed nothing was browsing. Then stop looking at them while you make. Copying a reference section by section produces a cheaper imitation of someone else's brand — a worse outcome than a mediocre original — and brand-clone files ("make it look like Stripe") are imitation by design.
+Record in `DESIGN.md` ("References") the problem each reference solves, what was taken *as a principle*, and what was deliberately not taken. A list of URLs is not research. Stop researching a problem when it has changed a decision and further reading would not change another; a reference that changed nothing was browsing. Then stop looking at the references while you make. Copying a reference section by section produces a cheaper imitation of someone else's brand — a worse outcome than a mediocre original — and brand-clone files ("make it look like Stripe") are imitation by design.
 
 ## Without a browser or network
 

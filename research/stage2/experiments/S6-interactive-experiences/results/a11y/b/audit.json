@@ -1,6 +1,6 @@
 {
-  "url": "http://127.0.0.1:37605/b-proxies.html",
-  "date": "2026-09-28T21:15:12.043Z",
+  "url": "http://127.0.0.1:32977/b-proxies.html",
+  "date": "2026-09-28T21:35:10.831Z",
   "findings": [
     {
       "level": "FAIL",
@@ -62,7 +62,7 @@
       "level": "INFO",
       "section": "colour",
       "sc": "1.4.1",
-      "msg": "Review /home/user/website-redesign-skill/research/stage2/experiments/S6-interactive-experiences/results/a11y/b/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
+      "msg": "Review /tmp/s6-a11y-bQqtOn/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
       "where": ""
     }
   ],
@@ -86,7 +86,7 @@
     ],
     "tab-forward": [
       {
-        "key": "73160287",
+        "key": "60328751",
         "where": "button.proxy.palette \"Strawberry\"",
         "tag": "button",
         "href": null,
@@ -110,7 +110,7 @@
         "aria": "button \"Strawberry\""
       },
       {
-        "key": "63839757",
+        "key": "44950765",
         "where": "button.sound \"Sound off\"",
         "tag": "button",
         "href": null,
@@ -137,7 +137,7 @@
         "body": true
       },
       {
-        "key": "73160287",
+        "key": "60328751",
         "where": "button.proxy.palette \"Strawberry\"",
         "tag": "button",
         "href": null,
@@ -178,7 +178,7 @@
     },
     "tab-forced": [
       {
-        "key": "85959808",
+        "key": "78943322",
         "where": "button.proxy.palette \"Strawberry\"",
         "tag": "button",
         "href": null,
@@ -202,7 +202,7 @@
         "aria": "button \"Strawberry\""
       },
       {
-        "key": "36919715",
+        "key": "82464534",
         "where": "button.sound \"Sound off\"",
         "tag": "button",
         "href": null,
@@ -229,7 +229,7 @@
         "body": true
       },
       {
-        "key": "85959808",
+        "key": "78943322",
         "where": "button.proxy.palette \"Strawberry\"",
         "tag": "button",
         "href": null,
@@ -263,5 +263,5 @@
       }
     }
   },
-  "seconds": 40.2
+  "seconds": 39.8
 }

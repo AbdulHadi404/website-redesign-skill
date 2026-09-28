@@ -7,6 +7,9 @@
  *   b  canvas + parallel DOM: focusable proxies, keyboard moves, narration, tap-to-place
  *   c  form only: radios, selects, buttons; the canvas is a labelled picture
  *   d  b + c: proxies over the canvas and the list beside it
+ *   e  PixiJS 8 with its built-in AccessibilitySystem on defaults (accessible = true,
+ *      accessibleTitle on every object, click on a palette entry adds at the centre)
+ *   f  e with accessibilityOptions.enabledByDefault = true (the overlay exists from load)
  * For each: accessibility tree at load and after the tasks, a keyboard walkthrough of
  * three tasks, drag and single-pointer walkthroughs, reduced-motion frames, idle rAF,
  * sound defaults, axe-core, the skill's a11y.mjs, a canvas probe, byte and line cost,
@@ -14,7 +17,8 @@
  *
  *   node run-toy.mjs [--quick]      writes results/toy.json and shots/*.jpg
  */
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile, mkdtemp, rm, copyFile } from 'node:fs/promises';
+import os from 'node:os';
 import { gzipSync } from 'node:zlib';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
@@ -28,13 +32,18 @@ const SKILL_SCRIPTS = path.resolve(here, '../../../../skills/website-redesign/sc
 const { launch } = await import(path.join(SKILL_SCRIPTS, 'lib/env.mjs'));
 const QUICK = process.argv.includes('--quick');
 const RUNS = QUICK ? 1 : 5;
+const ONLY = process.argv.includes('--only') ? process.argv[process.argv.indexOf('--only') + 1].split(',') : null;
 const toyDir = path.join(here, 'toy');
 const VARIANTS = [
   { id: 'a', file: 'a-canvas.html', label: 'canvas only' },
   { id: 'b', file: 'b-proxies.html', label: 'canvas + focusable proxies' },
   { id: 'c', file: 'c-form.html', label: 'form alternative only' },
   { id: 'd', file: 'd-hybrid.html', label: 'canvas + proxies + list' },
+  { id: 'e', file: 'e-pixi.html', label: 'PixiJS 8 AccessibilitySystem defaults' },
+  { id: 'f', file: 'f-pixi-enabled.html', label: 'PixiJS 8 AccessibilitySystem, enabledByDefault: true' },
 ];
+const PIXI = path.join(here, 'node_modules/pixi.js/dist/pixi.min.mjs');
+const PHONE_UA = 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36';
 await mkdir(path.join(here, 'results'), { recursive: true });
 await mkdir(path.join(here, 'shots'), { recursive: true });
 
@@ -51,7 +60,12 @@ async function cost(file) {
   const own = files.filter(([f]) => !['style.css', 'bench.js'].includes(f));
   const all = own.map(([, s]) => s).join('\n');
   const loc = own.reduce((n, [, s]) => n + s.split('\n').filter((l) => l.trim() && !/^\s*\/\//.test(l)).length, 0);
-  return { files: own.map(([f]) => f), bytes: Buffer.byteLength(all), gzipBytes: gzipSync(all, { level: 9 }).length, nonBlankLines: loc };
+  const out = { files: own.map(([f]) => f), bytes: Buffer.byteLength(all), gzipBytes: gzipSync(all, { level: 9 }).length, nonBlankLines: loc };
+  if (files.some(([, s]) => s.includes('/vendor/pixi.mjs'))) {
+    const eng = await readFile(PIXI);
+    out.engine = { file: 'pixi.js@8.21.0 dist/pixi.min.mjs', bytes: eng.length, gzipBytes: gzipSync(eng, { level: 9 }).length };
+  }
+  return out;
 }
 
 // ---------- page instrumentation ----------
@@ -61,7 +75,7 @@ const INIT = () => {
   if (AC) window.AudioContext = class extends AC { constructor(...a) { super(...a); window.__audioContexts++; } };
   const raf = window.requestAnimationFrame.bind(window);
   window.requestAnimationFrame = (fn) => { window.__raf++; return raf(fn); };
-  const live = (n) => n && n.nodeType === 1 ? n.closest('[role=status],[role=alert],[role=log],[aria-live]:not([aria-live=off])') : live(n?.parentNode);
+  const live = (n) => !n ? null : n.nodeType === 1 ? n.closest('[role=status],[role=alert],[role=log],[aria-live]:not([aria-live=off])') : live(n.parentNode);
   new MutationObserver((ms) => {
     for (const m of ms) {
       const r = live(m.target);
@@ -114,6 +128,29 @@ async function focused(page, cdp) {
   const ax = await cdp.send('Accessibility.getPartialAXTree', { objectId: result.objectId, fetchRelatives: false });
   const n = ax.nodes[0] || {};
   return { ...info, role: n.role?.value, name: n.name?.value || '' };
+}
+
+// Where are the focusable stand-ins relative to what they stand for? (page px, worst case)
+async function alignment(page) {
+  return page.evaluate(() => {
+    const t = window.__toy, v = t.view, m = t.model;
+    const c = v.canvas.getBoundingClientRect(), k = c.width / v.W;
+    const nameOf = (e) => (e.getAttribute('aria-label') || e.textContent.trim() || e.title || '');
+    const btns = [...document.querySelectorAll('button')].filter((b) => b.offsetParent !== null || getComputedStyle(b).position === 'absolute');
+    const centre = (e) => { const b = e.getBoundingClientRect(); return [b.x + b.width / 2, b.y + b.height / 2, b.width, b.height]; };
+    const errs = [], sizes = [];
+    ['Strawberry', 'Candle', 'Flower', 'Star'].forEach((name, i) => {
+      const b = btns.find((x) => nameOf(x) === name); if (!b) return;
+      const [x, y] = centre(b);
+      errs.push(Math.hypot(x - (c.x + v.PALETTE_X[i] * k), y - (c.y + (v.PALETTE_Y - 8) * k)));
+    });
+    for (const it of m.state.items) {
+      const b = btns.find((x) => nameOf(x).startsWith(m.label(it) + ',') || nameOf(x) === m.label(it)); if (!b) continue;
+      const [x, y, w, h] = centre(b); const [px, py] = v.toPx(it.x, it.y);
+      errs.push(Math.hypot(x - (c.x + px * k), y - (c.y + py * k))); sizes.push(Math.round(Math.min(w, h)));
+    }
+    return errs.length ? { stand_ins: errs.length, maxErrorPx: +Math.max(...errs).toFixed(1), itemTargetMinCssPx: sizes.length ? Math.min(...sizes) : null } : null;
+  });
 }
 
 // ---------- keyboard walkthrough ----------
@@ -210,6 +247,26 @@ async function keyboardTasks(page, cdp, strategy) {
       await kb.press('Enter');
     }, noStrawberry);
   }
+  if (strategy === 'engine') {
+    // Pixi's layer appears on the first Tab; Enter on its <button> is a click.
+    await task('T1 add a strawberry to the centre', async () => {
+      if (!await kb.tabTo(is('button', /^Strawberry$/))) throw new Error('palette not reached');
+      await kb.press('Enter');
+    }, strawberryAtCentre);
+    await task('T2 add a candle at the top left', async () => {
+      if (!await kb.tabTo(is('button', /^Candle$/), { shift: true, max: 12 }) && !await kb.tabTo(is('button', /^Candle$/), { max: 12 })) throw new Error('candle not reached');
+      await kb.press('Enter');
+      await page.waitForTimeout(100);
+      const f = await kb.tabTo(is('button', /^Candle 1/), { max: 12 });
+      if (!f) throw new Error('added candle not reached');
+      for (const k of ['Shift+ArrowUp', 'Shift+ArrowLeft', 'ArrowUp', 'ArrowLeft']) await kb.press(k);
+    }, candleTopLeft);
+    await task('T3 remove the strawberry', async () => {
+      const f = await kb.tabTo(is('button', /^Strawberry 1/), { shift: true, max: 12 }) || await kb.tabTo(is('button', /^Strawberry 1/), { max: 12 });
+      if (!f) throw new Error('strawberry not reached');
+      await kb.press('Delete'); await kb.press('Enter');
+    }, noStrawberry);
+  }
   return { tasks, totalKeys: kb.log.keys, invisibleFocusStops: kb.log.invisibleFocus, completed: tasks.filter((t) => t.ok).length };
 }
 
@@ -294,9 +351,14 @@ async function axe(page) {
 }
 const exec = promisify(execFile);
 async function skillA11y(url, out) {
+  // a11y.mjs writes PNG evidence too; keep only its JSON and ARIA snapshot in the repo.
+  const tmp = await mkdtemp(path.join(os.tmpdir(), 's6-a11y-'));
   try {
-    await exec(process.execPath, [path.join(SKILL_SCRIPTS, 'a11y.mjs'), url, '--out', out, '--tabs', '40'], { timeout: 240000, maxBuffer: 1 << 24 });
+    await exec(process.execPath, [path.join(SKILL_SCRIPTS, 'a11y.mjs'), url, '--out', tmp, '--tabs', '40'], { timeout: 240000, maxBuffer: 1 << 24 });
   } catch (e) { /* exits non-zero on FAIL; audit.json is still written */ }
+  await rm(out, { recursive: true, force: true }); await mkdir(out, { recursive: true });
+  for (const f of ['audit.json', 'aria-snapshot.yml']) await copyFile(path.join(tmp, f), path.join(out, f)).catch(() => {});
+  await rm(tmp, { recursive: true, force: true });
   try {
     const j = JSON.parse(await readFile(path.join(out, 'audit.json'), 'utf8'));
     const by = (lvl) => j.findings.filter((f) => f.level === lvl);
@@ -305,22 +367,29 @@ async function skillA11y(url, out) {
 }
 
 // ---------- main ----------
-const srv = await serve(toyDir);
+const srv = await serve(toyDir, { '/vendor/pixi.mjs': PIXI });
 const { browser } = await launch();
 const results = { date: new Date().toISOString(), chromium: browser.version(), runs: RUNS, variants: {} };
 try {
-  for (const v of VARIANTS) {
+  for (const v of VARIANTS.filter((x) => !ONLY || ONLY.includes(x.id))) {
     const r = { label: v.label, cost: await cost(v.file) };
     console.error(`--- ${v.id}: ${v.label}`);
     // accessibility tree at load, idle rAF, sound
     { const { ctx, page, cdp } = await newPage(browser, srv.base, v);
       const ax = await axSummary(cdp);
       r.axAtLoad = { interactive: ax.interactive, namedInteractive: ax.namedInteractive, liveRegions: ax.liveRegions, canvasNode: ax.canvasNode };
+      // Does the accessible layer exist before any key (screen-reader browse mode), survive a mouse move, and come back on Tab?
+      await page.mouse.move(200, 200); await page.mouse.move(260, 240, { steps: 4 }); await page.waitForTimeout(250);
+      const afterMouse = await axSummary(cdp);
+      await page.keyboard.press('Tab'); await page.waitForTimeout(250);
+      const afterTab = await axSummary(cdp);
+      r.axLifecycle = { atLoad: ax.interactive, afterMouseMove: afterMouse.interactive, afterThenTab: afterTab.interactive,
+        genericNames: afterTab.texts.filter((t) => /^container \d+$/.test(t)).length };
       r.idleRafPerSecond = await idleRaf(page);
       r.audioContextsAtLoad = await page.evaluate(() => window.__audioContexts);
       await ctx.close(); }
     // keyboard
-    const strategies = v.id === 'a' ? ['none'] : v.id === 'b' ? ['proxies'] : v.id === 'c' ? ['form'] : ['proxies', 'form'];
+    const strategies = { a: ['none'], b: ['proxies'], c: ['form'], d: ['proxies', 'form'], e: ['engine'], f: ['engine'] }[v.id];
     r.keyboard = {};
     for (const s of strategies) {
       const { ctx, page, cdp } = await newPage(browser, srv.base, v);
@@ -358,27 +427,25 @@ try {
     { const { ctx, page, cdp } = await newPage(browser, srv.base, v);
       await page.evaluate(() => { const m = window.__toy.model; m.addToZone('strawberry', 'centre'); m.addToZone('candle', 'top-left'); m.addToZone('star', 'bottom-right'); });
       await page.waitForTimeout(500);
+      await page.keyboard.press('Tab'); await page.waitForTimeout(300); // engine layers appear on Tab
       const ax = await axSummary(cdp);
       r.seededStateFromTree = stateCoverage(await modelView(page), ax.texts);
+      r.alignment = await alignment(page);
+      // Do names follow the state? Move Strawberry 1 from the centre to the top left (as a drag would).
+      await page.evaluate(() => { const m = window.__toy.model; const s = m.state.items.find((i) => i.kind === 'strawberry'); m.move(s.id, -0.55, -0.5); });
+      await page.waitForTimeout(400);
+      const ax2 = await axSummary(cdp);
+      const said = ax2.texts.filter((t) => /Strawberry 1/.test(t));
+      r.namesTrackState = { strawberryNames: [...new Set(said)], current: said.some((t) => /top left/.test(t)), stale: said.some((t) => /centre/.test(t)) };
       await ctx.close(); }
     // phone: 390 px, touch; overflow, proxy alignment after scaling, touch tap and touch drag
-    { const { ctx, page, cdp } = await newPage(browser, srv.base, v, { ctx: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 } });
+    { const { ctx, page, cdp } = await newPage(browser, srv.base, v, { ctx: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2, userAgent: PHONE_UA } });
       const ph = { horizontalOverflow: await page.evaluate(() => document.documentElement.scrollWidth > innerWidth) };
+      { const a = await axSummary(cdp); ph.axInteractiveAtLoad = a.interactive; ph.axNames = a.texts.slice(0, 12); }
       if (v.id !== 'c') {
         await page.evaluate(() => { const m = window.__toy.model; m.addToZone('strawberry', 'centre'); m.addToZone('candle', 'top-left'); });
         await page.waitForTimeout(500);
-        ph.proxyAlignmentMaxErrorPx = await page.evaluate(() => {
-          const t = window.__toy; if (!t.proxies) return null;
-          const r = t.view.canvas.getBoundingClientRect(), k = r.width / t.view.W;
-          let worst = 0;
-          for (const it of t.model.state.items) {
-            const b = t.proxies.byId.get(it.id).b.getBoundingClientRect();
-            const [x, y] = t.view.toPx(it.x, it.y);
-            worst = Math.max(worst, Math.hypot(b.x + b.width / 2 - (r.x + x * k), b.y + b.height / 2 - (r.y + y * k)));
-          }
-          return +worst.toFixed(1);
-        });
-        ph.proxyTargetCssPx = await page.evaluate(() => { const b = document.querySelector('.proxy.item')?.getBoundingClientRect(); return b ? Math.round(b.width) : null; });
+        ph.alignment = await alignment(page);
         await page.evaluate(() => { const m = window.__toy.model; for (const it of [...m.state.items]) m.remove(it.id); });
         await page.waitForTimeout(500);
         const g = await geometry(page);
@@ -414,7 +481,7 @@ try {
   }
   // proxy sync cost: b with proxies on vs off, n toppings all moving every frame
   const bench = [];
-  for (const n of [10, 50, 200]) {
+  for (const n of !ONLY || ONLY.includes('b') ? [10, 50, 200] : []) {
     for (const on of [false, true]) {
       const js = [], style = [], layout = [], gap = [];
       for (let i = 0; i < RUNS; i++) {
@@ -437,5 +504,5 @@ try {
 } finally {
   await browser.close(); await srv.close();
 }
-await writeFile(path.join(here, 'results', 'toy.json'), JSON.stringify(results, null, 2));
+await writeFile(path.join(here, 'results', ONLY ? `toy-only-${ONLY.join('')}.json` : 'toy.json'), JSON.stringify(results, null, 2));
 console.log(JSON.stringify(Object.fromEntries(Object.entries(results.variants).map(([k, r]) => [k, { cost: r.cost.gzipBytes, kb: Object.fromEntries(Object.entries(r.keyboard).map(([s, x]) => [s, `${x.completed}/3 in ${x.totalKeys} keys`])), axe: r.axe.violations.length, a11yFail: r.skillA11y.FAIL, probe: r.probe.map((p) => p.verdict) }])), null, 1));

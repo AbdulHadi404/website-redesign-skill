@@ -3,7 +3,7 @@ import { W, H, FREEZE, ASSETS, Model } from '../shared/scene.js';
 import { draw2d } from '../shared/draw2d.js';
 
 let m, ctx, atlas, bg, frames, reduced, freeze;
-let recording = false, frames_ = [], lat = [], pending = [], last;
+let recording = false, frames_ = [], lat = [], pending = [], js = [], last;
 const origin = performance.timeOrigin;
 const now = () => (freeze ? FREEZE.t : performance.now());
 
@@ -25,9 +25,11 @@ function frame(ts) {
   scheduled = false;
   if (recording && last !== undefined) frames_.push(ts - last);
   last = ts;
+  const t0 = performance.now();
   const t = now();
   m.prune(t);
   draw2d(ctx, m, t, atlas, bg, frames);
+  if (recording) js.push(performance.now() - t0);
   if (pending.length) {
     const done = origin + performance.now();
     for (const p of pending) lat.push({ type: p.type, delay: p.hs - p.ts, toFrame: done - p.ts });
@@ -41,9 +43,9 @@ function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(
 onmessage = ({ data: d }) => {
   try {
     if (d.type === 'init') return void init(d).catch((e) => postMessage({ type: 'error', message: String(e) }));
-    if (d.type === 'start') { recording = true; frames_ = []; lat = []; pending = []; return; }
+    if (d.type === 'start') { recording = true; frames_ = []; lat = []; pending = []; js = []; return; }
     if (d.type === 'stop') { recording = false; return; }
-    if (d.type === 'stats') return postMessage({ type: 'stats', frames: frames_, lat });
+    if (d.type === 'stats') return postMessage({ type: 'stats', frames: frames_, lat, js });
     if (d.type === 'item') return postMessage({ type: 'item', id: d.id, x: m.items[d.id].x, y: m.items[d.id].y });
     if (!m) return;
     const t = now();

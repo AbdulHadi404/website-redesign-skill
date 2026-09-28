@@ -23,7 +23,7 @@ If `PRODUCT.md` exists (`discovery.md` §5), the routes, top tasks and success m
 
 **Constraints:** stack and component library (licence), contracts to preserve, surviving brand assets, legal copy, accessibility level, performance budget, languages/scripts/RTL.
 
-**Success measures** (per category, with baselines): …
+**Success measures** (per category, with the baseline where one exists): …
 
 ## Audit
 
@@ -35,7 +35,7 @@ If `PRODUCT.md` exists (`discovery.md` §5), the routes, top tasks and success m
 
 **Brand assets sampled:** logo colours (`palette.mjs --from`), wordmark construction (geometric / humanist / serif / techno / condensed), brand family (parent and sibling surfaces: marks, faces, palettes).
 
-**Measured baseline** (`audit.mjs`, dembrandt): type sizes in use, families, contrast failures, focus, targets, overflow, signals, LCP/CLS. (A first site: measured on what the customer meets today — the social profile, a competitor's template, a PDF menu — or "no measured baseline".)
+**Measured baseline** (`audit.mjs`, dembrandt): type sizes in use, families, contrast failures, focus, targets, overflow, signals, LCP/CLS. (A first site: "no measured baseline"; what the customer meets today — the social profile, a competitor's template, a PDF menu — is recorded here as the stand-in for the old site.)
 
 **Must be preserved (functionality and truth):**
 - Routes / anchors: …
@@ -58,7 +58,7 @@ If `PRODUCT.md` exists (`discovery.md` §5), the routes, top tasks and success m
 
 ## Direction
 
-Fill the parts that apply. **Expressive** routes: everything below except "Productive surfaces". **Productive** routes (apps, dashboards, field tools, checkout, services): "Productive surfaces", "First viewport", "Breaks if" and the convergence checks *for the brand layer only*; skip Concept, material-family candidates and the memory test. **Signature** routes (builder, configurator, studio, visualiser): the experiential quality bar first, then "Productive surfaces" for the chrome and controls around the experience (`discovery.md` §5b). A two-page site does not need every section of this template at full length — the Brief, Accessibility, Colour, Typography and Keep/replace/remove/create always; the rest as far as they change a decision. When `SYSTEM.md` also exists, each rule lives in one place: `DESIGN.md` holds decisions and their reasons (the accessibility block says *which* commitments this product makes and why); `SYSTEM.md` holds how components carry them out (focus ring, target sizes, error pattern). Refer, don't repeat.
+Fill the parts that apply. **Expressive** routes: everything below except the experiential quality bar and "Productive surfaces". **Productive** routes (apps, dashboards, field tools, checkout, services): "Productive surfaces", "First viewport", "Breaks if" and the convergence checks *for the brand layer only*; skip Concept, material-family candidates and the memory test. **Signature** routes (builder, configurator, studio, visualiser): the experiential quality bar first; the experience itself is directed like an expressive route (Concept, candidates, fidelity and materials, its motion and feel), with its interaction model from `ui-ux.md` §7b; its chrome and controls fill "Productive surfaces" (`discovery.md` §5b). A two-page site does not need every section of this template at full length — the Brief, Accessibility, Colour, Typography and Keep/replace/remove/create always; the rest as far as they change a decision. When `SYSTEM.md` also exists, each rule lives in one place: `DESIGN.md` holds decisions and their reasons (the accessibility block says *which* commitments this product makes and why); `SYSTEM.md` holds how components carry them out (focus ring, target sizes, error pattern). Refer, don't repeat.
 
 **Concept** (expressive surfaces) — one line a founder would recognise as theirs: **"…"**
 
@@ -73,10 +73,10 @@ Fill the parts that apply. **Expressive** routes: everything below except "Produ
 **Productive surfaces** (if any):
 - Interaction model: the candidates considered (a table with filters, an exceptions-first list, a queue, a map…) and why each won or lost against the top tasks; the one chosen: …
 - Brand layer carried over from the marketing site or brand: mark, colour roles and their meanings, display face and its one job, status vocabulary. Expressive devices deliberately not carried over: …
-- Navigation: sidebar groups (≤ 7 per group), phone pattern (`responsive.md` §5), tab titles, accelerators (palette, shortcuts): …
+- Navigation model (sidebar, top bar, rail, none) and, for a sidebar, its groups (≤ 7 per group); phone pattern (`responsive.md` §5), tab titles, accelerators (palette, shortcuts): …
 - Density (and density modes), page-header height budget and what sits above the 1280 × 800 fold; elevation model (canvas / surface / layer); state language, including freshness and offline (`app-ui.md` §7b): …
 - What users have learned that stays: …
-- Brand moments (2–3): sign-in, first-run/empty states, success after a long task, and how each shows the brand: … The sign-in treatment (form first, no marketing hero photograph): … A greeting never takes the title slot.
+- Brand moments (2–3): sign-in, first-run/empty states, success after a long task, and how each shows the brand: … The sign-in treatment (form first, no marketing hero photograph or tagline): … A greeting never takes the title slot.
 - Checklist: `app-ui.md` §14, ticked before implementation.
 
 **Breaks if:** three things that would betray this direction.
@@ -91,8 +91,7 @@ Fill the parts that apply. **Expressive** routes: everything below except "Produ
 
 ## Typography
 
-- Type sets: expressive (marketing) and/or productive (app), each with its ratio and every size listed — every step used somewhere.
-- Product type roles (fixed): see `SYSTEM.md` Foundations.
+- Type sets: expressive (marketing) with its ratio and every size listed — every step used somewhere; productive (app): the fixed type roles in `SYSTEM.md` Foundations.
 - Display: family, weights, axes (opsz, wdth), tracking at display sizes, line height — and why it matches the wordmark's construction or the brand family.
 - Text / UI: family, weights, measure; tabular figures available (`fonts.mjs`)?
 - Monospace: **none** — or the one-line reason this audience reads code (commitment 5 in `SKILL.md`). Where the framework has a mono token, point it at the UI face; `code`/`kbd`/`samp`/`pre` inherit the UI face.
@@ -117,7 +116,7 @@ Fill the parts that apply. **Expressive** routes: everything below except "Produ
 | surface / surface-alt / surface-raised | … | … |
 | text-strong / text / text-muted | … | … |
 | border / border-strong | … | … |
-| accent (action) / accent-hover / accent-text | … | action and emphasis only; contrast-safe variant for small text |
+| accent (action) / accent-hover / accent-text | … | action only on productive surfaces (action and emphasis on expressive routes); contrast-safe variant for small text |
 | selected | … | neutral, not accent |
 | status: danger / warning / success / info | … | state only — never decoration |
 | focus ring | … | ≥ 3:1 against both the control and its ground |

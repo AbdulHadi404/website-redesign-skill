@@ -91,6 +91,9 @@ const ndc = new Vector2();
 function pick(e) {
   ndc.set((e.offsetX / W) * 2 - 1, -(e.offsetY / H) * 2 + 1);
   ray.setFromCamera(ndc, camera);
+  // The orthographic ray starts at the camera's mid-depth (z = 0); items sit at z > 0 (renderOrder
+  // tie-break), so start it in front of them or they are behind the ray and never hit.
+  ray.ray.origin.z = 99;
   const hits = ray.intersectObjects(meshes, false);
   let best = -1, bz = -Infinity;
   for (const h of hits) if (h.object.position.z > bz) { bz = h.object.position.z; best = h.object.userData.id; }
@@ -146,8 +149,10 @@ function update() {
 
 let first = true;
 function frame() {
+  const t0 = performance.now();
   update();
   renderer.render(scene, camera);
+  lab.cpu(performance.now() - t0);
   if (first) { first = false; lab.markFirstFrame(); }
 }
 let scheduled = false;

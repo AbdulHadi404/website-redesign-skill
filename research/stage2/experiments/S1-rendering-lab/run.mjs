@@ -49,7 +49,10 @@ function summarise(runs) {
     over25: get((r) => r.steady.over25), longShare: get((r) => r.steady.longShare),
     mainFps: get((r) => r.steady.main?.fps), mainP95: get((r) => r.steady.main?.p95),
     busyPct: get((r) => r.steady.busyPct), scriptPct: get((r) => r.steady.scriptPct),
-    rendererCpu: get((r) => r.steady.cpuPct?.renderer), gpuCpu: get((r) => r.steady.cpuPct?.gpu), browserCpu: get((r) => r.steady.cpuPct?.browser),
+    rendererCpu: get((r) => r.steady.cpuPct?.renderer), gpuCpu: get((r) => r.steady.cpuPct?.GPU), browserCpu: get((r) => r.steady.cpuPct?.browser),
+    rendererMsPerFrame: get((r) => r.steady.rendererMsPerFrame),
+    jsMs: get((r) => r.steady.js?.median), jsP95: get((r) => r.steady.js?.p95),
+    rafCalls: get((r) => r.steady.rafCalls),
     drawCalls: get((r) => r.steady.drawCalls),
     moveToFrame: get((r) => r.drag?.moveToFrame.median), moveToFrameP95: get((r) => r.drag?.moveToFrame.p95),
     moveDelay: get((r) => r.drag?.moveDelay.median), moveDelayP95: get((r) => r.drag?.moveDelay.p95),
@@ -63,17 +66,33 @@ function summarise(runs) {
 
 async function matrix(browser, base, section, cells) {
   results[section] ??= {};
-  for (const c of cells) {
-    const key = [c.variant, c.n, `${c.throttle}x`, c.load ? `load${c.load}` : '', c.reduced ? 'reduced' : ''].filter(Boolean).join('|');
-    const runs = [];
-    for (let i = 0; i < (c.runs ?? RUNS); i++) {
-      const r = await runOne(browser, base, c);
-      runs.push(r);
-      if (r.failed) { log(key, 'FAILED', r.failed); break; }
+  const keyOf = (c) => [c.variant, c.n, `${c.throttle}x`, c.load ? `load${c.load}` : '', c.reduced ? 'reduced' : ''].filter(Boolean).join('|');
+  // Round-robin inside each group of comparable cells (same N, throttle, load, reduced): run 1 of every
+  // variant, then run 2 of every variant, … so drifting background load on the shared CPUs hits every
+  // variant alike instead of whichever happened to run during a busy minute.
+  const groups = new Map();
+  for (const c of cells) { const g = [c.n, c.throttle, c.load, c.reduced].join('|'); if (!groups.has(g)) groups.set(g, []); groups.get(g).push(c); }
+  for (const group of groups.values()) {
+    const runs = new Map(group.map((c) => [keyOf(c), []]));
+    const failed = new Set();
+    const reps = Math.max(...group.map((c) => c.runs ?? RUNS));
+    for (let i = 0; i < reps; i++) {
+      for (const c of group) {
+        const key = keyOf(c);
+        if (failed.has(key) || i >= (c.runs ?? RUNS)) continue;
+        const r = await runOne(browser, base, c);
+        r.loadavg = os.loadavg().map((x) => Math.round(x * 10) / 10);
+        runs.get(key).push(r);
+        if (r.failed) { log(key, 'FAILED', r.failed); failed.add(key); }
+      }
     }
-    const s = summarise(runs);
-    results[section][key] = { cell: c, summary: s, runs };
-    log(section, key, `ttff ${s.ttff} fps ${s.fps} p95 ${s.frameP95} busy ${s.busyPct}% gpu ${s.gpuCpu}% move→frame ${s.moveToFrame}/${s.moveToFrameP95} ET ${s.eventTimingMax} heap ${s.heapMB} ok ${s.dragOk}`);
+    for (const c of group) {
+      const key = keyOf(c);
+      const s = summarise(runs.get(key));
+      s.loadavg1 = median(runs.get(key).map((r) => r.loadavg?.[0]).filter((x) => x != null));
+      results[section][key] = { cell: c, summary: s, runs: runs.get(key) };
+      log(section, key, `ttff ${s.ttff} fps ${s.fps} p95 ${s.frameP95} js ${s.jsMs}/${s.jsP95} rms/f ${s.rendererMsPerFrame} busy ${s.busyPct}% gpu ${s.gpuCpu}% move→frame ${s.moveToFrame}/${s.moveToFrameP95} ET ${s.eventTimingMax} heap ${s.heapMB} ok ${s.dragOk} load ${s.loadavg1}`);
+    }
     await save();
   }
 }
@@ -126,12 +145,13 @@ async function a11y(browser, base) {
       if (focusInStage) break;
     }
     const snap = await page.locator('#stage').ariaSnapshot().catch((e) => `ERR ${e.message}`);
+    const tabStops = await page.evaluate(() => [...document.querySelectorAll('#stage button, #stage [tabindex], #stage a[href]')].filter((e) => e.tabIndex >= 0).length);
     const lines = snap.split('\n');
     results.a11y.tree[v] = {
-      focusable: !!focusInStage, tabsToFocus: focusInStage ? tabs + 1 : null, focused: focusInStage,
+      focusable: !!focusInStage, tabsToFocus: focusInStage ? tabs + 1 : null, focused: focusInStage, tabStops,
       buttons: lines.filter((l) => /button/.test(l)).length, snapshotHead: lines.slice(0, 6).join('\n'), snapshotLines: lines.length,
     };
-    if (focusInStage && A11Y.includes(v)) {
+    if (focusInStage && A11Y.includes(v) && v !== 'pixi-pixia11y') {
       const before = await page.evaluate(() => { const id = Number(document.activeElement.dataset?.kb ?? -1); return { id, pos: id >= 0 ? window.__lab.getItem(id) : null }; });
       await page.keyboard.press('Enter');
       for (let i = 0; i < 3; i++) await page.keyboard.press('ArrowRight');
@@ -146,12 +166,20 @@ async function a11y(browser, base) {
       };
     } else if (focusInStage) {
       // Built-in engine accessibility (PixiJS): does Enter select, do arrows move?
-      const before = await page.evaluate(() => window.__lab.getItem(window.__lab.topId()));
+      // The focused item is the first object in the display list (one tab stop per object).
+      const before = await page.evaluate(() => ({ sel: window.__lab.selectedId?.(), p0: window.__lab.getItem(0) }));
       await page.keyboard.press('Enter');
+      await page.waitForTimeout(200);
+      const mid = await page.evaluate(() => window.__lab.selectedId?.());
       for (let i = 0; i < 3; i++) await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('Enter');
       await page.waitForTimeout(300);
-      const after = await page.evaluate(() => ({ pos: window.__lab.getItem(window.__lab.topId()), count: document.getElementById('count').textContent }));
-      results.a11y.keyboard[v] = { enterActivates: 'dispatches click/pointertap to the sprite', arrowsMove: after.pos.x !== before.pos.x, counter: after.count, pass: false };
+      const after = await page.evaluate(() => ({ pos: window.__lab.getItem(0), count: document.getElementById('count').textContent, focused: document.activeElement?.getAttribute('aria-label') }));
+      results.a11y.keyboard[v] = {
+        enterSelects: before.sel !== mid && mid === 0, arrowsMove: after.pos.x !== before.p0.x || after.pos.y !== before.p0.y,
+        counter: after.count, focusedAfterArrows: after.focused, pass: false,
+        note: 'Enter/Space fire a click on the overlay <button>, which PixiJS forwards as click/pointertap; there is no keyboard move, so drag has no keyboard equivalent.',
+      };
     }
     log('a11y', v, JSON.stringify(results.a11y.tree[v].focused), results.a11y.tree[v].buttons, 'buttons', JSON.stringify(results.a11y.keyboard[v] ?? null));
     await ctx.close();

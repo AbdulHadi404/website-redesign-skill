@@ -86,7 +86,9 @@ function chromiumCandidates(explicit) {
   }
   c.push('/usr/bin/google-chrome', '/usr/bin/chromium', '/usr/bin/chromium-browser',
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe');
+    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+    'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe');
   return c.filter(Boolean);
 }
 
@@ -116,9 +118,14 @@ function seedStorage(seed) {
   } catch { /* opaque origin or storage blocked */ }
 }
 
-export async function launch({ chrome, headless = true, storage } = {}) {
+/**
+ * gpu: true asks for hardware WebGL (--ignore-gpu-blocklist, GPU rasterisation, ANGLE on Windows and macOS) in full
+ * Chromium rather than the headless shell. Without a GPU, WebGL still runs in software (SwiftShader): a 3D page then
+ * renders but its speed and motion cannot be judged (visual-qa.md, "3D and WebGL experiences"). --disable-gpu is never added.
+ */
+export async function launch({ chrome, headless = true, storage, gpu = false } = {}) {
   const seed = await readStorageSeed(storage ?? parseArgs().storage);
-  const r = await launchBrowser({ chrome, headless });
+  const r = await launchBrowser({ chrome, headless, gpu });
   if (seed) {
     // Every context any script opens gets the seed, so audits reach the states users actually see.
     const newContext = r.browser.newContext.bind(r.browser);
@@ -134,7 +141,7 @@ export async function launch({ chrome, headless = true, storage } = {}) {
   return r;
 }
 
-async function launchBrowser({ chrome, headless = true } = {}) {
+async function launchBrowser({ chrome, headless = true, gpu = false } = {}) {
   // Root by root, not package by package: a stale global \`playwright\` must not shadow the \`playwright-core\` pinned here.
   const pwPath = resolveFirst(['playwright', 'playwright-core']);
   const pw = pwPath ? await import(pathToFileURL(pwPath).href).then((m) => m.default ?? m) : null;
@@ -144,14 +151,22 @@ async function launchBrowser({ chrome, headless = true } = {}) {
   }
   const { chromium } = pw;
   const args = ['--no-sandbox', '--disable-dev-shm-usage', '--font-render-hinting=none', '--hide-scrollbars'];
+  if (gpu) {
+    args.push('--ignore-gpu-blocklist', '--enable-gpu', '--enable-gpu-rasterization');
+    if (process.platform === 'win32') args.push('--use-angle=d3d11');
+    if (process.platform === 'darwin') args.push('--use-angle=metal');
+  }
   // Opt-in proxy (CAPTURE_PROXY=http://host:port). Not taken from HTTPS_PROXY automatically:
   // some Playwright versions (1.56) ignore the localhost bypass and send the dev server's
   // traffic to the proxy (HTTP 405). Behind a TLS-intercepting proxy web fonts may still fail;
   // audit.mjs reports that as "declared font families not available".
   const proxy = process.env.CAPTURE_PROXY ? { server: process.env.CAPTURE_PROXY, bypass: 'localhost,127.0.0.1,::1' } : undefined;
   if (!chrome && !process.env.CHROME_PATH) {
+    // Full Chromium (new headless) renders WebGL on a real GPU; the headless shell does not.
+    if (gpu) try { return { browser: await chromium.launch({ headless, args, proxy, channel: 'chromium' }), chromium }; } catch { /* fall through */ }
     try { return { browser: await chromium.launch({ headless, args, proxy }), chromium }; } catch { /* fall through */ }
-    try { return { browser: await chromium.launch({ headless, args, proxy, channel: 'chrome' }), chromium }; } catch { /* fall through to a binary on disk */ }
+    try { return { browser: await chromium.launch({ headless, args, proxy, channel: 'chrome' }), chromium }; } catch { /* fall through */ }
+    try { return { browser: await chromium.launch({ headless, args, proxy, channel: 'msedge' }), chromium }; } catch { /* fall through to a binary on disk */ }
   }
   for (const executablePath of chromiumCandidates(chrome)) {
     if (!existsSync(executablePath)) continue;
@@ -169,8 +184,14 @@ export const slugFor = (p) => {
   return q ? `${base}-${q}` : base;
 };
 
+const msysWarned = new Set();
 export function urlFor(base, p) {
   if (/^https?:|^file:/.test(p)) return p;
+  // Git Bash (MSYS) rewrites a leading-slash argument such as /studio into C:/Program Files/Git/studio.
+  if (/^[A-Za-z]:[\\/]/.test(p) && !msysWarned.has(p)) {
+    msysWarned.add(p);
+    console.error(`--paths "${p}" looks like a path Git Bash (MSYS) rewrote — set MSYS_NO_PATHCONV=1 or pass paths without the leading slash`);
+  }
   return base.replace(/\/$/, '') + (p.startsWith('/') ? p : `/${p}`);
 }
 
@@ -269,6 +290,34 @@ export async function finishMotion(page) {
       try { if (a.effect?.getComputedTiming?.().iterations === Infinity) a.pause(); else a.finish(); } catch { /* ignore */ }
     }
   });
+}
+
+/**
+ * Stop all CSS motion for a scan: zero every animation and transition, then finish what is running.
+ * For scans only (axe, the inventory). Never before a no-JS or reduced-motion hidden-content check (it would hide
+ * the very content those checks look for), and never before a focus walk (focus rings that transition must be seen as users see them).
+ */
+export async function freezeMotion(page) {
+  try {
+    await page.addStyleTag({ content: '*,*::before,*::after{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important;transition-delay:0s!important}' });
+    await finishMotion(page);
+    await page.waitForTimeout(200);
+  } catch { /* page navigated or CSP blocked the style: scan as is */ }
+}
+
+/** WebGL renderer of the page's browser: { vendor, renderer, software } or null when WebGL is unavailable. */
+export async function rendererInfo(page) {
+  return page.evaluate(() => {
+    try {
+      const c = document.createElement('canvas');
+      const gl = c.getContext('webgl2') || c.getContext('webgl');
+      if (!gl) return null;
+      const ext = gl.getExtension('WEBGL_debug_renderer_info');
+      const vendor = String(ext ? gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) : gl.getParameter(gl.VENDOR));
+      const renderer = String(ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER));
+      return { vendor, renderer, software: /swiftshader|llvmpipe|software|microsoft basic render/i.test(`${vendor} ${renderer}`) };
+    } catch { return null; }
+  }).catch(() => null);
 }
 
 export async function decodeImages(page) {

@@ -1,0 +1,10 @@
+import { Application, Entity, Color, FILLMODE_NONE, RESOLUTION_FIXED } from 'playcanvas';
+import { ready, host } from './_ready.js';
+const c = document.createElement('canvas'); c.width = 800; c.height = 600; host().append(c);
+const app = new Application(c, {});
+app.setCanvasFillMode(FILLMODE_NONE); app.setCanvasResolution(RESOLUTION_FIXED, 800, 600);
+const cam = new Entity('cam'); cam.addComponent('camera', { clearColor: new Color(0.95, 0.9, 0.85) }); cam.setPosition(0, 0, 4); app.root.addChild(cam);
+const box = new Entity('box'); box.addComponent('render', { type: 'box' }); app.root.addChild(box);
+const light = new Entity('light'); light.addComponent('light'); light.setEulerAngles(45, 30, 0); app.root.addChild(light);
+app.on('frameend', () => ready(app.graphicsDevice.isWebGL2 ? 'webgl2' : app.graphicsDevice.deviceType));
+app.start();

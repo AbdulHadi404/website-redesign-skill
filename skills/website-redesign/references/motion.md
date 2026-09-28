@@ -9,10 +9,10 @@ Every animation names exactly one job; "it looks nice" is not a job on anything 
 | Job | Product example | Marketing example |
 | --- | --- | --- |
 | Orientation / spatial continuity | a row expands into a detail panel; a drawer slides from its edge | a page transition that keeps the nav still |
-| Feedback | press `scale(.97)`, toggle knob, drag lift | form submit state |
+| Feedback | press `scale(.97)`, toggle knob, drag lift; a validation nudge | form submit state |
 | State change | cart count ticks; item added | pricing toggle monthly/annual |
 | Causality | a filter narrows the list; remaining items move into place | before/after slider |
-| Attention | live state only: a pulsing dot that also says its state in words (§6) | rarely justified — moving things read as ads |
+| Attention | live state only (§6): a new-item dot | rarely justified — moving things read as ads |
 | Explanation | onboarding demonstration; empty-state loop | a product demo that shows the mechanism as it is described |
 | Brand expression | almost never in productive UI | a hero entrance; one signature transition |
 
@@ -30,7 +30,7 @@ Run each candidate through these gates in order; the first "no" ends it.
 4. **Never block** — input is accepted while it runs; transitions are interruptible (CSS transitions and springs retarget; keyframes restart from zero); content is visible by default (§5).
 5. **Cost** — animate `transform` and `opacity` (and sparingly `filter`, `clip-path`); nothing that re-lays-out many elements; no work in scroll handlers; a library only if CSS or the Web Animations API cannot do it.
 6. **Reduced motion** — the substitute is defined before shipping (§6).
-7. **Vestibular and attention** — large-area movement, zoom, spin, parallax and scroll-linked movement are off or crossfaded under reduced motion (§6); anything that auto-plays or auto-updates stops within 5 s or gets a pause control placed before it (WCAG 2.2.2, A) — and reduced motion is respected on top of that, never instead; never three flashes a second (2.3.1).
+7. **Vestibular and attention** — anything that would move or auto-update for more than 5 s stops within 5 s or gets a pause control placed before it (WCAG 2.2.2, A) — and reduced motion is respected on top of that, never instead: large-area movement, zoom, spin, parallax and scroll-linked movement are off or crossfaded under reduce (§6); never three flashes a second (2.3.1).
 
 Write one line per animation into `DESIGN.md`: `trigger · job · properties · duration token · easing token · reduced-motion substitute` — e.g. `row click · orientation · transform, opacity · --dur-medium · --ease-out · crossfade 150 ms`.
 
@@ -62,7 +62,7 @@ Reconciled from Material 3, Carbon, Fluent 2, Kowalski and NN/g:
   --dur-page: 400ms;     /* page or view transition, large container transform */
   --dur-hero: 700ms;     /* one-off marketing entrance; never in apps */
   --stagger: 40ms;       /* 30–80 ms between siblings; total ≤ 300 ms; never blocks input */
-  --delay: 0ms;          /* entrance or settle delay (a check mark after its ring): none by default, feedback never waits; raise it only inside @media (prefers-reduced-motion: no-preference) */
+  --delay: 0ms;          /* entrance or settle delay (a check mark after its ring); raised only under no-preference, below */
 
   --ease-out: cubic-bezier(0.2, 0, 0, 1);             /* default: entrances and on-screen moves */
   --ease-in-out: cubic-bezier(0.4, 0.14, 0.3, 1);     /* A → B while visible */

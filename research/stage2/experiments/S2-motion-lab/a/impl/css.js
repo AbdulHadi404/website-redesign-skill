@@ -1,18 +1,23 @@
 // CSS + WAAPI: everything the platform does alone. JS only toggles state, measures FLIP and starts view transitions.
-import { T, reduceGuard } from '../tokens.js';
+import { T, SLOW, reduceGuard } from '../tokens.js';
 const $ = (s) => document.querySelector(s);
+// the tokens live in css.css; ?slow=K rewrites them (test harness only)
+if (SLOW !== 1) for (const [k, v] of Object.entries({ micro: T.dur.micro, medium: T.dur.medium, large: T.dur.large, page: T.dur.page, count: T.dur.count })) document.documentElement.style.setProperty(`--dur-${k}`, `${v}ms`); // harness
+if (SLOW !== 1) document.documentElement.style.setProperty('--stagger', `${T.stagger}ms`); // harness
+// ?vtpe: let clicks reach the page during a view transition (test variant; see the report)
+if (new URLSearchParams(location.search).has('vtpe')) document.head.append(Object.assign(document.createElement('style'), { textContent: '::view-transition { pointer-events: none; }' })); // variant
 const ease = `cubic-bezier(${T.ease.out})`;
-const listMode = new URLSearchParams(location.search).get('list') || 'waapi';
+const listMode = new URLSearchParams(location.search).get('list') || 'waapi'; // variant
 
 // 2 list — FLIP with WAAPI, "first" measured from the current visual position so an interruption continues
 const list = $('#list');
-if (listMode === 'vt') for (const li of list.children) li.style.viewTransitionName = `li-${li.dataset.id}`;
+if (listMode === 'vt') for (const li of list.children) li.style.viewTransitionName = `li-${li.dataset.id}`; // variant
 $('#shuffle').addEventListener('click', () => {
   const lis = [...list.children];
-  if (listMode === 'vt' && document.startViewTransition && !reduceGuard()) {
-    document.startViewTransition(() => list.append(...lis.reverse()));
-    return;
-  }
+  if (listMode === 'vt' && document.startViewTransition && !reduceGuard()) { // variant
+    document.startViewTransition(() => list.append(...lis.reverse())); // variant
+    return; // variant
+  } // variant
   const first = new Map(lis.map((li) => [li, li.getBoundingClientRect().top]));
   lis.forEach((li) => li.getAnimations().forEach((a) => a.cancel()));
   list.append(...lis.reverse());

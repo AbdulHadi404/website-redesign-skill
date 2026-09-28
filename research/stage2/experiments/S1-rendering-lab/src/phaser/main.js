@@ -51,6 +51,9 @@ class Decorate extends Phaser.Scene {
     });
     this.input.on('dragend', () => { if (m.up(now())) lab.drop(); this.invalidate(); });
     game.events.once('postrender', () => lab.markFirstFrame());
+    let t0 = null;
+    game.events.on('prestep', () => { t0 = performance.now(); });
+    game.events.on('postrender', () => { if (t0 != null) { lab.cpu(performance.now() - t0); t0 = null; } });
     if (params.freeze) { m.freeze(); this.select(m.selected); }
     lab.getItem = (id) => ({ x: m.items[id].x, y: m.items[id].y });
     lab.topId = () => m.order[m.order.length - 1];

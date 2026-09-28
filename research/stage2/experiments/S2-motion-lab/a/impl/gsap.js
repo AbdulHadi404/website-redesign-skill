@@ -71,7 +71,7 @@ $('#tick-lo').addEventListener('click', () => go(200));
 
 // 7 grid
 const cells = gsap.utils.toArray('#grid .cell'); let on = false;
-gsap.set(cells, { opacity: 0, y: 12 });
+gsap.set(cells, { opacity: 0, y: reduceGuard() ? 0 : 12 }); // rm: no offset to travel under reduce
 $('#grid-toggle').addEventListener('click', (e) => {
   on = !on; e.currentTarget.setAttribute('aria-pressed', String(on));
   const rm = reduceGuard(); // rm

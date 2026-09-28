@@ -1,0 +1,7 @@
+- main:
+  - heading "Top the cake" [level=1]
+  - paragraph: Drag toppings from the tray onto the cake. Drag one off the cake to remove it.
+  - button "Strawberry"
+  - button "Candle"
+  - button "Flower"
+  - button "Star"

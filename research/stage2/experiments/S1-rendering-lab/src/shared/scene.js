@@ -135,7 +135,7 @@ export class Model {
 export function installHarness(variant, params) {
   const lab = {
     variant, params, info: { renderer: null }, ttff: null, errors: [],
-    frames: [], recording: false, lat: [], pending: [], ev: [], drops: 0, picked: [],
+    frames: [], recording: false, lat: [], pending: [], ev: [], drops: 0, picked: [], js: [], rafCalls: 0,
     getItem: null, extraStats: null,
   };
   if (typeof window === 'undefined') return lab;
@@ -143,7 +143,14 @@ export function installHarness(variant, params) {
   addEventListener('error', (e) => lab.errors.push(String(e.message || e.error)));
   addEventListener('unhandledrejection', (e) => lab.errors.push(String(e.reason?.message || e.reason)));
   lab.markFirstFrame = () => { if (lab.ttff == null) lab.ttff = performance.now(); };
-  lab.start = () => { lab.frames = []; lab.lat = []; lab.ev = []; lab.recording = true; };
+  lab.start = () => { lab.frames = []; lab.lat = []; lab.ev = []; lab.js = []; lab.rafCalls = 0; lab.recording = true; };
+  // JS time the scene spends per frame in its own update + render call (engine CPU cost, GPU-independent:
+  // WebGL calls are queued to the GPU process, so this excludes GPU work and waits for it).
+  lab.cpu = (ms) => { if (lab.recording) lab.js.push(ms); };
+  // Count requestAnimationFrame calls made by the page (the harness's own loop is not counted).
+  const raf = window.requestAnimationFrame.bind(window);
+  lab.raf = raf;
+  window.requestAnimationFrame = (cb) => { if (lab.recording) lab.rafCalls++; return raf(cb); };
   lab.stop = () => { lab.recording = false; };
   // Input → frame: pending inputs resolve in a task posted after the next frame's rendering work.
   const ch = new MessageChannel();
@@ -160,9 +167,9 @@ export function installHarness(variant, params) {
       if (lab.recording && last !== undefined) lab.frames.push(t - last);
       last = t;
       if (lab.pending.length) { batch.push(...lab.pending); lab.pending = []; ch.port2.postMessage(0); }
-      requestAnimationFrame(loop);
+      raf(loop);
     };
-    requestAnimationFrame(loop);
+    raf(loop);
   }
   try {
     new PerformanceObserver((list) => {
@@ -178,7 +185,7 @@ export function installHarness(variant, params) {
     if (out) out.textContent = String(lab.drops);
   };
   lab.stats = async () => {
-    const base = { variant, info: lab.info, ttff: lab.ttff, frames: lab.frames, lat: lab.lat, ev: lab.ev, drops: lab.drops, picked: lab.picked, errors: lab.errors };
+    const base = { variant, info: lab.info, ttff: lab.ttff, frames: lab.frames, lat: lab.lat, ev: lab.ev, drops: lab.drops, picked: lab.picked, errors: lab.errors, js: lab.js, rafCalls: lab.rafCalls };
     return lab.extraStats ? { ...base, ...(await lab.extraStats()) } : base;
   };
   if (params.load) {

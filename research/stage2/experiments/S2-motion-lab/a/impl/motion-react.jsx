@@ -6,7 +6,7 @@ import { Shell, items } from './react-shell.jsx';
 import { T, reduceGuard } from '../tokens.js';
 const s = (ms) => ms / 1000;
 const ease = T.ease.out;
-const viewMode = new URLSearchParams(location.search).get('view') || 'presence';
+const viewMode = new URLSearchParams(location.search).get('view') || 'presence'; // variant
 
 const Press = () => <motion.button id="press" className="btn" whileTap={{ scale: 0.97 }} transition={{ duration: s(T.dur.micro), ease }}>Press me</motion.button>;
 
@@ -29,8 +29,8 @@ function View() {
   const [v, setV] = useState('a');
   const flip = () => (viewMode === 'react-vt' ? startTransition(() => setV((x) => (x === 'a' ? 'b' : 'a'))) : setV((x) => (x === 'a' ? 'b' : 'a')));
   const el = <div className="view" id={`view-${v}`}>{v.toUpperCase()}</div>;
-  if (viewMode === 'react-vt') return (<><button id="swap" onClick={flip}>Swap view</button>
-    <ViewTransition name="stage"><div id="stage"><div className="view" key={v} id={`view-${v}`}>{v.toUpperCase()}</div></div></ViewTransition></>);
+  if (viewMode === 'react-vt') return (<><button id="swap" onClick={flip}>Swap view</button> {/* variant */}
+    <ViewTransition name="stage"><div id="stage"><div className="view" key={v} id={`view-${v}`}>{v.toUpperCase()}</div></div></ViewTransition></>); {/* variant */}
   return (<><button id="swap" onClick={flip}>Swap view</button><div id="stage">
     <AnimatePresence initial={false}><motion.div className="view" key={v} id={`view-${v}`}
       initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}

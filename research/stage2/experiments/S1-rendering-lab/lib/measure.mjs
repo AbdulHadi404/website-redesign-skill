@@ -98,7 +98,14 @@ export async function runOne(browser, base, o) {
     layoutPct: r1((100 * (m1.LayoutDuration - m0.LayoutDuration)) / wall),
     cpuPct: c0 && c1 ? Object.fromEntries(Object.keys(c1).map((k) => [k, r1((100 * (c1[k] - (c0[k] || 0))) / wall)])) : null,
     drawCalls: await page.evaluate(() => window.__lab.drawCalls?.() ?? null),
+    // The scene's own JS per frame (update + render call): median / p95 ms, and frames it covered.
+    js: st.js?.length ? { median: r1(median(st.js) * 100) / 100, p95: r1(pct(st.js, 95) * 100) / 100, frames: st.js.length } : null,
+    rafCalls: st.rafCalls ?? null,
   };
+  // CPU time of the renderer process (main thread + compositor + raster + workers) per displayed frame.
+  // Honest under SwiftShader, unlike busyPct: a main thread blocked waiting for the emulated GPU is
+  // "busy" in TaskDuration but burns no CPU.
+  if (out.steady.cpuPct?.renderer != null && out.steady.fps) out.steady.rendererMsPerFrame = r1((out.steady.cpuPct.renderer * 10) / out.steady.fps);
 
   if (drag) {
     const box = await page.locator('#stage').boundingBox();

@@ -1,6 +1,6 @@
 // PixiJS v8: one Sprite per decoration from a Spritesheet (auto-batched into few draw calls),
 // Pixi's federated events for hover/drag, app.ticker for bob and particles.
-import { Application, Assets, Sprite, Container, Circle } from 'pixi.js';
+import { Application, Assets, Sprite, Container, Circle, UPDATE_PRIORITY } from 'pixi.js';
 import {
   W, H, BOB_AMP, HOVER_SCALE, SEL_SCALE, HIT_R, P_COUNT, FREEZE, ASSETS,
   readParams, installHarness, Model, particle, clampX, clampY, itemLabel,
@@ -109,7 +109,9 @@ function update() {
 }
 
 let first = true;
-app.renderer.runners.postrender.add({ postrender() { if (first) { first = false; lab.markFirstFrame(); } } });
+let t0 = null;
+app.ticker.add(() => { t0 = performance.now(); }, null, UPDATE_PRIORITY.HIGH);
+app.renderer.runners.postrender.add({ postrender() { if (t0 != null) { lab.cpu(performance.now() - t0); t0 = null; } if (first) { first = false; lab.markFirstFrame(); } } });
 
 let scheduled = false;
 function invalidate() {
@@ -142,4 +144,5 @@ if (__A11Y__) {
 }
 
 lab.getItem = (id) => ({ x: m.items[id].x, y: m.items[id].y });
+lab.selectedId = () => m.selected;
 lab.topId = () => m.order[m.order.length - 1];

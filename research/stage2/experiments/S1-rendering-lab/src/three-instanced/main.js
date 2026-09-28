@@ -86,6 +86,9 @@ const ndc = new Vector2();
 function pick(e) {
   ndc.set((e.offsetX / W) * 2 - 1, -(e.offsetY / H) * 2 + 1);
   ray.setFromCamera(ndc, camera);
+  // The orthographic ray starts at the camera's mid-depth (z = 0); items sit at z > 0 (renderOrder
+  // tie-break), so start it in front of them or they are behind the ray and never hit.
+  ray.ray.origin.z = 99;
   let best = -1, bk = -1;
   for (const h of ray.intersectObject(inst, false)) {
     const id = slots[h.instanceId];
@@ -144,7 +147,7 @@ function update() {
   for (; k < sparks.length; k++) sparks[k].visible = false;
 }
 let first = true;
-function frame() { update(); renderer.render(scene, camera); if (first) { first = false; lab.markFirstFrame(); } }
+function frame() { const t0 = performance.now(); update(); renderer.render(scene, camera); lab.cpu(performance.now() - t0); if (first) { first = false; lab.markFirstFrame(); } }
 let scheduled = false;
 function invalidate() {
   if (!(params.reduced || params.freeze) || scheduled) return;

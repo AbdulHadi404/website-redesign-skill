@@ -5,11 +5,13 @@ import path from 'node:path';
 
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml' };
 
-export async function serve(root) {
+export async function serve(root, aliases = {}) {
   const server = http.createServer(async (req, res) => {
     const u = new URL(req.url, 'http://x');
-    const p = path.join(root, decodeURIComponent(u.pathname === '/' ? '/index.html' : u.pathname));
-    if (!p.startsWith(root)) { res.writeHead(403).end(); return; }
+    // aliases map a URL path to a file outside root (e.g. /vendor/pixi.mjs -> node_modules/...)
+    const alias = aliases[u.pathname];
+    const p = alias || path.join(root, decodeURIComponent(u.pathname === '/' ? '/index.html' : u.pathname));
+    if (!alias && !p.startsWith(root)) { res.writeHead(403).end(); return; }
     try {
       const body = await readFile(p);
       res.writeHead(200, { 'content-type': TYPES[path.extname(p)] || 'application/octet-stream', 'cache-control': 'no-store' });

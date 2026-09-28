@@ -1,0 +1,492 @@
+{
+  "date": "2026-09-28T21:35:20.388Z",
+  "payload": [
+    {
+      "name": "raw Web Audio (the toy's sound.js: two synthesised blips, toggle, gesture gate)",
+      "minBytes": 849,
+      "gzipBytes": 505
+    },
+    {
+      "name": "zzfx@1.3.2 (procedural sound effects)",
+      "minBytes": 1732,
+      "gzipBytes": 1050
+    },
+    {
+      "name": "howler@2.2.4 core (sprites, fallbacks, unlock; plays files)",
+      "minBytes": 27273,
+      "gzipBytes": 8136
+    },
+    {
+      "name": "howler@2.2.4 full (core + spatial plugin, the package main)",
+      "minBytes": 36755,
+      "gzipBytes": 9998
+    },
+    {
+      "name": "tone@15.1.22 one Synth (tree-shaken)",
+      "minBytes": 236850,
+      "gzipBytes": 60945
+    },
+    {
+      "name": "tone@15.1.22 whole namespace",
+      "minBytes": 348647,
+      "gzipBytes": 82777
+    },
+    {
+      "name": "one 0.13 s click as a 44.1 kHz 16-bit mono WAV file",
+      "fileBytes": 11510
+    }
+  ],
+  "esbuild": "0.28.2",
+  "bcd": {
+    "version": "8.1.3",
+    "timestamp": "2026-09-24T13:25:51.189Z"
+  },
+  "compat": {
+    "api.Navigator.vibrate": {
+      "chrome": "32",
+      "chrome_android": "32",
+      "edge": "79",
+      "firefox": "16–129 (removed)",
+      "firefox_android": "79 (partial)",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "2.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      },
+      "notes": [
+        "chrome_android: Beginning in Chrome 55, this is not supported in cross-origin iframes.",
+        "chrome_android: Beginning in Chrome 60, this method requires a user gesture. Otherwise it returns <code>false</code>.",
+        "firefox: Until Firefox 26 included, when the vibration pattern was too long or any of its elements too large, Firefox threw an exception instead of returning <code>false</code> (<a href=\"https://bugzil.la/884935\">bug 884935</a>).",
+        "firefox: From Firefox 32 onwards, when the vibration pattern is too long or any of its elements too large, it returns <code>true</code> but truncates the pattern (<a href=\"https://bugzil.la/1014581\">bug 1014581</a>).",
+        "firefox: Beginning in Firefox 72, this is not supported in cross-origin iframes.",
+        "firefox_android: Vibration is disabled. If the window is visible, then <code>navigator.vibrate()</code> returns <code>true</code>, but no vibration takes place (regardless of hardware support). Originally, the intent was to disable it for cross-origin frames only (<a href=\"https://bugzil.la/1591113\">bug 1591113</a>), but the feature was not re-enabled due to abuse concerns (<a href=\"https://bugzil.la/1653318\">bug 1653318</a>)."
+      ]
+    },
+    "api.AudioContext": {
+      "chrome": "35",
+      "chrome_android": "35",
+      "edge": "12",
+      "firefox": "25",
+      "firefox_android": "25",
+      "safari": "14.1",
+      "safari_ios": "14.5",
+      "samsunginternet_android": "3.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    },
+    "api.AudioContext.AudioContext": {
+      "chrome": "35",
+      "chrome_android": "35",
+      "edge": "12",
+      "firefox": "25",
+      "firefox_android": "25",
+      "safari": "14.1",
+      "safari_ios": "14.5",
+      "samsunginternet_android": "3.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      },
+      "notes": [
+        "chrome: Before Chrome 66, each tab is limited to 6 audio contexts in Chrome; attempting to create more will throw a <code>DOMException</code>. For details see <a href=\"https://developer.mozilla.org/docs/Web/API/AudioContext/AudioContext#Per-tab_audio_context_limitation_in_Chrome\">Per-tab audio context limitation in Chrome</a>.",
+        "chrome: If <code>latencyHint</code> isn't valid, Chrome throws a <code>TypeError</code> exception. See <a href=\"https://developer.mozilla.org/docs/Web/API/AudioContext/AudioContext#Non-standard_exceptions_in_Chrome\">Non-standard exceptions in Chrome</a> for details.",
+        "chrome_android: Before Chrome Android 66, each tab is limited to 6 audio contexts in Chrome Android; attempting to create more will throw a <code>DOMException</code>. For details see <a href=\"https://developer.mozilla.org/docs/Web/API/AudioContext/AudioContext#Per-tab_audio_context_limitation_in_Chrome\">Per-tab audio context limitation in Chrome Android</a>.",
+        "chrome_android: If <code>latencyHint</code> isn't valid, Chrome Android throws a <code>TypeError</code> exception. See <a href=\"https://developer.mozilla.org/docs/Web/API/AudioContext/AudioContext#Non-standard_exceptions_in_Chrome\">Non-standard exceptions in Chrome Android</a> for details.",
+        "safari: New audio contexts are suspended until the <code>resume()</code> method is called via user action, such as the <code>click</code> event.",
+        "safari_ios: New audio contexts are suspended until the <code>resume()</code> method is called via user action, such as the <code>click</code> event."
+      ]
+    },
+    "api.BaseAudioContext.createOscillator": {
+      "chrome": "20",
+      "chrome_android": "25",
+      "edge": "12",
+      "firefox": "25",
+      "firefox_android": "25",
+      "safari": "6",
+      "safari_ios": "6",
+      "samsunginternet_android": "1.5",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    },
+    "api.Navigator.userActivation": {
+      "chrome": "72",
+      "chrome_android": "72",
+      "edge": "79",
+      "firefox": "120",
+      "firefox_android": "120",
+      "safari": "16.4",
+      "safari_ios": "16.4",
+      "samsunginternet_android": "11.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    },
+    "api.UserActivation.hasBeenActive": {
+      "chrome": "72",
+      "chrome_android": "72",
+      "edge": "79",
+      "firefox": "120",
+      "firefox_android": "120",
+      "safari": "16.4",
+      "safari_ios": "16.4",
+      "samsunginternet_android": "11.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    },
+    "api.Navigator.getAutoplayPolicy": {
+      "chrome": "no",
+      "chrome_android": "no",
+      "edge": "no",
+      "firefox": "112",
+      "firefox_android": "112",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "no",
+      "status": {
+        "deprecated": false,
+        "experimental": true,
+        "standard_track": true
+      }
+    },
+    "api.Navigator.audioSession": {
+      "chrome": "no",
+      "chrome_android": "no",
+      "edge": "no",
+      "firefox": "preview",
+      "firefox_android": "no",
+      "safari": "16.4",
+      "safari_ios": "16.4",
+      "samsunginternet_android": "no",
+      "status": {
+        "deprecated": false,
+        "experimental": true,
+        "standard_track": true
+      }
+    },
+    "api.AudioSession.type": {
+      "chrome": "no",
+      "chrome_android": "no",
+      "edge": "no",
+      "firefox": "preview",
+      "firefox_android": "no",
+      "safari": "16.4",
+      "safari_ios": "16.4",
+      "samsunginternet_android": "no",
+      "status": {
+        "deprecated": false,
+        "experimental": true,
+        "standard_track": true
+      }
+    },
+    "api.HTMLMediaElement.autoplay": {
+      "chrome": "3",
+      "chrome_android": "18",
+      "edge": "12",
+      "firefox": "3.5",
+      "firefox_android": "4",
+      "safari": "3.1",
+      "safari_ios": "3",
+      "samsunginternet_android": "1.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    },
+    "html.elements.input.switch": {
+      "chrome": "no",
+      "chrome_android": "no",
+      "edge": "no",
+      "firefox": "no",
+      "firefox_android": "no",
+      "safari": "17.4",
+      "safari_ios": "17.4",
+      "samsunginternet_android": "no",
+      "status": {
+        "deprecated": false,
+        "experimental": true,
+        "standard_track": false
+      }
+    },
+    "api.GamepadHapticActuator.playEffect": {
+      "chrome": "68",
+      "chrome_android": "68",
+      "edge": "15",
+      "firefox": "no",
+      "firefox_android": "no",
+      "safari": "16.4",
+      "safari_ios": "no",
+      "samsunginternet_android": "10.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    },
+    "api.Gamepad": {
+      "chrome": "21",
+      "chrome_android": "25",
+      "edge": "12",
+      "firefox": "29",
+      "firefox_android": "32",
+      "safari": "10.1",
+      "safari_ios": "10.3",
+      "samsunginternet_android": "1.5",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    },
+    "api.Element.requestFullscreen": {
+      "chrome": "71",
+      "chrome_android": "71",
+      "edge": "79",
+      "firefox": "64",
+      "firefox_android": "64",
+      "safari": "16.4",
+      "safari_ios": "16.4 (partial)",
+      "samsunginternet_android": "10.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      },
+      "notes": [
+        "firefox: Before Firefox 44, Firefox incorrectly allowed elements inside a <code>&lt;frame&gt;</code> or <code>&lt;object&gt;</code> element to request, and to be granted, fullscreen. In Firefox 44 and onwards this has been fixed: only elements in the top-level document or in an <code>&lt;iframe&gt;</code> element with the <code>allowfullscreen</code> attribute can be displayed fullscreen.",
+        "firefox_android: Before Firefox for Android 44, Firefox for Android incorrectly allowed elements inside a <code>&lt;frame&gt;</code> or <code>&lt;object&gt;</code> element to request, and to be granted, fullscreen. In Firefox for Android 44 and onwards this has been fixed: only elements in the top-level document or in an <code>&lt;iframe&gt;</code> element with the <code>allowfullscreen</code> attribute can be displayed fullscreen.",
+        "safari_ios: Only available on iPad, not on iPhone.",
+        "safari_ios: Shows an overlay button which can not be disabled. Swiping down exits fullscreen mode, making it unsuitable for some use cases like games.",
+        "safari_ios: Only available on iPad, not on iPhone. Shows an overlay button which can not be disabled."
+      ]
+    },
+    "api.ScreenOrientation.lock": {
+      "chrome": "38 (partial)",
+      "chrome_android": "38",
+      "edge": "79 (partial)",
+      "firefox": "144",
+      "firefox_android": "144",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "3.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      },
+      "notes": [
+        "chrome: Always throws <code>NotSupportedError</code>.",
+        "edge: Always throws <code>NotSupportedError</code>.",
+        "firefox: Always throws <code>NotSupportedError</code>.",
+        "firefox_android: The API exists but returns <code>NS_ERROR_UNEXPECTED</code>."
+      ]
+    },
+    "api.SpeechSynthesis.speak": {
+      "chrome": "33",
+      "chrome_android": "33",
+      "edge": "14",
+      "firefox": "49",
+      "firefox_android": "62",
+      "safari": "7",
+      "safari_ios": "7",
+      "samsunginternet_android": "3.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    },
+    "api.Element.ariaNotify": {
+      "chrome": "141",
+      "chrome_android": "141",
+      "edge": "141",
+      "firefox": "150",
+      "firefox_android": "150",
+      "safari": "27",
+      "safari_ios": "27",
+      "samsunginternet_android": "30.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      },
+      "notes": [
+        "chrome: On macOS, an announcement may not be spoken if another accessibility event fires at the same time; VoiceOver announces the competing event instead. This is a VoiceOver limitation and affects other browsers on macOS in the same way. See <a href=\"https://github.com/mdn/browser-compat-data/issues/29610\">mdn/browser-compat-data#29610</a>.",
+        "chrome: On ChromeOS, the method is exposed but announcements are never spoken.",
+        "chrome_android: On macOS, an announcement may not be spoken if another accessibility event fires at the same time; VoiceOver announces the competing event instead. This is a VoiceOver limitation and affects other browsers on macOS in the same way. See <a href=\"https://github.com/mdn/browser-compat-data/issues/29610\">mdn/browser-compat-data#29610</a>.",
+        "chrome_android: On ChromeOS, the method is exposed but announcements are never spoken.",
+        "edge: On macOS, an announcement may not be spoken if another accessibility event fires at the same time; VoiceOver announces the competing event instead. This is a VoiceOver limitation and affects other browsers on macOS in the same way. See <a href=\"https://github.com/mdn/browser-compat-data/issues/29610\">mdn/browser-compat-data#29610</a>.",
+        "edge: On ChromeOS, the method is exposed but announcements are never spoken."
+      ]
+    },
+    "api.Document.ariaNotify": {
+      "chrome": "141",
+      "chrome_android": "141",
+      "edge": "141",
+      "firefox": "150",
+      "firefox_android": "150",
+      "safari": "27",
+      "safari_ios": "27",
+      "samsunginternet_android": "30.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      },
+      "notes": [
+        "chrome: On macOS, an announcement may not be spoken if another accessibility event fires at the same time; VoiceOver announces the competing event instead. This is a VoiceOver limitation and affects other browsers on macOS in the same way. See <a href=\"https://github.com/mdn/browser-compat-data/issues/29610\">mdn/browser-compat-data#29610</a>.",
+        "chrome: On ChromeOS, the method is exposed but announcements are never spoken.",
+        "chrome_android: On macOS, an announcement may not be spoken if another accessibility event fires at the same time; VoiceOver announces the competing event instead. This is a VoiceOver limitation and affects other browsers on macOS in the same way. See <a href=\"https://github.com/mdn/browser-compat-data/issues/29610\">mdn/browser-compat-data#29610</a>.",
+        "chrome_android: On ChromeOS, the method is exposed but announcements are never spoken.",
+        "edge: On macOS, an announcement may not be spoken if another accessibility event fires at the same time; VoiceOver announces the competing event instead. This is a VoiceOver limitation and affects other browsers on macOS in the same way. See <a href=\"https://github.com/mdn/browser-compat-data/issues/29610\">mdn/browser-compat-data#29610</a>.",
+        "edge: On ChromeOS, the method is exposed but announcements are never spoken."
+      ]
+    },
+    "css.at-rules.media.prefers-reduced-motion": {
+      "chrome": "74",
+      "chrome_android": "74",
+      "edge": "79",
+      "firefox": "63",
+      "firefox_android": "64",
+      "safari": "10.1",
+      "safari_ios": "10.3",
+      "samsunginternet_android": "11.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    },
+    "css.at-rules.media.prefers-reduced-transparency": {
+      "chrome": "118",
+      "chrome_android": "118",
+      "edge": "118",
+      "firefox": "113 (flag)",
+      "firefox_android": "no",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "25.0",
+      "status": {
+        "deprecated": false,
+        "experimental": true,
+        "standard_track": true
+      }
+    },
+    "css.at-rules.media.forced-colors": {
+      "chrome": "89",
+      "chrome_android": "89",
+      "edge": "79",
+      "firefox": "89",
+      "firefox_android": "89",
+      "safari": "16",
+      "safari_ios": "16",
+      "samsunginternet_android": "15.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    },
+    "css.at-rules.media.prefers-contrast": {
+      "chrome": "96",
+      "chrome_android": "96",
+      "edge": "96",
+      "firefox": "101",
+      "firefox_android": "101",
+      "safari": "14.1",
+      "safari_ios": "14.5",
+      "samsunginternet_android": "17.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    },
+    "api.GPU": {
+      "chrome": "144",
+      "chrome_android": "121",
+      "edge": "144",
+      "firefox": "141 (partial)",
+      "firefox_android": "no",
+      "safari": "26",
+      "safari_ios": "26",
+      "samsunginternet_android": "25.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      },
+      "notes": [
+        "chrome: Supported on ChromeOS, macOS, Windows, and Linux (Intel Gen12+ GPUs only).",
+        "chrome: Supported on ChromeOS, macOS, and Windows.",
+        "edge: Supported on ChromeOS, macOS, Windows, and Linux (Intel Gen12+ GPUs only).",
+        "edge: Supported on ChromeOS, macOS, and Windows.",
+        "firefox: Supports all contexts except service workers. See <a href=\"https://bugzil.la/1942431\">bug 1942431</a>.",
+        "firefox: Supports Windows since Firefox 141. See <a href=\"https://bugzil.la/1972486\">bug 1972486</a>."
+      ]
+    },
+    "api.OffscreenCanvas": {
+      "chrome": "69",
+      "chrome_android": "69",
+      "edge": "79",
+      "firefox": "105",
+      "firefox_android": "105",
+      "safari": "16.4",
+      "safari_ios": "16.4",
+      "samsunginternet_android": "10.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    },
+    "css.properties.touch-action": {
+      "chrome": "36",
+      "chrome_android": "36",
+      "edge": "12",
+      "firefox": "52",
+      "firefox_android": "52",
+      "safari": "13",
+      "safari_ios": "9.3",
+      "samsunginternet_android": "3.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      },
+      "notes": [
+        "firefox: Not applicable to Firefox platforms that support neither pointer nor touch events."
+      ]
+    },
+    "api.Document.startViewTransition": {
+      "chrome": "111",
+      "chrome_android": "111",
+      "edge": "111",
+      "firefox": "144",
+      "firefox_android": "144",
+      "safari": "18",
+      "safari_ios": "18",
+      "samsunginternet_android": "22.0",
+      "status": {
+        "deprecated": false,
+        "experimental": false,
+        "standard_track": true
+      }
+    }
+  }
+}

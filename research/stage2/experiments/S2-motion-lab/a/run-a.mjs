@@ -14,11 +14,15 @@ const RUNS = +(args.runs || 5);
 const only = args.only ? String(args.only).split(',') : null;
 const harness = await readFile(path.join(labRoot, 'a/harness.js'), 'utf8');
 const VIEWPORT = { width: 1000, height: 800 };
+const SLOW = 4; // interruption runs play every duration 4x slower (tokens.js ?slow=4), waits scaled the same
+const withQ = (q, extra) => (q ? `${q}&${extra}` : `?${extra}`);
 
 const ALL = ['press', 'list', 'sheet', 'view', 'scroll', 'ticker', 'grid'];
 export const VARIANTS = [
   { id: 'css', impl: 'css', q: '' },
   { id: 'css-vt-list', impl: 'css', q: '?list=vt', only: ['list'] },
+  { id: 'css-vt-list-pe', impl: 'css', q: '?list=vt&vtpe', only: ['list'] },
+  { id: 'css-vtpe', impl: 'css', q: '?vtpe', only: ['view'] },
   { id: 'motion', impl: 'motion', q: '' },
   { id: 'motion-hw', impl: 'motion', q: '?hw', only: ['press', 'list', 'sheet'] },
   { id: 'motion-react', impl: 'motion-react', q: '' },
@@ -31,7 +35,7 @@ export const VARIANTS = [
 ];
 const BUTTONS = { press: '#press', shuffle: '#shuffle', sheet: '#sheet-toggle', swap: '#swap', hi: '#tick-hi', lo: '#tick-lo', grid: '#grid-toggle' };
 
-async function openPage(browser, base, v, { reducedMotion = 'no-preference', guard = true } = {}) {
+async function openPage(browser, base, v, { reducedMotion = 'no-preference', guard = true, slow = 1 } = {}) {
   const ctx = await browser.newContext({ viewport: VIEWPORT, reducedMotion, deviceScaleFactor: 1 });
   await ctx.addInitScript(`window.__RM_GUARD = ${guard};`);
   await ctx.addInitScript(harness);
@@ -39,7 +43,7 @@ async function openPage(browser, base, v, { reducedMotion = 'no-preference', gua
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
-  await page.goto(`${base}/captures/a/${v.impl}.html${v.q}`, { waitUntil: 'load' });
+  await page.goto(`${base}/captures/a/${v.impl}.html${slow !== 1 ? withQ(v.q, `slow=${slow}`) : v.q}`, { waitUntil: 'load' });
   await page.waitForTimeout(500);
   const c = await page.evaluate((B) => Object.fromEntries(Object.entries(B).map(([k, s]) => {
     const r = document.querySelector(s)?.getBoundingClientRect(); return [k, r ? { x: r.x + r.width / 2, y: r.y + r.height / 2 } : null]; })), BUTTONS);
@@ -48,19 +52,20 @@ async function openPage(browser, base, v, { reducedMotion = 'no-preference', gua
 const click = async (page, pt) => { if (pt) await page.mouse.click(pt.x, pt.y); };
 
 // ---------- interruption scenarios ----------
+const K = SLOW;
 const SCEN = {
-  press: { keys: ['press'], ms: 450, from: 1, to: 0.97, final: 1, intType: 'pointerup',
-    act: async (p, c) => { await p.mouse.move(c.press.x, c.press.y); await p.mouse.down(); await p.waitForTimeout(40); await p.mouse.up(); } },
-  list: { keys: ['list'], ms: 900, from: 0, to: 128, final: 0, intType: 'click', intId: 'shuffle',
-    act: async (p, c) => { await click(p, c.shuffle); await p.waitForTimeout(120); await click(p, c.shuffle); } },
-  sheet: { keys: ['sheet', 'sheetOp'], ms: 1100, from: 280, to: 0, final: 280, intType: 'click', intId: 'sheet-toggle',
-    act: async (p, c) => { await click(p, c.sheet); await p.waitForTimeout(150); await click(p, c.sheet); } },
-  view: { keys: ['viewMix', 'viewX'], ms: 1200, from: 0, to: 1, final: 0, intType: 'click', intId: 'swap', key: 'viewMix',
-    act: async (p, c) => { await click(p, c.swap); await p.waitForTimeout(150); await click(p, c.swap); } },
-  ticker: { keys: ['ticker'], ms: 1500, from: 0, to: 1000, final: 200, intType: 'click', intId: 'tick-lo',
-    act: async (p, c) => { await click(p, c.hi); await p.waitForTimeout(300); await click(p, c.lo); } },
-  grid: { keys: ['g0', 'g11'], ms: 1200, from: 0, to: 1, final: 0, intType: 'click', intId: 'grid-toggle', key: 'g0', key2: 'g11',
-    act: async (p, c) => { await click(p, c.grid); await p.waitForTimeout(150); await click(p, c.grid); } },
+  press: { keys: ['press'], ms: 450 * K, from: 1, to: 0.97, final: 1, intType: 'pointerup',
+    act: async (p, c) => { await p.mouse.move(c.press.x, c.press.y); await p.mouse.down(); await p.waitForTimeout(40 * K); await p.mouse.up(); } },
+  list: { keys: ['list'], ms: 900 * K, from: 0, to: 128, final: 0, intType: 'click', intId: 'shuffle',
+    act: async (p, c) => { await click(p, c.shuffle); await p.waitForTimeout(120 * K); await click(p, c.shuffle); } },
+  sheet: { keys: ['sheet', 'sheetOp'], ms: 1100 * K, from: 280, to: 0, final: 280, intType: 'click', intId: 'sheet-toggle',
+    act: async (p, c) => { await click(p, c.sheet); await p.waitForTimeout(150 * K); await click(p, c.sheet); } },
+  view: { keys: ['viewMix', 'viewX'], ms: 1200 * K, from: 0, to: 1, final: 0, intType: 'click', intId: 'swap', key: 'viewMix',
+    act: async (p, c) => { await click(p, c.swap); await p.waitForTimeout(150 * K); await click(p, c.swap); } },
+  ticker: { keys: ['ticker'], ms: 1500 * K, from: 0, to: 1000, final: 200, intType: 'click', intId: 'tick-lo',
+    act: async (p, c) => { await click(p, c.hi); await p.waitForTimeout(300 * K); await click(p, c.lo); } },
+  grid: { keys: ['g0', 'g11'], ms: 1200 * K, from: 0, to: 1, final: 0, intType: 'click', intId: 'grid-toggle', key: 'g0', key2: 'g11',
+    act: async (p, c) => { await click(p, c.grid); await p.waitForTimeout(150 * K); await click(p, c.grid); } },
 };
 
 async function record(page, keys, ms, act) {
@@ -71,6 +76,11 @@ async function record(page, keys, ms, act) {
   return { samples, events };
 }
 
+// Continuity of the animated value at the moment of interruption.
+//   continuous        — the first frames after the input continue from the value on screen (retarget or reverse)
+//   snaps-to-new      — the value jumps (most of the way) to the new target: the old animation was cut, no motion back
+//   jumps-to-old      — the old animation is finished instantly, then (maybe) the new one starts from its end
+//   jump              — any other discontinuity (e.g. a restart from the initial value)
 function analyseInterrupt(samples, key, tInt, sc) {
   const range = Math.abs(sc.to - sc.from);
   const S = samples.filter((s) => s[key] != null);
@@ -78,32 +88,43 @@ function analyseInterrupt(samples, key, tInt, sc) {
   if (i0 < 1 || i0 >= S.length - 3) return { error: 'interrupt outside samples' };
   const v = S.map((s) => s[key]);
   const steps = v.map((x, i) => (i ? Math.abs(x - v[i - 1]) : 0));
+  const maxPre = Math.max(...steps.slice(1, i0 + 1));
   const disc = Math.max(steps[i0 + 1], steps[i0 + 2]);
-  const natural = Math.max(...steps.filter((_, i) => i && (i < i0 - 1 || i > i0 + 3)));
   const reached = (v[i0] - sc.from) / (sc.to - sc.from);
   const dirOld = Math.sign(v[i0] - v[Math.max(0, i0 - 2)]);
   let momentum = 0; for (let i = i0 + 1; i < v.length && Math.sign(v[i] - v[i - 1]) === dirOld && dirOld !== 0; i++) momentum++;
   const tol = range * 0.01;
-  let settle = null; for (let i = v.length - 1; i > i0; i--) { if (Math.abs(v[i] - sc.final) > tol) { settle = i + 1 < v.length ? S[i + 1].t - tInt : null; break; } if (i === i0 + 1) settle = S[i].t - tInt; }
+  let settle = null;
+  for (let i = i0 + 1; i < v.length; i++) if (v.slice(i).every((x) => Math.abs(x - sc.final) <= tol)) { settle = S[i].t - tInt; break; }
   const finalOk = Math.abs(v.at(-1) - sc.final) <= tol * 2;
-  const jump = disc > 1.5 * natural + 0.02 * range;
-  return { reachedPct: round(reached * 100, 0), discPct: round((disc / range) * 100, 1), naturalStepPct: round((natural / range) * 100, 1),
-    jump, momentumFrames: momentum, settleMs: settle == null ? null : round(settle, 0), finalOk };
+  const continuous = disc <= 1.5 * maxPre + 0.03 * range;
+  const after = v[Math.min(v.length - 1, i0 + 2)];
+  const kind = continuous ? 'continuous'
+    : Math.abs(after - sc.final) <= 0.1 * range ? 'snaps-to-new'
+      : Math.abs(after - sc.to) <= 0.1 * range ? 'jumps-to-old' : 'jump';
+  return { reachedPct: round(reached * 100, 0), discPct: round((disc / range) * 100, 1), maxPreStepPct: round((maxPre / range) * 100, 1),
+    kind, jump: !continuous, momentumFrames: momentum, settleMs: settle == null ? null : round(settle / SLOW, 0), finalOk };
 }
 
 async function interruptRun(browser, base, v, name) {
   const sc = SCEN[name];
-  const { ctx, page, c, errors } = await openPage(browser, base, v);
+  const { ctx, page, c, errors } = await openPage(browser, base, v, { slow: SLOW });
   const { samples, events } = await record(page, sc.keys, sc.ms, () => sc.act(page, c));
   await ctx.close();
-  const evs = events.filter((e) => e.type === sc.intType && (!sc.intId || e.id === sc.intId));
-  const clicks = events.filter((e) => e.type === 'click');
-  const tInt = evs[sc.intType === 'pointerup' ? 0 : 1]?.t;
-  if (tInt == null) return { error: `interrupt event not received (${clicks.map((e) => e.id || '(none)').join(',')})`, errors };
   const key = sc.key || sc.keys[0];
+  const clicks = events.filter((e) => e.type === sc.intType);
+  // The second input must reach the control. During a view transition Chromium hit-tests the root element,
+  // so the click lands on <html> and the transition cannot be interrupted at all.
+  const second = clicks.at(-1);
+  if (!second) return { error: 'no input event', errors };
+  if (sc.intId && second.id !== sc.intId) {
+    const S = samples.filter((s) => s[key] != null); const v = S.map((s) => s[key]);
+    return { kind: 'input-swallowed', swallowedBy: second.tag.toLowerCase(), finalValue: v.at(-1), jump: false, errors: errors.slice(0, 3) };
+  }
+  const tInt = second.t;
   const r = analyseInterrupt(samples, key, tInt, sc);
   if (sc.key2) r.last = analyseInterrupt(samples, sc.key2, tInt, sc);
-  if (name === 'sheet') r.opacityDip = Math.min(...samples.map((s) => s.sheetOp)) < 0.98 && samples.some((s) => s.sheet < 279);
+  if (name === 'sheet') r.opacityDip = samples.some((s) => s.sheet < 279 && s.sheetOp > 0.02 && s.sheetOp < 0.98);
   r.errors = errors.slice(0, 3);
   r.trace = samples.map((s) => [round(s.t - tInt, 0), s[key]]).filter((_, i) => i % 2 === 0);
   return r;
@@ -119,10 +140,15 @@ const SINGLE = {
     classify: (S) => ({ moves: S.some((s) => s.sheet > 2 && s.sheet < 278), fades: S.some((s) => s.sheetOp > 0.03 && s.sheetOp < 0.97), final: S.at(-1).sheet < 1 && S.at(-1).sheetOp > 0.99 }) },
   view: { keys: ['viewMix', 'viewX'], ms: 900, act: async (p, c) => click(p, c.swap),
     classify: (S) => ({ moves: S.some((s) => s.viewX > 1), fades: S.some((s) => s.viewMix > 0.03 && s.viewMix < 0.97), final: S.at(-1).viewMix > 0.97 }) },
-  scroll: { keys: ['reveal2', 'reveal2y', 'progress', 'scrollFrac'], ms: 900, act: async (p) => { await p.evaluate(() => scrollTo(0, document.querySelector('#r2').getBoundingClientRect().top + scrollY - 500)); },
-    classify: (S) => { const after = S.filter((s) => s.scrollFrac > 0.1);
-      return { moves: after.some((s) => Math.abs(s.reveal2y) > 0.5), fades: after.some((s) => s.reveal2 > 0.03 && s.reveal2 < 0.97), final: S.at(-1).reveal2 > 0.99,
-        progressLagFrames: after.findIndex((s) => Math.abs(s.progress - s.scrollFrac) < 0.01), progressFirstErr: after.length ? round(Math.abs(after[0].progress - after[0].scrollFrac), 3) : null }; } },
+  // A 500 ms user-like scroll (one scrollTo per frame) that brings reveal #2 fully into view.
+  scroll: { keys: ['reveal2', 'reveal2y', 'progress', 'scrollFrac'], ms: 1300, act: async (p) => { await p.evaluate(() => new Promise((res) => {
+      const y1 = document.querySelector('#r2').getBoundingClientRect().top + scrollY - 500; const t0 = performance.now();
+      const step = () => { const k = Math.min(1, (performance.now() - t0) / 500); scrollTo(0, y1 * k); if (k < 1) requestAnimationFrame(step); else res(); };
+      requestAnimationFrame(step); })); },
+    classify: (S) => { const during = S.filter((s) => s.scrollFrac > 0.01);
+      const err = during.map((s) => Math.abs((s.progress ?? 0) - s.scrollFrac));
+      return { moves: during.some((s) => Math.abs(s.reveal2y) > 0.5), fades: during.some((s) => s.reveal2 > 0.03 && s.reveal2 < 0.97), final: S.at(-1).reveal2 > 0.99,
+        progressErrMean: err.length ? round(err.reduce((a, b) => a + b, 0) / err.length, 4) : null, progressErrMax: err.length ? round(Math.max(...err), 4) : null }; } },
   ticker: { keys: ['ticker'], ms: 1100, act: async (p, c) => click(p, c.hi),
     classify: (S) => ({ moves: new Set(S.map((s) => s.ticker)).size > 3, fades: false, final: S.at(-1).ticker === 1000 }) },
   grid: { keys: ['g0', 'g11', 'g11y'], ms: 1000, act: async (p, c) => click(p, c.grid),
@@ -159,13 +185,17 @@ async function compositorRun(browser, base, v) {
   await ctx.close();
   const tops = frames.filter((f) => f.wall > block.t0 + 30 && f.wall < block.t1 - 5).map((f) => firstRowOfColour(f, 100, [26, 127, 55]));
   const vals = tops.map((t) => (t == null ? 800 : t));
-  return { framesInBlock: vals.length, movedPx: vals.length ? round(Math.max(...vals) - Math.min(...vals), 0) : null };
+  // No screencast frame during the block means nothing on screen changed: the sheet froze.
+  return { framesInBlock: vals.length, movedPx: vals.length ? round(Math.max(...vals) - Math.min(...vals), 0) : 0 };
 }
 
 // ---------- main-thread cost of the whole set, 4x CPU throttle, no sampler ----------
 async function costRun(browser, base, v, idle) {
   const ctx = await browser.newContext({ viewport: VIEWPORT });
   await ctx.addInitScript('window.__RM_GUARD = true;');
+  // count requestAnimationFrame callbacks, to see whether anything keeps ticking at rest
+  await ctx.addInitScript(() => { const raf = window.requestAnimationFrame.bind(window); window.__rafN = 0;
+    window.requestAnimationFrame = (cb) => raf((t) => { window.__rafN++; cb(t); }); });
   const page = await ctx.newPage();
   await page.goto(`${base}/captures/a/${v.impl}.html${v.q}`, { waitUntil: 'load' });
   await page.waitForTimeout(500);
@@ -189,11 +219,13 @@ async function costRun(browser, base, v, idle) {
   await W(500);
   const b = await m();
   // then 2 s at rest: anything still ticking?
+  const n0 = await page.evaluate(() => window.__rafN);
   const r0 = await m(); await W(2000); const r1 = await m();
+  const n1 = await page.evaluate(() => window.__rafN);
   await ctx.close();
   return { task: (b.TaskDuration - a.TaskDuration) * 1000, script: (b.ScriptDuration - a.ScriptDuration) * 1000,
     layout: (b.LayoutDuration - a.LayoutDuration) * 1000, style: (b.RecalcStyleDuration - a.RecalcStyleDuration) * 1000,
-    restTaskPerS: ((r1.TaskDuration - r0.TaskDuration) * 1000) / 2 };
+    restTaskPerS: ((r1.TaskDuration - r0.TaskDuration) * 1000) / 2, restRafPerS: (n1 - n0) / 2 };
 }
 
 export async function runA() {
@@ -209,8 +241,9 @@ export async function runA() {
       if (SCEN[name]) {
         const runs = []; for (let i = 0; i < RUNS; i++) runs.push(await interruptRun(browser, base, v, name));
         const ok = runs.filter((r) => !r.error);
-        const pick = ok.length ? ok.sort((x, y) => x.discPct - y.discPct)[ok.length >> 1] : runs[0];
-        results.interrupt[v.id][name] = { ...pick, jumpRuns: `${ok.filter((r) => r.jump).length}/${ok.length}`, discPctMedian: median(ok.map((r) => r.discPct)), settleMsMedian: median(ok.map((r) => r.settleMs)) };
+        const pick = ok.length ? [...ok].sort((x, y) => (x.discPct ?? 0) - (y.discPct ?? 0))[ok.length >> 1] : runs[0];
+        const kinds = {}; for (const r of ok) kinds[r.kind] = (kinds[r.kind] || 0) + 1;
+        results.interrupt[v.id][name] = { ...pick, kinds, runs: ok.length, discPctMedian: median(ok.map((r) => r.discPct)), settleMsMedian: median(ok.map((r) => r.settleMs)) };
       }
       results.single[v.id][name] = {};
       for (const mode of ['normal', 'reduce-default', 'reduce-guard']) results.single[v.id][name][mode] = await singleRun(browser, base, v, name, mode);
@@ -218,10 +251,10 @@ export async function runA() {
     }
     if (list.includes('sheet')) { const cr = []; for (let i = 0; i < 3; i++) cr.push(await compositorRun(browser, base, v)); results.compositor[v.id] = { movedPx: median(cr.map((r) => r.movedPx)), framesInBlock: median(cr.map((r) => r.framesInBlock)) }; }
     const costs = []; for (let i = 0; i < RUNS; i++) costs.push(await costRun(browser, base, v, false));
-    results.cost[v.id] = Object.fromEntries(['task', 'script', 'layout', 'style', 'restTaskPerS'].map((k) => [k, round(median(costs.map((c) => c[k])), 1)]));
+    results.cost[v.id] = Object.fromEntries(['task', 'script', 'layout', 'style', 'restTaskPerS', 'restRafPerS'].map((k) => [k, round(median(costs.map((c) => c[k])), 1)]));
   }
   const idles = []; for (let i = 0; i < RUNS; i++) idles.push(await costRun(browser, base, { impl: 'css', q: '' }, true));
-  results.cost.idleBaseline = Object.fromEntries(['task', 'script', 'layout', 'style', 'restTaskPerS'].map((k) => [k, round(median(idles.map((c) => c[k])), 1)]));
+  results.cost.idleBaseline = Object.fromEntries(['task', 'script', 'layout', 'style', 'restTaskPerS', 'restRafPerS'].map((k) => [k, round(median(idles.map((c) => c[k])), 1)]));
   await browser.close(); await close();
   await mkdir(path.join(labRoot, 'captures'), { recursive: true });
   await writeFile(path.join(labRoot, 'captures/a-results.json'), JSON.stringify(results, null, 1));

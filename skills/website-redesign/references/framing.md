@@ -17,7 +17,7 @@ Most repositories hold more than one kind of surface — a marketing site and an
 | Density | one idea per viewport | as high as comprehension allows |
 | Navigation | a few pages in a linear story | many tools, jumped between |
 | Copy | persuasive | labels, states and instructions of 2–4 words (NN/g) |
-| Motion | can carry the concept | feedback and live state only |
+| Motion | can carry the concept | explains change and shows live state, nothing more |
 | Imagery | photography can carry the concept | almost none — the product's own data |
 
 The signals feed the category and posture below; they do not replace them.
@@ -37,11 +37,11 @@ The signals feed the category and posture below; they do not replace them.
 | Public service | complete a mandatory task first time, whoever you are | plain |
 | Signature experience (builder, configurator, studio, visualiser) | the reason the business is remembered; people play with it and show others | signature — expressive in fidelity and feel, productive in chrome and controls |
 
-Hybrids take the rule of their job. Sign-in, empty states and onboarding are doors: one brand moment, then out of the way (`app-ui.md` §12). Docs are reading surfaces (`categories.md`). A calculator inside an app is a tool.
+Hybrids take the rule of their job. Sign-in, empty states and onboarding are doors: one brand moment, then out of the way (`app-ui.md` §12). Docs keep the productive posture, with prose at a reading size and measure (`categories.md` "Developer tools and documentation"). A calculator inside an app is a tool.
 
 When a marketing site is becoming an application — a transaction needs a human decision (a quote, an approval, a booking), customers have their own state, an operator runs a daily workflow, or capacity is finite — classify the customer routes and the operator's back office separately. The operator's device, often a phone, is recorded like any other route's (`discovery.md` §5, `templates/PRODUCT.md`).
 
-For each route write: category, **frequency** (once · occasional · weekly · daily · all day), **stakes** (what goes wrong if the user errs: nothing · lost time · lost money · legal/health consequence), **device and context** (desk, phone one-handed, shared screen, poor network), and **posture**. Expressive surfaces may spend novelty; productive surfaces spend it almost nowhere. The dials each category sets — body size, density, motion and novelty budget, colour's job, what gets visual weight, navigation model, metrics — are in `categories.md`. Run `audit.mjs` with the matching `--kind`.
+For each route write: category, **frequency** (once · occasional · weekly · daily · all day), **stakes** (what goes wrong if the user errs: nothing · lost time · lost money · legal/health consequence), **device and context** (desk, phone one-handed, shared screen, poor network), and **posture**. Expressive surfaces may spend novelty; productive surfaces spend it almost nowhere. The dials each category sets — body size, density, motion and novelty budget, colour's job, what gets visual weight, navigation model, metrics — are in `categories.md`. Run `audit.mjs` with the matching `--kind`; a signature route runs `--kind app` for its chrome and controls, and the experience itself is judged against its written quality bar (`discovery.md` §5b) and `visual-qa.md` "3D and WebGL experiences".
 
 ## 2. Choose the intensity
 
@@ -67,7 +67,7 @@ The user's words set the starting point; the audit can argue for more or less. S
 | Success measured by | memorability, clarity in five seconds, conversion, credibility | task success, time, errors, learnability, accessibility |
 | Critique rows that matter most | distance, first viewport, rhythm, tells | top tasks, states, density, consistency, keyboard |
 
-Signature routes spend novelty and fidelity on the experience itself, while their chrome and controls follow the productive column. They get their own performance budget row (`performance.md` §1) and are never judged by the "repeat the right layout" rule (`discovery.md` §5b, `categories.md`).
+Signature routes spend novelty and fidelity on the experience itself, while their chrome and controls follow the productive column. They get their own column in the performance budget (`performance.md` §1) and are never judged by the "repeat the right layout" rule (`discovery.md` §5b, `categories.md`).
 
 ## 3. Qualities that are often confused
 
@@ -116,4 +116,4 @@ Answer in writing; the unanswerable ones become assumptions or questions for the
 - **Constraints:** stack, contracts to preserve, surviving brand assets, legal copy, accessibility level, performance budget, languages.
 - **Success measures:** per category, with the baseline where one exists.
 
-The brief is short — half a page. If it cannot be written, the redesign is not ready to start, and the gap is the first thing to tell the user. When context is thin, build it rather than guess (`discovery.md`); if `templates/PRODUCT.md` exists, the surfaces and top tasks come from it, and its product principles are not restated here.
+The brief is short — half a page. If it cannot be written, the redesign is not ready to start, and the gap is the first thing to tell the user. When context is thin, build it rather than guess (`discovery.md`); if the project has a `PRODUCT.md` (`templates/PRODUCT.md`), the surfaces, top tasks and success measures come from it (its routes, arrival situations and targets), and its product principles are not restated here.

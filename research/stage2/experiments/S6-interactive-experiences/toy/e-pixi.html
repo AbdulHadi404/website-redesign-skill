@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top the cake – PixiJS with its accessibility defaults</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Top the cake</h1>
+  <p class="lede">Drag toppings from the tray onto the cake. Drag one off the cake to remove it.</p>
+  <div class="stage"><div class="wrap" id="wrap"></div></div>
+</main>
+<script type="module">
+  import { createModel } from './model.js';
+  import { createPixiView } from './pixi-view.js';
+  const model = createModel();
+  const view = await createPixiView(model, document.getElementById('wrap'));
+  window.__toy = { variant: 'e', model, view, ready: true };
+</script>
+</body>
+</html>

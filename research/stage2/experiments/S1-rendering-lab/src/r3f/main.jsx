@@ -3,7 +3,7 @@
 // positions mutated in refs (never React state per frame), React.memo so selection re-renders two items.
 import { createRoot } from 'react-dom/client';
 import { memo, useMemo, useRef, useState, useEffect, Suspense } from 'react';
-import { Canvas, useFrame, useLoader, useThree, addAfterEffect } from '@react-three/fiber';
+import { Canvas, useFrame, useLoader, useThree, addEffect, addAfterEffect } from '@react-three/fiber';
 import { TextureLoader, PlaneGeometry, MeshBasicMaterial, Mesh, SRGBColorSpace } from 'three';
 import {
   W, H, HOVER_SCALE, SEL_SCALE, P_COUNT, FREEZE, ASSETS,
@@ -124,6 +124,9 @@ function Scene() {
 }
 
 const unsub = addAfterEffect(() => { if (st.mounted) { lab.markFirstFrame(); unsub(); } });
+let t0 = null;
+addEffect(() => { t0 = performance.now(); });
+addAfterEffect(() => { if (t0 != null) { lab.cpu(performance.now() - t0); t0 = null; } });
 
 function App() {
   return (

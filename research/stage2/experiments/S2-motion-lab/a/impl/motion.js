@@ -4,7 +4,7 @@ import { T, reduceGuard } from '../tokens.js';
 const $ = (q) => document.querySelector(q);
 const s = (ms) => ms / 1000;
 const ease = T.ease.out; // Motion takes the bezier points as an array
-const HW = new URLSearchParams(location.search).has('hw'); // transform strings (WAAPI, compositor) instead of x/y/scale shorthands
+const HW = new URLSearchParams(location.search).has('hw'); // variant: transform strings (WAAPI, compositor) instead of x/y/scale shorthands
 
 // 1 press — the press gesture; release animates back from wherever the press animation is
 press('#press', (el) => {
@@ -68,7 +68,7 @@ $('#tick-lo').addEventListener('click', () => go(200));
 
 // 7 grid — staggered
 const cells = document.querySelectorAll('#grid .cell'); let on = false;
-animate(cells, { opacity: 0, y: 12 }, { duration: 0 });
+animate(cells, { opacity: 0, y: reduceGuard() ? 0 : 12 }, { duration: 0 }); // rm: no offset to travel under reduce
 $('#grid-toggle').addEventListener('click', (e) => {
   on = !on; e.currentTarget.setAttribute('aria-pressed', String(on));
   const rm = reduceGuard(); // rm

@@ -1,6 +1,6 @@
 {
-  "url": "http://127.0.0.1:37605/a-canvas.html",
-  "date": "2026-09-28T21:14:14.368Z",
+  "url": "http://127.0.0.1:32977/a-canvas.html",
+  "date": "2026-09-28T21:34:11.766Z",
   "findings": [
     {
       "level": "FAIL",
@@ -20,7 +20,7 @@
       "level": "INFO",
       "section": "colour",
       "sc": "1.4.1",
-      "msg": "Review /home/user/website-redesign-skill/research/stage2/experiments/S6-interactive-experiences/results/a11y/a/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
+      "msg": "Review /tmp/s6-a11y-DOZchC/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
       "where": ""
     }
   ],
@@ -90,5 +90,5 @@
       }
     }
   },
-  "seconds": 38.7
+  "seconds": 39
 }

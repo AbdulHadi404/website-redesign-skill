@@ -23,15 +23,15 @@ It is built against three failures:
 
 | Phase | What happens |
 | --- | --- |
-| 0. Frame | Each route is classified: category, how often it is used, stakes, expressive or productive. Intensity is chosen (refine / redesign / rethink). A brief with top tasks, constraints and success measures goes at the top of `DESIGN.md`. When context is thin (a brand that lives on social media, an unfamiliar industry, no references, a "website" that is really an ordering or booking app, an empty folder), discovery builds it first (`discovery.md`, `templates/PRODUCT.md`); a signature feature — a builder or configurator people play with — is classified as its own route and never shrunk to fit a page. |
+| 0. Frame | Each route is classified: category, how often it is used, stakes, expressive, productive or signature. Intensity is chosen (refine / redesign / rethink). A brief with top tasks, constraints and success measures goes at the top of `DESIGN.md`. When context is thin (a brand that lives on social media, an unfamiliar industry, no references, a "website" that is really an ordering or booking app, an empty folder), discovery builds it first (`discovery.md`, `templates/PRODUCT.md`); a signature feature — a builder or configurator people play with — is classified as its own route and never shrunk to fit a page. |
 | 1. Audit | Read the repo like a new design lead. Run the product and **measure** it with the scripts. List what must be preserved (routes, ids, form fields, analytics, legal copy) and which accessibility features already work. |
 | 2. Research | References are chosen by the problem they solve, and principles go into a take/leave table. |
 | 3. Direction | **Expressive:** concept, candidates, typography, a named colour strategy, composition, imagery, motion. **Productive:** interaction model, density, navigation, elevation, and a marketing site's brand layer carried into the product without its expressive devices. Convergence checks run against the model's prior and against the ledger of past outputs. The accessibility decisions are made here too. |
 | 4. System | Three-tier tokens, type sets per surface, a state matrix, and `SYSTEM.md` for product UI. |
-| 5. Build | On a branch, in the existing framework and component library, with functionality untouched. |
+| 5. Build | On a branch, in the existing framework and component library (for a first site, the stack chosen in discovery, `discovery.md` §6), with functionality untouched. |
 | 6. Verify | Captures at five widths plus states and artwork. Measured audit, scripted accessibility checks and widget keyboard contracts, then responsive and performance passes. |
 | 7. Critique | A fresh-context reviewer works from the renders only, in at most three rounds. |
-| 8. Hand-off | Build and tests, then `parity.mjs` against the old site, or against the discovery sources for a first site (no unsourced claims, no lost routes or fields). Then commit, report, and add a row to the ledger. |
+| 8. Hand-off | Build and tests, then `parity.mjs` against the old site (no unsourced claims, no lost routes or fields), or with `--greenfield` against the discovery sources for a first site (every claim sourced). Then commit, report, and add a row to the ledger. |
 
 The knowledge base behind it is written as checkable rules with their numbers and sources:
 
@@ -93,7 +93,7 @@ Restart the session (or open a new one) so the skill is listed.
 
 ## Use
 
-Ask in plain language. The skill triggers on redesign, rebrand, "make it premium", "looks generic" and "fix the UX" requests. You can also invoke it directly:
+Ask in plain language. The skill triggers on redesign, rebrand, "make it premium", "looks generic" and "fix the UX" requests, and on requests to build a business's first site from its social media or to make an app match its marketing site. You can also invoke it directly:
 
 ```
 Use the website redesign skill to redesign our marketing site. We sell fleet
@@ -121,7 +121,7 @@ Our checkout converts badly on phones. Redesign the flow; keep the payment
 integration and analytics events exactly as they are.
 ```
 
-Claude writes a `DESIGN.md` (with a `PRODUCT.md` before it when a site is becoming an application, and a `SYSTEM.md` for product UI) in the repo, works on a branch, and reports with before/after captures and the measured results. It stops to ask only for things you own: credentials, a capability the environment lacks, a fact the repo cannot answer, a paid resource, a component-library migration, downloading your social media, creating accounts, pushing a new repository to a remote, or a production deployment.
+Claude writes a `DESIGN.md` (with a `PRODUCT.md` before it when a site is becoming an application, and a `SYSTEM.md` for product UI) in the repo, works on a branch, and reports with before/after captures and the measured results. It stops to ask only for things you own: credentials, a capability the environment lacks, a fact the repo cannot answer, a paid resource, a component-library migration, downloading your social media or reading your stories (which may notify you), creating accounts, pushing a new repository to a remote, or a production deployment.
 
 **Recommended:** a browser capability so live references can be inspected, and network access to image sources for photography. Without them the skill says what it could not do rather than faking it.
 

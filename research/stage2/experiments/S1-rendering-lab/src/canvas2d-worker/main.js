@@ -39,7 +39,7 @@ const origStart = lab.start, origStop = lab.stop;
 lab.start = () => { origStart(); worker.postMessage({ type: 'start' }); };
 lab.stop = () => { origStop(); worker.postMessage({ type: 'stop' }); };
 lab.extraStats = () => new Promise((res) => {
-  statsResolve = (d) => res({ mainFrames: lab.frames, frames: d.frames, mainLat: lab.lat, lat: d.lat });
+  statsResolve = (d) => res({ mainFrames: lab.frames, frames: d.frames, mainLat: lab.lat, lat: d.lat, js: d.js });
   worker.postMessage({ type: 'stats' });
 });
 // The runner asks for an item's position; the Worker owns the state, so ask it (async).

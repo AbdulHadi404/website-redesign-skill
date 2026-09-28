@@ -23,10 +23,12 @@ const now = () => (params.freeze ? FREEZE.t : performance.now());
 let scheduled = false;
 function frame() {
   scheduled = false;
+  const t0 = performance.now();
   const t = now();
   m.prune(t);
   draw2d(ctx, m, t, atlas, bg, frames);
   m.dirty = false;
+  lab.cpu(performance.now() - t0);
   lab.markFirstFrame();
   if (!params.reduced && !params.freeze) schedule();
 }

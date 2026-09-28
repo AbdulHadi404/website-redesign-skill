@@ -1,0 +1,94 @@
+{
+  "url": "http://127.0.0.1:32977/e-pixi.html",
+  "date": "2026-09-28T21:38:39.183Z",
+  "findings": [
+    {
+      "level": "FAIL",
+      "section": "pointer",
+      "sc": "2.1.1",
+      "msg": "Clickable (pointerdown listener) but not keyboard focusable",
+      "where": "canvas"
+    },
+    {
+      "level": "FAIL",
+      "section": "keyboard",
+      "sc": "2.1.1",
+      "msg": "Nothing on the page receives keyboard focus",
+      "where": ""
+    },
+    {
+      "level": "INFO",
+      "section": "colour",
+      "sc": "1.4.1",
+      "msg": "Review /tmp/s6-a11y-raBkIr/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
+      "where": ""
+    }
+  ],
+  "data": {
+    "page": {
+      "lang": "en",
+      "title": "Top the cake – PixiJS with its accessibility defaults",
+      "viewport": "width=device-width, initial-scale=1"
+    },
+    "headings": [
+      {
+        "level": 1,
+        "name": "Top the cake"
+      }
+    ],
+    "landmarks": [
+      {
+        "role": "main",
+        "name": ""
+      }
+    ],
+    "tab-forward": [
+      {
+        "body": true
+      },
+      {
+        "body": true
+      }
+    ],
+    "tabOrder": [],
+    "reflow-320": {
+      "scrollWidth": 320,
+      "vw": 320,
+      "roots": [],
+      "cutControls": [],
+      "cutText": 0,
+      "cutTextBy": []
+    },
+    "reflow-640": {
+      "scrollWidth": 640,
+      "vw": 640,
+      "roots": [],
+      "cutControls": [],
+      "cutText": 0,
+      "cutTextBy": []
+    },
+    "tab-forced": [
+      {
+        "body": true
+      },
+      {
+        "body": true
+      }
+    ],
+    "motion": {
+      "normal": {
+        "anims": [],
+        "updating": [],
+        "smooth": false,
+        "video": []
+      },
+      "reduce": {
+        "anims": [],
+        "updating": [],
+        "smooth": false,
+        "video": []
+      }
+    }
+  },
+  "seconds": 46.7
+}

@@ -58,11 +58,11 @@ Productive roles, with numbers from the systems' source files (Carbon `packages/
 | Body (reading) | body-01 14/20 · body-02 16/24 | body-large 16/24 | descriptions, notes, anything read in sentences (15–16 px) |
 | Small heading | heading-compact-01 14/18 · heading-compact-02 16/22, semibold | title-small 14/20 · title-medium 16/24, 500 | panel, card and table-group titles |
 | Section heading | heading-03 20/28 | title-large 22/28 | the few section titles on a screen |
-| Page title | heading-04 28/36 · heading-05 32/40 | headline-small 24/32 · headline-medium 28/36 | one per screen; 20–28 px in this skill, 32 only for a dashboard or home screen (`app-ui.md` §3) |
+| Page title | heading-04 28/36 · heading-05 32/40 | headline-small 24/32 · headline-medium 28/36 | one per screen; 20–28 px in this skill, 32 only for a dashboard or home screen whose title stands alone (`app-ui.md` §1, §3) |
 | Metric | — | — | 24–32 px semibold in the UI face with tabular figures, never a display cut |
-| Display | expressive only (fluid, 60 px+) | display 36–57 | not in the product; sign-in at most |
+| Display | expressive only (fluid, 60 px+) | display 36–57 | display sizes stay out of the product (sign-in at most); the display face itself keeps one job, page titles and sign-in (`app-ui.md` §3) |
 
-Values are not code: IDs, passwords, env names, `[placeholders]`, key hints and timers take the label or body role at 500 with tabular figures. Where the framework has a mono token (Tailwind `font-mono`, a `--font-mono` variable), point it at the UI face unless users read code, and set `code, kbd, samp, pre { font-family: inherit }` in the base layer, so a stray class or the browser default cannot render a code font (`implementation.md` "Order of work").
+Values are not code: IDs, passwords, env names, `[placeholders]`, key hints and timers take the label or body role at 500 with tabular figures, with a copy button where a value is copied (commitment 5 in `SKILL.md`). Where the framework has a mono token (Tailwind `font-mono`, a `--font-mono` variable), point it at the UI face unless users read code, and set `code, kbd, samp, pre { font-family: inherit }` in the base layer, so a stray class or the browser default cannot render a code font (`implementation.md` "Order of work").
 
 ## 4. Density
 
