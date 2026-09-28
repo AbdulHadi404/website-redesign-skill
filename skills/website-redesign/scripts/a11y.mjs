@@ -273,6 +273,26 @@ async function newPage(opts = {}) {
       const r = g.getBoundingClientRect();
       if (shapes && !named && r.width * r.height > 48 * 48) out.push(['WARN', '1.1.1', `SVG graphic (${Math.round(r.width)}×${Math.round(r.height)}, ${shapes} shapes) has no text alternative — role="img" + name, or a data table / text summary for charts`, d(g.parentElement) + ' > svg']);
     }
+    // id references that point at nothing. aria-controls is left out: libraries (Radix and others) point it at
+    // a popup that exists only while open.
+    const missing = (el, attr) => (el.getAttribute(attr) || '').split(/\s+/).filter((id) => id && !document.getElementById(id));
+    for (const el of document.querySelectorAll('[aria-labelledby]')) {
+      const gone = missing(el, 'aria-labelledby');
+      if (!gone.length) continue;
+      const all = gone.length === el.getAttribute('aria-labelledby').trim().split(/\s+/).length;
+      const other = el.getAttribute('aria-label') || (el.innerText || '').trim() || el.getAttribute('title');
+      out.push([all && !other ? 'FAIL' : 'WARN', '4.1.2', `aria-labelledby points at missing id${gone.length > 1 ? 's' : ''} ${gone.map((i) => `#${i}`).join(' ')}${all && !other ? ' — the element has no name' : ''}`, d(el)]);
+    }
+    for (const attr of ['aria-describedby', 'aria-errormessage', 'aria-activedescendant']) {
+      for (const el of document.querySelectorAll(`[${attr}]`)) {
+        const gone = missing(el, attr);
+        if (gone.length) out.push(['WARN', attr === 'aria-activedescendant' ? '4.1.2' : '1.3.1', `${attr} points at missing id${gone.length > 1 ? 's' : ''} ${gone.map((i) => `#${i}`).join(' ')} — ${attr === 'aria-activedescendant' ? 'the active option is never announced' : 'that hint or error is never announced'}`, d(el)]);
+      }
+    }
+    for (const l of document.querySelectorAll('label[for]')) {
+      const t = document.getElementById(l.htmlFor);
+      if (!t && !l.querySelector('input,select,textarea')) out.push(['WARN', '1.3.1', `<label for="${l.htmlFor}"> labels nothing (no element with that id)`, d(l)]);
+    }
     // required fields: asterisk in label but no required/aria-required
     for (const el of document.querySelectorAll('input,select,textarea')) {
       const lab = el.labels ? [...el.labels].map(l => l.innerText).join(' ') : '';

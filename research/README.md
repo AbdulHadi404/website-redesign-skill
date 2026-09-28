@@ -75,6 +75,7 @@ Full lists: A §6, C §11, F §5.
 - **Leaked product prompts** (GPL or proprietary): used as evidence of tells only.
 - **Lighthouse's accessibility score as a gate**: it went from 46 to 100 between two pages sixty defects apart.
 - **pa11y's defaults**: they promote needs-review items to errors, and it has no WCAG 2.2 rules.
+- **An `--ibm` flag in `a11y.mjs`** (injecting IBM's `accessibility-checker-engine`). Measured against what the skill already runs (axe with experimental rules, plus `a11y.mjs` and `widgets.mjs`) on the lab's 61 seeded defects, IBM adds one new signal: a redundant `role=navigation`, which is not a barrier. It also upgrades four warnings to failures (a radio group without a fieldset, an unlabelled SVG chart, a dangling `aria-describedby`, `aria-label` on a generic `div`). In exchange it produces five violation-level false positives on the clean page. Coverage goes from 56 to 57 defects with any signal, and from 47 to 51 as failures, at the cost of noise the agent would have to disprove.
 - **Resources rejected on staleness, consent or licence grounds**: Feather, UI Faces, placeholder hosts, Material Symbols' full font, AI-generated "customers".
 
 ## Open items and future work
@@ -88,5 +89,4 @@ Full lists: A §6, C §11, F §5.
   - Russell's budget table
 - **Live-site studies** (Linear, Stripe, Shopify admin, GOV.UK services) with `dembrandt` and `capture.mjs` once egress allows. The product-lab probe (`experiments/G-product-lab/ui-probe.js`) is ready for it.
 - **A small corpus of before/after redesigns** to regression-test the skill's taste checks. The ledger is the start of it.
-- **An optional `--ibm` flag** in `a11y.mjs` (inject `accessibility-checker-engine`) for the widget heuristics axe lacks.
 - **A real-device performance pass** on a mid-range Android phone (backdrop-filter, shadows, long lists).
