@@ -1,0 +1,33 @@
+{
+  "name": "s2-motion-lab",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Seven fixed interactions in CSS/WAAPI, Motion (vanilla + React), GSAP, anime.js v4, React Spring, AutoAnimate and Theatre.js, measured the same way; Rive vs Lottie vs SVG/CSS for a stateful illustrated toggle; fixtures for the motion.mjs spec checker.",
+  "license": "MIT",
+  "scripts": {
+    "all": "node run.mjs",
+    "a": "node run.mjs --only a",
+    "b": "node run.mjs --only b",
+    "c": "node run.mjs --only c",
+    "fetch": "node fetch-assets.mjs"
+  },
+  "dependencies": {
+    "@formkit/auto-animate": "0.10.0",
+    "@lottiefiles/dotlottie-web": "0.80.0",
+    "@react-spring/web": "10.1.2",
+    "@rive-app/canvas": "2.43.1",
+    "@rive-app/canvas-lite": "2.43.1",
+    "@rive-app/react-canvas": "4.35.0",
+    "@rive-app/webgl2": "2.43.1",
+    "@theatre/core": "0.7.2",
+    "animejs": "4.5.0",
+    "esbuild": "0.28.2",
+    "gsap": "3.15.0",
+    "lottie-web": "5.13.0",
+    "motion": "13.4.4",
+    "pngjs": "^7.0.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  }
+}

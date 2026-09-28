@@ -1,6 +1,6 @@
 # <Business> — product definition
 
-Written <date> in Phase 0 from `discovery/` (`references/discovery.md` §5). The source of truth for what is built: if a decision stops matching how the business actually works, change it here first. Order of documents: `PRODUCT.md` (what we build) → the `DESIGN.md` brief (how each route is classified and judged) → `SYSTEM.md` (how components carry it out); refer, don't repeat.
+Written <date> in Phase 0 from `discovery/` (`discovery.md` §5). The source of truth for what is built: if a decision stops matching how the business actually works, change it here first. Order of documents: `PRODUCT.md` (what we build) → the `DESIGN.md` brief (how each route is classified and judged) → `SYSTEM.md` (how components carry it out); refer, don't repeat.
 
 ## What we are building
 
@@ -38,7 +38,7 @@ What was deliberately *not* made a page, and why.
 | Lifecycle status | Meaning | Who acts next | Customer sees |
 | --- | --- | --- | --- |
 
-A few statuses, each matching a real decision, in the same words on both sides. Money tracked separately from lifecycle status (how). Derived states (which; "due this week" comes from the date, and the operator never clicks it).
+A few lifecycle statuses, each matching a real decision, in the same words on both sides. Money tracked separately from lifecycle status (how). Derived states (which; "due this week" comes from the date, and the operator never clicks it).
 
 ## The operator side
 

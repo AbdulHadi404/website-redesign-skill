@@ -1,0 +1,15 @@
+{
+  "name": "s5-configurators-editors",
+  "private": true,
+  "type": "module",
+  "description": "Stage-2 stream S5: undo/redo history strategies benchmark and a cake configurator evidence prototype.",
+  "scripts": {
+    "bench": "node run.mjs",
+    "prototype": "node prototype-run.mjs"
+  },
+  "dependencies": {
+    "immer": "11.1.18",
+    "immutable": "5.1.9",
+    "yjs": "13.6.33"
+  }
+}

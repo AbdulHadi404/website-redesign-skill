@@ -131,8 +131,8 @@ Test: open the busiest screen at 1280 × 800 (`capture.mjs --widths 1280 --heigh
 
 The failure of "make the app match the site": the brand layer is right and the ergonomics are wrong. It photographs well and tires the people who use it all day. Eyebrows over every heading, long leads under every title and italic emphasis are marketing devices: in an app they are read once and then paid for on every screen. Symptoms, all seen in one redesign (`lessons.md` 2026-09-25, Brio3 app):
 
-- **Display-size page titles on every screen** — a 40 px serif with an eyebrow index above it and a two-line lead below: 180 px of header before the first row of data, on every page, read once and scrolled past for ever. Page titles are 20–28 px, fixed, in one band with the actions (`app-ui.md` §3).
-- **The site's small-caps label device as the product's label system** — 10–11 px tracked mono capitals on window bars, table heads, status words and stat labels. Caps are glanceable for a word or two in isolation (NN/g, "Typography for Glanceable Reading") and tiring down a column of statuses and sentences. Caps only for one- or two-word labels (short column heads, one-word nav-group labels) at 11–12 px, tracked 0.05–0.06 em, which together count as the page's one caps device; statuses and anything scanned down a column in sentence case in the UI face.
+- **Display-size page titles on every screen** — a 40 px serif with an eyebrow index above it and a two-line lead below: 180 px of header before the first row of data, on every page, read once and scrolled past for ever. Page titles are 20–28 px (32 px only for a dashboard or home screen whose title stands alone), fixed, in one band with the actions (`app-ui.md` §3).
+- **The site's small-caps label device as the product's label system** — 10–11 px tracked mono capitals on window bars, table heads, status words and stat labels. Caps are glanceable for a word or two in isolation (NN/g, "Typography for Glanceable Reading") and tiring down a column of statuses and sentences. Caps only for one- or two-word labels (short column heads, one-word nav-group labels) at 11–12 px (11 px only for a single word), tracked 0.05–0.06 em, in the UI face and never a condensed or hard grotesk; together they count as the page's one caps device. Statuses and anything scanned down a column stay in sentence case in the UI face.
 - **Serif record names and serif numerals in lists and KPIs** — a display cut at 18–38 px where a 15–16 px semibold UI face scans faster, and many serif display faces have no tabular figures. The display face gets one job: page titles, plus the sign-in screen (`app-ui.md` §3).
 - **The marketing hero photograph and its tagline on the sign-in screen.** The user is already a customer and sees this door every morning; it is a utility. Form first; brand from the mark and at most one abstract graphic derived from it (`app-ui.md` §12).
 - **"Windows" and editorial frames copied as decoration** around every object, such as title bars that only repeat the title below them.
@@ -174,7 +174,7 @@ Illustration you draw yourself fails in ways stock imagery never does. Each read
 - **Labels that collide** or are crossed by connectors: lay nodes out on a column or an arc.
 - **Disconnected objects**: parts that should touch and do not.
 - **Decoration that escapes its surface**: give the surface a real element with `overflow: hidden` and put the watermark inside it.
-- **A watermark clipped to a meaningless wedge**: show enough of the form to be recognisable, or make it a small complete ornament in a corner without copy.
+- **A watermark clipped to a meaningless wedge**: make it a small, complete ornament in a corner without copy, never a viewport-wide mark ("Composition").
 - **Positioning inside a full-bleed container**: a ground bleeding with `left: -100vw; right: -100vw` moves its own edges 100vw away; anchor children back to the visible panel.
 
 ## Logos and marks

@@ -79,7 +79,7 @@ When the site frames a **signature product experience** (`framing.md` §1: a bui
 - **Scroll storytelling is position-mapped and reversible**, drawn from the product's own parts (layers rendered by the product's pipeline, not mock-ups), pinned for at most ~2.5 screens (`motion.md` §5). The finished state is the fallback and the reduced-motion state, and the essential object is visible before the scroll starts.
 - **A template that reacts on the page** (recolour, swap a part) is the bridge into a configurator: the page shows what the visitor could make beside what the company has made, then hands the choice into the product through the URL.
 - **Tools, in order:** CSS transitions, scroll-driven animations (`view()`/`scroll()` timelines, `position: sticky` pinning) and View Transitions before any library. When the product is live 3D, these marketing pages carry no WebGL: stills rendered by the product carry them and the live 3D starts in the product (elsewhere the gate in `motion.md` §9 stands). No smooth-scroll library on a site that frames a signature product.
-- **Budget and judging:** the signature-experience row of the phone budget in `performance.md` §1. Judge on a phone and the real GPU, from filmstrips of the transitions, not from screenshots on a desktop monitor.
+- **Budget and judging:** the phone budget for pages around a signature product in `performance.md` §1 (a lab budget, stricter than the field targets, which still apply). Judge on a phone and on the real GPU, from filmstrips of the transitions: not from screenshots, and not on a desktop monitor alone (`motion.md` §7).
 
 ## 5. Convergence checks (before code)
 
@@ -92,7 +92,7 @@ Write each into `DESIGN.md`. On **productive** routes they apply to the brand la
 - **Breaks if** (three things that would betray the direction) and the **memory test** (what a visitor describes an hour later).
 - **Seam test** (productive routes, when a marketing site exists): a user moving from the site into the product recognises the house — mark, colour, voice — and immediately finds the product calmer, denser and faster than the site. Tested on the site's identity, never its layout: "match the site" never means "replicate the site" (§6).
 
-**Short form, when the brand layer is fully supplied.** If the company's own assets fix the brand layer — a logo whose colours and wordmark face are named in the file, a brand guide in use — the tests can only confirm the derivation. Write one line instead of five paragraphs: "Brand layer derived from the supplied mark: teal #0E5E5A and saffron #E0A526 from the arch and keystone, IBM Plex Sans Arabic named in the wordmark; no free choices left to converge." Run the full tests on whatever *was* chosen freely (a secondary face, an illustration style, a data palette).
+**Short form, when the brand layer is fully supplied.** If the company's own assets fix the brand layer — a logo whose colours and wordmark face are named in the file, a brand guide in use — the tests can only confirm the derivation. Write one line instead of a paragraph per test: "Brand layer derived from the supplied mark: teal #0E5E5A and saffron #E0A526 from the arch and keystone, IBM Plex Sans Arabic named in the wordmark; no free choices left to converge." Run the full tests on whatever *was* chosen freely (a secondary face, an illustration style, a data palette). The seam test still runs in full when a marketing site exists: it judges the product against the site, not the derivation.
 
 ## 6. Productive surfaces: the interaction direction
 

@@ -8,11 +8,11 @@ Read in Phase 0 after classifying the routes, and again in Phase 3. The numbers 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Frequency | once to a few visits | daily, hours | daily, glance or deep-dive | occasional, task-driven | all day | often, in bursts | daily glance; rare high-stakes acts | many short sessions | daily to occasional | rare |
 | Body text | 16–20 px | 13–14 px | 12–14 px | 14–16 px | 13–14 px | 15–16 px prose, 13–14 code | 14–17 px | 16–17 px | 17–21 px | 19 px (16 on phones) |
-| Largest text | 48–120 px | 20–28 px | 24–32 px (a few key numbers) | 24–40 px | 20–28 px | 32–48 px | 28–40 px (the balance) | 28–34 px | 32–56 px | 48 px (32 on phones) |
+| Largest text | 48–120 px | 20–28 px (32 for a lone home-screen title) | 24–32 px (a few key numbers) | 24–40 px | 20–28 px | 32–48 px | 28–40 px (the balance) | 28–34 px | 32–56 px | 48 px (32 on phones) |
 | Density | low | medium–high | high | medium | very high | medium | medium–low | medium | low | low |
 | Motion | 1–3 orchestrated moments + quiet reveals | only to explain change; none on keyboard actions | none except live-data updates | micro-feedback, image zoom | none | none in docs | confirmation moments | gesture-driven, physical | none | none |
 | Novelty | high, in one place | low | very low | medium (in imagery) | very low | low | low | medium | medium (in typography) | zero |
-| Colour's job | identity + one action colour | neutral chrome; accent = action and selection; semantic = status | data encodings + status only | product imagery dominates; one action colour | neutral + status | neutral + syntax | trust colour; unambiguous gains and losses | brand + action | neutral; links | fixed palette |
+| Colour's job | identity + one action colour | neutral chrome; accent = action only, neutral fill for selection; semantic = status | data encodings + status only | product imagery dominates; one action colour | neutral + status | neutral + syntax | trust colour; unambiguous gains and losses | brand + action | neutral; links | fixed palette |
 | Visual weight | the idea, the product, real proof | the user's content and current object | the anomaly; the metric against its target | product image, price, add to cart | the data and the selected record | code, search, the answer | balance, what is due, the next safe action | the one primary action | the article | the question and the Continue button |
 | Navigation | top nav ≤ 7 + one CTA | sidebar + command palette + shortcuts | filters + drill-down | search + categories + filters | sidebar + tabs + saved views | left tree + search (⌘K) + on-page TOC | tab bar ≤ 5 | tab bar ≤ 5 / bottom actions | sections + related | linear flow + back link |
 | Success | visit → signup/demo, CTA click-through, bounce, CWV | activation, time-to-value, retention, task time, errors | time to detect and act; decision accuracy | conversion, add-to-cart, checkout completion, AOV, search exits | task time, errors, records per hour | time to first successful call, search success | task completion, support contacts, trust | D1/D7 retention, session success | read depth, return visits, subscriptions | completion rate, digital take-up, satisfaction |
@@ -63,7 +63,7 @@ Measured reference points: Primer body 14 px with 3 type sizes on an issues page
 
 - **Docs structure** (Diátaxis): tutorials (learning), how-to guides (goals), reference (information), explanation (understanding). Mixing them is the main failure.
 - **Good:** Stripe's three columns (navigation, prose, live code); the user's own keys when signed in; copy buttons; a first successful call within minutes; ⌘K search; an on-page table of contents; a version switch.
-- **Numbers:** prose 15–16 px at 60–75 characters; code 13–14 px monospace. Monospace belongs here — and, per `lessons.md`, essentially only here.
+- **Numbers:** prose 15–16 px at 60–75 characters; code 13–14 px monospace. Monospace belongs here — and, per commitment 5 in `SKILL.md`, essentially only here.
 - The dev tool's *marketing* can be expressive, but it shows real code and real UI.
 
 ## Fintech and banking
@@ -108,7 +108,7 @@ Posture *signature* (`framing.md` §1): expressive in fidelity and interaction f
 
 - **Goal:** the experience the business is remembered for, which also removes real ambiguity from ordering.
 - **Good:** a written experiential quality bar in the user's words; one vertical slice proved before breadth; a full-screen route or app of its own that shares the brand layer (type, colour roles, motion tokens, tone), not the website's layout; direct manipulation (`ui-ux.md` §7b); quality tiers that keep the look (`realtime-3d.md` §6).
-- **Numbers:** its own performance budget row (`performance.md` §1); frame time measured on a real GPU (`visual-qa.md` "3D and WebGL experiences").
+- **Numbers:** its own column in the performance budget (`performance.md` §1); frame time measured on a real GPU (`visual-qa.md` "3D and WebGL experiences").
 - **Typical failures:** shrunk to a stepper with a thumbnail between two sections; spectacle that does not improve understanding, confidence, sharing or ordering.
 - Details: `discovery.md` §5b, `realtime-3d.md`.
 

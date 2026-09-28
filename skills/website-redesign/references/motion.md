@@ -12,7 +12,7 @@ Every animation names exactly one job; "it looks nice" is not a job on anything 
 | Feedback | press `scale(.97)`, toggle knob, drag lift | form submit state |
 | State change | cart count ticks; item added | pricing toggle monthly/annual |
 | Causality | a filter narrows the list; remaining items move into place | before/after slider |
-| Attention | a validation nudge; a new-item dot | rarely justified — moving things read as ads |
+| Attention | live state only: a pulsing dot that also says its state in words (§6) | rarely justified — moving things read as ads |
 | Explanation | onboarding demonstration; empty-state loop | a product demo that shows the mechanism as it is described |
 | Brand expression | almost never in productive UI | a hero entrance; one signature transition |
 
@@ -62,7 +62,7 @@ Reconciled from Material 3, Carbon, Fluent 2, Kowalski and NN/g:
   --dur-page: 400ms;     /* page or view transition, large container transform */
   --dur-hero: 700ms;     /* one-off marketing entrance; never in apps */
   --stagger: 40ms;       /* 30–80 ms between siblings; total ≤ 300 ms; never blocks input */
-  --delay: 100ms;        /* one step of an entrance or settle delay (a check mark after its ring); calc(var(--delay) * n) */
+  --delay: 0ms;          /* entrance or settle delay (a check mark after its ring): none by default, feedback never waits; raise it only inside @media (prefers-reduced-motion: no-preference) */
 
   --ease-out: cubic-bezier(0.2, 0, 0, 1);             /* default: entrances and on-screen moves */
   --ease-in-out: cubic-bezier(0.4, 0.14, 0.3, 1);     /* A → B while visible */
@@ -78,7 +78,7 @@ Reconciled from Material 3, Carbon, Fluent 2, Kowalski and NN/g:
 }
 ```
 
-Under reduce every delay is zero — `transition-delay`, `animation-delay`, stagger and delay tokens — so a settled state (a check mark after a click) arrives immediately; the substitutes (crossfades ≤ 150 ms, §6) keep running. Write delays only through `--stagger` and `--delay`, so this block reaches them. When only durations were reduced, a check mark still arrived 250 ms after the click (`lessons.md` 2026-09-28, CleoHR website).
+Under reduce every delay is zero — `transition-delay`, `animation-delay`, stagger and delay tokens — so a settled state (a check mark after a click) arrives immediately; the substitutes (crossfades ≤ 150 ms, §6) keep running. Write every delay through `--stagger` or `--delay`, and raise `--delay` only inside `@media (prefers-reduced-motion: no-preference)`: a value set on a component outside it escapes this block. When only durations were reduced, a check mark still arrived 250 ms after the click (`lessons.md` 2026-09-28, CleoHR website).
 
 Rules: entrances decelerate; **never `ease-in` on anything the user is waiting to see** (an exit may accelerate only when short and nobody waits on it — otherwise exit with the ease-out at ~70% of the entrance duration); never linear for movement (only for progress and scrubbed timelines); never enter from `scale(0)` — start at 0.9–0.97 with opacity 0; popovers scale from their trigger, modals from the centre; opacity and colour never bounce; bounce 0.1–0.3 only for gesture-driven or playful motion; hover motion only under `@media (hover: hover) and (pointer: fine)` (touch fires false hovers); never `transition: all`; switching theme triggers no transitions. For JS springs: Motion `{ type: "spring", stiffness: 700, damping: 47.6 }` (productive) or `{ stiffness: 340, damping: 25.8 }` (expressive). Springs keep velocity when interrupted — use them for drag and anything reversible mid-flight.
 
@@ -132,6 +132,7 @@ Reduced motion means fewer and gentler animations, not zero, and never missing c
 | Motion | Under `prefers-reduced-motion: reduce` |
 | --- | --- |
 | Slide, zoom or morph transitions | crossfade ≤ 150 ms, or instant |
+| Entrance and settle delays, stagger | zero (§4); the substitute still runs |
 | Parallax, scroll-linked movement, smooth scroll | off |
 | Scroll reveals | content simply present |
 | Hover lift, scale, tilt | colour, shadow or outline only |
@@ -192,7 +193,7 @@ Checklist for any 3D on a page:
 - [ ] **Poster first** — a real render in the same framing, sized, eager if above the fold. A WebGL canvas never becomes the LCP element; the poster does (verified), and a flat single-colour poster is ignored — optimise the poster.
 - [ ] **Load late** — `loading="lazy"` or tap-to-load; `import()` on IntersectionObserver or first interaction; never in the critical path.
 - [ ] **Render only when needed** — `frameloop="demand"`; pause offscreen and on `visibilitychange`; cap device pixel ratio at 2.
-- [ ] **Nothing runs at rest** — zero `requestAnimationFrame` callbacks while nothing moves (check in DevTools Performance); render on demand, and remove idle loops and frame-rate monitors that keep firing.
+- [ ] **Nothing runs at rest** — zero `requestAnimationFrame` callbacks while nothing moves (the DevTools check in §7); remove idle loops and frame-rate monitors that keep firing.
 - [ ] **Reduced motion** — no auto-rotate, fly-ins or tilt; a static, well-lit frame with working controls.
 - [ ] **Don't trap scrolling** — `<model-viewer>` defaults to `touch-action="none"`, which swallows vertical scrolling on phones: set `touch-action="pan-y"`; no wheel-zoom without a modifier.
 - [ ] **Accessibility** — `alt` on model-viewer, or `role="img"` + `aria-label` on a canvas; rotate and zoom buttons (WCAG 2.5.7) and keyboard support.

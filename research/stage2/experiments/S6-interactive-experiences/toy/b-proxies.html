@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top the cake – canvas with focusable proxies</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Top the cake</h1>
+  <p class="lede">Drag toppings from the tray onto the cake. Drag one off the cake to remove it.</p>
+  <div class="stage">
+    <div>
+      <div class="wrap" id="wrap"><canvas id="cake" aria-hidden="true"></canvas></div>
+      <p class="tap-hint" id="tap-hint"></p>
+      <p class="help" id="how">Or tap a topping, then tap the cake. With a keyboard: Tab to the tray and press Enter to add a topping; arrow keys move it (Shift moves further); Delete removes it.</p>
+      <p><button class="sound" type="button" aria-pressed="false">Sound <span data-state aria-hidden="true">off</span></button></p>
+    </div>
+  </div>
+</main>
+<script type="module">
+  import { createModel } from './model.js';
+  import { createCanvasView } from './canvas-view.js';
+  import { createProxyLayer } from './proxy-layer.js';
+  import { createAnnouncer } from './announce.js';
+  import { createSound } from './sound.js';
+  import { attachTapHelpers } from './tap-helpers.js';
+  import { makeBench } from './bench.js';
+  const model = createModel();
+  const announce = createAnnouncer(document.querySelector('main'));
+  const sound = createSound(document.querySelector('.sound'));
+  const wrap = document.getElementById('wrap');
+  let tap;
+  const view = createCanvasView(model, document.getElementById('cake'), { juice: 'respect-reduced-motion', tapToPlace: true, onTapState: (s) => tap(s) });
+  const proxies = createProxyLayer(model, view, wrap, announce, { instructionsId: 'how', sound });
+  tap = attachTapHelpers(model, view, proxies.layer, document.getElementById('tap-hint'), sound);
+  window.__toy = { variant: 'b', model, view, proxies, bench: makeBench(model, view, proxies), ready: true };
+</script>
+</body>
+</html>

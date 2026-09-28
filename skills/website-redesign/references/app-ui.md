@@ -66,7 +66,7 @@ Also render the **content extremes**: 0, 1, typical and 100+ items; 1-character 
 - **Places** in a sidebar when there are five or more primary items or any second level; grouped by task, at most 7 items per group; at most two levels (Carbon's left panel does not support three — use tabs in the page); icon + label at the first level; width sized to the longest translated label. The current item is marked by more than colour (weight, background, `aria-current`).
 - **Phones** follow `responsive.md` §5: a bottom tab bar for 3–5 destinations, a labelled "Menu" drawer for many tools or admin. The phone top bar is the `<header>` landmark.
 - **Views of one object** in tabs. Tabs that change the URL are navigation; tabs that swap panels are tabs — never mix them in one set.
-- **Commands** in a command palette (⌘K) that lists every page this user may open (permission-aware) and shows each command's shortcut, so users graduate to the shortcut; its focus rules are in `accessibility.md` §4. Keyboard shortcuts for top tasks; `?` to list them. Shortcut hints and `kbd` keycaps in the UI face, never a mono keycap.
+- **Commands** in a command palette (⌘K) that lists every page this user may open (permission-aware) and shows each command's shortcut, so users graduate to the shortcut; its focus rules are in `accessibility.md` §4. Keyboard shortcuts for top tasks; `?` to list them. Shortcut hints and `kbd` keycaps go in the UI face (§3).
 - **A browser tab title per page** ("Campaigns · Product"), because people run several tabs.
 - **State in the URL**: filters, sort, tabs, pagination, open panels. Back restores position.
 - Parent → child always has a way back (breadcrumbs, back link). Primary–detail layouts for lists of records.
@@ -78,12 +78,12 @@ Also render the **content extremes**: 0, 1, typical and 100+ items; 1-character 
 - **Four tasks** (NN/g): find (search and filters prominent, the active filter state obvious), compare (sticky headers, aligned tabular numerals, row hover), view or edit one (side panel or inline edit), act (selection + bulk actions).
 - A title that says what the rows have in common; the first column a human-readable identifier; related columns adjacent; column titles of one or two words; header alignment follows the data; **numbers right-aligned with tabular figures** and consistent units.
 - **Row actions**: one or two inline, in the last column as quiet icon buttons with names, and the rest in a menu. A clickable row never wraps a button (`accessibility.md` §3).
-- **Status**: a dot plus a word, in sentence case, from the product's one status vocabulary (§1).
+- **Status**: a dot plus a word, in the sentence-case status vocabulary (§1, §7).
 - **Sorting**: one column at a time; first click ascending; only the sorted column shows its arrow; a default sort that serves the top task; `aria-sort` and a polite announcement of the new order.
 - **Selection**: with nothing selected, show "Showing 1–25 of 1,240"; the bulk-action bar appears only once something is selected and replaces the toolbar with "{n} selected"; the header checkbox selects the page, then offers "Select all 1,240", then "Clear selection".
 - **Pagination** for management tables — 25 rows by default, 10/25/50/100 offered, the choice remembered (Elastic EUI); infinite scroll only for browsing homogeneous feeds; "Load more" for product lists.
 - **Zebra striping** only for very wide numeric tables; otherwise dividers + hover.
-- **Phones**: a record list (one row per object) folds into a name plus a meta line and drops what the phone does not need. Only a genuine numeric comparison table scrolls sideways, inside a focusable, labelled container (`tabindex="0"`, a caption) with the identifier column sticky (`responsive.md` §6).
+- **Phones**: a record list (one row per object) folds into a name plus a meta line and drops the columns the phone does not need. Only a genuine numeric comparison table scrolls sideways, inside a focusable, labelled container (`tabindex="0"`, a caption) with the identifier column sticky, as for a comparison matrix in `responsive.md` §6.
 
 ## 6. Forms
 
@@ -110,7 +110,7 @@ Also render the **content extremes**: 0, 1, typical and 100+ items; 1-character 
 
 A toast or snackbar with an action keeps the action *outside* its live region: announce the message only, or "Undo Dismiss" is read aloud with it.
 
-Default to **no message** when the interface already shows the result (the updated row is the confirmation; a temporary inline check beats a toast). Primer deprecated its toast over accessibility; auto-dismissing toasts collide with WCAG 2.2.1. "Completed" is quiet; colour belongs to what still needs doing. Status is colour + icon + words.
+Default to **no message** when the interface already shows the result (the updated row is the confirmation; a temporary inline check beats a toast). Primer deprecated its toast over accessibility; auto-dismissing toasts collide with WCAG 2.2.1. "Completed" is quiet; colour belongs to what still needs doing. Status is colour + a shape (an icon, or a dot in a table row) + words.
 
 ## 7b. Data freshness, offline and sync — say what is true
 
@@ -163,10 +163,10 @@ Found by the checker and the keyboard walk on the Brio3 app after the design its
 
 - **The faint token leaks into text.** A palette's 'decorative' grey (for dots, disabled states and rules) ends up on timestamps and select placeholders at about 2.5:1. Name the token 'decorative' where it is defined and grep its text uses, placeholders included, before shipping (`design-systems.md` §2).
 - **Dimming rows with opacity** (§2).
-- **A clickable row that contains a button.** `<div role="button">` wrapping a delete or menu button is nested-interactive: screen readers announce one control and swallow the other. Make the row's main target a real `<button>` or link, and put secondary actions beside it, not inside (`accessibility.md` §3).
+- **A clickable row that contains a button**, where screen readers announce one control and swallow the other (§5, `accessibility.md` §3).
 - **Hover-only row actions**, invisible on a phone (`responsive.md` §4).
 - **Tables that scroll sideways** (§5).
-- **The phone top bar outside every landmark.** The desktop shell has `<nav>` and `<main>`; the phone bar is often a bare `<div>`. Make it the `<header>`.
+- **The phone top bar outside every landmark**, often a bare `<div>` (§4).
 - **Command-palette focus** (`accessibility.md` §4).
 - **Overlays only exist when open.** Automated checks of a route never see its palette, menus or dialogs; scan them open with `states.mjs --axe`.
 - **Promoted numbers** (§9).

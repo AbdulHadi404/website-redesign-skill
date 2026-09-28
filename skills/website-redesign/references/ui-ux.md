@@ -52,7 +52,7 @@ Every surface is an interface — a landing page included: a nav, forms, widgets
 - **Loading thresholds** (Primer, consistent with the limits above): under 1 s show nothing; 1–3 s an indeterminate spinner or skeleton; 3–10 s determinate progress; beyond 10 s a background task the user can leave. Delay indicators ~150–300 ms and keep them ~300–500 ms once shown, so they never flash.
 - **Skeleton screens beat spinners** for content areas: a skeleton that fills in draws attention to progress. Skeletons only for containers (tables, lists, tiles), shaped like the final layout; spinners only inside the control that was pressed.
 - **Every component fills its state matrix** — interaction (rest, hover, focus-visible, pressed), selection, validation, availability (disabled, inactive, read-only), async (loading, empty, degraded) — and every applicable row is designed and rendered, not defaulted (`app-ui.md` §2, `visual-qa.md`).
-- **Empty states** (first use, nothing configured, no results, cleared): say *why* it is empty, teach the feature in one line ("Star a job to keep it here"), and offer the next action; never a blank container, never "No records" that later fills in.
+- **Empty states** (first use, nothing configured, no results, cleared; on a canvas, first use is a real default, §7b): say *why* it is empty, teach the feature in one line ("Star a job to keep it here"), and offer the next action; never a blank container, never "No records" that later fills in.
 - **Error messages**: next to the source; colour *and* icon *and* text (never colour alone); plain language; the precise problem; a constructive next step; the entered text preserved; no blame words ("invalid", "illegal"), no humour, no codes. Validate inline only fields that are error-prone; validate the rest on submit. Modal dialogs only for errors that block progress.
 - **Progressive disclosure**: show what most people need most of the time; put the rest one click away with an obvious label; **never more than two levels** — people get lost between three. In a configurator the disclosure order comes from the options' dependency graph, not from taste (`discovery.md` §3).
 
@@ -100,7 +100,7 @@ For canvases where people select, orbit, drag and edit objects. The rules hold o
 - **One history entry per gesture.** Record the undo point when a drag or slider gesture starts, update without history while it moves, and commit on release, so one undo reverses the whole gesture.
 - **Drag from a library with a ghost** that shows exactly where the item will land, and hide the ghost where the item cannot go. On touch, lift the ghost above the fingertip, and start a drag from a horizontally scrolling tray only on an upward pull, so a sideways swipe still scrolls the tray.
 - **Every drag has a single-pointer alternative**: tap an item to add it, tap a spot to place it (WCAG 2.5.7, §8).
-- **Start from a beautiful, real default** (the client's signature piece), never an empty scene. On a canvas that is the first-use state (`app-ui.md` §8).
+- **Start from a beautiful, real default** (the client's signature piece), never an empty scene. On a canvas that is the first-use state (§4 Empty states, `app-ui.md` §8).
 
 These faults are invisible in screenshots. Find them with a scripted gesture test at a phone device: `states.mjs` tap and swipe steps (tap an object, then swipe from where it was), whose log names what each step hit.
 

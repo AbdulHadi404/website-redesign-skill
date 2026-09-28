@@ -1,0 +1,1299 @@
+{
+ "meta": {
+  "date": "2026-09-28T21:15:04.968Z",
+  "node": "v22.22.2",
+  "cpus": 4,
+  "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "platform": "linux 6.18.44-fc-v42",
+  "method": "Fresh browser context per run; viewport 860×720 at DPR 1; stage 800×600. Warm-up 1 s after the first frame, then a 5 s window (rAF deltas, CDP Performance.getMetrics TaskDuration, SystemInfo.getProcessInfo CPU per process type), then a scripted drag of the top item (30 pointer moves 16 ms apart) while everything animates, then heap after GC. CPU throttle with Emulation.setCPUThrottlingRate (renderer main thread). Medians across runs.",
+  "chromium": "141.0.7390.37",
+  "webgl": {
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "maxTextureSize": 8192
+  },
+  "offscreenCanvasInWorker": true
+ },
+ "build": {
+  "dom": {
+   "name": "dom",
+   "label": "DOM + CSS",
+   "total": {
+    "min": 6606,
+    "gzip": 3000,
+    "br": 2691
+   },
+   "files": {
+    "app.js": {
+     "min": 6606,
+     "gzip": 3000,
+     "br": 2691
+    }
+   },
+   "worker": null,
+   "app": {
+    "min": 6605,
+    "gzip": 3000,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 0,
+    "gzipApprox": 0,
+    "packages": {}
+   }
+  },
+  "svg": {
+   "name": "svg",
+   "label": "Inline SVG",
+   "total": {
+    "min": 6516,
+    "gzip": 3045,
+    "br": 2728
+   },
+   "files": {
+    "app.js": {
+     "min": 6516,
+     "gzip": 3045,
+     "br": 2728
+    }
+   },
+   "worker": null,
+   "app": {
+    "min": 6515,
+    "gzip": 3045,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 0,
+    "gzipApprox": 0,
+    "packages": {}
+   }
+  },
+  "canvas2d": {
+   "name": "canvas2d",
+   "label": "Canvas 2D",
+   "total": {
+    "min": 6108,
+    "gzip": 2863,
+    "br": 2588
+   },
+   "files": {
+    "app.js": {
+     "min": 6108,
+     "gzip": 2863,
+     "br": 2588
+    }
+   },
+   "worker": null,
+   "app": {
+    "min": 6107,
+    "gzip": 2863,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 0,
+    "gzipApprox": 0,
+    "packages": {}
+   }
+  },
+  "canvas2d-worker": {
+   "name": "canvas2d-worker",
+   "label": "Canvas 2D in a Worker (OffscreenCanvas)",
+   "total": {
+    "min": 3481,
+    "gzip": 1615,
+    "br": 1427
+   },
+   "files": {
+    "app.js": {
+     "min": 3481,
+     "gzip": 1615,
+     "br": 1427
+    }
+   },
+   "worker": {
+    "min": 4283,
+    "gzip": 2041,
+    "br": 1887,
+    "attr": {
+     "app": 4271,
+     "runtime": 0,
+     "packages": {}
+    }
+   },
+   "app": {
+    "min": 3480,
+    "gzip": 1615,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 0,
+    "gzipApprox": 0,
+    "packages": {}
+   }
+  },
+  "pixi": {
+   "name": "pixi",
+   "label": "PixiJS 8",
+   "total": {
+    "min": 575035,
+    "gzip": 169323,
+    "br": 139709
+   },
+   "files": {
+    "app.js": {
+     "min": 37329,
+     "gzip": 13433,
+     "br": 12139
+    },
+    "chunk-HYRBLJHF.js": {
+     "min": 314,
+     "gzip": 188,
+     "br": 164
+    },
+    "chunk-VHKTRPDS.js": {
+     "min": 42879,
+     "gzip": 11183,
+     "br": 9878
+    },
+    "chunk-UQM7B6DK.js": {
+     "min": 169,
+     "gzip": 101,
+     "br": 89
+    },
+    "chunk-VPYIYQZT.js": {
+     "min": 110,
+     "gzip": 101,
+     "br": 105
+    },
+    "chunk-5E2QALEN.js": {
+     "min": 39844,
+     "gzip": 12978,
+     "br": 11720
+    },
+    "chunk-S3Z2UCCZ.js": {
+     "min": 232,
+     "gzip": 141,
+     "br": 129
+    },
+    "chunk-EKND3IGR.js": {
+     "min": 48221,
+     "gzip": 13756,
+     "br": 12348
+    },
+    "chunk-SRXGQA5M.js": {
+     "min": 203,
+     "gzip": 133,
+     "br": 120
+    },
+    "chunk-UTYTLSVF.js": {
+     "min": 72106,
+     "gzip": 19526,
+     "br": 17241
+    },
+    "chunk-EZGJE64B.js": {
+     "min": 11135,
+     "gzip": 2856,
+     "br": 2560
+    },
+    "chunk-QVKXLJ3N.js": {
+     "min": 260,
+     "gzip": 152,
+     "br": 135
+    },
+    "chunk-E3LY7O6S.js": {
+     "min": 27301,
+     "gzip": 8140,
+     "br": 7372
+    },
+    "chunk-3NCODIXP.js": {
+     "min": 59269,
+     "gzip": 16563,
+     "br": 14873
+    },
+    "chunk-STYO2ZJE.js": {
+     "min": 42544,
+     "gzip": 12113,
+     "br": 10867
+    },
+    "chunk-FTHHLEQF.js": {
+     "min": 228,
+     "gzip": 138,
+     "br": 127
+    },
+    "chunk-DNLZC42D.js": {
+     "min": 33704,
+     "gzip": 11530,
+     "br": 10475
+    },
+    "chunk-WWEXYVIA.js": {
+     "min": 1104,
+     "gzip": 568,
+     "br": 514
+    },
+    "chunk-HZCRCU3P.js": {
+     "min": 55596,
+     "gzip": 18116,
+     "br": 16208
+    },
+    "chunk-JMOED7BD.js": {
+     "min": 6083,
+     "gzip": 1985,
+     "br": 1776
+    },
+    "chunk-UQN6DRSC.js": {
+     "min": 340,
+     "gzip": 271,
+     "br": 246
+    },
+    "chunk-UPG2LXYC.js": {
+     "min": 26975,
+     "gzip": 9472,
+     "br": 8581
+    },
+    "chunk-U2RI4OOT.js": {
+     "min": 69089,
+     "gzip": 22676,
+     "br": 19977
+    }
+   },
+   "worker": null,
+   "app": {
+    "min": 6715,
+    "gzip": 3061,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 560765,
+    "gzipApprox": 166262,
+    "packages": {
+     "pixi.js": 536847,
+     "ismobilejs": 1662,
+     "tiny-lru": 2400,
+     "parse-svg-path": 498,
+     "earcut": 7261,
+     "eventemitter3": 2830,
+     "@pixi/colord": 9267
+    }
+   }
+  },
+  "phaser": {
+   "name": "phaser",
+   "label": "Phaser 4",
+   "total": {
+    "min": 1395295,
+    "gzip": 372765,
+    "br": 298665
+   },
+   "files": {
+    "app.js": {
+     "min": 1395295,
+     "gzip": 372765,
+     "br": 298665
+    }
+   },
+   "worker": null,
+   "app": {
+    "min": 6771,
+    "gzip": 2973,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 1388523,
+    "gzipApprox": 369792,
+    "packages": {
+     "phaser": 1388523
+    }
+   }
+  },
+  "three": {
+   "name": "three",
+   "label": "three.js (mesh per item)",
+   "total": {
+    "min": 539450,
+    "gzip": 136879,
+    "br": 113063
+   },
+   "files": {
+    "app.js": {
+     "min": 539450,
+     "gzip": 136879,
+     "br": 113063
+    }
+   },
+   "worker": null,
+   "app": {
+    "min": 7776,
+    "gzip": 3553,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 531673,
+    "gzipApprox": 133326,
+    "packages": {
+     "three": 531673
+    }
+   }
+  },
+  "three-instanced": {
+   "name": "three-instanced",
+   "label": "three.js (one InstancedMesh)",
+   "total": {
+    "min": 543080,
+    "gzip": 137913,
+    "br": 113932
+   },
+   "files": {
+    "app.js": {
+     "min": 543080,
+     "gzip": 137913,
+     "br": 113932
+    }
+   },
+   "worker": null,
+   "app": {
+    "min": 8286,
+    "gzip": 3876,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 534793,
+    "gzipApprox": 134037,
+    "packages": {
+     "three": 534793
+    }
+   }
+  },
+  "r3f": {
+   "name": "r3f",
+   "label": "React Three Fiber",
+   "total": {
+    "min": 1152862,
+    "gzip": 320029,
+    "br": 256883
+   },
+   "files": {
+    "app.js": {
+     "min": 1152862,
+     "gzip": 320029,
+     "br": 256883
+    }
+   },
+   "worker": null,
+   "app": {
+    "min": 6970,
+    "gzip": 3390,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 1145264,
+    "gzipApprox": 316639,
+    "packages": {
+     "scheduler": 3713,
+     "react": 8480,
+     "react-dom": 209975,
+     "use-sync-external-store": 1693,
+     "@react-three/fiber": 170235,
+     "three": 743961,
+     "suspend-react": 1029,
+     "its-fine": 3015,
+     "react-use-measure": 3163
+    }
+   }
+  },
+  "dom-a11y": {
+   "name": "dom-a11y",
+   "label": "DOM + keyboard layer (native elements)",
+   "total": {
+    "min": 9596,
+    "gzip": 4167,
+    "br": 3755
+   },
+   "files": {
+    "app.js": {
+     "min": 9596,
+     "gzip": 4167,
+     "br": 3755
+    }
+   },
+   "worker": null,
+   "app": {
+    "min": 9595,
+    "gzip": 4167,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 0,
+    "gzipApprox": 0,
+    "packages": {}
+   }
+  },
+  "svg-a11y": {
+   "name": "svg-a11y",
+   "label": "SVG + keyboard layer (native elements)",
+   "total": {
+    "min": 9530,
+    "gzip": 4266,
+    "br": 3826
+   },
+   "files": {
+    "app.js": {
+     "min": 9530,
+     "gzip": 4266,
+     "br": 3826
+    }
+   },
+   "worker": null,
+   "app": {
+    "min": 9529,
+    "gzip": 4266,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 0,
+    "gzipApprox": 0,
+    "packages": {}
+   }
+  },
+  "pixi-a11y": {
+   "name": "pixi-a11y",
+   "label": "PixiJS + parallel DOM keyboard layer",
+   "total": {
+    "min": 578005,
+    "gzip": 170508,
+    "br": 140812
+   },
+   "files": {
+    "app.js": {
+     "min": 40299,
+     "gzip": 14684,
+     "br": 13235
+    },
+    "chunk-HYRBLJHF.js": {
+     "min": 314,
+     "gzip": 188,
+     "br": 164
+    },
+    "chunk-VHKTRPDS.js": {
+     "min": 42879,
+     "gzip": 11183,
+     "br": 9878
+    },
+    "chunk-UQM7B6DK.js": {
+     "min": 169,
+     "gzip": 101,
+     "br": 89
+    },
+    "chunk-VPYIYQZT.js": {
+     "min": 110,
+     "gzip": 101,
+     "br": 105
+    },
+    "chunk-5E2QALEN.js": {
+     "min": 39844,
+     "gzip": 12978,
+     "br": 11720
+    },
+    "chunk-S3Z2UCCZ.js": {
+     "min": 232,
+     "gzip": 141,
+     "br": 129
+    },
+    "chunk-EKND3IGR.js": {
+     "min": 48221,
+     "gzip": 13756,
+     "br": 12348
+    },
+    "chunk-SRXGQA5M.js": {
+     "min": 203,
+     "gzip": 133,
+     "br": 120
+    },
+    "chunk-UTYTLSVF.js": {
+     "min": 72106,
+     "gzip": 19526,
+     "br": 17241
+    },
+    "chunk-EZGJE64B.js": {
+     "min": 11135,
+     "gzip": 2856,
+     "br": 2560
+    },
+    "chunk-QVKXLJ3N.js": {
+     "min": 260,
+     "gzip": 152,
+     "br": 135
+    },
+    "chunk-E3LY7O6S.js": {
+     "min": 27301,
+     "gzip": 8140,
+     "br": 7372
+    },
+    "chunk-3NCODIXP.js": {
+     "min": 59269,
+     "gzip": 16563,
+     "br": 14873
+    },
+    "chunk-STYO2ZJE.js": {
+     "min": 42544,
+     "gzip": 12113,
+     "br": 10867
+    },
+    "chunk-FTHHLEQF.js": {
+     "min": 228,
+     "gzip": 138,
+     "br": 127
+    },
+    "chunk-DNLZC42D.js": {
+     "min": 33704,
+     "gzip": 11530,
+     "br": 10475
+    },
+    "chunk-WWEXYVIA.js": {
+     "min": 1104,
+     "gzip": 568,
+     "br": 514
+    },
+    "chunk-HZCRCU3P.js": {
+     "min": 55596,
+     "gzip": 18116,
+     "br": 16208
+    },
+    "chunk-JMOED7BD.js": {
+     "min": 6083,
+     "gzip": 1985,
+     "br": 1776
+    },
+    "chunk-UQN6DRSC.js": {
+     "min": 340,
+     "gzip": 271,
+     "br": 246
+    },
+    "chunk-UPG2LXYC.js": {
+     "min": 26975,
+     "gzip": 9472,
+     "br": 8581
+    },
+    "chunk-U2RI4OOT.js": {
+     "min": 69089,
+     "gzip": 22676,
+     "br": 19977
+    }
+   },
+   "worker": null,
+   "app": {
+    "min": 9684,
+    "gzip": 4350,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 560765,
+    "gzipApprox": 166158,
+    "packages": {
+     "pixi.js": 536847,
+     "ismobilejs": 1662,
+     "tiny-lru": 2400,
+     "parse-svg-path": 498,
+     "earcut": 7261,
+     "eventemitter3": 2830,
+     "@pixi/colord": 9267
+    }
+   }
+  },
+  "pixi-pixia11y": {
+   "name": "pixi-pixia11y",
+   "label": "PixiJS + built-in AccessibilitySystem",
+   "total": {
+    "min": 576829,
+    "gzip": 169540,
+    "br": 140011
+   },
+   "files": {
+    "app.js": {
+     "min": 37831,
+     "gzip": 13648,
+     "br": 12301
+    },
+    "chunk-PUGNWLCH.js": {
+     "min": 113,
+     "gzip": 82,
+     "br": 81
+    },
+    "chunk-Y2AH6E7H.js": {
+     "min": 390,
+     "gzip": 209,
+     "br": 186
+    },
+    "chunk-LCSXNZP4.js": {
+     "min": 29522,
+     "gzip": 7551,
+     "br": 6647
+    },
+    "chunk-SIYC7ZWT.js": {
+     "min": 150,
+     "gzip": 122,
+     "br": 118
+    },
+    "chunk-WY7MCUGE.js": {
+     "min": 13485,
+     "gzip": 4290,
+     "br": 3773
+    },
+    "chunk-KZYI2CVT.js": {
+     "min": 225,
+     "gzip": 120,
+     "br": 100
+    },
+    "chunk-ZE6JRU42.js": {
+     "min": 110,
+     "gzip": 101,
+     "br": 101
+    },
+    "chunk-7474ZMT2.js": {
+     "min": 39910,
+     "gzip": 12993,
+     "br": 11730
+    },
+    "chunk-KDPSTPOS.js": {
+     "min": 288,
+     "gzip": 164,
+     "br": 142
+    },
+    "chunk-VKIPMLSG.js": {
+     "min": 48254,
+     "gzip": 13753,
+     "br": 12328
+    },
+    "chunk-VLYYOQRP.js": {
+     "min": 259,
+     "gzip": 152,
+     "br": 148
+    },
+    "chunk-OL7FNQ6F.js": {
+     "min": 72139,
+     "gzip": 19524,
+     "br": 17229
+    },
+    "chunk-SESQIHQF.js": {
+     "min": 11163,
+     "gzip": 2865,
+     "br": 2569
+    },
+    "chunk-ZQWDGS4R.js": {
+     "min": 316,
+     "gzip": 174,
+     "br": 150
+    },
+    "chunk-DCEI7Z7N.js": {
+     "min": 27367,
+     "gzip": 8159,
+     "br": 7408
+    },
+    "chunk-BFNUINQL.js": {
+     "min": 59335,
+     "gzip": 16577,
+     "br": 14938
+    },
+    "chunk-KUI7MCMF.js": {
+     "min": 7546,
+     "gzip": 2669,
+     "br": 2419
+    },
+    "chunk-ZXQY3ONC.js": {
+     "min": 35107,
+     "gzip": 9965,
+     "br": 8928
+    },
+    "chunk-VRFKCDOH.js": {
+     "min": 256,
+     "gzip": 150,
+     "br": 134
+    },
+    "chunk-5G6P6SQH.js": {
+     "min": 33737,
+     "gzip": 11539,
+     "br": 10448
+    },
+    "chunk-ET6PDCDF.js": {
+     "min": 1104,
+     "gzip": 567,
+     "br": 509
+    },
+    "chunk-VFZ3I4W2.js": {
+     "min": 55629,
+     "gzip": 18129,
+     "br": 16189
+    },
+    "chunk-C7MK7X5M.js": {
+     "min": 6116,
+     "gzip": 1998,
+     "br": 1794
+    },
+    "chunk-X6B6IOFE.js": {
+     "min": 373,
+     "gzip": 285,
+     "br": 270
+    },
+    "chunk-2QXSISQM.js": {
+     "min": 27008,
+     "gzip": 9479,
+     "br": 8565
+    },
+    "chunk-U7LUVU5F.js": {
+     "min": 21958,
+     "gzip": 7394,
+     "br": 6657
+    },
+    "chunk-44JGS2OS.js": {
+     "min": 47138,
+     "gzip": 15627,
+     "br": 13826
+    }
+   },
+   "worker": null,
+   "app": {
+    "min": 7123,
+    "gzip": 3247,
+    "note": "min = bytes of src/ in the bundle; gzip = the app built with packages external"
+   },
+   "runtime": {
+    "min": 560579,
+    "gzipApprox": 166293,
+    "packages": {
+     "pixi.js": 536673,
+     "ismobilejs": 1660,
+     "tiny-lru": 2400,
+     "parse-svg-path": 498,
+     "earcut": 7261,
+     "eventemitter3": 2825,
+     "@pixi/colord": 9262
+    }
+   }
+  }
+ },
+ "main": {
+  "dom|200|1x": {
+   "cell": {
+    "variant": "dom",
+    "n": 200,
+    "throttle": 1
+   },
+   "summary": {
+    "runs": 1,
+    "renderer": "dom",
+    "ttff": 70.4,
+    "fps": 60,
+    "frameMedian": 16.7,
+    "frameP95": 16.8,
+    "over25": 0,
+    "longShare": 0,
+    "mainFps": null,
+    "mainP95": null,
+    "busyPct": 17.1,
+    "scriptPct": 0.5,
+    "rendererCpu": 21.6,
+    "gpuCpu": null,
+    "browserCpu": 1,
+    "drawCalls": null,
+    "moveToFrame": 12.8,
+    "moveToFrameP95": 18,
+    "moveDelay": 9.2,
+    "moveDelayP95": 15.2,
+    "dragFps": 60,
+    "eventTimingMax": 48,
+    "dragOk": true,
+    "heapMB": 2,
+    "domNodes": 646,
+    "jsFiles": [
+     "app.js"
+    ]
+   },
+   "runs": [
+    {
+     "variant": "dom",
+     "n": 200,
+     "throttle": 1,
+     "reduced": false,
+     "load": 0,
+     "idle": false,
+     "url": "http://127.0.0.1:35427/dom/?n=200",
+     "errors": [],
+     "ttff": 70.4,
+     "fcp": 52,
+     "info": {
+      "renderer": "dom"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 300,
+      "fps": 60,
+      "median": 16.7,
+      "p95": 16.8,
+      "max": 16.8,
+      "over25": 0,
+      "longShare": 0,
+      "busyPct": 17.1,
+      "scriptPct": 0.5,
+      "stylePct": 7.8,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 1,
+       "renderer": 21.6,
+       "GPU": 19.8,
+       "network.mojom.NetworkService": 0.2,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 12.8,
+       "p95": 18,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 9.2,
+       "p95": 15.2
+      },
+      "downUpToFrame": 24.7,
+      "eventTimingMax": 48,
+      "eventTiming": [
+       {
+        "name": "pointerdown",
+        "dur": 32,
+        "delay": 1.8,
+        "proc": 0.8
+       },
+       {
+        "name": "pointerup",
+        "dur": 48,
+        "delay": 0.2,
+        "proc": 1.2
+       },
+       {
+        "name": "click",
+        "dur": 48,
+        "delay": 2.7,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 128,
+       "fps": 60,
+       "median": 16.7,
+       "p95": 16.8,
+       "max": 16.8,
+       "over25": 0,
+       "longShare": 0
+      }
+     },
+     "heapMB": 2,
+     "domNodes": 646
+    }
+   ]
+  },
+  "svg|200|1x": {
+   "cell": {
+    "variant": "svg",
+    "n": 200,
+    "throttle": 1
+   },
+   "summary": {
+    "runs": 1,
+    "renderer": "svg",
+    "ttff": 71.2,
+    "fps": 59.8,
+    "frameMedian": 16.7,
+    "frameP95": 16.8,
+    "over25": 1,
+    "longShare": 0.7,
+    "mainFps": null,
+    "mainP95": null,
+    "busyPct": 17.8,
+    "scriptPct": 0.2,
+    "rendererCpu": 45.3,
+    "gpuCpu": null,
+    "browserCpu": 0,
+    "drawCalls": null,
+    "moveToFrame": 13.3,
+    "moveToFrameP95": 19.8,
+    "moveDelay": 9.1,
+    "moveDelayP95": 16.1,
+    "dragFps": 60,
+    "eventTimingMax": 48,
+    "dragOk": true,
+    "heapMB": 2.1,
+    "domNodes": 1274,
+    "jsFiles": [
+     "app.js"
+    ]
+   },
+   "runs": [
+    {
+     "variant": "svg",
+     "n": 200,
+     "throttle": 1,
+     "reduced": false,
+     "load": 0,
+     "idle": false,
+     "url": "http://127.0.0.1:35427/svg/?n=200",
+     "errors": [],
+     "ttff": 71.2,
+     "fcp": 52,
+     "info": {
+      "renderer": "svg"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 299,
+      "fps": 59.8,
+      "median": 16.7,
+      "p95": 16.8,
+      "max": 33.3,
+      "over25": 1,
+      "longShare": 0.7,
+      "busyPct": 17.8,
+      "scriptPct": 0.2,
+      "stylePct": 4.4,
+      "layoutPct": 0.5,
+      "cpuPct": {
+       "browser": 0,
+       "renderer": 45.3,
+       "GPU": 3.4,
+       "network.mojom.NetworkService": 0.2,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 13.3,
+       "p95": 19.8,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 9.1,
+       "p95": 16.1
+      },
+      "downUpToFrame": 17.4,
+      "eventTimingMax": 48,
+      "eventTiming": [
+       {
+        "name": "pointerdown",
+        "dur": 48,
+        "delay": 0.4,
+        "proc": 0.4
+       },
+       {
+        "name": "pointerup",
+        "dur": 48,
+        "delay": 3.8,
+        "proc": 1.3
+       }
+      ],
+      "frames": {
+       "frames": 126,
+       "fps": 60,
+       "median": 16.7,
+       "p95": 16.8,
+       "max": 16.8,
+       "over25": 0,
+       "longShare": 0
+      }
+     },
+     "heapMB": 2.1,
+     "domNodes": 1274
+    }
+   ]
+  },
+  "canvas2d|200|1x": {
+   "cell": {
+    "variant": "canvas2d",
+    "n": 200,
+    "throttle": 1
+   },
+   "summary": {
+    "runs": 1,
+    "renderer": "canvas2d",
+    "ttff": 66.9,
+    "fps": 60,
+    "frameMedian": 16.7,
+    "frameP95": 16.7,
+    "over25": 0,
+    "longShare": 0,
+    "mainFps": null,
+    "mainP95": null,
+    "busyPct": 19.5,
+    "scriptPct": 1.5,
+    "rendererCpu": 20.6,
+    "gpuCpu": null,
+    "browserCpu": 0,
+    "drawCalls": null,
+    "moveToFrame": 13.5,
+    "moveToFrameP95": 20.1,
+    "moveDelay": 9.9,
+    "moveDelayP95": 15.4,
+    "dragFps": 60,
+    "eventTimingMax": 32,
+    "dragOk": true,
+    "heapMB": 1.9,
+    "domNodes": 44,
+    "jsFiles": [
+     "app.js"
+    ]
+   },
+   "runs": [
+    {
+     "variant": "canvas2d",
+     "n": 200,
+     "throttle": 1,
+     "reduced": false,
+     "load": 0,
+     "idle": false,
+     "url": "http://127.0.0.1:35427/canvas2d/?n=200",
+     "errors": [],
+     "ttff": 66.9,
+     "fcp": 52,
+     "info": {
+      "renderer": "canvas2d"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 300,
+      "fps": 60,
+      "median": 16.7,
+      "p95": 16.7,
+      "max": 16.8,
+      "over25": 0,
+      "longShare": 0,
+      "busyPct": 19.5,
+      "scriptPct": 1.5,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0,
+       "renderer": 20.6,
+       "GPU": 4.8,
+       "network.mojom.NetworkService": 0.2,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 13.5,
+       "p95": 20.1,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 9.9,
+       "p95": 15.4
+      },
+      "downUpToFrame": 19.1,
+      "eventTimingMax": 32,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 32,
+        "delay": 1.5,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 32,
+        "delay": 0.7,
+        "proc": 0.8
+       },
+       {
+        "name": "pointerup",
+        "dur": 24,
+        "delay": 0.2,
+        "proc": 0.3
+       },
+       {
+        "name": "mouseup",
+        "dur": 24,
+        "delay": 0.5,
+        "proc": 0
+       },
+       {
+        "name": "click",
+        "dur": 24,
+        "delay": 0.7,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 126,
+       "fps": 60,
+       "median": 16.7,
+       "p95": 16.8,
+       "max": 16.8,
+       "over25": 0,
+       "longShare": 0
+      }
+     },
+     "heapMB": 1.9,
+     "domNodes": 44
+    }
+   ]
+  },
+  "canvas2d-worker|200|1x": {
+   "cell": {
+    "variant": "canvas2d-worker",
+    "n": 200,
+    "throttle": 1
+   },
+   "summary": {
+    "runs": 1,
+    "renderer": "canvas2d-offscreen-worker",
+    "ttff": 92.2,
+    "fps": 60,
+    "frameMedian": 16.7,
+    "frameP95": 16.7,
+    "over25": 0,
+    "longShare": 0,
+    "mainFps": 60,
+    "mainP95": 16.8,
+    "busyPct": 0.9,
+    "scriptPct": 0.2,
+    "rendererCpu": 20.6,
+    "gpuCpu": null,
+    "browserCpu": 0.4,
+    "drawCalls": null,
+    "moveToFrame": 27.8,
+    "moveToFrameP95": 32.7,
+    "moveDelay": 12.3,
+    "moveDelayP95": 16.4,
+    "dragFps": 59.5,
+    "eventTimingMax": 16,
+    "dragOk": true,
+    "heapMB": 1.8,
+    "domNodes": 42,
+    "jsFiles": [
+     "app.js",
+     "worker.js"
+    ]
+   },
+   "runs": [
+    {
+     "variant": "canvas2d-worker",
+     "n": 200,
+     "throttle": 1,
+     "reduced": false,
+     "load": 0,
+     "idle": false,
+     "url": "http://127.0.0.1:35427/canvas2d-worker/?n=200",
+     "errors": [],
+     "ttff": 92.2,
+     "fcp": 52,
+     "info": {
+      "renderer": "canvas2d-offscreen-worker"
+     },
+     "jsFiles": [
+      "app.js",
+      "worker.js"
+     ],
+     "steady": {
+      "frames": 300,
+      "fps": 60,
+      "median": 16.7,
+      "p95": 16.7,
+      "max": 16.8,
+      "over25": 0,
+      "longShare": 0,
+      "main": {
+       "frames": 300,
+       "fps": 60,
+       "median": 16.7,
+       "p95": 16.8,
+       "max": 16.8,
+       "over25": 0,
+       "longShare": 0
+      },
+      "busyPct": 0.9,
+      "scriptPct": 0.2,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.4,
+       "renderer": 20.6,
+       "GPU": 5.4,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 27.8,
+       "p95": 32.7,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 12.3,
+       "p95": 16.4
+      },
+      "downUpToFrame": 12.4,
+      "eventTimingMax": 16,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 16,
+        "delay": 0.6,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 16,
+        "delay": 0.3,
+        "proc": 0.3
+       }
+      ],
+      "frames": {
+       "frames": 127,
+       "fps": 59.5,
+       "median": 16.7,
+       "p95": 16.8,
+       "max": 33.4,
+       "over25": 1,
+       "longShare": 1.6
+      },
+      "mainLatToFrame": 12.5
+     },
+     "heapMB": 1.8,
+     "domNodes": 42
+    }
+   ]
+  }
+ }
+}

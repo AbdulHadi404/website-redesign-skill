@@ -1,0 +1,39 @@
+- main:
+  - heading "Top the cake" [level=1]
+  - paragraph: Choose a topping and where it goes. The picture updates as you go.
+  - img "An empty cake"
+  - group "Topping":
+    - text: Topping
+    - radio "Strawberry" [checked]
+    - text: Strawberry
+    - radio "Candle"
+    - text: Candle
+    - radio "Flower"
+    - text: Flower
+    - radio "Star"
+    - text: Star
+  - group "Where on the cake":
+    - text: Where on the cake
+    - radio "Top left"
+    - text: Top left
+    - radio "Top"
+    - text: Top
+    - radio "Top right"
+    - text: Top right
+    - radio "Left"
+    - text: Left
+    - radio "Centre" [checked]
+    - text: Centre
+    - radio "Right"
+    - text: Right
+    - radio "Bottom left"
+    - text: Bottom left
+    - radio "Bottom"
+    - text: Bottom
+    - radio "Bottom right"
+    - text: Bottom right
+  - button "Add to cake"
+  - heading "On the cake (0)" [level=2]
+  - paragraph: Nothing on the cake yet. Choose a topping and where it goes, then Add to cake.
+  - list
+  - status

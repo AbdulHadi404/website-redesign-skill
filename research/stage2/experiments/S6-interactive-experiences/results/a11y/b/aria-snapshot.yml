@@ -1,0 +1,15 @@
+- main:
+  - heading "Top the cake" [level=1]
+  - paragraph: Drag toppings from the tray onto the cake. Drag one off the cake to remove it.
+  - toolbar "Add a topping":
+    - button "Strawberry"
+    - button "Candle"
+    - button "Flower"
+    - button "Star"
+  - group "Toppings on the cake":
+    - list
+  - paragraph
+  - paragraph: "Or tap a topping, then tap the cake. With a keyboard: Tab to the tray and press Enter to add a topping; arrow keys move it (Shift moves further); Delete removes it."
+  - paragraph:
+    - button "Sound"
+  - status

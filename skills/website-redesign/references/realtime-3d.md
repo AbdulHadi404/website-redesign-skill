@@ -36,7 +36,7 @@ Geometry detail comes last, and usually goes *down*: shading (baked occlusion, n
 
 If a minute of preparation saves milliseconds on every frame for every visitor, spend the minute: bake in a DCC tool (Blender, headless), decimate LODs, and compress (Meshopt for geometry; textures as below).
 
-- **Budgets per asset, enforced.** The defaults are `motion.md` §9's (≤ ~1.5 MB GLB for a product model, textures ≤ 2048², 1024² on mobile). Enforce them per asset in a build script that **fails** when an asset is over.
+- **Budgets per asset, enforced.** The defaults are the asset budgets in `motion.md` §9. Enforce them per asset in a build script that **fails** when an asset is over.
 - **Texture format by what is scarce.** In a real-time scene, GPU memory and upload time are the limit: use KTX2 (Basis Universal), which stays compressed on the GPU, where a WebP or JPEG is decoded to full RGBA (16 MB for one 2048² texture, before mipmaps). In a page viewer with a few textures, transfer size is the limit: use WebP (`motion.md` §9).
 - **A repeatable pipeline before the second asset** (source → bake → LODs → validate → compress → budgets → hashed files → manifest → loader), never one-off exports.
 
@@ -57,7 +57,7 @@ When a live 3D product exists, the marketing pages around it carry no WebGL (`mo
 - Let the product's own content open from the page (a template, a saved design) and render each one from the **exact view the product opens on**. At capture time, also record where the subject sits in the still (project its framing points), so the still can later be laid over the live scene precisely.
 - Give the page's still and the product's loading poster the same shared-element name (React `<ViewTransition name share>` or `view-transition-name`, `motion.md` §5), and use the **same image file** on both sides, warmed on hover/focus/touch together with the 3D code chunk, so the morph lands on a decoded image.
 - **Don't start the 3D engine during the morph.** A shared-element morph animates width/height on the main thread, and engine start-up (module evaluation, context creation, shader compiles) blocks it: measured, a 0.56 s morph stretched to 3.8 s. Mount the canvas when the morph's animation finishes.
-- When the live scene is built and steady, move/scale the poster onto the live subject's projected box (FLIP), then dissolve it. Hold the camera still at the poster's view until then, and start idle motion (none under reduced motion, `motion.md` §6) and bring in the tool panels only after (opacity only if panel boxes drive the camera framing).
+- When the live scene is built and steady, move/scale the poster onto the live subject's projected box (FLIP), then dissolve it. Hold the camera still at the poster's view until then, and start idle motion and bring in the tool panels only after (opacity only if panel boxes drive the camera framing). Idle motion stops within 5 s or has a pause control placed before it, and there is none under reduced motion (`motion.md` §2 gate 7, §6).
 - Replacing someone's work with a template must be undoable (push it through the same undo history), and the entry URL is rewritten so a reload reopens their work, not the template.
 - Verify with a filmstrip from a compositor screencast (CDP `Page.startScreencast`, `motion.md` §7); ordinary screenshots don't capture view transitions. Time it on a production build from the navigation commit.
 
