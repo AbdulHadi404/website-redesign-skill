@@ -49,7 +49,7 @@ Compare with the Phase 1 run in `audit/before`. Every ✗ is fixed or justified 
 - Headline wrapping: no orphaned single words, no break inside an emphasised phrase, nothing overlapping the subject of a photograph.
 - Photo crops: the subject visible and not decapitated; copy on its own ground.
 - Whitespace: no dead bands (a `100svh` hero on a tall screen — cap it with `min(100svh, 56rem)` — a parallax gap, an empty column).
-- Alignment: columns, rules and baselines line up; concentric radii; nothing a few pixels off (`audit.mjs` reports text blocks whose left edges sit 1–4 px apart — usually two copies of one component with drifted spacing).
+- Alignment: columns, rules and baselines line up; concentric radii; nothing a few pixels off. `audit.mjs` reports text blocks whose left edges sit 1–4 px apart (usually two copies of one component with drifted spacing) and rounded elements close inside a rounded parent whose radius is more than 4 px above the outer radius minus the gap.
 - Sizing: nothing tiny at 390 (tables, diagrams, labels); nothing absurd at 1440.
 - Sticky and fixed elements: header state on scroll; the **open** mobile menu; overlays; body scroll lock releases; focus never hidden under a sticky bar.
 - Every widget in every state; hover and focus on desktop; targets on mobile (rendered size, not source).

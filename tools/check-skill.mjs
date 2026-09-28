@@ -28,7 +28,8 @@ else {
 
 // 2. Every referenced file exists; every "file.md` §N" points at a real "## N." heading.
 const docs = walk(skill).filter((f) => f.endsWith('.md'));
-const byName = new Map(docs.map((f) => [path.basename(f), f]));
+// resolve names against the knowledge base only, so a script's output folder (e.g. scripts/audit/audit.md) cannot shadow a reference
+const byName = new Map(docs.filter((f) => /[\\/](references|templates)[\\/]/.test(f) || path.basename(f) === 'SKILL.md').map((f) => [path.basename(f), f]));
 for (const f of docs) {
   const text = readFileSync(f, 'utf8');
   for (const m of text.matchAll(/(?:references|templates|scripts)\/[\w./-]+\.(?:md|mjs|json)/g)) {

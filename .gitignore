@@ -4,3 +4,5 @@ captures/
 .DS_Store
 .env
 .env.*
+skills/website-redesign/scripts/*/
+!skills/website-redesign/scripts/lib/

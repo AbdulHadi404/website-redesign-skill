@@ -276,6 +276,33 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   const nearMisses = [];
   for (let i = 1; i < edges.length; i++) { const d = edges[i][0] - edges[i - 1][0]; if (d >= 1 && d <= 4) nearMisses.push(`${edges[i - 1][0]}px ×${edges[i - 1][1]} vs ${edges[i][0]}px ×${edges[i][1]}`); }
 
+  // ---- concentric radii: a rounded element near its rounded parent's corner --------
+  // Nested corners read as one shape when inner radius ≈ outer radius − the gap between them. An inner radius
+  // equal to or larger than that looks swollen (the common "card with a pill inside it" mismatch).
+  const radiusMismatch = [];
+  for (const el of document.body.querySelectorAll('*')) {
+    const cs = getComputedStyle(el);
+    const R = parseFloat(cs.borderTopLeftRadius);
+    if (!(R >= 8) || !visible(el)) continue;
+    const pr = el.getBoundingClientRect();
+    if (pr.width < 60 || pr.height < 40) continue;
+    // painted surfaces only: a radius on an invisible box has no corner to match
+    const painted = (c) => c.backgroundColor !== 'rgba(0, 0, 0, 0)' || parseFloat(c.borderTopWidth) > 0 || c.boxShadow !== 'none';
+    if (!painted(cs)) continue;
+    for (const ch of el.querySelectorAll('*')) {
+      const ccs = getComputedStyle(ch);
+      const r = parseFloat(ccs.borderTopLeftRadius);
+      if (!(r >= 4) || !painted(ccs)) continue;
+      const cr = ch.getBoundingClientRect();
+      if (cr.width < 24 || cr.height < 16 || cr.width >= pr.width - 1) continue;
+      const d = Math.min(cr.left - pr.left, cr.top - pr.top);
+      if (d < 0 || d > R || cr.left - pr.left > R * 1.5 || cr.top - pr.top > R * 1.5) continue; // not near the corner
+      const ideal = Math.max(R - d, 0);
+      if (r > ideal + 4 && r < 999) { radiusMismatch.push(`\`${sel(ch)}\` ${Math.round(r)}px inside \`${sel(el)}\` ${Math.round(R)}px, ${Math.round(d)}px in (≈${Math.round(ideal)}px)`); break; }
+    }
+    if (radiusMismatch.length >= 8) break;
+  }
+
   // ---- meaning carried by colour alone: status dots with no text -----------
   const colourOnly = [];
   for (const el of document.body.querySelectorAll('span, i, div, b, em')) {
@@ -516,7 +543,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     signals: {
       gradientText, emoji: emoji.slice(0, 10), cliches: [...cliches], statClaims: statClaims.slice(0, 10), gradients: gradients.length, violetGradients: gradients.filter((g) => g.violet).length,
       backdropBlur: blur, cards, pills, buttonsLike, iconTiles, domNodes: all.length,
-      mainGround, creamGround, eyebrows, eyebrowExamples, sectionCount, accentedHeadlines: accentedHeadlines.slice(0, 5), sideStripes, stripeExamples, glows, oneRadius, centredShare, nearMisses, leftEdges: edges.length,
+      mainGround, creamGround, eyebrows, eyebrowExamples, sectionCount, accentedHeadlines: accentedHeadlines.slice(0, 5), sideStripes, stripeExamples, glows, oneRadius, centredShare, nearMisses, leftEdges: edges.length, radiusMismatch,
       emDashes, middleDots, arrowCtas, aphorisms, headingRatio, bodyPx, flatSteps, headingInversions,
       cardTextShare: Math.round((charsInCards / pageChars) * 100), outerCards: outerCards.length, kpiTiles, greeting, iconOnly, unlabelledCharts: charts,
       controlHeights: [...new Set(controls)].sort((x, y) => x - y), maxPx, hoverMoves, badgeAboveH1,
