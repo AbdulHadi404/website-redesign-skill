@@ -259,6 +259,23 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     }
   }
 
+  // ---- near-miss alignment: left edges of text blocks 1–4px apart ------------
+  // A grid gives few distinct edges; hand-placed layouts drift into 48/50/52. Only left-aligned text blocks at
+  // least 40px wide count (centred text and icons are excluded), and only edges shared by two or more blocks.
+  const edgeCount = new Map();
+  for (const [el] of textEls) {
+    if (!visible(el)) continue;
+    const cs = getComputedStyle(el);
+    if (!['block', 'flex', 'grid', 'list-item', 'table-cell'].includes(cs.display) || cs.textAlign === 'center' || cs.textAlign === 'right' || cs.textAlign === 'end') continue;
+    const r = el.getBoundingClientRect();
+    if (r.width < 40 || r.height < 8) continue;
+    const x = Math.round(r.left + parseFloat(cs.paddingLeft || 0));
+    edgeCount.set(x, (edgeCount.get(x) || 0) + 1);
+  }
+  const edges = [...edgeCount.entries()].filter(([, n]) => n >= 2).sort((p, q) => p[0] - q[0]);
+  const nearMisses = [];
+  for (let i = 1; i < edges.length; i++) { const d = edges[i][0] - edges[i - 1][0]; if (d >= 1 && d <= 4) nearMisses.push(`${edges[i - 1][0]}px ×${edges[i - 1][1]} vs ${edges[i][0]}px ×${edges[i][1]}`); }
+
   // ---- meaning carried by colour alone: status dots with no text -----------
   const colourOnly = [];
   for (const el of document.body.querySelectorAll('span, i, div, b, em')) {
@@ -499,7 +516,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     signals: {
       gradientText, emoji: emoji.slice(0, 10), cliches: [...cliches], statClaims: statClaims.slice(0, 10), gradients: gradients.length, violetGradients: gradients.filter((g) => g.violet).length,
       backdropBlur: blur, cards, pills, buttonsLike, iconTiles, domNodes: all.length,
-      mainGround, creamGround, eyebrows, eyebrowExamples, sectionCount, accentedHeadlines: accentedHeadlines.slice(0, 5), sideStripes, stripeExamples, glows, oneRadius, centredShare,
+      mainGround, creamGround, eyebrows, eyebrowExamples, sectionCount, accentedHeadlines: accentedHeadlines.slice(0, 5), sideStripes, stripeExamples, glows, oneRadius, centredShare, nearMisses, leftEdges: edges.length,
       emDashes, middleDots, arrowCtas, aphorisms, headingRatio, bodyPx, flatSteps, headingInversions,
       cardTextShare: Math.round((charsInCards / pageChars) * 100), outerCards: outerCards.length, kpiTiles, greeting, iconOnly, unlabelledCharts: charts,
       controlHeights: [...new Set(controls)].sort((x, y) => x - y), maxPx, hoverMoves, badgeAboveH1,
