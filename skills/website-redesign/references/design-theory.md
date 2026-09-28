@@ -1,6 +1,6 @@
 # Design fundamentals, colour and typography — the theory this skill works to
 
-Read at the start of Phase 3 (art direction), before deciding a palette, a type scale or a layout system, and again when filling `DESIGN.md`. It is a working reference: every rule is stated so it can be checked against a render or a token file, and the numbers are the ones the sources give. Companion files: `ui-ux.md` (interaction, forms, states, accessibility), `web-design.md` (pages, heroes, responsiveness, performance), `logo-design.md` (marks and identity).
+Read at the start of Phase 3 (art direction), before deciding a palette, a type scale or a layout system, and again when filling `DESIGN.md`. **Parts B (colour), C (typography) and D (checklists) gate the work; Part A is background** — the vocabulary for a critique, read when a judgement needs naming rather than on every job. It is a working reference: every rule is stated so it can be checked against a render or a token file, and the numbers are the ones the sources give. Companion files: `ui-ux.md` (interaction, forms, states, accessibility), `web-design.md` (pages, heroes, responsiveness, performance), `logo-design.md` (marks and identity).
 
 ---
 

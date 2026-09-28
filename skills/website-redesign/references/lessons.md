@@ -1,6 +1,19 @@
 # Lessons log
 
-Read this at the start of Phase 3 (direction). Every entry came from a user correction or a failure found while testing the skill; each one changed a rule somewhere in this skill. Append, never prune — a lesson that stops appearing in the output still belongs here. Finished outputs go in `ledger.md`.
+Every entry came from a user correction or a failure found while testing the skill, and each one has already changed a rule somewhere in this skill (last column) — so at the start of Phase 3 read the digest below; read the table when a direction resembles one of these projects, or when you are about to add a row.
+
+**Digest — the mistakes this skill has made, in one line each:**
+- Keeping the fonts, palette and hero and calling it a redesign (a refresh).
+- Producing its own house style (paper + italic serif + mono eyebrows + ink chapters + warm accent) for unrelated companies; sampling the logo came last instead of first.
+- Monospace or tracked condensed capitals as a reflex "data" or "document" voice on a non-developer brand.
+- Status carried by a coloured stripe; a timeline drawn as a stepper; a hero object with no ground; debris and clipped artwork in drawn graphics.
+- Content hidden until a transition runs (holes without JavaScript, in background tabs, under reduced motion, in captures).
+- Trusting source instead of renders; trusting a capture tool that its own lessons had already condemned; checks written as prose that no script performed.
+- Desk-tool and marketing assumptions applied to a field tool; convergence tests applied to a working interface.
+- Tools that report their own process as the site's defects (reloads, transitions, smooth scroll, sr-only text, dev toolbars) until run on real sites.
+- Arabic digits judged by their Latin companions; calendars and digit systems left to the locale's default.
+
+Append, never prune — a lesson that stops appearing in the output still belongs here. Finished outputs go in `ledger.md`.
 
 | Date | Project | What went wrong | Root cause | What changed in the skill |
 | --- | --- | --- | --- | --- |
