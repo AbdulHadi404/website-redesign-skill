@@ -116,6 +116,18 @@ const cases = [
       [/Alerts[^\n]*\n[^\n]*No data/.test(tree) || /No data/.test(tree), 'marked tree lists the Alerts panel'],
       [/broken-phone-failed\.png/.test(out), 'a failing step leaves a capture'],
     ] },
+  { group: 'parity', name: 'parity.mjs: Arabic digits, reformatted values, --derived', run: async () => {
+      const r = await run('parity.mjs', ['--before', `${fx}/parity/old`, '--after', `${fx}/parity/new`, '--paths', '/', '--out', `${tmp}/parity.md`, '--derived', '/^\\d+ days$/']);
+      return { ...r, md: await readFile(`${tmp}/parity.md`, 'utf8').catch(() => '') };
+    },
+    check: ({ md }) => [
+      [/✗ "10,000 customers"/.test(md), 'invented "10,000 customers" is unsourced'],
+      [/same value, new format[^\n]*55,484 ر\.س/.test(md), '٥٥٬٤٨٤ ر.س (Eastern digits) is recognised as the reformatted 55,484.00'],
+      [/⚠ "54,822 ر\.س"/.test(md) && /⚠ "12\.4%"/.test(md), 'the removed total and delta are dropped'],
+      [!/"9\/5"/.test(md), 'the date 9/5/2026 is not read as a 9/5 rating'],
+      [/declared as computed from data[^\n]*"30 days"/.test(md), '--derived moves "30 days" out of the failures'],
+      [/every id, form field/.test(md), 'form and ids kept'],
+    ] },
   { group: 'contrast', name: 'contrast.mjs', run: () => run('contrast.mjs', ['#767676', '#ffffff']),
     check: ({ out }) => [[/4\.54:1/.test(out), '#767676 on white = 4.54:1']] },
 ];

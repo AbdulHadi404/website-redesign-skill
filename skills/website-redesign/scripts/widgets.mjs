@@ -240,7 +240,8 @@ const tests = {
     res.invalid ? r.ok(`${res.invalid} field(s) aria-invalid=true`) : r.fail('3.3.1/4.1.2', 'No field marked aria-invalid=true');
     for (const d of res.described) d.desc ? r.ok(`#${d.id} error text is in its description: "${d.desc.slice(0, 60)}"`) : r.fail('3.3.1', `#${d.id} is invalid but no error text is associated (aria-describedby)`);
     if (!res.invalid && silent.length) r.fail('3.3.1', `Error text appeared but is not tied to any field: "${silent.join(' / ').slice(0, 80)}"`);
-    if (!res.summaryLinks.length && !announced.length) r.warnf('4.1.3', 'Errors were neither focused nor announced via a live region');
+    // Moving focus to an invalid field announces it (name, invalid state, description): that already informs the user.
+    if (!res.summaryLinks.length && !res.focusIsField && !announced.length) r.warnf('4.1.3', 'Errors were neither focused nor announced via a live region');
     res.title !== title0 && /error/i.test(res.title) ? r.ok(`title updated: "${res.title}"`) : r.warnf('—', 'Page title not prefixed with "Error:" (GOV.UK recommends it)');
     if (res.summaryLinks.length) {
       await page.locator(`a[href="${res.summaryLinks[0]}"]`).first().focus(); await page.keyboard.press('Enter'); await page.waitForTimeout(150);

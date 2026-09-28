@@ -253,6 +253,8 @@ export async function growToDocument(page, width, MAX_H = 16000) {
   // widened by overflow, scrollHeight never drops below innerHeight × zoom-out.
   const contentHeight = () => page.evaluate(() => {
     const b = document.body;
+    // A bare SVG document (a logo opened directly) has no body: its root element is the content.
+    if (!b) return Math.ceil(document.documentElement.getBoundingClientRect().height) || innerHeight;
     const bottoms = [...b.children].filter((e) => getComputedStyle(e).position !== 'fixed').map((e) => e.getBoundingClientRect().bottom + scrollY);
     return Math.ceil(Math.max(b.getBoundingClientRect().bottom + scrollY, ...bottoms) + parseFloat(getComputedStyle(b).marginBottom || 0));
   });

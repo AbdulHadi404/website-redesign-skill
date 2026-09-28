@@ -4,6 +4,7 @@
  *
  *   node parity.mjs --before http://localhost:4000 --after http://localhost:3000 \
  *        [--paths / /pricing /about | --crawl 40] [--source src content] [--out parity.md]
+ *        [--derived "days late" "/^\d+ days$/" …]   values computed from the data (listed, not failed)
  *
  * Run the old build (main branch) and the new build (redesign branch) side by
  * side. For every route it compares:
@@ -18,6 +19,7 @@
  *  - element ids (anchors, script and analytics hooks) and form field names
  *    present on the old page and missing on the new one.
  *  - title, meta description, canonical, og:image, h1.
+ * Eastern Arabic and Persian digits are normalised first, so claims on an Arabic page are compared too.
  * This turns "never invent proof" and the audit's preserved-list into checks.
  * It cannot tell a true claim from a false one — only whether it has a source.
  */
@@ -34,10 +36,17 @@ let paths = asList(a.paths, ['/']);
 const { browser } = await launch({ chrome: a.chrome });
 
 function extract() {
-  const text = document.body.innerText || '';
+  // One digit system for comparison: Eastern Arabic and Persian digits, Arabic separators and bidi marks are
+  // normalised, so a claim written ٥٥٬٤٨٤ on the old Arabic page is the same claim as 55,484 on the new one.
+  const text = (document.body.innerText || '')
+    .replace(/[\u0660-\u0669]/g, (d) => d.charCodeAt(0) - 0x660).replace(/[\u06F0-\u06F9]/g, (d) => d.charCodeAt(0) - 0x6F0)
+    .replace(/\u066B/g, '.').replace(/\u066C/g, ',').replace(/\u066A/g, '%').replace(/\u2212/g, '-')
+    .replace(/[\u200E\u200F\u061C\u202A-\u202E\u2066-\u2069]/g, '');
   // A claim keeps the noun it counts ("12,000+ teams"): the same number counting something else is a new claim.
   const NOUN = '(?:\\s(?:active\\s|happy\\s|paying\\s|monthly\\s)?(?:users?|customers?|clients?|teams?|companies|businesses|brands|countries|languages|integrations|reviews?|ratings?|stars?|downloads|installs|employees|people|members|subscribers|developers|partners|farms|stores|shops|orders|projects|sites|websites|apps|hours?|days?|weeks?|months?|years?|minutes?|seconds?))';
-  const claimRe = new RegExp(`(?:\\b\\d(?:\\.\\d)?\\s?\\/\\s?(?:5|10)\\b|\\b\\d(?:\\.\\d)?\\s?(?:out of|of)\\s?(?:5|10)\\b|[$€£¥₹]\\s?\\d[\\d,.]*(?:\\s?(?:k|m|bn|million|billion))?(?:\\s?\\/\\s?\\w+)?|\\b\\d[\\d,.]*\\s?(?:%|x\\b|×|\\+(?!\\s?\\d)|k\\+?\\b|m\\+?\\b|ms\\b(?!\\/)|(?:L|kg|km|kWh|GB|TB|lb|mph|km\\/h)\\b)${NOUN}?|\\b\\d[\\d,.]*${NOUN}\\b|[↑↓▲▼]\\s?[+−-]?\\d[\\d,.]*\\s?%?|\\b(?:since|founded in|est\\.?)\\s+\\d{4}\\b)`, 'gi');
+  const CUR = '(?:SAR|AED|USD|EUR|GBP|QAR|KWD|BHD|OMR|EGP|MAD|INR|ر\\.س|د\\.إ|ريال|درهم|جنيه)';
+  // Ratings ("4.8/5") but not dates ("9/5/2026", "15/9"); amounts with a currency code or Arabic symbol either side.
+  const claimRe = new RegExp(`(?:(?<![\\d/.])\\d(?:\\.\\d)?\\s?\\/\\s?(?:5|10)\\b(?!\\s?\\/\\s?\\d)|${CUR}\\s?\\d[\\d,.]*|\\b\\d[\\d,.]*\\s?${CUR}|\\b\\d(?:\\.\\d)?\\s?(?:out of|of)\\s?(?:5|10)\\b|[$€£¥₹]\\s?\\d[\\d,.]*(?:\\s?(?:k|m|bn|million|billion))?(?:\\s?\\/\\s?\\w+)?|\\b\\d[\\d,.]*\\s?(?:%|x\\b|×|\\+(?!\\s?\\d)|k\\+?\\b|m\\+?\\b|ms\\b(?!\\/)|(?:L|kg|km|kWh|GB|TB|lb|mph|km\\/h)\\b)${NOUN}?|\\b\\d[\\d,.]*${NOUN}\\b|[↑↓▲▼]\\s?[+−-]?\\d[\\d,.]*\\s?%?|\\b(?:since|founded in|est\\.?)\\s+\\d{4}\\b)`, 'gi');
   const claims = [...new Set([...text.matchAll(claimRe)].map((m) => m[0].replace(/\s+/g, ' ').trim()).filter((c) => !/\dmS$|\d mS$/.test(c)))];
   const quotes = [...new Set([
     ...[...document.querySelectorAll('blockquote, q')].map((q) => q.innerText.replace(/\s+/g, ' ').trim()),
@@ -163,19 +172,32 @@ const unsourcedAll = [...newAll.claims].filter((c) => !has(oldNorm, c) && !(sour
 // sourced; it is listed for a look rather than failed.
 const bareNumber = (c) => (c.match(/\d[\d,.]*/) || [''])[0].replace(/,/g, '');
 const numberInSources = unsourcedAll.filter((c) => sourceNorm && bareNumber(c).length >= 2 && new RegExp(`(^|[^\\d.])${bareNumber(c).replace('.', '\\.')}([^\\d]|$)`).test(sourceNorm));
-const unsourced = unsourcedAll.filter((c) => !numberInSources.includes(c));
+// --derived: values the new build computes from data it already had (days late, bucket limits, axis ticks, a
+// month-on-month change). Declared, they are listed as such instead of failing; say in DESIGN.md how each is computed.
+const derivedPats = asList(a.derived).map((d) => (/^\/.*\/[a-z]*$/.test(d) ? new RegExp(d.slice(1, d.lastIndexOf('/')), d.slice(d.lastIndexOf('/') + 1)) : d.toLowerCase()));
+const isDerived = (c) => derivedPats.some((p) => (p instanceof RegExp ? p.test(c) : c.toLowerCase().includes(p)));
+const derived = unsourcedAll.filter((c) => !numberInSources.includes(c) && isDerived(c));
+const unsourced = unsourcedAll.filter((c) => !numberInSources.includes(c) && !derived.includes(c));
 const unsourcedQuotes = [...newAll.quotes].filter((q) => !oldNorm.includes(norm(q).slice(0, 60)) && !(sourceNorm && sourceNorm.includes(norm(q).slice(0, 60))));
 md(unsourced.length || unsourcedQuotes.length ? [
   ...unsourced.map((c) => `- ✗ "${c}"`),
   ...unsourcedQuotes.map((q) => `- ✗ quotation: “${q.slice(0, 140)}${q.length > 140 ? '…' : ''}”`),
 ].join('\n') + '\n\nEach needs a source (the user, the repo, a document) or it comes out. Sample data in a product fragment must read as obviously illustrative.' : '- ✓ none — every number and quotation on the new site exists on the old site or in the sources.');
 if (numberInSources.length) md(`\n- ⚠ the number (without its unit) appears in the source files — check it is the same figure: ${numberInSources.map((c) => `"${c}"`).join(', ')}`);
+if (derived.length) md(`\n- ◇ declared as computed from data (--derived): ${derived.map((c) => `"${c}"`).join(', ')} — DESIGN.md should say how each is calculated.`);
 md();
 
 if (changingAll.size) { md(`Changing values (timers, clocks, count-up animations) left out of the comparison: ${[...changingAll].slice(0, 8).map((c) => `"${c.replace(/\s+/g, ' ')}"`).join(', ')}`); md(); }
 md('## Claims on the old site missing from the new one');
-const dropped = [...oldAll.claims].filter((c) => !has(newNorm, c) && !changingAll.has(c));
+const droppedAll = [...oldAll.claims].filter((c) => !has(newNorm, c) && !changingAll.has(c));
+// The same value still on the new page in another format (the unit moved to a column header, "12,748.5" now
+// "12,748.50") is reformatted, not dropped. Percentages and multipliers must keep their unit to count.
+const newValues = new Set([...newNorm.matchAll(/\d[\d,]*(?:\.\d+)?/g)].map((m) => parseFloat(m[0].replace(/,/g, ''))));
+const value = (c) => parseFloat(((c.match(/\d[\d,]*(?:\.\d+)?/) || [''])[0]).replace(/,/g, ''));
+const reformatted = droppedAll.filter((c) => !/%|x\b|×/i.test(c) && value(c) >= 10 && newValues.has(value(c)));
+const dropped = droppedAll.filter((c) => !reformatted.includes(c));
 const droppedQuotes = [...oldAll.quotes].filter((q) => !newNorm.includes(norm(q).slice(0, 60)));
+if (reformatted.length) md(`- ◇ same value, new format (check the unit is still stated nearby): ${reformatted.slice(0, 15).map((c) => `"${c}"`).join(', ')}${reformatted.length > 15 ? ` and ${reformatted.length - 15} more` : ''}\n`);
 md(dropped.length || droppedQuotes.length ? [
   ...dropped.map((c) => `- ⚠ "${c}"`),
   ...droppedQuotes.map((q) => `- ⚠ quotation: “${q.slice(0, 140)}${q.length > 140 ? '…' : ''}”`),

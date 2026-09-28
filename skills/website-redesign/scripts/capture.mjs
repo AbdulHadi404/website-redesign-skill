@@ -125,6 +125,14 @@ try {
       const page = await context.newPage();
       const url = urlFor(base, p);
       await open(page, url);
+      // A bare SVG (the logo, opened directly) has no body for the capture steps to work on: re-host it in a
+      // minimal HTML page with the same base URL, so its own references still resolve.
+      const svgDoc = await page.evaluate(() => (document.documentElement instanceof SVGElement ? document.documentElement.outerHTML : null)).catch(() => null);
+      if (svgDoc && /<text[\s>]/.test(svgDoc)) {
+        const fams = [...new Set([...svgDoc.matchAll(/font-family\s*[:=]\s*"?([^;">]+)/g)].map((m) => m[1].replace(/['"]/g, '').trim()))].join(', ');
+        console.log(`  ⚠ ${p} draws text with live <text>${fams ? ` in ${fams}` : ''}: it renders in whatever font the viewer has. Outline the wordmark for a logo.`);
+      }
+      if (svgDoc) await page.goto('about:blank').then(() => page.setContent(`<!doctype html><html><head><base href="${url}"><style>html,body{margin:0;background:#fff}svg{display:block;max-width:100%;height:auto}</style></head><body>${svgDoc}</body></html>`, { waitUntil: 'load' }));
       await settle(page, { js: !a['no-js'] });
       const slug = slugFor(p);
       const stem = path.join(outDir, `${slug}-${width}${label}`);
