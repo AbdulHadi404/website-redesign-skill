@@ -1,0 +1,429 @@
+{
+ "url": "/fixtures/bilingual.html?lang=ar&variant=broken",
+ "mode": "as-served",
+ "width": 1280,
+ "summary": {
+  "FAIL": 10,
+  "WARN": 3,
+  "INFO": 4
+ },
+ "mirror": null,
+ "css": {
+  "rules": 86,
+  "physicalRules": 12,
+  "overrideRules": 0,
+  "logicalRules": 6
+ },
+ "keys": [
+  {
+   "group": "toolbar \"Actions\"",
+   "arrowLeftMoves": "right (backwards)"
+  },
+  {
+   "group": "tablist \"Order\"",
+   "arrowLeftMoves": "right (backwards)"
+  }
+ ],
+ "icons": [
+  {
+   "name": "menu icon icon-menu",
+   "class": "never",
+   "flipped": false,
+   "context": "القائمة"
+  },
+  {
+   "name": "search icon icon-search",
+   "class": "never",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "cart icon icon-cart",
+   "class": "never",
+   "flipped": false,
+   "context": "Cart"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "flipped": false,
+   "context": "الطلبات"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "flipped": false,
+   "context": "الفواتير"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "flipped": false,
+   "context": "العملاء"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "undo icon icon-dir icon-undo",
+   "class": "directional",
+   "flipped": true,
+   "context": "تراجع"
+  },
+  {
+   "name": "redo icon icon-dir icon-redo",
+   "class": "directional",
+   "flipped": true,
+   "context": "إعادة"
+  },
+  {
+   "name": "reply icon icon-dir icon-reply",
+   "class": "directional",
+   "flipped": true,
+   "context": "رد"
+  },
+  {
+   "name": "send icon icon-dir icon-send",
+   "class": "directional",
+   "flipped": true,
+   "context": "إرسال"
+  },
+  {
+   "name": "external-link icon icon-dir icon-external-link",
+   "class": "directional",
+   "flipped": true,
+   "context": "فتح في علامة تبويب جديدة"
+  },
+  {
+   "name": "help icon icon-dir icon-help",
+   "class": "ambiguous",
+   "flipped": true,
+   "context": "مساعدة"
+  },
+  {
+   "name": "logout icon icon-dir icon-logout",
+   "class": "ambiguous",
+   "flipped": true,
+   "context": "تسجيل الخروج"
+  },
+  {
+   "name": "refresh icon icon-refresh",
+   "class": "never",
+   "flipped": true,
+   "context": "تحديث"
+  },
+  {
+   "name": "clock icon icon-clock",
+   "class": "never",
+   "flipped": true,
+   "context": ""
+  },
+  {
+   "name": "check icon icon-check",
+   "class": "never",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "check icon icon-check",
+   "class": "never",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "alert icon icon-alert",
+   "class": "never",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "flipped": false,
+   "context": "حفظ التغييرات"
+  },
+  {
+   "name": "sort-desc icon icon-sort-desc",
+   "class": "never",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "flipped": false,
+   "context": "فتح 1042"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "flipped": false,
+   "context": "فتح 1041"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "flipped": false,
+   "context": "فتح 1040"
+  },
+  {
+   "name": "arrow-left icon icon-dir icon-arrow-left",
+   "class": "directional",
+   "flipped": false,
+   "context": "السابق rel=prev"
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "flipped": false,
+   "context": "التالي rel=next"
+  },
+  {
+   "name": "chevron-left icon icon-dir icon-chevron-left",
+   "class": "directional",
+   "flipped": false,
+   "context": "السابق"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "flipped": false,
+   "context": "التالي"
+  },
+  {
+   "name": "play icon icon-play",
+   "class": "never",
+   "flipped": true,
+   "context": "تشغيل"
+  },
+  {
+   "name": "skip-forward icon icon-skip-forward",
+   "class": "never",
+   "flipped": true,
+   "context": "تقديم"
+  },
+  {
+   "name": "check icon icon-check",
+   "class": "never",
+   "flipped": true,
+   "context": ""
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "check": "icons",
+   "message": "Arrows that point against the RTL reading direction for their action",
+   "count": 5,
+   "examples": [
+    "arrow-right icon icon-dir icon-arrow-right in \"حفظ التغييرات\"",
+    "arrow-left icon icon-dir icon-arrow-left in \"السابق rel=prev\"",
+    "arrow-right icon icon-dir icon-arrow-right in \"التالي rel=next\"",
+    "chevron-left icon icon-dir icon-chevron-left in \"السابق\"",
+    "chevron-right icon icon-dir icon-chevron-right in \"التالي\""
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "icons",
+   "message": "Icons that must not mirror but are flipped (media, clocks, checks, search, objects)",
+   "count": 5,
+   "examples": [
+    "refresh icon icon-refresh in \"تحديث\"",
+    "clock icon icon-clock",
+    "play icon icon-play in \"تشغيل\"",
+    "skip-forward icon icon-skip-forward in \"تقديم\"",
+    "check icon icon-check"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "icons",
+   "message": "Directional icons with no flip in RTL — confirm each points the reading way (or was swapped for its mirror)",
+   "count": 10,
+   "examples": [
+    "chevron-right icon icon-dir icon-chevron-right in \"الطلبات\"",
+    "chevron-right icon icon-dir icon-chevron-right in \"الفواتير\"",
+    "chevron-right icon icon-dir icon-chevron-right in \"العملاء\"",
+    "chevron-right icon icon-dir icon-chevron-right",
+    "chevron-right icon icon-dir icon-chevron-right",
+    "arrow-right icon icon-dir icon-arrow-right",
+    "arrow-right icon icon-dir icon-arrow-right",
+    "chevron-right icon icon-dir icon-chevron-right in \"فتح 1042\"",
+    "chevron-right icon icon-dir icon-chevron-right in \"فتح 1041\"",
+    "chevron-right icon icon-dir icon-chevron-right in \"فتح 1040\""
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "icons",
+   "message": "Icons the sources disagree on — record the decision",
+   "count": 2,
+   "examples": [
+    "help icon icon-dir icon-help: flipped",
+    "logout icon icon-dir icon-logout: flipped"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "Rules with physical inline-axis values (12 of 86 rules; 0 RTL overrides; 6 rules use logical properties)",
+   "count": 12,
+   "examples": [
+    ".brand { margin-right:8px }",
+    ".search { margin-left:auto }",
+    ".badge { right:2px }",
+    ".drawer { left:0px }",
+    ".lede { text-align:left }",
+    ".due { margin-left:8px }",
+    ".hint { text-align:left }",
+    ".with-icon input { padding-right:36px }",
+    ".with-icon .icon { right:10px }",
+    ".orders caption { text-align:left }",
+    ".orders th, .orders td { padding-left:12px/padding-right:8px; text-align:left }",
+    ".toast { right:16px }"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "css",
+   "message": "Keyframes that move along x — give them an RTL variant or a direction variable",
+   "count": 1,
+   "examples": [
+    "slide-in"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "Transforms with an x translation (drawers, slides): transforms never flip with dir",
+   "count": 1,
+   "examples": [
+    ".drawer { transform: translateX(-100%) }"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "1 box-shadows with an x offset: decide whether the light source mirrors (Material: elevation shadows fall straight down)",
+   "examples": []
+  },
+  {
+   "level": "FAIL",
+   "check": "align",
+   "message": "text-align: left inside RTL text",
+   "count": 12,
+   "examples": [
+    "p.lede",
+    "p.hint",
+    "caption",
+    "th",
+    "th",
+    "th",
+    "div.cell-name",
+    "td",
+    "div.cell-name",
+    "td",
+    "div.cell-name",
+    "td"
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "arabic",
+   "message": "Letter-spacing on Arabic text (breaks or spaces the joins)",
+   "count": 1,
+   "examples": [
+    "p.eyebrow (0.060em)"
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "arabic",
+   "message": "Italic/oblique on Arabic text (synthesised slant; use weight or colour)",
+   "count": 1,
+   "examples": [
+    "em (italic)"
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "bidi",
+   "message": "LTR data shown in scrambled order in RTL text — wrap in <bdi dir=\"ltr\"> or format with Intl",
+   "count": 1,
+   "examples": [
+    "td.num: \"-310.50\" reads as \"310 . 50 -\""
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "bidi",
+   "message": "Inputs whose LTR value is laid out in scrambled order (dir=\"ltr\" on the field, aligned with the form)",
+   "count": 2,
+   "examples": [
+    "#f-email [email] \"2024.sara@example.sa\"",
+    "#f-phone [text] \"+966 50 123 4567\""
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "bidi",
+   "message": "Email/phone/URL/IBAN fields that inherit RTL: values starting with digits or ending in punctuation will scramble",
+   "count": 1,
+   "examples": [
+    "#f-iban [text]"
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "drawers",
+   "message": "Off-canvas panels parked off the LEFT edge in RTL: they slide in from the wrong side",
+   "count": 1,
+   "examples": [
+    "#drawer"
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "arabic",
+   "message": "Arabic glyphs cut by a clipping box (2 of 14 clipped text runs)",
+   "count": 2,
+   "examples": [
+    "span.note-text in self: top 6.3px, bottom 3.5px cut (15px UI, line-height 1.1) \"سَلِّمْ إِلَى الاسْتِقْبَالِ لِأَنَّ الم\"",
+    "div.cell-name in self: top 1px, bottom 0.2px cut (14px UI, line-height 1.2) \"سارة أحمد\""
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "keys",
+   "message": "Arrow keys run backwards in RTL: ArrowLeft moves focus to the right",
+   "count": 2,
+   "examples": [
+    "toolbar \"Actions\"",
+    "tablist \"Order\""
+   ]
+  }
+ ],
+ "ms": 856
+}

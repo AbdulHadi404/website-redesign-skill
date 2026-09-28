@@ -38,12 +38,27 @@ export function overflowCulprits() {
     if (!parentAlsoOver) { out.push({ selector: sel(el), right: Math.round(r.right), width: Math.round(r.width) }); culpritEls.push(el); }
   }
 
-  // Readable text cut at the viewport edge by the page itself. `html, body { overflow-x: clip | hidden }` makes body
-  // clip its own box, so scrollWidth never grows and the check above sees nothing, while the render shows copy cut
-  // at the edge (a nowrap chip that widened a `1fr` track, a label pushed out of a flex row). Text cut by a clipping
-  // container below body is inventory.mjs clippedText's finding, not this one; text inside a real scroller is
-  // reachable; a single-line ellipsis whose own box fits is a deliberate truncation; a box wholly off-screen (a
-  // carousel slide) is not cut. When the page does overflow, text inside a culprit above is already reported.
+  // Readable text past the viewport edge. When html's overflow is not visible, html's overflow-x goes to the viewport
+  // and body clips its own box by its own overflow-x: so `html, body { overflow-x: hidden | clip }`, and just as
+  // well `html { overflow-y: scroll }` (overflow-x then computes to auto) with `body { overflow-x: hidden }`, leave
+  // scrollWidth at the viewport width, the check above sees nothing, and the render shows copy cut at the edge (a
+  // nowrap chip that widened a `1fr` track, a label pushed out of a flex row). With html's overflow visible, body's
+  // goes to the viewport instead and body clips nothing itself. Text cut by a clipping container below body is
+  // inventory.mjs clippedText's finding, not this one; text inside a real scroller is reachable; a single-line
+  // ellipsis whose own box fits is a deliberate truncation; a box wholly off-screen (a carousel slide) is not cut.
+  // When the page does overflow, text inside a culprit above is already reported.
+  // Each item says whether a sideways scroll of the page reaches it (`reach`: past the end edge, within the
+  // scrollable width, and the page scroller is not clipped) and whether it is past the start edge (`start`: left in
+  // a left-to-right page, where nothing ever scrolls). Text the page scrolls to is still listed (callers name it as
+  // what widened the page), except on a page whose html or body is itself a scroller, where it never was.
+  const hcs = getComputedStyle(doc), bcs = getComputedStyle(document.body);
+  const clips = (o) => o === 'hidden' || o === 'clip';
+  const rootVisible = hcs.overflowX === 'visible' && hcs.overflowY === 'visible';
+  const viewportX = rootVisible ? bcs.overflowX : hcs.overflowX, bodyX = rootVisible ? 'visible' : bcs.overflowX;
+  const clip = clips(bodyX) ? 'body' : clips(viewportX) ? 'viewport' : null;
+  const rtl = bcs.direction === 'rtl';
+  const bodyRange = /auto|scroll/.test(bodyX) ? document.body.scrollWidth - document.body.clientWidth : 0;
+  const scrollerPage = [document.body, doc].some((t) => /auto|scroll/.test(getComputedStyle(t).overflowX));
   const cutAtEdge = [];
   const NO_TEXT = /^(hidden|checkbox|radio|range|color|file|image)$/i;
   const nowrap = (c) => c.whiteSpace === 'nowrap' || c.whiteSpace === 'pre' || c.textWrapMode === 'nowrap';
@@ -89,16 +104,20 @@ export function overflowCulprits() {
       L = Math.max(L, q.left); R = Math.min(R, q.right);
     }
     if (reachable || cutBelow) continue;
-    // body or html as a scroller (its own, or the viewport's by propagation) makes the text reachable too.
-    if ([document.body, doc].some((t) => /auto|scroll/.test(getComputedStyle(t).overflowX))) continue;
     const pastRight = L < vw && R > vw + 1, pastLeft = R > 0 && L < -1;
     if (!pastRight && !pastLeft) continue;
+    // The page scrolls to it: past the end edge, within the scrollable width, with the scroller not clipped (the
+    // viewport, or body when it scrolls its own box). A fixed box does not move when the page scrolls.
+    const past = pastRight ? R - vw : -L, start = rtl ? pastRight : !pastRight;
+    const fixed = (() => { for (let e = el; e && e !== doc; e = e.parentElement) if (getComputedStyle(e).position === 'fixed') return true; return false; })();
+    const reach = !start && !fixed && ((!clips(viewportX) && past <= by + 1) || past <= bodyRange + 1);
+    if (reach && scrollerPage) continue;
     if (by > 0 && culpritEls.some((c) => c === el || c.contains(el))) continue;
     if (reported.some((r) => r.contains(el))) continue;
     reported.push(el);
     const text = shortText(control ? (el.type === 'password' ? '(password)' : el.value || el.getAttribute('placeholder') || '') : own.map((n) => n.nodeValue).join(' '));
-    cutAtEdge.push(pastRight ? { selector: sel(el), right: Math.round(R), past: Math.round(R - vw), text } : { selector: sel(el), right: Math.round(R), past: Math.round(-L), edge: 'left', text });
+    cutAtEdge.push({ selector: sel(el), right: Math.round(R), past: Math.round(past), ...(pastRight ? {} : { edge: 'left' }), text, reach, start });
     if (cutAtEdge.length >= 8) break;
   }
-  return { overflow: by > 0, by, viewport: vw, culprits: out.slice(0, 8), cutAtEdge };
+  return { overflow: by > 0, by, viewport: vw, culprits: out.slice(0, 8), cutAtEdge, clip };
 }

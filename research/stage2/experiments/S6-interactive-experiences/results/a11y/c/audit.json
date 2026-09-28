@@ -1,6 +1,6 @@
 {
-  "url": "http://127.0.0.1:32977/c-form.html",
-  "date": "2026-09-28T21:36:05.568Z",
+  "url": "http://127.0.0.1:34113/c-form.html",
+  "date": "2026-09-28T22:39:12.583Z",
   "findings": [
     {
       "level": "WARN",
@@ -13,7 +13,7 @@
       "level": "INFO",
       "section": "colour",
       "sc": "1.4.1",
-      "msg": "Review /tmp/s6-a11y-XjgTZK/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
+      "msg": "Review /tmp/s6-a11y-RnaAUq/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
       "where": ""
     }
   ],
@@ -41,7 +41,7 @@
     ],
     "tab-forward": [
       {
-        "key": "43585357",
+        "key": "51239145",
         "where": "input \"strawberry\"",
         "tag": "input",
         "href": null,
@@ -65,7 +65,7 @@
         "aria": "radio \"Strawberry\" [checked]"
       },
       {
-        "key": "14226303",
+        "key": "19868673",
         "where": "input \"centre\"",
         "tag": "input",
         "href": null,
@@ -89,7 +89,7 @@
         "aria": "radio \"Centre\" [checked]"
       },
       {
-        "key": "03204241",
+        "key": "32172356",
         "where": "button.primary \"Add to cake\"",
         "tag": "button",
         "href": null,
@@ -116,7 +116,7 @@
         "body": true
       },
       {
-        "key": "43585357",
+        "key": "51239145",
         "where": "input \"strawberry\"",
         "tag": "input",
         "href": null,
@@ -158,7 +158,7 @@
     },
     "tab-forced": [
       {
-        "key": "67642024",
+        "key": "17332199",
         "where": "input \"strawberry\"",
         "tag": "input",
         "href": null,
@@ -182,7 +182,7 @@
         "aria": "radio \"Strawberry\" [checked]"
       },
       {
-        "key": "88306907",
+        "key": "13746231",
         "where": "input \"centre\"",
         "tag": "input",
         "href": null,
@@ -206,7 +206,7 @@
         "aria": "radio \"Centre\" [checked]"
       },
       {
-        "key": "49090089",
+        "key": "45664030",
         "where": "button.primary \"Add to cake\"",
         "tag": "button",
         "href": null,
@@ -233,7 +233,7 @@
         "body": true
       },
       {
-        "key": "67642024",
+        "key": "17332199",
         "where": "input \"strawberry\"",
         "tag": "input",
         "href": null,
@@ -267,5 +267,5 @@
       }
     }
   },
-  "seconds": 40.7
+  "seconds": 41.8
 }

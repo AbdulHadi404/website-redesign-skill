@@ -1,0 +1,100 @@
+<!doctype html>
+<!--
+  Regression fixture for audit.mjs (tools/regress.mjs, group "audit"): numeric columns whose values all paint at one
+  width (tabular-nums does that), so the rows cannot tell the alignment apart and the digits' edges are the same in
+  every row. audit.mjs narrows one value for a moment and reads which edge stays put. Column heads are short, so the
+  right-aligned columns are only as wide as their values.
+
+  "Numeric columns" must name, at 1440 and at 390:
+    GridEq (aligned left)   a grid cell 1fr 1fr with a ::before label: the digits start the value track
+    GapEq (aligned left)    a flex cell whose ::before label takes half, with a gap: the same
+    MidEq (aligned center)  inline-flex pills in a centred column
+  and must not name (right-aligned in paint):
+    PillEq (an inline-flex pill with padding), IconEq (an inline-flex value with a trailing svg), LinkEq (an
+    inline-flex padded link), FloatEq (float: right in a text-align: left cell), EndEq (an inner flex box with
+    justify-content: flex-end), Change (inline-flex delta pills in a nowrap table inside a scroller; at 390 the
+    table is wider than its scroller, so the column is only as wide as the pills).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Even columns</title>
+<style>
+  body { margin: 0; font-family: system-ui, sans-serif; font-size: 16px; line-height: 1.5; color: #1a1a1a; background: #fff; }
+  header, footer { padding: 12px 16px; font-size: 14px; }
+  main { padding: 0 16px 24px; }
+  h1 { font-size: 32px; line-height: 1.2; margin: 16px 0; }
+  table { border-collapse: collapse; font-size: 14px; margin: 12px 0; }
+  th, td { padding: 6px 12px; text-align: left; font-variant-numeric: tabular-nums; }
+  .r { text-align: right; }
+  .c { text-align: center; }
+  .full { width: 100%; }
+  .g { display: grid; grid-template-columns: 1fr 1fr; }
+  .g::before, .f::before { content: attr(data-label); }
+  .f { display: flex; gap: 8px; }
+  .f::before { flex: 0 0 50%; }
+  .pill { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; background: #e8eef8; }
+  .ifx { display: inline-flex; align-items: center; gap: 4px; }
+  .lk { display: inline-flex; padding: 4px 8px; color: #1a4fa0; }
+  .fr { float: right; }
+  .je { display: flex; justify-content: flex-end; }
+  .wrap { overflow-x: auto; }
+  .wrap table { width: 100%; white-space: nowrap; }
+  .delta { display: inline-flex; padding: 2px 8px; border-radius: 999px; background: #e6f4ea; }
+</style>
+</head>
+<body>
+<header>Harbour charges</header>
+<main>
+<h1>Charges of one width</h1>
+<table class="full"><thead><tr><th>Line</th><th>GridEq</th></tr></thead><tbody>
+<tr><td>a</td><td class="g" data-label="Price">£12.00</td></tr>
+<tr><td>b</td><td class="g" data-label="Price">£14.50</td></tr>
+<tr><td>c</td><td class="g" data-label="Price">£11.25</td></tr>
+</tbody></table>
+<table class="full"><thead><tr><th>Line</th><th>GapEq</th></tr></thead><tbody>
+<tr><td>a</td><td class="f" data-label="Price">£12.00</td></tr>
+<tr><td>b</td><td class="f" data-label="Price">£14.50</td></tr>
+<tr><td>c</td><td class="f" data-label="Price">£11.25</td></tr>
+</tbody></table>
+<table><thead><tr><th>Line</th><th>MidEq</th></tr></thead><tbody>
+<tr><td>a</td><td class="c" style="width: 160px"><span class="pill">13.25</span></td></tr>
+<tr><td>b</td><td class="c"><span class="pill">12.50</span></td></tr>
+<tr><td>c</td><td class="c"><span class="pill">40.75</span></td></tr>
+</tbody></table>
+<table><thead><tr><th>Line</th><th>PillEq</th></tr></thead><tbody>
+<tr><td>a</td><td class="r"><span class="pill">13.25</span></td></tr>
+<tr><td>b</td><td class="r"><span class="pill">12.50</span></td></tr>
+<tr><td>c</td><td class="r"><span class="pill">40.75</span></td></tr>
+</tbody></table>
+<table><thead><tr><th>Line</th><th>IconEq</th></tr></thead><tbody>
+<tr><td>a</td><td class="r"><span class="ifx">13.25<svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="7"/></svg></span></td></tr>
+<tr><td>b</td><td class="r"><span class="ifx">12.50<svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="7"/></svg></span></td></tr>
+<tr><td>c</td><td class="r"><span class="ifx">40.75<svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="7"/></svg></span></td></tr>
+</tbody></table>
+<table><thead><tr><th>Line</th><th>LinkEq</th></tr></thead><tbody>
+<tr><td>a</td><td class="r"><a class="lk" href="#a">13.25</a></td></tr>
+<tr><td>b</td><td class="r"><a class="lk" href="#b">12.50</a></td></tr>
+<tr><td>c</td><td class="r"><a class="lk" href="#c">40.75</a></td></tr>
+</tbody></table>
+<table class="full"><thead><tr><th>Line</th><th>FloatEq</th></tr></thead><tbody>
+<tr><td>a</td><td><span class="fr">13.25</span></td></tr>
+<tr><td>b</td><td><span class="fr">12.50</span></td></tr>
+<tr><td>c</td><td><span class="fr">40.75</span></td></tr>
+</tbody></table>
+<table class="full"><thead><tr><th>Line</th><th>EndEq</th></tr></thead><tbody>
+<tr><td>a</td><td><div class="je">13.25</div></td></tr>
+<tr><td>b</td><td><div class="je">12.50</div></td></tr>
+<tr><td>c</td><td><div class="je">40.75</div></td></tr>
+</tbody></table>
+<div class="wrap"><table><thead><tr><th>Account</th><th>Owner</th><th class="r">Balance</th><th class="r">Change</th></tr></thead><tbody>
+<tr><td>North pier moorings</td><td>Maria Anders</td><td class="r">£12,480.00</td><td class="r"><span class="delta">+4.2%</span></td></tr>
+<tr><td>South pier moorings</td><td>Ana Trujillo</td><td class="r">£9,120.50</td><td class="r"><span class="delta">−1.5%</span></td></tr>
+<tr><td>Ferry berth and slip</td><td>Thomas Hardy</td><td class="r">£31,002.75</td><td class="r"><span class="delta">+0.8%</span></td></tr>
+<tr><td>Slipway and hard</td><td>Hanna Moos</td><td class="r">£4,310.25</td><td class="r"><span class="delta">+1.8%</span></td></tr>
+</tbody></table></div>
+</main>
+<footer>Harbour office</footer>
+</body>
+</html>

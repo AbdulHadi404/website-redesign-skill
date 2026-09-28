@@ -17,7 +17,7 @@ body { margin: 0; font: 15px/1.5 "UI", system-ui, sans-serif; color: var(--ink);
 .bar { display: flex; align-items: center; gap: 12px; padding-block: 8px; padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right)); border-block-end: 1px solid var(--line); }
 .brand { font-weight: 700; color: inherit; text-decoration: none; margin-inline-end: 8px; }
 .navlist { display: flex; gap: 16px; list-style: none; margin: 0; padding: 0; }
-.navlist a { color: var(--muted); text-decoration: none; }
+.navlist a { color: var(--muted); text-decoration: none; display: inline-block; padding-block: 4px; }
 .navlist a[aria-current] { color: var(--ink); font-weight: 600; box-shadow: inset 0 -2px 0 var(--accent); }
 .search { display: flex; align-items: center; gap: 6px; margin-inline-start: auto; border: 1px solid var(--line); border-radius: 8px; padding-inline: 8px; }
 .search input { border: 0; font: inherit; padding-block: 6px; inline-size: 14rem; background: transparent; }
@@ -36,7 +36,7 @@ body { margin: 0; font: 15px/1.5 "UI", system-ui, sans-serif; color: var(--ink);
 main { max-inline-size: 60rem; margin-inline: auto; padding: 16px; }
 .crumbs { display: flex; flex-wrap: wrap; gap: 4px; list-style: none; padding: 0; margin: 8px 0 16px; color: var(--muted); font-size: 14px; }
 .crumbs li { display: flex; align-items: center; gap: 4px; }
-.crumbs a { color: var(--accent); }
+.crumbs a { color: var(--accent); display: inline-block; padding-block: 2px; }
 .eyebrow { margin: 0; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
 :lang(ar) .eyebrow { letter-spacing: 0; text-transform: none; font-size: 13px; }
 h1 { margin: 4px 0; font-size: 28px; line-height: 1.25; }
@@ -76,6 +76,7 @@ h1 { margin: 4px 0; font-size: 28px; line-height: 1.25; }
 .note { margin-block: 16px; }
 :lang(ar) .note-text { line-height: 2; }
 
+.table-wrap { overflow-x: auto; }
 .orders { border-collapse: collapse; inline-size: 100%; margin-block: 16px; font-size: 14px; }
 .orders caption { text-align: start; font-weight: 600; padding-block-end: 6px; }
 .orders th, .orders td { text-align: start; padding-block: 10px; padding-inline: 8px; border-block-end: 1px solid var(--line); }
@@ -104,3 +105,6 @@ h1 { margin: 4px 0; font-size: 28px; line-height: 1.25; }
 .card { padding: 16px; border-radius: 10px; box-shadow: 0 1px 2px rgb(0 0 0 / .12), 0 4px 12px rgb(0 0 0 / .08); margin-block: 16px; }
 
 .toast { position: fixed; inset-block-end: max(16px, env(safe-area-inset-bottom)); inset-inline-end: 16px; display: flex; gap: 8px; align-items: center; background: #1f2329; color: #fff; padding: 10px 14px; border-radius: 8px; }
+
+/* phone: the header keeps the menu button, brand, language and cart; nav and search move into the drawer */
+@media (max-width: 700px) { .bar nav, .bar .search { display: none; } .stepper { flex-wrap: wrap; } }

@@ -1,8 +1,9 @@
 // One benchmark run in a fresh process (node --expose-gc lab/bench-one.mjs <strategy> <sceneSize> <ops> <history|none> [--serialize]).
 // Prints one JSON line. Memory = heapUsed after full GC, minus the heap before the strategy was created
 // (the generated workload is already in the heap in both modes). History cost = history mode − none mode.
+import { readFileSync, existsSync } from 'node:fs';
 import { STRATEGIES } from './strategies.mjs';
-import { generate } from './model.mjs';
+import { generate, workloadCachePath } from './model.mjs';
 
 const [name, sceneSize, ops, mode] = process.argv.slice(2);
 const serialize = process.argv.includes('--serialize');
@@ -12,7 +13,9 @@ const gcAll = () => { for (let i = 0; i < 4; i++) global.gc(); };
 const pct = (arr, p) => { if (!arr.length) return null; const s = [...arr].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };
 const us = (v) => (v == null ? null : Math.round(v * 1000 * 10) / 10);
 
-let w = generate({ sceneSize: +sceneSize, ops: +ops, seed: 11 });
+// run.mjs writes each workload once to the OS temp folder (it is deterministic: seed 11); regenerate if absent
+const cache = workloadCachePath(+sceneSize, +ops, 11);
+let w = existsSync(cache) ? JSON.parse(readFileSync(cache, 'utf8')) : generate({ sceneSize: +sceneSize, ops: +ops, seed: 11 });
 const { script, initial, finalCanon, initialCanon } = w; w = null;
 gcAll();
 const heap0 = process.memoryUsage().heapUsed;

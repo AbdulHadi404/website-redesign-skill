@@ -101,12 +101,34 @@ function material(Scheme) {
 export const materialTonalSpot = material('SchemeTonalSpot');
 export const materialFidelity = material('SchemeFidelity');
 
-// ------------------------------------------------------------------ M6 S12 safety rules
-// Keep the tenant's exact colour on large fills where a legible label exists; derive a
-// separate strong accent for text, indicators and focus; gate every text pair on WCAG 4.5:1
-// AND APCA Lc 60, every non-text pair on 3:1; move only OKLCH lightness (chroma clamped to
-// the sRGB gamut, hue kept), and only as far as the gates need.
-export const S12_GATES = { text: 4.5, lc: 60, nonText: 3, nearGroundRatio: 1.5, nearGroundChroma: 0.1 };
+// ------------------------------------------------------------------ M6 S12 rules
+// Keep the tenant's exact colour on large fills where a legible label exists; derive a separate strong
+// accent for text, indicators and focus; move only OKLCH lightness (chroma clamped to the sRGB gamut, hue
+// kept), and only as far as the gates need.
+//
+// Second round (after review). The skill's accessibility.md makes WCAG 2 the gate and APCA "a design aid …
+// never the gate", so the recommended configuration (M6) is:
+//   - exit-1 gates: every text pair ≥ 4.5:1, every non-text pair ≥ 3:1 — WCAG only;
+//   - label: the one of white / ink that passes WCAG; APCA only breaks a tie (both pass);
+//   - the tenant's fill is never moved for APCA; a label below the size-aware APCA level of
+//     design-theory.md B6 (Lc 75 for body-size labels; Lc 60 only at ≥ 24px/400 or ≥ 16px/700) is a WARNING
+//     that the admin preview shows with the nearest fill that meets it;
+//   - derived text (accent-strong) is solved for WCAG 4.5 AND Lc 75 where reachable (it is not the brand
+//     fill, so the cost is only the link colour — the same idea as palette.mjs solving step 11).
+// The first-round rules are kept as M6a (APCA Lc 60 as a hard gate on every text pair, APCA-first label).
+export const S12_GATES = { text: 4.5, nonText: 3, lcFill: 0, lcText: 0, lcTextSoft: 75, labelRule: 'wcag-first', warnLabelLc: 75, nearGroundRatio: 1.5, nearGroundChroma: 0.1 };
+export const S12_V1_GATES = { text: 4.5, nonText: 3, lcFill: 60, lcText: 60, lcTextSoft: 0, labelRule: 'apca-first', warnLabelLc: 0, nearGroundRatio: 1.5, nearGroundChroma: 0.1 };
+// Size-aware APCA level from design-theory.md B6 for a label of this size/weight.
+export const apcaLevelFor = ({ px, weight }) => (px >= 24 || (px >= 16 && weight >= 700) ? 60 : 75);
+
+// A tenant colour is untrusted input: only an opaque 6-digit hex is accepted (Atlassian's
+// is-valid-brand-hex rule). Alpha, keywords and other syntaxes are refused, never measured.
+export function parseTenantHex(input) {
+  const v = String(input ?? '').trim();
+  if (!/^#[0-9a-fA-F]{6}$/.test(v)) throw new TypeError(`tenant colour must be an opaque 6-digit hex (#RRGGBB), got ${JSON.stringify(input)}`);
+  return v.toUpperCase();
+}
+
 // A tenant hue "collides" with a status colour when both are chromatic and their hues are within 30°.
 export function statusCollisions(colours, mode) {
   const n = NEUTRALS[mode], out = [];
@@ -122,87 +144,146 @@ export function statusCollisions(colours, mode) {
   return out;
 }
 const WHITE = '#FFFFFF';
-export function s12(t, mode, gates = S12_GATES) {
-  const n = NEUTRALS[mode];
-  const T = oklch(t);
+function inkFor(T) {
   const achromatic = T.c < 0.02;
   const H = achromatic ? 265 : T.h; // a cool neutral hue for greys, black and white
   const Cc = achromatic ? Math.min(T.c, 0.012) : T.c;
-  const ink = hex(fromOklch(0.2, Math.min(0.03, Cc * 0.3), H));
-  const bestOn = (fill) => {
-    const c = [WHITE, ink].map((on) => ({ on, w: wcag(fill, on), lc: apca(fill, on) }));
-    return c.sort((a, b) => b.lc - a.lc)[0];
-  };
-  const solidOk = (fill) => { const b = bestOn(fill); return b.w >= gates.text && b.lc >= gates.lc; };
-  const flags = [];
-  // 1. accent: the tenant colour itself unless it vanishes into the ground or no label is legible on it.
-  let accent = hex(t);
+  return { achromatic, H, Cc, ink: hex(fromOklch(0.2, Math.min(0.03, Cc * 0.3), H)) };
+}
+// Choose the label for a fill. 'apca-first': the higher |Lc| (first round). 'wcag-first': a label that
+// passes the WCAG gate; APCA only breaks the tie when both pass; if neither passes, the better ratio.
+function chooseLabel(fill, ink, g) {
+  const c = [WHITE, ink].map((on) => ({ on, w: wcag(fill, on), lc: apca(fill, on) }));
+  if (g.labelRule === 'apca-first') return c.sort((a, b) => b.lc - a.lc)[0];
+  const pass = c.filter((x) => x.w >= g.text);
+  return pass.length ? pass.sort((a, b) => b.lc - a.lc)[0] : c.sort((a, b) => b.w - a.w)[0];
+}
+export function s12(input, mode, g = S12_GATES, { labelSize = { px: 14, weight: 600 } } = {}) {
+  const t = parseTenantHex(input);
+  const n = NEUTRALS[mode];
+  const T = oklch(t);
+  const { achromatic, H, Cc, ink } = inkFor(T);
+  const solidOk = (fill) => { const b = chooseLabel(fill, ink, g); return b.w >= g.text && b.lc >= g.lcFill; };
+  const flags = [], warnings = [];
+  // 1. accent: the tenant colour itself unless it vanishes into the ground or no label passes the gate on it.
+  let accent = t;
   // "vanishes": low luminance contrast with the ground AND too little chroma to stand out by hue.
-  const nearGround = wcag(t, n.bg) < gates.nearGroundRatio && T.c < gates.nearGroundChroma;
+  const nearGround = wcag(t, n.bg) < g.nearGroundRatio && T.c < g.nearGroundChroma;
   const lighterGoesAway = oklch(n.bg).l < 0.5; // dark mode: move away from the ground by lightening
   if (nearGround || !solidOk(accent)) {
-    flags.push(nearGround ? 'tenant colour ≈ page ground: fill moved' : 'no legible label on tenant colour: fill lightness moved');
+    flags.push(nearGround ? 'tenant colour ≈ page ground: fill moved' : 'no label passes the gate on the tenant colour: fill lightness moved');
     let found = null;
     for (let d = 0.005; d <= 1 && !found; d += 0.005) {
       const dirs = nearGround ? [lighterGoesAway ? +1 : -1] : [-1, +1];
-      for (const s of dirs) {
-        const L = T.l + s * d;
+      for (const sgn of dirs) {
+        const L = T.l + sgn * d;
         if (L < 0 || L > 1) continue;
         const c = hex(fromOklch(L, Cc, H));
-        if (solidOk(c) && (!nearGround || wcag(c, n.bg) >= gates.nonText)) { found = c; break; }
+        if (solidOk(c) && (!nearGround || wcag(c, n.bg) >= g.nonText)) { found = c; break; }
       }
     }
     accent = found ?? accent;
   }
-  const on = bestOn(accent).on;
+  const label = chooseLabel(accent, ink, g);
+  const on = label.on;
   // 2. hover: 0.05 OKLCH L away from the label, as long as the label still passes.
   const A = oklch(accent);
   const hoverDir = on === WHITE ? -1 : +1;
   let accentHover = accent;
   for (const d of [0.05, 0.04, 0.03, 0.02]) {
     const c = hex(fromOklch(A.l + hoverDir * d, A.c, A.h ?? H));
-    if (wcag(c, on) >= gates.text && apca(c, on) >= gates.lc) { accentHover = c; break; }
+    if (wcag(c, on) >= g.text && apca(c, on) >= g.lcFill) { accentHover = c; break; }
   }
   // 3. subtle ground, then 4. strong accent solved against bg, surface and the subtle ground.
   const accentSubtle = hex(mode === 'light' ? fromOklch(0.965, Math.min(Cc, 0.12) * 0.3, H) : fromOklch(0.29, Math.min(Cc, 0.12) * 0.5, H));
   const grounds = [n.bg, n.surface, accentSubtle];
-  const textOk = (c) => grounds.every((g) => wcag(c, g) >= gates.text && apca(g, c) >= gates.lc);
-  let strong = hex(t);
-  if (!textOk(strong)) {
+  const solveText = (lc) => {
+    const ok = (c) => grounds.every((gr) => wcag(c, gr) >= g.text && apca(gr, c) >= lc);
+    if (ok(t)) return t;
     const dir = mode === 'light' ? -1 : +1;
     for (let d = 0.005; d <= 1; d += 0.005) {
       const L = T.l + dir * d;
       if (L < 0 || L > 1) break;
       const c = hex(fromOklch(L, Cc, H));
-      if (textOk(c)) { strong = c; break; }
+      if (ok(c)) return c;
     }
-  }
+    return null;
+  };
+  let strong = (g.lcTextSoft ? solveText(Math.max(g.lcText, g.lcTextSoft)) : null) ?? solveText(g.lcText) ?? t;
+  if (g.lcTextSoft && grounds.some((gr) => apca(gr, strong) < g.lcTextSoft)) warnings.push(`accent text below APCA Lc ${g.lcTextSoft} on some ground`);
   // 5. the primary button keeps a 1 px boundary in the strong accent when its fill is < 3:1 on the ground.
-  const buttonBorder = wcag(accent, n.bg) < gates.nonText ? strong : null;
+  const buttonBorder = wcag(accent, n.bg) < g.nonText ? strong : null;
+  // 6. APCA as a size-aware warning (never a gate in M6): the label on the fill and on hover.
+  const level = g.warnLabelLc ? Math.min(g.warnLabelLc, apcaLevelFor(labelSize)) : 0;
+  if (level && Math.min(apca(accent, on), apca(accentHover, on)) < level) warnings.push(`label reads weak: APCA Lc ${Math.round(Math.min(apca(accent, on), apca(accentHover, on)))} < ${level} for ${labelSize.px}px/${labelSize.weight}; offer the nearest fill that meets it`);
   if (achromatic) flags.push('achromatic brand: selection needs a non-colour cue (weight, check, bar)');
   for (const k of statusCollisions([accent, strong], mode)) flags.push(`accent hue ≈ ${k}: ${k} states must carry icon + word, never colour alone`);
-  return { accent, accentHover, onAccent: on, accentText: strong, accentSubtle, onSubtle: strong, indicator: strong, focusRing: strong, buttonBorder, flags };
+  return { accent, accentHover, onAccent: on, accentText: strong, accentSubtle, onSubtle: strong, indicator: strong, focusRing: strong, buttonBorder, flags, warnings };
 }
 
-// For the tenant-admin preview: the nearest safe fill for each label colour (white or ink),
-// so the tenant chooses between two legible versions of their colour instead of getting one silently.
-export function labelOptions(t, mode, gates = S12_GATES) {
+// For the tenant-admin preview: for each label (white or ink), the nearest fill that passes the WCAG gate,
+// and the nearest that also reads at the size-aware APCA level — so the tenant chooses between legible
+// versions of their colour instead of getting one silently.
+export function labelOptions(input, mode, g = S12_GATES, { labelSize = { px: 14, weight: 600 } } = {}) {
+  const t = parseTenantHex(input);
   const n = NEUTRALS[mode];
   const T = oklch(t);
-  const H = T.c < 0.02 ? 265 : T.h, Cc = T.c < 0.02 ? Math.min(T.c, 0.012) : T.c;
-  const ink = hex(fromOklch(0.2, Math.min(0.03, Cc * 0.3), H));
-  const out = {};
-  for (const [name, on] of [['whiteLabel', WHITE], ['darkLabel', ink]]) {
-    let best = null;
-    for (let d = 0; d <= 1 && !best; d += 0.005) for (const s of d ? [-1, +1] : [0]) {
-      const L = T.l + s * d; if (L < 0 || L > 1) continue;
-      const c = d ? hex(fromOklch(L, Cc, H)) : hex(t);
-      if (wcag(c, on) >= gates.text && apca(c, on) >= gates.lc && !(wcag(c, n.bg) < gates.nearGroundRatio && oklch(c).c < gates.nearGroundChroma)) { best = c; break; }
+  const { H, Cc, ink } = inkFor(T);
+  const level = apcaLevelFor(labelSize);
+  const nearest = (on, lc) => {
+    for (let d = 0; d <= 1; d += 0.005) for (const sgn of d ? [-1, +1] : [0]) {
+      const L = T.l + sgn * d; if (L < 0 || L > 1) continue;
+      const c = d ? hex(fromOklch(L, Cc, H)) : t;
+      if (wcag(c, on) >= g.text && apca(c, on) >= lc && !(wcag(c, n.bg) < g.nearGroundRatio && oklch(c).c < g.nearGroundChroma)) return { fill: c, label: on, dE: Math.round(dE(t, c) * 1000) / 10, wcag: Math.round(wcag(c, on) * 100) / 100, lc: Math.round(apca(c, on)) };
     }
-    out[name] = best ? { fill: best, label: on, dE: Math.round(dE(t, best) * 1000) / 10 } : null;
-  }
-  return out;
+    return null;
+  };
+  return { apcaLevel: level, whiteLabel: nearest(WHITE, 0), whiteLabelReadsWell: nearest(WHITE, level), darkLabel: nearest(ink, 0), darkLabelReadsWell: nearest(ink, level) };
 }
+
+// ------------------------------------------------------------------ M7 the skill's own palette.mjs
+// scripts/palette.mjs --brand <hex> --dark (run as a child process, unmodified), mapped the way the script
+// and design-theory.md B5 describe the Radix roles: solid = step 9, hover = 10, label = the "text on step 9"
+// it prints, links and selected text = 11, soft ground = 3, checkbox fill = 9, focus ring = the step it
+// recommends ("focus ring and meaningful control borders … step N"). M7f is the same scale with the
+// proposed one-line fix: the label that passes WCAG, APCA only breaking a tie.
+import { execFile } from 'node:child_process';
+import { readFile as readFileP, mkdtemp, rm } from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+const PALETTE = new URL('../../../../../skills/website-redesign/scripts/palette.mjs', import.meta.url).pathname;
+const paletteCache = new Map();
+async function runPalette(t) {
+  const dir = await mkdtemp(path.join(os.tmpdir(), 's12-pal-'));
+  const css = path.join(dir, 'p.css');
+  const stdout = await new Promise((res, rej) => execFile(process.execPath, [PALETTE, '--brand', t, '--name', 'b', '--dark', '--css', css], { encoding: 'utf8' }, (e, so) => (e ? rej(e) : res(so))));
+  const text = await readFileP(css, 'utf8');
+  await rm(dir, { recursive: true, force: true });
+  const [lightCss, darkCss] = text.split('@media');
+  const steps = (blk) => Array.from({ length: 12 }, (_, i) => '#' + new RegExp(`--b-${i + 1}: [^;]+; /\\* #([0-9a-f]{6})`).exec(blk)[1].toUpperCase());
+  const labels = [...stdout.matchAll(/text on step 9: (#[0-9a-f]{6})/g)].map((m) => m[1].toUpperCase()); // brand L, neutral L, brand D, neutral D
+  const focus = [...stdout.matchAll(/focus ring and meaningful control borders .*?\): step (\d+)/g)].map((m) => Number(m[1]));
+  return { light: { s: steps(lightCss), label: labels[0], focusStep: focus[0] }, dark: { s: steps(darkCss), label: labels[2], focusStep: focus[2] } };
+}
+export async function loadPalette(colours, concurrency = 3) {
+  const todo = colours.filter((c) => !paletteCache.has(c));
+  let i = 0;
+  await Promise.all(Array.from({ length: concurrency }, async () => { while (i < todo.length) { const c = todo[i++]; paletteCache.set(c, await runPalette(c)); } }));
+}
+function paletteRoles(t, mode, fixLabel) {
+  const p = paletteCache.get(t)?.[mode];
+  if (!p) throw new Error(`palette.mjs output for ${t} not loaded`);
+  const s = p.s;
+  let on = p.label;
+  if (fixLabel) { // the proposed rule, with the script's own two label colours (#fff and #111)
+    const c = ['#FFFFFF', '#111111'].map((x) => ({ x, w: wcag(s[8], x), lc: apca(s[8], x) }));
+    const pass = c.filter((y) => y.w >= 4.5);
+    on = (pass.length ? pass.sort((a, b) => b.lc - a.lc) : c.sort((a, b) => b.w - a.w))[0].x;
+  }
+  return { accent: s[8], accentHover: s[9], onAccent: on, accentText: s[10], accentSubtle: s[2], onSubtle: s[10], indicator: s[8], focusRing: s[p.focusStep - 1], buttonBorder: null };
+}
+export const paletteAsIs = (t, mode) => paletteRoles(t, mode, false);
+export const paletteFixedLabel = (t, mode) => paletteRoles(t, mode, true);
 
 export const METHODS = [
   { id: 'M0-naive', label: 'Naive: tenant hex everywhere, white label', fn: naive },
@@ -212,9 +293,12 @@ export const METHODS = [
   { id: 'M3-atlassian', label: 'Atlassian custom theme (@atlaskit/tokens 20.1.0)', fn: atlassian },
   { id: 'M4-m3-tonalspot', label: 'Material 3 SchemeTonalSpot (material-color-utilities 0.4.0)', fn: materialTonalSpot },
   { id: 'M5-m3-fidelity', label: 'Material 3 SchemeFidelity (material-color-utilities 0.4.0)', fn: materialFidelity },
-  { id: 'M6-s12', label: 'S12 rules: exact tenant fill where safe, OKLCH-L solved strong accent, WCAG 4.5 + APCA Lc 60 gates', fn: s12 },
-  { id: 'M6w-s12-wcag-only', label: 'S12 rules with the WCAG gate only (no APCA)', fn: (t, m) => s12(t, m, { ...S12_GATES, lc: 0 }) },
-  { id: 'M6s-s12-lc75', label: 'S12 rules with APCA Lc 75 on every text pair (body-text strict)', fn: (t, m) => s12(t, m, { ...S12_GATES, lc: 75 }) },
+  { id: 'M7-palette-mjs', label: "The skill's scripts/palette.mjs --brand --dark, roles as the script advises", fn: paletteAsIs },
+  { id: 'M7f-palette-mjs-wcag-label', label: 'palette.mjs with the proposed label fix (WCAG-passing label, APCA breaks ties)', fn: paletteFixedLabel },
+  { id: 'M6-s12', label: 'S12 rules, second round: WCAG gates, WCAG-first label, APCA as a size-aware warning, derived text also Lc 75', fn: (t, m) => s12(t, m, S12_GATES) },
+  { id: 'M6w-s12-wcag-only', label: 'S12 first-round code with the WCAG gate only (APCA-first label, no Lc target anywhere)', fn: (t, m) => s12(t, m, { ...S12_V1_GATES, lcFill: 0, lcText: 0 }) },
+  { id: 'M6a-s12-apca-gate', label: 'S12 first round as reported: APCA Lc 60 as a hard gate on every text pair, APCA-first label', fn: (t, m) => s12(t, m, S12_V1_GATES) },
+  { id: 'M6s-s12-lc75', label: 'S12 first round with APCA Lc 75 as a hard gate on every text pair', fn: (t, m) => s12(t, m, { ...S12_V1_GATES, lcFill: 75, lcText: 75 }) },
 ];
 
 // Every text/ground and non-text pair measured, with its gate.

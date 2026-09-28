@@ -17,8 +17,9 @@
  * --allow-mono turns the monospace fail into a warning, for a product whose users read code (--kind docs implies it).
  *
  * Per page, width and theme it measures:
- *  - layout: horizontal overflow and the element causing it; phone zoom-out; readable text cut at the viewport
- *    edge by the page's own clip (html and body clipping), which scrollWidth never shows
+ *  - layout: horizontal overflow and the element (or the text running out of its box) causing it; phone zoom-out;
+ *    readable text past the viewport edge that no scroll reaches: under the page's own clip (with html's overflow
+ *    not visible, body clips its own box and scrollWidth never shows it), or past the start edge
  *  - type: sizes in use (by share of text), families, weights, measure
  *    (characters per line), centred/justified runs, leading, text < 12px (a one- or two-word uppercase label at
  *    11px is allowed), rendered monospace (code/kbd/samp/pre defaults and form-control values included)
@@ -161,6 +162,8 @@ let anyFail = false;
 // axe violations across every view (path × width × theme), for the roll-up at the end of the summary.
 const byRule = new Map();
 let axeViews = 0;
+// A server that is down leaves Chromium's own error page, which must not be audited as if it were the site.
+const loaded = (page, url) => { if (/^(chrome-error:|about:blank)/.test(page.url())) throw new Error(`the page did not load (${url}) — is the server running?`); };
 // A context in a theme: prefers-color-scheme, and the stored choice when the site keeps one (--theme-key). The init
 // script is added after launch()'s --storage seed, so it runs later and wins.
 const themedContext = async (theme, opts) => {
@@ -181,6 +184,7 @@ try {
       const ctx = await themedContext(themes[0], { viewport: { width: widths[0], height: 900 }, javaScriptEnabled: false });
       const page = await ctx.newPage();
       await open(page, url);
+      loaded(page, url);
       const hidden = await page.evaluate(hiddenContent).catch(() => []);
       await ctx.close();
       if (hidden.length) { anyFail = true; md(`- ✗ **Invisible without JavaScript** (${hidden.length}): ${hidden.slice(0, 6).join(', ')} — content must be finished by default; let a script hide it only to animate it in (see implementation.md, "The reveal, written safely").`); }
@@ -190,6 +194,7 @@ try {
       const ctx = await themedContext(themes[0], { viewport: { width: widths[0], height: 900 }, reducedMotion: 'reduce' });
       const page = await ctx.newPage();
       await open(page, url);
+      loaded(page, url);
       await settle(page);
       const hidden = await page.evaluate(hiddenContent).catch(() => []);
       await ctx.close();
@@ -211,6 +216,7 @@ try {
       page.on('requestfailed', (r) => errors.push(`request failed: ${r.url().slice(0, 100)} (${r.failure()?.errorText})`));
       const t0 = Date.now();
       await open(page, url);
+      loaded(page, url);
       const loadMs = Date.now() - t0;
       const lazyAttrs = await page.evaluate(() => [...document.images].map((i) => i.getAttribute('loading')));
       await page.waitForTimeout(500);
@@ -273,9 +279,24 @@ try {
       md();
       const F = [], W = [], S = [];
       if (mobile && layoutW > width) F.push(`Phone layout viewport widened to ${layoutW}px by overflowing content — the page loads zoomed out.`);
-      if (overflow.overflow) F.push(`Horizontal overflow by ${overflow.by}px: ${overflow.culprits.map((c) => `\`${c.selector}\` (${c.width}px wide)`).join(', ')}`);
+      // Text past the viewport edge that the reader can still reach is not cut: the page scrolls sideways to it, or a
+      // phone whose layout viewport widened shows it zoomed out. Past the start edge (left in a left-to-right page),
+      // or with the page clipping its own overflow, nothing reaches it.
+      const edgeText = overflow.cutAtEdge || [];
+      const zoom = mobile ? Math.max(0, layoutW - width) : 0;
+      const isCut = (c) => c.start || (!c.reach && c.past > zoom + 1);
+      const cut = edgeText.filter(isCut), reached = edgeText.filter((c) => !isCut(c));
+      const pastEdge = (c) => `${c.past}px past the ${c.edge === 'left' ? 'left' : 'right'} edge`;
+      if (overflow.overflow) {
+        // Text that runs out of its own box widens the page with no element box doing so: name that text.
+        const named = overflow.culprits.length ? overflow.culprits.map((c) => `\`${c.selector}\` (${c.width}px wide)`) : (reached.length ? reached : cut).map((c) => `\`${c.selector}\` (its text runs ${pastEdge(c)})`);
+        F.push(`Horizontal overflow by ${overflow.by}px${named.length ? `: ${named.join(', ')}` : ''}`);
+      }
       // Reported even when overflow.overflow is false: a page that clips itself never grows scrollWidth.
-      if (overflow.cutAtEdge?.length) F.push(`Text past the viewport, hidden by a clipping ancestor (the page clips itself, so scrollWidth did not grow): ${overflow.cutAtEdge.map((c) => `\`${c.selector}\` "${c.text}" (${c.past}px past the ${c.edge === 'left' ? 'left' : 'right'} edge)`).join(', ')} — a stacked fallback written \`1fr\` is \`minmax(auto, 1fr)\`: use \`minmax(0, 1fr)\` and \`min-width: 0\` on nowrap holders, let the text wrap, or give it a real scroller.`);
+      const why = overflow.clip === 'body' ? 'hidden by a clipping ancestor (the page clips itself, so scrollWidth did not grow)'
+        : overflow.clip === 'viewport' ? 'where no scroll reaches it (overflow-x on html or body stops the page scrolling sideways)'
+        : 'where no scroll reaches it';
+      if (cut.length) F.push(`Text past the viewport, ${why}: ${cut.map((c) => `\`${c.selector}\` "${c.text}" (${pastEdge(c)})`).join(', ')} — ${cut.every((c) => c.start) ? 'text pulled past the start edge (a negative margin, text-indent or translate) never scrolls into view: keep it inside the viewport.' : 'a stacked fallback written \`1fr\` is \`minmax(auto, 1fr)\`: use \`minmax(0, 1fr)\` and \`min-width: 0\` on nowrap holders, let the text wrap, or give it a real scroller.'}`);
       const fails = inv.contrast.failing;
       if (fails.length) F.push(`Contrast below WCAG AA on ${inv.contrast.failingCount} of ${inv.contrast.checked} text elements: ${fails.slice(0, 6).map((c) => `\`${c.selector}\`${c.times > 1 ? ` ×${c.times}` : ''} ${c.fg} on ${c.bg} = ${c.ratio}:1 (needs ${c.need}, ${c.px}px)`).join('; ')}`);
       if (inv.clippedCount) F.push(`Text cut off by an overflow:hidden/clip container (${inv.clippedCount}): ${inv.clippedText.slice(0, 5).map((c) => `\`${c.selector}\` in \`${c.by}\``).join(', ')} — scroll it, reflow it, or truncate deliberately with a way to see the rest.`);

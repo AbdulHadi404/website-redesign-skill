@@ -1,0 +1,19 @@
+<!doctype html>
+<!-- capture.mjs regress fixture: a WebGL canvas inside a closed shadow root (a 3D viewer web component that hides its
+     internals), where page script cannot find it: expect the renderer line all the same. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scene component</title>
+<style>body{margin:0;font:16px system-ui,sans-serif;color:#111;background:#fff}main{padding:24px}scene-view{display:block;max-width:640px}</style></head>
+<body><main><h1>A scene component</h1><scene-view></scene-view><p>The component draws with WebGL in a closed shadow root.</p></main>
+<script>
+customElements.define('scene-view', class extends HTMLElement {
+  connectedCallback() {
+    const root = this.attachShadow({ mode: 'closed' });
+    const c = document.createElement('canvas');
+    c.width = 640; c.height = 360;
+    c.style.cssText = 'display:block;width:100%;height:auto;background:#eee';
+    root.append(c);
+    const gl = c.getContext('webgl');
+    if (gl) { gl.clearColor(0.1, 0.55, 0.3, 1); gl.clear(gl.COLOR_BUFFER_BIT); }
+  }
+});
+</script></body></html>

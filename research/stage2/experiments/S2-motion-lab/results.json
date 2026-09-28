@@ -1,0 +1,3442 @@
+{
+ "env": {
+  "date": "2026-09-28T22:08:31.845Z",
+  "node": "v22.22.2",
+  "cpus": 4,
+  "platform": "linux",
+  "versions": {
+   "motion": "13.4.4",
+   "gsap": "3.15.0",
+   "animejs": "4.5.0",
+   "@react-spring/web": "10.1.2",
+   "@formkit/auto-animate": "0.10.0",
+   "@theatre/core": "0.7.2",
+   "react": "19.3.0",
+   "lottie-web": "5.13.0",
+   "@lottiefiles/dotlottie-web": "0.80.0",
+   "@rive-app/canvas": "2.43.1",
+   "@rive-app/canvas-lite": "2.43.1",
+   "@rive-app/webgl2": "2.43.1",
+   "@rive-app/react-canvas": "4.35.0",
+   "esbuild": "0.28.2"
+  }
+ },
+ "a": {
+  "sizes": {
+   "css": {
+    "label": "CSS + WAAPI",
+    "jsMin": 2393,
+    "jsGz": 1131,
+    "cssGz": 793,
+    "withReactGz": null,
+    "loc": 72,
+    "locRm": 9
+   },
+   "motion": {
+    "label": "Motion (vanilla)",
+    "jsMin": 76510,
+    "jsGz": 28335,
+    "cssGz": 0,
+    "withReactGz": null,
+    "loc": 61,
+    "locRm": 6
+   },
+   "motion-react": {
+    "label": "Motion for React",
+    "jsMin": 155692,
+    "jsGz": 52660,
+    "cssGz": 0,
+    "withReactGz": 121640,
+    "loc": 51,
+    "locRm": 3
+   },
+   "gsap": {
+    "label": "GSAP",
+    "jsMin": 150187,
+    "jsGz": 58415,
+    "cssGz": 0,
+    "withReactGz": null,
+    "loc": 64,
+    "locRm": 6
+   },
+   "anime": {
+    "label": "anime.js v4",
+    "jsMin": 82869,
+    "jsGz": 29906,
+    "cssGz": 0,
+    "withReactGz": null,
+    "loc": 57,
+    "locRm": 6
+   },
+   "spring": {
+    "label": "React Spring",
+    "jsMin": 53783,
+    "jsGz": 21717,
+    "cssGz": 0,
+    "withReactGz": 90598,
+    "loc": 56,
+    "locRm": 5
+   },
+   "autoanimate": {
+    "label": "AutoAnimate",
+    "jsMin": 8850,
+    "jsGz": 3591,
+    "cssGz": 0,
+    "withReactGz": null,
+    "loc": 22,
+    "locRm": 0
+   },
+   "theatre": {
+    "label": "Theatre.js core",
+    "jsMin": 109007,
+    "jsGz": 36112,
+    "cssGz": 0,
+    "withReactGz": null,
+    "loc": 24,
+    "locRm": 1
+   }
+  },
+  "interrupt": {
+   "css": {
+    "press": {
+     "reachedPct": 73,
+     "discPct": 12.7,
+     "maxPreStepPct": 15.7,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 55,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 12.7,
+     "settleMsMedian": 55
+    },
+    "list": {
+     "reachedPct": 87,
+     "discPct": 0.2,
+     "maxPreStepPct": 7,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 201,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.2,
+     "settleMsMedian": 202
+    },
+    "sheet": {
+     "reachedPct": 87,
+     "discPct": 0.7,
+     "maxPreStepPct": 5.6,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 214,
+     "finalOk": true,
+     "opacityDip": false,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.7,
+     "settleMsMedian": 214
+    },
+    "view": {
+     "kind": "input-swallowed",
+     "swallowedBy": "html",
+     "finalValue": 1,
+     "jump": false,
+     "errors": [],
+     "kinds": {
+      "input-swallowed": 5
+     },
+     "runs": 5,
+     "discPctMedian": null,
+     "settleMsMedian": null
+    },
+    "ticker": {
+     "reachedPct": 77,
+     "discPct": 0,
+     "maxPreStepPct": 2.2,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 631,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0,
+     "settleMsMedian": 631
+    },
+    "grid": {
+     "reachedPct": 93,
+     "discPct": 1,
+     "maxPreStepPct": 6.9,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 185,
+     "finalOk": true,
+     "last": {
+      "reachedPct": 0,
+      "discPct": 0,
+      "maxPreStepPct": 0,
+      "kind": "continuous",
+      "jump": false,
+      "momentumFrames": 0,
+      "settleMs": 2,
+      "finalOk": true
+     },
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 1,
+     "settleMsMedian": 185
+    }
+   },
+   "css-vt-list": {
+    "list": {
+     "kind": "input-swallowed",
+     "swallowedBy": "html",
+     "finalValue": 128,
+     "jump": false,
+     "errors": [],
+     "kinds": {
+      "input-swallowed": 5
+     },
+     "runs": 5,
+     "discPctMedian": null,
+     "settleMsMedian": null
+    }
+   },
+   "css-vt-list-pe": {
+    "list": {
+     "reachedPct": 100,
+     "discPct": 0.1,
+     "maxPreStepPct": 14.9,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 59,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.1,
+     "settleMsMedian": 65
+    }
+   },
+   "css-vtpe": {
+    "view": {
+     "reachedPct": 74,
+     "discPct": 25.6,
+     "maxPreStepPct": 14.1,
+     "kind": "jumps-to-old",
+     "jump": true,
+     "momentumFrames": 1,
+     "settleMs": 342,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "jumps-to-old": 5
+     },
+     "runs": 5,
+     "discPctMedian": 25.6,
+     "settleMsMedian": 339
+    }
+   },
+   "motion": {
+    "press": {
+     "reachedPct": 77,
+     "discPct": 4,
+     "maxPreStepPct": 15.3,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 84,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 4,
+     "settleMsMedian": 84
+    },
+    "list": {
+     "reachedPct": 88,
+     "discPct": 0.4,
+     "maxPreStepPct": 8.6,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 201,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.4,
+     "settleMsMedian": 200
+    },
+    "sheet": {
+     "reachedPct": 87,
+     "discPct": 0.2,
+     "maxPreStepPct": 5.7,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 251,
+     "finalOk": true,
+     "opacityDip": false,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.2,
+     "settleMsMedian": 251
+    },
+    "view": {
+     "kind": "input-swallowed",
+     "swallowedBy": "html",
+     "finalValue": 1,
+     "jump": false,
+     "errors": [],
+     "kinds": {
+      "input-swallowed": 5
+     },
+     "runs": 5,
+     "discPctMedian": null,
+     "settleMsMedian": null
+    },
+    "ticker": {
+     "reachedPct": 78,
+     "discPct": 0.3,
+     "maxPreStepPct": 6.2,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 626,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.3,
+     "settleMsMedian": 629
+    },
+    "grid": {
+     "reachedPct": 94,
+     "discPct": 0.6,
+     "maxPreStepPct": 7,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 200,
+     "finalOk": true,
+     "last": {
+      "reachedPct": 0,
+      "discPct": 0,
+      "maxPreStepPct": 0,
+      "kind": "continuous",
+      "jump": false,
+      "momentumFrames": 0,
+      "settleMs": 3,
+      "finalOk": true
+     },
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.6,
+     "settleMsMedian": 200
+    }
+   },
+   "motion-hw": {
+    "press": {
+     "reachedPct": 837,
+     "discPct": 128,
+     "maxPreStepPct": 3291.3,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 25,
+     "settleMs": 96,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 128,
+     "settleMsMedian": 96
+    },
+    "list": {
+     "reachedPct": 88,
+     "discPct": 0.6,
+     "maxPreStepPct": 6.9,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 199,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.6,
+     "settleMsMedian": 202
+    },
+    "sheet": {
+     "reachedPct": 88,
+     "discPct": 12.1,
+     "maxPreStepPct": 5.6,
+     "kind": "jumps-to-old",
+     "jump": true,
+     "momentumFrames": 1,
+     "settleMs": 253,
+     "finalOk": true,
+     "opacityDip": false,
+     "errors": [],
+     "kinds": {
+      "jumps-to-old": 5
+     },
+     "runs": 5,
+     "discPctMedian": 12.1,
+     "settleMsMedian": 254
+    }
+   },
+   "motion-react": {
+    "press": {
+     "reachedPct": 77,
+     "discPct": 4.3,
+     "maxPreStepPct": 17,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 87,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 4.3,
+     "settleMsMedian": 87
+    },
+    "list": {
+     "reachedPct": 87,
+     "discPct": 1.1,
+     "maxPreStepPct": 7.5,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 201,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 1.1,
+     "settleMsMedian": 206
+    },
+    "sheet": {
+     "reachedPct": 87,
+     "discPct": 1.6,
+     "maxPreStepPct": 7.5,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 256,
+     "finalOk": true,
+     "opacityDip": false,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 1.6,
+     "settleMsMedian": 255
+    },
+    "view": {
+     "reachedPct": 77,
+     "discPct": 1.1,
+     "maxPreStepPct": 4.2,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 325,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 1.1,
+     "settleMsMedian": 327
+    },
+    "ticker": {
+     "reachedPct": 77,
+     "discPct": 0.5,
+     "maxPreStepPct": 3.1,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 2,
+     "settleMs": 633,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.5,
+     "settleMsMedian": 633
+    },
+    "grid": {
+     "reachedPct": 94,
+     "discPct": 0.6,
+     "maxPreStepPct": 6.9,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 201,
+     "finalOk": true,
+     "last": {
+      "reachedPct": 0,
+      "discPct": 0,
+      "maxPreStepPct": 0,
+      "kind": "continuous",
+      "jump": false,
+      "momentumFrames": 0,
+      "settleMs": 1,
+      "finalOk": true
+     },
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.6,
+     "settleMsMedian": 201
+    }
+   },
+   "motion-react-vt": {
+    "view": {
+     "reachedPct": 100,
+     "discPct": 0,
+     "maxPreStepPct": 15,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 95,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0,
+     "settleMsMedian": 69
+    }
+   },
+   "gsap": {
+    "press": {
+     "reachedPct": 78,
+     "discPct": 6,
+     "maxPreStepPct": 15.3,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 80,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 6,
+     "settleMsMedian": 80
+    },
+    "list": {
+     "reachedPct": 87,
+     "discPct": 1.1,
+     "maxPreStepPct": 7,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 203,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 1.1,
+     "settleMsMedian": 203
+    },
+    "sheet": {
+     "reachedPct": 87,
+     "discPct": 0.9,
+     "maxPreStepPct": 5.6,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 252,
+     "finalOk": true,
+     "opacityDip": false,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.9,
+     "settleMsMedian": 251
+    },
+    "view": {
+     "reachedPct": 79,
+     "discPct": 0.3,
+     "maxPreStepPct": 5.9,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 329,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.3,
+     "settleMsMedian": 327
+    },
+    "ticker": {
+     "reachedPct": 78,
+     "discPct": 0.1,
+     "maxPreStepPct": 2.8,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 627,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.1,
+     "settleMsMedian": 626
+    },
+    "grid": {
+     "reachedPct": 95,
+     "discPct": 0.9,
+     "maxPreStepPct": 7,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 200,
+     "finalOk": true,
+     "last": {
+      "reachedPct": 0,
+      "discPct": 0,
+      "maxPreStepPct": 0,
+      "kind": "continuous",
+      "jump": false,
+      "momentumFrames": 0,
+      "settleMs": 3,
+      "finalOk": true
+     },
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.9,
+     "settleMsMedian": 200
+    }
+   },
+   "anime": {
+    "press": {
+     "reachedPct": 80,
+     "discPct": 5,
+     "maxPreStepPct": 18,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 80,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 5,
+     "settleMsMedian": 79
+    },
+    "list": {
+     "reachedPct": 88,
+     "discPct": 0.7,
+     "maxPreStepPct": 7,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 197,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.7,
+     "settleMsMedian": 199
+    },
+    "sheet": {
+     "reachedPct": 88,
+     "discPct": 0.5,
+     "maxPreStepPct": 5.7,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 247,
+     "finalOk": true,
+     "opacityDip": false,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.5,
+     "settleMsMedian": 247
+    },
+    "view": {
+     "reachedPct": 78,
+     "discPct": 0.3,
+     "maxPreStepPct": 4.2,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 322,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.3,
+     "settleMsMedian": 324
+    },
+    "ticker": {
+     "reachedPct": 78,
+     "discPct": 0.1,
+     "maxPreStepPct": 3.1,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 624,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.1,
+     "settleMsMedian": 624
+    },
+    "grid": {
+     "reachedPct": 94,
+     "discPct": 1.2,
+     "maxPreStepPct": 8.3,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 199,
+     "finalOk": true,
+     "last": {
+      "reachedPct": 0,
+      "discPct": 0,
+      "maxPreStepPct": 0,
+      "kind": "continuous",
+      "jump": false,
+      "momentumFrames": 0,
+      "settleMs": 3,
+      "finalOk": true
+     },
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 1.2,
+     "settleMsMedian": 199
+    }
+   },
+   "spring": {
+    "press": {
+     "reachedPct": 80,
+     "discPct": 6.7,
+     "maxPreStepPct": 38,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 82,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 6.7,
+     "settleMsMedian": 82
+    },
+    "list": {
+     "reachedPct": 88,
+     "discPct": 0.6,
+     "maxPreStepPct": 4.4,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 192,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.6,
+     "settleMsMedian": 191
+    },
+    "sheet": {
+     "reachedPct": 89,
+     "discPct": 0.5,
+     "maxPreStepPct": 10.7,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 251,
+     "finalOk": true,
+     "opacityDip": false,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.5,
+     "settleMsMedian": 251
+    },
+    "view": {
+     "reachedPct": 78,
+     "discPct": 0.2,
+     "maxPreStepPct": 6.6,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 322,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.2,
+     "settleMsMedian": 325
+    },
+    "ticker": {
+     "reachedPct": 79,
+     "discPct": 0.1,
+     "maxPreStepPct": 3.5,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 680,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.1,
+     "settleMsMedian": 645
+    },
+    "grid": {
+     "reachedPct": 93,
+     "discPct": 0.8,
+     "maxPreStepPct": 7,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 197,
+     "finalOk": true,
+     "last": {
+      "reachedPct": 0,
+      "discPct": 0,
+      "maxPreStepPct": 0,
+      "kind": "continuous",
+      "jump": false,
+      "momentumFrames": 0,
+      "settleMs": 638,
+      "finalOk": true
+     },
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.8,
+     "settleMsMedian": 197
+    }
+   },
+   "autoanimate": {
+    "list": {
+     "reachedPct": 88,
+     "discPct": 12,
+     "maxPreStepPct": 6.9,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 213,
+     "finalOk": true,
+     "errors": [],
+     "kinds": {
+      "jumps-to-old": 1,
+      "continuous": 4
+     },
+     "runs": 5,
+     "discPctMedian": 12,
+     "settleMsMedian": 207
+    },
+    "sheet": {
+     "reachedPct": 100,
+     "discPct": 0,
+     "maxPreStepPct": 100,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 0,
+     "settleMs": 308,
+     "finalOk": true,
+     "opacityDip": true,
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0,
+     "settleMsMedian": 306
+    },
+    "grid": {
+     "reachedPct": 0,
+     "discPct": 100,
+     "maxPreStepPct": 0,
+     "kind": "jumps-to-old",
+     "jump": true,
+     "momentumFrames": 0,
+     "settleMs": 225,
+     "finalOk": true,
+     "last": {
+      "reachedPct": 0,
+      "discPct": 100,
+      "maxPreStepPct": 0,
+      "kind": "jumps-to-old",
+      "jump": true,
+      "momentumFrames": 0,
+      "settleMs": 225,
+      "finalOk": true
+     },
+     "errors": [],
+     "kinds": {
+      "jumps-to-old": 5
+     },
+     "runs": 5,
+     "discPctMedian": 100,
+     "settleMsMedian": 228
+    }
+   },
+   "theatre": {
+    "grid": {
+     "reachedPct": 93,
+     "discPct": 0.7,
+     "maxPreStepPct": 12.7,
+     "kind": "continuous",
+     "jump": false,
+     "momentumFrames": 1,
+     "settleMs": 146,
+     "finalOk": true,
+     "last": {
+      "reachedPct": 0,
+      "discPct": 0,
+      "maxPreStepPct": 0,
+      "kind": "continuous",
+      "jump": false,
+      "momentumFrames": 0,
+      "settleMs": 1,
+      "finalOk": true
+     },
+     "errors": [],
+     "kinds": {
+      "continuous": 5
+     },
+     "runs": 5,
+     "discPctMedian": 0.7,
+     "settleMsMedian": 148
+    }
+   }
+  },
+  "single": {
+   "css": {
+    "press": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 365,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 364,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 365,
+      "state": "moves"
+     }
+    },
+    "list": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 260,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 264,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "sheet": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 307,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 302,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 165,
+      "state": "fades"
+     }
+    },
+    "view": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 462,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 473,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 176,
+      "state": "fades"
+     }
+    },
+    "scroll": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0,
+      "progressErrMax": 0,
+      "doneMs": 501,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0,
+      "progressErrMax": 0.0001,
+      "doneMs": 500,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "progressErrMean": 0,
+      "progressErrMax": 0.0001,
+      "doneMs": 503,
+      "state": "instant"
+     }
+    },
+    "ticker": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 796,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 781,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "grid": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 694,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 692,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 166,
+      "state": "fades"
+     }
+    }
+   },
+   "css-vt-list": {
+    "list": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 463,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 481,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    }
+   },
+   "css-vt-list-pe": {
+    "list": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 470,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 468,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    }
+   },
+   "css-vtpe": {
+    "view": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 478,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 449,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 172,
+      "state": "fades"
+     }
+    }
+   },
+   "motion": {
+    "press": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 363,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 362,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 361,
+      "state": "moves"
+     }
+    },
+    "list": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 252,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 249,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "sheet": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 301,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 306,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 158,
+      "state": "fades"
+     }
+    },
+    "view": {
+     "normal": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 434,
+      "state": "fades"
+     },
+     "reduce-default": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 469,
+      "state": "fades"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 184,
+      "state": "fades"
+     }
+    },
+    "scroll": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0,
+      "progressErrMax": 0,
+      "doneMs": 649,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0,
+      "progressErrMax": 0.0001,
+      "doneMs": 652,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "progressErrMean": 0,
+      "progressErrMax": 0,
+      "doneMs": 499,
+      "state": "instant"
+     }
+    },
+    "ticker": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 778,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 772,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "grid": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 672,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 688,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 155,
+      "state": "fades"
+     }
+    }
+   },
+   "motion-hw": {
+    "press": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 362,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 363,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 348,
+      "state": "moves"
+     }
+    },
+    "list": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 239,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 244,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "sheet": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 318,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 315,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 154,
+      "state": "fades"
+     }
+    }
+   },
+   "motion-react": {
+    "press": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 380,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 382,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 280,
+      "state": "instant"
+     }
+    },
+    "list": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 271,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 258,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 28,
+      "state": "instant"
+     }
+    },
+    "sheet": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 331,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 332,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 168,
+      "state": "fades"
+     }
+    },
+    "view": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 411,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 425,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 398,
+      "state": "fades"
+     }
+    },
+    "scroll": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0.0002,
+      "progressErrMax": 0.0127,
+      "doneMs": 655,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0,
+      "progressErrMax": 0,
+      "doneMs": 652,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0.0001,
+      "progressErrMax": 0.0102,
+      "doneMs": 618,
+      "state": "fades"
+     }
+    },
+    "ticker": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 796,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 798,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 28,
+      "state": "instant"
+     }
+    },
+    "grid": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 705,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 702,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 163,
+      "state": "fades"
+     }
+    }
+   },
+   "motion-react-vt": {
+    "view": {
+     "normal": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 295,
+      "state": "fades"
+     },
+     "reduce-default": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 355,
+      "state": "fades"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 308,
+      "state": "fades"
+     }
+    }
+   },
+   "gsap": {
+    "press": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 349,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 340,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 369,
+      "state": "moves"
+     }
+    },
+    "list": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 246,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 275,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "sheet": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 318,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 285,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 143,
+      "state": "fades"
+     }
+    },
+    "view": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 412,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 415,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 147,
+      "state": "fades"
+     }
+    },
+    "scroll": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0,
+      "progressErrMax": 0,
+      "doneMs": 701,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0,
+      "progressErrMax": 0,
+      "doneMs": 683,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "progressErrMean": 0,
+      "progressErrMax": 0,
+      "doneMs": 483,
+      "state": "instant"
+     }
+    },
+    "ticker": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 774,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 781,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "grid": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 691,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 697,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 169,
+      "state": "fades"
+     }
+    }
+   },
+   "anime": {
+    "press": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 347,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 348,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 345,
+      "state": "moves"
+     }
+    },
+    "list": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 246,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 234,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "sheet": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 294,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 293,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 134,
+      "state": "fades"
+     }
+    },
+    "view": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 381,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 384,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 138,
+      "state": "fades"
+     }
+    },
+    "scroll": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0,
+      "progressErrMax": 0,
+      "doneMs": 654,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0,
+      "progressErrMax": 0,
+      "doneMs": 680,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "progressErrMean": 0.001,
+      "progressErrMax": 0.0418,
+      "doneMs": 504,
+      "state": "instant"
+     }
+    },
+    "ticker": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 769,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 763,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "grid": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 669,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 671,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 143,
+      "state": "fades"
+     }
+    }
+   },
+   "spring": {
+    "press": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 373,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 340,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 359,
+      "state": "moves"
+     }
+    },
+    "list": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 230,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 229,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "sheet": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 296,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 313,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 156,
+      "state": "fades"
+     }
+    },
+    "view": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 378,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 406,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 146,
+      "state": "fades"
+     }
+    },
+    "scroll": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0.0616,
+      "progressErrMax": 0.1582,
+      "doneMs": 1134,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "progressErrMean": 0.0612,
+      "progressErrMax": 0.1721,
+      "doneMs": 1136,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "progressErrMean": 0.0608,
+      "progressErrMax": 0.1884,
+      "doneMs": 1169,
+      "state": "instant"
+     }
+    },
+    "ticker": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 871,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 765,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "grid": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 667,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 674,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 122,
+      "state": "fades"
+     }
+    }
+   },
+   "autoanimate": {
+    "list": {
+     "normal": {
+      "moves": true,
+      "fades": false,
+      "final": true,
+      "doneMs": 256,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "sheet": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 465,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    },
+    "grid": {
+     "normal": {
+      "moves": false,
+      "fades": true,
+      "final": true,
+      "doneMs": 372,
+      "state": "fades"
+     },
+     "reduce-default": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 0,
+      "state": "instant"
+     }
+    }
+   },
+   "theatre": {
+    "grid": {
+     "normal": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 701,
+      "state": "moves"
+     },
+     "reduce-default": {
+      "moves": true,
+      "fades": true,
+      "final": true,
+      "doneMs": 692,
+      "state": "moves"
+     },
+     "reduce-guard": {
+      "moves": false,
+      "fades": false,
+      "final": true,
+      "doneMs": 30,
+      "state": "instant"
+     }
+    }
+   }
+  },
+  "compositor": {
+   "css": {
+    "movedPx": 224,
+    "framesInBlock": 13
+   },
+   "motion": {
+    "movedPx": 0,
+    "framesInBlock": 0
+   },
+   "motion-hw": {
+    "movedPx": 224,
+    "framesInBlock": 15
+   },
+   "motion-react": {
+    "movedPx": 0,
+    "framesInBlock": 0
+   },
+   "gsap": {
+    "movedPx": 0,
+    "framesInBlock": 0
+   },
+   "anime": {
+    "movedPx": 0,
+    "framesInBlock": 0
+   },
+   "spring": {
+    "movedPx": 0,
+    "framesInBlock": 0
+   },
+   "autoanimate": {
+    "movedPx": 0,
+    "framesInBlock": 2
+   }
+  },
+  "cost": {
+   "css": {
+    "task": 485.6,
+    "script": 5.9,
+    "layout": 40.4,
+    "style": 49.9,
+    "restTaskPerS": 0.5,
+    "restRafPerS": 0
+   },
+   "css-vt-list": {
+    "task": 174.8,
+    "script": 1.6,
+    "layout": 2.4,
+    "style": 42,
+    "restTaskPerS": 0.1,
+    "restRafPerS": 0
+   },
+   "css-vt-list-pe": {
+    "task": 157.4,
+    "script": 2.3,
+    "layout": 2,
+    "style": 34.2,
+    "restTaskPerS": 0.1,
+    "restRafPerS": 0
+   },
+   "css-vtpe": {
+    "task": 151.9,
+    "script": 1.5,
+    "layout": 2.6,
+    "style": 20.8,
+    "restTaskPerS": 0.1,
+    "restRafPerS": 0
+   },
+   "motion": {
+    "task": 729,
+    "script": 181,
+    "layout": 26.1,
+    "style": 45.4,
+    "restTaskPerS": 28.2,
+    "restRafPerS": 59
+   },
+   "motion-hw": {
+    "task": 391.1,
+    "script": 104.9,
+    "layout": 2.6,
+    "style": 14.7,
+    "restTaskPerS": 30.2,
+    "restRafPerS": 59
+   },
+   "motion-react": {
+    "task": 682.5,
+    "script": 208.6,
+    "layout": 30.2,
+    "style": 44,
+    "restTaskPerS": 0.2,
+    "restRafPerS": 0
+   },
+   "motion-react-vt": {
+    "task": 147.8,
+    "script": 52,
+    "layout": 4.4,
+    "style": 17.4,
+    "restTaskPerS": 0.2,
+    "restRafPerS": 0
+   },
+   "gsap": {
+    "task": 588.6,
+    "script": 146.3,
+    "layout": 29.7,
+    "style": 24.6,
+    "restTaskPerS": 45.9,
+    "restRafPerS": 103.5
+   },
+   "anime": {
+    "task": 785.1,
+    "script": 181.3,
+    "layout": 22.8,
+    "style": 35.2,
+    "restTaskPerS": 41.3,
+    "restRafPerS": 56.5
+   },
+   "spring": {
+    "task": 978.8,
+    "script": 397.5,
+    "layout": 21.8,
+    "style": 31.5,
+    "restTaskPerS": 98.8,
+    "restRafPerS": 57.5
+   },
+   "autoanimate": {
+    "task": 244.7,
+    "script": 22.6,
+    "layout": 22.8,
+    "style": 13.8,
+    "restTaskPerS": 10.4,
+    "restRafPerS": 0
+   },
+   "theatre": {
+    "task": 277.8,
+    "script": 96.8,
+    "layout": 0,
+    "style": 5.6,
+    "restTaskPerS": 33.6,
+    "restRafPerS": 54
+   },
+   "idleBaseline": {
+    "task": 3,
+    "script": 0,
+    "layout": 0,
+    "style": 0,
+    "restTaskPerS": 0.1,
+    "restRafPerS": 0
+   }
+  },
+  "env": {
+   "browser": "141.0.7390.37",
+   "runs": 5,
+   "viewport": {
+    "width": 1000,
+    "height": 800
+   }
+  },
+  "motionTransformRepro": {
+   "scaleAt50ms_from_none": 0.03,
+   "scaleShorthandAt50ms": 0.972,
+   "bBefore": 55.7,
+   "bAfter2Frames": 5.5
+  },
+  "restProbes": {
+   "motion animate (finished)": 0,
+   "motion animate transform string (finished)": 0,
+   "motion scroll(animate scaleX)": 58.5,
+   "motion scroll(animate transform string)": 0,
+   "motion scroll(callback)": 0,
+   "motion inView": 0,
+   "motion press": 0,
+   "gsap tween (finished)": 0,
+   "gsap + ScrollTrigger (one trigger)": 73,
+   "gsap ScrollTrigger registered only": 73,
+   "anime animate (finished)": 0,
+   "anime onScroll": 56.5,
+   "anime waapi.animate (finished)": 0,
+   "react-spring useSpring (finished)": 0,
+   "react-spring useScroll": 59,
+   "motion/react useScroll": 0,
+   "theatre sequence played once": 0,
+   "CSS transition (finished)": 0
+  }
+ },
+ "b": {
+  "sizes": {
+   "rive-canvas": {
+    "jsMin": 200689,
+    "jsGz": 57439,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 1955136,
+    "wasmGz": 814027,
+    "wasmBr": 627666,
+    "asset": "switch.riv",
+    "assetRaw": 9218,
+    "assetGz": 3784
+   },
+   "rive-canvas-lite": {
+    "jsMin": 179401,
+    "jsGz": 49919,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 882456,
+    "wasmGz": 364845,
+    "wasmBr": 278888,
+    "asset": "switch.riv",
+    "assetRaw": 9218,
+    "assetGz": 3784
+   },
+   "rive-webgl2": {
+    "jsMin": 204288,
+    "jsGz": 58142,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 2224503,
+    "wasmGz": 918431,
+    "wasmBr": 716787,
+    "asset": "switch.riv",
+    "assetRaw": 9218,
+    "assetGz": 3784
+   },
+   "rive-react": {
+    "jsMin": 443938,
+    "jsGz": 132229,
+    "jsGzWithoutReact": 63387,
+    "wasmRaw": 1955136,
+    "wasmGz": 814027,
+    "wasmBr": 627666,
+    "asset": "switch.riv",
+    "assetRaw": 9218,
+    "assetGz": 3784
+   },
+   "lottie-svg": {
+    "jsMin": 309375,
+    "jsGz": 79194,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 0,
+    "wasmGz": 0,
+    "wasmBr": 0,
+    "asset": "toggle.json",
+    "assetRaw": 26453,
+    "assetGz": 2367
+   },
+   "lottie-light": {
+    "jsMin": 172675,
+    "jsGz": 49334,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 0,
+    "wasmGz": 0,
+    "wasmBr": 0,
+    "asset": "toggle.json",
+    "assetRaw": 26453,
+    "assetGz": 2367
+   },
+   "dotlottie": {
+    "jsMin": 62003,
+    "jsGz": 13988,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 1238072,
+    "wasmGz": 499096,
+    "wasmBr": 388165,
+    "asset": "toggle-sm.lottie",
+    "assetRaw": 3262,
+    "assetGz": 3173
+   },
+   "dotlottie-worker": {
+    "jsMin": 108529,
+    "jsGz": 20831,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 1238072,
+    "wasmGz": 499096,
+    "wasmBr": 388165,
+    "asset": "toggle-sm.lottie",
+    "assetRaw": 3262,
+    "assetGz": 3173
+   },
+   "css-svg": {
+    "jsMin": 216,
+    "jsGz": 171,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 0,
+    "wasmGz": 0,
+    "wasmBr": 0,
+    "assetRaw": null,
+    "assetGz": null
+   },
+   "sprite": {
+    "jsMin": 241,
+    "jsGz": 188,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 0,
+    "wasmGz": 0,
+    "wasmBr": 0,
+    "asset": "../b/sprite.webp",
+    "assetRaw": 53524,
+    "assetGz": 50657
+   },
+   "loop-rive": {
+    "jsMin": 200556,
+    "jsGz": 57388,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 1955136,
+    "wasmGz": 814027,
+    "wasmBr": 627666,
+    "asset": "truck.riv",
+    "assetRaw": 19760,
+    "assetGz": 7586
+   },
+   "loop-lottie-svg": {
+    "jsMin": 309127,
+    "jsGz": 79086,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 0,
+    "wasmGz": 0,
+    "wasmBr": 0,
+    "asset": "hamster.json",
+    "assetRaw": 46836,
+    "assetGz": 3846
+   },
+   "loop-lottie-canvas": {
+    "jsMin": 309130,
+    "jsGz": 79086,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 0,
+    "wasmGz": 0,
+    "wasmBr": 0,
+    "asset": "hamster.json",
+    "assetRaw": 46836,
+    "assetGz": 3846
+   },
+   "loop-dotlottie": {
+    "jsMin": 61833,
+    "jsGz": 13945,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 1238072,
+    "wasmGz": 499096,
+    "wasmBr": 388165,
+    "asset": "hamster.lottie",
+    "assetRaw": 4674,
+    "assetGz": 4595
+   },
+   "loop-dotlottie-worker": {
+    "jsMin": 108332,
+    "jsGz": 20782,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 1238072,
+    "wasmGz": 499096,
+    "wasmBr": 388165,
+    "asset": "hamster.lottie",
+    "assetRaw": 4674,
+    "assetGz": 4595
+   },
+   "rive-semantics": {
+    "jsMin": 200642,
+    "jsGz": 57429,
+    "jsGzWithoutReact": null,
+    "wasmRaw": 1955136,
+    "wasmGz": 814027,
+    "wasmBr": 627666,
+    "asset": "semantic.riv",
+    "assetRaw": 880468,
+    "assetGz": 470285
+   }
+  },
+  "toggle": {
+   "rive-canvas": {
+    "ttffMs": 942.1,
+    "ttffRuns": [
+     968,
+     1131,
+     636,
+     644,
+     942
+    ],
+    "loadedCbMs": 889.8,
+    "taskMsPerS": 389.8,
+    "scriptMsPerS": 166.6,
+    "rafPerS": 53.1,
+    "restTaskMsPerS": 54.3,
+    "restRafPerS": 55,
+    "reducedMotion": {
+     "distinctFrames": 55,
+     "animates": true
+    },
+    "errors": []
+   },
+   "rive-canvas-lite": {
+    "ttffMs": 530.3,
+    "ttffRuns": [
+     530,
+     522,
+     643,
+     499,
+     678
+    ],
+    "loadedCbMs": 520.1,
+    "taskMsPerS": 427.5,
+    "scriptMsPerS": 179.8,
+    "rafPerS": 50.3,
+    "restTaskMsPerS": 72.8,
+    "restRafPerS": 56.5,
+    "reducedMotion": {
+     "distinctFrames": 64,
+     "animates": true
+    },
+    "errors": []
+   },
+   "rive-webgl2": {
+    "ttffMs": 1919.5,
+    "ttffRuns": [
+     2444,
+     1850,
+     2163,
+     1797,
+     1920
+    ],
+    "loadedCbMs": 1232.8,
+    "taskMsPerS": 974.5,
+    "scriptMsPerS": 60.6,
+    "rafPerS": 11.8,
+    "restTaskMsPerS": 68.9,
+    "restRafPerS": 57.5,
+    "reducedMotion": {
+     "distinctFrames": 27,
+     "animates": true
+    },
+    "errors": []
+   },
+   "rive-react": {
+    "ttffMs": 1098.2,
+    "ttffRuns": [
+     755,
+     1274,
+     1095,
+     1115,
+     1098
+    ],
+    "loadedCbMs": 839.1,
+    "taskMsPerS": 413.4,
+    "scriptMsPerS": 177.3,
+    "rafPerS": 56,
+    "restTaskMsPerS": 83.7,
+    "restRafPerS": 59.5,
+    "reducedMotion": {
+     "distinctFrames": 66,
+     "animates": true
+    },
+    "errors": []
+   },
+   "lottie-svg": {
+    "ttffMs": 386.8,
+    "ttffRuns": [
+     409,
+     288,
+     463,
+     387,
+     256
+    ],
+    "loadedCbMs": 394.5,
+    "taskMsPerS": 307.3,
+    "scriptMsPerS": 98.3,
+    "rafPerS": 56.7,
+    "restTaskMsPerS": 3,
+    "restRafPerS": 0,
+    "reducedMotion": {
+     "distinctFrames": 47,
+     "animates": true
+    },
+    "errors": []
+   },
+   "lottie-canvas": {
+    "ttffMs": 289.8,
+    "ttffRuns": [
+     268,
+     290,
+     451,
+     169,
+     316
+    ],
+    "loadedCbMs": 290.4,
+    "taskMsPerS": 751.2,
+    "scriptMsPerS": 606.5,
+    "rafPerS": 48.9,
+    "restTaskMsPerS": 5.7,
+    "restRafPerS": 0,
+    "reducedMotion": {
+     "distinctFrames": 47,
+     "animates": true
+    },
+    "errors": []
+   },
+   "lottie-light": {
+    "ttffMs": 285.4,
+    "ttffRuns": [
+     285,
+     382,
+     453,
+     276,
+     258
+    ],
+    "loadedCbMs": 282.3,
+    "taskMsPerS": 277.2,
+    "scriptMsPerS": 91.7,
+    "rafPerS": 55.9,
+    "restTaskMsPerS": 0.9,
+    "restRafPerS": 0,
+    "reducedMotion": {
+     "distinctFrames": 42,
+     "animates": true
+    },
+    "errors": []
+   },
+   "dotlottie": {
+    "ttffMs": 413.9,
+    "ttffRuns": [
+     414,
+     507,
+     293,
+     250,
+     601
+    ],
+    "loadedCbMs": 415.1,
+    "taskMsPerS": 254.6,
+    "scriptMsPerS": 162.6,
+    "rafPerS": 51.8,
+    "restTaskMsPerS": 73.7,
+    "restRafPerS": 57.5,
+    "reducedMotion": {
+     "distinctFrames": 35,
+     "animates": true
+    },
+    "errors": []
+   },
+   "dotlottie-worker": {
+    "ttffMs": 444.3,
+    "ttffRuns": [
+     931,
+     491,
+     313,
+     444,
+     364
+    ],
+    "loadedCbMs": 418.6,
+    "taskMsPerS": 19.5,
+    "scriptMsPerS": 1.3,
+    "rafPerS": 0,
+    "restTaskMsPerS": 0.5,
+    "restRafPerS": 0,
+    "reducedMotion": {
+     "distinctFrames": 31,
+     "animates": true
+    },
+    "errors": []
+   },
+   "css-svg": {
+    "ttffMs": 98.4,
+    "ttffRuns": [
+     98,
+     113,
+     118,
+     67,
+     51
+    ],
+    "loadedCbMs": 109.4,
+    "taskMsPerS": 80,
+    "scriptMsPerS": 1,
+    "rafPerS": 0,
+    "restTaskMsPerS": 2,
+    "restRafPerS": 0,
+    "reducedMotion": {
+     "distinctFrames": 15,
+     "animates": true
+    },
+    "errors": []
+   },
+   "sprite": {
+    "ttffMs": 131.3,
+    "ttffRuns": [
+     104,
+     146,
+     100,
+     154,
+     131
+    ],
+    "loadedCbMs": 72.3,
+    "taskMsPerS": 80.6,
+    "scriptMsPerS": 0.6,
+    "rafPerS": 0,
+    "restTaskMsPerS": 0.7,
+    "restRafPerS": 0,
+    "reducedMotion": {
+     "distinctFrames": 2,
+     "animates": false
+    },
+    "errors": []
+   }
+  },
+  "loops": {
+   "loop-rive": {
+    "ttffMs": 632.7,
+    "ttffRuns": [
+     575,
+     599,
+     674,
+     633,
+     980
+    ],
+    "loadedCbMs": 615.9,
+    "taskMsPerS": 430.7,
+    "scriptMsPerS": 212.6,
+    "rafPerS": 50.2,
+    "restTaskMsPerS": null,
+    "restRafPerS": null,
+    "reducedMotion": {
+     "distinctFrames": 66,
+     "animates": true
+    },
+    "errors": []
+   },
+   "loop-lottie-svg": {
+    "ttffMs": 489,
+    "ttffRuns": [
+     662,
+     1062,
+     451,
+     489,
+     329
+    ],
+    "loadedCbMs": 471,
+    "taskMsPerS": 267,
+    "scriptMsPerS": 71.5,
+    "rafPerS": 53.4,
+    "restTaskMsPerS": null,
+    "restRafPerS": null,
+    "reducedMotion": {
+     "distinctFrames": 79,
+     "animates": true
+    },
+    "errors": []
+   },
+   "loop-lottie-canvas": {
+    "ttffMs": 359.9,
+    "ttffRuns": [
+     360,
+     370,
+     444,
+     275,
+     335
+    ],
+    "loadedCbMs": 360.5,
+    "taskMsPerS": 377.7,
+    "scriptMsPerS": 130.1,
+    "rafPerS": 47.9,
+    "restTaskMsPerS": null,
+    "restRafPerS": null,
+    "reducedMotion": {
+     "distinctFrames": 74,
+     "animates": true
+    },
+    "errors": []
+   },
+   "loop-dotlottie": {
+    "ttffMs": 400.8,
+    "ttffRuns": [
+     401,
+     318,
+     485,
+     236,
+     483
+    ],
+    "loadedCbMs": 386.3,
+    "taskMsPerS": 317.1,
+    "scriptMsPerS": 206.4,
+    "rafPerS": 51.3,
+    "restTaskMsPerS": null,
+    "restRafPerS": null,
+    "reducedMotion": {
+     "distinctFrames": 63,
+     "animates": true
+    },
+    "errors": []
+   },
+   "loop-dotlottie-worker": {
+    "ttffMs": 526.4,
+    "ttffRuns": [
+     899,
+     294,
+     526,
+     511,
+     573
+    ],
+    "loadedCbMs": 501.8,
+    "taskMsPerS": 21.3,
+    "scriptMsPerS": 4.2,
+    "rafPerS": 0,
+    "restTaskMsPerS": null,
+    "restRafPerS": null,
+    "reducedMotion": {
+     "distinctFrames": 65,
+     "animates": true
+    },
+    "errors": []
+   }
+  },
+  "a11y": {
+   "rive-canvas": {
+    "tree": "- main",
+    "tabReaches": null,
+    "keyboardToggles": false
+   },
+   "rive-canvas-lite": {
+    "tree": "- main",
+    "tabReaches": null,
+    "keyboardToggles": false
+   },
+   "rive-webgl2": {
+    "tree": "- main",
+    "tabReaches": null,
+    "keyboardToggles": false
+   },
+   "rive-react": {
+    "tree": "- main",
+    "tabReaches": null,
+    "keyboardToggles": false
+   },
+   "lottie-svg": {
+    "tree": "- main: |   - img",
+    "tabReaches": null,
+    "keyboardToggles": false
+   },
+   "lottie-canvas": {
+    "tree": "- main",
+    "tabReaches": null,
+    "keyboardToggles": false
+   },
+   "lottie-light": {
+    "tree": "- main: |   - img",
+    "tabReaches": null,
+    "keyboardToggles": false
+   },
+   "dotlottie": {
+    "tree": "- main",
+    "tabReaches": null,
+    "keyboardToggles": false
+   },
+   "dotlottie-worker": {
+    "tree": "- main",
+    "tabReaches": null,
+    "keyboardToggles": false
+   },
+   "css-svg": {
+    "tree": "- main: |   - switch \"Dark mode\"",
+    "tabReaches": "button[role=switch]",
+    "keyboardToggles": true
+   },
+   "sprite": {
+    "tree": "- main: |   - switch \"Dark mode\"",
+    "tabReaches": "button[role=switch]",
+    "keyboardToggles": true
+   },
+   "rive-semantics": {
+    "tree": "- main: |   - region \"Alerts demo\": |     - button \"Add alert\" |     - button \"Add info\"",
+    "tabReaches": "canvas",
+    "keyboardToggles": false
+   }
+  },
+  "env": {
+   "browser": "141.0.7390.37",
+   "runs": 5,
+   "cpuThrottle": 4,
+   "note": "WebGL2 is SwiftShader (CPU): rive-webgl2 numbers are pessimistic and only comparable among themselves"
+  }
+ },
+ "c": {
+  "pages": {
+   "static": {
+    "exit": 1,
+    "seconds": 95,
+    "specPass": "0/9",
+    "spec": {
+     "tp": 11,
+     "fp": [],
+     "fn": []
+    },
+    "flags": {
+     "predicted": 27,
+     "truth": 27,
+     "tp": 27,
+     "fp": [],
+     "fn": []
+    },
+    "problems": {
+     "cta-press": [
+      "static: nothing changed after the trigger",
+      "reduced motion removed essential feedback (nothing changes)"
+     ],
+     "cta-hover": [
+      "static: nothing changed after the trigger",
+      "reduced motion removed essential feedback (nothing changes)"
+     ],
+     "plan-hover": [
+      "static: nothing changed after the trigger"
+     ],
+     "sheet-open": [
+      "static: changed in one frame (no animation)"
+     ],
+     "toast": [
+      "static: changed in one frame (no animation)"
+     ],
+     "features-reveal": [
+      "static: nothing changed after the trigger"
+     ],
+     "stat-count": [
+      "static: nothing changed after the trigger"
+     ],
+     "hero-in": [
+      "static: nothing changed after the trigger"
+     ],
+     "panel-swap": [
+      "static: nothing changed after the trigger"
+     ]
+    },
+    "reduced": {
+     "cta-press": "nothing changes",
+     "cta-hover": "nothing changes",
+     "plan-hover": "nothing changes",
+     "sheet-open": "stops (instant)",
+     "toast": "stops (instant)",
+     "features-reveal": "nothing changes",
+     "stat-count": "nothing changes",
+     "hero-in": "nothing changes",
+     "panel-swap": "nothing changes"
+    }
+   },
+   "good": {
+    "exit": 1,
+    "seconds": 107,
+    "specPass": "7/9",
+    "spec": {
+     "tp": 0,
+     "fp": [
+      "cta-hover|reduced",
+      "sheet-open|props"
+     ],
+     "fn": []
+    },
+    "flags": {
+     "predicted": 0,
+     "truth": 0,
+     "tp": 0,
+     "fp": [],
+     "fn": []
+    },
+    "problems": {
+     "cta-press": [],
+     "cta-hover": [
+      "reduced motion removed essential feedback (stops (instant))"
+     ],
+     "plan-hover": [],
+     "sheet-open": [
+      "layout jumps in one frame (width, height, left/margin, top/margin): a layout property changed without transitioning"
+     ],
+     "toast": [],
+     "features-reveal": [],
+     "stat-count": [],
+     "hero-in": [],
+     "panel-swap": []
+    },
+    "reduced": {
+     "cta-press": "still moves",
+     "cta-hover": "stops (instant)",
+     "plan-hover": "substituted (fade/colour)",
+     "sheet-open": "substituted (fade/colour)",
+     "toast": "substituted (fade/colour)",
+     "features-reveal": "nothing changes",
+     "stat-count": "nothing changes",
+     "hero-in": "substituted (fade/colour)",
+     "panel-swap": "substituted (fade/colour)"
+    }
+   },
+   "over": {
+    "exit": 1,
+    "seconds": 104,
+    "specPass": "0/9",
+    "spec": {
+     "tp": 31,
+     "fp": [
+      "sheet-open|interrupt"
+     ],
+     "fn": []
+    },
+    "flags": {
+     "predicted": 47,
+     "truth": 47,
+     "tp": 47,
+     "fp": [],
+     "fn": []
+    },
+    "problems": {
+     "cta-press": [
+      "static: nothing changed after the trigger",
+      "reduced motion removed essential feedback (nothing changes)"
+     ],
+     "cta-hover": [
+      "duration 600ms outside micro (100ms)",
+      "easing cubic-bezier(0.68, -0.55, 0.27, 1.55) is not out (cubic-bezier(0.2, 0, 0, 1))",
+      "animates layout properties not in the spec: width, height, padding-bottom, padding-left, padding-right, padding-top"
+     ],
+     "plan-hover": [
+      "duration 600ms outside small (150ms)",
+      "layout jumps in one frame (width, top/margin): a layout property changed without transitioning",
+      "easing cubic-bezier(0.68, -0.55, 0.27, 1.55) is not out (cubic-bezier(0.2, 0, 0, 1))",
+      "spec'd properties that did not change: transform",
+      "reduced motion: the fade takes 600ms (≤ 200 ms)"
+     ],
+     "sheet-open": [
+      "duration 800ms outside large (300ms)",
+      "easing cubic-bezier(0.68, -0.55, 0.27, 1.55) / ease is not out (cubic-bezier(0.2, 0, 0, 1))",
+      "animates layout properties not in the spec: height, top/margin, padding-bottom, padding-top",
+      "spec'd properties that did not change: transform",
+      "reduced motion: still moves — spec says fade",
+      "interrupted after 120ms: jumps"
+     ],
+     "toast": [
+      "duration 900ms outside medium (240ms)",
+      "easing cubic-bezier(0.68, -0.55, 0.27, 1.55) is not out (cubic-bezier(0.2, 0, 0, 1))",
+      "animates layout properties not in the spec: top/margin, margin-bottom",
+      "spec'd properties that did not change: transform",
+      "reduced motion: still moves — spec says fade"
+     ],
+     "features-reveal": [
+      "duration 1200ms outside medium (240ms)",
+      "easing cubic-bezier(0.68, -0.55, 0.27, 1.55) is not out (cubic-bezier(0.2, 0, 0, 1))",
+      "stagger 200ms, spec 40ms",
+      "reduced motion: still moves — spec says static"
+     ],
+     "stat-count": [
+      "duration 2494ms (fitted to samples, linear) outside 800ms",
+      "sampled curve fits linear better than out (rms 0.069 vs 0.005)",
+      "reduced motion: substituted (fade/colour) — spec says instant"
+     ],
+     "hero-in": [
+      "duration 1500ms outside hero (700ms)",
+      "easing ease-in is not emphasized (cubic-bezier(0.05, 0.7, 0.1, 1))",
+      "reduced motion: still moves — spec says fade"
+     ],
+     "panel-swap": [
+      "duration 600ms outside page (400ms)",
+      "easing ease / ease-in is not out (cubic-bezier(0.2, 0, 0, 1))",
+      "reduced motion: still moves — spec says fade",
+      "interrupted after 150ms: input swallowed (the second click landed on <html>; a view transition hit-tests the root for its whole duration)"
+     ]
+    },
+    "reduced": {
+     "cta-press": "nothing changes",
+     "cta-hover": "still moves",
+     "plan-hover": "substituted (fade/colour)",
+     "sheet-open": "still moves",
+     "toast": "still moves",
+     "features-reveal": "still moves",
+     "stat-count": "substituted (fade/colour)",
+     "hero-in": "still moves",
+     "panel-swap": "still moves"
+    }
+   },
+   "gsap": {
+    "exit": 1,
+    "seconds": 96,
+    "specPass": "7/9",
+    "spec": {
+     "tp": 0,
+     "fp": [
+      "sheet-open|props",
+      "hero-in|duration"
+     ],
+     "fn": []
+    },
+    "flags": {
+     "predicted": 0,
+     "truth": 0,
+     "tp": 0,
+     "fp": [],
+     "fn": []
+    },
+    "problems": {
+     "cta-press": [],
+     "cta-hover": [],
+     "plan-hover": [],
+     "sheet-open": [
+      "layout jumps in one frame (width, height, left/margin, top/margin): a layout property changed without transitioning"
+     ],
+     "toast": [],
+     "features-reveal": [],
+     "stat-count": [],
+     "hero-in": [
+      "duration 1640ms (fitted to samples, spec easing) outside hero (700ms)"
+     ],
+     "panel-swap": []
+    },
+    "reduced": {
+     "cta-press": "still moves",
+     "cta-hover": "substituted (fade/colour)",
+     "plan-hover": "substituted (fade/colour)",
+     "sheet-open": "substituted (fade/colour)",
+     "toast": "substituted (fade/colour)",
+     "features-reveal": "nothing changes",
+     "stat-count": "nothing changes",
+     "hero-in": "substituted (fade/colour)",
+     "panel-swap": "substituted (fade/colour)"
+    }
+   }
+  },
+  "totals": {
+   "specFindings": {
+    "precision": 0.894,
+    "recall": 1,
+    "tp": 42,
+    "fp": [
+     "good:cta-hover|reduced",
+     "good:sheet-open|props",
+     "over:sheet-open|interrupt",
+     "gsap:sheet-open|props",
+     "gsap:hero-in|duration"
+    ],
+    "fn": []
+   },
+   "flags": {
+    "precision": 1,
+    "recall": 1,
+    "tp": 74,
+    "fp": [],
+    "fn": []
+   },
+   "entryVerdicts": "32/36"
+  },
+  "heldout": {
+   "agreementNormal": "40/42",
+   "agreementReduce": "35/41",
+   "disagreements": [
+    {
+     "page": "css",
+     "id": "ticker",
+     "motionMjs": {
+      "normal": "none",
+      "reduce": "nothing changes",
+      "problems": [
+       "static: nothing changed after the trigger"
+      ]
+     },
+     "partA": {
+      "normal": "moves",
+      "reduce": "moves"
+     },
+     "agreeNormal": false,
+     "agreeReduce": false
+    },
+    {
+     "page": "motion",
+     "id": "ticker",
+     "motionMjs": {
+      "normal": "animates",
+      "reduce": "substituted (fade/colour)",
+      "problems": [
+       "reduced motion: substituted (fade/colour) — spec says instant"
+      ]
+     },
+     "partA": {
+      "normal": "moves",
+      "reduce": "moves"
+     },
+     "agreeNormal": true,
+     "agreeReduce": false
+    },
+    {
+     "page": "motion-react",
+     "id": "sheet",
+     "motionMjs": {
+      "problems": [
+       "normal run: target #sheet not found"
+      ]
+     },
+     "partA": {
+      "normal": "moves",
+      "reduce": "moves"
+     },
+     "agreeNormal": false,
+     "agreeReduce": false
+    },
+    {
+     "page": "motion-react",
+     "id": "ticker",
+     "motionMjs": {
+      "normal": "animates",
+      "reduce": "substituted (fade/colour)",
+      "problems": [
+       "reduced motion: substituted (fade/colour) — spec says instant"
+      ]
+     },
+     "partA": {
+      "normal": "moves",
+      "reduce": "moves"
+     },
+     "agreeNormal": true,
+     "agreeReduce": false
+    },
+    {
+     "page": "gsap",
+     "id": "ticker",
+     "motionMjs": {
+      "normal": "animates",
+      "reduce": "substituted (fade/colour)",
+      "problems": [
+       "reduced motion: substituted (fade/colour) — spec says instant"
+      ]
+     },
+     "partA": {
+      "normal": "moves",
+      "reduce": "moves"
+     },
+     "agreeNormal": true,
+     "agreeReduce": false
+    },
+    {
+     "page": "anime",
+     "id": "ticker",
+     "motionMjs": {
+      "normal": "animates",
+      "reduce": "substituted (fade/colour)",
+      "problems": [
+       "reduced motion: substituted (fade/colour) — spec says instant"
+      ]
+     },
+     "partA": {
+      "normal": "moves",
+      "reduce": "moves"
+     },
+     "agreeNormal": true,
+     "agreeReduce": false
+    },
+    {
+     "page": "spring",
+     "id": "ticker",
+     "motionMjs": {
+      "normal": "animates",
+      "reduce": "substituted (fade/colour)",
+      "problems": [
+       "reduced motion: substituted (fade/colour) — spec says instant"
+      ]
+     },
+     "partA": {
+      "normal": "moves",
+      "reduce": "moves"
+     },
+     "agreeNormal": true,
+     "agreeReduce": false
+    }
+   ]
+  }
+ }
+}

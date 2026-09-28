@@ -6,7 +6,8 @@
 <script src="../node_modules/onscan.js/onscan.js"></script>
 <script>
 // onscan.js 1.5.2 with its defaults (avgTimeByChar 30, minLength 6, suffix Tab/Enter).
-window.scans = []; window.rejected = [];
+window.scans = []; window.rejected = []; window.gaps = []; let last = 0;
+document.addEventListener('keydown', () => { const n = performance.now(); if (last) window.gaps.push(Math.round(n - last)); last = n; }, true);
 onScan.attachTo(document, { onScan: (code) => window.scans.push(code), onScanError: (e) => window.rejected.push(e.scanCode ?? '') });
 </script>
 </body>

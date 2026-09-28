@@ -33,7 +33,9 @@ export function glyphClipProbe(opts = {}) {
     if (!clipper) continue;
     checked++;
     const cr = clipper.getBoundingClientRect(), ccs = getComputedStyle(clipper);
-    const clip = { top: cr.top + parseFloat(ccs.borderTopWidth), bottom: cr.bottom - parseFloat(ccs.borderBottomWidth) };
+    // overflow: clip honours overflow-clip-margin (Chromium, Firefox; not Safari): the clip edge moves out by that much
+    const margin = ccs.overflowY === 'clip' ? parseFloat(ccs.overflowClipMargin) || 0 : 0;
+    const clip = { top: cr.top + parseFloat(ccs.borderTopWidth) - margin, bottom: cr.bottom - parseFloat(ccs.borderBottomWidth) + margin };
     if (cr.width < 2 || cr.height < 2) continue;
     // group characters by rendered line
     const lines = new Map();

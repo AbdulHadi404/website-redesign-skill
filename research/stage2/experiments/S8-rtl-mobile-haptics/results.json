@@ -1,0 +1,4909 @@
+{
+ "date": "2026-09-28T23:09:46.102Z",
+ "chromium": "141.0.7390.37",
+ "node": "v22.22.2",
+ "parts": {
+  "compat": {
+   "bcd": {
+    "timestamp": "2026-09-24T13:25:51.189Z",
+    "version": "8.1.3"
+   },
+   "groups": {
+    "haptics": {
+     "api.Navigator.vibrate": {
+      "chrome": "32",
+      "chrome_android": "32",
+      "edge": "79",
+      "firefox": "16–129 (removed)",
+      "firefox_android": "79 (partial)",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "2.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "notes": [
+       "chrome_android: Beginning in Chrome 55, this is not supported in cross-origin iframes.",
+       "chrome_android: Beginning in Chrome 60, this method requires a user gesture. Otherwise it returns false.",
+       "firefox: Until Firefox 26 included, when the vibration pattern was too long or any of its elements too large, Firefox threw an exception instead of returning false (bug 884935).",
+       "firefox: From Firefox 32 onwards, when the vibration pattern is too long or any of its elements too large, it returns true but truncates the pattern (bug 1014581).",
+       "firefox: Beginning in Firefox 72, this is not supported in cross-origin iframes.",
+       "firefox_android: Vibration is disabled. If the window is visible, then navigator.vibrate() returns true, but no vibration takes place (regardless of hardware support). Originally, the intent was to disable it for cross-origin frames only (bug 1591113), but the feature was not re-enabled due to abuse concerns (bug 1653318).",
+       "firefox_android: Until Firefox 26 included, when the vibration pattern was too long or any of its elements too large, Firefox threw an exception instead of returning false (bug 884935).",
+       "firefox_android: From Firefox 32 onwards, when the vibration pattern is too long or any of its elements too large, it returns true but truncates the pattern (bug 1014581).",
+       "samsunginternet_android: Beginning in Chrome 55, this is not supported in cross-origin iframes.",
+       "samsunginternet_android: Beginning in Chrome 60, this method requires a user gesture. Otherwise it returns false."
+      ],
+      "baseline": {
+       "feature": "vibration",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     },
+     "html.elements.input.switch": {
+      "chrome": "no",
+      "chrome_android": "no",
+      "edge": "no",
+      "firefox": "no",
+      "firefox_android": "no",
+      "safari": "17.4",
+      "safari_ios": "17.4",
+      "samsunginternet_android": "no",
+      "status": {
+       "deprecated": false,
+       "experimental": true,
+       "standard_track": false
+      },
+      "baseline": {
+       "feature": "switch-control",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     }
+    },
+    "viewportKeyboard": {
+     "api.VisualViewport": {
+      "chrome": "61",
+      "chrome_android": "61",
+      "edge": "79",
+      "firefox": "91",
+      "firefox_android": "68",
+      "safari": "13",
+      "safari_ios": "13",
+      "samsunginternet_android": "8.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "visual-viewport",
+       "status": "high",
+       "low": "2021-08-10",
+       "high": "2024-02-10"
+      }
+     },
+     "api.VirtualKeyboard": {
+      "chrome": "94",
+      "chrome_android": "94",
+      "edge": "94",
+      "firefox": "no",
+      "firefox_android": "no",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "17.0",
+      "status": {
+       "deprecated": false,
+       "experimental": true,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "virtual-keyboard",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     },
+     "api.VirtualKeyboard.overlaysContent": {
+      "chrome": "94",
+      "chrome_android": "94",
+      "edge": "94",
+      "firefox": "no",
+      "firefox_android": "no",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "17.0",
+      "status": {
+       "deprecated": false,
+       "experimental": true,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "virtual-keyboard",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     },
+     "css.types.env.keyboard-inset-height": {
+      "chrome": "94",
+      "chrome_android": "94",
+      "edge": "94",
+      "firefox": "no",
+      "firefox_android": "no",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "17.0",
+      "status": {
+       "deprecated": false,
+       "experimental": true,
+       "standard_track": true
+      }
+     },
+     "html.elements.meta.name.viewport.interactive-widget": {
+      "chrome": "no",
+      "chrome_android": "108",
+      "edge": "no",
+      "firefox": "no",
+      "firefox_android": "133",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "21.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      }
+     },
+     "html.elements.meta.name.viewport.interactive-widget.resizes-content": {
+      "chrome": "no",
+      "chrome_android": "108",
+      "edge": "no",
+      "firefox": "no",
+      "firefox_android": "133",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "21.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      }
+     },
+     "html.elements.meta.name.viewport.viewport-fit": {
+      "chrome": "no",
+      "chrome_android": "135",
+      "edge": "no",
+      "firefox": "no",
+      "firefox_android": "79",
+      "safari": "no",
+      "safari_ios": "11",
+      "samsunginternet_android": "29.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      }
+     },
+     "css.types.env.safe-area-inset-bottom": {
+      "chrome": "69",
+      "chrome_android": "69",
+      "edge": "79",
+      "firefox": "65",
+      "firefox_android": "65",
+      "safari": "11",
+      "safari_ios": "11",
+      "samsunginternet_android": "10.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "safe-area-inset",
+       "status": "high",
+       "low": "2020-01-15",
+       "high": "2022-07-15"
+      }
+     }
+    },
+    "backAndSheets": {
+     "api.CloseWatcher": {
+      "chrome": "126",
+      "chrome_android": "126",
+      "edge": "126",
+      "firefox": "149",
+      "firefox_android": "149",
+      "safari": "preview",
+      "safari_ios": "no",
+      "samsunginternet_android": "28.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "closewatcher",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     },
+     "html.elements.dialog.closedby": {
+      "chrome": "134",
+      "chrome_android": "134",
+      "edge": "134",
+      "firefox": "141",
+      "firefox_android": "141",
+      "safari": "preview",
+      "safari_ios": "no",
+      "samsunginternet_android": "29.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "dialog-closedby",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     },
+     "html.global_attributes.popover": {
+      "chrome": "114",
+      "chrome_android": "114",
+      "edge": "114",
+      "firefox": "125",
+      "firefox_android": "125",
+      "safari": "17",
+      "safari_ios": "17",
+      "samsunginternet_android": "23.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "popover",
+       "status": "low",
+       "low": "2025-01-27",
+       "high": null
+      }
+     },
+     "css.properties.overscroll-behavior": {
+      "chrome": "144",
+      "chrome_android": "144",
+      "edge": "18",
+      "firefox": "150",
+      "firefox_android": "150",
+      "safari": "16 (partial)",
+      "safari_ios": "16 (partial)",
+      "samsunginternet_android": "8.0 (partial)",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "notes": [
+       "chrome: The property has no effect on scroll containers that have no scrollable overflow.",
+       "chrome_android: The property has no effect on scroll containers that have no scrollable overflow.",
+       "firefox: The property has no effect on scroll containers that have no scrollable overflow.",
+       "firefox_android: The property has no effect on scroll containers that have no scrollable overflow.",
+       "safari: The property has no effect on scroll containers that have no scrollable overflow.",
+       "safari_ios: The property has no effect on scroll containers that have no scrollable overflow.",
+       "samsunginternet_android: The property has no effect on scroll containers that have no scrollable overflow."
+      ],
+      "baseline": {
+       "feature": "overscroll-behavior",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     },
+     "api.Navigation": {
+      "chrome": "102",
+      "chrome_android": "102",
+      "edge": "102",
+      "firefox": "147",
+      "firefox_android": "147",
+      "safari": "26.2",
+      "safari_ios": "26.2",
+      "samsunginternet_android": "19.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "navigation",
+       "status": "low",
+       "low": "2026-01-13",
+       "high": null
+      }
+     },
+     "api.Navigator.share": {
+      "chrome": "128",
+      "chrome_android": "61",
+      "edge": "93",
+      "firefox": "71 (flag)",
+      "firefox_android": "79",
+      "safari": "12.1",
+      "safari_ios": "12.2",
+      "samsunginternet_android": "8.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "notes": [
+       "chrome: Only supported on ChromeOS and Windows, see bug 40542648 and bug 40729163.",
+       "edge: Only supported on Windows."
+      ],
+      "baseline": {
+       "feature": "share",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     }
+    },
+    "inputs": {
+     "html.global_attributes.inputmode": {
+      "chrome": "66",
+      "chrome_android": "66",
+      "edge": "79",
+      "firefox": "95",
+      "firefox_android": "79",
+      "safari": "12.1",
+      "safari_ios": "12.2",
+      "samsunginternet_android": "9.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "notes": [
+       "safari_ios: Before iOS 13, inputmode=\"none\" had no effect."
+      ],
+      "baseline": {
+       "feature": "inputmode",
+       "status": "high",
+       "low": "2021-12-07",
+       "high": "2024-06-07"
+      }
+     },
+     "html.global_attributes.enterkeyhint": {
+      "chrome": "77",
+      "chrome_android": "77",
+      "edge": "79",
+      "firefox": "94",
+      "firefox_android": "94",
+      "safari": "13.1",
+      "safari_ios": "13.4",
+      "samsunginternet_android": "12.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "enterkeyhint",
+       "status": "high",
+       "low": "2021-11-02",
+       "high": "2024-05-02"
+      }
+     },
+     "html.global_attributes.autocapitalize": {
+      "chrome": "43",
+      "chrome_android": "43",
+      "edge": "79",
+      "firefox": "111",
+      "firefox_android": "111",
+      "safari": "no",
+      "safari_ios": "10.3",
+      "samsunginternet_android": "4.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "notes": [
+       "safari_ios: No effect on contenteditable elements. See bug 164538."
+      ],
+      "baseline": {
+       "feature": "autocapitalize",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     },
+     "css.properties.field-sizing": {
+      "chrome": "123",
+      "chrome_android": "123",
+      "edge": "123",
+      "firefox": "152",
+      "firefox_android": "152",
+      "safari": "26.2",
+      "safari_ios": "26.2",
+      "samsunginternet_android": "27.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "field-sizing",
+       "status": "low",
+       "low": "2026-06-16",
+       "high": null
+      }
+     },
+     "html.elements.input.type_date": {
+      "chrome": "20",
+      "chrome_android": "25",
+      "edge": "12",
+      "firefox": "57",
+      "firefox_android": "57",
+      "safari": "14.1",
+      "safari_ios": "5",
+      "samsunginternet_android": "1.5",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "input-date-time",
+       "status": "high",
+       "low": "2021-10-05",
+       "high": "2024-04-05"
+      }
+     }
+    },
+    "pointer": {
+     "css.at-rules.media.hover": {
+      "chrome": "38",
+      "chrome_android": "50",
+      "edge": "12",
+      "firefox": "64",
+      "firefox_android": "64",
+      "safari": "9",
+      "safari_ios": "9",
+      "samsunginternet_android": "5.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "notes": [
+       "chrome: Before Chrome 41, the implementation was buggy and reported (hover: none) on non-touch-based computers with a mouse/trackpad. See bug 40397980.",
+       "chrome_android: On some Android devices, such as certain Samsung models, the (hover: hover) media query may incorrectly match. See bug 41445959.",
+       "samsunginternet_android: On some Android devices, such as certain Samsung models, the (hover: hover) media query may incorrectly match. See bug 41445959."
+      ],
+      "baseline": {
+       "feature": "interaction",
+       "status": "high",
+       "low": "2018-12-11",
+       "high": "2021-06-11"
+      }
+     },
+     "css.at-rules.media.any-hover": {
+      "chrome": "41",
+      "chrome_android": "41",
+      "edge": "16",
+      "firefox": "64",
+      "firefox_android": "64",
+      "safari": "9",
+      "safari_ios": "9",
+      "samsunginternet_android": "5.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "interaction",
+       "status": "high",
+       "low": "2018-12-11",
+       "high": "2021-06-11"
+      }
+     },
+     "css.selectors.active": {
+      "chrome": "1",
+      "chrome_android": "18",
+      "edge": "12",
+      "firefox": "1",
+      "firefox_android": "4",
+      "safari": "1",
+      "safari_ios": "1",
+      "samsunginternet_android": "1.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "user-action-pseudos",
+       "status": "high",
+       "low": "2015-07-29",
+       "high": "2018-01-29"
+      }
+     },
+     "css.properties.touch-action.manipulation": {
+      "chrome": "36",
+      "chrome_android": "36",
+      "edge": "12",
+      "firefox": "52",
+      "firefox_android": "52",
+      "safari": "13",
+      "safari_ios": "9.3",
+      "samsunginternet_android": "3.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "notes": [
+       "firefox: Not applicable to Firefox platforms that support neither pointer nor touch events."
+      ],
+      "baseline": {
+       "feature": "touch-action",
+       "status": "high",
+       "low": "2019-09-19",
+       "high": "2022-03-19"
+      }
+     }
+    },
+    "lowBandwidth": {
+     "api.NetworkInformation.saveData": {
+      "chrome": "65",
+      "chrome_android": "65",
+      "edge": "79",
+      "firefox": "no",
+      "firefox_android": "no",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "9.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "savedata",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     },
+     "css.at-rules.media.prefers-reduced-data": {
+      "chrome": "85 (flag)",
+      "chrome_android": "85 (flag)",
+      "edge": "85 (flag)",
+      "firefox": "no",
+      "firefox_android": "no",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "no",
+      "status": {
+       "deprecated": false,
+       "experimental": true,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "prefers-reduced-data",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     }
+    },
+    "bidiType": {
+     "css.selectors.dir": {
+      "chrome": "120",
+      "chrome_android": "120",
+      "edge": "120",
+      "firefox": "49",
+      "firefox_android": "49",
+      "safari": "16.4",
+      "safari_ios": "16.4",
+      "samsunginternet_android": "25.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "dir-pseudo",
+       "status": "high",
+       "low": "2023-12-07",
+       "high": "2026-06-07"
+      }
+     },
+     "css.properties.unicode-bidi.plaintext": {
+      "chrome": "48",
+      "chrome_android": "48",
+      "edge": "79",
+      "firefox": "50",
+      "firefox_android": "50",
+      "safari": "11",
+      "safari_ios": "11",
+      "samsunginternet_android": "5.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "notes": [
+       "firefox: Before Firefox 50, the plaintext value was ignored for vertical writing modes (bug 1302734).",
+       "firefox: Before Firefox 15, plaintext didn't do anything to an inline element. The specification changed and the implementation was changed in Firefox 15.",
+       "firefox_android: Before Firefox for Android 50, the plaintext value was ignored for vertical writing modes (bug 1302734).",
+       "firefox_android: Before Firefox for Android 15, plaintext didn't do anything to an inline element. The specification changed and the implementation was changed in Firefox for Android 15."
+      ],
+      "baseline": {
+       "feature": "layout-direction-override",
+       "status": "high",
+       "low": "2020-01-15",
+       "high": "2022-07-15"
+      }
+     },
+     "css.properties.unicode-bidi.isolate": {
+      "chrome": "48",
+      "chrome_android": "48",
+      "edge": "79",
+      "firefox": "50",
+      "firefox_android": "50",
+      "safari": "11",
+      "safari_ios": "11",
+      "samsunginternet_android": "5.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "notes": [
+       "chrome: Before Chrome 47, -webkit-isolate could lock up the browser.",
+       "chrome: Since Chrome 19, the syntax from a previous version of the specification, where the isolate keyword could be used together with bidi-override, is allowed.",
+       "firefox: From Firefox 10 to Firefox 16 (inclusive), the isolate keyword could be used together with bidi-override, which was the syntax from a previous version of the specification. From Firefox 17, only one value is allowed. Use isolate-override instead the previous isolate bidi-override.",
+       "firefox_android: From Firefox for Android 10 to Firefox for Android 16 (inclusive), the isolate keyword could be used together with bidi-override, which was the syntax from a previous version of the specification. From Firefox for Android 17, only one value is allowed. Use isolate-override instead the previous isolate bidi-override.",
+       "safari: Before Safari 9, -webkit-isolate could lock up the browser.",
+       "safari_ios: Before Safari on iOS 9, -webkit-isolate could lock up the browser."
+      ],
+      "baseline": {
+       "feature": "layout-direction-override",
+       "status": "high",
+       "low": "2020-01-15",
+       "high": "2022-07-15"
+      }
+     },
+     "css.properties.text-justify": {
+      "chrome": "145",
+      "chrome_android": "145",
+      "edge": "145",
+      "firefox": "55",
+      "firefox_android": "55",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "no",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "notes": [
+       "edge: Standard values inter-character and none are supported. The deprecated distribute value is also supported."
+      ],
+      "baseline": {
+       "feature": "text-justify",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     },
+     "css.properties.text-box-trim": {
+      "chrome": "133",
+      "chrome_android": "133",
+      "edge": "133",
+      "firefox": "154",
+      "firefox_android": "154",
+      "safari": "18.2",
+      "safari_ios": "18.2",
+      "samsunginternet_android": "29.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "text-box",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     },
+     "css.at-rules.font-face.size-adjust": {
+      "chrome": "92",
+      "chrome_android": "92",
+      "edge": "92",
+      "firefox": "92",
+      "firefox_android": "92",
+      "safari": "17",
+      "safari_ios": "17",
+      "samsunginternet_android": "16.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "font-size-adjust",
+       "status": "low",
+       "low": "2024-07-25",
+       "high": null
+      }
+     },
+     "css.at-rules.font-face.ascent-override": {
+      "chrome": "87",
+      "chrome_android": "87",
+      "edge": "87",
+      "firefox": "89",
+      "firefox_android": "89",
+      "safari": "preview",
+      "safari_ios": "no",
+      "samsunginternet_android": "14.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "font-metric-overrides",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     },
+     "css.properties.font-size-adjust": {
+      "chrome": "127",
+      "chrome_android": "127",
+      "edge": "127",
+      "firefox": "3",
+      "firefox_android": "4",
+      "safari": "16.4",
+      "safari_ios": "16.4",
+      "samsunginternet_android": "28.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "notes": [
+       "firefox: Before Firefox 40, font-size-adjust: 0 was incorrectly interpreted as font-size-adjust: none (bug 1144885).",
+       "firefox: Only supported on Windows.",
+       "firefox_android: Before Firefox for Android 40, font-size-adjust: 0 was incorrectly interpreted as font-size-adjust: none (bug 1144885)."
+      ],
+      "baseline": {
+       "feature": "font-size-adjust",
+       "status": "low",
+       "low": "2024-07-25",
+       "high": null
+      }
+     }
+    }
+   }
+  },
+  "vmetrics": {
+   "note": "em units; ink measured at 60 px (pixels) and 100 px (canvas); Chromium headless, --font-render-hinting=none",
+   "fonts": {
+    "Noto Naskh Arabic": {
+     "family": "Noto Naskh Arabic",
+     "script": "ar",
+     "file": {
+      "upm": 1000,
+      "hheaAscent": 1.069,
+      "hheaDescent": 0.634,
+      "hheaLineGap": 0,
+      "typoAscender": 1.069,
+      "typoDescender": 0.634,
+      "typoLineGap": 0,
+      "winAscent": 1.405,
+      "winDescent": 0.634,
+      "useTypoMetrics": true,
+      "hasRiyalSign": true,
+      "version": "Version 2.021",
+      "arabicBlockCoverage": 256,
+      "missing": null
+     },
+     "strings": {
+      "ar_plain": {
+       "text": "الخدمات الإلكترونية",
+       "inkAscent": 0.69,
+       "inkDescent": 0.24,
+       "lineAscent": 1.07,
+       "lineDescent": 0.63,
+       "minLineHeight": 0.94,
+       "firstSafeInSweep": 1,
+       "probeMaxErrorPx60": 0,
+       "fontkitVsCanvasEm": 0.003,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_vocal": {
+       "text": "كُتُبٌ جَمِيلَةٌ",
+       "inkAscent": 0.855,
+       "inkDescent": 0.232,
+       "lineAscent": 1.07,
+       "lineDescent": 0.63,
+       "minLineHeight": 1.27,
+       "firstSafeInSweep": 1.25,
+       "probeMaxErrorPx60": 0.4,
+       "fontkitVsCanvasEm": 0.009,
+       "clipAt": {
+        "1": {
+         "topPx60": 8,
+         "bottomPx60": 0
+        },
+        "1.2": {
+         "topPx60": 2,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_stack": {
+       "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
+       "inkAscent": 1.139,
+       "inkDescent": 0.388,
+       "lineAscent": 1.07,
+       "lineDescent": 0.63,
+       "minLineHeight": 1.84,
+       "firstSafeInSweep": 1.8,
+       "probeMaxErrorPx60": 0.5,
+       "fontkitVsCanvasEm": 0.009,
+       "clipAt": {
+        "1": {
+         "topPx60": 25,
+         "bottomPx60": 6
+        },
+        "1.2": {
+         "topPx60": 19,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 10,
+         "bottomPx60": 0
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 1.7,
+     "visual": {
+      "xHeight": 0.54,
+      "capHeight": 0.72,
+      "bodyHeight": 0.36,
+      "alefHeight": 0.68
+     }
+    },
+    "Noto Sans Arabic": {
+     "family": "Noto Sans Arabic",
+     "script": "ar",
+     "file": {
+      "upm": 1000,
+      "hheaAscent": 1.374,
+      "hheaDescent": 0.738,
+      "hheaLineGap": 0,
+      "typoAscender": 1.374,
+      "typoDescender": 0.738,
+      "typoLineGap": 0,
+      "winAscent": 1.431,
+      "winDescent": 0.738,
+      "useTypoMetrics": true,
+      "hasRiyalSign": false,
+      "version": "Version 2.012",
+      "arabicBlockCoverage": 256,
+      "missing": null
+     },
+     "strings": {
+      "ar_plain": {
+       "text": "الخدمات الإلكترونية",
+       "inkAscent": 0.735,
+       "inkDescent": 0.31,
+       "lineAscent": 1.37,
+       "lineDescent": 0.74,
+       "minLineHeight": 1.25,
+       "firstSafeInSweep": 1.2,
+       "probeMaxErrorPx60": 0.5,
+       "fontkitVsCanvasEm": 0.007,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 7
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 1
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_vocal": {
+       "text": "كُتُبٌ جَمِيلَةٌ",
+       "inkAscent": 1.112,
+       "inkDescent": 0.213,
+       "lineAscent": 1.37,
+       "lineDescent": 0.74,
+       "minLineHeight": 1.59,
+       "firstSafeInSweep": 1.6,
+       "probeMaxErrorPx60": 0.8,
+       "fontkitVsCanvasEm": 0.002,
+       "clipAt": {
+        "1": {
+         "topPx60": 17,
+         "bottomPx60": 1
+        },
+        "1.2": {
+         "topPx60": 11,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 2,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_stack": {
+       "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
+       "inkAscent": 1.242,
+       "inkDescent": 0.449,
+       "lineAscent": 1.37,
+       "lineDescent": 0.74,
+       "minLineHeight": 1.85,
+       "firstSafeInSweep": 1.8,
+       "probeMaxErrorPx60": 1.3,
+       "fontkitVsCanvasEm": 0.012,
+       "clipAt": {
+        "1": {
+         "topPx60": 25,
+         "bottomPx60": 15
+        },
+        "1.2": {
+         "topPx60": 19,
+         "bottomPx60": 9
+        },
+        "1.5": {
+         "topPx60": 10,
+         "bottomPx60": 0
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 2.11,
+     "visual": {
+      "xHeight": 0.54,
+      "capHeight": 0.72,
+      "bodyHeight": 0.39,
+      "alefHeight": 0.71
+     }
+    },
+    "Noto Kufi Arabic": {
+     "family": "Noto Kufi Arabic",
+     "script": "ar",
+     "file": {
+      "upm": 1000,
+      "hheaAscent": 1.282,
+      "hheaDescent": 0.615,
+      "hheaLineGap": 0,
+      "typoAscender": 1.282,
+      "typoDescender": 0.615,
+      "typoLineGap": 0,
+      "winAscent": 1.507,
+      "winDescent": 0.65,
+      "useTypoMetrics": true,
+      "hasRiyalSign": false,
+      "version": "Version 2.109",
+      "arabicBlockCoverage": 256,
+      "missing": null
+     },
+     "strings": {
+      "ar_plain": {
+       "text": "الخدمات الإلكترونية",
+       "inkAscent": 0.82,
+       "inkDescent": 0.293,
+       "lineAscent": 1.28,
+       "lineDescent": 0.62,
+       "minLineHeight": 1.25,
+       "firstSafeInSweep": 1.2,
+       "probeMaxErrorPx60": 0.4,
+       "fontkitVsCanvasEm": 0.006,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 7
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 1
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_vocal": {
+       "text": "كُتُبٌ جَمِيلَةٌ",
+       "inkAscent": 1.111,
+       "inkDescent": 0.236,
+       "lineAscent": 1.28,
+       "lineDescent": 0.62,
+       "minLineHeight": 1.56,
+       "firstSafeInSweep": 1.6,
+       "probeMaxErrorPx60": 0.6,
+       "fontkitVsCanvasEm": 0.006,
+       "clipAt": {
+        "1": {
+         "topPx60": 17,
+         "bottomPx60": 4
+        },
+        "1.2": {
+         "topPx60": 11,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 2,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_stack": {
+       "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
+       "inkAscent": 1.254,
+       "inkDescent": 0.448,
+       "lineAscent": 1.28,
+       "lineDescent": 0.62,
+       "minLineHeight": 1.85,
+       "firstSafeInSweep": 2,
+       "probeMaxErrorPx60": 1.1,
+       "fontkitVsCanvasEm": 0.006,
+       "clipAt": {
+        "1": {
+         "topPx60": 26,
+         "bottomPx60": 17
+        },
+        "1.2": {
+         "topPx60": 20,
+         "bottomPx60": 11
+        },
+        "1.5": {
+         "topPx60": 11,
+         "bottomPx60": 2
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 1.9,
+     "visual": {
+      "xHeight": 0.54,
+      "capHeight": 0.72,
+      "bodyHeight": 0.49,
+      "alefHeight": 0.76
+     }
+    },
+    "IBM Plex Sans Arabic": {
+     "family": "IBM Plex Sans Arabic",
+     "script": "ar",
+     "file": {
+      "upm": 1000,
+      "hheaAscent": 1.085,
+      "hheaDescent": 0.415,
+      "hheaLineGap": 0,
+      "typoAscender": 1.085,
+      "typoDescender": 0.415,
+      "typoLineGap": 0,
+      "winAscent": 1.128,
+      "winDescent": 0.601,
+      "useTypoMetrics": true,
+      "hasRiyalSign": false,
+      "version": "Version 1.101",
+      "arabicBlockCoverage": 252,
+      "missing": null
+     },
+     "strings": {
+      "ar_plain": {
+       "text": "الخدمات الإلكترونية",
+       "inkAscent": 0.76,
+       "inkDescent": 0.26,
+       "lineAscent": 1.09,
+       "lineDescent": 0.42,
+       "minLineHeight": 1.19,
+       "firstSafeInSweep": 1.2,
+       "probeMaxErrorPx60": 0.3,
+       "fontkitVsCanvasEm": 0.009,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 6
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_vocal": {
+       "text": "كُتُبٌ جَمِيلَةٌ",
+       "inkAscent": 1.031,
+       "inkDescent": 0.224,
+       "lineAscent": 1.09,
+       "lineDescent": 0.42,
+       "minLineHeight": 1.39,
+       "firstSafeInSweep": 1.4,
+       "probeMaxErrorPx60": 0.7,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 12,
+         "bottomPx60": 3
+        },
+        "1.2": {
+         "topPx60": 6,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_stack": {
+       "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
+       "inkAscent": 1.205,
+       "inkDescent": 0.454,
+       "lineAscent": 1.09,
+       "lineDescent": 0.42,
+       "minLineHeight": 1.74,
+       "firstSafeInSweep": 1.7,
+       "probeMaxErrorPx60": 1.2,
+       "fontkitVsCanvasEm": 0.006,
+       "clipAt": {
+        "1": {
+         "topPx60": 21,
+         "bottomPx60": 17
+        },
+        "1.2": {
+         "topPx60": 15,
+         "bottomPx60": 11
+        },
+        "1.5": {
+         "topPx60": 6,
+         "bottomPx60": 2
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 1.51,
+     "visual": {
+      "xHeight": 0.52,
+      "capHeight": 0.71,
+      "bodyHeight": 0.41,
+      "alefHeight": 0.74
+     }
+    },
+    "Tajawal": {
+     "family": "Tajawal",
+     "script": "ar",
+     "file": {
+      "upm": 1000,
+      "hheaAscent": 0.643,
+      "hheaDescent": 0.357,
+      "hheaLineGap": 0.2,
+      "typoAscender": 0.643,
+      "typoDescender": 0.357,
+      "typoLineGap": 0.2,
+      "winAscent": 1.016,
+      "winDescent": 0.375,
+      "useTypoMetrics": false,
+      "hasRiyalSign": false,
+      "version": "Version 1.700",
+      "arabicBlockCoverage": 67,
+      "missing": "گ چ ی ک ٫ ٬ ﷼"
+     },
+     "strings": {
+      "ar_plain": {
+       "text": "الخدمات الإلكترونية",
+       "inkAscent": 0.65,
+       "inkDescent": 0.23,
+       "lineAscent": 0.64,
+       "lineDescent": 0.36,
+       "minLineHeight": 1.02,
+       "firstSafeInSweep": 1,
+       "probeMaxErrorPx60": 0.6,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_vocal": {
+       "text": "كُتُبٌ جَمِيلَةٌ",
+       "inkAscent": 0.965,
+       "inkDescent": 0.2,
+       "lineAscent": 0.64,
+       "lineDescent": 0.36,
+       "minLineHeight": 1.65,
+       "firstSafeInSweep": 1.6,
+       "probeMaxErrorPx60": 0.5,
+       "fontkitVsCanvasEm": 0.007,
+       "clipAt": {
+        "1": {
+         "topPx60": 19,
+         "bottomPx60": 0
+        },
+        "1.2": {
+         "topPx60": 13,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 4,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_stack": {
+       "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
+       "inkAscent": 1.1,
+       "inkDescent": 0.39,
+       "lineAscent": 0.64,
+       "lineDescent": 0.36,
+       "minLineHeight": 1.92,
+       "firstSafeInSweep": 2,
+       "probeMaxErrorPx60": 0.6,
+       "fontkitVsCanvasEm": 0.007,
+       "clipAt": {
+        "1": {
+         "topPx60": 27,
+         "bottomPx60": 2
+        },
+        "1.2": {
+         "topPx60": 21,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 12,
+         "bottomPx60": 0
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 1.2,
+     "visual": {
+      "xHeight": 0.46,
+      "capHeight": 0.64,
+      "bodyHeight": 0.44,
+      "alefHeight": 0.65
+     }
+    },
+    "Cairo": {
+     "family": "Cairo",
+     "script": "ar",
+     "file": {
+      "upm": 1000,
+      "hheaAscent": 1.303,
+      "hheaDescent": 0.571,
+      "hheaLineGap": 0,
+      "typoAscender": 1.303,
+      "typoDescender": 0.571,
+      "typoLineGap": 0,
+      "winAscent": 1.312,
+      "winDescent": 0.571,
+      "useTypoMetrics": true,
+      "hasRiyalSign": false,
+      "version": "Version 3.130;gftools[0.9.24]",
+      "arabicBlockCoverage": 102,
+      "missing": "﷼"
+     },
+     "strings": {
+      "ar_plain": {
+       "text": "الخدمات الإلكترونية",
+       "inkAscent": 0.72,
+       "inkDescent": 0.27,
+       "lineAscent": 1.3,
+       "lineDescent": 0.57,
+       "minLineHeight": 1.27,
+       "firstSafeInSweep": 1.25,
+       "probeMaxErrorPx60": 0.9,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 9
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 3
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_vocal": {
+       "text": "كُتُبٌ جَمِيلَةٌ",
+       "inkAscent": 0.925,
+       "inkDescent": 0.18,
+       "lineAscent": 1.3,
+       "lineDescent": 0.57,
+       "minLineHeight": 1.12,
+       "firstSafeInSweep": 1.1,
+       "probeMaxErrorPx60": 0.4,
+       "fontkitVsCanvasEm": 0.002,
+       "clipAt": {
+        "1": {
+         "topPx60": 4,
+         "bottomPx60": 3
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_stack": {
+       "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
+       "inkAscent": 1.154,
+       "inkDescent": 0.363,
+       "lineAscent": 1.3,
+       "lineDescent": 0.57,
+       "minLineHeight": 1.58,
+       "firstSafeInSweep": 1.6,
+       "probeMaxErrorPx60": 1.2,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 17,
+         "bottomPx60": 13
+        },
+        "1.2": {
+         "topPx60": 11,
+         "bottomPx60": 7
+        },
+        "1.5": {
+         "topPx60": 2,
+         "bottomPx60": 0
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 1.87,
+     "visual": {
+      "xHeight": 0.5,
+      "capHeight": 0.7,
+      "bodyHeight": 0.5,
+      "alefHeight": 0.72
+     }
+    },
+    "Almarai": {
+     "family": "Almarai",
+     "script": "ar",
+     "file": {
+      "upm": 1000,
+      "hheaAscent": 0.905,
+      "hheaDescent": 0.211,
+      "hheaLineGap": 0,
+      "typoAscender": 0.905,
+      "typoDescender": 0.211,
+      "typoLineGap": 0,
+      "winAscent": 1.108,
+      "winDescent": 0.453,
+      "useTypoMetrics": true,
+      "hasRiyalSign": false,
+      "version": "Version 1.10",
+      "arabicBlockCoverage": 104,
+      "missing": null
+     },
+     "strings": {
+      "ar_plain": {
+       "text": "الخدمات الإلكترونية",
+       "inkAscent": 0.74,
+       "inkDescent": 0.31,
+       "lineAscent": 0.91,
+       "lineDescent": 0.21,
+       "minLineHeight": 1.32,
+       "firstSafeInSweep": 1.25,
+       "probeMaxErrorPx60": 1.6,
+       "fontkitVsCanvasEm": 0.009,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 8
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 2
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_vocal": {
+       "text": "كُتُبٌ جَمِيلَةٌ",
+       "inkAscent": 1,
+       "inkDescent": 0.245,
+       "lineAscent": 0.91,
+       "lineDescent": 0.21,
+       "minLineHeight": 1.3,
+       "firstSafeInSweep": 1.25,
+       "probeMaxErrorPx60": 0.7,
+       "fontkitVsCanvasEm": 0.005,
+       "clipAt": {
+        "1": {
+         "topPx60": 9,
+         "bottomPx60": 5
+        },
+        "1.2": {
+         "topPx60": 3,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_stack": {
+       "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
+       "inkAscent": 1.239,
+       "inkDescent": 0.52,
+       "lineAscent": 0.91,
+       "lineDescent": 0.21,
+       "minLineHeight": 1.78,
+       "firstSafeInSweep": 1.8,
+       "probeMaxErrorPx60": 1.7,
+       "fontkitVsCanvasEm": 0.005,
+       "clipAt": {
+        "1": {
+         "topPx60": 25,
+         "bottomPx60": 21
+        },
+        "1.2": {
+         "topPx60": 19,
+         "bottomPx60": 15
+        },
+        "1.5": {
+         "topPx60": 10,
+         "bottomPx60": 6
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 1.12,
+     "visual": {
+      "xHeight": 0.52,
+      "capHeight": 0.72,
+      "bodyHeight": 0.47,
+      "alefHeight": 0.72
+     }
+    },
+    "Readex Pro": {
+     "family": "Readex Pro",
+     "script": "ar",
+     "file": {
+      "upm": 1000,
+      "hheaAscent": 1,
+      "hheaDescent": 0.25,
+      "hheaLineGap": 0,
+      "typoAscender": 1,
+      "typoDescender": 0.25,
+      "typoLineGap": 0,
+      "winAscent": 1.2,
+      "winDescent": 0.555,
+      "useTypoMetrics": true,
+      "hasRiyalSign": false,
+      "version": "Version 1.205",
+      "arabicBlockCoverage": 73,
+      "missing": "گ پ چ ی ک ﷼"
+     },
+     "strings": {
+      "ar_plain": {
+       "text": "الخدمات الإلكترونية",
+       "inkAscent": 0.75,
+       "inkDescent": 0.25,
+       "lineAscent": 1,
+       "lineDescent": 0.25,
+       "minLineHeight": 1.25,
+       "firstSafeInSweep": 1.2,
+       "probeMaxErrorPx60": 0.5,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 7
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 1
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_vocal": {
+       "text": "كُتُبٌ جَمِيلَةٌ",
+       "inkAscent": 1.121,
+       "inkDescent": 0.25,
+       "lineAscent": 1,
+       "lineDescent": 0.25,
+       "minLineHeight": 1.49,
+       "firstSafeInSweep": 1.5,
+       "probeMaxErrorPx60": 1.3,
+       "fontkitVsCanvasEm": 0.009,
+       "clipAt": {
+        "1": {
+         "topPx60": 14,
+         "bottomPx60": 7
+        },
+        "1.2": {
+         "topPx60": 8,
+         "bottomPx60": 1
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_stack": {
+       "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
+       "inkAscent": 1.318,
+       "inkDescent": 0.46,
+       "lineAscent": 1,
+       "lineDescent": 0.25,
+       "minLineHeight": 1.89,
+       "firstSafeInSweep": 2,
+       "probeMaxErrorPx60": 1.1,
+       "fontkitVsCanvasEm": 0.009,
+       "clipAt": {
+        "1": {
+         "topPx60": 26,
+         "bottomPx60": 19
+        },
+        "1.2": {
+         "topPx60": 20,
+         "bottomPx60": 13
+        },
+        "1.5": {
+         "topPx60": 11,
+         "bottomPx60": 4
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 1.25,
+     "visual": {
+      "xHeight": 0.53,
+      "capHeight": 0.71,
+      "bodyHeight": 0.44,
+      "alefHeight": 0.74
+     }
+    },
+    "Alexandria": {
+     "family": "Alexandria",
+     "script": "ar",
+     "file": {
+      "upm": 1000,
+      "hheaAscent": 0.968,
+      "hheaDescent": 0.251,
+      "hheaLineGap": 0,
+      "typoAscender": 0.968,
+      "typoDescender": 0.251,
+      "typoLineGap": 0,
+      "winAscent": 1.166,
+      "winDescent": 0.566,
+      "useTypoMetrics": true,
+      "hasRiyalSign": false,
+      "version": "Version 5.100",
+      "arabicBlockCoverage": 101,
+      "missing": "﷼"
+     },
+     "strings": {
+      "ar_plain": {
+       "text": "الخدمات الإلكترونية",
+       "inkAscent": 0.82,
+       "inkDescent": 0.27,
+       "lineAscent": 0.97,
+       "lineDescent": 0.25,
+       "minLineHeight": 1.26,
+       "firstSafeInSweep": 1.25,
+       "probeMaxErrorPx60": 0.7,
+       "fontkitVsCanvasEm": 0.005,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 8
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 2
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_vocal": {
+       "text": "كُتُبٌ جَمِيلَةٌ",
+       "inkAscent": 1.148,
+       "inkDescent": 0.27,
+       "lineAscent": 0.97,
+       "lineDescent": 0.25,
+       "minLineHeight": 1.58,
+       "firstSafeInSweep": 1.6,
+       "probeMaxErrorPx60": 0.8,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 18,
+         "bottomPx60": 7
+        },
+        "1.2": {
+         "topPx60": 12,
+         "bottomPx60": 1
+        },
+        "1.5": {
+         "topPx60": 3,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_stack": {
+       "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
+       "inkAscent": 1.338,
+       "inkDescent": 0.462,
+       "lineAscent": 0.97,
+       "lineDescent": 0.25,
+       "minLineHeight": 1.96,
+       "firstSafeInSweep": 2,
+       "probeMaxErrorPx60": 0.3,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 29,
+         "bottomPx60": 19
+        },
+        "1.2": {
+         "topPx60": 23,
+         "bottomPx60": 13
+        },
+        "1.5": {
+         "topPx60": 14,
+         "bottomPx60": 4
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 1.22,
+     "visual": {
+      "xHeight": 0.54,
+      "capHeight": 0.71,
+      "bodyHeight": 0.52,
+      "alefHeight": 0.82
+     }
+    },
+    "Vazirmatn": {
+     "family": "Vazirmatn",
+     "script": "ar",
+     "file": {
+      "upm": 2048,
+      "hheaAscent": 1.025,
+      "hheaDescent": 0.537,
+      "hheaLineGap": 0,
+      "typoAscender": 1.025,
+      "typoDescender": 0.537,
+      "typoLineGap": 0,
+      "winAscent": 1.074,
+      "winDescent": 0.635,
+      "useTypoMetrics": true,
+      "hasRiyalSign": false,
+      "version": "Version 33.003",
+      "arabicBlockCoverage": 142,
+      "missing": null
+     },
+     "strings": {
+      "ar_plain": {
+       "text": "الخدمات الإلكترونية",
+       "inkAscent": 0.69,
+       "inkDescent": 0.3,
+       "lineAscent": 1.03,
+       "lineDescent": 0.54,
+       "minLineHeight": 1.09,
+       "firstSafeInSweep": 1.1,
+       "probeMaxErrorPx60": 0.7,
+       "fontkitVsCanvasEm": 0.007,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 2
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_vocal": {
+       "text": "كُتُبٌ جَمِيلَةٌ",
+       "inkAscent": 0.986,
+       "inkDescent": 0.242,
+       "lineAscent": 1.03,
+       "lineDescent": 0.54,
+       "minLineHeight": 1.48,
+       "firstSafeInSweep": 1.5,
+       "probeMaxErrorPx60": 1,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 15,
+         "bottomPx60": 0
+        },
+        "1.2": {
+         "topPx60": 9,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_stack": {
+       "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
+       "inkAscent": 1.155,
+       "inkDescent": 0.413,
+       "lineAscent": 1.03,
+       "lineDescent": 0.54,
+       "minLineHeight": 1.82,
+       "firstSafeInSweep": 1.8,
+       "probeMaxErrorPx60": 0.6,
+       "fontkitVsCanvasEm": 0.012,
+       "clipAt": {
+        "1": {
+         "topPx60": 24,
+         "bottomPx60": 10
+        },
+        "1.2": {
+         "topPx60": 18,
+         "bottomPx60": 4
+        },
+        "1.5": {
+         "topPx60": 9,
+         "bottomPx60": 0
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 1.57,
+     "visual": {
+      "xHeight": 0.54,
+      "capHeight": 0.72,
+      "bodyHeight": 0.36,
+      "alefHeight": 0.67
+     }
+    },
+    "Noto Nastaliq Urdu": {
+     "family": "Noto Nastaliq Urdu",
+     "script": "ur",
+     "file": {
+      "upm": 1000,
+      "hheaAscent": 1.904,
+      "hheaDescent": 0.596,
+      "hheaLineGap": 0,
+      "typoAscender": 1.904,
+      "typoDescender": 0.596,
+      "typoLineGap": 0,
+      "winAscent": 1.904,
+      "winDescent": 1.382,
+      "useTypoMetrics": true,
+      "hasRiyalSign": false,
+      "version": "Version 3.009",
+      "arabicBlockCoverage": 214,
+      "missing": null
+     },
+     "strings": {
+      "ur_plain": {
+       "text": "اردو زبان میں خوش آمدید",
+       "inkAscent": 1.1,
+       "inkDescent": 0.365,
+       "lineAscent": 1.9,
+       "lineDescent": 0.6,
+       "minLineHeight": 2.03,
+       "firstSafeInSweep": 2,
+       "probeMaxErrorPx60": 0.4,
+       "fontkitVsCanvasEm": "Cannot read properties of null (reading 'xCoordinate')",
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 31
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 25
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 16
+        }
+       }
+      },
+      "ar_stack": {
+       "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
+       "inkAscent": 1.952,
+       "inkDescent": 0.6,
+       "lineAscent": 1.9,
+       "lineDescent": 0.6,
+       "minLineHeight": 2.6,
+       "firstSafeInSweep": null,
+       "probeMaxErrorPx60": 0.5,
+       "fontkitVsCanvasEm": "Cannot read properties of null (reading 'xCoordinate')",
+       "clipAt": {
+        "1": {
+         "topPx60": 48,
+         "bottomPx60": 45
+        },
+        "1.2": {
+         "topPx60": 42,
+         "bottomPx60": 39
+        },
+        "1.5": {
+         "topPx60": 33,
+         "bottomPx60": 30
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 2.5,
+     "visual": {
+      "xHeight": 0.54,
+      "capHeight": 0.72,
+      "bodyHeight": 0.45,
+      "alefHeight": 0.87
+     }
+    },
+    "Inter": {
+     "family": "Inter",
+     "script": "la",
+     "file": {
+      "upm": 2048,
+      "hheaAscent": 0.969,
+      "hheaDescent": 0.241,
+      "hheaLineGap": 0,
+      "typoAscender": 0.969,
+      "typoDescender": 0.241,
+      "typoLineGap": 0,
+      "winAscent": 1.108,
+      "winDescent": 0.322,
+      "useTypoMetrics": true,
+      "hasRiyalSign": false,
+      "version": "Version 4.001;git-66647c0bb",
+      "arabicBlockCoverage": 0,
+      "missing": "ڤ گ پ چ ی ک ٰ ؟ ٪ ٫ ٬ ﷼ ـ"
+     },
+     "strings": {
+      "latin": {
+       "text": "Hxgjpy",
+       "inkAscent": 0.73,
+       "inkDescent": 0.21,
+       "lineAscent": 0.97,
+       "lineDescent": 0.24,
+       "minLineHeight": 1.15,
+       "firstSafeInSweep": 1.1,
+       "probeMaxErrorPx60": 0.5,
+       "fontkitVsCanvasEm": 0.021,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 4
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "latin_acc": {
+       "text": "ÉÅÇgjpy",
+       "inkAscent": 1,
+       "inkDescent": 0.21,
+       "lineAscent": 0.97,
+       "lineDescent": 0.24,
+       "minLineHeight": 1.27,
+       "firstSafeInSweep": 1.3,
+       "probeMaxErrorPx60": 1.4,
+       "fontkitVsCanvasEm": 0.006,
+       "clipAt": {
+        "1": {
+         "topPx60": 9,
+         "bottomPx60": 4
+        },
+        "1.2": {
+         "topPx60": 3,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 1.21,
+     "visual": {
+      "xHeight": 0.52,
+      "capHeight": 0.73,
+      "bodyHeight": 0.36,
+      "alefHeight": 0.76
+     }
+    },
+    "IBM Plex Sans": {
+     "family": "IBM Plex Sans",
+     "script": "la",
+     "file": {
+      "upm": 1000,
+      "hheaAscent": 1.025,
+      "hheaDescent": 0.275,
+      "hheaLineGap": 0,
+      "typoAscender": 1.025,
+      "typoDescender": 0.275,
+      "typoLineGap": 0,
+      "winAscent": 1.12,
+      "winDescent": 0.275,
+      "useTypoMetrics": true,
+      "hasRiyalSign": false,
+      "version": "Version 3.201",
+      "arabicBlockCoverage": 0,
+      "missing": "ڤ گ پ چ ی ک ٰ ؟ ٪ ٫ ٬ ﷼ ـ"
+     },
+     "strings": {
+      "latin": {
+       "text": "Hxgjpy",
+       "inkAscent": 0.74,
+       "inkDescent": 0.21,
+       "lineAscent": 1.03,
+       "lineDescent": 0.28,
+       "minLineHeight": 1.17,
+       "firstSafeInSweep": 1.2,
+       "probeMaxErrorPx60": 0.1,
+       "fontkitVsCanvasEm": 0.002,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 5
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "latin_acc": {
+       "text": "ÉÅÇgjpy",
+       "inkAscent": 0.98,
+       "inkDescent": 0.21,
+       "lineAscent": 1.03,
+       "lineDescent": 0.28,
+       "minLineHeight": 1.21,
+       "firstSafeInSweep": 1.2,
+       "probeMaxErrorPx60": 0.7,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 7,
+         "bottomPx60": 5
+        },
+        "1.2": {
+         "topPx60": 1,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 1.31,
+     "visual": {
+      "xHeight": 0.52,
+      "capHeight": 0.71,
+      "bodyHeight": 0.36,
+      "alefHeight": 0.76
+     }
+    },
+    "Noto Sans": {
+     "family": "Noto Sans",
+     "script": "la",
+     "file": {
+      "upm": 1000,
+      "hheaAscent": 1.069,
+      "hheaDescent": 0.293,
+      "hheaLineGap": 0,
+      "typoAscender": 1.069,
+      "typoDescender": 0.293,
+      "typoLineGap": 0,
+      "winAscent": 1.124,
+      "winDescent": 0.395,
+      "useTypoMetrics": true,
+      "hasRiyalSign": false,
+      "version": "Version 2.015",
+      "arabicBlockCoverage": 0,
+      "missing": "ڤ گ پ چ ی ک ٰ ؟ ٪ ٫ ٬ ﷼ ـ"
+     },
+     "strings": {
+      "latin": {
+       "text": "Hxgjpy",
+       "inkAscent": 0.75,
+       "inkDescent": 0.24,
+       "lineAscent": 1.07,
+       "lineDescent": 0.29,
+       "minLineHeight": 1.26,
+       "firstSafeInSweep": 1.2,
+       "probeMaxErrorPx60": 0.8,
+       "fontkitVsCanvasEm": 0.013,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 7
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 1
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "latin_acc": {
+       "text": "ÉÅÇgjpy",
+       "inkAscent": 0.95,
+       "inkDescent": 0.24,
+       "lineAscent": 1.07,
+       "lineDescent": 0.29,
+       "minLineHeight": 1.26,
+       "firstSafeInSweep": 1.2,
+       "probeMaxErrorPx60": 0.8,
+       "fontkitVsCanvasEm": 0.006,
+       "clipAt": {
+        "1": {
+         "topPx60": 4,
+         "bottomPx60": 7
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 1
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      }
+     },
+     "lineHeightNormal": 1.36,
+     "visual": {
+      "xHeight": 0.54,
+      "capHeight": 0.72,
+      "bodyHeight": 0.36,
+      "alefHeight": 0.76
+     }
+    }
+   },
+   "sizeAdjustToMatch": {
+    "Inter": {
+     "Noto Naskh Arabic": {
+      "byBody": "144%",
+      "byAlef": "107%"
+     },
+     "Noto Sans Arabic": {
+      "byBody": "133%",
+      "byAlef": "103%"
+     },
+     "Noto Kufi Arabic": {
+      "byBody": "106%",
+      "byAlef": "96%"
+     },
+     "IBM Plex Sans Arabic": {
+      "byBody": "127%",
+      "byAlef": "99%"
+     },
+     "Tajawal": {
+      "byBody": "118%",
+      "byAlef": "112%"
+     },
+     "Cairo": {
+      "byBody": "104%",
+      "byAlef": "101%"
+     },
+     "Almarai": {
+      "byBody": "111%",
+      "byAlef": "101%"
+     },
+     "Readex Pro": {
+      "byBody": "118%",
+      "byAlef": "99%"
+     },
+     "Alexandria": {
+      "byBody": "100%",
+      "byAlef": "89%"
+     },
+     "Vazirmatn": {
+      "byBody": "144%",
+      "byAlef": "109%"
+     }
+    },
+    "IBM Plex Sans": {
+     "Noto Naskh Arabic": {
+      "byBody": "144%",
+      "byAlef": "104%"
+     },
+     "Noto Sans Arabic": {
+      "byBody": "133%",
+      "byAlef": "100%"
+     },
+     "Noto Kufi Arabic": {
+      "byBody": "106%",
+      "byAlef": "93%"
+     },
+     "IBM Plex Sans Arabic": {
+      "byBody": "127%",
+      "byAlef": "96%"
+     },
+     "Tajawal": {
+      "byBody": "118%",
+      "byAlef": "109%"
+     },
+     "Cairo": {
+      "byBody": "104%",
+      "byAlef": "99%"
+     },
+     "Almarai": {
+      "byBody": "111%",
+      "byAlef": "99%"
+     },
+     "Readex Pro": {
+      "byBody": "118%",
+      "byAlef": "96%"
+     },
+     "Alexandria": {
+      "byBody": "100%",
+      "byAlef": "87%"
+     },
+     "Vazirmatn": {
+      "byBody": "144%",
+      "byAlef": "106%"
+     }
+    },
+    "Noto Sans": {
+     "Noto Naskh Arabic": {
+      "byBody": "150%",
+      "byAlef": "106%"
+     },
+     "Noto Sans Arabic": {
+      "byBody": "138%",
+      "byAlef": "101%"
+     },
+     "Noto Kufi Arabic": {
+      "byBody": "110%",
+      "byAlef": "95%"
+     },
+     "IBM Plex Sans Arabic": {
+      "byBody": "132%",
+      "byAlef": "97%"
+     },
+     "Tajawal": {
+      "byBody": "123%",
+      "byAlef": "111%"
+     },
+     "Cairo": {
+      "byBody": "108%",
+      "byAlef": "100%"
+     },
+     "Almarai": {
+      "byBody": "115%",
+      "byAlef": "100%"
+     },
+     "Readex Pro": {
+      "byBody": "123%",
+      "byAlef": "97%"
+     },
+     "Alexandria": {
+      "byBody": "104%",
+      "byAlef": "88%"
+     },
+     "Vazirmatn": {
+      "byBody": "150%",
+      "byAlef": "107%"
+     }
+    }
+   }
+  },
+  "clip": {
+   "summary": {
+    "cases": 126,
+    "truePositive": 53,
+    "falsePositive": 0,
+    "falseNegative": 4,
+    "trueNegative": 69,
+    "medianAbsErrorPx": 0,
+    "p90AbsErrorPx": 0.40000000000000036,
+    "maxAbsErrorPx": 2.2
+   },
+   "perComponent": {
+    "note": "count of the 6 faces that lose ≥ 1 px of ink, per string",
+    "chip": {
+     "plain": 0,
+     "vocal": 0,
+     "stack": 5,
+     "maxLossPx": 2
+    },
+    "button": {
+     "plain": 0,
+     "vocal": 0,
+     "stack": 0,
+     "maxLossPx": 0
+    },
+    "cell": {
+     "plain": 0,
+     "vocal": 4,
+     "stack": 6,
+     "maxLossPx": 4
+    },
+    "clamp": {
+     "plain": 5,
+     "vocal": 6,
+     "stack": 6,
+     "maxLossPx": 14
+    },
+    "nav": {
+     "plain": 0,
+     "vocal": 2,
+     "stack": 6,
+     "maxLossPx": 5
+    },
+    "cellFixed": {
+     "plain": 0,
+     "vocal": 0,
+     "stack": 1,
+     "maxLossPx": 1
+    },
+    "hero": {
+     "plain": 5,
+     "vocal": 5,
+     "stack": 6,
+     "maxLossPx": 16
+    }
+   },
+   "cases": [
+    {
+     "case": "Tajawal|chip|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|chip|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|chip|stack",
+     "truthTopPx": 1,
+     "truthBottomPx": 0,
+     "probeTopPx": 1.2,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|button|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|button|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|button|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|cell|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|cell|vocal",
+     "truthTopPx": 2,
+     "truthBottomPx": 0,
+     "probeTopPx": 2,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|cell|stack",
+     "truthTopPx": 4,
+     "truthBottomPx": 0,
+     "probeTopPx": 3.9,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|clamp|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|clamp|vocal",
+     "truthTopPx": 7,
+     "truthBottomPx": 0,
+     "probeTopPx": 8,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|clamp|stack",
+     "truthTopPx": 12,
+     "truthBottomPx": 0,
+     "probeTopPx": 11.8,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|nav|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|nav|vocal",
+     "truthTopPx": 1,
+     "truthBottomPx": 0,
+     "probeTopPx": 1.4,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|nav|stack",
+     "truthTopPx": 4,
+     "truthBottomPx": 0,
+     "probeTopPx": 3.6,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|cellFixed|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|cellFixed|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|cellFixed|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|hero|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|hero|vocal",
+     "truthTopPx": 11,
+     "truthBottomPx": 0,
+     "probeTopPx": 11.6,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Tajawal|hero|stack",
+     "truthTopPx": 16,
+     "truthBottomPx": 0,
+     "probeTopPx": 17,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|chip|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|chip|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|chip|stack",
+     "truthTopPx": 1,
+     "truthBottomPx": 0,
+     "probeTopPx": 0.9,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|button|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|button|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|button|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|cell|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|cell|vocal",
+     "truthTopPx": 1,
+     "truthBottomPx": 0,
+     "probeTopPx": 0.8,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|cell|stack",
+     "truthTopPx": 3,
+     "truthBottomPx": 0,
+     "probeTopPx": 3.1,
+     "probeBottomPx": 1.3
+    },
+    {
+     "case": "IBM Plex Sans Arabic|clamp|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 1,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|clamp|vocal",
+     "truthTopPx": 6,
+     "truthBottomPx": 0,
+     "probeTopPx": 5.5,
+     "probeBottomPx": 0.3
+    },
+    {
+     "case": "IBM Plex Sans Arabic|clamp|stack",
+     "truthTopPx": 10,
+     "truthBottomPx": 7,
+     "probeTopPx": 10.1,
+     "probeBottomPx": 6.7
+    },
+    {
+     "case": "IBM Plex Sans Arabic|nav|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|nav|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|nav|stack",
+     "truthTopPx": 2,
+     "truthBottomPx": 0,
+     "probeTopPx": 2.2,
+     "probeBottomPx": 0.9
+    },
+    {
+     "case": "IBM Plex Sans Arabic|cellFixed|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|cellFixed|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|cellFixed|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|hero|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 2,
+     "probeTopPx": 0,
+     "probeBottomPx": 2
+    },
+    {
+     "case": "IBM Plex Sans Arabic|hero|vocal",
+     "truthTopPx": 6,
+     "truthBottomPx": 0,
+     "probeTopPx": 6.4,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "IBM Plex Sans Arabic|hero|stack",
+     "truthTopPx": 13,
+     "truthBottomPx": 9,
+     "probeTopPx": 14,
+     "probeBottomPx": 9.2
+    },
+    {
+     "case": "Noto Sans Arabic|chip|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|chip|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|chip|stack",
+     "truthTopPx": 2,
+     "truthBottomPx": 0,
+     "probeTopPx": 1.8,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|button|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|button|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|button|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|cell|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|cell|vocal",
+     "truthTopPx": 2,
+     "truthBottomPx": 0,
+     "probeTopPx": 1.8,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|cell|stack",
+     "truthTopPx": 4,
+     "truthBottomPx": 1,
+     "probeTopPx": 3.6,
+     "probeBottomPx": 0.8
+    },
+    {
+     "case": "Noto Sans Arabic|clamp|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 1,
+     "probeTopPx": 0,
+     "probeBottomPx": 1.2
+    },
+    {
+     "case": "Noto Sans Arabic|clamp|vocal",
+     "truthTopPx": 10,
+     "truthBottomPx": 0,
+     "probeTopPx": 10.4,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|clamp|stack",
+     "truthTopPx": 12,
+     "truthBottomPx": 6,
+     "probeTopPx": 12,
+     "probeBottomPx": 4.8
+    },
+    {
+     "case": "Noto Sans Arabic|nav|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|nav|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|nav|stack",
+     "truthTopPx": 2,
+     "truthBottomPx": 0,
+     "probeTopPx": 2.4,
+     "probeBottomPx": 0.3
+    },
+    {
+     "case": "Noto Sans Arabic|cellFixed|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|cellFixed|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|cellFixed|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|hero|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 2,
+     "probeTopPx": 0,
+     "probeBottomPx": 2
+    },
+    {
+     "case": "Noto Sans Arabic|hero|vocal",
+     "truthTopPx": 9,
+     "truthBottomPx": 0,
+     "probeTopPx": 10.4,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Noto Sans Arabic|hero|stack",
+     "truthTopPx": 15,
+     "truthBottomPx": 8,
+     "probeTopPx": 16.5,
+     "probeBottomPx": 7.8
+    },
+    {
+     "case": "Almarai|chip|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Almarai|chip|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Almarai|chip|stack",
+     "truthTopPx": 1,
+     "truthBottomPx": 1,
+     "probeTopPx": 1.1,
+     "probeBottomPx": 0.6
+    },
+    {
+     "case": "Almarai|button|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Almarai|button|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Almarai|button|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Almarai|cell|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Almarai|cell|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Almarai|cell|stack",
+     "truthTopPx": 2,
+     "truthBottomPx": 1,
+     "probeTopPx": 2.1,
+     "probeBottomPx": 3.2
+    },
+    {
+     "case": "Almarai|clamp|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 3,
+     "probeTopPx": 0,
+     "probeBottomPx": 2.2
+    },
+    {
+     "case": "Almarai|clamp|vocal",
+     "truthTopPx": 4,
+     "truthBottomPx": 1,
+     "probeTopPx": 3.6,
+     "probeBottomPx": 0.9
+    },
+    {
+     "case": "Almarai|clamp|stack",
+     "truthTopPx": 11,
+     "truthBottomPx": 8,
+     "probeTopPx": 11.3,
+     "probeBottomPx": 8.6
+    },
+    {
+     "case": "Almarai|nav|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Almarai|nav|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Almarai|nav|stack",
+     "truthTopPx": 3,
+     "truthBottomPx": 2,
+     "probeTopPx": 3.1,
+     "probeBottomPx": 1.8
+    },
+    {
+     "case": "Almarai|cellFixed|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Almarai|cellFixed|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Almarai|cellFixed|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Almarai|hero|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 4,
+     "probeTopPx": 0,
+     "probeBottomPx": 4
+    },
+    {
+     "case": "Almarai|hero|vocal",
+     "truthTopPx": 5,
+     "truthBottomPx": 2,
+     "probeTopPx": 4.8,
+     "probeBottomPx": 2
+    },
+    {
+     "case": "Almarai|hero|stack",
+     "truthTopPx": 14,
+     "truthBottomPx": 11,
+     "probeTopPx": 14.4,
+     "probeBottomPx": 13
+    },
+    {
+     "case": "Cairo|chip|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|chip|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|chip|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|button|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|button|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|button|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|cell|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|cell|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|cell|stack",
+     "truthTopPx": 1,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|clamp|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 3,
+     "probeTopPx": 0,
+     "probeBottomPx": 2.2
+    },
+    {
+     "case": "Cairo|clamp|vocal",
+     "truthTopPx": 1,
+     "truthBottomPx": 0,
+     "probeTopPx": 1,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|clamp|stack",
+     "truthTopPx": 7,
+     "truthBottomPx": 5,
+     "probeTopPx": 7.7,
+     "probeBottomPx": 5.5
+    },
+    {
+     "case": "Cairo|nav|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|nav|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|nav|stack",
+     "truthTopPx": 1,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|cellFixed|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|cellFixed|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|cellFixed|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|hero|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 2,
+     "probeTopPx": 0,
+     "probeBottomPx": 2
+    },
+    {
+     "case": "Cairo|hero|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Cairo|hero|stack",
+     "truthTopPx": 5,
+     "truthBottomPx": 6,
+     "probeTopPx": 7.1,
+     "probeBottomPx": 6
+    },
+    {
+     "case": "Alexandria|chip|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|chip|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|chip|stack",
+     "truthTopPx": 2,
+     "truthBottomPx": 0,
+     "probeTopPx": 2.4,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|button|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|button|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|button|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|cell|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|cell|vocal",
+     "truthTopPx": 1,
+     "truthBottomPx": 0,
+     "probeTopPx": 1,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|cell|stack",
+     "truthTopPx": 4,
+     "truthBottomPx": 1,
+     "probeTopPx": 3.7,
+     "probeBottomPx": 1.3
+    },
+    {
+     "case": "Alexandria|clamp|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 4,
+     "probeTopPx": 0,
+     "probeBottomPx": 3.2
+    },
+    {
+     "case": "Alexandria|clamp|vocal",
+     "truthTopPx": 9,
+     "truthBottomPx": 3,
+     "probeTopPx": 9,
+     "probeBottomPx": 2.2
+    },
+    {
+     "case": "Alexandria|clamp|stack",
+     "truthTopPx": 14,
+     "truthBottomPx": 7,
+     "probeTopPx": 14.2,
+     "probeBottomPx": 7.8
+    },
+    {
+     "case": "Alexandria|nav|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|nav|vocal",
+     "truthTopPx": 2,
+     "truthBottomPx": 0,
+     "probeTopPx": 1.8,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|nav|stack",
+     "truthTopPx": 5,
+     "truthBottomPx": 0,
+     "probeTopPx": 4.9,
+     "probeBottomPx": 0.1
+    },
+    {
+     "case": "Alexandria|cellFixed|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|cellFixed|vocal",
+     "truthTopPx": 0,
+     "truthBottomPx": 0,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|cellFixed|stack",
+     "truthTopPx": 0,
+     "truthBottomPx": 1,
+     "probeTopPx": 0,
+     "probeBottomPx": 0
+    },
+    {
+     "case": "Alexandria|hero|plain",
+     "truthTopPx": 0,
+     "truthBottomPx": 3,
+     "probeTopPx": 0,
+     "probeBottomPx": 3
+    },
+    {
+     "case": "Alexandria|hero|vocal",
+     "truthTopPx": 8,
+     "truthBottomPx": 1,
+     "probeTopPx": 7.8,
+     "probeBottomPx": 1
+    },
+    {
+     "case": "Alexandria|hero|stack",
+     "truthTopPx": 14,
+     "truthBottomPx": 7,
+     "probeTopPx": 14.1,
+     "probeBottomPx": 7.4
+    }
+   ]
+  },
+  "mixed": {
+   "text": "Your order ships from Riyadh. The courier (مندوب التوصيل) will call before arriving. Track it under الطلبات الحالية in the app. Payment: بطاقة مدى or cash. Questions? Write to support any time; we answer in English and العربية.",
+   "fonts": {
+    "Noto Naskh Arabic": {
+     "A_fallback_normal": {
+      "lines": 6,
+      "pitches": [
+       21,
+       27,
+       27,
+       26,
+       21
+      ],
+      "spread": 6,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 148
+     },
+     "B_fallback_1_5": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "C_span_1_5": {
+      "lines": 6,
+      "pitches": [
+       24,
+       27,
+       27,
+       27,
+       24
+      ],
+      "spread": 3,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 156
+     },
+     "D_span_overrides": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "E_span_lh1": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "F_unicode_range": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     }
+    },
+    "Noto Sans Arabic": {
+     "A_fallback_normal": {
+      "lines": 6,
+      "pitches": [
+       26,
+       34,
+       34,
+       28,
+       26
+      ],
+      "spread": 8,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 176
+     },
+     "B_fallback_1_5": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "C_span_1_5": {
+      "lines": 6,
+      "pitches": [
+       24,
+       25,
+       25,
+       25,
+       24
+      ],
+      "spread": 1,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 148
+     },
+     "D_span_overrides": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "E_span_lh1": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "F_unicode_range": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     }
+    },
+    "IBM Plex Sans Arabic": {
+     "A_fallback_normal": {
+      "lines": 6,
+      "pitches": [
+       21,
+       24,
+       24,
+       23,
+       21
+      ],
+      "spread": 3,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 136
+     },
+     "B_fallback_1_5": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "C_span_1_5": {
+      "lines": 6,
+      "pitches": [
+       24,
+       25,
+       25,
+       25,
+       24
+      ],
+      "spread": 1,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 148
+     },
+     "D_span_overrides": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "E_span_lh1": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "F_unicode_range": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     }
+    },
+    "Tajawal": {
+     "A_fallback_normal": {
+      "lines": 6,
+      "pitches": [
+       20,
+       24,
+       24,
+       24,
+       20
+      ],
+      "spread": 4,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 136
+     },
+     "B_fallback_1_5": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "C_span_1_5": {
+      "lines": 6,
+      "pitches": [
+       24,
+       28,
+       28,
+       28,
+       24
+      ],
+      "spread": 4,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 160
+     },
+     "D_span_overrides": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "E_span_lh1": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "F_unicode_range": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     }
+    },
+    "Cairo": {
+     "A_fallback_normal": {
+      "lines": 6,
+      "pitches": [
+       25,
+       30,
+       30,
+       25,
+       25
+      ],
+      "spread": 5,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 160
+     },
+     "B_fallback_1_5": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "C_span_1_5": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "D_span_overrides": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "E_span_lh1": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "F_unicode_range": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     }
+    },
+    "Noto Nastaliq Urdu": {
+     "A_fallback_normal": {
+      "lines": 6,
+      "pitches": [
+       34,
+       40,
+       40,
+       26,
+       34
+      ],
+      "spread": 14,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 200
+     },
+     "B_fallback_1_5": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "C_span_1_5": {
+      "lines": 6,
+      "pitches": [
+       28,
+       28,
+       28,
+       24,
+       28
+      ],
+      "spread": 4,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 160
+     },
+     "D_span_overrides": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "E_span_lh1": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     },
+     "F_unicode_range": {
+      "lines": 6,
+      "pitches": [
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "spread": 0,
+      "arabicLines": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "height": 144
+     }
+    }
+   }
+  },
+  "bidi": {
+   "values": {
+    "sara.ahmed@example.com": {
+     "plain": "ok",
+     "bdi": "ok",
+     "ltr": "ok",
+     "input:inherit": "ok (rtl, text-align start)",
+     "input:ltr": "ok (ltr, text-align left)",
+     "input:ltr-mp": "ok (ltr, text-align right)",
+     "input:auto": "ok (ltr, text-align right)"
+    },
+    "2024.sara@example.sa": {
+     "plain": "scrambled → \"sara @ example . sa . 2024\"",
+     "bdi": "ok",
+     "ltr": "ok",
+     "input:inherit": "scrambled → \"sara @ example . sa . 2024\" (rtl, text-align start)",
+     "input:ltr": "ok (ltr, text-align left)",
+     "input:ltr-mp": "ok (ltr, text-align right)",
+     "input:auto": "ok (ltr, text-align right)"
+    },
+    "+966 50 123 4567": {
+     "plain": "scrambled → \"4567 123 50 966 +\"",
+     "bdi": "ok",
+     "ltr": "ok",
+     "input:inherit": "ok (ltr, text-align start)",
+     "input:ltr": "ok (ltr, text-align left)",
+     "input:ltr-mp": "ok (ltr, text-align right)",
+     "input:auto": "ok (ltr, text-align right)"
+    },
+    "050 123 4567": {
+     "plain": "scrambled → \"4567 123 050\"",
+     "bdi": "ok",
+     "ltr": "ok",
+     "input:inherit": "ok (ltr, text-align start)",
+     "input:ltr": "ok (ltr, text-align left)",
+     "input:ltr-mp": "ok (ltr, text-align right)",
+     "input:auto": "ok (ltr, text-align right)"
+    },
+    "SA03 8000 0000 6080 1016 7519": {
+     "plain": "ok",
+     "bdi": "ok",
+     "ltr": "ok",
+     "input:inherit": "ok (rtl, text-align start)",
+     "input:ltr": "ok (ltr, text-align left)",
+     "input:ltr-mp": "ok (ltr, text-align right)",
+     "input:auto": "ok (ltr, text-align right)"
+    },
+    "4111 1111 1111 1111": {
+     "plain": "scrambled → \"1111 1111 1111 4111\"",
+     "bdi": "ok",
+     "ltr": "ok",
+     "input:inherit": "scrambled → \"1111 1111 1111 4111\" (rtl, text-align start)",
+     "input:ltr": "ok (ltr, text-align left)",
+     "input:ltr-mp": "ok (ltr, text-align right)",
+     "input:auto": "ok (ltr, text-align right)"
+    },
+    "https://example.com/ar/orders?id=42": {
+     "plain": "ok",
+     "bdi": "ok",
+     "ltr": "ok",
+     "input:inherit": "ok (rtl, text-align start)",
+     "input:ltr": "ok (ltr, text-align left)",
+     "input:ltr-mp": "ok (ltr, text-align right)",
+     "input:auto": "ok (ltr, text-align right)"
+    },
+    "INV-2026-0042": {
+     "plain": "ok",
+     "bdi": "ok",
+     "ltr": "ok",
+     "input:inherit": "ok (rtl, text-align start)",
+     "input:ltr": "ok (ltr, text-align left)",
+     "input:ltr-mp": "ok (ltr, text-align right)",
+     "input:auto": "ok (ltr, text-align right)"
+    },
+    "2026-09-28": {
+     "plain": "ok",
+     "bdi": "ok",
+     "ltr": "ok",
+     "input:inherit": "ok (rtl, text-align start)",
+     "input:ltr": "ok (ltr, text-align left)",
+     "input:ltr-mp": "ok (ltr, text-align right)",
+     "input:auto": "ok (ltr, text-align right)"
+    },
+    "09:00 - 17:00": {
+     "plain": "scrambled → \"17 : 00 - 09 : 00\"",
+     "bdi": "ok",
+     "ltr": "ok",
+     "input:inherit": "scrambled → \"17 : 00 - 09 : 00\" (rtl, text-align start)",
+     "input:ltr": "ok (ltr, text-align left)",
+     "input:ltr-mp": "ok (ltr, text-align right)",
+     "input:auto": "ok (ltr, text-align right)"
+    },
+    "-4.2%": {
+     "plain": "scrambled → \"4 . 2 % -\"",
+     "bdi": "ok",
+     "ltr": "ok",
+     "input:inherit": "scrambled → \"4 . 2 % -\" (rtl, text-align start)",
+     "input:ltr": "ok (ltr, text-align left)",
+     "input:ltr-mp": "ok (ltr, text-align right)",
+     "input:auto": "ok (ltr, text-align right)"
+    }
+   },
+   "uaInputDirection": {
+    "text": {
+     "direction": "rtl",
+     "textAlign": "start"
+    },
+    "email": {
+     "direction": "rtl",
+     "textAlign": "start"
+    },
+    "tel": {
+     "direction": "ltr",
+     "textAlign": "start"
+    },
+    "url": {
+     "direction": "rtl",
+     "textAlign": "start"
+    },
+    "number": {
+     "direction": "rtl",
+     "textAlign": "start"
+    },
+    "password": {
+     "direction": "rtl",
+     "textAlign": "start"
+    },
+    "search": {
+     "direction": "rtl",
+     "textAlign": "start"
+    },
+    "date": {
+     "direction": "ltr",
+     "textAlign": "start"
+    }
+   },
+   "truncation": {
+    "t1": {
+     "containerDir": "rtl",
+     "resolvedDir": "rtl",
+     "startVisible": true,
+     "endVisible": false
+    },
+    "t2": {
+     "containerDir": "ltr",
+     "resolvedDir": "ltr",
+     "startVisible": false,
+     "endVisible": true
+    },
+    "t3": {
+     "containerDir": "rtl",
+     "resolvedDir": "rtl",
+     "startVisible": true,
+     "endVisible": false
+    },
+    "t4": {
+     "containerDir": "ltr",
+     "resolvedDir": "ltr",
+     "startVisible": true,
+     "endVisible": false
+    }
+   },
+   "justify": {
+    "start": {
+     "maxGap": 3.8,
+     "meanGap": 3.8
+    },
+    "justify": {
+     "maxGap": 13,
+     "meanGap": 6.5
+    },
+    "textJustifySupported": false
+   },
+   "riyal": {
+    "drawnBy": {
+     "Brand": "saudi_riyal (web font)",
+     "IBM Plex Sans Arabic": "Unifont (system)",
+     "Noto Naskh Arabic": "Noto Naskh Arabic (web font)",
+     "Inter": "Unifont (system)",
+     "system-ui": "Unifont (system)"
+    },
+    "intlArSA": {
+     "text": "‏١٢٥٫٠٠ ر.س.‏",
+     "hasU20C1": false,
+     "codepoints": "U+200F U+0661 U+0662 U+0665 U+066B U+0660 U+0660 U+00A0 U+0631 U+0633 U+200F",
+     "has_symbol": false,
+     "has_narrowSymbol": false
+    }
+   },
+   "dirAutoTyping": [
+    {
+     "typed": "empty",
+     "resolvedDir": "ltr"
+    },
+    {
+     "typed": "+966 digits first",
+     "resolvedDir": "ltr"
+    },
+    {
+     "typed": "email",
+     "resolvedDir": "ltr"
+    },
+    {
+     "typed": "arabic name",
+     "resolvedDir": "rtl"
+    },
+    {
+     "typed": "digits only",
+     "resolvedDir": "ltr"
+    }
+   ]
+  },
+  "keys": {
+   "tabs": {
+    "tabs-aware": {
+     "ArrowLeft": {
+      "movedTo": "next (DOM)",
+      "visual": "left",
+      "followsArrow": true
+     },
+     "ArrowRight": {
+      "movedTo": "previous (DOM)",
+      "visual": "right",
+      "followsArrow": true
+     }
+    },
+    "tabs-naive": {
+     "ArrowLeft": {
+      "movedTo": "previous (DOM)",
+      "visual": "right",
+      "followsArrow": false
+     },
+     "ArrowRight": {
+      "movedTo": "next (DOM)",
+      "visual": "left",
+      "followsArrow": false
+     }
+    }
+   },
+   "native": {
+    "range": {
+     "ArrowRight": {
+      "value": 49,
+      "change": "decrease"
+     },
+     "ArrowLeft": {
+      "value": 51,
+      "change": "increase"
+     },
+     "valueAtLeftEdge": 100,
+     "thumbMovesWithArrow": true
+    },
+    "radios": {
+     "ArrowLeft": {
+      "checked": "3",
+      "domMove": "next",
+      "visual": "left",
+      "followsArrow": true
+     },
+     "ArrowRight": {
+      "checked": "1",
+      "domMove": "previous",
+      "visual": "right",
+      "followsArrow": true
+     }
+    }
+   },
+   "widgetsMjs": [
+    "FAIL tabs #tabs-aware",
+    "   ✗ [2.1.1] ArrowRight does not move focus between tabs",
+    "   ! [—] Selection does not follow focus — acceptable only if Enter/Space activates (manual activation)",
+    "   ✓ exactly one aria-selected=true",
+    "   ✓ every tab aria-controls a tabpanel",
+    "   ✓ roving tabindex: one tab in the Tab sequence",
+    "   ✓ End → last tab",
+    "   ✓ Home → first tab",
+    "   ✓ selected tab's panel is visible",
+    "PASS tabs #tabs-naive",
+    "   ✓ exactly one aria-selected=true",
+    "   ✓ every tab aria-controls a tabpanel",
+    "   ✓ roving tabindex: one tab in the Tab sequence",
+    "   ✓ ArrowRight moves focus to next tab",
+    "   ✓ selection follows focus (automatic activation)",
+    "   ✓ End → last tab",
+    "   ✓ Home → first tab",
+    "   ✓ selected tab's panel is visible"
+   ]
+  },
+  "files": {
+   "served": {
+    "Tajawal": {
+     "arabicKB": 8.7,
+     "latinKB": 10,
+     "subsets": [
+      "arabic",
+      "latin"
+     ]
+    },
+    "ReadexPro": {
+     "arabicKB": 9.5,
+     "latinKB": 14.1,
+     "subsets": [
+      "arabic",
+      "latin-ext",
+      "latin",
+      "vietnamese"
+     ]
+    },
+    "Alexandria": {
+     "arabicKB": 12.2,
+     "latinKB": 12.5,
+     "subsets": [
+      "arabic",
+      "latin-ext",
+      "latin",
+      "vietnamese"
+     ]
+    },
+    "Cairo": {
+     "arabicKB": 13,
+     "latinKB": 14.7,
+     "subsets": [
+      "arabic",
+      "latin-ext",
+      "latin"
+     ]
+    },
+    "Vazirmatn": {
+     "arabicKB": 20.6,
+     "latinKB": 15.7,
+     "subsets": [
+      "arabic",
+      "latin-ext",
+      "latin"
+     ]
+    },
+    "Almarai": {
+     "arabicKB": 30.9,
+     "latinKB": 17.1,
+     "subsets": [
+      "arabic",
+      "latin"
+     ]
+    },
+    "IBMPlexSansArabic": {
+     "arabicKB": 41.8,
+     "latinKB": 18.7,
+     "subsets": [
+      "arabic",
+      "cyrillic-ext",
+      "latin-ext",
+      "latin"
+     ]
+    },
+    "NotoKufiArabic": {
+     "arabicKB": 42.9,
+     "latinKB": 10.2,
+     "subsets": [
+      "arabic",
+      "latin-ext",
+      "latin",
+      "math",
+      "symbols"
+     ]
+    },
+    "NotoSansArabic": {
+     "arabicKB": 47.7,
+     "latinKB": 10.5,
+     "subsets": [
+      "arabic",
+      "latin-ext",
+      "latin",
+      "math",
+      "symbols"
+     ]
+    },
+    "NotoNaskhArabic": {
+     "arabicKB": 51.4,
+     "latinKB": 11.2,
+     "subsets": [
+      "arabic",
+      "latin-ext",
+      "latin",
+      "math",
+      "symbols"
+     ]
+    },
+    "NotoNastaliqUrdu": {
+     "arabicKB": 155.6,
+     "latinKB": 11.6,
+     "subsets": [
+      "arabic",
+      "latin-ext",
+      "latin"
+     ]
+    }
+   },
+   "truncation": {
+    "text": "مُحَمَّدٌ عَبْدُ الرَّحْمٰنِ",
+    "codeUnits": 28,
+    "graphemes": 15,
+    "slice5": {
+     "value": "مُحَم",
+     "shows": "م ُ ح َ م — the harakat count as characters, so 5 \"characters\" is 3 letters",
+     "graphemeSlice5": "مُحَمَّدٌ "
+    },
+    "lastGraphemeOfSlice4": "ends on a mark",
+    "rule": "truncate by grapheme (Intl.Segmenter) or let CSS do it (text-overflow / line-clamp); never String.slice on user-visible Arabic"
+   },
+   "riyalSignInGoogleFonts": {
+    "has": [
+     "NotoNaskhArabic",
+     "Roboto",
+     "ScheherazadeNew"
+    ],
+    "lacks": [
+     "Alexandria",
+     "Almarai",
+     "Amiri",
+     "BalooBhaijaan2",
+     "Beiruti",
+     "Blaka",
+     "Cairo",
+     "Changa",
+     "ElMessiri",
+     "Handjet",
+     "Harmattan",
+     "IBMPlexSans",
+     "IBMPlexSansArabic",
+     "Inter",
+     "Kufam",
+     "Lalezar",
+     "Lateef",
+     "Mada",
+     "Marhey",
+     "MarkaziText",
+     "NotoKufiArabic",
+     "NotoSans",
+     "NotoSansArabic",
+     "NotoSansMath",
+     "NotoSansSymbols",
+     "NotoSansSymbols2",
+     "PlaypenSansArabic",
+     "ReadexPro",
+     "ReemKufi",
+     "Rubik",
+     "Tajawal",
+     "Vazirmatn",
+     "Zain"
+    ]
+   }
+  },
+  "haptics": {
+   "chromium": {
+    "vibrateBeforeGesture": {
+     "exists": true,
+     "result": true,
+     "activation": true
+    },
+    "vibrateAfterTap": {
+     "result": true,
+     "activation": true,
+     "longPattern": true
+    },
+    "inputSwitch": {
+     "switchProperty": false,
+     "role": "checkbox",
+     "appearance": "auto"
+    },
+    "note": "headless Chromium on Linux has no vibration motor: the return value says whether the call was accepted, not whether anything moved"
+   },
+   "libraries": [
+    {
+     "spec": "ios-haptics@3.2.0",
+     "license": "MIT",
+     "unpackedSize": 4691,
+     "entry": "./dist/index.js",
+     "entryBytes": 1167
+    },
+    {
+     "spec": "web-haptics@0.0.6",
+     "license": "MIT",
+     "unpackedSize": 65050,
+     "entry": "./dist/index.mjs",
+     "entryBytes": 135
+    }
+   ]
+  },
+  "rtl": {
+   "fixture-ar-good": {
+    "mode": "as-served",
+    "summary": {
+     "FAIL": 0,
+     "WARN": 0,
+     "INFO": 1
+    },
+    "mirror": null,
+    "css": {
+     "rules": 89,
+     "physicalRules": 0,
+     "overrideRules": 1,
+     "logicalRules": 14
+    },
+    "ms": 425
+   },
+   "fixture-ar-broken": {
+    "mode": "as-served",
+    "summary": {
+     "FAIL": 10,
+     "WARN": 3,
+     "INFO": 4
+    },
+    "mirror": null,
+    "css": {
+     "rules": 86,
+     "physicalRules": 12,
+     "overrideRules": 0,
+     "logicalRules": 6
+    },
+    "ms": 856
+   },
+   "fixture-en-good-flip": {
+    "mode": "flip",
+    "summary": {
+     "FAIL": 0,
+     "WARN": 0,
+     "INFO": 1
+    },
+    "mirror": {
+     "checked": 189,
+     "notMirrored": 0,
+     "roots": 0,
+     "keptPhysical": 0
+    },
+    "css": {
+     "rules": 89,
+     "physicalRules": 0,
+     "overrideRules": 1,
+     "logicalRules": 14
+    },
+    "ms": 9071
+   },
+   "fixture-en-broken-flip": {
+    "mode": "flip",
+    "summary": {
+     "FAIL": 8,
+     "WARN": 4,
+     "INFO": 3
+    },
+    "mirror": {
+     "checked": 186,
+     "notMirrored": 30,
+     "roots": 13,
+     "keptPhysical": 30
+    },
+    "css": {
+     "rules": 86,
+     "physicalRules": 12,
+     "overrideRules": 0,
+     "logicalRules": 6
+    },
+    "ms": 9161
+   },
+   "bootstrap-dashboard-rtl": {
+    "mode": "as-served",
+    "summary": {
+     "FAIL": 0,
+     "WARN": 0,
+     "INFO": 4
+    },
+    "mirror": null,
+    "css": {
+     "rules": 2549,
+     "physicalRules": 421,
+     "overrideRules": 0,
+     "logicalRules": 9
+    },
+    "ms": 581
+   },
+   "bootstrap-checkout-rtl": {
+    "mode": "as-served",
+    "summary": {
+     "FAIL": 1,
+     "WARN": 1,
+     "INFO": 2
+    },
+    "mirror": null,
+    "css": {
+     "rules": 2542,
+     "physicalRules": 421,
+     "overrideRules": 0,
+     "logicalRules": 9
+    },
+    "ms": 872
+   },
+   "bootstrap-dashboard-flip": {
+    "mode": "flip",
+    "summary": {
+     "FAIL": 1,
+     "WARN": 2,
+     "INFO": 3
+    },
+    "mirror": {
+     "checked": 167,
+     "notMirrored": 14,
+     "roots": 12,
+     "keptPhysical": 6
+    },
+    "css": {
+     "rules": 2549,
+     "physicalRules": 421,
+     "overrideRules": 0,
+     "logicalRules": 9
+    },
+    "ms": 3690
+   },
+   "bootstrap-checkout-flip": {
+    "mode": "flip",
+    "summary": {
+     "FAIL": 2,
+     "WARN": 3,
+     "INFO": 1
+    },
+    "mirror": {
+     "checked": 115,
+     "notMirrored": 22,
+     "roots": 18,
+     "keptPhysical": 18
+    },
+    "css": {
+     "rules": 2542,
+     "physicalRules": 421,
+     "overrideRules": 0,
+     "logicalRules": 9
+    },
+    "ms": 944
+   },
+   "seeded": {
+    "defects": [
+     {
+      "defect": "brand margin-right",
+      "asServed": "INFO",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "search margin-left:auto",
+      "asServed": "INFO",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "badge right:2px",
+      "asServed": "INFO",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "drawer left:0 + translateX(-100%)",
+      "asServed": "FAIL",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "due margin-left",
+      "asServed": "INFO",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "field padding-right for the icon",
+      "asServed": "INFO",
+      "flip": "WARN"
+     },
+     {
+      "defect": "field icon right:10px",
+      "asServed": "INFO",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "table cell padding 12/8",
+      "asServed": "INFO",
+      "flip": "WARN"
+     },
+     {
+      "defect": "toast right:16px",
+      "asServed": "INFO",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "lede text-align:left",
+      "asServed": "FAIL",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "hint text-align:left",
+      "asServed": "FAIL",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "caption text-align:left",
+      "asServed": "FAIL",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "th/td text-align:left",
+      "asServed": "FAIL",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "eyebrow letter-spacing on Arabic",
+      "asServed": "FAIL",
+      "flip": null
+     },
+     {
+      "defect": "italic em on Arabic",
+      "asServed": "FAIL",
+      "flip": null
+     },
+     {
+      "defect": "note line-height 1.1 clips harakat",
+      "asServed": "FAIL",
+      "flip": null
+     },
+     {
+      "defect": "cell line-height 1.2 clips",
+      "asServed": "FAIL",
+      "flip": null
+     },
+     {
+      "defect": "amount without bdi",
+      "asServed": "FAIL",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "email field inherits RTL",
+      "asServed": "FAIL",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "phone type=text inherits RTL",
+      "asServed": "FAIL",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "tabs arrow keys backwards",
+      "asServed": "FAIL",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "toolbar arrow keys backwards",
+      "asServed": "FAIL",
+      "flip": "FAIL"
+     },
+     {
+      "defect": "slide-in keyframes along x",
+      "asServed": "WARN",
+      "flip": "WARN"
+     },
+     {
+      "defect": "shadow x-offset",
+      "asServed": "INFO",
+      "flip": "INFO"
+     }
+    ],
+    "total": 24,
+    "asServed": {
+     "FAIL": 14,
+     "WARN": 1,
+     "INFO": 9,
+     "null": 0
+    },
+    "flip": {
+     "FAIL": 16,
+     "WARN": 3,
+     "INFO": 1,
+     "null": 4
+    },
+    "icons": {
+     "directionalExpected": 15,
+     "directionalFlaggedAsServed": 15,
+     "directionalFlaggedFlip": 11,
+     "neverExpected": 5,
+     "neverFlaggedAsServed": 5,
+     "neverFlaggedFlip": 4
+    },
+    "goodVariantFalseAlarms": {
+     "asServed": 0,
+     "flip": 0
+    }
+   }
+  },
+  "auditBaseline": {
+   "good": {
+    "fails": 1
+   },
+   "broken": {
+    "fails": 0
+   },
+   "linesOnlyInBroken": [
+    "- Type sizes carrying text: 28 · 24 · 22.5 · 15 · 14 · 13 · 12 · 10 px (9 distinct). Families (declared): UI 100%, Arial 0%. Weights: 400 75%, 600 16%, 700 9%.",
+    "- Type sizes carrying text: 28 · 24 · 22.5 · 15 · 14 · 13 · 12 · 10 px (9 distinct). Families (declared): UI 100%, Arial 0%. Weights: 400 75%, 600 16%, 700 10%."
+   ]
+  },
+  "mobile": {
+   "good-portrait": {
+    "summary": {
+     "FAIL": 0,
+     "WARN": 0,
+     "INFO": 0
+    },
+    "thumb": {
+     "model": {
+      "pxPerMm": 6.1,
+      "pivotOutsideMm": 5,
+      "pivotUpMm": 15,
+      "near": 25,
+      "natural": 65,
+      "stretch": 85,
+      "edgeMm": 5
+     },
+     "primaries": [
+      {
+       "target": "button.primary\"Add to cart\"",
+       "band": "bottom third",
+       "right": "awkward (at the thumb base)",
+       "left": "natural",
+       "edge": false
+      }
+     ],
+     "tabbar": [
+      {
+       "target": "a\"Home\"",
+       "band": "bottom third",
+       "right": "natural",
+       "left": "awkward (at the thumb base)",
+       "edge": false
+      },
+      {
+       "target": "a\"Search\"",
+       "band": "bottom third",
+       "right": "natural",
+       "left": "natural",
+       "edge": false
+      },
+      {
+       "target": "a\"Bag\"",
+       "band": "bottom third",
+       "right": "natural",
+       "left": "natural",
+       "edge": false
+      },
+      {
+       "target": "a\"Account\"",
+       "band": "bottom third",
+       "right": "awkward (at the thumb base)",
+       "left": "natural",
+       "edge": false
+      }
+     ]
+    },
+    "findings": [],
+    "ms": 1076
+   },
+   "broken-portrait": {
+    "summary": {
+     "FAIL": 3,
+     "WARN": 7,
+     "INFO": 1
+    },
+    "thumb": {
+     "model": {
+      "pxPerMm": 6.1,
+      "pivotOutsideMm": 5,
+      "pivotUpMm": 15,
+      "near": 25,
+      "natural": 65,
+      "stretch": 85,
+      "edgeMm": 5
+     },
+     "primaries": [
+      {
+       "target": "a.fab-top.primary\"Buy now\"",
+       "band": "top third",
+       "right": "regrip",
+       "left": "regrip",
+       "edge": false
+      },
+      {
+       "target": "button.primary\"Add to cart\"",
+       "band": "bottom third",
+       "right": "awkward (at the thumb base)",
+       "left": "natural",
+       "edge": false
+      }
+     ],
+     "tabbar": [
+      {
+       "target": "a\"Home\"",
+       "band": "bottom third",
+       "right": "natural",
+       "left": "awkward (at the thumb base)",
+       "edge": true
+      },
+      {
+       "target": "a\"Search\"",
+       "band": "bottom third",
+       "right": "natural",
+       "left": "natural",
+       "edge": true
+      },
+      {
+       "target": "a\"Bag\"",
+       "band": "bottom third",
+       "right": "natural",
+       "left": "natural",
+       "edge": true
+      },
+      {
+       "target": "a\"Account\"",
+       "band": "bottom third",
+       "right": "awkward (at the thumb base)",
+       "left": "natural",
+       "edge": true
+      }
+     ]
+    },
+    "findings": [
+     "WARN safe-area: ",
+     "FAIL safe-area: 8",
+     "WARN targets: 15",
+     "WARN targets: 11",
+     "INFO targets: 7",
+     "FAIL hover: 1",
+     "WARN pressed: 15",
+     "FAIL keyboards: 5",
+     "WARN keyboards: 19",
+     "WARN keyboard: 3",
+     "WARN thumb: 1"
+    ],
+    "ms": 1110
+   },
+   "good-landscape": {
+    "summary": {
+     "FAIL": 0,
+     "WARN": 0,
+     "INFO": 0
+    },
+    "thumb": {
+     "model": "not applied in landscape",
+     "primaries": [],
+     "tabbar": []
+    },
+    "findings": [],
+    "ms": 1187
+   },
+   "broken-landscape": {
+    "summary": {
+     "FAIL": 3,
+     "WARN": 6,
+     "INFO": 1
+    },
+    "thumb": {
+     "model": "not applied in landscape",
+     "primaries": [],
+     "tabbar": []
+    },
+    "findings": [
+     "WARN safe-area: ",
+     "FAIL safe-area: 4",
+     "WARN targets: 15",
+     "WARN targets: 11",
+     "INFO targets: 7",
+     "FAIL hover: 1",
+     "WARN pressed: 15",
+     "FAIL keyboards: 5",
+     "WARN keyboards: 19",
+     "WARN keyboard: 7"
+    ],
+    "ms": 1117
+   },
+   "bootstrap-checkout-rtl-phone": {
+    "summary": {
+     "FAIL": 0,
+     "WARN": 4,
+     "INFO": 1
+    },
+    "thumb": {
+     "model": {
+      "pxPerMm": 6.1,
+      "pivotOutsideMm": 5,
+      "pivotUpMm": 15,
+      "near": 25,
+      "natural": 65,
+      "stretch": 85,
+      "edgeMm": 5
+     },
+     "primaries": [
+      {
+       "target": "button.btn.btn-secondary\"تحقق\"",
+       "band": "bottom third",
+       "right": "natural",
+       "left": "awkward (at the thumb base)",
+       "edge": false
+      }
+     ],
+     "tabbar": []
+    },
+    "findings": [
+     "WARN safe-area: ",
+     "WARN targets: 4",
+     "INFO targets: 3",
+     "WARN pressed: 3",
+     "WARN keyboards: 6"
+    ],
+    "ms": 941
+   }
+  }
+ }
+}

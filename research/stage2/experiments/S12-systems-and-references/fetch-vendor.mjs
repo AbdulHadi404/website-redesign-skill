@@ -11,6 +11,7 @@ const FILES = [
   },
 ];
 await mkdir(here, { recursive: true });
+await writeFile(new URL('.gitignore', here), '*\n'); // nothing fetched here is committed
 // Held-out code for the lint lab: sparse, pinned clones (git only; GitHub is reachable from the lab).
 import { execFileSync } from 'node:child_process';
 const REPOS = [
@@ -38,4 +39,29 @@ for (const f of FILES) {
   text = text.replace('from "colorjs.io"', 'from "colorjs-052"');
   await writeFile(dest, `// Source: ${f.url}\n// Licence: ${f.licence}\n// Modified: colorjs.io import pointed at the pinned 0.5.2 alias\n` + text);
   console.log('fetched', f.out);
+}
+
+// Held-out code for the lint lab (second round, after review): npm tarballs at pinned versions,
+// only the paths the lab reads are extracted. None of this is committed (vendor/.gitignore).
+//   TSX written with style objects: tldraw (own licence, LICENSE.md), BlockNote react + shadcn (MPL-2.0),
+//   react-arborist (MIT), @lexical/react (MIT). Token-first CSS: tldraw ui.css, ckeditor5 (GPL-2.0-or-later
+//   or commercial), ag-grid-community (MIT).
+const NPM = [
+  { dir: 'npm/tldraw', tgz: 'https://registry.npmjs.org/tldraw/-/tldraw-5.4.2.tgz', paths: ['package/src/lib', 'package/LICENSE.md'] },
+  { dir: 'npm/blocknote-react', tgz: 'https://registry.npmjs.org/@blocknote/react/-/react-0.55.0.tgz', paths: ['package/src'] },
+  { dir: 'npm/blocknote-shadcn', tgz: 'https://registry.npmjs.org/@blocknote/shadcn/-/shadcn-0.55.0.tgz', paths: ['package/src'] },
+  { dir: 'npm/react-arborist', tgz: 'https://registry.npmjs.org/react-arborist/-/react-arborist-3.16.0.tgz', paths: ['package/src'] },
+  { dir: 'npm/lexical-react', tgz: 'https://registry.npmjs.org/@lexical/react/-/react-0.52.0.tgz', paths: ['package/src'] },
+  { dir: 'npm/ckeditor5', tgz: 'https://registry.npmjs.org/ckeditor5/-/ckeditor5-48.5.2.tgz', paths: ['package/dist/ckeditor5.css'] },
+  { dir: 'npm/ag-grid-community', tgz: 'https://registry.npmjs.org/ag-grid-community/-/ag-grid-community-36.2.0.tgz', paths: ['package/styles/ag-grid.css'] },
+];
+for (const n of NPM) {
+  const d = new URL(n.dir + '/', here).pathname;
+  try { await access(d); continue; } catch {}
+  await mkdir(d, { recursive: true });
+  const tgz = d + 'pkg.tgz';
+  execFileSync('curl', ['-sSfL', '-o', tgz, n.tgz]); // curl honours the lab's HTTPS proxy
+  execFileSync('tar', ['-xzf', tgz, '-C', d, ...n.paths]);
+  execFileSync('rm', ['-f', tgz]);
+  console.log('fetched', n.dir);
 }

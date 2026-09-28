@@ -1,0 +1,14 @@
+{
+  "name": "s9-polish-and-composition",
+  "private": true,
+  "type": "module",
+  "description": "S9: which polish moves are perceptible. Builds a fixture page with ~24 toggleable polish moves, captures every variant with the skill's capture.mjs, measures pixel and colour differences, and builds blind pair sheets with compare.mjs.",
+  "scripts": {
+    "assets": "NODE_USE_ENV_PROXY=1 node fetch-assets.mjs",
+    "run": "node run.mjs"
+  },
+  "dependencies": {
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0"
+  }
+}

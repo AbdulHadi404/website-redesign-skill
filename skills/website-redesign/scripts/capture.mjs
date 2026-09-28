@@ -30,11 +30,12 @@
  *
  * In Git Bash on Windows pass paths without the leading slash or set MSYS_NO_PATHCONV=1 (the scripts warn).
  *
- * WebGL: the first page of a run that has a <canvas> (or the first page at all, with --gpu or --headed)
- * prints `renderer: <vendor> / <renderer>`. A software renderer (SwiftShader, llvmpipe) draws a 3D page
- * correctly but slowly, so its speed and motion cannot be judged from that run (visual-qa.md, "3D and
- * WebGL experiences"): capture again with --gpu or --headed on a machine with a GPU. Pages without a
- * canvas print nothing.
+ * WebGL: the first page of a run that has a <canvas> (in the page, in a shadow root, open or closed, or in
+ * an iframe of any origin), or the first page at all with --gpu or --headed, prints
+ * `renderer: <vendor> / <renderer>`. A software renderer (SwiftShader, llvmpipe) draws a 3D page correctly
+ * but slowly, so its speed and motion cannot be judged from that run (visual-qa.md, "3D and WebGL
+ * experiences"): capture again with --gpu or --headed on a machine with a GPU. Pages without a canvas
+ * print nothing.
  *
  * Why it works the way it does (each of these was a real failure):
  * - In some environments `fullPage: true` does not rasterise images that were
@@ -61,7 +62,10 @@
  * html or body). With both html and body clipping, the document does not get
  * any wider, so only the second warning sees the cut. Text a reader can still
  * reach (the page scrolls sideways to it, or a phone shows the page zoomed
- * out) is left to the overflow and layout-viewport warnings.
+ * out) is left to the overflow and layout-viewport warnings. Text past the
+ * start edge (left in a left-to-right page, right in a right-to-left one) is
+ * never reachable, so it is reported with or without a clip ("where no scroll
+ * reaches it").
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -133,11 +137,31 @@ async function flatImages(page, file, dpr) {
   return out;
 }
 
-/** A <canvas> anywhere in the page, open shadow roots included (3D viewers draw inside web components). */
-const hasCanvas = (page) => page.evaluate(() => {
-  const find = (root) => !!root.querySelector('canvas') || [...root.querySelectorAll('*')].some((e) => e.shadowRoot && find(e.shadowRoot));
-  return find(document);
-}).catch(() => false);
+/**
+ * A <canvas> anywhere in the page: in a shadow root, open or closed (3D viewers draw inside web components), or in an
+ * iframe of any origin (the usual embed for Sketchfab, Spline and Matterport scenes). Read from the DevTools DOM tree,
+ * which sees what page script cannot (closed roots, other sites' documents). A frame from another site runs in its
+ * own process and has its own session; any other frame is already in its parent's tree.
+ */
+async function hasCanvas(page) {
+  const found = (n) => n.nodeName === 'CANVAS' || [...(n.children || []), ...(n.shadowRoots || []), ...(n.contentDocument ? [n.contentDocument] : [])].some(found);
+  const inTree = async (target) => { // null: no session of its own (or the frame went away)
+    const s = await page.context().newCDPSession(target).catch(() => null);
+    if (!s) return null;
+    try { return found((await s.send('DOM.getDocument', { depth: -1, pierce: true })).root); }
+    catch { return null; } finally { await s.detach().catch(() => {}); }
+  };
+  const top = await inTree(page);
+  if (top === null) {
+    // No DevTools tree: page script still sees every frame and the open shadow roots.
+    const find = () => { const f = (r) => !!r.querySelector('canvas') || [...r.querySelectorAll('*')].some((e) => e.shadowRoot && f(e.shadowRoot)); return f(document); };
+    for (const f of page.frames()) if (await f.evaluate(find).catch(() => false)) return true;
+    return false;
+  }
+  if (top) return true;
+  for (const f of page.frames().slice(1)) if (await inTree(f)) return true;
+  return false;
+}
 
 /**
  * One line per run naming the WebGL renderer, so a 3D page captured in software is not judged for speed or motion.
@@ -253,11 +277,13 @@ try {
       // Start edge: always cut. End edge: cut when it lies beyond what the reader can reach.
       const isCut = (c) => (c.side === 'right') === edge.rtl || (c.px == null ? edge.clip && reach === 0 : c.px > reach + 1);
       const cut = past.filter(isCut);
-      // Text that overflows its own box widens the page without any element box doing so: name it there.
-      const culprits = over.culprits.length ? over.culprits : past.filter((c) => !isCut(c));
+      // Text that overflows its own box widens the page without any element box doing so: name it there (the text the
+      // reader can reach, or else the cut text, which a body-only clip lets widen the document all the same).
+      const reachable = past.filter((c) => !isCut(c));
+      const culprits = over.culprits.length ? over.culprits : reachable.length ? reachable : past;
       const note = [`${fullH}px tall`, pinned ? `${pinned} viewport-height elements pinned` : null,
         mobile && layoutW > width ? `⚠ layout viewport widened to ${layoutW}px — phones show this page zoomed out` : null,
-        over.overflow ? `⚠ horizontal overflow by ${over.by}px: ${culprits.map((c) => c.selector).join(', ')}` : null,
+        over.overflow ? `⚠ horizontal overflow by ${over.by}px${culprits.length ? `: ${culprits.map((c) => c.selector).join(', ')}` : ''}` : null,
         cut.length ? `⚠ text past the viewport ${edge.clip ? 'under a page-level clip' : 'where no scroll reaches it'}: ${cut.map((c) => `${c.selector} (${c.px == null ? `${c.side} edge` : `${Math.round(c.px)}px${c.side === 'left' ? ' left' : ''}`})`).join(', ')}` : null,
         flat?.length ? `⚠ ${flat.length} image(s) painted flat (${flat.slice(0, 3).join(', ')}) — either something on the page covers them, or the capture failed to rasterise them: check in a browser, or retry with --mode ${mode === 'grow' ? 'fullpage' : 'grow'}` : null,
         variants.length ? `variants: ${variants.join(', ')}` : null].filter(Boolean).join(' · ');

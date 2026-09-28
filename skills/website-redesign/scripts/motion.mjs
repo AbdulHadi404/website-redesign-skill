@@ -180,11 +180,12 @@ function pageHelpers() {
     const sc = cs.scale && cs.scale !== 'none' ? cs.scale.split(' ').map(Number) : [1, 1];
     const sx = (m ? Math.hypot(m.m11, m.m12) : 1) * (sc[0] ?? 1), sy = (m ? Math.hypot(m.m21, m.m22) : 1) * (sc[1] ?? sc[0] ?? 1);
     const text = el.childElementCount === 0 ? (el.textContent || '').trim().slice(0, 32) : '';
+    const cvar = el.getAnimations().map((x) => x.transitionProperty || '').filter((p) => p.startsWith('--')).map((p) => `${p}:${cs.getPropertyValue(p).trim()}`).join(';');
     return { tx: +((m ? m.m41 : 0) + (tr[0] || 0)).toFixed(2), ty: +((m ? m.m42 : 0) + (tr[1] || 0)).toFixed(2), sx: +sx.toFixed(4), sy: +sy.toFixed(4),
       rot: +(m ? (Math.atan2(m.m12, m.m11) * 180) / Math.PI : 0).toFixed(2) + (cs.rotate && cs.rotate !== 'none' ? num(cs.rotate) : 0),
       op: +(+cs.opacity).toFixed(3), ow: el.offsetWidth ?? 0, oh: el.offsetHeight ?? 0, ol: el.offsetLeft ?? 0, ot: el.offsetTop ?? 0,
       color: cs.color, bg: cs.backgroundColor, shadow: cs.boxShadow, filter: cs.filter, clip: cs.clipPath, outline: cs.outlineStyle === 'none' ? 'none' : `${cs.outlineWidth} ${cs.outlineColor}`,
-      vis: cs.visibility === 'hidden' || cs.display === 'none' ? 0 : 1, text };
+      vis: cs.visibility === 'hidden' || cs.display === 'none' ? 0 : 1, text, cvar };
   };
   const animInfo = (an) => {
     const eff = an.effect; const tm = eff?.getTiming?.() || {}; let kf = []; try { kf = eff?.getKeyframes?.() || []; } catch { /* ignore */ }
@@ -279,13 +280,15 @@ function loadMotion() {
 // Sampler: start → every frame reads the targets, their animations and any view-transition pseudos.
 function samplerStart({ sel, on, ms }) {
   const { read, animInfo, readVT } = window.__mh;
-  const els = [...document.querySelectorAll(sel)].slice(0, 12);
+  let els = [...document.querySelectorAll(sel)].slice(0, 12);
   window.__on = on ? [...document.querySelectorAll(on)].slice(0, 1) : els.slice(0, 1);
+  const late = !els.length; // mounted by the trigger (AnimatePresence, a toast appended on click): look again every frame
   window.__inputs = [];
   const frames = []; const anims = new Map(); const t0 = performance.now();
   window.__sample = { frames, anims, n: els.length, t0, done: false, delays: [], inView: els.map((e) => { const r = e.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; }) };
   const tick = () => {
     const t = performance.now();
+    if (late && els.length < 12) { const found = [...document.querySelectorAll(sel)].slice(0, 12); if (found.length > els.length) { els = found; window.__sample.n = els.length; } }
     const v = els.map((e) => (e.isConnected ? read(e) : null));
     const list = [...els.flatMap((e) => (e.isConnected ? e.getAnimations({ subtree: true }) : [])), ...document.getAnimations().filter((x) => (x.effect?.pseudoElement || '').startsWith('::view-transition'))];
     for (const x of list) { const info = animInfo(x); const k = `${info.kind}|${info.name}|${info.pseudo}|${info.target}|${info.duration}|${info.delay}`; if (!anims.has(k)) anims.set(k, { ...info, firstSeen: t - t0 }); }
@@ -294,19 +297,19 @@ function samplerStart({ sel, on, ms }) {
     if (t - t0 < ms) requestAnimationFrame(tick); else window.__sample.done = true;
   };
   requestAnimationFrame(tick);
-  return els.length;
+  return late ? -1 : els.length;
 }
 function samplerCollect() {
   const s = window.__sample;
-  return s ? { frames: s.frames, anims: [...s.anims.values()], n: s.n, t0: s.t0, done: s.done, delays: s.delays, inView: s.inView, inputs: window.__inputs.map((e) => ({ ...e, t: e.t - s.t0 })) } : null;
+  return s ? { frames: s.frames, anims: [...s.anims.values()], n: Math.max(s.n, ...s.frames.map((f) => f.v.length)), t0: s.t0, done: s.done, delays: s.delays, inView: s.inView, inputs: window.__inputs.map((e) => ({ ...e, t: e.t - s.t0 })) } : null;
 }
 
 // ---------------------------------------------------------------- sample analysis (Node side)
 const CH = { tx: 40, ty: 40, sx: 0.08, sy: 0.08, rot: 20, op: 1, ow: 60, oh: 60, ol: 40, ot: 40 }; // normalising scales per channel
 const MOVE_CH = ['tx', 'ty', 'sx', 'sy', 'rot', 'ol', 'ot'];
 const SIZE_CH = ['ow', 'oh'];
-const STR_CH = ['color', 'bg', 'shadow', 'filter', 'clip', 'outline', 'text', 'vis'];
-const EPS = { tx: 0.15, ty: 0.15, sx: 0.001, sy: 0.001, rot: 0.1, op: 0.004, ow: 0.5, oh: 0.5, ol: 0.5, ot: 0.5, num: 1e-9 };
+const STR_CH = ['color', 'bg', 'shadow', 'filter', 'clip', 'outline', 'text', 'vis', 'cvar'];
+const EPS = { tx: 0.15, ty: 0.15, sx: 0.001, sy: 0.001, rot: 0.1, op: 0.004, ow: 0.5, oh: 0.5, ol: 0.5, ot: 0.5, num: 1e-9, vis: 0.5 };
 const numOf = (t) => { const d = String(t ?? '').replace(/[^\d.-]/g, ''); return /\d/.test(d) ? parseFloat(d) : null; };
 
 /** For one target over the sampled frames: which channels changed, over how many frames, from when to when.
@@ -334,13 +337,14 @@ function channelStats(frames, idx, tFrom) {
 }
 /** animates: changed over ≥ 3 frames; instant: changed in 1–2 steps; none. */
 function classify(stats) {
-  if (!stats || !Object.keys(stats).length) return { state: 'none', moves: false, fades: false, layout: false, jumps: [] };
+  if (!stats || !Object.keys(stats).length) return { state: 'none', moves: false, fades: false, counts: false, layout: false, jumps: [] };
   const anim = (ch) => stats[ch] && stats[ch].changes >= 3;
   const moves = MOVE_CH.some(anim) || SIZE_CH.some(anim);
-  const fades = anim('op') || ['color', 'bg', 'shadow', 'filter', 'outline'].some(anim) || anim('clip') || anim('text');
+  const fades = anim('op') || ['color', 'bg', 'shadow', 'filter', 'outline'].some(anim) || anim('clip');
+  const counts = anim('text') || anim('cvar'); // a number counting, or a custom property driving something the sampler cannot name
   const any = Object.values(stats).some((s) => s.changes >= 3);
-  const jumps = [...SIZE_CH, 'ol', 'ot'].filter((ch) => stats[ch] && stats[ch].changes < 3);
-  return { state: any ? 'animates' : 'instant', moves, fades, layout: SIZE_CH.some(anim) || (anim('ol') || anim('ot')), jumps };
+  const jumps = stats.vis ? [] : [...SIZE_CH, 'ol', 'ot'].filter((ch) => stats[ch] && stats[ch].changes < 3); // display:none ↔ shown moves every box
+  return { state: any ? 'animates' : 'instant', moves, fades, counts, layout: SIZE_CH.some(anim) || (anim('ol') || anim('ot')), jumps };
 }
 function dominant(stats) {
   let best = null, score = 0;
@@ -380,8 +384,10 @@ function fitEasing(frames, idx, ch, candidates) {
 function continuity(frames, idx, ch, tInt) {
   const F = frames.filter((f) => f.v[idx]); const v = F.map((f) => f.v[idx][ch]);
   const i0 = F.findLastIndex((f) => f.t < tInt); if (i0 < 1 || i0 >= F.length - 3) return null;
-  const steps = v.map((x, i) => (i ? Math.abs(x - v[i - 1]) : 0));
+  // speeds (change per 16.7 ms), so a frame the busy machine dropped right after the input does not read as a jump
+  const steps = v.map((x, i) => (i ? (Math.abs(x - v[i - 1]) * 16.7) / Math.max(8, F[i].t - F[i - 1].t) : 0));
   const range = Math.max(...v) - Math.min(...v) || 1;
+  if (CH[ch] && range / CH[ch] < 0.25) return { continuous: true, tooSmall: true, discPct: null, maxPreStepPct: null }; // a few pixels of integer steps: nothing to judge
   const maxPre = Math.max(...steps.slice(1, i0 + 1)); const disc = Math.max(steps[i0 + 1], steps[i0 + 2]);
   return { continuous: disc <= 1.5 * maxPre + 0.03 * range, discPct: +((disc / range) * 100).toFixed(1), maxPreStepPct: +((maxPre / range) * 100).toFixed(1) };
 }
@@ -580,6 +586,7 @@ async function trigger(page, entry, ms) {
   const box = async () => page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, on);
   const n = await page.evaluate(samplerStart, { sel: entry.target, on, ms });
   if (!n) return { error: `target ${entry.target} not found` };
+  if (n < 0 && entry.trigger === 'hover') return { error: `target ${entry.target} not found` };
   await page.waitForTimeout(150); // pre-roll: channels already changing now (a loop) are not the trigger's doing
   const p = await box();
   if (!p && kind !== 'load') return { error: `${on} not found` };
@@ -631,8 +638,15 @@ async function runEntry(entry, mode, film) {
         const rs = els.map((e) => e.getBoundingClientRect()).filter((r) => r.width && r.height); if (!rs.length) return null;
         const x0 = Math.min(...rs.map((r) => r.left)), y0 = Math.min(...rs.map((r) => r.top)), x1 = Math.max(...rs.map((r) => r.right)), y1 = Math.max(...rs.map((r) => r.bottom));
         return { x: x0, y: y0, w: x1 - x0, h: y1 - y0, vw: innerWidth, vh: innerHeight }; }, entry.target);
-      const origin = await page.evaluate(() => performance.timeOrigin + (window.__sample?.t0 || 0));
-      data.film = { frames: await cast.stop(), rect, origin };
+      // Put everything on Node's clock: the page's clock via a round trip, the paint timestamps via the fastest
+      // deliveries (renderer, browser and Node clocks can disagree by hundreds of ms)
+      const n0 = Date.now(); const pg = await page.evaluate(() => [performance.timeOrigin + performance.now(), performance.timeOrigin + (window.__sample?.t0 || 0)]); const n1 = Date.now();
+      const frames = await cast.stop();
+      const lag = frames.map((fr) => fr.recv - fr.meta).sort((x, y) => x - y);
+      const metaToNode = lag.length ? lag[Math.floor(lag.length * 0.1)] : 0;
+      for (const fr of frames) fr.wall = fr.meta + metaToNode;
+      data.film = { frames, rect: entry.trigger === 'scroll' ? { x: 0, y: 0, w: rect?.vw ?? CTX.viewport.width, h: rect?.vh ?? CTX.viewport.height, vw: rect?.vw ?? CTX.viewport.width, vh: rect?.vh ?? CTX.viewport.height } : rect,
+        origin: pg[1] + ((n0 + n1) / 2 - pg[0]) };
     } else if (cast) await cast.stop();
   } catch (e) { data = { error: e.message.split('\n')[0] }; }
   await ctx.close();
@@ -643,7 +657,8 @@ async function runEntry(entry, mode, film) {
 async function screencast(page) {
   const cdp = await page.context().newCDPSession(page);
   const frames = [];
-  cdp.on('Page.screencastFrame', async (f) => { frames.push({ wall: f.metadata.timestamp * 1000, data: f.data, w: f.metadata.deviceWidth, h: f.metadata.deviceHeight });
+  // meta: the browser's paint timestamp; recv: when Node got the frame (the two clocks are related after the run)
+  cdp.on('Page.screencastFrame', async (f) => { frames.push({ meta: f.metadata.timestamp * 1000, recv: Date.now(), data: f.data, w: f.metadata.deviceWidth, h: f.metadata.deviceHeight });
     try { await cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }); } catch { /* closed */ } });
   await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 85, everyNthFrame: 1 });
   return { stop: async () => { try { await cdp.send('Page.stopScreencast'); } catch { /* ignore */ } await cdp.detach().catch(() => {}); return frames; } };
@@ -670,10 +685,15 @@ function analyse(entry, data) {
   const vt = vtFrames.length ? { frames: vtFrames.length, moves: new Set(vtFrames.map((f) => f.vt.move)).size > 3, fades: new Set(vtFrames.map((f) => f.vt.fade)).size > 3, span: Math.round(vtFrames.at(-1).t - vtFrames[0].t) } : null;
   const anims = data.anims.filter((x) => x.firstSeen >= tT - 20 || entry.trigger === 'load');
   const cls = perTarget.map((p) => p.cls);
-  const state = cls.some((c) => c.state === 'animates') || (vt && (vt.moves || vt.fades)) ? 'animates' : cls.some((c) => c.state === 'instant') ? 'instant' : 'none';
-  const moves = cls.some((c) => c.moves) || !!vt?.moves;
-  const fades = cls.some((c) => c.fades) || !!vt?.fades;
+  // A CSS/WAAPI animation of ≥ 50 ms that ran after the trigger counts even if a busy machine sampled it in two frames.
+  const ran = anims.filter((x) => x.timeline === 'document' && x.iterations !== Infinity && x.duration >= 50 && !x.pseudo.startsWith('::view-transition') && x.props.some((p) => !['display', 'overlay', 'visibility', 'content-visibility'].includes(p)));
+  const ranMoves = ran.some((x) => x.props.some((p) => /^(transform|translate|scale|rotate|top|left|right|bottom|width|height|margin.*|inset.*)$/.test(p)));
+  const sampledChanged = cls.some((c) => c.state !== 'none');
+  const state = cls.some((c) => c.state === 'animates') || (vt && (vt.moves || vt.fades)) || (ran.length && sampledChanged) ? 'animates' : cls.some((c) => c.state === 'instant') ? 'instant' : 'none';
+  const moves = cls.some((c) => c.moves) || !!vt?.moves || (ran.length > 0 && sampledChanged && ranMoves && !cls.some((c) => c.state === 'animates'));
+  const fades = cls.some((c) => c.fades) || !!vt?.fades || (ran.length > 0 && sampledChanged && !ranMoves && !cls.some((c) => c.state === 'animates'));
   const layout = cls.some((c) => c.layout);
+  const counts = cls.some((c) => c.counts);
   // durations: declared (Animation objects, exact) and observed (sampled span of the dominant channel per target)
   const docAnims = anims.filter((x) => x.timeline === 'document' && x.iterations !== Infinity && x.duration > 0);
   const declared = docAnims.length ? Math.max(...docAnims.map((x) => x.duration)) : null;
@@ -694,7 +714,7 @@ function analyse(entry, data) {
   const scrollLinked = anims.some((x) => x.timeline !== 'document');
   const inViewAtStart = entry.trigger === 'scroll' && (data.inView || []).some(Boolean);
   const jumps = [...new Set(perTarget.flatMap((p) => (p.cls.state === 'animates' || state === 'animates' ? p.cls.jumps : [])))];
-  return { tT: Math.round(tT), jumps, state, moves, fades, layout, vt, declared, observed, stagger, staggerSource, scrollLinked, inViewAtStart, props: [...changedProps], anims: anims.slice(0, 8), dominant: ch0,
+  return { tT: Math.round(tT), jumps, state, moves, fades, counts, layout, vt, declared, observed, stagger, staggerSource, scrollLinked, inViewAtStart, props: [...changedProps], anims: anims.slice(0, 8), dominant: ch0,
     final: fin && { op: fin.op, vis: fin.vis, tx: fin.tx, ty: fin.ty, sx: fin.sx, text: fin.text }, targets: data.n, perTarget: perTarget.map((p) => p.cls.state),
     interrupt: entry.interrupt ? interruptInfo(entry, data, ch0, state) : null, frames: data.frames.length, ambient: [...ambient] };
 }
@@ -708,7 +728,7 @@ function interruptInfo(entry, data, ch, state) {
     if (!clicks[1].onTarget) return { result: `input swallowed (the second click landed on <${clicks[1].tag.toLowerCase()}>; a view transition hit-tests the root for its whole duration)` };
     if (!ch) return { result: 'nothing to compare' };
     const c = continuity(data.frames, 0, ch, clicks[1].t);
-    return c ? { result: c.continuous ? 'continues from the current value' : 'jumps', ...c } : { result: 'outside samples' };
+    return c ? { result: c.tooSmall ? 'n/a (it had barely moved when interrupted)' : c.continuous ? 'continues from the current value' : 'jumps', ...c } : { result: 'outside samples' };
   }
   return { result: evs.length ? 'n/a for this trigger' : 'no input' };
 }
@@ -720,12 +740,16 @@ function judge(entry, n, r) {
   else if (n.state === 'instant') problems.push('static: changed in one frame (no animation)');
   const dur = resolveDuration(entry.duration);
   // declared durations (CSS/WAAPI) are exact; for JavaScript-driven motion, the duration fitted with the best-fitting easing
+  // Sampled (JavaScript-driven) motion: the duration lies between the last visible change (a decelerating tail
+  // changes less than a pixel per frame, so this undercounts) and the duration fitted with the best easing (for a
+  // very flat tail, overcounts). Flag only when the whole range misses the spec. An interrupted run holds two animations.
   const fitted = n.fit ? n.fit.duration[n.fit.best] : null;
-  const durCheck = n.scrollLinked ? null : n.declared ?? (entry.interrupt ? null : fitted); // an interrupted run holds two animations
+  const est = n.scrollLinked || n.declared != null || entry.interrupt ? null : [n.observed ?? fitted, fitted ?? n.observed].filter((x) => x != null).sort((x, y) => x - y);
   if (dur?.unknown) problems.push(`duration token "${dur.unknown}" not found`);
-  else if (dur && n.state === 'animates' && durCheck != null) {
-    const lo = n.declared != null ? dur.min : dur.min * 0.85 - 17, hi = n.declared != null ? dur.max : dur.max * 1.15 + 17;
-    if (durCheck < lo || durCheck > hi) problems.push(`duration ${durCheck}ms${n.declared != null ? '' : ` (fitted to samples, ${n.fit.best === '__spec' ? 'spec easing' : n.fit.best})`} outside ${dur.label}`);
+  else if (dur && n.state === 'animates' && !n.scrollLinked) {
+    if (n.declared != null) { if (n.declared < dur.min || n.declared > dur.max) problems.push(`duration ${n.declared}ms outside ${dur.label}`); }
+    else if (est?.length) { const lo = dur.min * 0.85 - 17, hi = dur.max * 1.15 + 17;
+      if (est.at(-1) < lo || est[0] > hi) problems.push(`duration ~${est[0]}–${est.at(-1)}ms (sampled: last visible change – fitted) outside ${dur.label}`); }
   }
   if (n.jumps?.length && n.state === 'animates') problems.push(`layout jumps in one frame (${n.jumps.map((c) => ({ ow: 'width', oh: 'height', ol: 'left/margin', ot: 'top/margin' }[c])).join(', ')}): a layout property changed without transitioning`);
   const wantE = resolveEasing(entry.easing);
@@ -751,7 +775,7 @@ function judge(entry, n, r) {
   // reduced motion
   let reduced = null;
   if (r && !r.error) {
-    const outcome = r.state === 'none' ? 'nothing changes' : r.state === 'instant' ? 'stops (instant)' : r.moves ? 'still moves' : 'substituted (fade/colour)';
+    const outcome = r.state === 'none' ? 'nothing changes' : r.state === 'instant' ? 'stops (instant)' : r.moves ? 'still moves' : r.fades ? 'substituted (fade/colour)' : r.counts ? 'still animates (text or custom property)' : 'substituted (fade/colour)';
     const lost = n.final && r.final && ((n.final.vis && !r.final.vis) || (n.final.vis && r.final.vis && n.final.op > 0.5 && r.final.op < 0.5) || (n.final.text && r.final.text !== n.final.text));
     const exp = String(entry.reduced || '').toLowerCase();
     let ok = true;
@@ -786,7 +810,9 @@ if (spec) {
     const row = { id: entry.id, trigger: entry.trigger, on: entry.on, target: entry.target, spec: { properties: entry.properties, duration: entry.duration, easing: entry.easing, reduced: entry.reduced, stagger: entry.stagger },
       normal: n, reduce: r, ...j };
     report.spec.push(row);
-    if (film && dn?.film && dr?.film) films.push({ id: entry.id, n: dn.film, r: dr.film, tn: n.tT, tr: r.tT });
+    // a scroll trigger is a 600 ms scripted scroll: its filmstrip starts when the scroll ends
+    const shift = entry.trigger === 'scroll' ? 600 : 0;
+    if (film && dn?.film && dr?.film) films.push({ id: entry.id, n: dn.film, r: dr.film, tn: n.tT + shift, tr: r.tT + shift, after: shift ? 'the end of the scroll' : 'the trigger' });
     process.stderr.write(`${j.pass ? '✓' : '✗'} ${entry.id}${j.problems.length ? ` — ${j.problems[0]}` : ''}\n`);
   }
 }
@@ -803,7 +829,7 @@ async function filmstrip(f) {
   const scale = Math.min(1, 1400 / (w * TIMES.length));
   const row = (label, cells) => `<div class="row"><div class="lab">${label}</div>${cells.map((c) => `<figure><div class="clip" style="width:${w * scale}px;height:${h * scale}px">${c.fr ? `<img src="data:image/jpeg;base64,${c.fr.data}" style="width:${c.fr.w * scale}px;margin-left:${-x * scale}px;margin-top:${-y * scale}px">` : ''}</div><figcaption>${c.ms} ms${c.fr && Math.abs(c.at - c.ms) > 20 ? ` <i>(frame ${c.at})</i>` : ''}</figcaption></figure>`).join('')}</div>`;
   const html = `<!doctype html><meta charset=utf-8><style>body{margin:0;padding:12px;background:#fff;font:12px/1.3 system-ui,sans-serif;color:#222}h1{font-size:13px;margin:0 0 8px}.row{display:flex;gap:6px;align-items:flex-start;margin-bottom:8px}.lab{width:70px;font-weight:600;padding-top:4px}figure{margin:0}.clip{overflow:hidden;outline:1px solid #ccc;background:#f4f4f4}.clip img{display:block}figcaption{text-align:center;color:#555;margin-top:2px}i{color:#a33;font-style:normal}</style>
-<h1>${f.id} — frames after the trigger (last frame painted at or before each time)</h1>${row('normal', pick(f.n, f.tn))}${row('reduce', pick(f.r, f.tr))}`;
+<h1>${f.id} — frames after ${f.after} (last frame painted at or before each time; red: when that frame was painted)</h1>${row('normal', pick(f.n, f.tn))}${row('reduce', pick(f.r, f.tr))}`;
   const page = await browser.newPage();
   await page.setContent(html);
   await page.waitForTimeout(100);

@@ -7,6 +7,11 @@
   --radius-*: initial;
   --text-*: initial;
   --shadow-*: initial;
+}
+/* Theme variables that point at the system's own custom properties go in @theme inline, so a
+   utility compiles to var(--accent) itself and follows a theme or tenant set below <html>
+   (plain @theme resolves var(--color-accent) once, at :root — see tenant/tw-tenant.mjs). */
+@theme inline {
   --color-fg: var(--color-text);
   --color-surface: var(--color-surface);
   --color-accent: var(--accent);

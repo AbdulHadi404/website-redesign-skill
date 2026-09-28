@@ -583,36 +583,60 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     // Only text nodes that hold digits are measured (a Range each), so a ::before label and a currency sign set in
     // a box of its own (accounting style) do not count. Offsets are taken from each cell's content box.
     // Right edges constant and left edges ragged = right; the reverse = left; both ragged about one centre = centre.
-    // When every value paints the same width both edges coincide and paint cannot tell: the text-align of the box
-    // that lays out the digits decides, or, in a flex or grid cell (where text-align does not place the items), the
-    // side with the clearly larger gap.
+    // When every value paints the same width, both edges coincide and the rows cannot tell: then one value is made
+    // narrower for a moment (its longest digit run cut to its first character, and put back before anything
+    // paints), and the edge that stays put is the one the layout anchors, whatever does the anchoring (text-align,
+    // a float, justify-content, a grid track, an inline-flex pill with its padding or icon).
     const DIGIT = /[\d\u0660-\u0669\u06F0-\u06F9]/;
     const digitBox = (cell) => {
       const cs = getComputedStyle(cell), b = cell.getBoundingClientRect();
-      const L = b.left + parseFloat(cs.borderLeftWidth) + parseFloat(cs.paddingLeft), R = b.right - parseFloat(cs.borderRightWidth) - parseFloat(cs.paddingRight);
-      let l = Infinity, r = -Infinity, flexy = /flex|grid/.test(cs.display), laidOut = null;
-      const tw = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT), rg = document.createRange();
+      let laidOut = null;
+      const nodes = [];
+      const tw = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT);
       for (let n = tw.nextNode(); n; n = tw.nextNode()) {
         if (!DIGIT.test(n.data) || !n.parentElement) continue;
         const pb = n.parentElement.getBoundingClientRect();
         if (pb.width <= 2 || srOnly(n.parentElement, pb)) continue; // visually hidden text is not painted in the cell
-        rg.selectNodeContents(n);
-        let hit = false;
-        for (const q of rg.getClientRects()) if (q.width > 1 && q.height > 1 && q.right > b.left && q.left < b.right) { l = Math.min(l, q.left); r = Math.max(r, q.right); hit = true; }
-        if (!hit) continue;
-        for (let e = n.parentElement; e && e !== cell; e = e.parentElement) {
+        nodes.push(n);
+        for (let e = n.parentElement; e && e !== cell && !laidOut; e = e.parentElement) {
           const ecs = getComputedStyle(e);
-          if (!laidOut && !/^(inline|contents)$/.test(ecs.display)) laidOut = ecs;
-          if (/flex|grid/.test(ecs.display)) flexy = true;
+          if (!/^(inline|contents)$/.test(ecs.display)) laidOut = ecs;
         }
       }
-      if (!(r > l)) return null;
-      return { gl: l - L, gr: R - r, ta: align(laidOut || cs), flexy };
+      const m = { cell, cs, b, nodes, ta: align(laidOut || cs) };
+      return Object.assign(m, digitEdges(m));
     };
-    const fallback = (m) => (m.flexy && m.gl + m.gr >= 4 ? (Math.abs(m.gl - m.gr) <= 2 ? 'center' : m.gr < m.gl ? 'right' : 'left') : m.ta);
+    // The digits' painted extent, and its offsets from the cell's content box (gl, gr).
+    const digitEdges = ({ cell, cs, nodes }) => {
+      const b = cell.getBoundingClientRect();
+      const L = b.left + parseFloat(cs.borderLeftWidth) + parseFloat(cs.paddingLeft), R = b.right - parseFloat(cs.borderRightWidth) - parseFloat(cs.paddingRight);
+      let l = Infinity, r = -Infinity;
+      const rg = document.createRange();
+      for (const n of nodes) {
+        rg.selectNodeContents(n);
+        for (const q of rg.getClientRects()) if (q.width > 1 && q.height > 1 && q.right > b.left && q.left < b.right) { l = Math.min(l, q.left); r = Math.max(r, q.right); }
+      }
+      return r > l ? { l, r, L, R, gl: l - L, gr: R - r } : { l: NaN };
+    };
+    // Narrow one value for a moment and see which edge stays: 'right', 'left', 'center', or null when it cannot tell
+    // (a single character, or a cell that resized with its value, as a column held by nothing else does).
+    const anchored = (m) => {
+      const n = m.nodes.reduce((a, x) => (x.data.trim().length > a.data.trim().length ? x : a));
+      const was = n.data, s = was.trim();
+      if (s.length < 2) return null;
+      let e;
+      try { n.data = s[0]; e = digitEdges(m); } finally { n.data = was; }
+      if (!(e.r > e.l) || Math.abs(e.L - m.L) > 0.5 || Math.abs(e.R - m.R) > 0.5 || (m.r - m.l) - (e.r - e.l) < 2) return null;
+      const dl = e.l - m.l, dr = m.r - e.r; // how far each edge moved inwards
+      if (Math.abs(dr) <= 0.5 && dl > 1) return 'right';
+      if (Math.abs(dl) <= 0.5 && dr > 1) return 'left';
+      if (Math.abs(dl - dr) <= 1) return 'center';
+      return null;
+    };
     const columnAlign = (cells) => {
-      const m = cells.map(digitBox).filter(Boolean);
-      if (!m.length) return [...new Set(cells.map((c) => align(getComputedStyle(c))))];
+      const all = cells.map(digitBox);
+      const m = all.filter((x) => x.nodes.length && x.r > x.l);
+      if (!m.length) return [...new Set(all.map((x) => x.ta))];
       if (m.length >= 2) {
         const spread = (f) => { const v = m.map(f); return Math.max(...v) - Math.min(...v); };
         const sL = spread((x) => x.gl), sR = spread((x) => x.gr), sC = spread((x) => x.gl - x.gr);
@@ -620,7 +644,13 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
         if (sL <= 1 && sR > 1) return ['left'];
         if (sL > 1 && sR > 1 && sC <= 2) return ['center'];
       }
-      return [...new Set(m.map(fallback))];
+      // Rows that paint alike need one trial; rows that differ (an icon on some) get a few, narrowest first, so the
+      // value holding the column's width is the last one narrowed.
+      const same = m.length < 2 || m.every((x) => Math.abs(x.gl - m[0].gl) <= 1 && Math.abs(x.gr - m[0].gr) <= 1);
+      const tried = [...m].sort((a, b) => (a.r - a.l) - (b.r - b.l)).slice(0, same ? 3 : 4);
+      const got = [];
+      for (const x of tried) { const k = anchored(x); if (k) { got.push(k); if (same) break; } }
+      return got.length ? [...new Set(got)] : [...new Set(m.map((x) => x.ta))];
     };
     for (const table of document.querySelectorAll('table, [role=table], [role=grid]')) {
       if (!visible(table)) continue;

@@ -28,6 +28,20 @@ export const STRINGS = {
 };
 const LH = [1.0, 1.1, 1.2, 1.25, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 2.0, 2.2];
 
+// Ink extents from fontkit's own shaper (no browser): what scripts/fonts.mjs could report. Compared with canvas below.
+async function fontkitInk(file, strings) {
+  let f = fontkit.create(await readFile(path.join(root, 'fonts', file + '.ttf')));
+  if (f.variationAxes?.wght) f = f.getVariation({ wght: 400 });
+  const u = f.unitsPerEm, out = {};
+  for (const [k, s] of Object.entries(strings)) {
+    let run; try { run = f.layout(s, /[\u0600-\u06FF]/.test(s) ? { script: 'arab', direction: 'rtl' } : undefined); } catch (e) { out[k] = { error: String(e.message).slice(0, 60) }; continue; } // fontkit's GPOS code throws on some faces (Noto Nastaliq)
+    let top = -1e9, bot = 1e9;
+    run.glyphs.forEach((g, i) => { const b = g.bbox, p = run.positions[i]; if (isFinite(b.maxY) && b.maxY > b.minY) { top = Math.max(top, b.maxY + p.yOffset); bot = Math.min(bot, b.minY + p.yOffset); } });
+    out[k] = { inkAscent: +(top / u).toFixed(3), inkDescent: +(-bot / u).toFixed(3) };
+  }
+  return out;
+}
+
 async function fileMetrics(file) {
   const buf = await readFile(path.join(root, 'fonts', file + '.ttf'));
   const f = fontkit.create(buf);
@@ -38,6 +52,11 @@ async function fileMetrics(file) {
     typoAscender: r(o.typoAscender), typoDescender: r(-o.typoDescender), typoLineGap: r(o.typoLineGap),
     winAscent: r(o.winAscent), winDescent: r(o.winDescent), useTypoMetrics: !!o.fsSelection?.useTypoMetrics,
     hasRiyalSign: f.hasGlyphForCodePoint(0x20C1), version: f.version,
+    arabicBlockCoverage: Array.from({ length: 256 }, (_, i) => 0x600 + i).filter((c) => f.hasGlyphForCodePoint(c)).length,
+    // characters an Arabic product meets beyond the core alphabet: Gulf/Maghreb loan letters, Persian/Urdu letters,
+    // Intl's Arabic decimal and group separators, the old riyal ligature
+    missing: Object.entries({ 'ڤ': 0x6A4, 'گ': 0x6AF, 'پ': 0x67E, 'چ': 0x686, 'ی': 0x6CC, 'ک': 0x6A9, 'ٰ': 0x670, '؟': 0x61F, '٪': 0x66A, '٫': 0x66B, '٬': 0x66C, '﷼': 0xFDFC, 'ـ': 0x640 })
+      .filter(([, c]) => !f.hasGlyphForCodePoint(c)).map(([k]) => k).join(' ') || null,
   };
 }
 
@@ -83,6 +102,7 @@ export async function run(browser, base) {
     }, { fam, strings });
     rec.lineHeightNormal = +m.lineHeightNormal.toFixed(3);
     rec.visual = { xHeight: +m.xHeight.toFixed(3), capHeight: +m.capHeight.toFixed(3), bodyHeight: +m.bodyHeight.toFixed(3), alefHeight: +m.alefHeight.toFixed(3) };
+    const fkInk = await fontkitInk(file, strings);
     for (const [k, s] of Object.entries(strings)) {
       const a = m.strings[k];
       const A = a.fontAscent, D = a.fontDescent;
@@ -120,6 +140,7 @@ export async function run(browser, base) {
       rec.strings[k] = {
         text: s, inkAscent: +a.inkAscent.toFixed(3), inkDescent: +a.inkDescent.toFixed(3), lineAscent: +A.toFixed(3), lineDescent: +D.toFixed(3),
         minLineHeight: +lmin.toFixed(2), firstSafeInSweep: firstSafe, probeMaxErrorPx60: +maxErr.toFixed(1),
+        fontkitVsCanvasEm: fkInk[k].error ? fkInk[k].error : +Math.max(Math.abs(fkInk[k].inkAscent - a.inkAscent), Math.abs(fkInk[k].inkDescent - a.inkDescent)).toFixed(3),
         clipAt: Object.fromEntries(sweep.filter((r) => [1.0, 1.2, 1.5].includes(r.L)).map((r) => [r.L, { topPx60: r.overTopPx, bottomPx60: r.overBottomPx }])),
       };
     }

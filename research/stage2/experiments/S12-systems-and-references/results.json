@@ -1,0 +1,2254 @@
+{
+ "generated": "2026-09-28T22:36:44.634Z",
+ "node": "v22.22.2",
+ "cpus": 4,
+ "tenant": {
+  "note": "Full per-case records (roles, every pair) are in tenant/tenant-results.json. Contact sheet: shots/tenant-sheet.jpg.",
+  "tenants": [
+   {
+    "name": "yellow",
+    "hex": "#FFFF00",
+    "note": "pathological: lighter than any label ground"
+   },
+   {
+    "name": "near-white",
+    "hex": "#F0F0F0",
+    "note": "pathological: vanishes on a white page"
+   },
+   {
+    "name": "black",
+    "hex": "#000000",
+    "note": "pathological in dark mode"
+   },
+   {
+    "name": "pure red",
+    "hex": "#FF0000",
+    "note": "white label 4.0:1; collides with danger"
+   },
+   {
+    "name": "grey",
+    "hex": "#8A8F98",
+    "note": "low chroma: brand has no hue"
+   },
+   {
+    "name": "blue",
+    "hex": "#1A3CF2",
+    "note": "well-behaved control"
+   },
+   {
+    "name": "jade",
+    "hex": "#00A86B",
+    "note": "mid-light green; collides with success"
+   },
+   {
+    "name": "orange",
+    "hex": "#FF7A00",
+    "note": "classic white-label failure"
+   },
+   {
+    "name": "cyan",
+    "hex": "#00D1FF",
+    "note": "light, saturated"
+   },
+   {
+    "name": "purple",
+    "hex": "#6B21A8",
+    "note": "dark, fine in light mode"
+   },
+   {
+    "name": "navy",
+    "hex": "#0B1F3A",
+    "note": "vanishes on a dark page"
+   },
+   {
+    "name": "pink",
+    "hex": "#FF69B4",
+    "note": "mid-tone: neither label passes APCA"
+   }
+  ],
+  "gates": {
+   "text": 4.5,
+   "lc": 60,
+   "nonText": 3,
+   "nearGroundRatio": 1.5,
+   "nearGroundChroma": 0.1
+  },
+  "neutrals": {
+   "light": {
+    "bg": "#FFFFFF",
+    "surface": "#F6F6F7",
+    "text": "#1C1D21",
+    "muted": "#5B5D66",
+    "danger": "#C9372C",
+    "warning": "#A15C00",
+    "success": "#1F7A4D"
+   },
+   "dark": {
+    "bg": "#111113",
+    "surface": "#1C1D21",
+    "text": "#EDEEF0",
+    "muted": "#A3A5AE",
+    "danger": "#F87168",
+    "warning": "#F5A524",
+    "success": "#4CC38A"
+   }
+  },
+  "summary": [
+   {
+    "method": "M0-naive",
+    "label": "Naive: tenant hex everywhere, white label",
+    "textPairs": 120,
+    "textPassWcag": 43.3,
+    "textPassWcagAndLc60": 32.5,
+    "textPassWcagAndLc75": 28.3,
+    "nonTextPairs": 72,
+    "nonTextPass": 61.1,
+    "buttonBoundaryPass": 62.5,
+    "tenantModesAllGates": "4/24",
+    "light": {
+     "textPass": 35,
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 0,
+     "exactFill": 12
+    },
+    "dark": {
+     "textPass": 51.7,
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 0,
+     "exactFill": 12
+    },
+    "failingPairs": {
+     "T1": 16,
+     "T2": 14,
+     "T3": 12,
+     "T4": 13,
+     "T5": 13,
+     "N1": 9,
+     "N2": 9,
+     "N3": 10
+    }
+   },
+   {
+    "method": "M1a-luma-on",
+    "label": "Auto on-colour by luma threshold (Cal.com getWCAGContrastColor rule)",
+    "textPairs": 120,
+    "textPassWcag": 66.7,
+    "textPassWcagAndLc60": 42.5,
+    "textPassWcagAndLc75": 35,
+    "nonTextPairs": 72,
+    "nonTextPass": 61.1,
+    "buttonBoundaryPass": 62.5,
+    "tenantModesAllGates": "11/24",
+    "light": {
+     "textPass": 58.3,
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 0,
+     "exactFill": 12
+    },
+    "dark": {
+     "textPass": 75,
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 0,
+     "exactFill": 12
+    },
+    "failingPairs": {
+     "T3": 12,
+     "T4": 13,
+     "T5": 13,
+     "N1": 9,
+     "N2": 9,
+     "N3": 10,
+     "T1": 2
+    }
+   },
+   {
+    "method": "M1b-wcag-on",
+    "label": "Auto on-colour: best of black/white by WCAG ratio",
+    "textPairs": 120,
+    "textPassWcag": 66.7,
+    "textPassWcagAndLc60": 40.8,
+    "textPassWcagAndLc75": 33.3,
+    "nonTextPairs": 72,
+    "nonTextPass": 61.1,
+    "buttonBoundaryPass": 62.5,
+    "tenantModesAllGates": "11/24",
+    "light": {
+     "textPass": 58.3,
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 0,
+     "exactFill": 12
+    },
+    "dark": {
+     "textPass": 75,
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 0,
+     "exactFill": 12
+    },
+    "failingPairs": {
+     "T3": 12,
+     "T4": 13,
+     "T5": 13,
+     "N1": 9,
+     "N2": 9,
+     "N3": 10,
+     "T2": 2
+    }
+   },
+   {
+    "method": "M2-radix",
+    "label": "Radix custom palette generator (radix-ui/website)",
+    "textPairs": 120,
+    "textPassWcag": 71.7,
+    "textPassWcagAndLc60": 60.8,
+    "textPassWcagAndLc75": 25,
+    "nonTextPairs": 72,
+    "nonTextPass": 50,
+    "buttonBoundaryPass": 75,
+    "tenantModesAllGates": "3/24",
+    "light": {
+     "textPass": 60,
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 31.2,
+     "exactFill": 9
+    },
+    "dark": {
+     "textPass": 83.3,
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 61.8,
+     "exactFill": 10
+    },
+    "failingPairs": {
+     "T3": 2,
+     "T4": 4,
+     "T5": 6,
+     "N1": 6,
+     "N2": 13,
+     "N3": 17,
+     "T1": 11,
+     "T2": 11
+    }
+   },
+   {
+    "method": "M3-atlassian",
+    "label": "Atlassian custom theme (@atlaskit/tokens 20.1.0)",
+    "textPairs": 120,
+    "textPassWcag": 100,
+    "textPassWcagAndLc60": 79.2,
+    "textPassWcagAndLc75": 47.5,
+    "nonTextPairs": 72,
+    "nonTextPass": 100,
+    "buttonBoundaryPass": 100,
+    "tenantModesAllGates": "24/24",
+    "light": {
+     "textPass": 100,
+     "fidelityMedianDE": 11,
+     "fidelityMaxDE": 42.3,
+     "exactFill": 4
+    },
+    "dark": {
+     "textPass": 100,
+     "fidelityMedianDE": 15.649999999999999,
+     "fidelityMaxDE": 96.1,
+     "exactFill": 5
+    },
+    "failingPairs": {}
+   },
+   {
+    "method": "M4-m3-tonalspot",
+    "label": "Material 3 SchemeTonalSpot (material-color-utilities 0.4.0)",
+    "textPairs": 120,
+    "textPassWcag": 100,
+    "textPassWcagAndLc60": 92.5,
+    "textPassWcagAndLc75": 50,
+    "nonTextPairs": 72,
+    "nonTextPass": 100,
+    "buttonBoundaryPass": 100,
+    "tenantModesAllGates": "24/24",
+    "light": {
+     "textPass": 100,
+     "fidelityMedianDE": 24.75,
+     "fidelityMaxDE": 50.4,
+     "exactFill": 0
+    },
+    "dark": {
+     "textPass": 100,
+     "fidelityMedianDE": 18.7,
+     "fidelityMaxDE": 84.6,
+     "exactFill": 0
+    },
+    "failingPairs": {}
+   },
+   {
+    "method": "M5-m3-fidelity",
+    "label": "Material 3 SchemeFidelity (material-color-utilities 0.4.0)",
+    "textPairs": 120,
+    "textPassWcag": 100,
+    "textPassWcagAndLc60": 80,
+    "textPassWcagAndLc75": 49.2,
+    "nonTextPairs": 72,
+    "nonTextPass": 100,
+    "buttonBoundaryPass": 100,
+    "tenantModesAllGates": "24/24",
+    "light": {
+     "textPass": 100,
+     "fidelityMedianDE": 17.65,
+     "fidelityMaxDE": 49.9,
+     "exactFill": 1
+    },
+    "dark": {
+     "textPass": 100,
+     "fidelityMedianDE": 19.65,
+     "fidelityMaxDE": 82.7,
+     "exactFill": 0
+    },
+    "failingPairs": {}
+   },
+   {
+    "method": "M6-s12",
+    "label": "S12 rules: exact tenant fill where safe, OKLCH-L solved strong accent, WCAG 4.5 + APCA Lc 60 gates",
+    "textPairs": 120,
+    "textPassWcag": 100,
+    "textPassWcagAndLc60": 100,
+    "textPassWcagAndLc75": 42.5,
+    "nonTextPairs": 72,
+    "nonTextPass": 100,
+    "buttonBoundaryPass": 100,
+    "tenantModesAllGates": "24/24",
+    "light": {
+     "textPass": 100,
+     "fidelityMedianDE": 1.75,
+     "fidelityMaxDE": 38.9,
+     "exactFill": 6
+    },
+    "dark": {
+     "textPass": 100,
+     "fidelityMedianDE": 4.8,
+     "fidelityMaxDE": 49.6,
+     "exactFill": 5
+    },
+    "failingPairs": {}
+   },
+   {
+    "method": "M6w-s12-wcag-only",
+    "label": "S12 rules with the WCAG gate only (no APCA)",
+    "textPairs": 120,
+    "textPassWcag": 100,
+    "textPassWcagAndLc60": 70.8,
+    "textPassWcagAndLc75": 39.2,
+    "nonTextPairs": 72,
+    "nonTextPass": 100,
+    "buttonBoundaryPass": 100,
+    "tenantModesAllGates": "24/24",
+    "light": {
+     "textPass": 100,
+     "fidelityMedianDE": 0.7,
+     "fidelityMaxDE": 38.9,
+     "exactFill": 6
+    },
+    "dark": {
+     "textPass": 100,
+     "fidelityMedianDE": 1.5,
+     "fidelityMaxDE": 49.6,
+     "exactFill": 5
+    },
+    "failingPairs": {}
+   },
+   {
+    "method": "M6s-s12-lc75",
+    "label": "S12 rules with APCA Lc 75 on every text pair (body-text strict)",
+    "textPairs": 120,
+    "textPassWcag": 100,
+    "textPassWcagAndLc60": 100,
+    "textPassWcagAndLc75": 100,
+    "nonTextPairs": 72,
+    "nonTextPass": 100,
+    "buttonBoundaryPass": 100,
+    "tenantModesAllGates": "24/24",
+    "light": {
+     "textPass": 100,
+     "fidelityMedianDE": 4.5,
+     "fidelityMaxDE": 38.9,
+     "exactFill": 5
+    },
+    "dark": {
+     "textPass": 100,
+     "fidelityMedianDE": 6.550000000000001,
+     "fidelityMaxDE": 49.6,
+     "exactFill": 4
+    },
+    "failingPairs": {}
+   }
+  ],
+  "collisions": [
+   {
+    "tenant": "pure red",
+    "hex": "#FF0000",
+    "light": [
+     "danger"
+    ],
+    "dark": [
+     "danger"
+    ]
+   },
+   {
+    "tenant": "jade",
+    "hex": "#00A86B",
+    "light": [
+     "success"
+    ],
+    "dark": [
+     "success"
+    ]
+   },
+   {
+    "tenant": "orange",
+    "hex": "#FF7A00",
+    "light": [
+     "danger",
+     "warning"
+    ],
+    "dark": [
+     "danger",
+     "warning"
+    ]
+   }
+  ],
+  "labelSweep": {
+   "colours": 35937,
+   "minBestWcag": 4.58,
+   "minBestWcagAt": "#DF3020",
+   "minBestApcaLc": 55,
+   "minBestApcaAt": "#08B78F",
+   "shareBestLabelBelowLc60": 11.3,
+   "shareBestLabelBelowLc75": 46
+  },
+  "axeCheck": {
+   "axeVersion": "4.13.0",
+   "pairChecks": 1200,
+   "agreement": 99.8,
+   "axeFailingPairs": 179,
+   "computedFailingPairs": 182,
+   "disagreements": [
+    {
+     "method": "M0-naive",
+     "tenant": "yellow",
+     "mode": "light",
+     "pair": "T4",
+     "axe": false,
+     "computed": true,
+     "wcag": 1.01
+    },
+    {
+     "method": "M1a-luma-on",
+     "tenant": "yellow",
+     "mode": "light",
+     "pair": "T4",
+     "axe": false,
+     "computed": true,
+     "wcag": 1.01
+    },
+    {
+     "method": "M1b-wcag-on",
+     "tenant": "yellow",
+     "mode": "light",
+     "pair": "T4",
+     "axe": false,
+     "computed": true,
+     "wcag": 1.01
+    }
+   ]
+  },
+  "adminOptions": [
+   {
+    "tenant": "yellow",
+    "hex": "#FFFF00",
+    "mode": "light",
+    "whiteLabel": {
+     "fill": "#7A7900",
+     "label": "#FFFFFF",
+     "dE": 41.9
+    },
+    "darkLabel": {
+     "fill": "#FFFF00",
+     "label": "#171707",
+     "dE": 0
+    }
+   },
+   {
+    "tenant": "yellow",
+    "hex": "#FFFF00",
+    "mode": "dark",
+    "whiteLabel": {
+     "fill": "#7A7900",
+     "label": "#FFFFFF",
+     "dE": 41.9
+    },
+    "darkLabel": {
+     "fill": "#FFFF00",
+     "label": "#171707",
+     "dE": 0
+    }
+   },
+   {
+    "tenant": "near-white",
+    "hex": "#F0F0F0",
+    "mode": "light",
+    "whiteLabel": {
+     "fill": "#767676",
+     "label": "#FFFFFF",
+     "dE": 38.9
+    },
+    "darkLabel": {
+     "fill": "#D2D2D2",
+     "label": "#161616",
+     "dE": 9.1
+    }
+   },
+   {
+    "tenant": "near-white",
+    "hex": "#F0F0F0",
+    "mode": "dark",
+    "whiteLabel": {
+     "fill": "#767676",
+     "label": "#FFFFFF",
+     "dE": 38.9
+    },
+    "darkLabel": {
+     "fill": "#F0F0F0",
+     "label": "#161616",
+     "dE": 0
+    }
+   },
+   {
+    "tenant": "black",
+    "hex": "#000000",
+    "mode": "light",
+    "whiteLabel": {
+     "fill": "#000000",
+     "label": "#FFFFFF",
+     "dE": 0
+    },
+    "darkLabel": {
+     "fill": "#B1B1B1",
+     "label": "#161616",
+     "dE": 76
+    }
+   },
+   {
+    "tenant": "black",
+    "hex": "#000000",
+    "mode": "dark",
+    "whiteLabel": {
+     "fill": "#343434",
+     "label": "#FFFFFF",
+     "dE": 32.5
+    },
+    "darkLabel": {
+     "fill": "#B1B1B1",
+     "label": "#161616",
+     "dE": 76
+    }
+   },
+   {
+    "tenant": "pure red",
+    "hex": "#FF0000",
+    "mode": "light",
+    "whiteLabel": {
+     "fill": "#EE0000",
+     "label": "#FFFFFF",
+     "dE": 3.5
+    },
+    "darkLabel": {
+     "fill": "#FF9281",
+     "label": "#22110E",
+     "dE": 18.9
+    }
+   },
+   {
+    "tenant": "pure red",
+    "hex": "#FF0000",
+    "mode": "dark",
+    "whiteLabel": {
+     "fill": "#EE0000",
+     "label": "#FFFFFF",
+     "dE": 3.5
+    },
+    "darkLabel": {
+     "fill": "#FF9281",
+     "label": "#22110E",
+     "dE": 18.9
+    }
+   },
+   {
+    "tenant": "grey",
+    "hex": "#8A8F98",
+    "mode": "light",
+    "whiteLabel": {
+     "fill": "#72767D",
+     "label": "#FFFFFF",
+     "dE": 8.4
+    },
+    "darkLabel": {
+     "fill": "#ADB1B9",
+     "label": "#151618",
+     "dE": 11.1
+    }
+   },
+   {
+    "tenant": "grey",
+    "hex": "#8A8F98",
+    "mode": "dark",
+    "whiteLabel": {
+     "fill": "#72767D",
+     "label": "#FFFFFF",
+     "dE": 8.4
+    },
+    "darkLabel": {
+     "fill": "#ADB1B9",
+     "label": "#151618",
+     "dE": 11.1
+    }
+   },
+   {
+    "tenant": "blue",
+    "hex": "#1A3CF2",
+    "mode": "light",
+    "whiteLabel": {
+     "fill": "#1A3CF2",
+     "label": "#FFFFFF",
+     "dE": 0
+    },
+    "darkLabel": {
+     "fill": "#85B0FF",
+     "label": "#101624",
+     "dE": 30.8
+    }
+   },
+   {
+    "tenant": "blue",
+    "hex": "#1A3CF2",
+    "mode": "dark",
+    "whiteLabel": {
+     "fill": "#1A3CF2",
+     "label": "#FFFFFF",
+     "dE": 0
+    },
+    "darkLabel": {
+     "fill": "#85B0FF",
+     "label": "#101624",
+     "dE": 30.8
+    }
+   },
+   {
+    "tenant": "jade",
+    "hex": "#00A86B",
+    "mode": "light",
+    "whiteLabel": {
+     "fill": "#00884F",
+     "label": "#FFFFFF",
+     "dE": 9.5
+    },
+    "darkLabel": {
+     "fill": "#3FC787",
+     "label": "#091A11",
+     "dE": 9.6
+    }
+   },
+   {
+    "tenant": "jade",
+    "hex": "#00A86B",
+    "mode": "dark",
+    "whiteLabel": {
+     "fill": "#00884F",
+     "label": "#FFFFFF",
+     "dE": 9.5
+    },
+    "darkLabel": {
+     "fill": "#3FC787",
+     "label": "#091A11",
+     "dE": 9.6
+    }
+   },
+   {
+    "tenant": "orange",
+    "hex": "#FF7A00",
+    "mode": "light",
+    "whiteLabel": {
+     "fill": "#BF5700",
+     "label": "#FFFFFF",
+     "dE": 14.9
+    },
+    "darkLabel": {
+     "fill": "#FF964D",
+     "label": "#211209",
+     "dE": 6.1
+    }
+   },
+   {
+    "tenant": "orange",
+    "hex": "#FF7A00",
+    "mode": "dark",
+    "whiteLabel": {
+     "fill": "#BF5700",
+     "label": "#FFFFFF",
+     "dE": 14.9
+    },
+    "darkLabel": {
+     "fill": "#FF964D",
+     "label": "#211209",
+     "dE": 6.1
+    }
+   },
+   {
+    "tenant": "cyan",
+    "hex": "#00D1FF",
+    "mode": "light",
+    "whiteLabel": {
+     "fill": "#0080A1",
+     "label": "#FFFFFF",
+     "dE": 24.3
+    },
+    "darkLabel": {
+     "fill": "#00D1FF",
+     "label": "#041920",
+     "dE": 0
+    }
+   },
+   {
+    "tenant": "cyan",
+    "hex": "#00D1FF",
+    "mode": "dark",
+    "whiteLabel": {
+     "fill": "#0080A1",
+     "label": "#FFFFFF",
+     "dE": 24.3
+    },
+    "darkLabel": {
+     "fill": "#00D1FF",
+     "label": "#041920",
+     "dE": 0
+    }
+   },
+   {
+    "tenant": "purple",
+    "hex": "#6B21A8",
+    "mode": "light",
+    "whiteLabel": {
+     "fill": "#6B21A8",
+     "label": "#FFFFFF",
+     "dE": 0
+    },
+    "darkLabel": {
+     "fill": "#CD9BFF",
+     "label": "#191321",
+     "dE": 33.9
+    }
+   },
+   {
+    "tenant": "purple",
+    "hex": "#6B21A8",
+    "mode": "dark",
+    "whiteLabel": {
+     "fill": "#6B21A8",
+     "label": "#FFFFFF",
+     "dE": 0
+    },
+    "darkLabel": {
+     "fill": "#CD9BFF",
+     "label": "#191321",
+     "dE": 33.9
+    }
+   },
+   {
+    "tenant": "navy",
+    "hex": "#0B1F3A",
+    "mode": "light",
+    "whiteLabel": {
+     "fill": "#0B1F3A",
+     "label": "#FFFFFF",
+     "dE": 0
+    },
+    "darkLabel": {
+     "fill": "#99B3D6",
+     "label": "#11161E",
+     "dE": 52
+    }
+   },
+   {
+    "tenant": "navy",
+    "hex": "#0B1F3A",
+    "mode": "dark",
+    "whiteLabel": {
+     "fill": "#203551",
+     "label": "#FFFFFF",
+     "dE": 8.6
+    },
+    "darkLabel": {
+     "fill": "#99B3D6",
+     "label": "#11161E",
+     "dE": 52
+    }
+   },
+   {
+    "tenant": "pink",
+    "hex": "#FF69B4",
+    "mode": "light",
+    "whiteLabel": {
+     "fill": "#CF3B8A",
+     "label": "#FFFFFF",
+     "dE": 13.5
+    },
+    "darkLabel": {
+     "fill": "#FF88C5",
+     "label": "#201017",
+     "dE": 6.1
+    }
+   },
+   {
+    "tenant": "pink",
+    "hex": "#FF69B4",
+    "mode": "dark",
+    "whiteLabel": {
+     "fill": "#CF3B8A",
+     "label": "#FFFFFF",
+     "dE": 13.5
+    },
+    "darkLabel": {
+     "fill": "#FF88C5",
+     "label": "#201017",
+     "dE": 6.1
+    }
+   }
+  ],
+  "s12Cases": [
+   {
+    "tenant": "yellow",
+    "mode": "light",
+    "in": "#FFFF00",
+    "accent": "#FFFF00",
+    "onAccent": "#171707",
+    "strong": "#747300",
+    "subtle": "#F4F6DB",
+    "buttonBorder": "#747300",
+    "fidelityDE": 0,
+    "flags": []
+   },
+   {
+    "tenant": "yellow",
+    "mode": "dark",
+    "in": "#FFFF00",
+    "accent": "#FFFF00",
+    "onAccent": "#171707",
+    "strong": "#FFFF00",
+    "subtle": "#2D2E03",
+    "buttonBorder": null,
+    "fidelityDE": 0,
+    "flags": []
+   },
+   {
+    "tenant": "near-white",
+    "mode": "light",
+    "in": "#F0F0F0",
+    "accent": "#767676",
+    "onAccent": "#FFFFFF",
+    "strong": "#6F6F6F",
+    "subtle": "#F3F3F3",
+    "buttonBorder": null,
+    "fidelityDE": 38.9,
+    "flags": [
+     "tenant colour ≈ page ground: fill moved",
+     "achromatic brand: selection needs a non-colour cue (weight, check, bar)"
+    ]
+   },
+   {
+    "tenant": "near-white",
+    "mode": "dark",
+    "in": "#F0F0F0",
+    "accent": "#F0F0F0",
+    "onAccent": "#161616",
+    "strong": "#F0F0F0",
+    "subtle": "#2B2B2B",
+    "buttonBorder": null,
+    "fidelityDE": 0,
+    "flags": [
+     "achromatic brand: selection needs a non-colour cue (weight, check, bar)"
+    ]
+   },
+   {
+    "tenant": "black",
+    "mode": "light",
+    "in": "#000000",
+    "accent": "#000000",
+    "onAccent": "#FFFFFF",
+    "strong": "#000000",
+    "subtle": "#F3F3F3",
+    "buttonBorder": null,
+    "fidelityDE": 0,
+    "flags": [
+     "achromatic brand: selection needs a non-colour cue (weight, check, bar)"
+    ]
+   },
+   {
+    "tenant": "black",
+    "mode": "dark",
+    "in": "#000000",
+    "accent": "#626262",
+    "onAccent": "#FFFFFF",
+    "strong": "#B9B9B9",
+    "subtle": "#2B2B2B",
+    "buttonBorder": null,
+    "fidelityDE": 49.6,
+    "flags": [
+     "tenant colour ≈ page ground: fill moved",
+     "achromatic brand: selection needs a non-colour cue (weight, check, bar)"
+    ]
+   },
+   {
+    "tenant": "pure red",
+    "mode": "light",
+    "in": "#FF0000",
+    "accent": "#EE0000",
+    "onAccent": "#FFFFFF",
+    "strong": "#DF0000",
+    "subtle": "#FFEEEB",
+    "buttonBorder": null,
+    "fidelityDE": 3.5,
+    "flags": [
+     "no legible label on tenant colour: fill lightness moved",
+     "accent hue ≈ danger: danger states must carry icon + word, never colour alone"
+    ]
+   },
+   {
+    "tenant": "pure red",
+    "mode": "dark",
+    "in": "#FF0000",
+    "accent": "#EE0000",
+    "onAccent": "#FFFFFF",
+    "strong": "#FF9E8E",
+    "subtle": "#451E19",
+    "buttonBorder": null,
+    "fidelityDE": 3.5,
+    "flags": [
+     "no legible label on tenant colour: fill lightness moved",
+     "accent hue ≈ danger: danger states must carry icon + word, never colour alone"
+    ]
+   },
+   {
+    "tenant": "grey",
+    "mode": "light",
+    "in": "#8A8F98",
+    "accent": "#72767D",
+    "onAccent": "#FFFFFF",
+    "strong": "#6B6E76",
+    "subtle": "#F2F3F6",
+    "buttonBorder": null,
+    "fidelityDE": 8.4,
+    "flags": [
+     "no legible label on tenant colour: fill lightness moved",
+     "achromatic brand: selection needs a non-colour cue (weight, check, bar)"
+    ]
+   },
+   {
+    "tenant": "grey",
+    "mode": "dark",
+    "in": "#8A8F98",
+    "accent": "#72767D",
+    "onAccent": "#FFFFFF",
+    "strong": "#B5B9C1",
+    "subtle": "#2A2B2E",
+    "buttonBorder": null,
+    "fidelityDE": 8.4,
+    "flags": [
+     "no legible label on tenant colour: fill lightness moved",
+     "achromatic brand: selection needs a non-colour cue (weight, check, bar)"
+    ]
+   },
+   {
+    "tenant": "blue",
+    "mode": "light",
+    "in": "#1A3CF2",
+    "accent": "#1A3CF2",
+    "onAccent": "#FFFFFF",
+    "strong": "#1A3CF2",
+    "subtle": "#ECF4FF",
+    "buttonBorder": null,
+    "fidelityDE": 0,
+    "flags": []
+   },
+   {
+    "tenant": "blue",
+    "mode": "dark",
+    "in": "#1A3CF2",
+    "accent": "#1A3CF2",
+    "onAccent": "#FFFFFF",
+    "strong": "#92B9FF",
+    "subtle": "#1D2A49",
+    "buttonBorder": "#92B9FF",
+    "fidelityDE": 0,
+    "flags": []
+   },
+   {
+    "tenant": "jade",
+    "mode": "light",
+    "in": "#00A86B",
+    "accent": "#3FC787",
+    "onAccent": "#091A11",
+    "strong": "#00814C",
+    "subtle": "#E0FBEB",
+    "buttonBorder": "#00814C",
+    "fidelityDE": 9.6,
+    "flags": [
+     "no legible label on tenant colour: fill lightness moved",
+     "accent hue ≈ success: success states must carry icon + word, never colour alone"
+    ]
+   },
+   {
+    "tenant": "jade",
+    "mode": "dark",
+    "in": "#00A86B",
+    "accent": "#3FC787",
+    "onAccent": "#091A11",
+    "strong": "#4BD091",
+    "subtle": "#083420",
+    "buttonBorder": null,
+    "fidelityDE": 9.6,
+    "flags": [
+     "no legible label on tenant colour: fill lightness moved",
+     "accent hue ≈ success: success states must carry icon + word, never colour alone"
+    ]
+   },
+   {
+    "tenant": "orange",
+    "mode": "light",
+    "in": "#FF7A00",
+    "accent": "#FF964D",
+    "onAccent": "#211209",
+    "strong": "#B35000",
+    "subtle": "#FFEEE1",
+    "buttonBorder": "#B35000",
+    "fidelityDE": 6.1,
+    "flags": [
+     "no legible label on tenant colour: fill lightness moved",
+     "accent hue ≈ danger: danger states must carry icon + word, never colour alone",
+     "accent hue ≈ warning: warning states must carry icon + word, never colour alone"
+    ]
+   },
+   {
+    "tenant": "orange",
+    "mode": "dark",
+    "in": "#FF7A00",
+    "accent": "#FF964D",
+    "onAccent": "#211209",
+    "strong": "#FFA163",
+    "subtle": "#42210C",
+    "buttonBorder": null,
+    "fidelityDE": 6.1,
+    "flags": [
+     "no legible label on tenant colour: fill lightness moved",
+     "accent hue ≈ danger: danger states must carry icon + word, never colour alone",
+     "accent hue ≈ warning: warning states must carry icon + word, never colour alone"
+    ]
+   },
+   {
+    "tenant": "cyan",
+    "mode": "light",
+    "in": "#00D1FF",
+    "accent": "#00D1FF",
+    "onAccent": "#041920",
+    "strong": "#007999",
+    "subtle": "#DDF9FF",
+    "buttonBorder": "#007999",
+    "fidelityDE": 0,
+    "flags": []
+   },
+   {
+    "tenant": "cyan",
+    "mode": "dark",
+    "in": "#00D1FF",
+    "accent": "#00D1FF",
+    "onAccent": "#041920",
+    "strong": "#00D1FF",
+    "subtle": "#003140",
+    "buttonBorder": null,
+    "fidelityDE": 0,
+    "flags": []
+   },
+   {
+    "tenant": "purple",
+    "mode": "light",
+    "in": "#6B21A8",
+    "accent": "#6B21A8",
+    "onAccent": "#FFFFFF",
+    "strong": "#6B21A8",
+    "subtle": "#F8EFFF",
+    "buttonBorder": null,
+    "fidelityDE": 0,
+    "flags": []
+   },
+   {
+    "tenant": "purple",
+    "mode": "dark",
+    "in": "#6B21A8",
+    "accent": "#6B21A8",
+    "onAccent": "#FFFFFF",
+    "strong": "#D2A7FF",
+    "subtle": "#322343",
+    "buttonBorder": "#D2A7FF",
+    "fidelityDE": 0,
+    "flags": []
+   },
+   {
+    "tenant": "navy",
+    "mode": "light",
+    "in": "#0B1F3A",
+    "accent": "#0B1F3A",
+    "onAccent": "#FFFFFF",
+    "strong": "#0B1F3A",
+    "subtle": "#ECF4FF",
+    "buttonBorder": null,
+    "fidelityDE": 0,
+    "flags": []
+   },
+   {
+    "tenant": "navy",
+    "mode": "dark",
+    "in": "#0B1F3A",
+    "accent": "#4B6281",
+    "onAccent": "#FFFFFF",
+    "strong": "#A1BBDE",
+    "subtle": "#222C3A",
+    "buttonBorder": null,
+    "fidelityDE": 25.1,
+    "flags": [
+     "tenant colour ≈ page ground: fill moved"
+    ]
+   },
+   {
+    "tenant": "pink",
+    "mode": "light",
+    "in": "#FF69B4",
+    "accent": "#FF88C5",
+    "onAccent": "#201017",
+    "strong": "#C43081",
+    "subtle": "#FFEBF6",
+    "buttonBorder": "#C43081",
+    "fidelityDE": 6.1,
+    "flags": [
+     "no legible label on tenant colour: fill lightness moved"
+    ]
+   },
+   {
+    "tenant": "pink",
+    "mode": "dark",
+    "in": "#FF69B4",
+    "accent": "#FF88C5",
+    "onAccent": "#201017",
+    "strong": "#FF97CC",
+    "subtle": "#411E2E",
+    "buttonBorder": null,
+    "fidelityDE": 6.1,
+    "flags": [
+     "no legible label on tenant colour: fill lightness moved"
+    ]
+   }
+  ]
+ },
+ "lint": {
+  "note": "Full messages and held-out flag lists are in lint/lint-results.json.",
+  "versions": {
+   "stylelint": "17.15.0",
+   "stylelint-declaration-strict-value": "1.12.1",
+   "eslint": "10.11.0",
+   "@atlaskit/eslint-plugin-design-system": "16.13.2",
+   "eslint-plugin-better-tailwindcss": "4.7.0",
+   "eslint-plugin-tailwindcss": "4.4.0",
+   "tailwindcss": "4.3.3"
+  },
+  "fixture": {
+   "stylelint": {
+    "css-A-builtins": {
+     "note": "stylelint core rules only: color-no-hex, color-named, function-disallowed-list, declaration-property-unit-disallowed-list",
+     "violations": 12,
+     "ok": 26,
+     "caught": 12,
+     "missed": 0,
+     "falsePositives": 2,
+     "recall": 100,
+     "precision": 85.7,
+     "missLines": [],
+     "falsePositiveLines": [
+      26,
+      42
+     ],
+     "unlabelledLinesFlagged": []
+    },
+    "css-D-builtins-bare-lengths": {
+     "note": "revised after the held-out run (so its held-out numbers are not blind): A, but lengths are flagged only when bare (no var(), not zero, not em)",
+     "violations": 12,
+     "ok": 26,
+     "caught": 12,
+     "missed": 0,
+     "falsePositives": 2,
+     "recall": 100,
+     "precision": 85.7,
+     "missLines": [],
+     "falsePositiveLines": [
+      26,
+      42
+     ],
+     "unlabelledLinesFlagged": []
+    },
+    "css-B1-strict-value-defaults": {
+     "note": "stylelint-declaration-strict-value with its default ignoreFunctions: true",
+     "violations": 12,
+     "ok": 26,
+     "caught": 9,
+     "missed": 3,
+     "falsePositives": 0,
+     "recall": 75,
+     "precision": 100,
+     "missLines": [
+      5,
+      13,
+      15
+     ],
+     "falsePositiveLines": [],
+     "unlabelledLinesFlagged": []
+    },
+    "css-B2-strict-value-no-functions": {
+     "note": "stylelint-declaration-strict-value with ignoreFunctions: false (functions other than var() are flagged)",
+     "violations": 12,
+     "ok": 26,
+     "caught": 12,
+     "missed": 0,
+     "falsePositives": 2,
+     "recall": 100,
+     "precision": 85.7,
+     "missLines": [],
+     "falsePositiveLines": [
+      26,
+      38
+     ],
+     "unlabelledLinesFlagged": []
+    },
+    "css-C-builtins-plus-strict-value": {
+     "note": "A + B1 together",
+     "violations": 12,
+     "ok": 26,
+     "caught": 12,
+     "missed": 0,
+     "falsePositives": 2,
+     "recall": 100,
+     "precision": 85.7,
+     "missLines": [],
+     "falsePositiveLines": [
+      26,
+      42
+     ],
+     "unlabelledLinesFlagged": []
+    }
+   },
+   "eslint": {
+    "js-E1-core-no-restricted-syntax": {
+     "note": "ESLint core rule with AST selectors, zero dependencies",
+     "lintMs": 110,
+     "fatal": [],
+     "violations": 11,
+     "ok": 16,
+     "caught": 10,
+     "missed": 1,
+     "falsePositives": 2,
+     "recall": 90.9,
+     "precision": 83.3,
+     "missLines": [
+      21
+     ],
+     "falsePositiveLines": [
+      6,
+      27
+     ],
+     "unlabelledLinesFlagged": []
+    },
+    "js-E2-atlaskit-ensure-design-token-usage": {
+     "note": "@atlaskit/eslint-plugin-design-system ensure-design-token-usage (domains color + spacing)",
+     "lintMs": 40,
+     "fatal": [],
+     "violations": 11,
+     "ok": 16,
+     "caught": 7,
+     "missed": 4,
+     "falsePositives": 2,
+     "recall": 63.6,
+     "precision": 77.8,
+     "missLines": [
+      5,
+      20,
+      22,
+      23
+     ],
+     "falsePositiveLines": [
+      11,
+      26
+     ],
+     "unlabelledLinesFlagged": []
+    },
+    "js-E3-better-tailwindcss-locked": {
+     "note": "eslint-plugin-better-tailwindcss: no-unknown-classes against the locked @theme + no-restricted-classes for arbitrary token-owned values",
+     "lintMs": 807,
+     "fatal": [],
+     "violations": 11,
+     "ok": 16,
+     "caught": 4,
+     "missed": 7,
+     "falsePositives": 0,
+     "recall": 36.4,
+     "precision": 100,
+     "missLines": [
+      5,
+      8,
+      10,
+      16,
+      17,
+      18,
+      23
+     ],
+     "falsePositiveLines": [],
+     "unlabelledLinesFlagged": []
+    },
+    "js-E4-tailwindcss-plugin-locked": {
+     "note": "eslint-plugin-tailwindcss v4: no-arbitrary-value + no-custom-classname against the locked @theme",
+     "lintMs": 128,
+     "fatal": [],
+     "violations": 11,
+     "ok": 16,
+     "caught": 4,
+     "missed": 7,
+     "falsePositives": 1,
+     "recall": 36.4,
+     "precision": 80,
+     "missLines": [
+      5,
+      8,
+      10,
+      16,
+      17,
+      18,
+      23
+     ],
+     "falsePositiveLines": [
+      30
+     ],
+     "unlabelledLinesFlagged": []
+    },
+    "js-E1s-core-scoped-hex": {
+     "note": "E1 with hex strings reported only in colour positions (property value, colour attribute, colour-named variable)",
+     "lintMs": 15,
+     "fatal": [],
+     "violations": 11,
+     "ok": 16,
+     "caught": 10,
+     "missed": 1,
+     "falsePositives": 0,
+     "recall": 90.9,
+     "precision": 100,
+     "missLines": [
+      21
+     ],
+     "falsePositiveLines": [],
+     "unlabelledLinesFlagged": []
+    },
+    "js-E5-core-plus-better-tailwindcss": {
+     "note": "E1s + E3 (recommended hand-over for a Tailwind React codebase)",
+     "lintMs": 68,
+     "fatal": [],
+     "violations": 11,
+     "ok": 16,
+     "caught": 11,
+     "missed": 0,
+     "falsePositives": 0,
+     "recall": 100,
+     "precision": 100,
+     "missLines": [],
+     "falsePositiveLines": [],
+     "unlabelledLinesFlagged": []
+    }
+   }
+  },
+  "tailwind": {
+   "candidates": [
+    "bg-red-500",
+    "p-4",
+    "p-13",
+    "text-sm",
+    "rounded-md",
+    "shadow-lg",
+    "text-[#ff0000]",
+    "p-[13px]",
+    "rounded-[6px]",
+    "text-[15px]",
+    "bg-accent",
+    "bg-accent/50",
+    "p-sm",
+    "rounded-card",
+    "text-fg"
+   ],
+   "generated": {
+    "open": {
+     "bg-red-500": true,
+     "p-4": true,
+     "p-13": true,
+     "text-sm": true,
+     "rounded-md": true,
+     "shadow-lg": true,
+     "text-[#ff0000]": true,
+     "p-[13px]": true,
+     "rounded-[6px]": true,
+     "text-[15px]": true,
+     "bg-accent": true,
+     "bg-accent/50": true,
+     "p-sm": true,
+     "rounded-card": false,
+     "text-fg": true
+    },
+    "locked": {
+     "bg-red-500": false,
+     "p-4": false,
+     "p-13": false,
+     "text-sm": false,
+     "rounded-md": false,
+     "shadow-lg": false,
+     "text-[#ff0000]": true,
+     "p-[13px]": true,
+     "rounded-[6px]": true,
+     "text-[15px]": true,
+     "bg-accent": true,
+     "bg-accent/50": true,
+     "p-sm": true,
+     "rounded-card": true,
+     "text-fg": true
+    }
+   },
+   "tailwindVersion": "4.3.3"
+  },
+  "heldOut": {
+   "tsxFiles": 163,
+   "tsxLines": 16911,
+   "cssFiles": 61,
+   "cssLines": 7380,
+   "eslint": {
+    "js-E1-core-no-restricted-syntax": {
+     "flags": 10,
+     "filesFlagged": 7
+    },
+    "js-E1s-core-scoped-hex": {
+     "flags": 10,
+     "filesFlagged": 7
+    },
+    "js-E3r-better-tailwindcss-restricted-only": {
+     "flags": 37,
+     "filesFlagged": 22,
+     "categories": {
+      "raw-literal": 27,
+      "derived-from-var": 5,
+      "keyword": 5
+     }
+    }
+   },
+   "stylelint": {
+    "css-A-builtins": {
+     "flags": 51,
+     "byRule": {
+      "declaration-property-unit-disallowed-list": 49,
+      "color-named": 2
+     },
+     "categories": {
+      "derived-from-var": 16,
+      "em-relative": 8,
+      "zero-with-unit": 16,
+      "raw-literal": 11
+     }
+    },
+    "css-D-builtins-bare-lengths": {
+     "flags": 11,
+     "byRule": {
+      "declaration-property-value-disallowed-list": 9,
+      "color-named": 2
+     },
+     "categories": {
+      "raw-literal": 11
+     }
+    },
+    "css-B1-strict-value-defaults": {
+     "flags": 110,
+     "byRule": {
+      "scale-unlimited/declaration-strict-value": 110
+     },
+     "categories": {
+      "raw-literal": 45,
+      "derived-from-var": 43,
+      "em-relative": 7,
+      "zero-with-unit": 15
+     }
+    },
+    "css-B2-strict-value-no-functions": {
+     "flags": 189,
+     "byRule": {
+      "scale-unlimited/declaration-strict-value": 189
+     },
+     "categories": {
+      "raw-literal": 47,
+      "derived-from-var": 120,
+      "em-relative": 7,
+      "zero-with-unit": 15
+     }
+    }
+   }
+  }
+ },
+ "labs": {
+  "wedge": [
+   {
+    "detector": "burst-gate 35 ms",
+    "case": "scanner 4 ms/key",
+    "kind": "scan",
+    "runs": 5,
+    "correct": 4,
+    "detectedAsScan": 4,
+    "leakedIntoField": 1,
+    "gapMedian": 10,
+    "gapMax": 146
+   },
+   {
+    "detector": "burst-gate 35 ms",
+    "case": "scanner 15 ms/key",
+    "kind": "scan",
+    "runs": 5,
+    "correct": 2,
+    "detectedAsScan": 2,
+    "leakedIntoField": 3,
+    "gapMedian": 19,
+    "gapMax": 84
+   },
+   {
+    "detector": "burst-gate 35 ms",
+    "case": "scanner 25 ms/key",
+    "kind": "scan",
+    "runs": 5,
+    "correct": 1,
+    "detectedAsScan": 1,
+    "leakedIntoField": 4,
+    "gapMedian": 31,
+    "gapMax": 284
+   },
+   {
+    "detector": "burst-gate 35 ms",
+    "case": "scanner 40 ms/key",
+    "kind": "scan",
+    "runs": 5,
+    "correct": 0,
+    "detectedAsScan": 0,
+    "leakedIntoField": 5,
+    "gapMedian": 45,
+    "gapMax": 81
+   },
+   {
+    "detector": "burst-gate 35 ms",
+    "case": "person 60 ms/key",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 66,
+    "gapMax": 120
+   },
+   {
+    "detector": "burst-gate 35 ms",
+    "case": "person 90 ms/key",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 95,
+    "gapMax": 122
+   },
+   {
+    "detector": "burst-gate 35 ms",
+    "case": "person 150 ms/key",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 155,
+    "gapMax": 169
+   },
+   {
+    "detector": "burst-gate 35 ms",
+    "case": "person with one 20 ms rollover",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 128,
+    "gapMax": 153
+   },
+   {
+    "detector": "burst-gate 35 ms",
+    "case": "person typing a 6-digit code at 70 ms",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 76,
+    "gapMax": 93
+   },
+   {
+    "detector": "burst-gate 50 ms",
+    "case": "scanner 4 ms/key",
+    "kind": "scan",
+    "runs": 5,
+    "correct": 4,
+    "detectedAsScan": 4,
+    "leakedIntoField": 1,
+    "gapMedian": 9,
+    "gapMax": 113
+   },
+   {
+    "detector": "burst-gate 50 ms",
+    "case": "scanner 15 ms/key",
+    "kind": "scan",
+    "runs": 5,
+    "correct": 4,
+    "detectedAsScan": 4,
+    "leakedIntoField": 1,
+    "gapMedian": 19,
+    "gapMax": 98
+   },
+   {
+    "detector": "burst-gate 50 ms",
+    "case": "scanner 25 ms/key",
+    "kind": "scan",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 5,
+    "leakedIntoField": 0,
+    "gapMedian": 28,
+    "gapMax": 67
+   },
+   {
+    "detector": "burst-gate 50 ms",
+    "case": "scanner 40 ms/key",
+    "kind": "scan",
+    "runs": 5,
+    "correct": 1,
+    "detectedAsScan": 1,
+    "leakedIntoField": 4,
+    "gapMedian": 44,
+    "gapMax": 68
+   },
+   {
+    "detector": "burst-gate 50 ms",
+    "case": "person 60 ms/key",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 70,
+    "gapMax": 102
+   },
+   {
+    "detector": "burst-gate 50 ms",
+    "case": "person 90 ms/key",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 99,
+    "gapMax": 371
+   },
+   {
+    "detector": "burst-gate 50 ms",
+    "case": "person 150 ms/key",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 157,
+    "gapMax": 185
+   },
+   {
+    "detector": "burst-gate 50 ms",
+    "case": "person with one 20 ms rollover",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 126,
+    "gapMax": 177
+   },
+   {
+    "detector": "burst-gate 50 ms",
+    "case": "person typing a 6-digit code at 70 ms",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 76,
+    "gapMax": 114
+   },
+   {
+    "detector": "onscan.js 1.5.2 defaults",
+    "case": "scanner 4 ms/key",
+    "kind": "scan",
+    "runs": 5,
+    "correct": 0,
+    "detectedAsScan": 5,
+    "leakedIntoField": 5,
+    "gapMedian": 8,
+    "gapMax": 63
+   },
+   {
+    "detector": "onscan.js 1.5.2 defaults",
+    "case": "scanner 15 ms/key",
+    "kind": "scan",
+    "runs": 5,
+    "correct": 0,
+    "detectedAsScan": 5,
+    "leakedIntoField": 5,
+    "gapMedian": 18,
+    "gapMax": 51
+   },
+   {
+    "detector": "onscan.js 1.5.2 defaults",
+    "case": "scanner 25 ms/key",
+    "kind": "scan",
+    "runs": 5,
+    "correct": 0,
+    "detectedAsScan": 0,
+    "leakedIntoField": 5,
+    "gapMedian": 29,
+    "gapMax": 99
+   },
+   {
+    "detector": "onscan.js 1.5.2 defaults",
+    "case": "scanner 40 ms/key",
+    "kind": "scan",
+    "runs": 5,
+    "correct": 0,
+    "detectedAsScan": 0,
+    "leakedIntoField": 5,
+    "gapMedian": 44,
+    "gapMax": 91
+   },
+   {
+    "detector": "onscan.js 1.5.2 defaults",
+    "case": "person 60 ms/key",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 65,
+    "gapMax": 86
+   },
+   {
+    "detector": "onscan.js 1.5.2 defaults",
+    "case": "person 90 ms/key",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 95,
+    "gapMax": 122
+   },
+   {
+    "detector": "onscan.js 1.5.2 defaults",
+    "case": "person 150 ms/key",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 156,
+    "gapMax": 185
+   },
+   {
+    "detector": "onscan.js 1.5.2 defaults",
+    "case": "person with one 20 ms rollover",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 127,
+    "gapMax": 206
+   },
+   {
+    "detector": "onscan.js 1.5.2 defaults",
+    "case": "person typing a 6-digit code at 70 ms",
+    "kind": "human",
+    "runs": 5,
+    "correct": 5,
+    "detectedAsScan": 0,
+    "leakedIntoField": 0,
+    "gapMedian": 75,
+    "gapMax": 133
+   }
+  ],
+  "rum": [
+   {
+    "session": "dead control clicked 4× (150 ms apart)",
+    "expect": {
+     "rage_click": 1,
+     "dead_click": "≥1"
+    },
+    "runs": [
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 4
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 4
+     },
+     {
+      "inp_max": 24,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 4
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 4
+     },
+     {
+      "inp_max": 72,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 4
+     }
+    ]
+   },
+   {
+    "session": "slow pay button clicked 3× while waiting (250 ms apart; answers after 1.5 s)",
+    "expect": {
+     "rage_click": 1,
+     "dead_click": 0
+    },
+    "runs": [
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#slow",
+      "rage_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#slow",
+      "rage_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#slow",
+      "rage_click": 1
+     },
+     {
+      "inp_max": 40,
+      "inp_rating": "good",
+      "inp_target": "#slow",
+      "rage_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#slow",
+      "rage_click": 1
+     }
+    ]
+   },
+   {
+    "session": "double-click a word in a paragraph",
+    "expect": {
+     "rage_click": 0,
+     "dead_click": 0
+    },
+    "runs": [
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "inp_max": 0,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     }
+    ]
+   },
+   {
+    "session": "triple-click to select a paragraph",
+    "expect": {
+     "rage_click": 0,
+     "dead_click": 0,
+     "triple_click_select": 1
+    },
+    "runs": [
+     {
+      "triple_click_select": 1,
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "triple_click_select": 1,
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "triple_click_select": 1,
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "triple_click_select": 1,
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "triple_click_select": 1,
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     }
+    ]
+   },
+   {
+    "session": "working button clicked once",
+    "expect": {
+     "rage_click": 0,
+     "dead_click": 0
+    },
+    "runs": [
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#ok"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#ok"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#ok"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#ok"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#ok"
+     }
+    ]
+   },
+   {
+    "session": "janky handler (350 ms busy loop)",
+    "expect": {
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    "runs": [
+     {
+      "inp_max": 360,
+      "inp_rating": "needs-improvement",
+      "inp_over_200ms": 1,
+      "inp_target": "#jank"
+     },
+     {
+      "inp_max": 352,
+      "inp_rating": "needs-improvement",
+      "inp_over_200ms": 1,
+      "inp_target": "#jank"
+     },
+     {
+      "inp_max": 376,
+      "inp_rating": "needs-improvement",
+      "inp_over_200ms": 1,
+      "inp_target": "#jank"
+     },
+     {
+      "inp_max": 352,
+      "inp_rating": "needs-improvement",
+      "inp_over_200ms": 1,
+      "inp_target": "#jank"
+     },
+     {
+      "inp_max": 360,
+      "inp_rating": "needs-improvement",
+      "inp_over_200ms": 1,
+      "inp_target": "#jank"
+     }
+    ]
+   },
+   {
+    "session": "handler that throws",
+    "expect": {
+     "js_error": 1
+    },
+    "runs": [
+     {
+      "js_error": 1,
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#boom"
+     },
+     {
+      "js_error": 1,
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#boom"
+     },
+     {
+      "js_error": 1,
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#boom"
+     },
+     {
+      "js_error": 1,
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#boom"
+     },
+     {
+      "js_error": 1,
+      "inp_max": 0,
+      "inp_rating": "good",
+      "inp_target": "#boom"
+     }
+    ]
+   }
+  ],
+  "sizes": {
+   "rumSnippetGzipBytes": 1852,
+   "webVitalsAttributionGzipBytes": 5465,
+   "webVitalsVersion": "6.2.2"
+  },
+  "mde": [
+   {
+    "baselineRate": 0.02,
+    "dailyVisitors": 300,
+    "shareOnNewDesign": 0.5,
+    "mde14dRelativePct": 60.5,
+    "mde28dRelativePct": 42.8
+   },
+   {
+    "baselineRate": 0.02,
+    "dailyVisitors": 300,
+    "shareOnNewDesign": 0.1,
+    "mde14dRelativePct": 100.9,
+    "mde28dRelativePct": 71.3
+   },
+   {
+    "baselineRate": 0.02,
+    "dailyVisitors": 3000,
+    "shareOnNewDesign": 0.5,
+    "mde14dRelativePct": 19.1,
+    "mde28dRelativePct": 13.5
+   },
+   {
+    "baselineRate": 0.02,
+    "dailyVisitors": 3000,
+    "shareOnNewDesign": 0.1,
+    "mde14dRelativePct": 31.9,
+    "mde28dRelativePct": 22.6
+   },
+   {
+    "baselineRate": 0.02,
+    "dailyVisitors": 30000,
+    "shareOnNewDesign": 0.5,
+    "mde14dRelativePct": 6.1,
+    "mde28dRelativePct": 4.3
+   },
+   {
+    "baselineRate": 0.02,
+    "dailyVisitors": 30000,
+    "shareOnNewDesign": 0.1,
+    "mde14dRelativePct": 10.1,
+    "mde28dRelativePct": 7.1
+   },
+   {
+    "baselineRate": 0.1,
+    "dailyVisitors": 300,
+    "shareOnNewDesign": 0.5,
+    "mde14dRelativePct": 25.9,
+    "mde28dRelativePct": 18.3
+   },
+   {
+    "baselineRate": 0.1,
+    "dailyVisitors": 300,
+    "shareOnNewDesign": 0.1,
+    "mde14dRelativePct": 43.2,
+    "mde28dRelativePct": 30.6
+   },
+   {
+    "baselineRate": 0.1,
+    "dailyVisitors": 3000,
+    "shareOnNewDesign": 0.5,
+    "mde14dRelativePct": 8.2,
+    "mde28dRelativePct": 5.8
+   },
+   {
+    "baselineRate": 0.1,
+    "dailyVisitors": 3000,
+    "shareOnNewDesign": 0.1,
+    "mde14dRelativePct": 13.7,
+    "mde28dRelativePct": 9.7
+   },
+   {
+    "baselineRate": 0.1,
+    "dailyVisitors": 30000,
+    "shareOnNewDesign": 0.5,
+    "mde14dRelativePct": 2.6,
+    "mde28dRelativePct": 1.8
+   },
+   {
+    "baselineRate": 0.1,
+    "dailyVisitors": 30000,
+    "shareOnNewDesign": 0.1,
+    "mde14dRelativePct": 4.3,
+    "mde28dRelativePct": 3.1
+   },
+   {
+    "baselineRate": 0.5,
+    "dailyVisitors": 300,
+    "shareOnNewDesign": 0.5,
+    "mde14dRelativePct": 8.6,
+    "mde28dRelativePct": 6.1
+   },
+   {
+    "baselineRate": 0.5,
+    "dailyVisitors": 300,
+    "shareOnNewDesign": 0.1,
+    "mde14dRelativePct": 14.4,
+    "mde28dRelativePct": 10.2
+   },
+   {
+    "baselineRate": 0.5,
+    "dailyVisitors": 3000,
+    "shareOnNewDesign": 0.5,
+    "mde14dRelativePct": 2.7,
+    "mde28dRelativePct": 1.9
+   },
+   {
+    "baselineRate": 0.5,
+    "dailyVisitors": 3000,
+    "shareOnNewDesign": 0.1,
+    "mde14dRelativePct": 4.6,
+    "mde28dRelativePct": 3.2
+   },
+   {
+    "baselineRate": 0.5,
+    "dailyVisitors": 30000,
+    "shareOnNewDesign": 0.5,
+    "mde14dRelativePct": 0.9,
+    "mde28dRelativePct": 0.6
+   },
+   {
+    "baselineRate": 0.5,
+    "dailyVisitors": 30000,
+    "shareOnNewDesign": 0.1,
+    "mde14dRelativePct": 1.4,
+    "mde28dRelativePct": 1
+   },
+   {
+    "baselineRate": 0.8,
+    "dailyVisitors": 300,
+    "shareOnNewDesign": 0.5,
+    "mde14dRelativePct": 4.3,
+    "mde28dRelativePct": 3.1
+   },
+   {
+    "baselineRate": 0.8,
+    "dailyVisitors": 300,
+    "shareOnNewDesign": 0.1,
+    "mde14dRelativePct": 7.2,
+    "mde28dRelativePct": 5.1
+   },
+   {
+    "baselineRate": 0.8,
+    "dailyVisitors": 3000,
+    "shareOnNewDesign": 0.5,
+    "mde14dRelativePct": 1.4,
+    "mde28dRelativePct": 1
+   },
+   {
+    "baselineRate": 0.8,
+    "dailyVisitors": 3000,
+    "shareOnNewDesign": 0.1,
+    "mde14dRelativePct": 2.3,
+    "mde28dRelativePct": 1.6
+   },
+   {
+    "baselineRate": 0.8,
+    "dailyVisitors": 30000,
+    "shareOnNewDesign": 0.5,
+    "mde14dRelativePct": 0.4,
+    "mde28dRelativePct": 0.3
+   },
+   {
+    "baselineRate": 0.8,
+    "dailyVisitors": 30000,
+    "shareOnNewDesign": 0.1,
+    "mde14dRelativePct": 0.7,
+    "mde28dRelativePct": 0.5
+   }
+  ]
+ }
+}

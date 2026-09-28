@@ -6,7 +6,8 @@ set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
 fonts="$here/fonts"; ext="${S8_EXT:-/tmp/s2-S8}"
 mkdir -p "$fonts/served" "$ext"
-raw=https://raw.githubusercontent.com/google/fonts/main/ofl
+# google/fonts pinned to the commit measured on 2026-09-28
+raw=https://raw.githubusercontent.com/google/fonts/23e54b51ddffbc7713c583748e3bd86f62b1fa4a/ofl
 get() { [ -s "$fonts/$2" ] || curl -sSfL -o "$fonts/$2" "$raw/$1"; }
 get 'notonaskharabic/NotoNaskhArabic%5Bwght%5D.ttf' NotoNaskhArabic.ttf
 get 'notosansarabic/NotoSansArabic%5Bwdth,wght%5D.ttf' NotoSansArabic.ttf
@@ -34,7 +35,8 @@ for fam in 'Noto Naskh Arabic' 'Noto Sans Arabic' 'Noto Kufi Arabic' 'IBM Plex S
     f="$fonts/served/$slug-$sub.woff2"; [ -s "$f" ] || curl -sSf -o "$f" "$url"
   done
 done
-# Which Google families have the Saudi riyal sign U+20C1: ask the API for a one-character subset.
+# Which Google families have the Saudi riyal sign U+20C1: ask the API for a one-character subset. The API answers 400
+# when the family has no glyph for it, so a missing .woff2 means "no U+20C1". (These probes reflect the day they ran.)
 mkdir -p "$fonts/riyal"
 for fam in 'Noto Sans' 'Noto Sans Arabic' 'Noto Naskh Arabic' 'Noto Kufi Arabic' 'IBM Plex Sans Arabic' 'IBM Plex Sans' 'Tajawal' 'Cairo' 'Almarai' 'Readex Pro' 'Alexandria' 'Vazirmatn' 'Rubik' 'Inter' 'Roboto' 'Noto Sans Symbols' 'Noto Sans Symbols 2' 'Amiri' 'Beiruti' 'Baloo Bhaijaan 2' 'Changa' 'El Messiri' 'Mada' 'Markazi Text' 'Lalezar' 'Harmattan' 'Scheherazade New' 'Lateef' 'Reem Kufi' 'Zain' 'Kufam' 'Marhey' 'Blaka' 'Handjet' 'Playpen Sans Arabic' 'Noto Sans Math'; do
   slug=$(echo "$fam" | tr -d ' ')
@@ -51,8 +53,10 @@ if [ ! -d "$ext/riyalpkg/package" ]; then mkdir -p "$ext/riyalpkg" && (cd "$ext/
 [ -d "$here/node_modules/chart.js" ] || (cd "$here" && npm install --no-audit --no-fund chart.js@4.3.2 >/dev/null)
 
 # Bootstrap RTL examples (MIT). Sparse and shallow; built into static HTML by lib/bootstrap-pages.mjs.
+BS=46a88042b323d78c580352085ca60afca5c6c405   # twbs/bootstrap main on 2026-09-22
 if [ ! -d "$ext/bootstrap/.git" ]; then
   git clone -q --depth 1 --filter=blob:none --sparse https://github.com/twbs/bootstrap.git "$ext/bootstrap"
   (cd "$ext/bootstrap" && git sparse-checkout set dist/css dist/js site/src/assets/examples)
 fi
+(cd "$ext/bootstrap" && { [ "$(git rev-parse HEAD)" = "$BS" ] || { git fetch -q --depth 1 origin "$BS" && git checkout -q "$BS"; }; })
 echo "fetched: $(ls "$fonts"/*.ttf | wc -l) fonts, $(ls "$fonts"/served/*.woff2 | wc -l) served subsets, riyal probes $(ls "$fonts"/riyal/*.woff2 2>/dev/null | wc -l); bootstrap $(cd "$ext/bootstrap" && git log -1 --format=%h)"

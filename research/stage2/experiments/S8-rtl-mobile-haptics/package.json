@@ -2,14 +2,16 @@
   "name": "s8-rtl-mobile-haptics",
   "private": true,
   "type": "module",
-  "description": "Stage-2 stream S8: RTL component checks, Arabic vertical metrics, mobile emulation checks, haptics support data.",
+  "description": "Stage-2 stream S8: RTL component checker (rtl-check.mjs), Arabic vertical-metrics and glyph-clip labs, mobile emulation checks with safe-area insets and a thumb-reach overlay (mobile-check.mjs), haptics support data. Browser: the skill scripts' playwright-core (lib/env.mjs). Run: npm install && bash fetch.sh && node run.mjs",
   "scripts": {
     "fetch": "bash fetch.sh",
-    "run": "node run.mjs"
+    "start": "node run.mjs",
+    "rtl-check": "node rtl-check.mjs",
+    "mobile-check": "node mobile-check.mjs"
   },
   "dependencies": {
-    "@mdn/browser-compat-data": "*",
-    "chart.js": "^4.3.2",
-    "web-features": "*"
+    "@mdn/browser-compat-data": "8.1.3",
+    "chart.js": "4.3.2",
+    "web-features": "3.40.0"
   }
 }

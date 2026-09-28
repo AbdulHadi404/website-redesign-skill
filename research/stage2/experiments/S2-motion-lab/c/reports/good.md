@@ -1,4 +1,4 @@
-# Motion check — http://127.0.0.1:45933/captures/c/good.html
+# Motion check — http://127.0.0.1:37679/captures/c/good.html
 
 2026-09-28 · desktop · Chromium 141.0.7390.37 · tokens from page custom properties: micro 100, small 150, medium 240, large 300, page 400, hero 700, count 800
 
@@ -9,10 +9,10 @@
 | cta-press | press | animates | 100ms (spec micro) | cubic-bezier(0.2, 0, 0, 1) | keep → still moves | ✓ |
 | cta-hover | hover | animates | 100ms (spec micro) | cubic-bezier(0.2, 0, 0, 1) | keep → substituted (fade/colour) | ✓ |
 | plan-hover | hover | animates | 150ms (spec small) | cubic-bezier(0.2, 0, 0, 1) | fade → substituted (fade/colour) | ✓ |
-| sheet-open | click | animates | 300ms (spec large) | cubic-bezier(0.2, 0, 0, 1) / ease | fade → substituted (fade/colour) | ✓ |
+| sheet-open | click | animates | 300ms (spec large) | cubic-bezier(0.2, 0, 0, 1) / ease | fade → substituted (fade/colour) | ✗ layout jumps in one frame (width, height, left/margin, top/margin): a layout property changed without transitioning |
 | toast | click | animates | 240ms (spec medium) | cubic-bezier(0.2, 0, 0, 1) | fade → substituted (fade/colour) | ✓ |
 | features-reveal | scroll | animates, stagger 40ms (declared) | 240ms (spec medium) | cubic-bezier(0.2, 0, 0, 1) | static → nothing changes | ✓ |
-| stat-count | scroll | animates | ~343ms (spec 800) | ≈ ease-out | instant → nothing changes | ✗ duration 343ms (sampled) outside 800ms; sampled curve fits ease-out better than out (rms 0.281 vs 0.216); animates layout properties not in the spec: width |
+| stat-count | scroll | animates | ~783ms (spec 800) | ≈ __spec | instant → nothing changes | ✓ |
 | hero-in | load | animates | 700ms (spec hero) | cubic-bezier(0.05, 0.7, 0.1, 1) | fade → substituted (fade/colour) | ✓ |
 | panel-swap | click | animates | 400ms (spec page) | cubic-bezier(0.2, 0, 0, 1) | fade → substituted (fade/colour) | ✓ |
 

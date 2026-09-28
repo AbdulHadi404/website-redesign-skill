@@ -8,7 +8,7 @@ import { glyphClipProbe } from '../lib/glyph-probe.mjs';
 const require = createRequire('/home/user/website-redesign-skill/skills/website-redesign/scripts/package.json');
 const { PNG } = require('pngjs');
 
-const FONTS = ['Tajawal', 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Almarai', 'Cairo'];
+const FONTS = ['Tajawal', 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Almarai', 'Cairo', 'Alexandria'];
 const STR = { plain: 'الخدمات الإلكترونية', vocal: 'كُتُبٌ جَمِيلَةٌ', stack: 'إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ' };
 // The component recipes as they are usually written (Tailwind equivalents in comments).
 const COMPONENTS = {
@@ -17,6 +17,8 @@ const COMPONENTS = {
   cell: 'font-size:14px; line-height:20px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:300px', // a <div class="truncate leading-5"> inside a 40px row
   clamp: 'font-size:28px; line-height:1.1; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; max-width:320px; font-weight:600', // line-clamp-2 leading-[1.1]
   nav: 'font-size:16px; line-height:1.5; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:300px', // truncate leading-6
+  cellFixed: 'font-size:14px; line-height:20px; overflow-x:clip; overflow-y:visible; text-overflow:ellipsis; white-space:nowrap; max-width:300px', // the fix: clip only the inline axis, keep the ellipsis
+  hero: 'font-size:40px; line-height:1.1; font-weight:300; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; max-width:400px', // the UAE DS hero title recipe: line-clamp-2, display line-height 1.1
 };
 
 export async function run(browser, base) {
@@ -25,7 +27,7 @@ export async function run(browser, base) {
   await page.goto(base + '/fixtures/blank.html');
   await page.evaluate(async ({ FONTS, STR, COMPONENTS }) => {
     document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl';
-    const grid = document.createElement('div'); grid.style.cssText = 'display:grid; grid-template-columns: repeat(3, 360px); gap: 44px 40px; padding: 40px; justify-content:start';
+    const grid = document.createElement('div'); grid.style.cssText = 'display:grid; grid-template-columns: repeat(3, 420px); gap: 44px 40px; padding: 40px; justify-content:start';
     let k = 0;
     for (const f of FONTS) for (const [cname, css] of Object.entries(COMPONENTS)) for (const [sname, s] of Object.entries(STR)) {
       const cell = document.createElement('div'); cell.style.cssText = 'height: 88px; display:flex; align-items:center';
@@ -37,11 +39,11 @@ export async function run(browser, base) {
     for (const f of FONTS) await document.fonts.load(`16px "T-${f}"`, 'عربي');
     await document.fonts.ready;
   }, { FONTS, STR, COMPONENTS });
-  const rects = await page.evaluate(() => [...document.querySelectorAll('[data-case]')].map((e) => { const r = e.getBoundingClientRect(); return { id: e.id, c: e.dataset.case, top: r.top, bottom: r.bottom, left: r.left, right: r.right }; }));
+  const rects = await page.evaluate(() => [...document.querySelectorAll('[data-case]')].map((e) => { const r = e.getBoundingClientRect(); return { id: e.id, c: e.dataset.case, top: r.top, bottom: r.bottom, left: r.left, right: r.right, oneLine: r.height < 1.5 * parseFloat(getComputedStyle(e).lineHeight) }; }));
   const H = await page.evaluate(() => document.documentElement.scrollHeight);
   await page.setViewportSize({ width: 1400, height: H });
   const before = PNG.sync.read(await page.screenshot());
-  await page.screenshot({ path: path.join(root, 'shots', 'clip-sheet.jpg'), type: 'jpeg', quality: 70, clip: { x: 0, y: 0, width: 1240, height: Math.min(H, 2200) } });
+  await page.screenshot({ path: path.join(root, 'shots', 'clip-sheet.jpg'), type: 'jpeg', quality: 70, clip: { x: 0, y: 0, width: 1400, height: Math.min(H, 2400) } });
   const probe = await page.evaluate(glyphClipProbe, { scripts: 'arabic' });
   await page.addStyleTag({ content: '[data-case] { overflow: visible !important; -webkit-line-clamp: unset !important; text-overflow: clip !important }' });
   const after = PNG.sync.read(await page.screenshot());
@@ -49,8 +51,9 @@ export async function run(browser, base) {
   const byId = Object.fromEntries(probe.clipped.map((c) => [c.selector.replace('#', ''), c]));
   const cases = rects.map((r) => {
     const truthTop = rowsDiff(r.top - 34, r.top, r.left - 4, r.right + 4);
-    const clamp = r.c.includes('|clamp|');
-    const truthBottom = clamp ? null : rowsDiff(r.bottom, r.bottom + 34, r.left - 4, r.right + 4);
+    const clamp = /\|(clamp|hero)\|/.test(r.c);
+    // a clamp that holds one line has no hidden second line: its bottom edge can be measured too
+    const truthBottom = clamp && !r.oneLine ? null : rowsDiff(r.bottom, r.bottom + 34, r.left - 4, r.right + 4);
     const p = byId[r.id];
     return { case: r.c, truthTopPx: truthTop, truthBottomPx: truthBottom, probeTopPx: p ? p.topPx : 0, probeBottomPx: p ? p.bottomPx : 0 };
   });
@@ -70,5 +73,5 @@ export async function run(browser, base) {
   for (const c of cases) { const [, comp, s] = c.case.split('|'); const k = `${comp}`; perComponent[k] ??= { plain: 0, vocal: 0, stack: 0, maxLossPx: 0 };
     const lost = Math.max(c.truthTopPx, c.truthBottomPx ?? 0); if (lost >= 1) perComponent[k][s]++; perComponent[k].maxLossPx = Math.max(perComponent[k].maxLossPx, lost); }
   await ctx.close();
-  return { summary, perComponent: { note: 'count of the 5 faces that lose ≥ 1 px of ink, per string', ...perComponent }, cases };
+  return { summary, perComponent: { note: 'count of the 6 faces that lose ≥ 1 px of ink, per string', ...perComponent }, cases };
 }

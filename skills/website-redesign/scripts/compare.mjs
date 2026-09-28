@@ -17,8 +17,11 @@
  *           whole caption. Fewer labels than files is fine: the rest keep their default caption (the file
  *           name; Before / After for a pair), and an empty label or "-" keeps it for one panel
  *           (--labels New - Azul). More labels than files is an error. So is a label that names another
- *           file of the sheet better than its own ("sanad" on azul-home.jpg beside sanad-dashboard.jpg):
- *           the run stops with the order it most likely meant; --labels-as-given draws them as typed.
+ *           file from the same folder better than its own ("sanad" on azul-home.jpg beside
+ *           sanad-dashboard.jpg, "Old" on home-1440-after-fold.png): the run stops, and prints the order it
+ *           most likely meant when that is clear; --labels-as-given draws them as typed. Your own captures
+ *           are not checked against files in other folders, so "Sanad new" on captures/new.png is fine
+ *           beside the ledger's sanad-dashboard.jpg.
  *           Every sheet prints its file -> caption pairing. A --dir sheet takes at most two labels, its
  *           before and after captions, used on every sheet.
  * --blur N  blurs every panel by N px: the squint test. What still reads when
@@ -54,37 +57,61 @@ function typedLabels(panels) {
 
 // Labels pair with files by position and a shell glob picks the file order, so a list typed in the order you
 // had in mind names the wrong panels, and nothing on the sheet says so. Most such captions name another file
-// of the same sheet: compare each typed label's words with every file's name (and folder), and stop when it
-// matches another file better than its own. Words are runs of two or more letters or digits; a word matches
-// a file-name word exactly, or as a prefix of four letters or more ("dash" ~ "dashboard").
-const words = (s) => String(s).toLowerCase().normalize('NFKC').split(/[^\p{L}\p{N}]+/u).filter((w) => w.length > 1);
+// that came in with the same glob: compare each typed label's words with the names of the files that could
+// have been mixed up with its own, and stop when it matches another of them better than its own. Words are
+// runs of two or more letters or digits; a word matches a file-name word exactly, or as a prefix of four
+// letters or more ("dash" ~ "dashboard"); "after" and "new", "before" and "old" count as one word (capture.mjs
+// names captures -before / -after, and people caption them Old / New).
+const SAME = { after: 'new', before: 'old' };
+const words = (s) => String(s).toLowerCase().normalize('NFKC').split(/[^\p{L}\p{N}]+/u).filter((w) => w.length > 1).map((w) => SAME[w] ?? w);
 const lettered = (w) => /\p{L}/u.test(w);
 const alike = (x, y) => x === y || (lettered(x) && lettered(y) && Math.min(x.length, y.length) >= 4 && (x.startsWith(y) || y.startsWith(x)));
-function misnamed(files, typed) {
-  const names = files.map((f) => words(`${path.basename(path.dirname(path.resolve(f)))} ${path.basename(f).replace(/\.[^.]+$/, '')}`));
+// Which files a label is measured against: on a grid, the files in its own folder (the files one glob brought
+// in) and same-named files in other folders. Your own captures, typed one by one before references/ledger/*.jpg,
+// are placed on purpose, and their names say nothing about the project, so "Sanad new" on captures/new.png is
+// not read as a caption meant for ledger/…-sanad-dashboard.jpg. A before/after pair measures its two files.
+function misnamed(files, typed, { pair = false } = {}) {
+  const dirs = files.map((f) => path.dirname(path.resolve(f)));
+  const bases = files.map((f) => path.basename(f));
+  const near = (i, j) => pair || dirs[i] === dirs[j] || bases[i] === bases[j];
+  const names = files.map((f, j) => words(`${path.basename(dirs[j])} ${bases[j].replace(/\.[^.]+$/, '')}`));
   const flagged = new Map(); // label index -> the file indices it names better than its own
-  const at = new Array(files.length).fill(null);
-  let clean = true;
+  const best = new Map();    // label index -> the one file it names best, and whether every word of it is in that name
+  let unsure = false;        // a label kept in place that is, word for word, the name of a file in another folder
   typed.forEach((l, i) => {
     if (l == null) return;
     const lw = [...new Set(words(l))];
-    const score = names.map((n) => lw.filter((w) => n.some((x) => alike(w, x))).length);
+    const hits = names.map((n) => lw.filter((w) => n.some((x) => alike(w, x))).length);
+    const score = hits.map((s, j) => (near(i, j) ? s : -1));
     const top = Math.max(...score);
+    if (top <= score[i]) { unsure ||= !hits[i] && hits.some((s, j) => !near(i, j) && s && s === lw.length); return; }
     const tops = score.flatMap((s, j) => (s === top ? [j] : []));
-    if (top > score[i]) flagged.set(i, tops);
-    // The order that was probably meant: a flagged label moves to the one file it names best; the others stay
-    // where they were typed. No suggestion when a label names two files equally or two labels want one panel.
-    const j = top > score[i] ? (tops.length === 1 ? tops[0] : -1) : i;
-    if (j < 0 || at[j] != null) clean = false; else at[j] = l;
+    flagged.set(i, tops);
+    if (tops.length === 1) best.set(i, { j: tops[0], whole: top === lw.length });
   });
   if (!flagged.size) return null;
+  // The order that was probably meant: a flagged label moves to the one file it names best, and the others stay
+  // where they were typed. A label only takes the place of a caption that is itself wrong (a flagged label), or of
+  // a panel's file name when every word of the label is in that file name ("sanad" onto …-sanad-dashboard.jpg):
+  // a suggestion must not put a caption that only shares a word with a file ("New dashboard") over its correct
+  // file name. No suggestion when a label names two files equally, when two labels want one panel, or when a
+  // label left in place on your own capture is the name of a ledger file (--labels Azul … typed without the
+  // captions of your own panels): following the list would then draw that mistake.
+  const at = new Array(files.length).fill(null);
+  let clean = !unsure;
+  typed.forEach((l, i) => {
+    if (l == null) return;
+    const b = flagged.has(i) ? best.get(i) : { j: i };
+    const fits = b && (!flagged.has(i) || flagged.has(b.j) || (typed[b.j] == null && b.whole));
+    if (!fits || at[b.j] != null) clean = false; else at[b.j] = l;
+  });
   const order = clean ? at.map((l) => l ?? '-') : null;
   while (order?.at(-1) === '-') order.pop();
   return { flagged, order };
 }
 
 // Every panel's caption, and the file -> caption lines to print; stops on a list that cannot be what was meant.
-function captionsFor(files, defaults, typed = typedLabels(files.length)) {
+function captionsFor(files, defaults, { typed = typedLabels(files.length), pair = false } = {}) {
   const caps = files.map((f, i) => typed[i] ?? defaults[i]);
   const mixed = typed.some((l) => l != null);
   const pairing = (note = () => '') => files.map((f, i) => `  ${f} -> ${caps[i]}${mixed && typed[i] == null ? '  (default)' : ''}${note(i)}`).join('\n');
@@ -93,7 +120,7 @@ function captionsFor(files, defaults, typed = typedLabels(files.length)) {
     const byName = defaults.every((d, i) => d === path.basename(files[i]));
     fail(`--labels gives ${typed.length} label(s) for ${files.length} file(s). They pair by position, in this file order:\n${pairing()}\n  (unused: ${typed.slice(files.length).map((l) => l ?? '-').join(', ')})${split}\nGive at most one label per file, in that order, or leave out --labels to caption each panel with ${byName ? 'its file name' : defaults.join(' / ')}.`);
   }
-  const bad = a['labels-as-given'] ? null : misnamed(files, typed);
+  const bad = a['labels-as-given'] ? null : misnamed(files, typed, { pair });
   if (bad) {
     const name = (j) => (files.filter((f) => path.basename(f) === path.basename(files[j])).length > 1 ? files[j] : path.basename(files[j]));
     const glob = defaults.every((d, i) => d === path.basename(files[i])) ? ' (a shell glob sorts by name)' : '';
@@ -170,7 +197,7 @@ if (a.grid) {
   // Every sheet here has the same two panels, so --labels names their captions once; check them all before drawing.
   const typed = typedLabels(2);
   if (typed.length > 2) fail(`--labels gives ${typed.length} label(s), but every folder sheet has two panels: the before and the after capture of one page. Give those two captions (--labels Old New), or leave out --labels for Before / After.`);
-  const sheets = pairs.map(([f, g]) => ({ files: [f, g], out: path.join(outDir, key(f)), ...captionsFor([f, g], ['Before', 'After'], typed) }));
+  const sheets = pairs.map(([f, g]) => ({ files: [f, g], out: path.join(outDir, key(f)), ...captionsFor([f, g], ['Before', 'After'], { typed, pair: true }) }));
   for (const s of sheets) { console.log(s.pairing); await sheet(s.files, s.caps, s.out); }
   console.log(`${pairs.length} before/after sheet(s) in ${outDir}`);
 } else if (a.before && a.after) {
@@ -178,7 +205,7 @@ if (a.grid) {
   await mustBeFiles(files);
   // Check the labels before anything is written, so a refused run leaves no half of its output behind.
   const drawSheet = a.out || !a.diff;
-  const shown = drawSheet ? captionsFor(files, ['Before', 'After']) : null;
+  const shown = drawSheet ? captionsFor(files, ['Before', 'After'], { pair: true }) : null;
   if (!drawSheet && a.labels !== undefined) console.error('--labels unused: --diff alone draws no sheet (add --out for one).');
   if (a.diff) await diff(files[0], files[1], a.diff);
   if (drawSheet) { console.log(shown.pairing); await sheet(files, shown.caps, a.out || 'compare.png'); }

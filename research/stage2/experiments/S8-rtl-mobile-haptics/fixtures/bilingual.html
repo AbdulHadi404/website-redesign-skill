@@ -29,7 +29,7 @@ const T = {
   ar: { brand: 'سند', nav: ['الطلبات', 'الفواتير', 'العملاء'], lang: 'English', langHref: '?lang=en', search: 'ابحث في الطلبات', crumbs: ['الرئيسية', 'الطلبات', 'الطلب ١٠٤٢'],
     tabs: ['التفاصيل', 'المنتجات', 'السجل'], steps: ['السلة', 'التوصيل', 'الدفع'], eyebrow: 'طلب جديد', title: 'الطلب ١٠٤٢', lede: 'أنشأته <em>سارة أحمد</em> في ٢٨ سبتمبر.',
     form: { name: 'الاسم الكامل', email: 'البريد الإلكتروني', phone: 'الجوال', iban: 'رقم الآيبان', code: 'رمز الخصم', hintPhone: 'نرسل لك رسالة عند خروج المندوب.', err: 'أدخل رقم آيبان يبدأ بـ SA', save: 'حفظ التغييرات' },
-    table: { cap: 'أحدث الطلبات', cols: ['الطلب', 'العميل', 'الحالة', 'المبلغ'], rows: [['١٠٤٢', 'سارة أحمد', 'مدفوع', '1,250.00'], ['١٠٤١', 'عمر خالد', 'مسترد', '-310.50'], ['١٠٤٠', 'ليلى حسن', 'قيد الانتظار', '88.00']], open: 'فتح' },
+    table: { cap: 'أحدث الطلبات', cols: ['الطلب', 'العميل', 'الحالة', 'المبلغ'], rows: [['1042', 'سارة أحمد', 'مدفوع', '1,250.00'], ['1041', 'عمر خالد', 'مسترد', '-310.50'], ['1040', 'ليلى حسن', 'قيد الانتظار', '88.00']], open: 'فتح' },
     pager: ['السابق', 'التالي'], media: ['تشغيل', 'تقديم'], upload: 'جارٍ رفع الفاتورة invoice.pdf', slider: 'الميزانية', chart: 'الطلبات شهرياً', months: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
     actions: { undo: 'تراجع', redo: 'إعادة', reply: 'رد', send: 'إرسال', ext: 'فتح في علامة تبويب جديدة', help: 'مساعدة', logout: 'تسجيل الخروج', refresh: 'تحديث', clock: 'مستحق خلال يومين' },
     toast: 'تم حفظ الطلب', drawer: 'القائمة', rail: 'مقترحات', vocal: 'ملاحظة الطلب', vocalText: 'سَلِّمْ إِلَى الاسْتِقْبَالِ لِأَنَّ المَكْتَبَ مُغْلَقٌ' },
@@ -40,7 +40,7 @@ document.getElementById('app').innerHTML = `
 <header class="bar">
   <button class="icon-btn" id="menu-btn" aria-label="${T.drawer}" aria-expanded="false">${icon('menu')}</button>
   <a class="brand" href="#">${T.brand}</a>
-  <nav aria-label="${T.drawer}"><ul class="navlist">${T.nav.map((n, i) => `<li><a href="#" ${i === 0 ? 'aria-current="page"' : ''}>${n}</a></li>`).join('')}</ul></nav>
+  <nav aria-label="${T.nav[0]}"><ul class="navlist">${T.nav.map((n, i) => `<li><a href="#" ${i === 0 ? 'aria-current="page"' : ''}>${n}</a></li>`).join('')}</ul></nav>
   <form class="search" role="search"><label class="sr" for="q">${T.search}</label>${icon('search')}<input id="q" type="search" placeholder="${T.search}"></form>
   <a class="lang" href="${T.langHref}" lang="${LANG === 'ar' ? 'en' : 'ar'}">${T.lang}</a>
   <button class="icon-btn" aria-label="Cart">${icon('cart')}<span class="badge">3</span></button>
@@ -70,17 +70,17 @@ document.getElementById('app').innerHTML = `
   </div>
   <div role="tabpanel" id="panel1" aria-labelledby="tab1" hidden></div><div role="tabpanel" id="panel2" aria-labelledby="tab2" hidden></div>
   <p class="note"><strong>${T.vocal}:</strong> <span class="note-text">${T.vocalText}</span></p>
-  <table class="orders"><caption>${T.table.cap}</caption>
+  <div class="table-wrap" role="region" tabindex="0" aria-label="${T.table.cap}"><table class="orders"><caption>${T.table.cap}</caption>
     <thead><tr>${T.table.cols.map((c, i) => `<th scope="col" class="${i === 3 ? 'num' : ''}"${i === 3 ? ' aria-sort="descending"' : ''}>${c}${i === 3 ? icon('sort-desc') : ''}</th>`).join('')}<th><span class="sr">${T.table.open}</span></th></tr></thead>
     <tbody>${T.table.rows.map((r) => `<tr><td>${r[0]}</td><td><div class="cell-name">${r[1]}</div></td><td>${r[2]}</td><td class="num">${amount(r[3])}</td><td><a href="#" class="row-open" aria-label="${T.table.open} ${r[0]}">${icon('chevron-right')}</a></td></tr>`).join('')}</tbody>
-  </table>
+  </table></div>
   <nav class="pager" aria-label="Pagination"><a href="#" rel="prev">${icon('arrow-left')}${T.pager[0]}</a><a href="#" rel="next">${T.pager[1]}${icon('arrow-right')}</a></nav>
   <section class="reel-wrap" aria-labelledby="rail-h"><h2 id="rail-h">${T.rail}</h2>
     <div class="reel" role="region" tabindex="0" aria-labelledby="rail-h">${[1, 2, 3, 4, 5, 6].map((i) => `<div class="tile">${i}</div>`).join('')}</div>
     <div class="reel-ctrl"><button class="icon-btn" aria-label="${T.pager[0]}">${icon('chevron-left')}</button><button class="icon-btn" aria-label="${T.pager[1]}">${icon('chevron-right')}</button></div>
   </section>
   <div class="media" dir="ltr"><button class="icon-btn" aria-label="${T.media[0]}">${icon('play')}</button><div class="track"><div class="played"></div></div><button class="icon-btn" aria-label="${T.media[1]}">${icon('skip-forward')}</button><span class="time">1:05 / 3:40</span></div>
-  <div class="upload"><span>${T.upload}</span><div class="progress" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"><div class="bar-fill"></div></div></div>
+  <div class="upload"><span>${T.upload}</span><div class="progress" role="progressbar" aria-label="${T.upload}" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"><div class="bar-fill"></div></div></div>
   <figure class="chart"><figcaption>${T.chart}</figcaption>
     <svg viewBox="0 0 300 120" width="300" height="120" role="img" aria-label="${T.chart}" dir="ltr">${[30, 45, 38, 60, 72, 90].map((v, i) => `<rect x="${20 + i * 45}" y="${100 - v}" width="28" height="${v}" fill="currentColor" opacity=".7"/><text x="${34 + i * 45}" y="115" text-anchor="middle" font-size="10">${T.months[i]}</text>`).join('')}</svg>
   </figure>

@@ -26,10 +26,19 @@
  * --source: folders are searched for text files (md, json, yaml, js/ts, html, csv, txt…); a file named directly is
  * read whatever its extension, except binary formats (pdf, docx, images), which must be transcribed first. A source
  * that is missing or unreadable is reported under the first line.
- * A dropped claim whose value is still on the new page counts as "same value, new format" only when it is surely
- * the same figure: specific (3+ significant digits once trailing zeros are dropped, so "55,484.00" is and "10,000"
- * or "£35.00" is not) or beside its own unit or currency in the same block and sentence ("Council minutes" in one
- * footer item does not keep "10 minutes" for the "Zone 10" in the next).
+ * A claim is on the other site only within one block (as claims are read: "Zone 10" in one list item and
+ * "Minutes of the council" in the next is not "10 minutes"). A new claim is also sourced by the old site when the
+ * same value is there with its own unit attached, as below ("£45" there, "£45.00" here; "33.1" under a "Yield (L)"
+ * column there, "33.1 L" here). A dropped claim whose value is still on the new page
+ * counts as "same value, new format" only when it is surely the same figure: specific (4+ significant digits once
+ * trailing zeros are dropped, and not a year: "55,484.00" and "2,431" are; "10,000", "£35.00", "£125" and "2019" are
+ * not), or its own unit or currency is attached to that number on the new page: a currency symbol or code right
+ * beside it ("£35.00 a year"), a unit word right after it with at most one word between ("3 working days"), a label
+ * ending in ":" or a dash just before it ("Processing time (minutes): 10"), or the label of a bare value (its table
+ * row or column header, its <dt>, the rest of a small stat card). A unit outside the number's own item (the nearest
+ * element with words that holds it: another link, span or list item, as "Council minutes" before "Zone 10 map"), in
+ * another link or button inside it, two words away, or attached to another number ("Zone 35 permits now cost £40")
+ * does not count.
  * --removed declares what was taken out on purpose; each is listed as "declared removed" (DESIGN.md "Remove" lists
  * it) instead of warned about. One pattern per argument, commas kept (--derived too). A string matches by kind: one
  * with a digit matches a claim that contains it as whole words or states the same figure ("£35" matches "£35.00",
@@ -293,13 +302,97 @@ if (green && !sourceText.trim()) { console.error(`--source ${sources.join(', ')}
 
 const { browser } = await launch({ chrome: a.chrome });
 
-function extract() {
+function extract(opts) {
   // One digit system for comparison: Eastern Arabic and Persian digits, Arabic separators and bidi marks are
   // normalised, so a claim written ٥٥٬٤٨٤ on the old Arabic page is the same claim as 55,484 on the new one.
-  const text = (document.body.innerText || '')
+  const clean = (s) => s
     .replace(/[\u0660-\u0669]/g, (d) => d.charCodeAt(0) - 0x660).replace(/[\u06F0-\u06F9]/g, (d) => d.charCodeAt(0) - 0x6F0)
     .replace(/\u066B/g, '.').replace(/\u066C/g, ',').replace(/\u066A/g, '%').replace(/\u2212/g, '-')
     .replace(/[\u200E\u200F\u061C\u202A-\u202E\u2066-\u2069]/g, '');
+  const text = clean(document.body.innerText || '');
+  // Where each number on the page sits, for the same value in a new format: the text around it inside its own item,
+  // and the label a bare value has (its table headers, its <dt>, the rest of a small stat card). The item is the
+  // number's nearest element with words in it (climbing through wrappers such as <strong>10</strong>); inside it,
+  // block edges and <br> end the text, and another link or button with words in it is left out (a separate item),
+  // so "Council minutes" in the link before "Zone 10 map" is never the 10's unit.
+  const nums = [];
+  if (opts && opts.contexts) {
+    const LET = /\p{L}/u, NUM = /\d(?:[\d,]|[\u202f\u00a0](?=\d{3}(?!\d)))*(?:\.\d+)?/g;
+    const ITEM = 'a[href], button, [role=link], [role=button], [role=tab], [role=menuitem], summary, option';
+    const SKIP = /^(SCRIPT|STYLE|NOSCRIPT|TEMPLATE)$/i;
+    const styles = new Map(), letters = new Map(), toks = new Map(), labels = new Map(), texts = new Map(), heads = new Map(), vis = new Map();
+    const st = (el) => { let s = styles.get(el); if (!s) { const c = getComputedStyle(el); s = { d: c.display, v: c.visibility }; styles.set(el, s); } return s; };
+    const isBlock = (el) => !/^(inline|contents)/.test(st(el).d);
+    const lettered = (el) => { let l = letters.get(el); if (l === undefined) { l = LET.test(el.textContent); letters.set(el, l); } return l; };
+    const shown = (el) => {
+      if (vis.has(el)) return vis.get(el);
+      let v = el; while (v && v !== document.body && st(v).d === 'contents') v = v.parentElement;
+      const r = !v || !v.checkVisibility || v.checkVisibility({ checkVisibilityCSS: true, visibilityProperty: true });
+      vis.set(el, r); return r;
+    };
+    const tokensOf = (c) => {
+      let t = toks.get(c); if (t) return t;
+      t = { s: [], at: new Map() };
+      const rec = (el) => {
+        for (const n of el.childNodes) {
+          if (n.nodeType === 3) { if (st(el).v === 'visible') { t.at.set(n, t.s.length); t.s.push(clean(n.data)); } continue; }
+          if (n.nodeType !== 1 || SKIP.test(n.tagName) || st(n).d === 'none') continue;
+          if (/^br$/i.test(n.tagName)) { t.s.push(' '); continue; }   // "10<br>minutes" in a stat: one item
+          if (n.matches(ITEM) && lettered(n)) { t.s.push('\n'); continue; }
+          const b = isBlock(n);
+          if (b) t.s.push('\n');
+          rec(n);
+          if (b) t.s.push('\n');
+        }
+      };
+      rec(c); toks.set(c, t); return t;
+    };
+    const text1 = (el) => { let t = texts.get(el); if (t === undefined) { t = clean(el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim(); texts.set(el, t); } return t; };
+    // A table's header row: the last row of <thead>, or else the first row made only of <th> (found once per table).
+    const headRowOf = (tbl) => {
+      if (!heads.has(tbl)) heads.set(tbl, (tbl.tHead && tbl.tHead.rows[tbl.tHead.rows.length - 1]) || [...tbl.rows].find((r) => r.cells.length && [...r.cells].every((k) => k.tagName === 'TH')) || null);
+      return heads.get(tbl);
+    };
+    // A bare value (a cell, <dd> or block holding only the number) takes its label from the markup around it.
+    const labelOf = (c) => {
+      if (labels.has(c)) return labels.get(c);
+      let l = '';
+      const cell = c.closest('td, th'), dd = c.closest('dd');
+      if (lettered(c) || c === document.body) l = '';
+      else if (cell && !lettered(cell) && cell.parentElement) {
+        const row = cell.parentElement, tbl = cell.closest('table');
+        let x = 0; for (const k of row.cells || []) { if (k === cell) break; x += k.colSpan; }
+        const at = (r, i) => { let j = 0; for (const k of r.cells) { if (i < j + k.colSpan) return k; j += k.colSpan; } return null; };
+        const rowHead = [...(row.cells || [])].find((k) => k !== cell && k.tagName === 'TH') || (row.cells?.[0] !== cell && row.cells?.[0] && lettered(row.cells[0]) ? row.cells[0] : null);
+        const headRow = tbl && headRowOf(tbl);
+        const colHead = headRow && headRow !== row ? at(headRow, x) : null;
+        l = [rowHead, colHead].filter((k) => k && k !== cell).map(text1).join(' | ');
+      } else if (dd && !lettered(dd)) {
+        let e = dd.previousElementSibling; while (e && e.tagName !== 'DT') e = e.previousElementSibling;
+        l = e ? text1(e) : '';
+      } else if (c.parentElement && c.parentElement !== document.body) {
+        // A stat card: the value's container is short and holds no other number ("10" over "minutes to apply").
+        const t = text1(c.parentElement);
+        if (t.length <= 80 && [...t.matchAll(NUM)].length === 1) l = t;
+      }
+      labels.set(c, l); return l;
+    };
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n && nums.length < 20000; n = walker.nextNode()) {
+      const el = n.parentElement;
+      if (!el || !/[\d\u0660-\u0669\u06F0-\u06F9]/.test(n.data) || SKIP.test(el.tagName) || el.closest('script, style, noscript, template') || !shown(el)) continue;
+      let c = el; while (c !== document.body && c.parentElement && !isBlock(c) && !lettered(c)) c = c.parentElement;
+      const t = tokensOf(c), i = t.at.get(n);
+      if (i === undefined) continue;
+      const own = t.s[i], label = labelOf(c);
+      for (const m of own.matchAll(NUM)) {
+        let pre = own.slice(0, m.index), post = own.slice(m.index + m[0].length);
+        for (let k = i - 1; k >= 0 && pre.length < 40; k--) pre = t.s[k] + pre;
+        for (let k = i + 1; k < t.s.length && post.length < 40; k++) post += t.s[k];
+        nums.push({ v: parseFloat(m[0].replace(/[,\u202f\u00a0]/g, '')), pre: pre.slice(-40), post: post.slice(0, 40), label });
+      }
+    }
+  }
   // A claim keeps the noun it counts ("12,000+ teams"): the same number counting something else is a new claim.
   // Same-line spaces only: "4\nReview and pay" is a step number beside a heading, not "4 reviews".
   const NOUN = '(?:[ \\t\\u00a0](?:active\\s|happy\\s|paying\\s|monthly\\s)?(?:users?|customers?|clients?|teams?|companies|businesses|brands|countries|languages|integrations|reviews?|ratings?|stars?|downloads|installs|employees|people|members|subscribers|developers|partners|farms|stores|shops|orders|projects|sites|websites|apps|hours?|days?|weeks?|months?|years?|minutes?|seconds?))';
@@ -325,10 +418,11 @@ function extract() {
     ogImage: document.querySelector('meta[property="og:image"]')?.content || null,
     h1: [...document.querySelectorAll('h1')].map((h) => h.innerText.trim()).join(' | ') || null,
   };
-  return { text, claims, quotes, links, ids, fields, hooks, forms, meta };
+  return { text, claims, quotes, links, ids, fields, hooks, forms, meta, nums };
 }
 
-async function load(base, p) {
+// contexts: where each number sits (both builds; greenfield skips it), for the same value in a new format.
+async function load(base, p, contexts = false) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   try {
     const res = await open(page, urlFor(base, p));
@@ -336,9 +430,9 @@ async function load(base, p) {
     if (status >= 400) return { status };
     await settle(page, { settleMs: 300 });
     // Read twice: countdowns, clocks and count-up animations change between reads and are not claims to compare.
-    const r1 = await page.evaluate(extract);
+    const r1 = await page.evaluate(extract, {});
     await page.waitForTimeout(1500);
-    const r2 = await page.evaluate(extract);
+    const r2 = await page.evaluate(extract, { contexts });
     const stable = r2.claims.filter((c) => r1.claims.includes(c));
     const changing = [...r1.claims, ...r2.claims].filter((c) => !stable.includes(c));
     return { status, ...r2, claims: stable, changing };
@@ -403,7 +497,7 @@ const perPage = [];
 const changingAll = new Set();
 // Four routes at a time, old and new side by side (greenfield: the new side only).
 for (let i = 0; i < paths.length; i += 4) {
-  const batch = await Promise.all(paths.slice(i, i + 4).map(async (p) => { const [o, n] = await Promise.all([green ? { status: 0 } : load(before, p), load(after, p)]); return { p, o, n }; }));
+  const batch = await Promise.all(paths.slice(i, i + 4).map(async (p) => { const [o, n] = await Promise.all([green ? { status: 0 } : load(before, p, true), load(after, p, !green)]); return { p, o, n }; }));
   perPage.push(...batch);
 }
 for (const { o, n } of perPage) {
@@ -417,6 +511,48 @@ for (const { o, n } of perPage) {
   }
 }
 const oldNorm = norm(oldAll.text), newNorm = norm(newAll.text);
+// Line by line: a claim is on a page only within one block, as claims are read ("Zone 10" in one list item and
+// "Minutes of the council" in the next is not "10 minutes").
+const oldLines = oldAll.text.split('\n').map(norm).join('\n'), newLines = newAll.text.split('\n').map(norm).join('\n');
+// The same value in another format (the unit moved to a column header, "12,748.5" now "12,748.50") counts only when it
+// is surely the same figure:
+//  - specific enough not to be a coincidence: 4+ significant digits once trailing zeros go, and not a year
+//    ("55,484.00" and "2,431" yes; "10,000", "£35.00", "£125" and "2019" no). It may sit anywhere on the page. This
+//    is used for dropped claims only: a new claim needs its own unit on the old site to be sourced from it.
+//  - or its own unit or currency is attached to that very number (read from the DOM, see extract): a currency symbol
+//    or code right beside it ("£35.00 a year", "35 GBP"); a unit word right after it, at most one word between
+//    ("3 working days"); a label ending in ":" or a dash just before it ("Processing time (minutes): 10"); or the
+//    label of a bare value (its table row or column header, its <dt>, the rest of a small stat card).
+// A unit outside the number's own item ("Council minutes" in the link before "Zone 10 map"), two words away ("Zone 3
+// map … Open days") or attached to another number ("Zone 35 permits now cost £40") does not count. Percentages and
+// multipliers must keep their unit to count.
+const numRe = /\d[\d,]*(?:\.\d+)?/g;
+const oldNums = perPage.flatMap(({ o }) => o.nums || []), newNums = perPage.flatMap(({ n }) => n.nums || []);
+const digits = (c) => (c.match(/\d[\d,]*(?:\.\d+)?/) || [''])[0];
+const value = (c) => parseFloat(digits(c).replace(/,/g, ''));
+const significant = (c) => { const [i, f = ''] = digits(c).replace(/,/g, '').split('.'), fr = f.replace(/0+$/, ''), int = i.replace(/^0+/, ''); return fr ? `${int}${fr}`.replace(/^0+/, '').length : int.replace(/0+$/, '').length; };
+const specific = (c) => significant(c) >= 4 && !/^(?:1[89]|20)\d\d$/.test(digits(c).replace(/,/g, ''));
+// The text next to a number ends at another number, a block or item edge, an inline separator (· • |) or the end of a
+// sentence.
+const cutBefore = (s) => norm(s.replace(/^[\s\S]*(?:\d|\n|[·•|]|[.!?;](?=\s))/, ''));
+const cutAfter = (s) => norm(s.replace(/(?:\d|\n|[·•|]|[.!?;](?=\s|$))[\s\S]*$/, ''));
+const attached = (c, nums) => {
+  const n = norm(c), u = n.replace(digits(n), ' ').replace(/[+~≈]/g, ' ').trim();
+  const cur = u.match(/[$€£¥₹]|ر\.س|د\.إ|ريال|درهم|جنيه|\b(?:sar|aed|usd|eur|gbp|qar|kwd|bhd|omr|egp|mad|inr)\b/);
+  const word = cur ? null : u.split(/\s+/).pop();
+  if (!cur && !word) return false;
+  // A currency as written; a noun in any number ("minute", "minutes"); a short unit ("%", "x", "kg") as a whole token.
+  const unit = cur ? `${esc(cur[0])}${/\p{L}$/u.test(cur[0]) ? '(?![\\p{L}])' : ''}`
+    : `${esc(word.length >= 4 ? word.replace(/(?:ies|s)$/, '') : word)}${word.length >= 4 ? '\\p{L}{0,3}' : ''}(?![\\p{L}])`;
+  const re = new RegExp(`(^|[^\\p{L}])${unit}`, 'u'), besideBefore = new RegExp(`(^|[^\\p{L}])${unit}\\s?$`, 'u'), besideAfter = new RegExp(`^\\s?${unit}`, 'u');
+  return nums.some(({ v, pre, post, label }) => {
+    if (v !== value(c)) return false;
+    if (label && re.test(norm(label))) return true;
+    const p = cutBefore(pre), q = cutAfter(post);
+    if (/(?:[:=–—]|\s-)\s*$/.test(p) && re.test(p)) return true;
+    return cur ? besideBefore.test(p) || besideAfter.test(q) : re.test(q.trim().split(/\s+/).slice(0, 2).join(' '));
+  });
+};
 
 md(green ? `# Parity (greenfield): ${after}` : `# Parity: ${before} → ${after}`);
 md();
@@ -442,7 +578,8 @@ if (green) {
 }
 
 md('## Claims on the new site with no source');
-const unsourcedAll = [...newAll.claims].filter((c) => !has(oldNorm, c) && !(sourceNorm && has(sourceNorm, c)));
+// On the old site as written, or as the same value with its own unit attached ("£45" there, "£45.00" here).
+const unsourcedAll = [...newAll.claims].filter((c) => !has(oldLines, c) && !attached(c, oldNums) && !(sourceNorm && has(sourceNorm, c)));
 // A number that appears in the source files without its unit (sample data in JSON, a figure in a CMS field) is likely
 // sourced; it is listed for a look rather than failed.
 const bareNumber = (c) => (c.match(/\d[\d,.]*/) || [''])[0].replace(/,/g, '');
@@ -470,35 +607,10 @@ md();
 if (changingAll.size) { md(`Changing values (timers, clocks, count-up animations) left out of the comparison: ${[...changingAll].slice(0, 8).map((c) => `"${c.replace(/\s+/g, ' ')}"`).join(', ')}`); md(); }
 if (!green) {
   md('## Claims on the old site missing from the new one');
-  const droppedAll = [...oldAll.claims].filter((c) => !has(newNorm, c) && !changingAll.has(c));
+  const droppedAll = [...oldAll.claims].filter((c) => !has(newLines, c) && !changingAll.has(c));
   const claimsRemoved = droppedAll.filter((c) => isRemoved('claim', [c]));
-  // The same value still on the new page in another format (the unit moved to a column header, "12,748.5" now
-  // "12,748.50") is reformatted, not dropped — when it is surely the same figure. A value specific enough not to be a
-  // coincidence (3+ significant digits once trailing zeros go: "55,484.00" yes; "10,000" and "£35.00" no) may sit
-  // anywhere on the new page; any other value needs its own unit or currency beside it, in the same block and
-  // sentence with no other number in between: a "10am" elsewhere does not keep "10 minutes", nor does "Council
-  // minutes" in the footer item before "Zone 10 map". Percentages and multipliers must keep their unit to count.
-  const numRe = /\d[\d,]*(?:\.\d+)?/g;
   const newValues = new Set([...newNorm.matchAll(numRe)].map((m) => parseFloat(m[0].replace(/,/g, ''))));
-  // Block boundaries kept: innerText puts a newline between blocks (list items, headings, flex children) and a tab
-  // between table cells; norm() would fold both into a space.
-  const newBlocks = newAll.text.split(/[\n\t]+/).map(norm).join('\n');
-  const digits = (c) => (c.match(/\d[\d,]*(?:\.\d+)?/) || [''])[0];
-  const value = (c) => parseFloat(digits(c).replace(/,/g, ''));
-  const significant = (c) => { const [i, f = ''] = digits(c).replace(/,/g, '').split('.'), fr = f.replace(/0+$/, ''), int = i.replace(/^0+/, ''); return fr ? `${int}${fr}`.replace(/^0+/, '').length : int.replace(/0+$/, '').length; };
-  const specific = (c) => significant(c) >= 3;
-  const unitNear = (c) => {
-    const n = norm(c), u = n.replace(digits(n), ' ').replace(/[+~≈]/g, ' ').trim();
-    const cur = u.match(/[$€£¥₹]|ر\.س|د\.إ|ريال|درهم|جنيه|\b(?:sar|aed|usd|eur|gbp|qar|kwd|bhd|omr|egp|mad|inr)\b/);
-    const word = cur ? null : u.split(/\s+/).pop();
-    if (!cur && !word) return false;
-    // A noun in any number ("minute", "minutes"); a short unit ("%", "x", "kg") as a whole token.
-    const re = cur ? new RegExp(esc(cur[0])) : new RegExp(`(^|[^\\p{L}])${esc(word.length >= 4 ? word.replace(/(?:ies|s)$/, '') : word)}${word.length >= 4 ? '\\p{L}{0,3}' : ''}(?![\\p{L}])`, 'u');
-    // The window stops at another number, a block edge, an inline separator (· • |) or the end of a sentence.
-    return [...newBlocks.matchAll(numRe)].some((m) => parseFloat(m[0].replace(/,/g, '')) === value(c)
-      && re.test(`${newBlocks.slice(Math.max(0, m.index - 30), m.index).replace(/^[\s\S]*(?:\d|\n|[·•|]|[.!?;](?=\s))/, '')} ${newBlocks.slice(m.index + m[0].length, m.index + m[0].length + 30).replace(/(?:\d|\n|[·•|]|[.!?;](?=\s|$))[\s\S]*$/, '')}`));
-  };
-  const reformatted = droppedAll.filter((c) => !claimsRemoved.includes(c) && newValues.has(value(c)) && ((!/%|x\b|×/i.test(c) && value(c) >= 10 && specific(c)) || unitNear(c)));
+  const reformatted = droppedAll.filter((c) => !claimsRemoved.includes(c) && newValues.has(value(c)) && ((!/%|x\b|×/i.test(c) && value(c) >= 10 && specific(c)) || attached(c, newNums)));
   const dropped = droppedAll.filter((c) => !reformatted.includes(c) && !claimsRemoved.includes(c));
   const droppedQuotesAll = [...oldAll.quotes].filter((q) => !newNorm.includes(norm(q).slice(0, 60)));
   const droppedQuotes = droppedQuotesAll.filter((q) => !isRemoved('quote', [q]));

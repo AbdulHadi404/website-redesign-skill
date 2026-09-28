@@ -1,0 +1,465 @@
+{
+ "url": "/fixtures/bilingual.html?lang=en&variant=broken",
+ "mode": "flip",
+ "width": 1280,
+ "summary": {
+  "FAIL": 8,
+  "WARN": 4,
+  "INFO": 3
+ },
+ "mirror": {
+  "checked": 186,
+  "notMirrored": 30,
+  "roots": 13,
+  "keptPhysical": 30
+ },
+ "css": {
+  "rules": 86,
+  "physicalRules": 12,
+  "overrideRules": 0,
+  "logicalRules": 6
+ },
+ "keys": [
+  {
+   "group": "toolbar \"Actions\"",
+   "arrowLeftMoves": "right (backwards)"
+  },
+  {
+   "group": "tablist \"Order\"",
+   "arrowLeftMoves": "right (backwards)"
+  }
+ ],
+ "icons": [
+  {
+   "name": "menu icon icon-menu",
+   "class": "never",
+   "pixels": "symmetric",
+   "context": "Menu",
+   "island": false
+  },
+  {
+   "name": "search icon icon-search",
+   "class": "never",
+   "pixels": "same",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "cart icon icon-cart",
+   "class": "never",
+   "pixels": "symmetric",
+   "context": "Cart",
+   "island": false
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "pixels": "same",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "pixels": "same",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "undo icon icon-dir icon-undo",
+   "class": "directional",
+   "pixels": "mirrored",
+   "context": "Undo",
+   "island": false
+  },
+  {
+   "name": "redo icon icon-dir icon-redo",
+   "class": "directional",
+   "pixels": "mirrored",
+   "context": "Redo",
+   "island": false
+  },
+  {
+   "name": "reply icon icon-dir icon-reply",
+   "class": "directional",
+   "pixels": "mirrored",
+   "context": "Reply",
+   "island": false
+  },
+  {
+   "name": "send icon icon-dir icon-send",
+   "class": "directional",
+   "pixels": "mirrored",
+   "context": "Send",
+   "island": false
+  },
+  {
+   "name": "external-link icon icon-dir icon-external-link",
+   "class": "directional",
+   "pixels": "mirrored",
+   "context": "Open in new tab",
+   "island": false
+  },
+  {
+   "name": "help icon icon-dir icon-help",
+   "class": "ambiguous",
+   "pixels": "mirrored",
+   "context": "Help",
+   "island": false
+  },
+  {
+   "name": "logout icon icon-dir icon-logout",
+   "class": "ambiguous",
+   "pixels": "mirrored",
+   "context": "Sign out",
+   "island": false
+  },
+  {
+   "name": "refresh icon icon-refresh",
+   "class": "never",
+   "pixels": "mirrored",
+   "context": "Refresh",
+   "island": false
+  },
+  {
+   "name": "clock icon icon-clock",
+   "class": "never",
+   "pixels": "mirrored",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "check icon icon-check",
+   "class": "never",
+   "pixels": "same",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "pixels": "same",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "check icon icon-check",
+   "class": "never",
+   "pixels": "same",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "pixels": "same",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "alert icon icon-alert",
+   "class": "never",
+   "pixels": "symmetric",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "pixels": "empty",
+   "context": "Save changes",
+   "island": false
+  },
+  {
+   "name": "sort-desc icon icon-sort-desc",
+   "class": "never",
+   "pixels": "symmetric",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "pixels": "same",
+   "context": "Open 1042",
+   "island": false
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "pixels": "same",
+   "context": "Open 1041",
+   "island": false
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "pixels": "same",
+   "context": "Open 1040",
+   "island": false
+  },
+  {
+   "name": "arrow-left icon icon-dir icon-arrow-left",
+   "class": "directional",
+   "pixels": "same",
+   "context": "Previous rel=prev",
+   "island": false
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "pixels": "same",
+   "context": "Next rel=next",
+   "island": false
+  },
+  {
+   "name": "chevron-left icon icon-dir icon-chevron-left",
+   "class": "directional",
+   "pixels": "same",
+   "context": "Previous",
+   "island": false
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "pixels": "same",
+   "context": "Next",
+   "island": false
+  },
+  {
+   "name": "play icon icon-play",
+   "class": "never",
+   "pixels": "mirrored",
+   "context": "Play",
+   "island": true
+  },
+  {
+   "name": "skip-forward icon icon-skip-forward",
+   "class": "never",
+   "pixels": "mirrored",
+   "context": "Skip forward",
+   "island": true
+  },
+  {
+   "name": "check icon icon-check",
+   "class": "never",
+   "pixels": "empty",
+   "context": "",
+   "island": false
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "check": "mirror",
+   "message": "Boxes that do not mirror when the page turns RTL (topmost only)",
+   "count": 13,
+   "examples": [
+    "a.brand — margin-left 0px / right 8px",
+    "form.search — margin-left 537.641px / right 0px",
+    "span.badge — left 21.875px / right 2px",
+    "#drawer — left 0px / right 1000px, translateX -280px",
+    "span.due — margin-left 8px / right 0px",
+    "svg.icon.icon-alert — left 450px / right 10px",
+    "div.cell-name — text-align left",
+    "a.row-open — parent td: padding-left 12px / right 8px",
+    "div.cell-name — text-align left",
+    "a.row-open — parent td: padding-left 12px / right 8px",
+    "div.cell-name — text-align left",
+    "a.row-open — parent td: padding-left 12px / right 8px",
+    "div.toast — left 1126.59px / right 16px"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "mirror",
+   "message": "Physical values that stay the same in RTL (computed styles, LTR vs RTL render)",
+   "count": 30,
+   "examples": [
+    "a.brand: margin-left 0px / right 8px",
+    "form.search: margin-left 537.641px / right 0px",
+    "span.badge: left 21.875px / right 2px",
+    "#drawer: left 0px / right 1000px, translateX -280px",
+    "p.lede: text-align left",
+    "span.due: margin-left 8px / right 0px",
+    "p.hint: text-align left",
+    "#f-iban: padding-left 12px / right 36px",
+    "svg.icon.icon-alert: left 450px / right 10px",
+    "caption: text-align left",
+    "th: padding-left 12px / right 8px, text-align left",
+    "th: padding-left 12px / right 8px, text-align left",
+    "th: padding-left 12px / right 8px, text-align left",
+    "th: padding-left 12px / right 8px",
+    "td: padding-left 12px / right 8px",
+    "td: padding-left 12px / right 8px",
+    "div.cell-name: text-align left",
+    "td: padding-left 12px / right 8px, text-align left",
+    "td: padding-left 12px / right 8px",
+    "td: padding-left 12px / right 8px",
+    "td: padding-left 12px / right 8px",
+    "div.cell-name: text-align left",
+    "td: padding-left 12px / right 8px, text-align left",
+    "td: padding-left 12px / right 8px",
+    "td: padding-left 12px / right 8px",
+    "td: padding-left 12px / right 8px",
+    "div.cell-name: text-align left",
+    "td: padding-left 12px / right 8px, text-align left",
+    "td: padding-left 12px / right 8px",
+    "div.toast: left 1126.59px / right 16px"
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "icons",
+   "message": "Directional icons that do not mirror",
+   "count": 11,
+   "examples": [
+    "chevron-right icon icon-dir icon-chevron-right",
+    "chevron-right icon icon-dir icon-chevron-right",
+    "arrow-right icon icon-dir icon-arrow-right",
+    "arrow-right icon icon-dir icon-arrow-right",
+    "chevron-right icon icon-dir icon-chevron-right in \"Open 1042\"",
+    "chevron-right icon icon-dir icon-chevron-right in \"Open 1041\"",
+    "chevron-right icon icon-dir icon-chevron-right in \"Open 1040\"",
+    "arrow-left icon icon-dir icon-arrow-left in \"Previous rel=prev\"",
+    "arrow-right icon icon-dir icon-arrow-right in \"Next rel=next\"",
+    "chevron-left icon icon-dir icon-chevron-left in \"Previous\"",
+    "chevron-right icon icon-dir icon-chevron-right in \"Next\""
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "icons",
+   "message": "Icons that must not mirror but do (media, clocks, checks, search, objects)",
+   "count": 4,
+   "examples": [
+    "refresh icon icon-refresh in \"Refresh\"",
+    "clock icon icon-clock",
+    "play icon icon-play in \"Play\"",
+    "skip-forward icon icon-skip-forward in \"Skip forward\""
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "icons",
+   "message": "Icons the sources disagree on — record the decision (mirrored here: yes/no)",
+   "count": 2,
+   "examples": [
+    "help icon icon-dir icon-help: mirrored",
+    "logout icon icon-dir icon-logout: mirrored"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "css",
+   "message": "Rules with physical inline-axis values (12 of 86 rules; 0 RTL overrides; 6 rules use logical properties)",
+   "count": 12,
+   "examples": [
+    ".brand { margin-right:8px }",
+    ".search { margin-left:auto }",
+    ".badge { right:2px }",
+    ".drawer { left:0px }",
+    ".lede { text-align:left }",
+    ".due { margin-left:8px }",
+    ".hint { text-align:left }",
+    ".with-icon input { padding-right:36px }",
+    ".with-icon .icon { right:10px }",
+    ".orders caption { text-align:left }",
+    ".orders th, .orders td { padding-left:12px/padding-right:8px; text-align:left }",
+    ".toast { right:16px }"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "css",
+   "message": "Keyframes that move along x — give them an RTL variant or a direction variable",
+   "count": 1,
+   "examples": [
+    "slide-in"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "Transforms with an x translation (drawers, slides): transforms never flip with dir",
+   "count": 1,
+   "examples": [
+    ".drawer { transform: translateX(-100%) }"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "1 box-shadows with an x offset: decide whether the light source mirrors (Material: elevation shadows fall straight down)",
+   "examples": []
+  },
+  {
+   "level": "FAIL",
+   "check": "align",
+   "message": "text-align: left inside RTL text",
+   "count": 12,
+   "examples": [
+    "p.lede",
+    "p.hint",
+    "caption",
+    "th",
+    "th",
+    "th",
+    "div.cell-name",
+    "td",
+    "div.cell-name",
+    "td",
+    "div.cell-name",
+    "td"
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "bidi",
+   "message": "LTR data shown in scrambled order in RTL text — wrap in <bdi dir=\"ltr\"> or format with Intl",
+   "count": 1,
+   "examples": [
+    "td.num: \"-310.50\" reads as \"310 . 50 -\""
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "bidi",
+   "message": "Inputs whose LTR value is laid out in scrambled order (dir=\"ltr\" on the field, aligned with the form)",
+   "count": 2,
+   "examples": [
+    "#f-email [email] \"2024.sara@example.sa\"",
+    "#f-phone [text] \"+966 50 123 4567\""
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "bidi",
+   "message": "Email/phone/URL/IBAN fields that inherit RTL: values starting with digits or ending in punctuation will scramble",
+   "count": 1,
+   "examples": [
+    "#f-iban [text]"
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "drawers",
+   "message": "Off-canvas panels parked off the LEFT edge in RTL: they slide in from the wrong side",
+   "count": 1,
+   "examples": [
+    "#drawer"
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "keys",
+   "message": "Arrow keys run backwards in RTL: ArrowLeft moves focus to the right",
+   "count": 2,
+   "examples": [
+    "toolbar \"Actions\"",
+    "tablist \"Order\""
+   ]
+  }
+ ],
+ "ms": 9161
+}

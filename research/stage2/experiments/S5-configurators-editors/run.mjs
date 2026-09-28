@@ -1,9 +1,14 @@
 #!/usr/bin/env node
 // S5 runner: rebuilds and re-measures everything, writes results.json.
-//   node run.mjs                 history lab (correctness + benchmark, 5 runs each) and the prototype checks
-//   node run.mjs --only history  just the history lab          --only prototype  just the prototype
+//   npm install && node run.mjs  history lab (correctness + benchmark, 5 runs each) and the prototype checks
+//   node run.mjs --only history  just the history lab (about 40 min on 4 shared cores; the 5,000-item full-copy cell dominates)
+//   node run.mjs --only prototype  just the cake-configurator prototype (about 6 min): model tests, browser behaviour
+//                                  tests, the skill's capture/audit/a11y/states scripts, JPEG sheets into shots/
+//   node run.mjs --only workloads  regenerate the workload summary only
 //   node run.mjs --runs 5        repetitions per benchmark cell (median reported)
 // The benchmark runs every (strategy, scene, operations, mode) cell in a fresh `node --expose-gc` process, one at a time.
+// The prototype stage needs the skill's scripts installed (skills/website-redesign/scripts: npm install), python3 with
+// Pillow for the JPEG sheets, and the two OFL fonts (fetch-fonts.mjs runs itself when prototype/fonts/ is missing).
 import { execFileSync } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -22,6 +27,19 @@ const median = (xs) => { const v = xs.filter((x) => typeof x === 'number').sort(
 const r1 = (x) => (x == null ? null : Math.round(x * 10) / 10);
 const r2 = (x) => (x == null ? null : Math.round(x * 100) / 100);
 
+// Generate each workload once and cache it in the OS temp folder (bench-one.mjs reads it); return a summary.
+async function buildWorkloads() {
+  console.log('== workloads (generated once, cached in the OS temp folder)');
+  const { generate, workloadCachePath } = await import('./lab/model.mjs');
+  const workloads = {};
+  for (const [scene, ops] of [[200, 1000], [200, 10000], [5000, 1000]]) {
+    const w = generate({ sceneSize: scene, ops, seed: 11 });
+    await writeFile(workloadCachePath(scene, ops, 11), JSON.stringify(w));
+    workloads[`${scene}x${ops}`] = { startItems: scene, finalItems: JSON.parse(w.finalCanon).items.length, counts: w.counts, dragPointerUpdates: w.dragUpdates, undoDepth: w.undoDepth, redoDepth: w.redoDepth };
+  }
+  return workloads;
+}
+
 async function historyLab() {
   const pkg = JSON.parse(await readFile(path.join(here, 'package.json'), 'utf8'));
   const env = { node: process.version, cpus: os.cpus().length, cpuModel: os.cpus()[0]?.model, date: new Date().toISOString(), deps: pkg.dependencies, runs: RUNS };
@@ -36,6 +54,8 @@ async function historyLab() {
   const keyed = { items: Object.fromEntries(Array.from({ length: 1000 }, (_, i) => [`i${i}`, { z: i }])) };
   const [, pk] = produceWithPatches(keyed, (d) => { delete d.items.i0; });
   const arrayPitfall = { arrayOf1000_deleteFirst: { patches: pa.length, bytes: JSON.stringify(pa).length }, keyedMapOf1000_deleteOne: { patches: pk.length, bytes: JSON.stringify(pk).length } };
+
+  const workloads = await buildWorkloads();
 
   console.log('== benchmark');
   const strategies = ['naive', 'command', 'snapshotSpread', 'snapshotHamt', 'immerPatches', 'immerPatchesNoFreeze', 'recordDiff', 'propDiff', 'yjs', 'eventSourced'];
@@ -65,10 +85,11 @@ async function historyLab() {
     cells.push(cell);
     console.log(`${String(scene).padStart(5)} items ${String(ops).padStart(6)} ops  ${st.padEnd(21)} hist ${String(cell.historyMB).padStart(8)} MB  ${String(cell.bytesPerEntry).padStart(7)} B/step  upd p95 ${String(cell.updateP95us).padStart(7)} µs  commit p95 ${String(cell.commitP95us).padStart(8)} µs  undo ${String(cell.undoMeanUs).padStart(8)} µs  json ${String(cell.serializedKB).padStart(8)} KB  ${cell.correct ? 'ok' : 'WRONG'}`);
   }
-  results.history = { env, workload: 'mix per user operation: add 20%, drag 35% (20 pointer updates each), recolour 17%, delete 8%, group 8%, select-only 4%, undo 6%, redo 2%; seed 11; no no-op edits', correctness: corr, arrayPitfall, benchmark: cells };
+  results.history = { env, workloads, workload: 'mix per user operation: add 20%, drag 35% (20 pointer updates each), recolour 17%, delete 8%, group 8%, select-only 4%, undo 6%, redo 2%; seed 11; no no-op edits', correctness: corr, arrayPitfall, benchmark: cells };
 }
 
 if (!only || only === 'history') await historyLab();
+if (only === 'workloads') { results.history = results.history || {}; results.history.workloads = await buildWorkloads(); }
 if (!only || only === 'prototype') {
   const { prototypeLab } = await import('./prototype-run.mjs');
   results.prototype = await prototypeLab();

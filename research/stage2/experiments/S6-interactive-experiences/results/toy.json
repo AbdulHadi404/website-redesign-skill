@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-28T21:33:53.658Z",
+  "date": "2026-09-28T22:36:38.161Z",
   "chromium": "141.0.7390.37",
   "runs": 5,
   "variants": {
@@ -107,7 +107,7 @@
           "framesRendered": 25
         },
         "reduce": {
-          "distinctFrames60to540ms": 9,
+          "distinctFrames60to540ms": 8,
           "framesRendered": 25
         }
       },
@@ -293,7 +293,7 @@
       },
       "motion": {
         "noPreference": {
-          "distinctFrames60to540ms": 9,
+          "distinctFrames60to540ms": 8,
           "framesRendered": 25
         },
         "reduce": {
@@ -848,7 +848,7 @@
         "afterThenTab": 0,
         "genericNames": 0
       },
-      "idleRafPerSecond": 72,
+      "idleRafPerSecond": 16,
       "audioContextsAtLoad": 0,
       "keyboard": {
         "engine": {
@@ -924,11 +924,11 @@
       "motion": {
         "noPreference": {
           "distinctFrames60to540ms": 1,
-          "framesRendered": 29
+          "framesRendered": 16
         },
         "reduce": {
           "distinctFrames60to540ms": 1,
-          "framesRendered": 32
+          "framesRendered": 15
         }
       },
       "seededStateFromTree": {
@@ -1033,7 +1033,7 @@
         "afterThenTab": 4,
         "genericNames": 0
       },
-      "idleRafPerSecond": 48,
+      "idleRafPerSecond": 24,
       "audioContextsAtLoad": 0,
       "keyboard": {
         "engine": {
@@ -1106,11 +1106,11 @@
       "motion": {
         "noPreference": {
           "distinctFrames60to540ms": 1,
-          "framesRendered": 27
+          "framesRendered": 15
         },
         "reduce": {
           "distinctFrames60to540ms": 1,
-          "framesRendered": 31
+          "framesRendered": 17
         }
       },
       "seededStateFromTree": {
@@ -1216,7 +1216,7 @@
       "proxies": false,
       "jsPerFrameMs": 0.2,
       "styleRecalcPerFrameMs": 0.003,
-      "layoutPerFrameMs": 0.003,
+      "layoutPerFrameMs": 0.004,
       "frameGapMs": 16.7,
       "runs": 5
     },
@@ -1224,7 +1224,7 @@
       "n": 10,
       "proxies": true,
       "jsPerFrameMs": 0.2,
-      "styleRecalcPerFrameMs": 0.176,
+      "styleRecalcPerFrameMs": 0.212,
       "layoutPerFrameMs": 0.002,
       "frameGapMs": 16.7,
       "runs": 5
@@ -1241,18 +1241,18 @@
     {
       "n": 50,
       "proxies": true,
-      "jsPerFrameMs": 0.4,
-      "styleRecalcPerFrameMs": 0.462,
-      "layoutPerFrameMs": 0.005,
+      "jsPerFrameMs": 0.5,
+      "styleRecalcPerFrameMs": 0.587,
+      "layoutPerFrameMs": 0.004,
       "frameGapMs": 16.7,
       "runs": 5
     },
     {
       "n": 200,
       "proxies": false,
-      "jsPerFrameMs": 0.9,
-      "styleRecalcPerFrameMs": 0.008,
-      "layoutPerFrameMs": 0.012,
+      "jsPerFrameMs": 1,
+      "styleRecalcPerFrameMs": 0.007,
+      "layoutPerFrameMs": 0.014,
       "frameGapMs": 16.7,
       "runs": 5
     },
@@ -1260,8 +1260,8 @@
       "n": 200,
       "proxies": true,
       "jsPerFrameMs": 1.2,
-      "styleRecalcPerFrameMs": 1.449,
-      "layoutPerFrameMs": 0.013,
+      "styleRecalcPerFrameMs": 2.23,
+      "layoutPerFrameMs": 0.02,
       "frameGapMs": 16.7,
       "runs": 5
     }

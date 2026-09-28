@@ -131,22 +131,32 @@ if (!process.argv.includes('--no-play')) {
     const menu = [...document.querySelectorAll('.menu .menuBtn, .menuBtn')].filter(vis).length;
     return { btns, tabs, stores, menu };
   });
-  // Greedy player: every step, answer any event (sound: "disable audio"), then
-  // press every enabled control in every unlocked place except embarking into the world.
-  const act = () => page.evaluate(() => {
+  // Greedy player, as a human could play: answer any event (sound: "disable audio"), press
+  // every visible enabled control in the current place (stoke only when the fire is not yet
+  // roaring), and every 20 s walk to the next unlocked place. The world map is never entered.
+  let tick = 0;
+  const act = () => page.evaluate((travel) => {
     const ev = document.querySelector('#event');
     if (ev) {
       const choices = [...ev.querySelectorAll('.button:not(.disabled)')];
-      const pref = choices.find((b) => /disable audio|ignore|leave|continue|go home|end/i.test(b.textContent)) || choices[0];
+      const pref = choices.find((b) => /disable audio|ignore|leave|continue|go home|go back|end|turn .* away/i.test(b.textContent)) || choices[0];
       pref?.click();
       return 'event';
     }
-    for (const b of document.querySelectorAll('#outerSlider .button:not(.disabled)')) {
-      if (/embark|launch|lift off|restart/i.test(b.textContent) || b.id === 'embarkButton') continue;
+    if (travel) {
+      const tabs = [...document.querySelectorAll('#header .headerButton')];
+      const i = tabs.findIndex((t) => t.classList.contains('selected'));
+      if (tabs.length > 1) { tabs[(i + 1) % tabs.length].click(); return 'travel'; }
+    }
+    const panel = window.Engine?.activeModule?.panel?.[0] || document;
+    const fire = window.$SM?.get('game.fire.value');
+    for (const b of panel.querySelectorAll('.button:not(.disabled)')) {
+      if (b.offsetParent === null || /embark|launch|lift off|restart/i.test(b.textContent) || b.id === 'embarkButton') continue;
+      if (b.id === 'stokeButton' && fire >= 4) continue;
       b.click();
     }
     return 'play';
-  });
+  }, (tick++ % 10) === 9);
   const STEP = 2; // simulated seconds per step; every cooldown in the game is >= 10 s
   const t0 = Date.now();
   for (let s = 0; s <= MINUTES * 60; s += STEP) {
@@ -162,7 +172,7 @@ if (!process.argv.includes('--no-play')) {
     await page.clock.runFor(STEP * 1000);
   }
   out.adarkroomPlay = {
-    method: `greedy script, ${MINUTES} simulated minutes at ${STEP} s steps, fake clock; events answered with the first safe choice; world map (embark) not entered`,
+    method: `greedy script, ${MINUTES} simulated minutes at ${STEP} s steps, fake clock; presses visible controls in the current place, stokes only below a roaring fire, walks to the next place every 20 s, answers events with the first safe choice (sound: disable), never embarks to the world map`,
     controlsFirstSeen: Object.values(seen).sort((a, b) => a.firstSeenMin - b.firstSeenMin),
     placesFirstSeen: places,
     timeline,

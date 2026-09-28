@@ -1,5 +1,5 @@
 // S2 motion lab — one runner that rebuilds and re-measures everything and writes results.json.
-//   npm install && node fetch-assets.mjs && node run.mjs [--only a|b|c] [--runs 5]
+//   npm install && node fetch-assets.mjs && node run.mjs [--only a|b|c|x] [--runs 5]
 // Part A: seven interactions × eight tools (a/run-a.mjs), Motion transform-string repro, rest (rAF) probes.
 // Part B: Rive / Lottie / dotLottie / SVG+CSS / sprite for one stateful toggle, plus loops (b/run-b.mjs).
 // Part C: skills/website-redesign/scripts/motion.mjs on four builds of one page, scored against c/truth.json.
@@ -25,8 +25,15 @@ if (only.includes('a')) {
   results.a = trim(await runA());
   results.a.motionTransformRepro = await reproMotion();
   results.a.restProbes = await restProbes();
+  const { reproMotionReduce } = await import('./a/repro-motion-reduce.mjs');
+  results.a.motionReduceRepro = await reproMotionReduce();
 }
-if (only.includes('b')) { const { runB } = await import('./b/run-b.mjs'); results.b = await runB(); }
+if (only.includes('b')) { const { runB } = await import('./b/run-b.mjs'); const { restB } = await import('./b/rest-b.mjs'); results.b = await runB(); results.b.restCheck = await restB(); }
+// --only x: just the two small follow-up checks that a and b also run (Motion React reduced-motion repro, Part B at-rest check)
+if (only.includes('x')) {
+  const { reproMotionReduce } = await import('./a/repro-motion-reduce.mjs'); const { restB } = await import('./b/rest-b.mjs');
+  results.a.motionReduceRepro = await reproMotionReduce(); results.b.restCheck = await restB();
+}
 if (only.includes('c')) { const { runC } = await import('./c/run-c.mjs'); results.c = await runC(); }
 await writeFile(file, JSON.stringify(results, null, 1));
 console.log(`results.json written (${only.join(', ')})`);

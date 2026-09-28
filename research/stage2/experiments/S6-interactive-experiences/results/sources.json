@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-28T22:10:41.405Z",
+  "date": "2026-09-28T22:48:56.166Z",
   "sources": "/tmp/s2-S6",
   "repos": {
     "2048": {
@@ -293,7 +293,7 @@
     }
   },
   "adarkroomPlay": {
-    "method": "greedy script, 5 simulated minutes at 2 s steps, fake clock; events answered with the first safe choice; world map (embark) not entered",
+    "method": "greedy script, 40 simulated minutes at 2 s steps, fake clock; presses visible controls in the current place, stokes only below a roaring fire, walks to the next place every 20 s, answers events with the first safe choice (sound: disable), never embarks to the world map",
     "controlsFirstSeen": [
       {
         "text": "light fire",
@@ -301,30 +301,98 @@
       },
       {
         "text": "stoke fire",
-        "firstSeenMin": 0
+        "firstSeenMin": 0.5
       },
       {
         "text": "gather wood",
         "firstSeenMin": 1
+      },
+      {
+        "text": "trap",
+        "firstSeenMin": 3.5
+      },
+      {
+        "text": "cart",
+        "firstSeenMin": 3.5
+      },
+      {
+        "text": "check traps",
+        "firstSeenMin": 4
+      },
+      {
+        "text": "hut",
+        "firstSeenMin": 5
+      },
+      {
+        "text": "lodge",
+        "firstSeenMin": 15.5
+      },
+      {
+        "text": "trading post",
+        "firstSeenMin": 37
       }
     ],
     "placesFirstSeen": {
       "A Dark Room": 0,
       "A Firelit Room": 0.5,
-      "A Silent Forest": 1
+      "A Silent Forest": 1,
+      "A Lonely Hut": 34.5,
+      "A Tiny Village": 37
     },
     "timeline": [
       {
         "minute": 0,
-        "controls": 2,
+        "controls": 1,
         "places": 1,
         "storeRows": 0
       },
       {
         "minute": 5,
-        "controls": 3,
+        "controls": 6,
         "places": 2,
-        "storeRows": 1
+        "storeRows": 3
+      },
+      {
+        "minute": 10,
+        "controls": 6,
+        "places": 2,
+        "storeRows": 5
+      },
+      {
+        "minute": 15,
+        "controls": 6,
+        "places": 2,
+        "storeRows": 6
+      },
+      {
+        "minute": 20,
+        "controls": 7,
+        "places": 2,
+        "storeRows": 6
+      },
+      {
+        "minute": 25,
+        "controls": 7,
+        "places": 2,
+        "storeRows": 7
+      },
+      {
+        "minute": 30,
+        "controls": 7,
+        "places": 2,
+        "storeRows": 7
+      },
+      {
+        "minute": 35,
+        "controls": 7,
+        "places": 2,
+        "storeRows": 7
+      },
+      {
+        "minute": 40,
+        "controls": 8,
+        "places": 2,
+        "storeRows": 8
       }
     ]
   }

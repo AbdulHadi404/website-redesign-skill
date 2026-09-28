@@ -1,6 +1,6 @@
 {
-  "url": "http://127.0.0.1:32977/f-pixi-enabled.html",
-  "date": "2026-09-28T21:40:04.166Z",
+  "url": "http://127.0.0.1:34113/f-pixi-enabled.html",
+  "date": "2026-09-28T22:44:57.830Z",
   "findings": [
     {
       "level": "WARN",
@@ -76,7 +76,7 @@
       "level": "INFO",
       "section": "colour",
       "sc": "1.4.1",
-      "msg": "Review /tmp/s6-a11y-zSvoWH/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
+      "msg": "Review /tmp/s6-a11y-Rm8dvX/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
       "where": ""
     }
   ],
@@ -100,7 +100,7 @@
     ],
     "tab-forward": [
       {
-        "key": "92756360",
+        "key": "52329366",
         "where": "button",
         "tag": "button",
         "href": null,
@@ -124,7 +124,7 @@
         "aria": "button \"Strawberry\""
       },
       {
-        "key": "73653232",
+        "key": "62243897",
         "where": "button",
         "tag": "button",
         "href": null,
@@ -148,7 +148,7 @@
         "aria": "button \"Candle\""
       },
       {
-        "key": "29982043",
+        "key": "26629678",
         "where": "button",
         "tag": "button",
         "href": null,
@@ -172,7 +172,7 @@
         "aria": "button \"Flower\""
       },
       {
-        "key": "81469048",
+        "key": "51357297",
         "where": "button",
         "tag": "button",
         "href": null,
@@ -199,7 +199,7 @@
         "body": true
       },
       {
-        "key": "92756360",
+        "key": "52329366",
         "where": "button",
         "tag": "button",
         "href": null,
@@ -242,7 +242,7 @@
     },
     "tab-forced": [
       {
-        "key": "69920305",
+        "key": "29014343",
         "where": "button",
         "tag": "button",
         "href": null,
@@ -266,7 +266,7 @@
         "aria": "button \"Strawberry\""
       },
       {
-        "key": "70815793",
+        "key": "88242469",
         "where": "button",
         "tag": "button",
         "href": null,
@@ -290,7 +290,7 @@
         "aria": "button \"Candle\""
       },
       {
-        "key": "06284094",
+        "key": "39253804",
         "where": "button",
         "tag": "button",
         "href": null,
@@ -314,7 +314,7 @@
         "aria": "button \"Flower\""
       },
       {
-        "key": "01037986",
+        "key": "25457605",
         "where": "button",
         "tag": "button",
         "href": null,
@@ -341,7 +341,7 @@
         "body": true
       },
       {
-        "key": "69920305",
+        "key": "29014343",
         "where": "button",
         "tag": "button",
         "href": null,
@@ -375,5 +375,5 @@
       }
     }
   },
-  "seconds": 49.9
+  "seconds": 82.2
 }

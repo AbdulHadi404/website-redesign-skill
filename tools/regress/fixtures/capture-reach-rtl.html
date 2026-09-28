@@ -1,0 +1,20 @@
+<!doctype html>
+<!-- capture.mjs regress fixture (run at 1024): the mirror of capture-reach.html in a right-to-left page (dir="rtl"),
+     no page-level clip. The nowrap line runs out of its own 200px box, which sits at the end (left) side, and past the
+     LEFT edge of the viewport, the end edge here. The page scrolls sideways to it, so it is horizontal overflow naming
+     div.box, never text past the viewport. The list item's negative text-indent pulls its first line past the RIGHT
+     edge, the start edge, where nothing scrolls: expect "⚠ text past the viewport where no scroll reaches it" naming
+     ul.hang > li with a px count and no "left". -->
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>نص يمكن الوصول إليه</title>
+<style>
+body{margin:0;font:16px/1.6 system-ui,"Noto Sans Arabic",sans-serif;color:#111;background:#fff}
+main{padding:8px}
+.box{width:200px;margin-inline-start:auto;white-space:nowrap;border:1px solid #555}
+.hang{list-style:none;margin:0;padding:0}
+.hang li{text-indent:-40px}
+</style></head>
+<body><main>
+<h1>نص يمكن الوصول إليه</h1>
+<div class="box">ساعات العمل هذا الأسبوع: من الاثنين إلى السبت من التاسعة صباحاً حتى السادسة مساءً، والأحد عطلة</div>
+<ul class="hang"><li>— الطلبات قبل الظهر تُشحن في اليوم نفسه، والباقي يُشحن صباح اليوم التالي.</li></ul>
+</main></body></html>

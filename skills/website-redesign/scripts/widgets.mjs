@@ -115,18 +115,27 @@ async function activate(page, sel, r, keys = ['Enter']) {
 // A contract's own activation keys: Enter on a radio submits its form, a <select> changes on the arrow keys.
 const keysOf = (c) => (c.keys ? [].concat(c.keys) : ['Enter']);
 
+// Roles whose accessible name is the control's own label (its content, <label> or aria-label): a screen reader says
+// that name on focus, and it is the control, never the message.
+const CONTROL_ROLES = new Set(['button', 'link', 'textbox', 'searchbox', 'combobox', 'checkbox', 'radio', 'switch', 'tab', 'menuitem', 'menuitemcheckbox', 'menuitemradio',
+  'option', 'slider', 'spinbutton', 'listbox', 'treeitem', 'gridcell', 'menu', 'menubar', 'tree', 'grid', 'treegrid', 'tablist', 'radiogroup', 'toolbar', 'scrollbar',
+  'PopUpButton', 'ComboBoxMenuButton']);
 // Roles a screen reader announces by name (plus description and value) when they take focus. Any other focused
 // element — a generic box, a region, a dialog, a landmark — is a container, and its text is read as well.
-const NAMED_ROLES = new Set(['button', 'link', 'textbox', 'searchbox', 'combobox', 'checkbox', 'radio', 'switch', 'tab', 'menuitem', 'menuitemcheckbox', 'menuitemradio',
-  'option', 'slider', 'spinbutton', 'listbox', 'treeitem', 'heading', 'img', 'image', 'cell', 'gridcell', 'row', 'columnheader', 'rowheader', 'menu', 'menubar', 'tree', 'grid',
-  'treegrid', 'tablist', 'radiogroup', 'toolbar', 'scrollbar', 'separator', 'progressbar', 'meter', 'PopUpButton', 'ComboBoxMenuButton']);
-// Containers whose name a screen reader announces as focus enters them; a dialog's description is read too.
+const NAMED_ROLES = new Set([...CONTROL_ROLES, 'heading', 'img', 'image', 'cell', 'row', 'columnheader', 'rowheader', 'separator', 'progressbar', 'meter']);
+// Containers whose name a screen reader announces as focus enters them; a dialog's or a group's description (a
+// fieldset's error, GOV.UK radios) is read too.
 const ENTERED_ROLES = new Set(['dialog', 'alertdialog', 'group', 'region', 'radiogroup', 'form', 'main', 'navigation', 'complementary', 'banner', 'contentinfo', 'search', 'table', 'grid', 'tabpanel']);
+const DESCRIBED_ROLES = new Set(['dialog', 'alertdialog', 'group', 'radiogroup']);
 
 /**
- * What a screen reader says when focus has moved off the trigger (live contracts), and whether that carries at least
- * half of the new text on screen. `t` is the trigger's handle (null after a new page loaded), `shown` every visible
- * text run before activation. Null when focus is on <body>, on the trigger or unreadable.
+ * What a screen reader says when focus has moved off the trigger (live contracts), and whether that is the message.
+ * The new text on screen is grouped into message boxes; focus announces the message when what is said on that focus
+ * carries at least half of every box, and at least one. Not messages: the focused control's own name (its content
+ * and labels — a new Retry button is not the error beside it), a box of nothing but new controls, and another
+ * field's error (its aria-describedby or aria-errormessage), which that field announces when it takes focus.
+ * `t` is the trigger's handle (null after a new page loaded), `shown` every visible text run before activation.
+ * Null when focus is on <body>, on the trigger or unreadable.
  */
 async function focusHeard(page, t, shown, label) {
   const dom = await page.evaluate(({ t, shown, label }) => {
@@ -134,26 +143,46 @@ async function focusHeard(page, t, shown, label) {
     const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
     const vis = (e) => (e.checkVisibility ? e.checkVisibility({ visibilityProperty: true, opacityProperty: true }) : e.getClientRects().length);
     const who = (e) => (e.id ? '#' + e.id : e.tagName.toLowerCase());
-    // The new text: every visible text run that was not on screen before, outside the trigger and not its label.
-    const fresh = [];
-    for (const e of document.body.querySelectorAll('*')) {
-      const own = norm([...e.childNodes].filter(x => x.nodeType === 3).map(x => x.nodeValue).join(' '));
-      if (own && own !== label && !set.has(own) && !(t && t.contains(e)) && vis(e)) fresh.push([e, own]);
-    }
     const f = document.activeElement;
     if (!f || f === document.body || f === document.documentElement || f === t) return null;
-    const freshIn = (el) => fresh.reduce((n, [e, s]) => n + (el.contains(e) ? s.length : 0), 0);
-    const mostlyNew = (el) => { const all = norm(el.innerText); return all.length > 0 && freshIn(el) >= all.length / 2; };
+    // The new text: every visible element whose own text was not on screen before, outside the trigger and not its
+    // label. Kept as its text nodes too: a <strong>, <b> or <a> mid-sentence splits one sentence between two elements,
+    // and each part is matched on its own against what is said.
+    const fresh = [];
+    for (const e of document.body.querySelectorAll('*')) {
+      const nodes = [...e.childNodes].filter(x => x.nodeType === 3);
+      const own = norm(nodes.map(x => x.nodeValue).join(' '));
+      if (own && own !== label && !set.has(own) && !(t && t.contains(e)) && vis(e)) fresh.push({ e, own, segs: nodes.map(x => norm(x.nodeValue)).filter(Boolean) });
+    }
+    const freshIn = (el) => fresh.reduce((n, p) => n + (el.contains(p.e) ? p.own.length : 0), 0);
+    const seen = new Map();
+    const mostlyNew = (el) => { if (!seen.has(el)) { const all = norm(el.innerText); seen.set(el, all.length > 0 && freshIn(el) >= all.length / 2); } return seen.get(el); };
+    const holdsT = (el) => !!(t?.isConnected && el.contains(t));
     // The boxes focus entered: the focused element and its ancestors short of one that holds the trigger.
     const chain = [f];
-    for (let el = f.parentElement; el && el !== document.body && !(t?.isConnected && el.contains(t)); el = el.parentElement) chain.push(el);
+    for (let el = f.parentElement; el && el !== document.body && !holdsT(el); el = el.parentElement) chain.push(el);
     // A toast: a new, small fixed layer (or one named toast/snackbar) that is not a dialog or menu.
     const layer = chain.find(e => getComputedStyle(e).position === 'fixed') || chain.find(e => /toast|snack/i.test(`${e.getAttribute('class') || ''} ${e.id}`));
     const toast = layer && mostlyNew(layer) && !f.closest('dialog,[role=dialog],[role=alertdialog],[aria-modal=true],[role=menu],[role=listbox]') && layer.getBoundingClientRect().height < innerHeight * 0.4;
     // aria-errormessage is read on an invalid field (the ARIA rule), outside the description Chromium reports.
     const errmsg = f.getAttribute('aria-invalid') === 'true' ? (f.getAttribute('aria-errormessage') || '').split(/\s+/).map(i => i && document.getElementById(i)).filter(Boolean).map(e => norm(e.innerText)).join(' ') : '';
+    // Each piece's message box: the element, widened while its parent is mostly new, short of the one holding the
+    // trigger; a box inside another box belongs to the outer one.
+    let boxes = fresh.map(p => { let b = p.e; for (let q = b.parentElement; q && q !== document.body && !holdsT(q) && mostlyNew(q); q = q.parentElement) b = q; return b; });
+    boxes = boxes.map(b => boxes.reduce((o, x) => (x !== o && x.contains(o) ? x : o), b));
+    const uniq = [...new Set(boxes)];
+    // Another field's error: the description or error message of a field or group that focus did not reach.
+    const bound = [];
+    for (const fld of document.querySelectorAll('[aria-describedby],[aria-errormessage]')) {
+      if (fld.contains(f) || !fld.matches('input,select,textarea,fieldset,[role=group],[role=radiogroup],[role=textbox],[role=searchbox],[role=combobox],[role=listbox],[role=spinbutton],[role=slider],[role=checkbox],[role=radio],[role=switch],[contenteditable=""],[contenteditable=true]')) continue;
+      for (const id of `${fld.getAttribute('aria-describedby') || ''} ${fld.getAttribute('aria-errormessage') || ''}`.split(/\s+/)) { const el = id && document.getElementById(id); if (el) bound.push(el); }
+    }
+    // The focused element's labels: a new field's label is its name, not a message.
+    const labels = [...(f.labels || []), ...(f.getAttribute('aria-labelledby') || '').split(/\s+/).map(i => i && document.getElementById(i)).filter(Boolean)];
+    const CTL = 'a[href],button,input,select,textarea,summary,[role=button],[role=link],[role=menuitem],[role=tab],[role=option],[role=checkbox],[role=radio],[role=switch]';
+    const pieces = fresh.map((p, i) => ({ segs: p.segs, len: p.own.length, box: uniq.indexOf(boxes[i]), own: f.contains(p.e) || labels.some(l => l.contains(p.e)), bound: bound.some(b => b.contains(p.e)), ctl: !!p.e.closest(CTL) }));
     window.__wcAx = chain;
-    return { fresh: fresh.map(([, s]) => s), who: who(f), n: chain.length, content: norm(f.innerText), errmsg, mostlyNew: mostlyNew(f), toast: toast ? `${who(layer)} "${norm(layer.innerText).slice(0, 60)}"` : null };
+    return { pieces, boxes: uniq.map(b => norm(b.innerText).slice(0, 80)), who: who(f), n: chain.length, content: norm(f.innerText), errmsg, mostlyNew: mostlyNew(f), toast: toast ? `${who(layer)} "${norm(layer.innerText).slice(0, 60)}"` : null };
   }, { t, shown, label }).catch(() => null);
   if (!dom) return null;
   // Names and descriptions from Chromium's own accessibility tree (aria-labelledby, <label>, aria-describedby …).
@@ -180,14 +209,31 @@ async function focusHeard(page, t, shown, label) {
   for (const a of up) {
     const role = v(a.role);
     if (a.ignored || !ENTERED_ROLES.has(role) || !(v(a.name) || v(a.description))) continue;
-    parts.push(v(a.name), /dialog/.test(role) ? v(a.description) : '');
+    parts.push(v(a.name), DESCRIBED_ROLES.has(role) ? v(a.description) : '');
     via.push(`inside ${role} "${v(a.name).slice(0, 40)}"`);
   }
   const heard = parts.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
   const low = heard.toLowerCase();
-  const total = dom.fresh.reduce((n, s) => n + s.length, 0);
-  const got = dom.fresh.reduce((n, s) => n + (low.includes(s.toLowerCase()) ? s.length : 0), 0);
-  return { who: dom.who, heard, via: via.join(', '), toast: dom.toast, wrapper: container && !dom.mostlyNew, carries: total > 0 && got >= total / 2 };
+  // The message boxes and how much of each is said. A focused control's own name is not a message; nor is a box of
+  // nothing but new controls unless what is said carries it; nor another field's error.
+  const control = CONTROL_ROLES.has(v(f.role));
+  const box = dom.boxes.map((text) => ({ text, len: 0, got: 0, ctl: true }));
+  let own = 0, bound = 0;
+  for (const p of dom.pieces) {
+    if (control && p.own) { own += p.len; continue; }
+    if (p.bound) { bound += p.len; continue; }
+    const b = box[p.box];
+    b.len += p.len; b.ctl &&= p.ctl;
+    // Each text node on its own, weighted by the piece's length: a sentence split by inline markup still matches.
+    const segLen = p.segs.reduce((n, s) => n + s.length, 0) || 1;
+    b.got += p.len * p.segs.reduce((n, s) => n + (low.includes(s.toLowerCase()) ? s.length : 0), 0) / segLen;
+  }
+  const said = box.filter(b => b.len && b.got >= b.len / 2);
+  const unsaid = box.filter(b => b.len && b.got < b.len / 2 && !b.ctl);
+  // The focused control is itself the only new text (a download link that appeared): its name is the message.
+  const byName = control && own > 0 && !bound && !box.some(b => b.len && !b.ctl);
+  if (byName) via.unshift('its name');
+  return { who: dom.who, heard, via: via.join(', '), toast: dom.toast, wrapper: container && !dom.mostlyNew, carries: byName || (said.length > 0 && !unsaid.length), partial: said.length > 0, unsaid: unsaid.map(b => b.text) };
 }
 
 function recorder(type, target) {
@@ -354,10 +400,13 @@ const tests = {
     if (announced.length) r.ok(`announced via live region: "${announced.join(' / ')}"`);
     else if (heard?.carries && !heard.toast) r.ok(`announced by moving focus to it (${heard.who}${heard.via ? `, ${heard.via}` : ''}): "${heard.heard.slice(0, 160)}"`);
     else if (!heard?.toast) {
+      // The messages focus did not read, whole (a sentence split by a link stays one), else the new text runs.
+      const msgs = heard?.unsaid?.length ? heard.unsaid.slice(0, 3) : silent;
       const focus = !heard?.who ? `focus did not move to it (focus: ${await active(page)})`
         : heard.wrapper ? `focus moved to ${heard.who}, a box of mostly older text, not to the message itself`
         : `focus moved to ${heard.who}, which reads ${heard.heard ? `only "${heard.heard.slice(0, 80)}"` : 'nothing'}`;
-      r.fail('4.1.3', `Nothing announced${silent.length ? `; visible message not in a live region, and ${focus}: "${silent.join(' / ')}"` : ''}${newPage ? '; the trigger loaded a new page, where text already there at load is not announced' : ''}${relabel}`);
+      if (heard?.partial) r.fail('4.1.3', `Not all announced: focus moved to ${heard.who}, which reads "${heard.heard.slice(0, 80)}", but this other new text is not in a live region and focus does not read it: "${msgs.join(' / ')}"${relabel}`);
+      else r.fail('4.1.3', `Nothing announced${msgs.length ? `; visible message not in a live region, and ${focus}: "${msgs.join(' / ')}"` : ''}${newPage ? '; the trigger loaded a new page, where text already there at load is not announced' : ''}${relabel}`);
     }
     const regionsAtLoad = await page.evaluate(() => document.querySelectorAll('[aria-live]:not([aria-live="off"]),[role=status],[role=alert],[role=log]').length).catch(() => '?');
     r.ok(`${regionsAtLoad} live region(s) in the DOM`);

@@ -1,0 +1,1170 @@
+{
+ "wedge": [
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "scanner 4 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 4,
+   "detectedAsScan": 4,
+   "leakedIntoField": 1,
+   "gapMedian": 10,
+   "gapMax": 146,
+   "sample": {
+    "scans": [],
+    "value": "4006381333931",
+    "gaps": [
+     10,
+     26,
+     6,
+     10,
+     11,
+     57,
+     33,
+     16,
+     17,
+     10,
+     146,
+     9,
+     5
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "scanner 15 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 2,
+   "detectedAsScan": 2,
+   "leakedIntoField": 3,
+   "gapMedian": 19,
+   "gapMax": 84,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "",
+    "gaps": [
+     27,
+     17,
+     17,
+     17,
+     30,
+     23,
+     17,
+     19,
+     22,
+     28,
+     17,
+     22,
+     26
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "scanner 25 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 1,
+   "detectedAsScan": 1,
+   "leakedIntoField": 4,
+   "gapMedian": 31,
+   "gapMax": 284,
+   "sample": {
+    "scans": [
+     "006381333931"
+    ],
+    "value": "4",
+    "gaps": [
+     284,
+     32,
+     38,
+     28,
+     29,
+     26,
+     33,
+     27,
+     29,
+     28,
+     29,
+     27,
+     27
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "scanner 40 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 0,
+   "detectedAsScan": 0,
+   "leakedIntoField": 5,
+   "gapMedian": 45,
+   "gapMax": 81,
+   "sample": {
+    "scans": [],
+    "value": "4006381333931",
+    "gaps": [
+     53,
+     45,
+     44,
+     44,
+     48,
+     81,
+     48,
+     47,
+     56,
+     44,
+     52,
+     44,
+     56
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "person 60 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 66,
+   "gapMax": 120,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     65,
+     66,
+     65,
+     64,
+     63,
+     66
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "person 90 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 95,
+   "gapMax": 122,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     97,
+     94,
+     95,
+     110,
+     101,
+     95
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "person 150 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 155,
+   "gapMax": 169,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     157,
+     155,
+     154,
+     155,
+     155,
+     155
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "person with one 20 ms rollover",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 128,
+   "gapMax": 153,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     125,
+     24,
+     133,
+     115,
+     148,
+     125
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "person typing a 6-digit code at 70 ms",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 76,
+   "gapMax": 93,
+   "sample": {
+    "scans": [],
+    "value": "400638",
+    "gaps": [
+     78,
+     76,
+     75,
+     77,
+     74,
+     74
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "scanner 4 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 4,
+   "detectedAsScan": 4,
+   "leakedIntoField": 1,
+   "gapMedian": 9,
+   "gapMax": 113,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "",
+    "gaps": [
+     32,
+     14,
+     28,
+     18,
+     19,
+     8,
+     15,
+     16,
+     46,
+     6,
+     37,
+     24,
+     35
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "scanner 15 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 4,
+   "detectedAsScan": 4,
+   "leakedIntoField": 1,
+   "gapMedian": 19,
+   "gapMax": 98,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "",
+    "gaps": [
+     42,
+     19,
+     17,
+     18,
+     55,
+     22,
+     17,
+     24,
+     18,
+     17,
+     17,
+     18,
+     18
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "scanner 25 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 5,
+   "leakedIntoField": 0,
+   "gapMedian": 28,
+   "gapMax": 67,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "",
+    "gaps": [
+     30,
+     27,
+     27,
+     32,
+     27,
+     28,
+     28,
+     41,
+     48,
+     33,
+     28,
+     41,
+     28
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "scanner 40 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 1,
+   "detectedAsScan": 1,
+   "leakedIntoField": 4,
+   "gapMedian": 44,
+   "gapMax": 68,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "",
+    "gaps": [
+     45,
+     41,
+     44,
+     42,
+     41,
+     46,
+     42,
+     42,
+     42,
+     42,
+     42,
+     43,
+     42
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "person 60 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 70,
+   "gapMax": 102,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     71,
+     64,
+     78,
+     84,
+     71,
+     64
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "person 90 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 99,
+   "gapMax": 371,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     113,
+     97,
+     95,
+     96,
+     103,
+     94
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "person 150 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 157,
+   "gapMax": 185,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     185,
+     162,
+     160,
+     164,
+     160,
+     155
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "person with one 20 ms rollover",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 126,
+   "gapMax": 177,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     177,
+     24,
+     139,
+     114,
+     147,
+     123
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "person typing a 6-digit code at 70 ms",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 76,
+   "gapMax": 114,
+   "sample": {
+    "scans": [],
+    "value": "400638",
+    "gaps": [
+     114,
+     76,
+     75,
+     76,
+     81,
+     77
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "scanner 4 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 0,
+   "detectedAsScan": 5,
+   "leakedIntoField": 5,
+   "gapMedian": 8,
+   "gapMax": 63,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "4006381333931",
+    "gaps": [
+     53,
+     44,
+     12,
+     10,
+     63,
+     7,
+     11,
+     5,
+     12,
+     7,
+     6,
+     8,
+     7
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "scanner 15 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 0,
+   "detectedAsScan": 5,
+   "leakedIntoField": 5,
+   "gapMedian": 18,
+   "gapMax": 51,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "4006381333931",
+    "gaps": [
+     18,
+     18,
+     17,
+     25,
+     17,
+     17,
+     18,
+     19,
+     18,
+     18,
+     19,
+     18,
+     17
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "scanner 25 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 0,
+   "detectedAsScan": 0,
+   "leakedIntoField": 5,
+   "gapMedian": 29,
+   "gapMax": 99,
+   "sample": {
+    "scans": [],
+    "value": "4006381333931",
+    "gaps": [
+     69,
+     30,
+     29,
+     30,
+     27,
+     27,
+     29,
+     28,
+     30,
+     31,
+     27,
+     28,
+     28
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "scanner 40 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 0,
+   "detectedAsScan": 0,
+   "leakedIntoField": 5,
+   "gapMedian": 44,
+   "gapMax": 91,
+   "sample": {
+    "scans": [],
+    "value": "4006381333931",
+    "gaps": [
+     43,
+     49,
+     44,
+     42,
+     43,
+     44,
+     45,
+     44,
+     91,
+     50,
+     44,
+     46,
+     45
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "person 60 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 65,
+   "gapMax": 86,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     65,
+     63,
+     65,
+     83,
+     68,
+     64
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "person 90 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 95,
+   "gapMax": 122,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     100,
+     104,
+     107,
+     94,
+     95,
+     94
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "person 150 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 156,
+   "gapMax": 185,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     158,
+     155,
+     154,
+     162,
+     159,
+     155
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "person with one 20 ms rollover",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 127,
+   "gapMax": 206,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     126,
+     26,
+     134,
+     115,
+     169,
+     129
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "person typing a 6-digit code at 70 ms",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 75,
+   "gapMax": 133,
+   "sample": {
+    "scans": [],
+    "value": "400638",
+    "gaps": [
+     83,
+     75,
+     74,
+     75,
+     80,
+     74
+    ]
+   }
+  }
+ ],
+ "rum": [
+  {
+   "session": "dead control clicked 4× (150 ms apart)",
+   "expect": {
+    "rage_click": 1,
+    "dead_click": "≥1"
+   },
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    },
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    },
+    {
+     "inp_max": 72,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    }
+   ]
+  },
+  {
+   "session": "slow pay button clicked 3× while waiting (250 ms apart; answers after 1.5 s)",
+   "expect": {
+    "rage_click": 1,
+    "dead_click": 0
+   },
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 40,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    }
+   ]
+  },
+  {
+   "session": "double-click a word in a paragraph",
+   "expect": {
+    "rage_click": 0,
+    "dead_click": 0
+   },
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    }
+   ]
+  },
+  {
+   "session": "triple-click to select a paragraph",
+   "expect": {
+    "rage_click": 0,
+    "dead_click": 0,
+    "triple_click_select": 1
+   },
+   "runs": [
+    {
+     "triple_click_select": 1,
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    }
+   ]
+  },
+  {
+   "session": "working button clicked once",
+   "expect": {
+    "rage_click": 0,
+    "dead_click": 0
+   },
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    }
+   ]
+  },
+  {
+   "session": "janky handler (350 ms busy loop)",
+   "expect": {
+    "inp_over_200ms": 1,
+    "inp_target": "#jank"
+   },
+   "runs": [
+    {
+     "inp_max": 360,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 352,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 376,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 352,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 360,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    }
+   ]
+  },
+  {
+   "session": "handler that throws",
+   "expect": {
+    "js_error": 1
+   },
+   "runs": [
+    {
+     "js_error": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    }
+   ]
+  }
+ ],
+ "sizes": {
+  "rumSnippetGzipBytes": 1852,
+  "webVitalsAttributionGzipBytes": 5465,
+  "webVitalsVersion": "6.2.2"
+ },
+ "mde": [
+  {
+   "baselineRate": 0.02,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 60.5,
+   "mde28dRelativePct": 42.8
+  },
+  {
+   "baselineRate": 0.02,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 100.9,
+   "mde28dRelativePct": 71.3
+  },
+  {
+   "baselineRate": 0.02,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 19.1,
+   "mde28dRelativePct": 13.5
+  },
+  {
+   "baselineRate": 0.02,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 31.9,
+   "mde28dRelativePct": 22.6
+  },
+  {
+   "baselineRate": 0.02,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 6.1,
+   "mde28dRelativePct": 4.3
+  },
+  {
+   "baselineRate": 0.02,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 10.1,
+   "mde28dRelativePct": 7.1
+  },
+  {
+   "baselineRate": 0.1,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 25.9,
+   "mde28dRelativePct": 18.3
+  },
+  {
+   "baselineRate": 0.1,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 43.2,
+   "mde28dRelativePct": 30.6
+  },
+  {
+   "baselineRate": 0.1,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 8.2,
+   "mde28dRelativePct": 5.8
+  },
+  {
+   "baselineRate": 0.1,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 13.7,
+   "mde28dRelativePct": 9.7
+  },
+  {
+   "baselineRate": 0.1,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 2.6,
+   "mde28dRelativePct": 1.8
+  },
+  {
+   "baselineRate": 0.1,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 4.3,
+   "mde28dRelativePct": 3.1
+  },
+  {
+   "baselineRate": 0.5,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 8.6,
+   "mde28dRelativePct": 6.1
+  },
+  {
+   "baselineRate": 0.5,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 14.4,
+   "mde28dRelativePct": 10.2
+  },
+  {
+   "baselineRate": 0.5,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 2.7,
+   "mde28dRelativePct": 1.9
+  },
+  {
+   "baselineRate": 0.5,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 4.6,
+   "mde28dRelativePct": 3.2
+  },
+  {
+   "baselineRate": 0.5,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 0.9,
+   "mde28dRelativePct": 0.6
+  },
+  {
+   "baselineRate": 0.5,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 1.4,
+   "mde28dRelativePct": 1
+  },
+  {
+   "baselineRate": 0.8,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 4.3,
+   "mde28dRelativePct": 3.1
+  },
+  {
+   "baselineRate": 0.8,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 7.2,
+   "mde28dRelativePct": 5.1
+  },
+  {
+   "baselineRate": 0.8,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 1.4,
+   "mde28dRelativePct": 1
+  },
+  {
+   "baselineRate": 0.8,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 2.3,
+   "mde28dRelativePct": 1.6
+  },
+  {
+   "baselineRate": 0.8,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 0.4,
+   "mde28dRelativePct": 0.3
+  },
+  {
+   "baselineRate": 0.8,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 0.7,
+   "mde28dRelativePct": 0.5
+  }
+ ]
+}

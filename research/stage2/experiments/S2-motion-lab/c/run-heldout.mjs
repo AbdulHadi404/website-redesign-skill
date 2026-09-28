@@ -11,7 +11,8 @@ const PAGES = ['css', 'motion', 'motion-react', 'gsap', 'anime', 'spring'];
 const run = (args) => new Promise((res) => { const c = spawn(process.execPath, ['motion.mjs', ...args], { cwd: scripts, stdio: ['ignore', 'pipe', 'pipe'] }); let o = ''; c.stdout.on('data', (d) => { o += d; }); c.stderr.on('data', (d) => { o += d; }); c.on('close', (code) => res({ code, o })); });
 const normOf = (s) => (s === 'animates' ? 'animates' : 'static');
 const aNorm = (s) => (s === 'moves' || s === 'fades' ? 'animates' : 'static');
-const redOf = (o) => (/still moves/.test(o) ? 'moves' : /substituted/.test(o) ? 'fades' : 'instant');
+// Part A calls a counting number "moves" (its value changes over frames); motion.mjs calls it "still animates (text …)"
+const redOf = (o) => (/still moves|still animates/.test(o) ? 'moves' : /substituted/.test(o) ? 'fades' : 'instant');
 export async function runHeldout() {
   const A = JSON.parse(await readFile(path.join(labRoot, 'captures/a-results.json'), 'utf8'));
   const { base, close } = await serve();

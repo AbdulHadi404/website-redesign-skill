@@ -20,8 +20,9 @@
  * motion frozen), and scanned with audit.mjs's rules: wcag2a, wcag2aa, wcag21a, wcag21aa, wcag22aa, best-practice.
  * The result line gains "axe: id (impact, nodes), …", and <out>/<state>-<device>[-<label>].axe.json lists each
  * violation (id, impact, help, targets, what fails). A critical or serious violation fails the state (exit 1); its
- * capture is still written. If settling closed something (a menu that closes on scroll), the line says so;
- * "axe": "no-scroll" then scans without scrolling. --gpu and --headed are passed to the browser launch.
+ * capture is still written. If something on screen went while the page settled (a menu that closes on scroll,
+ * whatever its markup; a toast), the line names it; when the steps opened it, the scan missed it and the state
+ * fails: "axe": "no-scroll" scans that state without scrolling. --gpu and --headed are passed to the browser launch.
  *
  * states.json:
  *   {
@@ -57,14 +58,16 @@
  * visible is reported ("dead tap"). A failing step still leaves a capture (…-failed.png) of where it stopped, and
  * says why its target refused: not found; not rendered (display: none on what, inside a closed <details>,
  * hidden="until-found"); invisible (visibility); zero-size or visually hidden (act on what is drawn, e.g. its label);
- * disabled or read-only (only for steps that need it: hover does not); outside the viewport; ignoring the pointer
- * (pointer-events: none); covered (by what) or cut off (by which overflow); a select with no such option (and the
- * options it has); else Playwright's own reason. When the step itself worked and the capture after it failed, it
- * says that instead. Every failed step on a page laid out wider than the screen ends with "the page is 940 px wide
- * at a 390 px viewport — the layout overflows, itself a finding", or, on a phone page without <meta name="viewport"
- * content="width=device-width">, with that finding: both are about the product, not the scenario. On such a page
- * Playwright's own pointer check (check, click, hover) can miss a target nothing covers; that is the test tool, not
- * the product, and the message says so: a "tap" step acts on the target at the same device.
+ * inert (no input at all, hover included); disabled or read-only (only for steps that need it: hover does not);
+ * outside the viewport; ignoring the pointer (pointer-events: none); covered (by what, a container's ::before or
+ * ::after overlay included), cut off (by which overflow or clip-path) or under its own container; a select with no
+ * such option (and the options it has); else Playwright's own reason. When the step itself worked and the capture
+ * after it failed, it says that instead. Every failed step on a page laid out wider than the screen ends with "the
+ * page is 940 px wide at a 390 px viewport — the layout overflows, itself a finding", or, on a phone page without
+ * <meta name="viewport" content="width=device-width">, with that finding: both are about the product, not the
+ * scenario. On such a page Playwright's own pointer check (check, click, hover) can miss a target that the page's
+ * own hit test reaches; only then does the message call it the test tool, not the product: a "tap" step acts on
+ * the target at the same device.
  * Routes: url (glob), delay (ms), abort, status, body, json, file (relative to this scenario file), contentType,
  * record; several routes as a list. A missing file fails that state only.
  * Payload contract: "record": true on a route, or "record": "<url glob>" (or a list) on a state or the whole file,
@@ -237,10 +240,11 @@ const POINTER = /^(click|dblclick|hover|check|uncheck|tap|swipe)$/;
 
 // Why a step's target refused, in a tester's words, measured where the step gave up (Playwright has already scrolled
 // it in): not found; not rendered (display: none, a closed <details>, hidden="until-found"); invisible; zero-size or
-// visually hidden; disabled or read-only; a select without that option; outside the screen; covered (by what) or cut
-// off (by which overflow); else Playwright's own reason. The caller adds layoutNote(): on a page wider than the
-// screen Playwright's pointer check can miss a target nothing covers (old permit build: 940 px at 390), while a real
-// touch tap at the same spot works.
+// visually hidden; inert; disabled or read-only; a select without that option; outside the screen; covered (by what,
+// a container's pseudo-element overlay included), cut off (by which overflow or clip-path) or under its container;
+// else Playwright's own reason. The caller adds layoutNote(): on a page wider than the screen Playwright's pointer
+// check can miss a target the page's own hit test reaches (old permit build: 940 px at 390), while a real touch tap
+// at the same spot works.
 async function whyNot(page, sel, e, op, want) {
   const n = await page.locator(sel).count().catch(() => -1);
   if (n === 0) return 'not found: nothing on the page matches the selector';
@@ -259,28 +263,43 @@ async function whyNot(page, sel, e, op, want) {
       else if (x !== el && cs(x).contentVisibility === 'hidden') hidden = `content-visibility: hidden on ${tag(x)}`;
     }
     // Screen coordinates: the visual viewport, which on an overflowing phone page is a window onto the layout one.
+    // The point is where Playwright aims: the centre of the first box (a link wrapped over two lines has two), not
+    // of the bounding box, whose centre can fall between the lines onto the paragraph.
     const r = el.getBoundingClientRect(), v = window.visualViewport || { offsetLeft: 0, offsetTop: 0, width: innerWidth, height: innerHeight, scale: 1 };
-    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    const q = [...el.getClientRects()].find((b) => b.width * b.height > 0.99) || r;
+    const cx = q.left + q.width / 2, cy = q.top + q.height / 2;
     const inView = cx >= v.offsetLeft && cx <= v.offsetLeft + v.width && cy >= v.offsetTop && cy <= v.offsetTop + v.height;
     const hit = inView ? (el.getRootNode().elementFromPoint ? el.getRootNode() : document).elementFromPoint(cx, cy) : null;
     const inert = el.closest('[inert]');
     // What a user would act on instead of a hidden control: a label that is drawn.
     const label = [...(el.labels || [])].find((l) => { const b = l.getBoundingClientRect(); return b.width >= 4 && b.height >= 4 && cs(l).visibility === 'visible'; });
-    // A hit on an ancestor with nothing over the target: the target's centre is cut off by an overflow clip.
-    let cut = '';
-    if (hit && hit !== el && hit.contains(el)) for (let x = el.parentElement; x && x !== hit.parentElement && !cut; x = x.parentElement) {
-      const b = x.getBoundingClientRect(), o = `${cs(x).overflowX}/${cs(x).overflowY}`;
-      if (o !== 'visible/visible' && (cx < b.left || cx > b.right || cy < b.top || cy > b.bottom)) cut = `${tag(x)}, overflow: ${cs(x).overflowX === cs(x).overflowY ? cs(x).overflowX : o}`;
+    // Where a pointer at that point lands: on the target (itself, a child or its label: nothing is in the way), on
+    // something else (it is covered), or on one of its own containers. A container takes the hit when it draws over
+    // the target (a ::before/::after overlay: a "locked" card), when a clip-path or overflow clip between them cuts
+    // the target away, or when the target is stacked below it; each is a real blocker, and the message names it.
+    const onTarget = !hit || el.contains(hit) || [...(el.labels || [])].some((l) => l.contains(hit));
+    const onContainer = !onTarget && hit.contains(el);
+    let cut = '', clip = '', overlay = '';
+    if (onContainer) {
+      for (let x = el; x && x !== hit.parentElement && !cut && !clip; x = x.parentElement) {
+        const b = x.getBoundingClientRect(), o = `${cs(x).overflowX}/${cs(x).overflowY}`;
+        if (x !== el && o !== 'visible/visible' && (cx < b.left || cx > b.right || cy < b.top || cy > b.bottom)) cut = `${tag(x)}, overflow: ${cs(x).overflowX === cs(x).overflowY ? cs(x).overflowX : o}`;
+        else if (x !== hit && cs(x).clipPath !== 'none') clip = `${tag(x)} (clip-path: ${cs(x).clipPath})`;
+      }
+      overlay = ['::after', '::before'].find((p) => { const s = getComputedStyle(hit, p); return !/^(none|normal)$/.test(s.content) && s.display !== 'none' && /^(absolute|fixed)$/.test(s.position); }) || '';
     }
     const opts = el.tagName === 'SELECT' ? [...el.options].map((o) => [o.value, o.label.trim()]) : null;
     return {
       rendered: !hidden && el.getClientRects().length > 0 && el.checkVisibility?.() !== false, hidden, visibility: cs(el).visibility, inView,
       box: [r.left - v.offsetLeft, r.top - v.offsetTop, r.width, r.height].map(Math.round), screen: [v.width, v.height].map(Math.round), scale: v.scale ?? 1,
-      disabled: el.matches(':disabled') ? (el.hasAttribute('disabled') ? 'disabled attribute' : 'inside a disabled <fieldset>') : el.closest('[aria-disabled=true]') ? 'aria-disabled="true"' : inert ? `inert${inert === el ? '' : `, inside ${tag(inert)}`}` : '',
+      disabled: el.matches(':disabled') ? (el.hasAttribute('disabled') ? 'disabled attribute' : 'inside a disabled <fieldset>') : el.closest('[aria-disabled=true]') ? 'aria-disabled="true"' : '',
+      inert: inert ? (inert === el ? 'inert' : `inert, inside ${tag(inert)}`) : '',
       readOnly: el.readOnly ? 'readonly attribute' : el.closest('[aria-readonly=true]') ? 'aria-readonly="true"' : '',
       noPointer: cs(el).pointerEvents === 'none',
-      cover: !hit || el.contains(hit) || hit.contains(el) || [...(el.labels || [])].some((l) => l.contains(hit)) ? '' : tag(hit) + text(hit),
-      cut, label: label ? ` "${short(label.innerText).replace(/^"|"$/g, '')}"` : '',
+      onTarget,
+      cover: onTarget || (onContainer && !overlay) ? '' : `${overlay ? `the ${overlay} of ` : ''}${tag(hit)}${text(hit)}`,
+      container: onContainer && !overlay ? tag(hit) + text(hit) : '',
+      cut, clip, label: label ? ` "${short(label.innerText).replace(/^"|"$/g, '')}"` : '',
       noOption: opts && want != null && !opts.some(([val, lab]) => val === want || lab === want) ? opts.slice(0, 8).map(([val, lab]) => (lab && lab !== val ? `"${val}" (${lab})` : `"${val}"`)).join(', ') + (opts.length > 8 ? ` and ${opts.length - 8} more` : '') || 'none' : null,
     };
   }, want == null ? null : String(want), { timeout: 2000 }).catch(() => null);
@@ -293,6 +312,8 @@ async function whyNot(page, sel, e, op, want) {
     : d.visibility !== 'visible' ? `invisible (visibility: ${d.visibility})`
     : d.box[2] < 1 || d.box[3] < 1 ? `zero-size (${where}): ${drawn}`
     : d.box[2] <= 2 && d.box[3] <= 2 ? `visually hidden (${where}): ${drawn}`
+    // Inert takes no input of any kind, hover included; a wait only needs it shown.
+    : d.inert && !/^(wait|scroll)$/.test(op) ? `${d.inert}: it takes no pointer, focus or keyboard input`
     // Hover, focus and wait do not need an enabled target: a disabled button's tooltip is a state worth capturing.
     : d.disabled && NEEDS_ENABLED.test(op) ? `disabled (${d.disabled})`
     : d.readOnly && /^(fill|type)$/.test(op) ? `read-only (${d.readOnly})`
@@ -302,9 +323,12 @@ async function whyNot(page, sel, e, op, want) {
     : d.noPointer ? 'it ignores the pointer (pointer-events: none)'
     : d.cover ? `covered by ${d.cover} (${where})`
     : d.cut ? `its centre is cut off by ${d.cut} (${where})`
-    // Nothing covers it, yet Playwright's hit test lands elsewhere: on a page wider than the screen its aim is off.
-    // A real touch tap at the same spot reaches the target (old permit build), so this is the tool, not the product.
-    : /intercepts pointer events/.test(pw) && await layoutNote(page) ? { tool: `Playwright's pointer check missed it: it aims at ${pw.replace(/\s*intercepts pointer events.*/, '')} though nothing covers the target — the test tool, not the product (its aim is off on a layout wider than the screen); a "tap" step acts on it at this device (${where})` }
+    : d.clip ? `cut away by the clip-path on ${d.clip}: a pointer at its centre lands on ${d.container} (${where})`
+    : d.container ? `a pointer at its centre lands on its container ${d.container}, not on it: something that container draws is over it, or the target is stacked below it (${where})`
+    // The page's own hit test at the centre reaches the target, yet Playwright's lands elsewhere: on a page laid out
+    // wider than the screen its aim is off, and a real touch tap at the same spot reaches the target (old permit
+    // build) — the tool, not the product. Only then: anything else between them is a blocker named above.
+    : d.onTarget && /intercepts pointer events/.test(pw) && await layoutNote(page) ? { tool: `Playwright's pointer check missed it: it aims at ${pw.replace(/\s*intercepts pointer events.*/, '')}, but the page's own hit test at the target's centre reaches the target — the test tool, not the product (its aim is off on a layout wider than the screen); a "tap" step acts on it at this device (${where})` }
     : pw ? `Playwright says "${pw}" (${where})` : '';
   return why?.tool || (why ? `exists but ${op === 'wait' ? 'never showed' : 'is not actionable'}: ${why}` : '');
 }
@@ -403,8 +427,8 @@ const markTap = (page, at) => (at ? page.evaluate(([x, y]) => {
 }, at).catch(() => {}) : null);
 const unmarkTap = (page) => page.evaluate(() => document.getElementById('__tap_mark')?.remove()).catch(() => {});
 
-// --axe: state-level "axe" wins, then the flag, then the file's.
-const axeMode = (st) => (st.axe !== undefined ? st.axe : a.axe ? true : spec.axe) || false;
+// --axe: a state's own "axe" wins; else the file's mode ("no-scroll" kept), else the flag.
+const axeMode = (st) => (st.axe !== undefined ? st.axe : spec.axe || !!a.axe) || false;
 const axeWanted = (spec.states || []).some((st) => (!only || only.includes(st.name)) && axeMode(st));
 const axePath = axeWanted ? resolveModule('axe-core/axe.min.js') : null;
 if (axeWanted && !axePath) console.error(`⚠ --axe: axe-core is not installed — run \`npm install\` in ${scriptsDir}. States are captured but not scanned, and the run exits 1.`);
@@ -419,9 +443,39 @@ const openThings = (page) => page.evaluate(() => {
   return { 'aria-expanded': document.querySelectorAll('[aria-expanded="true"]').length, dialogs: [...document.querySelectorAll('dialog[open], [role=dialog], [role=alertdialog], [aria-modal=true]')].filter(shown).length, popovers };
 }).catch(() => null);
 
-/** Scan the state's screen with axe-core, as audit.mjs does. Returns { violations, closed } (closed: what settling shut). */
+// Every element drawn now (in view only, or anywhere on the page), remembered in the page under `key` with its box.
+// Taken when the page opens and again just before the scan settles, it names what settling hid — whatever the
+// markup (a legacy menu has no aria-expanded) — and tells what the state's steps opened from what was there all along.
+const remember = (page, key, inView) => page.evaluate(([key, inView]) => {
+  const drawn = new Map();
+  for (const e of document.body ? document.body.querySelectorAll('*') : []) {
+    const r = e.getBoundingClientRect();
+    if (r.width * r.height < 1 || (inView && (r.right <= 0 || r.bottom <= 0 || r.left >= innerWidth || r.top >= innerHeight))) continue;
+    if (e.checkVisibility?.({ opacityProperty: true, visibilityProperty: true }) === false) continue;
+    drawn.set(e, [r.left, r.top, r.width, r.height]);
+  }
+  window[key] = drawn;
+}, [key, inView]).catch(() => {});
+
+// What was in view before settling and is no longer drawn there (hidden, removed, faded out, moved off screen), the
+// outermost of each, and whether it was drawn when the page opened. A node re-rendered in place is not counted.
+const hiddenSince = (page) => page.evaluate(() => {
+  const was = window.__statesMjsInView, atLoad = window.__statesMjsAtLoad;
+  delete window.__statesMjsInView; delete window.__statesMjsAtLoad;
+  if (!was) return [];
+  const tag = (x) => `<${x.tagName.toLowerCase()}${x.id ? `#${x.id}` : ''}${[...x.classList].slice(0, 2).map((c) => `.${c}`).join('')}>`;
+  const text = (x) => { const t = String(x.getAttribute('aria-label') || x.innerText || x.textContent || '').trim().replace(/\s+/g, ' '); return t ? ` "${t.slice(0, 30)}${t.length > 30 ? '…' : ''}"` : ''; };
+  const box = (e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.width, r.height]; };
+  const drawn = (e) => { const [x, y, w, h] = box(e); return e.isConnected && w * h >= 1 && x + w > 0 && y + h > 0 && x < innerWidth && y < innerHeight && e.checkVisibility?.({ opacityProperty: true, visibilityProperty: true }) !== false; };
+  const replaced = (e, b) => !e.isConnected && [...document.getElementsByTagName(e.tagName)].some((n) => n.id === e.id && n.getAttribute('class') === e.getAttribute('class') && drawn(n) && box(n).every((v, i) => Math.abs(v - b[i]) <= 2));
+  const gone = new Set([...was].filter(([e, b]) => !drawn(e) && !replaced(e, b)).map(([e]) => e));
+  return [...gone].filter((e) => !gone.has(e.parentElement)).map((e) => ({ what: tag(e) + text(e), opened: !atLoad?.has(e) }));
+}).catch(() => []);
+
+/** Scan the state's screen with axe-core, as audit.mjs does. Returns { violations, closed, hid } (what settling shut). */
 async function axeScan(page, mode) {
   const before = await openThings(page);
+  await remember(page, '__statesMjsInView', true);
   const at = await page.evaluate(() => [scrollX, scrollY]).catch(() => [0, 0]);
   if (mode === 'no-scroll') { await page.evaluate(async () => { await document.fonts?.ready; }).catch(() => {}); await decodeImages(page).catch(() => {}); }
   else await settle(page);
@@ -430,6 +484,7 @@ async function axeScan(page, mode) {
   await freezeMotion(page);
   const after = await openThings(page);
   const closed = before && after ? Object.keys(before).filter((k) => after[k] < before[k]).map((k) => `${k} ${before[k]} → ${after[k]}`) : [];
+  const hid = await hiddenSince(page);
   await page.addScriptTag({ path: axePath }).catch(() => {});
   // A page whose Content-Security-Policy blocks the injected tag still takes the source through evaluate.
   if (!await page.evaluate(() => !!window.axe).catch(() => false)) await page.evaluate(await readFile(axePath, 'utf8'));
@@ -439,7 +494,7 @@ async function axeScan(page, mode) {
     const what = (s) => String(s || '').split('\n').map((l) => l.trim()).find((l) => l && !/^Fix (any|all) of the following:?$/i.test(l)) || '';
     return r.violations.map((v) => ({ id: v.id, impact: v.impact, help: v.help, experimental: v.tags.includes('experimental'), nodes: v.nodes.length, targets: v.nodes.map((n) => n.target.join(' ')), failureSummary: what(v.nodes[0]?.failureSummary) }));
   }, AXE_TAGS);
-  return { violations, closed };
+  return { violations, closed, hid };
 }
 const axeBlocks = (v) => !v.experimental && (v.impact === 'critical' || v.impact === 'serious');
 const axeLine = (vs) => `axe: ${vs.length ? vs.map((v) => `${v.id} (${v.impact}, ${v.nodes}${v.experimental ? ', experimental' : ''})`).join(', ') : 'no violations'}`;
@@ -495,6 +550,8 @@ try {
       if ([].concat(st.route || []).some((r) => r.delay)) await page.goto(url, { waitUntil: 'commit' }).catch(() => {});
       else await open(page, url);
       await page.waitForTimeout(st.settle ?? 300);
+      // What the page draws before any step, so the scan can tell an overlay the steps opened from the page itself.
+      if (axeMode(st) && axePath) await remember(page, '__statesMjsAtLoad', false);
       if (each && st.steps?.length) await capture(`${stem}-00.png`);
       const r = await run(page, st.steps, {
         touch: !!opts.hasTouch,
@@ -518,10 +575,22 @@ try {
       const mode = axeMode(st);
       if (mode && axePath) {
         try {
-          const { violations, closed } = await axeScan(page, mode);
-          entry.axe = { violations, fail: violations.some(axeBlocks), file: `${stem}.axe.json` };
-          if (closed.length) entry.axe.closed = `settling for the scan closed something (${closed.join(', ')}): the scan is of the screen after that — "axe": "no-scroll" scans without scrolling`;
-          await writeFile(entry.axe.file, JSON.stringify({ state: st.name, device: entry.device, label: a.label || null, url: page.url(), tags: AXE_TAGS, ...(closed.length ? { closedBySettling: closed } : {}), violations }, null, 1) + '\n');
+          const { violations, closed, hid } = await axeScan(page, mode);
+          // Settling scrolls the page through and takes a few seconds; a menu that closes on scroll, or a toast, is
+          // then gone before the scan. When what went is something the steps opened (it was not drawn when the page
+          // opened, or an aria-expanded, dialog or popover count fell), the scan missed the very thing the state is
+          // for: the state fails. Anything else that went (a carousel slide, a scroll hint) is named; the state stands.
+          const opened = hid.filter((h) => h.opened), missed = closed.length > 0 || opened.length > 0;
+          const names = (l) => l.slice(0, 3).map((h) => h.what).join(', ') + (l.length > 3 ? ` and ${l.length - 3} more` : '');
+          entry.axe = { violations, blocking: violations.some(axeBlocks), missed, file: `${stem}.axe.json` };
+          entry.axe.fail = entry.axe.blocking || missed;
+          // Without scrolling, what went, went by itself (a toast timing out): nothing to suggest.
+          const what = `${(opened.length || hid.length) ? `: ${names(opened.length ? opened : hid)}` : ''}${closed.length ? ` (${closed.join(', ')})` : ''}`;
+          if (missed) entry.axe.closed = mode === 'no-scroll' ? `what the state opened went by itself before the scan${what} — the scan missed it, so the state fails`
+            : `what the state opened went while the page settled for the scan${what} — the scan missed it, so the state fails; if scrolling closes it, "axe": "no-scroll" on this state scans without scrolling`;
+          else if (hid.length) entry.axe.closed = mode === 'no-scroll' ? `${names(hid)} (drawn since the page opened) went by itself before the scan: the scan is of the screen without it`
+            : `${names(hid)} (drawn since the page opened) went while the page settled for the scan: the scan is of the screen without it; "axe": "no-scroll" scans without scrolling`;
+          await writeFile(entry.axe.file, JSON.stringify({ state: st.name, device: entry.device, label: a.label || null, url: page.url(), tags: AXE_TAGS, ...(missed ? { missedWhatTheStateOpened: true } : {}), ...(closed.length ? { closedBySettling: closed } : {}), ...(hid.length ? { hiddenBySettling: hid } : {}), violations }, null, 1) + '\n');
         } catch (e) {
           entry.axe = { violations: [], fail: true, error: `axe scan failed: ${firstLine(e)}` };
         }
@@ -551,7 +620,7 @@ try {
     }
     results.push(entry);
     const ax = entry.axe;
-    console.log(`${entry.file && !ax?.fail ? '✓' : '✗'} ${st.name} (${entry.device})${entry.file ? `  ${entry.file}` : ''}${ax && !ax.error ? `  ${axeLine(ax.violations)}` : ''}${ax?.error ? `\n   ⚠ ${ax.error}` : ''}${ax?.closed ? `\n   ⚠ ${ax.closed}` : ''}${ax?.fail && !ax.error ? `\n   ⚠ axe: critical or serious violation — the state fails; details in ${path.basename(ax.file)}` : ''}${entry.note ? `\n   ⚠ ${entry.note}` : ''}${entry.dead.map((d) => `\n   ⚠ ${d}`).join('')}${entry.recorded ? `\n   ${entry.recorded}` : ''}${errors.length ? `\n   ${errors.length} error(s): ${errors.slice(0, 2).join(' | ')}` : ''}${a.aria || each ? entry.trail.map((t) => `\n     ${t}`).join('') : ''}`);
+    console.log(`${entry.file && !ax?.fail ? '✓' : '✗'} ${st.name} (${entry.device})${entry.file ? `  ${entry.file}` : ''}${ax && !ax.error ? `  ${axeLine(ax.violations)}` : ''}${ax?.error ? `\n   ⚠ ${ax.error}` : ''}${ax?.closed ? `\n   ⚠ ${ax.closed}` : ''}${ax?.blocking ? `\n   ⚠ axe: critical or serious violation — the state fails; details in ${path.basename(ax.file)}` : ''}${entry.note ? `\n   ⚠ ${entry.note}` : ''}${entry.dead.map((d) => `\n   ⚠ ${d}`).join('')}${entry.recorded ? `\n   ${entry.recorded}` : ''}${errors.length ? `\n   ${errors.length} error(s): ${errors.slice(0, 2).join(' | ')}` : ''}${a.aria || each ? entry.trail.map((t) => `\n     ${t}`).join('') : ''}`);
     await ctx.close();
   }
 } finally {

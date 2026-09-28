@@ -1,6 +1,6 @@
 {
-  "url": "http://127.0.0.1:32977/b-proxies.html",
-  "date": "2026-09-28T21:35:10.831Z",
+  "url": "http://127.0.0.1:34113/b-proxies.html",
+  "date": "2026-09-28T22:38:11.304Z",
   "findings": [
     {
       "level": "FAIL",
@@ -62,7 +62,7 @@
       "level": "INFO",
       "section": "colour",
       "sc": "1.4.1",
-      "msg": "Review /tmp/s6-a11y-bQqtOn/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
+      "msg": "Review /tmp/s6-a11y-RavLDz/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
       "where": ""
     }
   ],
@@ -86,7 +86,7 @@
     ],
     "tab-forward": [
       {
-        "key": "60328751",
+        "key": "88271928",
         "where": "button.proxy.palette \"Strawberry\"",
         "tag": "button",
         "href": null,
@@ -110,7 +110,7 @@
         "aria": "button \"Strawberry\""
       },
       {
-        "key": "44950765",
+        "key": "02728614",
         "where": "button.sound \"Sound off\"",
         "tag": "button",
         "href": null,
@@ -137,7 +137,7 @@
         "body": true
       },
       {
-        "key": "60328751",
+        "key": "88271928",
         "where": "button.proxy.palette \"Strawberry\"",
         "tag": "button",
         "href": null,
@@ -178,7 +178,7 @@
     },
     "tab-forced": [
       {
-        "key": "78943322",
+        "key": "27898987",
         "where": "button.proxy.palette \"Strawberry\"",
         "tag": "button",
         "href": null,
@@ -202,7 +202,7 @@
         "aria": "button \"Strawberry\""
       },
       {
-        "key": "82464534",
+        "key": "88039332",
         "where": "button.sound \"Sound off\"",
         "tag": "button",
         "href": null,
@@ -229,7 +229,7 @@
         "body": true
       },
       {
-        "key": "78943322",
+        "key": "27898987",
         "where": "button.proxy.palette \"Strawberry\"",
         "tag": "button",
         "href": null,
@@ -263,5 +263,5 @@
       }
     }
   },
-  "seconds": 39.8
+  "seconds": 43.7
 }

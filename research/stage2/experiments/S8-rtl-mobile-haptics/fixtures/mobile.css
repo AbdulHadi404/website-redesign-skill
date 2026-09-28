@@ -1,0 +1,34 @@
+/* Mobile fixture — the version that follows the rules */
+* { box-sizing: border-box; }
+/* focused fields scroll clear of the buy bar and tab bar (and of the keyboard, with interactive-widget=resizes-content) */
+html { scroll-padding-block-end: calc(140px + env(safe-area-inset-bottom)); }
+body { margin: 0; font: 16px/1.5 system-ui, sans-serif; color: #15171a; background: #fff; padding-block-end: calc(140px + env(safe-area-inset-bottom)); }
+.top { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 8px; background: #fff; border-block-end: 1px solid #ddd;
+  padding-block: max(4px, env(safe-area-inset-top)) 4px; padding-inline: max(8px, env(safe-area-inset-left)) max(8px, env(safe-area-inset-right)); }
+.top h1 { flex: 1; font-size: 17px; margin: 0; }
+.icon-btn { min-inline-size: 44px; min-block-size: 44px; border: 0; background: none; font-size: 20px; border-radius: 10px; }
+.icon-btn:active, button:active, .tabbar a:active { background: #e8eaee; }
+.fab-top { display: none; }
+main { padding-inline: 16px; }
+.hero { block-size: 300px; background: #eef0f3; display: grid; place-items: center; border-radius: 12px; margin-block: 12px; }
+.price { font-size: 22px; font-weight: 700; margin: 0; }
+.sizes { display: flex; gap: 8px; border: 0; padding: 0; margin-block: 12px; }
+.sizes label { display: grid; place-items: center; min-inline-size: 48px; min-block-size: 44px; border: 1px solid #888; border-radius: 10px; }
+.sizes input { position: absolute; opacity: 0; }
+.qty { display: flex; align-items: center; gap: 8px; }
+.qty button { inline-size: 44px; block-size: 44px; font-size: 20px; }
+.rows { list-style: none; padding: 0; }
+.row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding-block: 6px; border-block-end: 1px solid #eee; }
+.actions { display: flex; gap: 8px; }
+.actions button { min-inline-size: 44px; min-block-size: 44px; border: 0; background: none; font-size: 18px; }
+@media (hover: hover) and (pointer: fine) { .actions { opacity: 0; } .row:hover .actions, .row:focus-within .actions { opacity: 1; } }
+.checkout { display: grid; gap: 12px; }
+.checkout label { display: grid; gap: 4px; font-weight: 600; font-size: 15px; }
+.checkout input { font: inherit; font-size: 16px; min-block-size: 44px; padding-inline: 12px; border: 1px solid #8a9099; border-radius: 8px; }
+.buybar { position: fixed; inset-inline: 0; bottom: calc(56px + env(safe-area-inset-bottom)); display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px max(16px, env(safe-area-inset-right)) 10px max(16px, env(safe-area-inset-left)); background: #fff; border-block-start: 1px solid #ddd; }
+.primary { font: inherit; font-weight: 600; min-block-size: 48px; padding-inline: 24px; border: 0; border-radius: 12px; background: #0b5cad; color: #fff; }
+.tabbar { position: fixed; inset-inline: 0; bottom: 0; display: grid; grid-template-columns: repeat(4, 1fr); background: #fafafa; border-block-start: 1px solid #ddd;
+  padding-block-end: env(safe-area-inset-bottom); }
+.tabbar a { display: grid; place-items: center; min-block-size: 56px; color: #444; text-decoration: none; font-size: 13px; }
+.tabbar a[aria-current] { color: #0b5cad; font-weight: 600; }

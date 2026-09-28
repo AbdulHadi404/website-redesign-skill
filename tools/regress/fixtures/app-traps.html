@@ -4,9 +4,10 @@
   - ✗ "Monospace text rendered": the unstyled <kbd> (browser-default monospace) and the monospace <input> value;
     not with --allow-mono (then a warning lists them instead)
   - ✗ "Text past the viewport": the nowrap chip in the one-column grid (1fr is minmax(auto, 1fr)) runs about 40px
-    past a 390px viewport. html and body both clip, so body clips itself and scrollWidth does not grow:
-    "Horizontal overflow" and "Phone layout viewport widened" stay silent. (A clip on body alone is propagated to
-    the viewport in Chromium, scrollWidth grows and the overflow check already names the chip.)
+    past a 390px viewport. html and body both clip: with html's overflow not visible, body clips its own box and
+    scrollWidth does not grow, so "Horizontal overflow" and "Phone layout viewport widened" stay silent. (A clip on
+    body alone moves to the viewport: scrollWidth grows and the overflow check names the chip. audit-gutter.html is
+    the other way to get here: html { overflow-y: scroll } with body { overflow-x: hidden }.)
   - "Text under 12px": the lowercase 11px note, and not the single uppercase 11px label (the product-UI caps rule)
   - exit code 1 (a page with a fail)
   Everything else is meant to be clean: contrast, alt, landmarks, one h1, lang.

@@ -15,9 +15,15 @@
  * Notes (◇, questions and caveats for the report, not failures):
  *   - requests that failed here, on either build: fonts (files, and the stylesheets and kits of font services),
  *     stylesheets, scripts, images, media, frames and data requests (cancellations, beacons and prefetches are left
- *     out). A page measured without them is lighter and faster than it is in production. Network, TLS, DNS and proxy
- *     errors are this machine's; an HTTP error or a browser block may be the site's own, so it is worded as a possibility.
- *     With --before, the old pages are the "broken baseline"; the new build's are named too, with or without --before.
+ *     out). Network, TLS, DNS and proxy errors are this machine's; an HTTP error or a browser block may be the site's
+ *     own, so it is worded as a possibility. With --before, the old pages are the "broken baseline"; the new build's
+ *     are named too, with or without --before. Every lost file makes a page's transfer lighter than in production;
+ *     only some make its LCP faster. These hold up the largest paint: fonts, render-blocking stylesheets,
+ *     parser-blocking scripts, and an image or video in the first viewport at least as large as the element measured
+ *     as largest. These might, on a page that draws its largest element from them: deferred and module scripts, data
+ *     requests, and an image in the first viewport whose size its failure hid. Async scripts, stylesheets for other
+ *     media, frames, and images outside the first viewport or smaller cannot. A page slower than the baseline keeps
+ *     its regression flag unless the old page lost a file that holds up its largest paint (or was an error page).
  *   - with --before, transfer growth of more than 50 KB, compared gzip-equivalent (text a server sent uncompressed is
  *     counted at its gzip size, since a production host compresses it), by type: what does it buy? And a note when
  *     one build's server compresses text and the other's does not, since that alone moves LCP on a throttled network.
@@ -46,7 +52,7 @@ const CTX = device === 'phone'
 
 // Collected in the page from the first byte: paint, LCP, layout shifts and long tasks.
 const OBSERVE = () => {
-  window.__perf = { lcp: 0, lcpEl: '', shifts: [], long: [], fcp: 0 };
+  window.__perf = { lcp: 0, lcpEl: '', lcpSize: 0, shifts: [], long: [], fcp: 0 };
   const P = window.__perf;
   // The resource timing buffer holds 250 entries by default: a heavy page would lose the rest of its bytes.
   try { performance.setResourceTimingBufferSize(10000); } catch { /* unsupported */ }
@@ -54,6 +60,7 @@ const OBSERVE = () => {
   obs('paint', (e) => { if (e.name === 'first-contentful-paint') P.fcp = e.startTime; });
   obs('largest-contentful-paint', (e) => {
     P.lcp = e.startTime;
+    P.lcpSize = e.size;
     const el = e.element;
     P.lcpEl = el ? el.tagName.toLowerCase() + (el.id ? '#' + el.id : el.classList[0] ? '.' + el.classList[0] : '') : '';
   });
@@ -76,6 +83,59 @@ function failKind(req, page) {
 // Anything else (an HTTP status, a CORS or ORB block, a CSP refusal) may be the site's own.
 const LOCAL_ERR = /ERR_(CERT|SSL|TUNNEL|PROXY|NAME_NOT_RESOLVED|NAME_RESOLUTION|CONNECTION|ADDRESS|INTERNET_DISCONNECTED|NETWORK|TIMED_OUT|SOCKS|EMPTY_RESPONSE|HTTP2|QUIC)/;
 const hostOf = (u) => { try { return new URL(u).host || u.slice(0, 40); } catch { return u.slice(0, 40); } };
+// Whether a lost file can hold up the largest paint (what LCP times): 'paint' (it can: the page measured without it
+// painted sooner than it will where it loads), 'maybe' (only on a page that draws its largest element from it) or
+// null (it cannot). Scripts and images are judged in the page (`where`); a stylesheet by the priority Chrome gave it:
+// render-blocking ones get VeryHigh (a media query that does not match gets VeryLow).
+function holdOf(f, prio, where) {
+  if (f.kind === 'font') return 'paint';
+  if (f.kind === 'css') return !prio || /High/.test(prio) ? 'paint' : null;
+  if (f.kind === 'data') return 'maybe';
+  if (f.kind === 'js') return where === 'parser' ? (/Low/.test(prio || '') ? 'maybe' : 'paint') : where === 'defer' ? 'maybe' : null;
+  if (f.kind === 'img' || f.kind === 'media') return where || null;
+  return null; // a frame: its content is not part of this page's LCP
+}
+// In the page, after load: each lost script's element (parser-blocking, deferred or async) and each lost image's
+// (does it show in the first viewport, and could it be larger than the largest paint measured?).
+const WHERE = ({ scripts, imgs, lcpSize }) => {
+  const bare = (u) => String(u).split('#')[0];
+  const out = {};
+  for (const u of scripts) {
+    const s = [...document.scripts].find((x) => bare(x.src) === bare(u));
+    // A script inserted by another script is async unless told otherwise; one with no element left is such a script.
+    out[u] = !s ? 'async' : s.async ? 'async' : s.defer || s.type === 'module' ? 'defer' : 'parser';
+  }
+  if (!imgs.length) return out;
+  const vw = innerWidth, vh = innerHeight;
+  // The part of a box [left, top, width, height] (document coordinates) inside the first viewport.
+  const inView = (x, y, w, h) => Math.max(0, Math.min(x + w, vw) - Math.max(x, 0)) * Math.max(0, Math.min(y + h, vh) - Math.max(y, 0));
+  let bgs = null;
+  for (const u of imgs) {
+    const els = [...document.images].filter((i) => bare(i.currentSrc) === bare(u) || bare(i.src) === bare(u));
+    for (const v of document.querySelectorAll('video')) if ([v.poster, v.currentSrc, v.src].some((x) => x && bare(x) === bare(u))) els.push(v);
+    if (!els.length) {
+      bgs ??= [...document.querySelectorAll('body, body *')].map((el) => [el, getComputedStyle(el).backgroundImage]).filter(([, b]) => b && b !== 'none');
+      for (const [el, b] of bgs) if (b.includes(u)) els.push(el);
+    }
+    let hold = null;
+    for (const el of els) {
+      if (!el.getClientRects().length || getComputedStyle(el).visibility === 'hidden') continue;
+      const r = el.getBoundingClientRect(), x = r.left + scrollX, y = r.top + scrollY;
+      if (y >= vh || x >= vw || y + r.height < 0 || x + r.width < 0) continue; // outside the first viewport
+      let area = inView(x, y, r.width, r.height);
+      if (el.tagName === 'IMG') {
+        // A failed image shrinks to its alt text, width and height attributes or not: estimate the box it would have
+        // had from the attributes (as wide as they say, at most its container, in their proportions).
+        const w = Number(el.getAttribute('width')), h = Number(el.getAttribute('height'));
+        if (w > 0 && h > 0) { const cw = Math.min(w, el.parentElement?.clientWidth || vw); area = Math.max(area, inView(x, y, cw, (cw * h) / w)); }
+        else if (area < lcpSize) { hold = 'maybe'; continue; } // no attributes: the size it would have is unknown
+      }
+      if (area > 0 && area >= lcpSize) { hold = 'paint'; break; }
+    }
+    out[u] = hold;
+  }
+  return out;
+};
 // Text a server may compress: counted at its gzip size for the growth check.
 const TEXT = /^(text\/|application\/(javascript|x-javascript|ecmascript|json|ld\+json|manifest\+json|xml|xhtml\+xml)|image\/svg\+xml)/i;
 const timed = (p, ms) => Promise.race([p.catch(() => null), new Promise((r) => setTimeout(r, ms, null).unref())]);
@@ -89,6 +149,8 @@ async function measure(url) {
   const page = await ctx.newPage();
   const cdp = await ctx.newCDPSession(page);
   await cdp.send('Network.enable');
+  const prio = new Map(); // url → the priority Chrome gave the request
+  cdp.on('Network.requestWillBeSent', (e) => { if (!prio.has(e.request.url)) prio.set(e.request.url, e.request.initialPriority); });
   await cdp.send('Network.setCacheDisabled', { cacheDisabled: true });
   if (net) await cdp.send('Network.emulateNetworkConditions', { offline: false, ...net });
   if (cpu > 1) await cdp.send('Emulation.setCPUThrottlingRate', { rate: cpu });
@@ -99,7 +161,7 @@ async function measure(url) {
   const fail = (req, why, local) => {
     if (failed.has(req)) return;
     const kind = failKind(req, page);
-    if (kind) failed.set(req, { kind, host: hostOf(req.url()), why, local });
+    if (kind) failed.set(req, { kind, host: hostOf(req.url()), url: req.url(), why, local });
   };
   const plain = []; // text sent uncompressed: [url, bytes, gzip bytes]
   page.on('requestfailed', (req) => { const why = req.failure()?.errorText || 'failed'; if (!/ERR_ABORTED/.test(why)) fail(req, why, LOCAL_ERR.test(why)); });
@@ -128,10 +190,15 @@ async function measure(url) {
     const tbt = P.long.filter(([t]) => t >= P.fcp).reduce((s, [, d]) => s + Math.max(0, d - 50), 0);
     const entries = performance.getEntriesByType('resource').map((r) => [r.name, r.initiatorType, r.transferSize || r.encodedBodySize || 0]);
     const n = performance.getEntriesByType('navigation')[0];
-    return { fcp: P.fcp, lcp: P.lcp || P.fcp, lcpEl: P.lcpEl, cls, tbt, entries, nav: n ? [n.name, n.transferSize || n.encodedBodySize || 0] : null, nodes: document.getElementsByTagName('*').length };
+    return { fcp: P.fcp, lcp: P.lcp || P.fcp, lcpEl: P.lcpEl, lcpSize: P.lcpSize, cls, tbt, entries, nav: n ? [n.name, n.transferSize || n.encodedBodySize || 0] : null, nodes: document.getElementsByTagName('*').length };
   });
-  const texts = (await Promise.all(plain)).filter(Boolean);
   const fails = [...failed.values()];
+  const urls = (...ks) => [...new Set(fails.filter((f) => ks.includes(f.kind)).map((f) => f.url))];
+  const where = fails.some((f) => ['js', 'img', 'media'].includes(f.kind))
+    ? await page.evaluate(WHERE, { scripts: urls('js'), imgs: urls('img', 'media'), lcpSize: m.lcpSize || 0 }).catch(() => ({}))
+    : {};
+  for (const f of fails) { f.hold = holdOf(f, prio.get(f.url), where[f.url]); delete f.url; }
+  const texts = (await Promise.all(plain)).filter(Boolean);
   await ctx.close();
   // Bytes by type as served, and gzip-equivalent: what an uncompressed text response would weigh compressed.
   const save = new Map(texts.map(([u, raw, gz]) => [u, Math.max(0, raw - gz)]));
@@ -169,6 +236,19 @@ const failText = (fs) => {
 const lostText = (fs) => { const k = byKind(fs); return k.length === 1 ? `${fs.length} ${k[0][0]} request(s) failed` : `${fs.length} request(s) failed (${k.map(([n, c]) => `${c} ${n}`).join(', ')})`; };
 // The subject of a clause about part of the failures: a count, or "It"/"They" when the part is all of them.
 const subj = (part, all) => (part.length < all.length ? String(part.length) : all.length === 1 ? 'It' : 'They');
+const holding = (fs, h) => fs.filter((f) => f.hold === h);
+// Each lost file by what it does to the largest paint, singular and plural: "1 async script, 2 frames".
+const LARGEST = 'at least as large as what was measured as largest', HID = 'whose size the failure hid', SMALL = 'outside the first viewport or smaller than what was measured as largest';
+const WHAT = {
+  paint: { font: ['font', 'fonts'], css: ['render-blocking stylesheet', 'render-blocking stylesheets'], js: ['parser-blocking script', 'parser-blocking scripts'], img: [`image in the first viewport ${LARGEST}`, `images in the first viewport ${LARGEST}`], media: [`video in the first viewport ${LARGEST}`, `videos in the first viewport ${LARGEST}`] },
+  maybe: { js: ['deferred or module script', 'deferred or module scripts'], data: ['data request', 'data requests'], img: [`image in the first viewport ${HID}`, `images in the first viewport ${HID}`], media: [`video in the first viewport ${HID}`, `videos in the first viewport ${HID}`] },
+  null: { js: ['async script', 'async scripts'], css: ['stylesheet for another medium', 'stylesheets for other media'], frame: ['frame', 'frames'], img: [`image ${SMALL}`, `images ${SMALL}`], media: [`video ${SMALL}`, `videos ${SMALL}`] },
+};
+const said = (fs) => {
+  const n = new Map();
+  for (const f of fs) { const k = `${f.hold}|${f.kind}`; n.set(k, (n.get(k) || 0) + 1); }
+  return [...n].sort((p, q) => q[1] - p[1]).map(([k, c]) => { const [h, kind] = k.split('|'); const w = WHAT[h]?.[kind]; return `${c} ${w ? w[c > 1 ? 1 : 0] : kind}`; }).join(', ');
+};
 
 async function site(base) {
   const out = [];
@@ -188,7 +268,8 @@ async function site(base) {
       failed: ok.reduce((w, r) => (r.failed.length > w.length ? r.failed : w), []),
     };
     out.push(res);
-    const lost = res.failed.length ? `  ⚠ ${failText(res.failed)}: measured without ${byKind(res.failed).length === 1 && res.failed[0].kind === 'font' ? 'its fonts' : 'them'}` : '';
+    const held = holding(res.failed, 'paint').length;
+    const lost = res.failed.length ? `  ⚠ ${failText(res.failed)}: measured without ${byKind(res.failed).length === 1 && res.failed[0].kind === 'font' ? 'its fonts' : 'them'}${held ? `, ${held < res.failed.length ? `${held} of which` : 'which'} ${held > 1 ? 'hold' : 'holds'} up its largest paint` : ''}` : '';
     console.log(`${res.lcp > 2500 || res.cls > 0.1 || res.tbt > 200 || res.status >= 400 ? '⚠' : '✓'} ${p}  ${res.status >= 400 ? `HTTP ${res.status}  ` : ''}LCP ${Math.round(res.lcp)} ms (${res.lcpEl || '?'})  CLS ${res.cls.toFixed(3)}${res.clsMax > res.cls + 0.05 ? ` (up to ${res.clsMax.toFixed(2)})` : ''}  TBT ${Math.round(res.tbt)} ms  ${kb(res.total)}${res.total - res.gzTotal >= 1024 ? ` (${kb(res.gzTotal)} gzipped)` : ''}${lost}`);
   }
   return out;
@@ -224,13 +305,27 @@ const flags = good(after).flatMap((r) => [
 const notes = []; // ◇ questions and caveats for the report, not failures
 const names = (rows) => rows.map((r) => r.p).join(', ');
 const those = (rows) => (rows.length > 1 ? 'those pages' : 'that page');
+// What the lost files do to LCP, page by page. `faster` ends the sentence for pages whose LCP they sped up.
+const lcpEffect = (rows, faster) => {
+  const paint = rows.filter((r) => holding(r.failed, 'paint').length);
+  const maybe = rows.filter((r) => !paint.includes(r) && holding(r.failed, 'maybe').length);
+  const none = rows.filter((r) => r.failed.length && !paint.includes(r) && !maybe.includes(r));
+  const of = (rs) => rs.flatMap((r) => r.failed);
+  const held = holding(of(paint), 'paint'), one = of(maybe).length === 1;
+  return [
+    paint.length && `On ${names(paint)} ${held.length < of(paint).length ? 'some of the lost files hold' : held.length > 1 ? 'the lost files hold' : 'the lost file holds'} up the largest paint (${said(held)}), so ${faster}`,
+    maybe.length && `On ${names(maybe)} ${one ? 'the lost file blocks' : 'the lost files block'} no rendering (${said(of(maybe))}): ${one ? 'it holds' : 'they hold'} up the largest paint only if the page draws it from ${one ? 'it' : 'them'}, so see what its LCP element is`,
+    none.length && `On ${names(none)} ${of(none).length === 1 ? 'the lost file cannot' : 'none of the lost files can'} hold up the largest paint (${said(of(none))}), so the LCP there stands`,
+  ].filter(Boolean);
+};
 // The new build's own failed requests, with or without --before: its figures are not production figures either.
 const incomplete = good(after).filter((r) => r.failed.length);
 if (incomplete.length) {
   const all = incomplete.flatMap((r) => r.failed), local = all.filter((f) => f.local), own = all.filter((f) => !f.local);
   notes.push([`new build measured without some of its files on ${names(incomplete)}: ${lostText(all)}`,
-    local.length && `${subj(local, all)} could not be fetched from this machine (${reasons(local)}): its transfer and LCP on ${those(incomplete)} are lighter and faster than they will be in production and do not show that it meets the budget. Self-host what it can (fonts: performance.md §4) or measure where those hosts load`,
+    local.length && `${subj(local, all)} could not be fetched from this machine (${reasons(local)}), so its transfer on ${those(incomplete)} is lighter than it will be in production. Self-host what it can (fonts: performance.md §4) or measure where those hosts load`,
     own.length && `${subj(own, all)} failed in a way that is the build's own (${reasons(own)}): a file it references that was not served or was blocked. Fix or remove the reference; until then its figures leave the file out`,
+    ...lcpEffect(incomplete, `its LCP there is faster than it will be once those files load, and does not show that it meets the budget${before ? ' or keeps up with the baseline' : ''}`),
   ].filter(Boolean).join('. '));
 }
 if (before) {
@@ -243,9 +338,10 @@ if (before) {
     const both = broken.filter((b) => incomplete.some((r) => r.p === b.p));
     notes.push([`broken baseline on ${names(broken)}${all.length ? `: ${lostText(all)} on the old build` : ''}`,
       errPages.length && `The old build answered ${errPages.map((b) => `HTTP ${b.status} for ${b.p}`).join(', ')} itself: its figures there are its error page's; compare with the old URL that serves the page`,
-      local.length && `${subj(local, all)} could not be fetched from this machine (${reasons(local)}), so the old build was measured without files it downloads in production: its transfer and LCP on ${those(broken)} are not production figures, lighter and faster than the live site`,
+      local.length && `${subj(local, all)} could not be fetched from this machine (${reasons(local)}), so the old build was measured without files it downloads in production: its transfer on ${those(broken.filter((b) => b.failed.some((f) => f.local)))} is lighter than the live site's`,
       own.length && `${subj(own, all)} failed in a way that may be the old site's own (${reasons(own)}): missing or blocked in production too (then those figures stand) or only in this copy of it; check one against the live site`,
-      `Judge the new build against the budget as well as the baseline, and say so in the report${both.length ? ` (on ${names(both)} the new build's own requests failed too: see its note)` : ''}`,
+      ...lcpEffect(broken, `its LCP there is faster than the live site's${broken.some((b) => b.failed.some((f) => f.hold === 'paint' && f.local)) ? '' : ' if those files load there'}: an LCP comparison on ${those(broken.filter((b) => holding(b.failed, 'paint').length))} is not a verdict`),
+      `${broken.some((b) => b.status >= 400 || holding(b.failed, 'paint').length) ? 'Judge the new build against the budget as well as the baseline, and say' : 'Say'} so in the report${both.length ? ` (on ${names(both)} the new build's own requests failed too: see its note)` : ''}`,
     ].filter(Boolean).join('. '));
   }
   // Compression changes the bytes on a throttled wire, so it moves FCP and LCP: part of the difference is the servers'.
@@ -262,9 +358,17 @@ if (before) {
     const d = (x, y, u = 'ms') => `${Math.round(y)} → ${Math.round(x)} ${u}`;
     const mark = [bad && 'baseline broken', r.failed.length && "new build's requests failed here"].filter(Boolean).join('; ');
     md.push(`| ${r.p}${mark ? ` (${mark})` : ''} | ${d(r.lcp, b.lcp)} | ${b.cls.toFixed(3)} → ${r.cls.toFixed(3)} | ${d(r.tbt, b.tbt)} | ${kb(b.total)} → ${kb(r.total)} |`);
-    if (r.lcp > b.lcp * 1.1 + 100) flags.push(bad
-      ? `${r.p}: slower than the baseline (LCP ${Math.round(b.lcp)} → ${Math.round(r.lcp)} ms), but the baseline is broken (see its note): the old page did not load everything here. Judge this page against the budget`
-      : `${r.p}: slower than the baseline (LCP ${Math.round(b.lcp)} → ${Math.round(r.lcp)} ms) — within budget is not enough when the old build was faster`);
+    // Only a lost file that holds up the largest paint (or an error page) excuses a slower page; any other failure
+    // leaves the old LCP as it is live, and the regression stands.
+    const slower = `${r.p}: slower than the baseline (LCP ${Math.round(b.lcp)} → ${Math.round(r.lcp)} ms)`;
+    const held = holding(b.failed, 'paint'), maybe = holding(b.failed, 'maybe');
+    if (r.lcp > b.lcp * 1.1 + 100) flags.push(b.status >= 400
+      ? `${slower}, but the old URL answered HTTP ${b.status}: that baseline is its error page (see its note). Judge this page against the budget`
+      : held.length
+        ? `${slower}, but the old page was measured without files that hold up its largest paint (${said(held)}; see the broken-baseline note), so its LCP here is faster than live. Measure the old page where they load before calling this a regression; until then judge this page against the budget`
+        : `${slower} — within budget is not enough when the old build was faster${!b.failed.length ? ''
+          : maybe.length ? ` (the old page's failed requests here block no rendering: ${said(b.failed)}; they explain this only if it drew its largest element from them)`
+            : ` (the old page's failed requests here cannot hold up its largest paint, so they do not explain it: ${said(b.failed)})`}`);
     if (r.cls > b.cls + 0.05) flags.push(`${r.p}: more layout shift than the baseline (${b.cls.toFixed(3)} → ${r.cls.toFixed(3)})`);
     const grow = r.gzTotal - b.gzTotal;
     if (grow > GROW) {

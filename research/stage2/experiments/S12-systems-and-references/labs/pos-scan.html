@@ -9,32 +9,35 @@
 // ending in Enter/Tab; people type 60–200 ms per key. The second fast key switches to scan mode:
 // later keys are swallowed, the first (already typed) key is taken back out of the focused field,
 // and the code is routed to the order, never to whatever field had focus.
-window.scans = []; window.rejected = [];
+window.scans = []; window.rejected = []; window.gaps = [];
 const MAX_GAP = Number(new URLSearchParams(location.search).get('gap') || 35); // ms between scanner keys
 const MIN_LEN = 6;
-let buf = '', last = 0, scanning = false, target = null;
-function reset() { buf = ''; scanning = false; target = null; }
+const SLACK = 3; // one late key inside a burst (USB/Bluetooth/OS jitter) may be up to 3 × MAX_GAP
+let buf = '', last = 0, scanning = false, target = null, leaked = 0, slow = 0, burstGaps = [];
+function giveBack() { if (scanning && target && 'value' in target) target.value += buf.slice(leaked); }
+function reset() { buf = ''; scanning = false; target = null; leaked = 0; slow = 0; burstGaps = []; }
 document.addEventListener('keydown', (e) => {
   const now = performance.now();
-  const gap = now - last; last = now;
+  const gap = last ? now - last : Infinity; last = now;
+  if (Number.isFinite(gap)) window.gaps.push(Math.round(gap));
   if (e.key === 'Enter' || e.key === 'Tab') {
-    if (scanning && buf.length >= MIN_LEN) {
+    const avg = burstGaps.length ? burstGaps.reduce((a, b) => a + b, 0) / burstGaps.length : Infinity;
+    if (scanning && buf.length >= MIN_LEN && avg <= MAX_GAP) {
       e.preventDefault();
-      if (target && 'value' in target && target.value.endsWith(buf[0])) target.value = target.value.slice(0, -1);
+      if (target && 'value' in target && leaked) target.value = target.value.slice(0, -leaked); // take back the keys typed before the burst was recognised
       window.scans.push(buf);
       const li = document.createElement('li'); li.textContent = buf; document.getElementById('order').append(li);
-    } else if (buf.length) window.rejected.push(buf);
+    } else { if (buf.length >= MIN_LEN) window.rejected.push(buf); giveBack(); }
     reset(); return;
   }
   if (e.key.length !== 1) return;
-  if (buf && gap > MAX_GAP) {                  // too slow: a person typing — give back any swallowed keys
-    if (scanning && target && 'value' in target) target.value += buf.slice(1);
-    reset();
+  if (buf) {
+    if (gap > MAX_GAP * SLACK || (gap > MAX_GAP && ++slow > 1)) { giveBack(); reset(); } // a person typing
+    else { burstGaps.push(gap); if (gap <= MAX_GAP) scanning = true; }
   }
-  if (buf && gap <= MAX_GAP) { scanning = true; }
   if (!buf) target = document.activeElement;
   buf += e.key;
-  if (scanning) e.preventDefault();            // keep the rest of the code out of the field
+  if (scanning) e.preventDefault(); else leaked++; // keep the rest of the code out of the field
 }, true);
 </script>
 </body>

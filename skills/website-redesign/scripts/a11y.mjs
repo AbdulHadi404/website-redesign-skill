@@ -3,10 +3,14 @@
  * a11y-audit.mjs — scripted checks for the things rule engines (axe, htmlcs, IBM) do not see.
  * Run it AFTER axe; it does not repeat axe's rules.
  *
- *   node a11y.mjs <url> [--out dir] [--tabs 80] [--width 1280 --height 720]
+ *   node a11y.mjs <url> [--out dir] [--tabs 80] [--width 1280 --height 720] [--storage seed.json]
  *
  * Browser: resolved like the other scripts (lib/env.mjs) — CHROME_PATH to choose one.
  * Output: <out>/audit.json, <out>/*.png, and a FAIL / WARN / INFO summary on stdout.
+ *
+ * Only rendered content is audited: elements under `hidden` / display: none, visibility: hidden, a closed <details>
+ * or content-visibility: hidden are skipped by every check (the steps of a wizard other than the current one, a
+ * closed drawer). Audit those states by opening them: a URL with the step's hash, --storage, or states.mjs.
  *
  * Sections (WCAG 2.2 SC in brackets):
  *   page      lang, title, zoom-blocking viewport                         [3.1.1 2.4.2 1.4.4]
@@ -73,6 +77,37 @@ const describe = `(el) => {
   const txt = (el.innerText || el.getAttribute('aria-label') || el.value || '').trim().replace(/\\s+/g, ' ').slice(0, 40);
   return el.tagName.toLowerCase() + id + cls + (txt ? ' "' + txt + '"' : '');
 }`;
+// Is the element rendered? Every check that inspects elements asks this first. A wizard's other steps (`hidden`),
+// a closed drawer (visibility: hidden), a closed <details> and a content-visibility: hidden panel are not: a finding
+// there is about a state the page is not in (and innerText of a display: none element is its whole textContent).
+// Opacity 0 does not count as hidden unless a check asks (opacityProperty): an opacity-0 radio under a styled one is
+// still the control, and scroll-reveal content at opacity 0 is about to be seen. Content that content-visibility: auto
+// skips off screen is rendered. An <option> is as visible as its <select>; display: contents as its parent.
+// Visibility that a running animation toggles (a blink: `@keyframes blink { to { visibility: hidden } }`) is not a
+// hidden state: the element is on screen for part of every cycle, so a check that samples once must not drop it when
+// the sample lands in the off phase. That is decided by where the hiding comes from: the top of the run of
+// visibility: hidden ancestors, if one of its running animations animates visibility. A blinking spinner inside a
+// closed drawer is still hidden (the drawer is the top of the run).
+const shownSrc = `(() => {
+  let blinking;
+  const animatesVisibility = (a) => { try { return a.playState === 'running' && !!a.effect?.target && a.effect.getKeyframes().some((k) => 'visibility' in k); } catch { return false; } };
+  const blinks = (el) => {
+    blinking ??= new Set(document.getAnimations().filter(animatesVisibility).map((a) => a.effect.target));
+    let top = el;
+    while (top.parentElement && getComputedStyle(top.parentElement).visibility === 'hidden') top = top.parentElement;
+    return blinking.has(top);
+  };
+  return function shown(el, o) {
+    if (!el || el.nodeType !== 1) return false;
+    if (el.matches('option, optgroup')) el = el.closest('select') || el;
+    if (!el.checkVisibility) return el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
+    const opts = { visibilityProperty: true, ...(o || {}) };
+    if (el.checkVisibility(opts)) return true;
+    if (opts.visibilityProperty && el.checkVisibility({ ...opts, visibilityProperty: false }) && blinks(el)) return true;
+    const cs = getComputedStyle(el);
+    return cs.display === 'contents' && cs.visibility !== 'hidden' && !!el.parentElement && shown(el.parentElement, o);
+  };
+})()`;
 
 // Full-page renders of a page with lazy images show blank squares below the fold unless the images are asked for.
 async function loadEverything(page) {
@@ -179,25 +214,26 @@ async function newPage(opts = {}) {
     prev = h.level;
   }
   // text styled like a heading but not one (large+bold short block, not a heading)
-  const fakeHeadings = await page.evaluate(() => [...document.querySelectorAll('body div, body p, body span')].filter(el => {
+  const fakeHeadings = await page.evaluate((shownSrc) => { const shown = eval(shownSrc); return [...document.querySelectorAll('body div, body p, body span')].filter(el => {
     if (el.closest('h1,h2,h3,h4,h5,h6,[role=heading],button,a,label,th,legend,caption,summary')) return false;
     const t = (el.innerText || '').trim(); if (!t || t.length > 60 || el.children.length > 1) return false;
     const cs = getComputedStyle(el); const body = parseFloat(getComputedStyle(document.body).fontSize);
-    return parseFloat(cs.fontSize) >= body * 1.25 && +cs.fontWeight >= 600 && !/^[~<>]?[\d$€£¥%.,\s▲▼+\-−×xKkMmBb]+$/.test(t) && !(/\d/.test(t) && t.length <= 16 && t.split(/\s+/).length <= 3) && cs.display === 'block';
-  }).map(el => el.innerText.trim()));
+    return parseFloat(cs.fontSize) >= body * 1.25 && +cs.fontWeight >= 600 && !/^[~<>]?[\d$€£¥%.,\s▲▼+\-−×xKkMmBb]+$/.test(t) && !(/\d/.test(t) && t.length <= 16 && t.split(/\s+/).length <= 3) && cs.display === 'block' && shown(el);
+  }).map(el => el.innerText.trim()); }, shownSrc);
   for (const t of fakeHeadings) add('WARN', 'outline', '1.3.1', `Looks like a heading but is not marked up as one: "${t}"`);
   const outline = await page.locator('body').ariaSnapshot();
   await writeFile(path.join(outDir, 'aria-snapshot.yml'), outline);
 
   // ---------- 5. pointer-only interactive elements ----------
   await page.evaluate(() => { let i = 0; for (const el of document.querySelectorAll('body *')) el.setAttribute('data-a11y-i', i++); });
-  const candidates = await page.evaluate(() => {
+  const candidates = await page.evaluate((shownSrc) => {
+    const shown = eval(shownSrc);
     const native = 'a[href],button,input,select,textarea,summary,label,iframe,[contenteditable=""],[contenteditable=true],video[controls],audio[controls]';
     return [...document.querySelectorAll('body *')].filter(el => !el.matches(native) && !el.closest('button,a[href],label,summary,select')
       && !['svg', 'path', 'circle', 'polyline', 'g', 'script', 'style', 'option'].includes(el.tagName.toLowerCase()))
-      .filter(el => el.getClientRects().length > 0) // rendered only
+      .filter(el => el.getClientRects().length > 0 && shown(el)) // rendered, with a box of its own
       .slice(0, 4000).map(el => ({ i: el.getAttribute('data-a11y-i'), pointer: getComputedStyle(el).cursor === 'pointer' && getComputedStyle(el.parentElement).cursor !== 'pointer', onclick: el.hasAttribute('onclick'), tabIndex: (el.tagName === 'A' && !el.hasAttribute('href') && !el.hasAttribute('tabindex')) ? -1 : el.tabIndex, role: el.getAttribute('role'), hasControls: !!el.querySelector('a[href],button,input,select,textarea,summary,[tabindex="0"]') }));
-  });
+  }, shownSrc);
   for (const c of candidates) {
     let listeners = [];
     if (!c.onclick && !c.pointer) {
@@ -214,9 +250,12 @@ async function newPage(opts = {}) {
   }
 
   // ---------- 7. targets (2.5.8) ----------
-  const small = await page.evaluate(() => {
+  const small = await page.evaluate((shownSrc) => {
+    const shown = eval(shownSrc);
     const sel = 'a[href],button,input:not([type=hidden]),select,textarea,summary,[role=button],[role=link],[role=checkbox],[role=radio],[role=tab],[role=menuitem],[role=switch],[tabindex]:not([tabindex="-1"])';
-    const els = [...document.querySelectorAll(sel)].filter(el => { const r = el.getBoundingClientRect(); const cs = getComputedStyle(el); return r.width > 0 && r.height > 0 && cs.visibility !== 'hidden'; });
+    // Not rendered is not a target, nor a neighbour: a closed <details> or content-visibility: hidden panel still
+    // reports a layout box for its content, stacked over whatever is on screen.
+    const els = [...document.querySelectorAll(sel)].filter(el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && shown(el); });
     const rects = els.map(el => el.getBoundingClientRect());
     const out = [];
     els.forEach((el, i) => {
@@ -236,45 +275,57 @@ async function newPage(opts = {}) {
       if (clash) out.push({ w: Math.round(r.width), h: Math.round(r.height), where: el.outerHTML.slice(0, 80) });
     });
     return out;
-  });
+  }, shownSrc);
   for (const s of small) add('FAIL', 'targets', '2.5.8', `Target ${s.w}×${s.h}px with neighbours closer than 24px`, s.where);
 
   // ---------- 8. non-text contrast of form controls (1.4.11) ----------
-  const weak = await page.evaluate(() => {
+  const weak = await page.evaluate((shownSrc) => {
+    const shown = eval(shownSrc);
     // Any CSS colour syntax through a canvas: Tailwind 4 and shadcn compute to oklch(), which a rgb() regex misses.
     const cx = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
     const parse = c => { if (!c) return null; cx.clearRect(0, 0, 1, 1); cx.fillStyle = '#000'; cx.fillStyle = c; cx.fillRect(0, 0, 1, 1); const [r, g, b, a] = cx.getImageData(0, 0, 1, 1).data; return { r, g, b, a: a / 255 }; };
     const lum = ({ r, g, b }) => { const f = v => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
     const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
     const bgOf = el => { for (let n = el; n; n = n.parentElement) { const c = parse(getComputedStyle(n).backgroundColor); if (c && c.a > 0.5) return c; } return { r: 255, g: 255, b: 255, a: 1 }; };
+    // Fill against what is behind the field, border against the fill (or what is behind); either at 3:1 passes.
+    const boundary = (cs, outer) => {
+      const own = parse(cs.backgroundColor), border = parse(cs.borderBottomColor), bw = parseFloat(cs.borderBottomWidth);
+      return { fill: own && own.a > 0.5 ? ratio(own, outer) : 1, border: bw > 0 && border ? ratio(border, own && own.a > 0.5 ? own : outer) : 1 };
+    };
     const out = [];
     for (const el of document.querySelectorAll('input:not([type=hidden]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]), select, textarea')) {
-      const cs = getComputedStyle(el); if (el.getBoundingClientRect().width === 0) continue;
-      const own = parse(cs.backgroundColor), outer = bgOf(el.parentElement);
-      const border = parse(cs.borderBottomColor), bw = parseFloat(cs.borderBottomWidth);
-      const fillRatio = own && own.a > 0.5 ? ratio(own, outer) : 1;
-      const borderRatio = bw > 0 && border ? ratio(border, own && own.a > 0.5 ? own : outer) : 1;
+      if (el.getBoundingClientRect().width === 0 || !shown(el)) continue;
+      // A field drawn at opacity 0 under a styled replacement: the replacement's boundary is the one users see.
+      if (getComputedStyle(el).opacity === '0') continue;
+      let { fill: fillRatio, border: borderRatio } = boundary(getComputedStyle(el), bgOf(el.parentElement));
+      // A file input draws no field of its own by default: its button (::file-selector-button, a 2px outset border)
+      // is the boundary users see. Either one at 3:1 is enough.
+      if (el.type === 'file') {
+        const b = boundary(getComputedStyle(el, '::file-selector-button'), bgOf(el));
+        if (Math.max(b.fill, b.border) > Math.max(fillRatio, borderRatio)) ({ fill: fillRatio, border: borderRatio } = b);
+      }
       if (fillRatio < 3 && borderRatio < 3) out.push({ where: el.outerHTML.slice(0, 70), border: borderRatio.toFixed(2), fill: fillRatio.toFixed(2) });
     }
     return out;
-  });
+  }, shownSrc);
   for (const w of weak) add('FAIL', 'nontext', '1.4.11', `Field boundary contrast too low (border ${w.border}:1, fill ${w.fill}:1; need 3:1)`, w.where);
 
   // ---------- 8b. structure heuristics axe does not flag by default ----------
-  const struct = await page.evaluate((describeSrc) => {
-    const d = eval(describeSrc); const out = [];
+  const struct = await page.evaluate(([describeSrc, shownSrc]) => {
+    const d = eval(describeSrc), shown = eval(shownSrc); const out = [];
     // radio groups outside fieldset / radiogroup
     const groups = {};
-    for (const r of document.querySelectorAll('input[type=radio][name]')) (groups[r.name] ??= []).push(r);
+    for (const r of document.querySelectorAll('input[type=radio][name]')) if (shown(r)) (groups[r.name] ??= []).push(r);
     for (const [n, rs] of Object.entries(groups)) if (rs.length > 1 && !rs[0].closest('fieldset,[role=radiogroup],[role=group]')) out.push(['WARN', '1.3.1', `Radio group "${n}" is not in a fieldset with a legend (group question is not announced)`, d(rs[0])]);
     // data tables with no header cells
     for (const t of document.querySelectorAll('table:not([role=presentation]):not([role=none])')) {
+      if (!shown(t)) continue;
       if (t.rows.length >= 2 && (t.rows[0]?.cells.length || 0) >= 2 && !t.querySelector('th,[role=columnheader],[role=rowheader]')) out.push(['FAIL', '1.3.1', `Table (${t.rows.length}×${t.rows[0].cells.length}) has no header cells — use <th scope>`, d(t)]);
       if (t.querySelector('th') && !t.caption && !t.getAttribute('aria-label') && !t.getAttribute('aria-labelledby')) out.push(['INFO', '1.3.1', 'Data table has no caption/accessible name', d(t)]);
     }
     // graphics: svg with drawing content, not hidden, no name, not inside a named control
     for (const g of document.querySelectorAll('svg')) {
-      if (g.closest('[aria-hidden=true]') || g.closest('a,button,[role=button],[role=link]')) continue;
+      if (g.closest('[aria-hidden=true]') || g.closest('a,button,[role=button],[role=link]') || !shown(g)) continue;
       const shapes = g.querySelectorAll('path,polyline,polygon,rect,circle,line,text').length;
       const named = g.getAttribute('aria-label') || g.getAttribute('aria-labelledby') || g.querySelector(':scope > title');
       const r = g.getBoundingClientRect();
@@ -293,7 +344,7 @@ async function newPage(opts = {}) {
         const own = [...el.childNodes].filter(n => n.nodeType === 3).map(n => n.data).join(' ').replace(/\s+/g, ' ').trim();
         if (!own || seen.has(own) || el.closest('[lang]') !== document.documentElement && el.closest('[lang]')) continue;
         const arabicRun = /[\u0600-\u06FF]{2,}/.test(own) && !/[A-Za-z]{3,}/.test(own);
-        if ((!rtlPage && arabicRun) || (rtlPage && LANG_NAMES.test(own))) {
+        if (((!rtlPage && arabicRun) || (rtlPage && LANG_NAMES.test(own))) && shown(el)) {
           seen.add(own);
           out.push(['WARN', '3.1.2', `"${own.slice(0, 40)}" is in another language than the page (${pageLang || 'no lang'}) and has no lang attribute — screen readers read it with the wrong voice`, d(el)]);
           if (seen.size >= 6) break;
@@ -305,7 +356,7 @@ async function newPage(opts = {}) {
     const missing = (el, attr) => (el.getAttribute(attr) || '').split(/\s+/).filter((id) => id && !document.getElementById(id));
     for (const el of document.querySelectorAll('[aria-labelledby]')) {
       const gone = missing(el, 'aria-labelledby');
-      if (!gone.length) continue;
+      if (!gone.length || !shown(el)) continue;
       const all = gone.length === el.getAttribute('aria-labelledby').trim().split(/\s+/).length;
       const other = el.getAttribute('aria-label') || (el.innerText || '').trim() || el.getAttribute('title');
       out.push([all && !other ? 'FAIL' : 'WARN', '4.1.2', `aria-labelledby points at missing id${gone.length > 1 ? 's' : ''} ${gone.map((i) => `#${i}`).join(' ')}${all && !other ? ' — the element has no name' : ''}`, d(el)]);
@@ -313,61 +364,81 @@ async function newPage(opts = {}) {
     for (const attr of ['aria-describedby', 'aria-errormessage', 'aria-activedescendant']) {
       for (const el of document.querySelectorAll(`[${attr}]`)) {
         const gone = missing(el, attr);
-        if (gone.length) out.push(['WARN', attr === 'aria-activedescendant' ? '4.1.2' : '1.3.1', `${attr} points at missing id${gone.length > 1 ? 's' : ''} ${gone.map((i) => `#${i}`).join(' ')} — ${attr === 'aria-activedescendant' ? 'the active option is never announced' : 'that hint or error is never announced'}`, d(el)]);
+        if (gone.length && shown(el)) out.push(['WARN', attr === 'aria-activedescendant' ? '4.1.2' : '1.3.1', `${attr} points at missing id${gone.length > 1 ? 's' : ''} ${gone.map((i) => `#${i}`).join(' ')} — ${attr === 'aria-activedescendant' ? 'the active option is never announced' : 'that hint or error is never announced'}`, d(el)]);
       }
     }
     for (const l of document.querySelectorAll('label[for]')) {
       const t = document.getElementById(l.htmlFor);
-      if (!t && !l.querySelector('input,select,textarea')) out.push(['WARN', '1.3.1', `<label for="${l.htmlFor}"> labels nothing (no element with that id)`, d(l)]);
+      if (!t && !l.querySelector('input,select,textarea') && shown(l)) out.push(['WARN', '1.3.1', `<label for="${l.htmlFor}"> labels nothing (no element with that id)`, d(l)]);
     }
     // required fields: asterisk in label but no required/aria-required
     for (const el of document.querySelectorAll('input,select,textarea')) {
+      if (!shown(el)) continue;
       const lab = el.labels ? [...el.labels].map(l => l.innerText).join(' ') : '';
       if (/\*/.test(lab) && !el.required && el.getAttribute('aria-required') !== 'true') out.push(['WARN', '3.3.2/1.3.1', `Label "${lab.trim()}" marks the field required with * only — add required and say "(required)" or explain * once`, d(el)]);
     }
     // ARIA menu roles used for site navigation (menus promise arrow keys + one tab stop)
     for (const m of document.querySelectorAll('[role=menu],[role=menubar]')) {
-      const items = [...m.querySelectorAll('[role^=menuitem]')];
+      if (!shown(m)) continue;
+      // A closed submenu's items are not in the Tab sequence, whatever their tabIndex says.
+      const items = [...m.querySelectorAll('[role^=menuitem]')].filter(i => shown(i));
       const links = items.filter(i => i.matches('a[href]')).length, tabbable = items.filter(i => i.tabIndex >= 0).length;
       if (links && links === items.length) out.push(['WARN', '4.1.2', `role=${m.getAttribute('role')} wraps ${links} ordinary links — site navigation should be <nav><ul> of links; menu roles are for app command menus`, d(m)]);
       if (tabbable > 1) out.push(['FAIL', '2.1.1/4.1.2', `role=${m.getAttribute('role')} has ${tabbable} items in the Tab sequence — APG menus use one tab stop and arrow keys`, d(m)]);
     }
     // password managers and paste (3.3.8)
     for (const el of document.querySelectorAll('input[type=password], input[autocomplete=one-time-code]')) {
+      if (!shown(el)) continue;
       if (el.hasAttribute('onpaste') || el.hasAttribute('oncopy')) out.push(['FAIL', '3.3.8', 'Paste is blocked on a password/code field', d(el)]);
       if (el.getAttribute('autocomplete') === 'off') out.push(['WARN', '3.3.8', 'autocomplete="off" on a password field fights password managers', d(el)]);
     }
     // text already clipped at baseline
     for (const el of document.querySelectorAll('body *')) {
       const cs = getComputedStyle(el);
-      if (!/(hidden|clip)/.test(cs.overflow + cs.overflowY) || !(el.innerText || '').trim() || el.getBoundingClientRect().width < 2) continue;
+      if (!/(hidden|clip)/.test(cs.overflow + cs.overflowY) || !(el.innerText || '').trim() || el.getBoundingClientRect().width < 2 || !shown(el)) continue;
       if (el.scrollHeight > el.clientHeight + 2 && el.clientHeight > 0 && !el.matches('.visually-hidden,.sr-only,[class*=visually-hidden]')) out.push(['WARN', '1.4.12', 'Text already clipped by overflow:hidden at default spacing', d(el)]);
     }
     return out;
-  }, describe);
+  }, [describe, shownSrc]);
   for (const [lvl, sc, msg, where] of struct) add(lvl, 'structure', sc, msg, where);
   // paste listeners registered with addEventListener
-  for (const i of await page.evaluate(() => [...document.querySelectorAll('input[type=password]')].map((el, i) => { el.setAttribute('data-a11y-pw', i); return i; }))) {
+  for (const i of await page.evaluate((shownSrc) => { const shown = eval(shownSrc); return [...document.querySelectorAll('input[type=password]')].filter((el) => shown(el)).map((el, i) => { el.setAttribute('data-a11y-pw', i); return i; }); }, shownSrc)) {
     const { result } = await cdp.send('Runtime.evaluate', { expression: `document.querySelector('[data-a11y-pw="${i}"]')` });
     const r = await cdp.send('DOMDebugger.getEventListeners', { objectId: result.objectId, depth: 0 });
     if (r.listeners.some(l => l.type === 'paste')) add('WARN', 'structure', '3.3.8', 'Password field has a paste listener — confirm it does not block pasting', `input[type=password] #${i}`);
   }
 
   // ---------- 9. autocomplete (1.3.5) ----------
-  const ac = await page.evaluate(() => {
-    const hints = [['name', /\b(full.?name|your.?name|^name$|fname|first.?name|lname|last.?name|surname)\b/i], ['email', /e-?mail/i], ['tel', /phone|tel\b|mobile/i], ['street-address', /address|street/i], ['postal-code', /post.?code|zip/i], ['address-level2', /\bcity|town\b/i], ['country-name', /country/i], ['bday', /birth|dob\b/i], ['organization', /company|organi[sz]ation/i], ['username', /user.?name|login/i], ['current-password / new-password', /password/i], ['cc-number', /card.?number|cc.?num/i]];
+  const ac = await page.evaluate((shownSrc) => {
+    const shown = eval(shownSrc);
+    // [token, label pattern, a <select> can take it]. A select's options are the site's own list: autofill fills one
+    // only from a value it can match to an option (a country, a town, a birth date), never a name, a phone number or
+    // a street address — a select of street names takes no token, and a select is matched against those tokens only
+    // (a country select whose label also says "address" is still a country). Addresses that are not postal (proof of
+    // address, an IP, web or wallet address) are not street-address, and neither is "address" as the group a part
+    // belongs to (Rails address[city], Shopify checkout[shipping_address][country], GOV.UK address-postcode): the
+    // part names the field.
+    const hints = [['name', /\b(full.?name|your.?name|^name$|fname|first.?name|lname|last.?name|surname)\b/i], ['email', /e-?mail/i], ['tel', /phone|tel\b|mobile/i],
+      ['address-line1', /address[\s_-]*(line[\s_-]*)?1\b/i], ['address-line2', /address[\s_-]*(line[\s_-]*)?2\b/i],
+      ['street-address', /(?<!(?:^|[^a-z])(?:proof[\s_-]*of|e-?mail|ip|web(?:site)?|mac|wallet|url)[\s_-]*)address(?![\s_\[\]-]*(?:line|level|city|town|post|zip|country|county|state|region|province|suburb|district|\d))|street/i], ['postal-code', /post.?code|zip/i],
+      ['address-level2', /\bcity|town\b/i, true], ['country-name', /country/i, true], ['bday', /birth|dob\b/i, true], ['organization', /company|organi[sz]ation/i],
+      ['username', /user.?name|login/i], ['current-password / new-password', /password/i], ['cc-number', /card.?number|cc.?num/i]];
+    // Input types the autocomplete attribute does not apply to (HTML: file, buttons, checkboxes and radios), or that
+    // never hold personal data.
+    const noToken = new Set(['hidden', 'submit', 'button', 'reset', 'image', 'file', 'radio', 'checkbox', 'search', 'range', 'color']);
     const out = [];
-    for (const el of document.querySelectorAll('input:not([type=hidden]):not([type=submit]):not([type=button]):not([type=radio]):not([type=checkbox]):not([type=search]), select, textarea')) {
+    for (const el of document.querySelectorAll('input, select, textarea')) {
+      if ((el.tagName === 'INPUT' && noToken.has(el.type)) || !shown(el)) continue;
       const named = [el.name, el.id, el.getAttribute('aria-label'), ...(el.labels ? [...el.labels].map(l => l.innerText) : [])].join(' ').trim();
       const label = named || (el.placeholder || '').replace(/\S+@\S+/g, '');
       const byType = { email: 'email', tel: 'tel', password: 'current-password / new-password' }[el.type];
-      const hint = byType ? hints.find(([t]) => t === byType) : hints.find(([, re]) => re.test(label));
+      const hint = byType ? hints.find(([t]) => t === byType) : hints.find(([, re, sel]) => (el.tagName !== 'SELECT' || sel) && re.test(label));
       if (hint && !el.getAttribute('autocomplete')) out.push({ token: hint[0], label: (label.trim() || el.placeholder || el.type).slice(0, 50), type: el.type });
       if (hint && hint[0] === 'email' && el.type === 'text') out.push({ typeHint: 'email', label: label.trim().slice(0, 50) });
       if (hint && hint[0] === 'tel' && el.type === 'text') out.push({ typeHint: 'tel', label: label.trim().slice(0, 50) });
     }
     return out;
-  });
+  }, shownSrc);
   for (const a of ac) a.token ? add('WARN', 'autocomplete', '1.3.5', `Field "${a.label}" collects personal data but has no autocomplete (suggest autocomplete="${a.token}")`)
     : add('INFO', 'autocomplete', '—', `Field "${a.label}" should be type="${a.typeHint}" for the right mobile keyboard`);
   await page.context().close();
@@ -407,7 +478,25 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
     if (stops.length && stops.some(s => s.key === info.key)) { info.repeat = true; stops.push(info); break; }
     if (shots && !info.iframe && info.rect.w > 0 && info.rect.h > 0 && !info.offscreen) {
       const pad = 8;
-      const clip = { x: Math.max(0, info.rect.x - pad), y: Math.max(0, info.rect.vy - pad), width: Math.min(W, info.rect.w + pad * 2), height: Math.min(H, info.rect.h + pad * 2) };
+      // Tab scrolls an element that was partly out of view only until its box is in, so it can end flush with the
+      // bottom edge. A focus bar under the box (or an outline outside it) is then below the viewport, the diff never
+      // sees it, and a strong indicator reads as weak. Measure with the element scrolled to the middle of the
+      // viewport, then put every scroll back where Tab left it: the walk goes on (and 2.4.11 is judged) as users get it.
+      let box = info.rect, scrolled = false, recentred = false;
+      const cut = box.vy - pad < 0 || box.vy + box.h + pad > H || box.x - pad < 0 || box.x + box.w + pad > W;
+      if (cut && box.h + pad * 2 <= H && box.w + pad * 2 <= W) {
+        const moved = await page.evaluate(() => {
+          let el = document.activeElement; while (el && el.shadowRoot && el.shadowRoot.activeElement) el = el.shadowRoot.activeElement;
+          const saved = [];
+          for (let n = el.parentElement || el.getRootNode().host; n; n = n.parentElement || n.getRootNode().host) saved.push([n, n.scrollLeft, n.scrollTop]);
+          window.__a11yScroll = { saved, x: scrollX, y: scrollY };
+          el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' });
+          const q = el.getBoundingClientRect();
+          return { x: Math.round(q.x), vy: Math.round(q.y), w: Math.round(q.width), h: Math.round(q.height) };
+        }).catch(() => null);
+        if (moved) { scrolled = true; recentred = moved.vy !== box.vy || moved.x !== box.x; box = moved; }
+      }
+      const clip = { x: Math.max(0, box.x - pad), y: Math.max(0, box.vy - pad), width: Math.min(W, box.w + pad * 2), height: Math.min(H, box.h + pad * 2) };
       clip.width = Math.min(clip.width, W - clip.x); clip.height = Math.min(clip.height, H - clip.y);
       if (clip.width > 2 && clip.height > 2) {
         const a = await page.screenshot({ clip, animations: 'disabled', caret: 'hide' });
@@ -415,7 +504,7 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
         const b = await page.screenshot({ clip, animations: 'disabled', caret: 'hide' });
         await page.evaluate(() => window.__a11yEl.focus({ preventScroll: true }));
         let d = await pixelDiff(a, b);
-        let r = info.rect;
+        let r = box;
         // A ring drawn on an ancestor (a card styled with :has(a:focus-visible) or :focus-within) falls outside the
         // element's own box: find the ancestor whose outline/shadow/border changes with focus and measure there.
         const host = await page.evaluate(() => {
@@ -444,8 +533,13 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
         const top = r.vy - pad >= 0, bottom = r.vy + r.h + pad <= H, left = r.x - pad >= 0, right = r.x + r.w + pad <= W;
         const vw = Math.min(r.w, W), vh = Math.min(r.h, H);
         const perimeterArea = 2 * (vw * (top + bottom) + vh * (left + right));
-        info.indicator = { changed: d.changed, changed3: d.changed3, perimeterArea };
+        info.indicator = { changed: d.changed, changed3: d.changed3, perimeterArea, ...(recentred ? { recentred: true } : {}) };
       }
+      if (scrolled) await page.evaluate(() => {
+        const s = window.__a11yScroll; if (!s) return;
+        for (const [n, left, top] of s.saved) n.scrollTo({ left, top, behavior: 'instant' });
+        window.scrollTo({ left: s.x, top: s.y, behavior: 'instant' });
+      }).catch(() => {});
     }
     try { info.aria = (await page.locator(':focus').first().ariaSnapshot({ timeout: 1000 })).split('\n')[0].replace(/^- /, '').trim(); } catch { info.aria = '?'; }
     stops.push(info);
@@ -506,14 +600,14 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
 {
   const page = await newPage();
   const reached = new Set((report.data['tab-forward'] || []).filter(s => !s.body).map(s => s.where));
-  const unreachable = await page.evaluate((describeSrc) => {
-    const d = eval(describeSrc);
+  const unreachable = await page.evaluate(([describeSrc, shownSrc]) => {
+    const d = eval(describeSrc), shown = eval(shownSrc);
     const composite = '[role=tablist],[role=menu],[role=menubar],[role=listbox],[role=radiogroup],[role=toolbar],[role=grid],[role=tree],[role=treegrid]';
     return [...document.querySelectorAll('[role=button],[role=link],[role=tab],[role=menuitem],[role=checkbox],[role=switch],[role=radio],[role=option],[role=slider],a:not([href])[onclick]')]
-      .filter(el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; })
+      .filter(el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && shown(el); })
       .filter(el => el.tabIndex < 0 && !(el.closest(composite) && [...el.closest(composite).querySelectorAll('*')].some(x => x.tabIndex >= 0 && x.getClientRects().length)))
       .map(el => d(el));
-  }, describe);
+  }, [describe, shownSrc]);
   for (const u of unreachable) add('FAIL', 'keyboard', '2.1.1', 'Has a widget role but is not in the Tab sequence (and no roving-tabindex sibling is)', u);
   await page.context().close();
 }
@@ -522,11 +616,13 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
 for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
   const page = await ctx.newPage(); await open(page, url); await page.waitForTimeout(300);
-  const r = await page.evaluate((describeSrc) => {
-    const d = eval(describeSrc);
+  const r = await page.evaluate(([describeSrc, shownSrc]) => {
+    const d = eval(describeSrc), shown = eval(shownSrc);
     const vw = document.documentElement.clientWidth;
     const scrollsOwnAxis = el => { for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) { const o = getComputedStyle(n).overflowX; if (o === 'auto' || o === 'scroll') return true; } return false; };
-    const off = [...document.querySelectorAll('body *')].filter(el => { const r = el.getBoundingClientRect(); return r.right > vw + 1 && r.width > 0 && getComputedStyle(el).position !== 'fixed' && !scrollsOwnAxis(el); });
+    // What widens the page: any laid-out box, visibility: hidden included (it still takes room), but not the content of
+    // a closed <details> or content-visibility: hidden panel, which reports a box that takes none.
+    const off = [...document.querySelectorAll('body *')].filter(el => { const r = el.getBoundingClientRect(); return r.right > vw + 1 && r.width > 0 && getComputedStyle(el).position !== 'fixed' && !scrollsOwnAxis(el) && shown(el, { visibilityProperty: false }); });
     const roots = off.filter(el => !off.includes(el.parentElement)).slice(0, 6).map(el => `${d(el)} (right edge ${Math.round(el.getBoundingClientRect().right)}px)`);
     // Content that does not scroll but is cut off: an ancestor with overflow hidden/clip (not a scroller) hides
     // more than half of it. Reflow passes on scroll width alone while a table loses six of eight columns.
@@ -536,7 +632,7 @@ for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
       if (r.width <= 2 || r.height <= 2) continue;
       const control = el.matches('a[href],button,input,select,textarea,[role=button],[tabindex="0"]');
       const ownText = [...el.childNodes].some(n => n.nodeType === 3 && n.data.trim().length > 1);
-      if (!control && !ownText) continue;
+      if ((!control && !ownText) || !shown(el)) continue;
       let x0 = r.left, x1 = r.right, y0 = r.top, y1 = r.bottom, by = null;
       for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
         const cs = getComputedStyle(a);
@@ -549,12 +645,12 @@ for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
         if (hy) { y0 = Math.max(y0, ar.top); y1 = Math.min(y1, ar.bottom); }
         by = by || a;
       }
-      const shown = Math.max(0, x1 - x0) * Math.max(0, y1 - y0);
-      if (by && shown < r.width * r.height * 0.5) (control ? cut.controls : cut.text).push({ el: d(el), by: d(by) });
+      const area = Math.max(0, x1 - x0) * Math.max(0, y1 - y0);
+      if (by && area < r.width * r.height * 0.5) (control ? cut.controls : cut.text).push({ el: d(el), by: d(by) });
     }
     const parentsOnly = list => list.filter((x, i) => !list.slice(0, i).some(y => y.by === x.by && y.el === x.el));
     return { scrollWidth: document.documentElement.scrollWidth, vw, roots, cutControls: parentsOnly(cut.controls).slice(0, 6), cutText: cut.text.length, cutTextBy: [...new Set(cut.text.map(x => x.by))].slice(0, 3) };
-  }, describe);
+  }, [describe, shownSrc]);
   await page.screenshot({ path: path.join(outDir, `reflow-${w}.png`), fullPage: true });
   if (r.scrollWidth > r.vw + 1) {
     const twoD = r.roots.length && r.roots.every(x => /^(table|pre|canvas|svg|iframe)|map/i.test(x));
@@ -569,14 +665,14 @@ for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
 // ---------- 11. text spacing (1.4.12) ----------
 {
   const page = await newPage();
-  const clipped = () => page.evaluate((describeSrc) => {
-    const d = eval(describeSrc);
+  const clipped = () => page.evaluate(([describeSrc, shownSrc]) => {
+    const d = eval(describeSrc), shown = eval(shownSrc);
     return [...document.querySelectorAll('body *')].filter(el => {
       const cs = getComputedStyle(el); if (!/(hidden|clip)/.test(cs.overflow + cs.overflowX + cs.overflowY) && !(cs.textOverflow === 'ellipsis')) return false;
-      if (!(el.innerText || '').trim() || el.getBoundingClientRect().width < 2) return false;
+      if (!(el.innerText || '').trim() || el.getBoundingClientRect().width < 2 || !shown(el)) return false;
       return el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
     }).map(el => (getComputedStyle(el).textOverflow === 'ellipsis' ? '…' : '') + d(el));
-  }, describe);
+  }, [describe, shownSrc]);
   const before = new Set(await clipped());
   await page.addStyleTag({ content: '*,*::before,*::after{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' });
   await page.waitForTimeout(200);
@@ -593,19 +689,19 @@ for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
   const page = await newPage({ forcedColors: 'active', colorScheme: 'dark' });
   await loadEverything(page);
   await page.screenshot({ path: path.join(outDir, 'forced-colors.png'), fullPage: true });
-  const r = await page.evaluate((describeSrc) => {
-    const d = eval(describeSrc);
+  const r = await page.evaluate(([describeSrc, shownSrc]) => {
+    const d = eval(describeSrc), shown = eval(shownSrc);
     const out = { noBoundary: [], bgIcons: [], adjustNone: [] };
     for (const el of document.querySelectorAll('button, [role=button], input[type=submit], input[type=button], [role=tab], [role=checkbox], [role=switch]')) {
-      const cs = getComputedStyle(el); const r = el.getBoundingClientRect(); if (!r.width) continue;
+      const cs = getComputedStyle(el); const r = el.getBoundingClientRect(); if (!r.width || !shown(el)) continue;
       const bw = ['Top', 'Right', 'Bottom', 'Left'].reduce((a, s) => a + (cs[`border${s}Style`] !== 'none' ? parseFloat(cs[`border${s}Width`]) : 0), 0);
       if (bw === 0 && !(el.innerText || '').trim()) out.noBoundary.push(d(el) + ' (icon-only, no border)');
       else if (bw === 0 && !el.matches('[role=tab]')) out.noBoundary.push(d(el));
       if (!(el.innerText || '').trim() && !el.querySelector('svg,img') && cs.backgroundImage !== 'none') out.bgIcons.push(d(el));
     }
-    for (const el of document.querySelectorAll('body *')) if (getComputedStyle(el).forcedColorAdjust === 'none') out.adjustNone.push(d(el));
+    for (const el of document.querySelectorAll('body *')) if (getComputedStyle(el).forcedColorAdjust === 'none' && shown(el)) out.adjustNone.push(d(el));
     return out;
-  }, describe);
+  }, [describe, shownSrc]);
   for (const n of r.noBoundary.slice(0, 10)) add('WARN', 'forced', '1.4.11', 'Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)', n);
   for (const n of r.bgIcons) add('FAIL', 'forced', '1.1.1/1.4.11', 'Icon drawn with background-image only; forced colors may hide it and it has no text', n);
   for (const n of r.adjustNone.slice(0, 5)) add('INFO', 'forced', '—', 'forced-color-adjust:none — verify this is deliberate (e.g. chart swatches)', n);
@@ -631,20 +727,27 @@ for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
 {
   const probe = async (reducedMotion) => {
     const page = await newPage({ reducedMotion });
-    await page.evaluate(() => {
-      window.__mut = new Map(); const t0 = performance.now();
-      new MutationObserver(ms => { if (performance.now() - t0 < 2000) return; for (const m of ms) { const el = m.target.nodeType === 1 ? m.target : m.target.parentElement; if (!el) continue; window.__mut.set(el, (window.__mut.get(el) || 0) + 1); } })
+    // Whether an updating element is on screen is noted at each change, not only at the end: a script that flashes a
+    // status (shown for 150ms, hidden again) is hidden at most sampling moments.
+    await page.evaluate((shownSrc) => {
+      const shown = eval(shownSrc);
+      window.__mut = new Map(); window.__seen = new WeakSet(); const t0 = performance.now();
+      new MutationObserver(ms => { if (performance.now() - t0 < 2000) return; for (const m of ms) { const el = m.target.nodeType === 1 ? m.target : m.target.parentElement; if (!el) continue; window.__mut.set(el, (window.__mut.get(el) || 0) + 1); if (!window.__seen.has(el) && shown(el)) window.__seen.add(el); } })
         .observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['style', 'class', 'src', 'aria-hidden', 'hidden'] });
-    });
+    }, shownSrc);
     await page.waitForTimeout(6500);
-    const r = await page.evaluate((describeSrc) => {
-      const d = eval(describeSrc);
-      const anims = document.getAnimations().filter(a => a.playState === 'running').map(a => { const t = a.effect?.getTiming?.() || {}; const r = a.effect?.target?.getBoundingClientRect?.() || { width: 0, height: 0 }; return { where: d(a.effect?.target), infinite: t.iterations === Infinity, dur: +t.duration || 0, name: a.animationName || a.constructor.name, small: r.width <= 48 && r.height <= 48 }; });
-      const updating = [...window.__mut.entries()].filter(([el, n]) => n >= 1 && el.isConnected && el.getBoundingClientRect().height > 0).map(([el, n]) => ({ where: d(el), n }));
+    const r = await page.evaluate(([describeSrc, shownSrc]) => {
+      const d = eval(describeSrc), shown = eval(shownSrc);
+      // Motion nobody can see (a spinner in a closed drawer) is not a finding; motion that starts at opacity 0 may be,
+      // and a blink sampled in its off phase is (shown() counts visibility that an animation toggles as shown).
+      // `key` matches an animation across the two probes: `where` quotes innerText, which is empty in a blink's off phase.
+      const key = (el) => el ? [el.tagName, el.id, el.getAttribute('class'), (el.textContent || '').trim().slice(0, 40)].join('|') : '';
+      const anims = document.getAnimations().filter(a => a.playState === 'running' && (!a.effect?.target || shown(a.effect.target))).map(a => { const t = a.effect?.getTiming?.() || {}; const r = a.effect?.target?.getBoundingClientRect?.() || { width: 0, height: 0 }; return { where: d(a.effect?.target), key: key(a.effect?.target), infinite: t.iterations === Infinity, dur: +t.duration || 0, name: a.animationName || a.constructor.name, small: r.width <= 48 && r.height <= 48 }; });
+      const updating = [...window.__mut.entries()].filter(([el, n]) => n >= 1 && el.isConnected && el.getBoundingClientRect().height > 0 && (window.__seen.has(el) || shown(el))).map(([el, n]) => ({ where: d(el), n }));
       const smooth = getComputedStyle(document.documentElement).scrollBehavior === 'smooth';
-      const video = [...document.querySelectorAll('video[autoplay]')].map(v => d(v));
+      const video = [...document.querySelectorAll('video[autoplay]')].filter(v => shown(v)).map(v => d(v));
       return { anims, updating, smooth, video };
-    }, describe);
+    }, [describe, shownSrc]);
     await page.context().close();
     return r;
   };
@@ -652,9 +755,9 @@ for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
   const reduce = await probe('reduce');
   report.data.motion = { normal, reduce };
   for (const a of reduce.anims.filter(a => a.infinite || a.dur > 5000)) add('FAIL', 'motion', '2.3.3/2.2.2', `Animation "${a.name}" keeps running with prefers-reduced-motion: reduce${a.infinite ? ' (infinite)' : ''}`, a.where);
-  const stillReduced = new Set(reduce.anims.map(a => a.where));
+  const stillReduced = new Set(reduce.anims.map(a => a.key));
   for (const a of normal.anims.filter(a => a.infinite && a.dur >= 1000)) {
-    const lvl = a.small && !stillReduced.has(a.where) ? 'INFO' : 'WARN';
+    const lvl = a.small && !stillReduced.has(a.key) ? 'INFO' : 'WARN';
     add(lvl, 'motion', '2.2.2', `Infinite animation "${a.name}"${a.small ? ' (small indicator)' : ''} — moving content shown >5s beside other content needs pause/stop/hide`, a.where);
   }
   for (const u of normal.updating) add('WARN', 'motion', '2.2.2', `Content changed on its own ${u.n}× in 6.5s — auto-updating content needs a visible pause/stop control (confirm one exists)`, u.where);

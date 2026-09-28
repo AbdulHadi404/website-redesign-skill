@@ -23,11 +23,31 @@
     <input id="code" aria-describedby="code-msg"> <span id="code-msg"></span>
   </section>
 
-  <!-- 2. A silent box appears; focus moves to a new Retry button outside it. Only "Retry" is read: fails. -->
+  <!-- 2. A silent box appears; focus moves to a new button outside it. Its name is longer than the message, and is
+       still only its name: fails. -->
   <section>
     <button id="save" type="button">Save</button>
     <div id="save-err" hidden><h2>Could not save</h2><p>The server did not answer.</p></div>
-    <p><span>A caption that was already beside the retry control.</span> <button id="retry" type="button" hidden>Retry</button></p>
+    <p><span>A caption that was already beside the retry control.</span> <button id="retry" type="button" hidden>Retry saving your address</button></p>
+  </section>
+
+  <!-- 2b. A short silent status; focus moves to a new link beside it: fails. -->
+  <section>
+    <button id="add" type="button">Add to basket</button>
+    <p id="added" class="message" hidden>Added.</p> <a id="go" href="#basket" hidden>Go to your basket and check out</a>
+  </section>
+
+  <!-- 2c. A silent status, and focus moves to the heading of a newly shown panel: the heading is read, the status is not. -->
+  <section>
+    <button id="publish" type="button">Publish</button>
+    <p id="published" class="message" hidden>Published</p>
+  </section>
+  <section id="next-steps" hidden><h2 id="next-h" tabindex="-1">Share your page</h2></section>
+
+  <!-- 2d. The only new text is a link that takes focus: its name is the message. Passes. -->
+  <section>
+    <button id="export-csv" type="button">Export as CSV</button>
+    <a id="download" href="#csv" hidden>Download orders-september.csv</a>
   </section>
 
   <!-- 3. A silent box appears; focus moves to a link inside it. Only the link's name is read: fails. -->
@@ -53,10 +73,48 @@
     </div>
   </section>
 
+  <!-- 5b. A focused error summary whose sentence has inline markup (a <strong>, a link mid-sentence): passes. -->
+  <section>
+    <button id="pay-card" type="button">Pay now</button>
+    <div id="card-problem" class="error-summary" tabindex="-1" hidden>
+      <h2>There is a problem</h2>
+      <p>Your card <strong>ending 4242</strong> was declined by your bank, so no money has been taken. <a href="#card">Use another card</a> or call the number on the back of your card.</p>
+    </div>
+  </section>
+
+  <!-- 5c. Three errors (§6): a focused summary, and each field's own error beside it — the same words with a visible
+       "Error:" prefix, or other words. The field errors are announced when their fields take focus: passes. -->
+  <section>
+    <label for="name3">Full name</label> <input id="name3"> <span id="name3-error" hidden></span>
+    <label for="email3">Email</label> <input id="email3"> <span id="email3-error" hidden></span>
+    <label for="town3">Town</label> <input id="town3"> <span id="town3-error" hidden></span>
+    <button id="send3" type="button">Send details</button>
+    <div id="problem3" class="error-summary" tabindex="-1" hidden>
+      <h2>There is a problem</h2>
+      <ul><li><a href="#name3">Enter your full name</a></li><li><a href="#email3">Enter your email address</a></li><li><a href="#town3">Enter your town</a></li></ul>
+    </div>
+  </section>
+
   <!-- 6. Focus moves from the trigger to a field whose new error is its description: passes. -->
   <section>
     <label for="phone">Phone</label> <input id="phone" type="tel"> <span id="phone-error" hidden></span>
     <button id="check-phone" type="button">Check phone</button>
+  </section>
+
+  <!-- 6b. The same with inline markup in the error: passes. -->
+  <section>
+    <label for="visit">Date of visit</label> <input id="visit"> <span id="visit-error" hidden></span>
+    <button id="book" type="button">Book</button>
+  </section>
+
+  <!-- 6c. GOV.UK radios: the error is the fieldset's description, focus moves to the first radio: passes. -->
+  <section>
+    <fieldset id="contact"><legend>How should we contact you?</legend>
+      <span id="contact-error" hidden></span>
+      <input type="radio" id="by-email" name="by"><label for="by-email">Email</label>
+      <input type="radio" id="by-phone" name="by"><label for="by-phone">Phone</label>
+    </fieldset>
+    <button id="next" type="button">Next</button>
   </section>
 
   <!-- 7. An alertdialog: focus on its button, the dialog's name and description are read: passes. -->
@@ -105,6 +163,25 @@ $('send').onclick = () => {
 $('check-phone').onclick = () => {
   $('phone-error').textContent = 'Enter a phone number, like 01632 960 001'; $('phone-error').hidden = false;
   $('phone').setAttribute('aria-invalid', 'true'); $('phone').setAttribute('aria-describedby', 'phone-error'); $('phone').focus();
+};
+$('add').onclick = () => { $('added').hidden = false; $('go').hidden = false; $('go').focus(); };
+$('publish').onclick = () => { $('published').hidden = false; $('next-steps').hidden = false; $('next-h').focus(); };
+$('export-csv').onclick = () => { $('download').hidden = false; $('download').focus(); };
+$('pay-card').onclick = () => { $('card-problem').hidden = false; $('card-problem').focus(); };
+$('send3').onclick = () => {
+  for (const [id, t] of [['name3', 'Error: Enter your full name'], ['email3', 'Error: Enter your email address'], ['town3', 'Enter the town or city you live in, like Leeds']]) {
+    $(id + '-error').textContent = t; $(id + '-error').hidden = false;
+    $(id).setAttribute('aria-invalid', 'true'); $(id).setAttribute('aria-describedby', id + '-error');
+  }
+  $('problem3').hidden = false; $('problem3').focus();
+};
+$('book').onclick = () => {
+  $('visit-error').innerHTML = 'Error: The date must be <b>in the future</b>, like 27 3 2027'; $('visit-error').hidden = false;
+  $('visit').setAttribute('aria-invalid', 'true'); $('visit').setAttribute('aria-describedby', 'visit-error'); $('visit').focus();
+};
+$('next').onclick = () => {
+  $('contact-error').textContent = 'Error: Select how we should contact you'; $('contact-error').hidden = false;
+  $('contact').setAttribute('aria-describedby', 'contact-error'); $('by-email').focus();
 };
 $('del').onclick = () => { $('confirm').hidden = false; $('cf-ok').focus(); };
 $('cf-ok').onclick = () => { $('confirm').hidden = true; $('del').focus(); };

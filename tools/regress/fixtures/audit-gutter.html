@@ -1,0 +1,37 @@
+<!doctype html>
+<!--
+  Regression fixture for audit.mjs (tools/regress.mjs, group "audit"), run at 390: the common always-show-the-
+  scrollbar rule `html { overflow-y: scroll }` with `body { overflow-x: hidden }`. html's overflow is not visible (its
+  overflow-x computes to auto), so body's is not moved to the viewport: body clips its own box and scrollWidth stays
+  at 390, while the nowrap chip in the one-column grid (1fr is minmax(auto, 1fr)) runs about 30px past the edge.
+  Expect "✗ Text past the viewport, hidden by a clipping ancestor (the page clips itself, so scrollWidth did not
+  grow)" naming span.chip, and no "Horizontal overflow" or "Phone layout viewport widened".
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handover</title>
+<style>
+  * { box-sizing: border-box; }
+  html { overflow-y: scroll; }
+  body { margin: 0; overflow-x: hidden; font-family: system-ui, sans-serif; font-size: 16px; line-height: 1.5; color: #1a1a1a; background: #fff; }
+  header, footer { padding: 12px 16px; }
+  main { padding: 0 16px 24px; }
+  h1 { font-size: 24px; margin: 16px 0 8px; }
+  .hero { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .chip { display: inline-block; padding: 4px 10px; border: 1px solid #555; border-radius: 4px; white-space: nowrap; }
+</style>
+</head>
+<body>
+<header>Shift board</header>
+<main>
+  <h1>Handover</h1>
+  <div class="hero">
+    <span class="chip">Line 4 handover: check chiller log before starting</span>
+  </div>
+  <p>Sign the log when the handover is complete.</p>
+</main>
+<footer>Plant office</footer>
+</body>
+</html>

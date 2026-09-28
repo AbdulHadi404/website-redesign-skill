@@ -1,0 +1,228 @@
+{
+ "url": "/fixtures/mobile.html?variant=broken",
+ "width": 844,
+ "height": 390,
+ "insets": [
+  0,
+  21,
+  59,
+  59
+ ],
+ "env": {
+  "viewportMeta": "width=device-width, initial-scale=1",
+  "hoverNone": true,
+  "coarse": true
+ },
+ "summary": {
+  "FAIL": 3,
+  "WARN": 6,
+  "INFO": 1
+ },
+ "thumb": {
+  "model": "not applied in landscape",
+  "primaries": [],
+  "tabbar": []
+ },
+ "inputs": [
+  {
+   "field": "#email",
+   "purpose": "email",
+   "keyboard": "text"
+  },
+  {
+   "field": "#phone",
+   "purpose": "tel",
+   "keyboard": "number (spinner; decimal pad on iOS)"
+  },
+  {
+   "field": "#card",
+   "purpose": "card",
+   "keyboard": "number (spinner; decimal pad on iOS)"
+  },
+  {
+   "field": "#cvc",
+   "purpose": "cvc",
+   "keyboard": "number (spinner; decimal pad on iOS)"
+  },
+  {
+   "field": "#post",
+   "purpose": "postcode",
+   "keyboard": "number (spinner; decimal pad on iOS)"
+  },
+  {
+   "field": "#otp",
+   "purpose": "otp",
+   "keyboard": "number (spinner; decimal pad on iOS)"
+  },
+  {
+   "field": "#store",
+   "purpose": "search",
+   "keyboard": "text"
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "check": "safe-area",
+   "message": "No viewport-fit=cover: iOS keeps content out of the notch in landscape (letterboxed bars) and env() insets stay 0 — decide, and check fixed bars on a device",
+   "examples": []
+  },
+  {
+   "level": "FAIL",
+   "check": "safe-area",
+   "message": "Controls in fixed/sticky bars inside the safe-area insets (emulated 0/21/59/59)",
+   "count": 4,
+   "examples": [
+    "a\"Home\" 21px into the home-indicator zone",
+    "a\"Search\" 21px into the home-indicator zone",
+    "a\"Bag\" 21px into the home-indicator zone",
+    "a\"Account\" 21px into the home-indicator zone"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "targets",
+   "message": "Targets under 44 px on a coarse pointer (buttons, fixed-bar links)",
+   "count": 15,
+   "examples": [
+    "button.icon-btn[Back] 28×28",
+    "button.icon-btn[Share] 28×28",
+    "button.icon-btn.fav[Save to favourites] 28×28",
+    "a.fab-top.primary\"Buy now\" 112×40",
+    "label\"S\" 36×30",
+    "label\"M\" 36×30",
+    "label\"L\" 36×30",
+    "label\"XL\" 36×30",
+    "button[Fewer] 28×28",
+    "button[More] 28×28",
+    "button[Edit home address] 26×26",
+    "button[Delete home address] 26×26",
+    "button[Edit office address] 26×26",
+    "button[Delete office address] 26×26",
+    "button.primary\"Add to cart\" 135×40"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "targets",
+   "message": "Small targets packed closer than 8 px (mis-taps)",
+   "count": 11,
+   "examples": [
+    "button.icon-btn[Share] (2px from button.icon-btn.fav[Save to favourites])",
+    "button.icon-btn.fav[Save to favourites] (2px from button.icon-btn[Share])",
+    "a.fab-top.primary\"Buy now\" (6px from button.icon-btn.fav[Save to favourites])",
+    "label\"S\" (4px from label\"M\")",
+    "label\"M\" (4px from label\"S\")",
+    "label\"L\" (4px from label\"M\")",
+    "label\"XL\" (4px from label\"L\")",
+    "button[Edit home address] (2px from button[Delete home address])",
+    "button[Delete home address] (2px from button[Edit home address])",
+    "button[Edit office address] (2px from button[Delete office address])",
+    "button[Delete office address] (2px from button[Edit office address])"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "targets",
+   "message": "Small targets hugging the screen edge, where touch error is largest",
+   "count": 7,
+   "examples": [
+    "button.icon-btn[Back]",
+    "a.fab-top.primary\"Buy now\"",
+    "label\"S\"",
+    "button[Fewer]",
+    "button[Delete home address]",
+    "button[Delete office address]",
+    "button.primary\"Add to cart\""
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "hover",
+   "message": "Content revealed only on :hover, hidden on this touch device",
+   "count": 1,
+   "examples": [
+    ".row:hover .actions (2 hidden)"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "pressed",
+   "message": "Controls with no pressed (:active) state and the tap highlight turned off: a tap gives no feedback until the result",
+   "count": 15,
+   "examples": [
+    "button.icon-btn[Back]",
+    "button.icon-btn[Share]",
+    "button.icon-btn.fav[Save to favourites]",
+    "a.fab-top.primary\"Buy now\"",
+    "button[Fewer]",
+    "button[More]",
+    "button[Edit home address]",
+    "button[Delete home address]",
+    "button[Edit office address]",
+    "button[Delete office address]",
+    "button.primary\"Add to cart\"",
+    "a\"Home\"",
+    "a\"Search\"",
+    "a\"Bag\"",
+    "a\"Account\""
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "keyboards",
+   "message": "Fields whose type breaks input",
+   "count": 5,
+   "examples": [
+    "#phone (Mobile number): type=number for tel: drops leading zeros, adds spinners, silently drops Arabic digits — use type=text inputmode=numeric",
+    "#card (Card number): type=number for card: drops leading zeros, adds spinners, silently drops Arabic digits — use type=text inputmode=numeric",
+    "#cvc (Security code): type=number for cvc: drops leading zeros, adds spinners, silently drops Arabic digits — use type=text inputmode=numeric",
+    "#post (Postcode): type=number for postcode: drops leading zeros, adds spinners, silently drops Arabic digits — use type=text inputmode=numeric",
+    "#otp (One-time code): type=number for otp: drops leading zeros, adds spinners, silently drops Arabic digits — use type=text inputmode=numeric"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "keyboards",
+   "message": "Fields that bring the wrong keyboard or miss autofill",
+   "count": 19,
+   "examples": [
+    "#email (Email): email field brings the \"text\" keyboard; expected email",
+    "#email (Email): autocomplete=\"email\" missing (autofill)",
+    "#email (Email): font-size 14px: iOS Safari zooms the page on focus",
+    "#phone (Mobile number): tel field brings the \"number (spinner; decimal pad on iOS)\" keyboard; expected tel",
+    "#phone (Mobile number): autocomplete=\"tel\" missing (autofill)",
+    "#phone (Mobile number): font-size 14px: iOS Safari zooms the page on focus",
+    "#card (Card number): card field brings the \"number (spinner; decimal pad on iOS)\" keyboard; expected numeric",
+    "#card (Card number): autocomplete=\"cc-number\" missing (autofill)",
+    "#card (Card number): font-size 14px: iOS Safari zooms the page on focus",
+    "#cvc (Security code): cvc field brings the \"number (spinner; decimal pad on iOS)\" keyboard; expected numeric",
+    "#cvc (Security code): autocomplete=\"cc-csc\" missing (autofill)",
+    "#cvc (Security code): font-size 14px: iOS Safari zooms the page on focus",
+    "#post (Postcode): autocomplete=\"postal-code\" missing (autofill)",
+    "#post (Postcode): font-size 14px: iOS Safari zooms the page on focus",
+    "#otp (One-time code): otp field brings the \"number (spinner; decimal pad on iOS)\" keyboard; expected numeric",
+    "#otp (One-time code): autocomplete=\"one-time-code\" missing (autofill, SMS code suggestion)",
+    "#otp (One-time code): font-size 14px: iOS Safari zooms the page on focus",
+    "#store (Search stores): search field brings the \"text\" keyboard; expected search",
+    "#store (Search stores): font-size 14px: iOS Safari zooms the page on focus"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "keyboard",
+   "message": "With a 200px keyboard open (resizes-content), fixed bars cover the focused field — add scroll-padding-block-end or hide the bars while typing",
+   "count": 7,
+   "examples": [
+    "#email under .buybar",
+    "#phone under .tabbar",
+    "#card under .buybar",
+    "#cvc under .tabbar",
+    "#post under .buybar",
+    "#otp under .tabbar",
+    "#store under .buybar"
+   ]
+  }
+ ],
+ "ms": 1117
+}

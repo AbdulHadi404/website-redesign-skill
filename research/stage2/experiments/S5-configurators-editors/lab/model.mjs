@@ -79,6 +79,11 @@ export class Reference {
 
 export { round };
 
+// Where run.mjs caches a generated workload (the generator replays a full-copy oracle, ~20 s at 5,000 items).
+import os from 'node:os';
+import path from 'node:path';
+export const workloadCachePath = (sceneSize, ops, seed) => path.join(os.tmpdir(), `s5-workload-${sceneSize}-${ops}-seed${seed}.json`);
+
 // ---------------------------------------------------------------------------------------------------------
 // Workload: `ops` user operations. A drag is one operation made of `dragSteps` pointer updates.
 // Mix: add 20%, drag 35%, recolour 17%, delete 8%, group 8%, select-only 4%, undo 6%, redo 2%.

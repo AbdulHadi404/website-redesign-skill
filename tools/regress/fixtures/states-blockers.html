@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blockers drawn by a container</title>
+<!-- states.mjs regression fixture: targets that a container blocks — a "locked" card's ::after overlay, a menu closed
+     with clip-path, an inert region, a button stacked below its own container (z-index: -1). None is Playwright's
+     fault, even where the 900 px block widens the phone layout (open with #narrow to drop it). -->
+<style>
+  body { margin: 0; font: 15px sans-serif; }
+  .wide { width: 900px; height: 60px; background: #eef; }
+  .card { position: relative; margin: 20px; padding: 16px; border: 1px solid #999; width: 280px; }
+  .card.locked::after { content: ''; position: absolute; inset: 0; background: rgba(255, 255, 255, .6); }
+  nav { position: relative; margin: 20px; }
+  #menu { clip-path: inset(0 0 100% 0); background: #fff; border: 1px solid #999; padding: 8px; margin: 0; }
+  .stack { position: relative; z-index: 0; background: #fee; padding: 20px; margin: 20px; }
+  .stack button { position: relative; z-index: -1; }
+</style></head>
+<body>
+<div id="w" class="wide">A 900 px wide table</div>
+<div class="card locked"><h2>Premium plan</h2><label><input type="checkbox" id="addon"> Add support</label></div>
+<nav><ul id="menu"><li><label><input type="checkbox" id="opt"> Compact view</label></li><li><a href="#s" id="settings">Settings</a></li></ul></nav>
+<div inert><button id="inertbtn" type="button" style="margin: 20px">Inert</button></div>
+<div class="stack"><button id="under" type="button">Under its container</button></div>
+<script>if (location.hash === '#narrow') document.getElementById('w').remove();</script>
+</body></html>
