@@ -82,7 +82,19 @@ async function flatImages(page, file, dpr) {
       if (r.width * r.height < 4000 || !img.naturalWidth || getComputedStyle(img).visibility === 'hidden' || parseFloat(getComputedStyle(img).opacity) < 0.5) return null;
       let own = null;
       try { ctx.clearRect(0, 0, 32, 32); ctx.drawImage(img, 0, 0, 32, 32); own = sd(ctx.getImageData(0, 0, 32, 32).data); } catch { return null; }
-      return { src: (img.currentSrc || img.src).split('/').pop().slice(0, 50), x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height, own };
+      // Only the part a clipping ancestor lets through is painted: a tile wall cut off by overflow: hidden, or a
+      // carousel's off-screen slides, is flat in the capture on purpose.
+      let x0 = r.left, y0 = r.top, x1 = r.right, y1 = r.bottom;
+      for (let a = img.parentElement; a && a !== document.body; a = a.parentElement) {
+        const cs = getComputedStyle(a);
+        if (cs.position === 'fixed') break;
+        if (!/hidden|clip|auto|scroll/.test(cs.overflowX + cs.overflowY)) continue;
+        const ar = a.getBoundingClientRect();
+        if (/hidden|clip|auto|scroll/.test(cs.overflowX)) { x0 = Math.max(x0, ar.left); x1 = Math.min(x1, ar.right); }
+        if (/hidden|clip|auto|scroll/.test(cs.overflowY)) { y0 = Math.max(y0, ar.top); y1 = Math.min(y1, ar.bottom); }
+      }
+      if ((x1 - x0) * (y1 - y0) < Math.max(4000, r.width * r.height * 0.5)) return null;
+      return { src: (img.currentSrc || img.src).split('/').pop().slice(0, 50), x: x0 + scrollX, y: y0 + scrollY, w: x1 - x0, h: y1 - y0, own };
     }).filter(Boolean);
   });
   const png = PNG.sync.read(await readFile(file));

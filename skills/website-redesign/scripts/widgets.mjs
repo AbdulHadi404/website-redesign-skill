@@ -3,7 +3,10 @@
  * widget-contracts.mjs — drive interactive widgets with the KEYBOARD and check the contract a
  * screen-reader/keyboard user relies on (WAI-ARIA APG + GOV.UK error pattern).
  *
- *   node widgets.mjs <url> contracts.json
+ *   node widgets.mjs <url> contracts.json [--device phone|tablet|desktop | --width 390 --height 844] [--storage seed.json]
+ *
+ * The viewport is 1280×800 unless --device/--width say otherwise, or a contract carries its own "device" or
+ * "viewport" (a phone-only menu: { "type": "disclosure", "button": "#menu-toggle", "device": "phone" }).
  *
  * contracts.json is a list; selectors are Playwright selectors (CSS, text=…, role=…):
  *   { "type": "dialog",      "trigger": "#invite-open" }
@@ -19,10 +22,23 @@
  */
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { launch, open } from './lib/env.mjs';
+import { launch, open, parseArgs } from './lib/env.mjs';
 
-const [url, file] = process.argv.slice(2);
-if (!url || !file) { console.error('usage: node widgets.mjs <url> contracts.json'); process.exit(2); }
+const a = parseArgs();
+const [url, file] = a._;
+if (!url || !file) { console.error('usage: node widgets.mjs <url> contracts.json [--device phone | --width W --height H] [--storage seed.json]'); process.exit(2); }
+const DEVICES = {
+  phone: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 },
+  tablet: { viewport: { width: 768, height: 1024 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 },
+  desktop: { viewport: { width: 1280, height: 800 } },
+};
+const deviceFor = (c) => {
+  if (c.viewport) return { viewport: c.viewport };
+  if (c.device) return DEVICES[c.device] || DEVICES.desktop;
+  if (a.device) return DEVICES[a.device] || DEVICES.desktop;
+  if (a.width) return { viewport: { width: Number(a.width), height: Number(a.height) || 844 } };
+  return DEVICES.desktop;
+};
 const contracts = JSON.parse(await readFile(file, 'utf8'));
 const { browser } = await launch({ chrome: process.env.CHROME_PATH });
 const results = [];
@@ -268,9 +284,11 @@ const tests = {
 const t0 = performance.now();
 for (const c of contracts) {
   // Clipboard permission: copy buttons otherwise fail silently in headless Chromium and look inert.
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, permissions: ['clipboard-read', 'clipboard-write'] });
+  const ctx = await browser.newContext({ ...deviceFor(c), permissions: ['clipboard-read', 'clipboard-write'] });
   await ctx.addInitScript(RECORDER);
   const page = await ctx.newPage();
+  // A widget that is not there should fail in seconds, not after Playwright's 30 s default.
+  page.setDefaultTimeout(5000);
   await open(page, url);
   // Optional set-up steps before the contract runs (fill a form so its async status can be tested, open a panel).
   for (const s of c.before || []) {
@@ -280,7 +298,15 @@ for (const c of contracts) {
     else if (s.wait) await page.waitForTimeout(s.wait);
   }
   try { results.push(await tests[c.type](page, c)); }
-  catch (e) { results.push({ type: c.type, target: c.trigger || c.tablist || c.button || c.form, passes: [], fails: [`test error: ${e.message.split('\n')[0]}`], warns: [] }); }
+  catch (e) {
+    const target = c.trigger || c.tablist || c.button || c.form;
+    const vp = page.viewportSize();
+    // The commonest cause: a control that exists only at another width (a phone menu tested on a desktop viewport).
+    const hidden = await page.locator(target).first().evaluate((el) => !el.checkVisibility?.({ checkVisibilityCSS: true })).catch(() => null);
+    const why = hidden === true ? `${target} exists but is not visible at ${vp.width}×${vp.height} — give the contract "device": "phone" (or run with --device phone)`
+      : hidden === null ? `${target} not found on the page` : e.message.split('\n')[0];
+    results.push({ type: c.type, target, passes: [], fails: [`test error: ${why}`], warns: [] });
+  }
   await ctx.close();
 }
 await browser.close();

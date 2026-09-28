@@ -91,7 +91,50 @@ function chromiumCandidates(explicit) {
 }
 
 /** Launch Chromium through Playwright. Returns { browser, chromium }. */
-export async function launch({ chrome, headless = true } = {}) {
+/**
+ * --storage: what a stateful page needs before it loads (a filled basket, a signed-in flag, a dismissed banner).
+ * A JSON file or string: {"localStorage": {...}, "sessionStorage": {...}, "cookies": [{name, value, url}]}, or a
+ * plain object, taken as localStorage. Seeded once per tab before the first page script runs, so a reload keeps
+ * whatever the page itself changed.
+ */
+export async function readStorageSeed(arg) {
+  if (!arg || arg === true) return null;
+  const { readFile } = await import('node:fs/promises');
+  const raw = String(arg).trim().startsWith('{') ? String(arg) : await readFile(String(arg), 'utf8');
+  const j = JSON.parse(raw);
+  const plain = !('localStorage' in j || 'sessionStorage' in j || 'cookies' in j);
+  const str = (o) => Object.fromEntries(Object.entries(o || {}).map(([k, v]) => [k, typeof v === 'string' ? v : JSON.stringify(v)]));
+  return { local: str(plain ? j : j.localStorage), session: str(j.sessionStorage), cookies: j.cookies || [] };
+}
+
+function seedStorage(seed) {
+  try {
+    if (sessionStorage.getItem('__storage_seeded')) return;
+    for (const [k, v] of Object.entries(seed.local)) localStorage.setItem(k, v);
+    for (const [k, v] of Object.entries(seed.session)) sessionStorage.setItem(k, v);
+    sessionStorage.setItem('__storage_seeded', '1');
+  } catch { /* opaque origin or storage blocked */ }
+}
+
+export async function launch({ chrome, headless = true, storage } = {}) {
+  const seed = await readStorageSeed(storage ?? parseArgs().storage);
+  const r = await launchBrowser({ chrome, headless });
+  if (seed) {
+    // Every context any script opens gets the seed, so audits reach the states users actually see.
+    const newContext = r.browser.newContext.bind(r.browser);
+    r.browser.newContext = async (o) => {
+      const c = await newContext(o);
+      await c.addInitScript(seedStorage, seed);
+      if (seed.cookies.length) await c.addCookies(seed.cookies).catch((e) => console.error(`--storage cookies: ${e.message}`));
+      return c;
+    };
+    r.browser.newPage = async (o) => (await r.browser.newContext(o)).newPage();
+    console.error(`storage seeded: ${Object.keys(seed.local).length} localStorage, ${Object.keys(seed.session).length} sessionStorage, ${seed.cookies.length} cookie(s)`);
+  }
+  return r;
+}
+
+async function launchBrowser({ chrome, headless = true } = {}) {
   // Root by root, not package by package: a stale global \`playwright\` must not shadow the \`playwright-core\` pinned here.
   const pwPath = resolveFirst(['playwright', 'playwright-core']);
   const pw = pwPath ? await import(pathToFileURL(pwPath).href).then((m) => m.default ?? m) : null;

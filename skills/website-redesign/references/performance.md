@@ -70,6 +70,7 @@ Write the budget into `DESIGN.md`; the redesign must not be slower than the audi
 ## 6. Measuring
 
 ```bash
+node scripts/perf.mjs --base http://localhost:3000 --before http://localhost:4000 --paths / /pricing   # always available
 export CHROME_PATH=/path/to/chrome          # Playwright's Chromium works
 npx lighthouse http://localhost:3000/ --only-categories=performance --output=json --output=html \
   --output-path=perf/home --chrome-flags="--headless=new --no-sandbox" --quiet        # phone emulation by default
@@ -78,6 +79,7 @@ npx lhci autorun                             # budgets as assertions (Lighthouse
 npx unlighthouse-ci --site http://localhost:3000   # every route
 ```
 
+- `perf.mjs` needs nothing beyond the scripts' own Playwright, so it runs where `npx lighthouse` cannot (no network for the download, a sandbox that refuses it). It uses Lighthouse's mobile profile (4× CPU, slow 4G, cache off) and reports the median of runs for LCP and its element, FCP, CLS, TBT (the lab stand-in for INP), transfer by type, requests and DOM size, old against new with `--before`. It says when a baseline is broken: an old page whose font requests failed here looks faster than it is. Its numbers track Lighthouse's closely enough to rank builds (measured on the Azul fixture: LCP 580 → 1164 ms against a hand-written probe's 604 → 1152 ms). Use Lighthouse too where it runs, for the audits that come with the score.
 - Lighthouse is one synthetic load: take the **median of 3–5 runs**, compare before and after **with the same Lighthouse version** (the same page scored 54 on 13.5 and 65 on 12.6), and read the reported **LCP element**, not only the number — with `devtools` throttling a broken page reported LCP 1.7 s on `<nav>` because the 8.5 MB hero never painted.
 - Lighthouse navigation mode cannot measure INP; use a user flow (navigate + timespan with real clicks) or Playwright with the web-vitals library and CPU/network throttling.
 - Render-blocking head scripts don't show in TBT (it counts after FCP) — watch FCP.

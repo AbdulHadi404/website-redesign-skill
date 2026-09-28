@@ -82,19 +82,20 @@ Typecheck, lint, build and test with the project's own commands. Run `scripts/pa
 
 ## Scripts
 
-All in `scripts/` (run `npm install` there once; Playwright-based; each prints what it found and why it matters):
+All in `scripts/` (run `npm install` there once; Playwright-based; each prints what it found and why it matters). Pages that depend on saved state — a filled basket, a signed-in view, a dismissed banner — are only audited if the state exists: every script takes `--storage seed.json` (`{"localStorage": {…}, "sessionStorage": {…}, "cookies": […]}`), seeded before the page's own scripts run.
 
 | Script | Use it for |
 | --- | --- |
 | `capture.mjs` | Full-page and first-viewport captures at several widths; element shots at 3× for artwork; `--reduced-motion`, `--dark`, `--no-js`, `--forced-colors` renders; `--variant` removal tests (no text, no images, no shadows) |
 | `audit.mjs` | Measured audit of a rendered page (`--kind marketing|app|field|commerce|content|docs|service`): overflow and zoom-out, contrast on the painted ground, invisible focus, targets, fake controls, clipped content, colour-only status, headings/landmarks, images, no-JS and reduced-motion hidden content, console errors, type/spacing/radius inventory, unavailable fonts, LCP/CLS, axe-core, numbers and scripts (digit systems, numeric columns, `type=number` on RTL, untranslated strings), finish (widows, concentric radii, dead bands), generic-look signals. `--kind` also takes category names (dashboard, fintech, ecommerce, …) |
 | `a11y.mjs` | What rule engines miss: keyboard walk with focus visibility, focus hidden under sticky UI, traps, pointer-only controls, names from the accessibility tree, form-control contrast, autocomplete, reflow at 320/640, text spacing, forced colours, colour-vision renders, motion |
-| `widgets.mjs` | Keyboard contracts of custom widgets — dialog, tabs, disclosure, live region, form errors, menu button — from a small JSON of selectors |
+| `widgets.mjs` | Keyboard contracts of custom widgets (`--device phone` or per-contract `"device"` for phone-only widgets) — dialog, tabs, disclosure, live region, form errors, menu button — from a small JSON of selectors |
 | `states.mjs` | Every widget state rendered: loading, empty, error, offline, stale, long and many items, open, focused — from a JSON of routes, fixtures and steps; flags scenarios and steps that changed nothing. With `--aria --each`, a task-walkthrough driver: touch taps and swipes, a capture per step, and the accessibility tree marked with what is not readable on screen |
 | `parity.mjs` | Old site vs new: unsourced and dropped claims (Eastern Arabic digits normalised; reformatted values told apart; `--derived` for values computed from data), missing routes, lost ids, form fields, `data-*` analytics hooks and form submissions, metadata |
 | `contrast.mjs` | WCAG 2 and APCA for any CSS colours or token files |
 | `palette.mjs` | Sample a logo's colours; build 12-step OKLCH role scales (light/dark) with solved text steps |
 | `fonts.mjs` | What a font can do before you choose it: axes, tabular figures per digit system (Latin, Eastern Arabic, Persian), features, script coverage, x-height; `--fallback arial` prints a metric-matched fallback `@font-face` |
+| `perf.mjs` | Throttled lab performance when Lighthouse cannot run, or before/after on every page when it can: LCP and its element, CLS, TBT, transfer by type; flags regressions and broken baselines |
 | `compare.mjs` | Before/after sheets, blurred squint sheets, pixel diffs for regressions |
 
 Scripts report facts, not taste. A clean audit is not a good design, and a signal is a question to answer, not a rule to obey.

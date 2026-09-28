@@ -167,6 +167,38 @@ const cases = [
       [/declared as computed from data[^\n]*"30 days"/.test(md), '--derived moves "30 days" out of the failures'],
       [/every id, form field/.test(md), 'form and ids kept'],
     ] },
+  { group: 'a11y', name: 'a11y.mjs --storage: a basket that only has defects when filled', run: async () => {
+      const seeded = await run('a11y.mjs', [`${fx}/basket.html`, '--out', `${tmp}/a11y-basket`, '--storage', path.join(root, 'tools/regress/fixtures/basket-seed.json')]);
+      const empty = await run('a11y.mjs', [`${fx}/basket.html`, '--out', `${tmp}/a11y-basket-empty`]);
+      return { out: seeded.out, empty: empty.out };
+    },
+    check: ({ out, empty }) => [
+      [/storage seeded: 1 localStorage/.test(out), 'the seed is applied'],
+      [/FAIL[^\n]*1\.3\.1[^\n]*Table \(2×3\) has no header cells/.test(out), 'the filled basket\'s table is audited'],
+      [!/Table \(2×3\)/.test(empty), 'without the seed the table does not exist'],
+    ] },
+  { group: 'a11y', name: 'a11y.mjs: card links (ancestor focus ring, label in name)', run: () => run('a11y.mjs', [`${fx}/card.html`, '--out', `${tmp}/a11y-card`]),
+    check: ({ out }) => [
+      [!/2\.4\.13[^\n]*Alfama/.test(out) && !/2\.4\.7[^\n]*Alfama/.test(out), 'a ring drawn on the card (:has) counts as the link\'s focus indicator'],
+      [!/2\.5\.3[^\n]*Tavira/.test(out), 'a name that starts with the card heading passes 2.5.3'],
+      [/FAIL[^\n]*2\.5\.3[^\n]*"Bloom" is not part of accessible name "Buy now"/.test(out), '"Buy now" on a card headed "Bloom" fails 2.5.3'],
+    ] },
+  { group: 'capture', name: 'capture.mjs: flat-image self-check', run: async () => {
+      const covered = await run('capture.mjs', ['--base', fx, '--paths', '/covered.html', '/wall.html', '--widths', '1440', '--out', `${tmp}/cap`]);
+      return covered;
+    },
+    check: ({ out }) => [
+      [/covered-html-1440\.png[^\n]*painted flat/.test(out), 'an image covered by an overlay is reported'],
+      [/wall-html-1440\.png/.test(out) && !/wall-html-1440\.png[^\n]*painted flat/.test(out), 'a wall clipped by overflow: hidden on purpose is not'],
+    ] },
+  { group: 'perf', name: 'perf.mjs: layout shift and long tasks', run: async () => {
+      const r = await run('perf.mjs', ['--base', fx, '--paths', '/cls.html', '--runs', '1', '--out', `${tmp}/perf.md`]);
+      return { ...r, md: await readFile(`${tmp}/perf.md`, 'utf8').catch(() => '') };
+    },
+    check: ({ md }) => [
+      [/CLS 0\.1\d\d over 0\.1|CLS 0\.[2-9]\d* over 0\.1/.test(md), 'the late 300px insert is measured as CLS over 0.1'],
+      [/TBT \d+ ms over 200 ms/.test(md), 'the 400 ms busy loop is measured as TBT over 200 ms'],
+    ] },
   { group: 'contrast', name: 'contrast.mjs', run: () => run('contrast.mjs', ['#767676', '#ffffff']),
     check: ({ out }) => [[/4\.54:1/.test(out), '#767676 on white = 4.54:1']] },
 ];

@@ -4,6 +4,7 @@
  *
  *   node fonts.mjs path/to/Font.woff2 [more files…]
  *   node fonts.mjs --google "Inter" "IBM Plex Sans Arabic" "Source Serif 4"
+ *   node fonts.mjs --google "Alegreya" --style italic [--weight 700]   the instance to inspect
  *   node fonts.mjs brand.woff2 --fallback arial        # metric-matched fallback @font-face (no layout shift on swap)
  *   node fonts.mjs brand-700.woff2 --fallback arial:700 --family "Brand"   # match the weight you fall back to
  *
@@ -106,17 +107,21 @@ async function fallbackFace(buf, label) {
 }
 
 async function google(family) {
-  const q = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(family).replace(/%20/g, '+')}:ital,wght@0,400;0,700&display=swap`;
+  // --style italic / --weight 600 pick the instance to inspect (a display face chosen for its italic is judged on it).
+  const italic = a.style === 'italic' ? 1 : 0, weight = Number(a.weight) || 400;
+  const q = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(family).replace(/%20/g, '+')}:ital,wght@${italic},${weight}${italic || weight !== 400 ? '' : ';0,700'}&display=swap`;
   let css = await fetch(q, { headers: { 'user-agent': UA } }).then((r) => (r.ok ? r.text() : null)).catch(() => null);
   if (!css) css = await fetch(`https://fonts.googleapis.com/css2?family=${encodeURIComponent(family).replace(/%20/g, '+')}&display=swap`, { headers: { 'user-agent': UA } }).then((r) => (r.ok ? r.text() : null)).catch(() => null);
   if (!css) { console.log(`\n${family}: not found on Google Fonts (or no network).`); return; }
   const faces = [...css.matchAll(/\/\*\s*([\w-]+)\s*\*\/\s*@font-face\s*{([^}]*)}/g)].map((m) => ({ subset: m[1], body: m[2] }));
   const subsets = [...new Set(faces.map((f) => f.subset))];
-  const pick = faces.find((f) => f.subset === 'latin') || faces[0];
+  if (italic && !faces.some((f) => /font-style:\s*italic/.test(f.body))) console.log(`\n${family}: no italic on Google Fonts — inspecting the upright.`);
+  const want = (f) => (!italic || /font-style:\s*italic/.test(f.body));
+  const pick = faces.find((f) => f.subset === 'latin' && want(f)) || faces.find((f) => f.subset === 'latin') || faces[0];
   const url = /url\(([^)]+)\)/.exec(pick.body)[1];
   const buf = Buffer.from(await fetch(url).then((r) => r.arrayBuffer()));
   // The latin subset is inspected for figures and features; for a script-specific family inspect that subset too.
-  await inspect(buf, `${family} (Google Fonts, ${pick.subset} subset)`, { subsets, bytes: buf.length, format: 'woff2' });
+  await inspect(buf, `${family}${/italic/.test(pick.body) ? ' Italic' : ''} (Google Fonts, ${pick.subset} subset)`, { subsets, bytes: buf.length, format: 'woff2' });
   if (a.fallback) await fallbackFace(buf, family);
   const script = faces.find((f) => ['arabic', 'hebrew', 'devanagari', 'thai', 'bengali'].includes(f.subset));
   if (script) {

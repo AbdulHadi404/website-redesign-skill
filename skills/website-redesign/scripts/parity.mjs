@@ -43,11 +43,12 @@ function extract() {
     .replace(/\u066B/g, '.').replace(/\u066C/g, ',').replace(/\u066A/g, '%').replace(/\u2212/g, '-')
     .replace(/[\u200E\u200F\u061C\u202A-\u202E\u2066-\u2069]/g, '');
   // A claim keeps the noun it counts ("12,000+ teams"): the same number counting something else is a new claim.
-  const NOUN = '(?:\\s(?:active\\s|happy\\s|paying\\s|monthly\\s)?(?:users?|customers?|clients?|teams?|companies|businesses|brands|countries|languages|integrations|reviews?|ratings?|stars?|downloads|installs|employees|people|members|subscribers|developers|partners|farms|stores|shops|orders|projects|sites|websites|apps|hours?|days?|weeks?|months?|years?|minutes?|seconds?))';
+  // Same-line spaces only: "4\nReview and pay" is a step number beside a heading, not "4 reviews".
+  const NOUN = '(?:[ \\t\\u00a0](?:active\\s|happy\\s|paying\\s|monthly\\s)?(?:users?|customers?|clients?|teams?|companies|businesses|brands|countries|languages|integrations|reviews?|ratings?|stars?|downloads|installs|employees|people|members|subscribers|developers|partners|farms|stores|shops|orders|projects|sites|websites|apps|hours?|days?|weeks?|months?|years?|minutes?|seconds?))';
   const CUR = '(?:SAR|AED|USD|EUR|GBP|QAR|KWD|BHD|OMR|EGP|MAD|INR|ر\\.س|د\\.إ|ريال|درهم|جنيه)';
   // Ratings ("4.8/5") but not dates ("9/5/2026", "15/9"); amounts with a currency code or Arabic symbol either side.
-  const claimRe = new RegExp(`(?:(?<![\\d/.])\\d(?:\\.\\d)?\\s?\\/\\s?(?:5|10)\\b(?!\\s?\\/\\s?\\d)|${CUR}\\s?\\d[\\d,.]*|\\b\\d[\\d,.]*\\s?${CUR}|\\b\\d(?:\\.\\d)?\\s?(?:out of|of)\\s?(?:5|10)\\b|[$€£¥₹]\\s?\\d[\\d,.]*(?:\\s?(?:k|m|bn|million|billion))?(?:\\s?\\/\\s?\\w+)?|\\b\\d[\\d,.]*\\s?(?:%|x\\b|×|\\+(?!\\s?\\d)|k\\+?\\b|m\\+?\\b|ms\\b(?!\\/)|(?:L|kg|km|kWh|GB|TB|lb|mph|km\\/h)\\b)${NOUN}?|\\b\\d[\\d,.]*${NOUN}\\b|[↑↓▲▼]\\s?[+−-]?\\d[\\d,.]*\\s?%?|\\b(?:since|founded in|est\\.?)\\s+\\d{4}\\b)`, 'gi');
-  const claims = [...new Set([...text.matchAll(claimRe)].map((m) => m[0].replace(/\s+/g, ' ').trim()).filter((c) => !/\dmS$|\d mS$/.test(c)))];
+  const claimRe = new RegExp(`(?:(?<![\\d/.])\\d(?:\\.\\d)?\\s?\\/\\s?(?:5|10)\\b(?!\\s?\\/\\s?\\d)|${CUR}\\s?\\d[\\d,.]*|\\b\\d[\\d,.]*\\s?${CUR}|\\b\\d(?:\\.\\d)?\\s?(?:out of|of)\\s?(?:5|10)\\b|[$€£¥₹]\\s?\\d[\\d,.]*(?:\\s?(?:k|m|bn|million|billion))?(?:\\s?\\/\\s?\\w+)?|\\b\\d[\\d,.]*[ \\u00a0]?(?:%|x\\b(?![ \\u00a0]?\\d)|×(?![ \\u00a0]?\\d)|\\+(?!\\s?\\d)|m²|m2\\b|cm\\b|mm\\b|k\\+?\\b|m\\+?\\b|ms\\b(?!\\/)|(?:L|kg|km|kWh|GB|TB|lb|mph|km\\/h)\\b)${NOUN}?|\\b\\d[\\d,.]*${NOUN}\\b|[↑↓▲▼]\\s?[+−-]?\\d[\\d,.]*\\s?%?|\\b(?:since|founded in|est\\.?)\\s+\\d{4}\\b)`, 'gi');
+  const claims = [...new Set([...text.matchAll(claimRe)].map((m) => m[0].replace(/\s+/g, ' ').trim().replace(/(\d)[.,]+$/, '$1')).filter((c) => !/\dmS$|\d mS$/.test(c)))];
   const quotes = [...new Set([
     ...[...document.querySelectorAll('blockquote, q')].map((q) => q.innerText.replace(/\s+/g, ' ').trim()),
     ...[...text.matchAll(/[“"]([^”"\n]{25,280})[”"]/g)].map((m) => m[1].trim()),
@@ -171,12 +172,17 @@ const unsourcedAll = [...newAll.claims].filter((c) => !has(oldNorm, c) && !(sour
 // A number that appears in the source files without its unit (sample data in JSON, a figure in a CMS field) is likely
 // sourced; it is listed for a look rather than failed.
 const bareNumber = (c) => (c.match(/\d[\d,.]*/) || [''])[0].replace(/,/g, '');
-const numberInSources = unsourcedAll.filter((c) => sourceNorm && bareNumber(c).length >= 2 && new RegExp(`(^|[^\\d.])${bareNumber(c).replace('.', '\\.')}([^\\d]|$)`).test(sourceNorm));
+// By value as well as by string: "£18.00" on the page is 18.0 in products.json.
+const sourceValues = sourceNorm ? new Set([...sourceNorm.matchAll(/\d[\d,]*(?:\.\d+)?/g)].map((m) => parseFloat(m[0].replace(/,/g, '')))) : new Set();
+const numberInSources = unsourcedAll.filter((c) => sourceNorm && bareNumber(c).length >= 2 && (new RegExp(`(^|[^\\d.])${bareNumber(c).replace('.', '\\.')}([^\\d]|$)`).test(sourceNorm) || sourceValues.has(parseFloat(bareNumber(c)))));
 // --derived: values the new build computes from data it already had (days late, bucket limits, axis ticks, a
 // month-on-month change). Declared, they are listed as such instead of failing; say in DESIGN.md how each is computed.
 const derivedPats = asList(a.derived).map((d) => (/^\/.*\/[a-z]*$/.test(d) ? new RegExp(d.slice(1, d.lastIndexOf('/')), d.slice(d.lastIndexOf('/') + 1)) : d.toLowerCase()));
 const isDerived = (c) => derivedPats.some((p) => (p instanceof RegExp ? p.test(c) : c.toLowerCase().includes(p)));
 const derived = unsourcedAll.filter((c) => !numberInSources.includes(c) && isDerived(c));
+// "3 days" is sourced by a data field named for its noun ("lead_time_days": 3), however short the number.
+const keyed = (c) => { const m = c.match(/^(\d[\d,.]*)\s+([a-z]+?)s?$/i); return !!(m && sourceNorm && new RegExp(`${m[2].toLowerCase()}[a-z_]*["']?\\s*[:=]\\s*${m[1].replace(/,/g, '').replace('.', '\\.')}\\b`).test(sourceNorm)); };
+for (const c of unsourcedAll) if (!numberInSources.includes(c) && keyed(c)) numberInSources.push(c);
 const unsourced = unsourcedAll.filter((c) => !numberInSources.includes(c) && !derived.includes(c));
 const unsourcedQuotes = [...newAll.quotes].filter((q) => !oldNorm.includes(norm(q).slice(0, 60)) && !(sourceNorm && sourceNorm.includes(norm(q).slice(0, 60))));
 md(unsourced.length || unsourcedQuotes.length ? [

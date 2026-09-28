@@ -28,7 +28,7 @@
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { launch, open } from './lib/env.mjs';
+import { launch, open, decodeImages } from './lib/env.mjs';
 
 const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i === -1 ? d : args[i + 1]; };
@@ -73,6 +73,12 @@ const describe = `(el) => {
   const txt = (el.innerText || el.getAttribute('aria-label') || el.value || '').trim().replace(/\\s+/g, ' ').slice(0, 40);
   return el.tagName.toLowerCase() + id + cls + (txt ? ' "' + txt + '"' : '');
 }`;
+
+// Full-page renders of a page with lazy images show blank squares below the fold unless the images are asked for.
+async function loadEverything(page) {
+  await page.evaluate(() => document.querySelectorAll('img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; })).catch(() => {});
+  await decodeImages(page).catch(() => {});
+}
 
 async function newPage(opts = {}) {
   const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1, ...opts });
@@ -134,7 +140,8 @@ async function newPage(opts = {}) {
       else if (src === 'placeholder') add('FAIL', 'names', '3.3.2', `${role} "${name}" is named only by its placeholder (disappears on input)`, await domInfo(n.backendDOMNodeId));
       else if (src === 'title') add('WARN', 'names', '4.1.2', `${role} "${name}" is named only by a title tooltip (not visible on touch/keyboard)`, await domInfo(n.backendDOMNodeId));
       if (name && ['aria-label', 'aria-labelledby'].includes(src) && ['button', 'link', 'menuitem', 'tab', 'checkbox', 'radio', 'switch'].includes(role)) {
-        const visible = await domInfo(n.backendDOMNodeId, '(el)=> (el.innerText||"").trim().replace(/\\s+/g," ")');
+        // A card link's visible label is its heading (or first line), not every word on the card.
+        const visible = await domInfo(n.backendDOMNodeId, '(el)=> { const h = el.querySelector("h1,h2,h3,h4,h5,h6,[role=heading]"); const t = (h ? h.innerText : (el.innerText||"").split("\\n").find((l) => l.trim()) || "").trim(); return t.replace(/\\s+/g," "); }');
         const words = (t) => t.toLowerCase().normalize('NFKD').replace(/[^\p{L}\p{N}]+/gu, ' ').trim().split(' ').filter(Boolean);
         const inOrder = (a, b) => { let i = 0; for (const w of b) if (w === a[i]) i++; return i === a.length; };
         if (visible && visible.length > 1 && !inOrder(words(visible), words(name)))
@@ -407,9 +414,34 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
         await page.evaluate(() => { let a = document.activeElement; while (a && a.shadowRoot && a.shadowRoot.activeElement) a = a.shadowRoot.activeElement; window.__a11yEl = a; a.blur(); });
         const b = await page.screenshot({ clip, animations: 'disabled', caret: 'hide' });
         await page.evaluate(() => window.__a11yEl.focus({ preventScroll: true }));
-        const d = await pixelDiff(a, b);
+        let d = await pixelDiff(a, b);
+        let r = info.rect;
+        // A ring drawn on an ancestor (a card styled with :has(a:focus-visible) or :focus-within) falls outside the
+        // element's own box: find the ancestor whose outline/shadow/border changes with focus and measure there.
+        const host = await page.evaluate(() => {
+          const el = window.__a11yEl, style = (n) => { const c = getComputedStyle(n); return [c.outlineStyle, c.outlineWidth, c.outlineColor, c.boxShadow, c.borderColor, c.backgroundColor].join('|'); };
+          const chain = []; for (let n = el.parentElement, i = 0; n && n !== document.body && i < 4; n = n.parentElement, i++) chain.push([n, style(n)]);
+          el.blur();
+          const changed = chain.find(([n, s]) => style(n) !== s);
+          el.focus({ preventScroll: true });
+          if (!changed) return null;
+          const q = changed[0].getBoundingClientRect();
+          return { x: Math.round(q.x), vy: Math.round(q.y), w: Math.round(q.width), h: Math.round(q.height) };
+        }).catch(() => null);
+        if (host && host.w > r.w) {
+          const c2 = { x: Math.max(0, host.x - pad), y: Math.max(0, host.vy - pad), width: Math.min(W, host.w + pad * 2), height: Math.min(H, host.h + pad * 2) };
+          c2.width = Math.min(c2.width, W - c2.x); c2.height = Math.min(c2.height, H - c2.y);
+          if (c2.width > 2 && c2.height > 2) {
+            const a2 = await page.screenshot({ clip: c2, animations: 'disabled', caret: 'hide' });
+            await page.evaluate(() => window.__a11yEl.blur());
+            const b2 = await page.screenshot({ clip: c2, animations: 'disabled', caret: 'hide' });
+            await page.evaluate(() => window.__a11yEl.focus({ preventScroll: true }));
+            const d2 = await pixelDiff(a2, b2);
+            if (d2.changed3 > d.changed3) { d = d2; r = { ...host, y: host.vy }; info.ringOn = 'ancestor'; }
+          }
+        }
         // 2.4.13: indicator area >= a 2 CSS px perimeter; count only the sides that are on screen
-        const r = info.rect, top = r.vy - pad >= 0, bottom = r.vy + r.h + pad <= H, left = r.x - pad >= 0, right = r.x + r.w + pad <= W;
+        const top = r.vy - pad >= 0, bottom = r.vy + r.h + pad <= H, left = r.x - pad >= 0, right = r.x + r.w + pad <= W;
         const vw = Math.min(r.w, W), vh = Math.min(r.h, H);
         const perimeterArea = 2 * (vw * (top + bottom) + vh * (left + right));
         info.indicator = { changed: d.changed, changed3: d.changed3, perimeterArea };
@@ -559,6 +591,7 @@ for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
 // ---------- 12. forced colors ----------
 {
   const page = await newPage({ forcedColors: 'active', colorScheme: 'dark' });
+  await loadEverything(page);
   await page.screenshot({ path: path.join(outDir, 'forced-colors.png'), fullPage: true });
   const r = await page.evaluate((describeSrc) => {
     const d = eval(describeSrc);
@@ -584,6 +617,7 @@ for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
 // ---------- 12b. colour-vision screenshots (for visual review of colour-only meaning, 1.4.1) ----------
 {
   const page = await newPage();
+  await loadEverything(page);
   const cdp = await page.context().newCDPSession(page);
   for (const type of ['achromatopsia', 'deuteranopia']) {
     await cdp.send('Emulation.setEmulatedVisionDeficiency', { type });

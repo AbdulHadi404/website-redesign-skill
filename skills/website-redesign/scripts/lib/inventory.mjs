@@ -64,6 +64,8 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   const visible = (el) => {
     const r = el.getBoundingClientRect();
     if (r.width < 1 || r.height < 1) return false;
+    // Closed <details> content still reports client rects in Chromium; checkVisibility knows it is not rendered.
+    if (el.checkVisibility && !el.checkVisibility({ checkVisibilityCSS: false })) return false;
     for (let e = el; e && e !== document.documentElement; e = e.parentElement) {
       const cs = getComputedStyle(e);
       if (cs.display === 'none' || cs.visibility === 'hidden' || cs.visibility === 'collapse' || parseFloat(cs.opacity) < 0.05) return false;
@@ -334,13 +336,22 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   }
 
   // ---- families that are declared but not actually available --------------
+  // A face the page loaded is available whatever its style: a family served only in italic, or only in the weights
+  // the page uses, would otherwise measure as its fallback when probed upright at 400.
+  const loadedFaces = new Set([...(document.fonts || [])].filter((f) => f.status === 'loaded').map((f) => f.family.replace(/^["']|["']$/g, '').toLowerCase()));
   const probe = (family) => {
+    if (loadedFaces.has(family.toLowerCase())) return false;
     const span = document.createElement('span');
     span.textContent = 'mmmmmmmmmwwwwwlliI10@#';
     span.style.cssText = 'position:absolute;left:-9999px;top:0;font-size:48px;white-space:nowrap';
     document.body.appendChild(span);
     const w = (f) => { span.style.fontFamily = f; return span.getBoundingClientRect().width; };
-    const res = ['monospace', 'serif', 'sans-serif'].every((fb) => Math.abs(w(`"${family}", ${fb}`) - w(fb)) < 0.5);
+    const same = () => ['monospace', 'serif', 'sans-serif'].every((fb) => Math.abs(w(`"${family}", ${fb}`) - w(fb)) < 0.5);
+    let res = true;
+    for (const [style, weight] of [['normal', 400], ['italic', 400], ['normal', 700], ['italic', 700]]) {
+      span.style.fontStyle = style; span.style.fontWeight = weight;
+      if (!same()) { res = false; break; }
+    }
     span.remove();
     return res; // true = renders identically to every fallback = not available
   };
@@ -427,6 +438,8 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       const ccs = getComputedStyle(c);
       const ct = c.textContent.trim();
       if (!ct || ct.length > h.textContent.trim().length * 0.6) continue;
+      // A step number ("1 Contact") or an icon is a marker, not an accented word.
+      if (/^[\d\s.:)–-]+$/.test(ct) || c.closest('[aria-hidden="true"]')) continue;
       if (ccs.fontStyle !== hcs.fontStyle || ccs.color !== hcs.color || ccs.fontFamily !== hcs.fontFamily || ccs.backgroundClip === 'text' || ccs.webkitBackgroundClip === 'text') { accentedHeadlines.push(`${short(h.textContent, 50)} [${ct}]`); break; }
     }
   }

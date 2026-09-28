@@ -62,7 +62,10 @@ Measurement replaces guesswork wherever something can be measured. All are in `s
 | `contrast.mjs` | WCAG 2 and APCA for any colours or token file. |
 | `palette.mjs` | Samples a logo's colours and builds 12-step OKLCH role scales with solved text steps. |
 | `fonts.mjs` | What can this font file actually do? Axes, tabular figures per digit system (Latin, Eastern Arabic, Persian), features, scripts; `--fallback` prints a metric-matched fallback `@font-face`. |
+| `perf.mjs` | How fast is each page on a throttled phone, old against new, when Lighthouse cannot run (or alongside it)? LCP and its element, CLS, TBT, transfer by type; broken baselines named. |
 | `compare.mjs` | Before/after sheets, blurred squint sheets, pixel diffs. |
+
+Every script takes `--storage seed.json` to seed localStorage, sessionStorage or cookies, so a filled basket or a signed-in view can be audited.
 
 Requirements: Node ≥ 18, `npm install` in `skills/website-redesign/scripts/`, and a Chromium. The scripts find Playwright's browsers on disk; set `CHROME_PATH` to choose one, or run `npm run browser`. They work offline against a local dev server.
 
