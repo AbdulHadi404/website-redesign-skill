@@ -1,0 +1,1 @@
+import { XYChart, AnimatedLineSeries, Axis, Tooltip } from "@visx/xychart"; export const A=({d})=> <XYChart height={300} xScale={{type:"band"}} yScale={{type:"linear"}}><Axis orientation="bottom"/><AnimatedLineSeries dataKey="a" data={d} xAccessor={d=>d.x} yAccessor={d=>d.y}/><Tooltip renderTooltip={()=>null}/></XYChart>;

@@ -1,0 +1,1 @@
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts"; export const A=({d})=> <ResponsiveContainer><LineChart data={d}><CartesianGrid/><XAxis dataKey="x"/><YAxis/><Tooltip/><Line dataKey="y"/></LineChart></ResponsiveContainer>;

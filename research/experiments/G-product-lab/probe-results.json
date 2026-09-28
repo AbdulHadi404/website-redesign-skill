@@ -1,0 +1,1592 @@
+{
+ "govuk-guidance": {
+  "1440": {
+   "facts": {
+    "viewport": "1440x900",
+    "fontFamilies": {
+     "GDS Transport": 1
+    },
+    "distinctFontSizes": 5,
+    "fontSizes": [
+     16,
+     19,
+     24,
+     30,
+     48
+    ],
+    "bodySize": 19,
+    "maxSize": 48,
+    "displayToBodyRatio": 2.5,
+    "h1": [
+     48
+    ],
+    "h2": [
+     24,
+     19
+    ],
+    "h3": [
+     19
+    ],
+    "weights": [
+     400,
+     700
+    ],
+    "distinctTextColors": 3,
+    "distinctBgColors": 3,
+    "saturatedHueBuckets": {
+     "150": 1,
+     "210": 13
+    },
+    "distinctRadii": 1,
+    "topRadii": [
+     "50px\u00d71"
+    ],
+    "distinctSpacings": 12,
+    "offFourPxGrid": 7,
+    "spacingValues": [
+     5,
+     8,
+     10,
+     15,
+     16,
+     20,
+     25,
+     30,
+     32,
+     40,
+     45,
+     50
+    ],
+    "shadows": 1,
+    "coloredShadows": 1,
+    "gradientBackgrounds": 0,
+    "gradientText": 0,
+    "backdropBlur": 0,
+    "cardLikeContainers": 0,
+    "shareOfTextInCards": 0,
+    "centeredTextShare": 0.01,
+    "trackedCapsLabels": 0,
+    "monoShare": 0,
+    "maxCharsPerLine": 62,
+    "interactiveTotal": 14,
+    "interactiveAboveFold": 9,
+    "textCharsAboveFold": 844,
+    "textUnitsAboveFold": 22,
+    "unlabelledCharts": 0,
+    "targetsUnder24px": 1,
+    "controlHeights": [
+     43
+    ],
+    "tableRowHeights": [],
+    "pillButtons": 0,
+    "iconOnlyButtons": 0,
+    "emojiAsUI": 0,
+    "fixedOrSticky": 0,
+    "hoverMoveRules": 0,
+    "genericCopyHits": [],
+    "bigNumberClaims": 0
+   },
+   "tells": [],
+   "score": 0
+  },
+  "390": {
+   "facts": {
+    "viewport": "390x844",
+    "fontFamilies": {
+     "GDS Transport": 1
+    },
+    "distinctFontSizes": 6,
+    "fontSizes": [
+     14,
+     16,
+     18,
+     21,
+     30,
+     32
+    ],
+    "bodySize": 16,
+    "maxSize": 32,
+    "displayToBodyRatio": 2,
+    "h1": [
+     32
+    ],
+    "h2": [
+     18,
+     16,
+     21
+    ],
+    "h3": [
+     16
+    ],
+    "weights": [
+     400,
+     700
+    ],
+    "distinctTextColors": 3,
+    "distinctBgColors": 3,
+    "saturatedHueBuckets": {
+     "150": 1,
+     "210": 13
+    },
+    "distinctRadii": 1,
+    "topRadii": [
+     "50px\u00d71"
+    ],
+    "distinctSpacings": 10,
+    "offFourPxGrid": 8,
+    "spacingValues": [
+     5,
+     8,
+     10,
+     14,
+     15,
+     20,
+     22,
+     25,
+     30,
+     45
+    ],
+    "shadows": 1,
+    "coloredShadows": 1,
+    "gradientBackgrounds": 0,
+    "gradientText": 0,
+    "backdropBlur": 0,
+    "cardLikeContainers": 0,
+    "shareOfTextInCards": 0,
+    "centeredTextShare": 0.01,
+    "trackedCapsLabels": 0,
+    "monoShare": 0,
+    "maxCharsPerLine": 41,
+    "interactiveTotal": 14,
+    "interactiveAboveFold": 6,
+    "textCharsAboveFold": 762,
+    "textUnitsAboveFold": 19,
+    "unlabelledCharts": 0,
+    "targetsUnder24px": 1,
+    "controlHeights": [
+     38
+    ],
+    "tableRowHeights": [],
+    "pillButtons": 0,
+    "iconOnlyButtons": 0,
+    "emojiAsUI": 0,
+    "fixedOrSticky": 0,
+    "hoverMoveRules": 0,
+    "genericCopyHits": [],
+    "bigNumberClaims": 0
+   },
+   "tells": [],
+   "score": 0
+  }
+ },
+ "govuk-question": {
+  "1440": {
+   "facts": {
+    "viewport": "1440x900",
+    "fontFamilies": {
+     "GDS Transport": 1
+    },
+    "distinctFontSizes": 5,
+    "fontSizes": [
+     16,
+     19,
+     24,
+     30,
+     36
+    ],
+    "bodySize": 19,
+    "maxSize": 36,
+    "displayToBodyRatio": 1.9,
+    "h1": [
+     36
+    ],
+    "h2": [
+     24
+    ],
+    "h3": [],
+    "weights": [
+     400,
+     700
+    ],
+    "distinctTextColors": 6,
+    "distinctBgColors": 5,
+    "saturatedHueBuckets": {
+     "0": 8,
+     "150": 1,
+     "210": 3
+    },
+    "distinctRadii": 0,
+    "topRadii": [],
+    "distinctSpacings": 12,
+    "offFourPxGrid": 7,
+    "spacingValues": [
+     2,
+     5,
+     8,
+     10,
+     14,
+     15,
+     20,
+     25,
+     30,
+     32,
+     40,
+     50
+    ],
+    "shadows": 1,
+    "coloredShadows": 1,
+    "gradientBackgrounds": 0,
+    "gradientText": 0,
+    "backdropBlur": 0,
+    "cardLikeContainers": 0,
+    "shareOfTextInCards": 0,
+    "centeredTextShare": 0.03,
+    "trackedCapsLabels": 0,
+    "monoShare": 0,
+    "maxCharsPerLine": null,
+    "interactiveTotal": 12,
+    "interactiveAboveFold": 12,
+    "textCharsAboveFold": 291,
+    "textUnitsAboveFold": 19,
+    "unlabelledCharts": 0,
+    "targetsUnder24px": 2,
+    "controlHeights": [
+     38,
+     40
+    ],
+    "tableRowHeights": [],
+    "pillButtons": 0,
+    "iconOnlyButtons": 0,
+    "emojiAsUI": 0,
+    "fixedOrSticky": 0,
+    "hoverMoveRules": 0,
+    "genericCopyHits": [],
+    "bigNumberClaims": 0
+   },
+   "tells": [],
+   "score": 0
+  },
+  "390": {
+   "facts": {
+    "viewport": "390x844",
+    "fontFamilies": {
+     "GDS Transport": 1
+    },
+    "distinctFontSizes": 5,
+    "fontSizes": [
+     14,
+     16,
+     18,
+     24,
+     30
+    ],
+    "bodySize": 16,
+    "maxSize": 30,
+    "displayToBodyRatio": 1.9,
+    "h1": [
+     24
+    ],
+    "h2": [
+     18
+    ],
+    "h3": [],
+    "weights": [
+     400,
+     700
+    ],
+    "distinctTextColors": 6,
+    "distinctBgColors": 5,
+    "saturatedHueBuckets": {
+     "0": 8,
+     "150": 1,
+     "210": 3
+    },
+    "distinctRadii": 0,
+    "topRadii": [],
+    "distinctSpacings": 10,
+    "offFourPxGrid": 6,
+    "spacingValues": [
+     2,
+     5,
+     8,
+     10,
+     12,
+     15,
+     20,
+     22,
+     25,
+     30
+    ],
+    "shadows": 1,
+    "coloredShadows": 1,
+    "gradientBackgrounds": 0,
+    "gradientText": 0,
+    "backdropBlur": 0,
+    "cardLikeContainers": 0,
+    "shareOfTextInCards": 0,
+    "centeredTextShare": 0.03,
+    "trackedCapsLabels": 0,
+    "monoShare": 0,
+    "maxCharsPerLine": 35,
+    "interactiveTotal": 12,
+    "interactiveAboveFold": 12,
+    "textCharsAboveFold": 291,
+    "textUnitsAboveFold": 19,
+    "unlabelledCharts": 0,
+    "targetsUnder24px": 3,
+    "controlHeights": [
+     38,
+     40
+    ],
+    "tableRowHeights": [],
+    "pillButtons": 0,
+    "iconOnlyButtons": 0,
+    "emojiAsUI": 0,
+    "fixedOrSticky": 0,
+    "hoverMoveRules": 0,
+    "genericCopyHits": [],
+    "bigNumberClaims": 0
+   },
+   "tells": [],
+   "score": 0
+  }
+ },
+ "primer-issues": {
+  "1440": {
+   "facts": {
+    "viewport": "1440x900",
+    "fontFamilies": {
+     "-apple-system": 1
+    },
+    "distinctFontSizes": 3,
+    "fontSizes": [
+     12,
+     14,
+     16
+    ],
+    "bodySize": 12,
+    "maxSize": 16,
+    "displayToBodyRatio": 1.3,
+    "h1": [],
+    "h2": [],
+    "h3": [],
+    "weights": [
+     400,
+     500,
+     600
+    ],
+    "distinctTextColors": 6,
+    "distinctBgColors": 9,
+    "saturatedHueBuckets": {
+     "0": 2,
+     "30": 1,
+     "150": 1,
+     "210": 4,
+     "270": 1
+    },
+    "distinctRadii": 2,
+    "topRadii": [
+     "6px\u00d718",
+     "24px\u00d710"
+    ],
+    "distinctSpacings": 10,
+    "offFourPxGrid": 4,
+    "spacingValues": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     10,
+     12,
+     16,
+     24,
+     32
+    ],
+    "shadows": 3,
+    "coloredShadows": 0,
+    "gradientBackgrounds": 0,
+    "gradientText": 0,
+    "backdropBlur": 0,
+    "cardLikeContainers": 0,
+    "shareOfTextInCards": 0,
+    "centeredTextShare": 0.09,
+    "trackedCapsLabels": 0,
+    "monoShare": 0,
+    "maxCharsPerLine": null,
+    "interactiveTotal": 31,
+    "interactiveAboveFold": 31,
+    "textCharsAboveFold": 779,
+    "textUnitsAboveFold": 54,
+    "unlabelledCharts": 0,
+    "targetsUnder24px": 16,
+    "controlHeights": [
+     32,
+     33
+    ],
+    "tableRowHeights": [
+     79
+    ],
+    "pillButtons": 0,
+    "iconOnlyButtons": 0,
+    "emojiAsUI": 0,
+    "fixedOrSticky": 0,
+    "hoverMoveRules": 0,
+    "genericCopyHits": [],
+    "bigNumberClaims": 0
+   },
+   "tells": [],
+   "score": 0
+  },
+  "390": {
+   "facts": {
+    "viewport": "390x844",
+    "fontFamilies": {
+     "-apple-system": 1
+    },
+    "distinctFontSizes": 3,
+    "fontSizes": [
+     12,
+     14,
+     16
+    ],
+    "bodySize": 12,
+    "maxSize": 16,
+    "displayToBodyRatio": 1.3,
+    "h1": [],
+    "h2": [],
+    "h3": [],
+    "weights": [
+     400,
+     500,
+     600
+    ],
+    "distinctTextColors": 6,
+    "distinctBgColors": 9,
+    "saturatedHueBuckets": {
+     "0": 2,
+     "30": 1,
+     "150": 1,
+     "210": 3,
+     "270": 1
+    },
+    "distinctRadii": 2,
+    "topRadii": [
+     "6px\u00d715",
+     "24px\u00d710"
+    ],
+    "distinctSpacings": 10,
+    "offFourPxGrid": 4,
+    "spacingValues": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     10,
+     12,
+     16,
+     24,
+     32
+    ],
+    "shadows": 3,
+    "coloredShadows": 0,
+    "gradientBackgrounds": 0,
+    "gradientText": 0,
+    "backdropBlur": 0,
+    "cardLikeContainers": 0,
+    "shareOfTextInCards": 0,
+    "centeredTextShare": 0.09,
+    "trackedCapsLabels": 0,
+    "monoShare": 0,
+    "maxCharsPerLine": null,
+    "interactiveTotal": 29,
+    "interactiveAboveFold": 24,
+    "textCharsAboveFold": 579,
+    "textUnitsAboveFold": 43,
+    "unlabelledCharts": 0,
+    "targetsUnder24px": 8,
+    "controlHeights": [
+     32,
+     106
+    ],
+    "tableRowHeights": [
+     103,
+     124,
+     127,
+     145
+    ],
+    "pillButtons": 0,
+    "iconOnlyButtons": 0,
+    "emojiAsUI": 0,
+    "fixedOrSticky": 0,
+    "hoverMoveRules": 0,
+    "genericCopyHits": [],
+    "bigNumberClaims": 0
+   },
+   "tells": [],
+   "score": 0
+  }
+ },
+ "carbon-table": {
+  "1440": {
+   "facts": {
+    "viewport": "1440x900",
+    "fontFamilies": {
+     "IBM Plex Sans": 1
+    },
+    "distinctFontSizes": 4,
+    "fontSizes": [
+     12,
+     14,
+     20,
+     28
+    ],
+    "bodySize": 14,
+    "maxSize": 28,
+    "displayToBodyRatio": 2,
+    "h1": [
+     28
+    ],
+    "h2": [
+     20
+    ],
+    "h3": [],
+    "weights": [
+     400,
+     600
+    ],
+    "distinctTextColors": 4,
+    "distinctBgColors": 4,
+    "saturatedHueBuckets": {
+     "210": 6
+    },
+    "distinctRadii": 0,
+    "topRadii": [],
+    "distinctSpacings": 11,
+    "offFourPxGrid": 4,
+    "spacingValues": [
+     2,
+     3,
+     7,
+     8,
+     14,
+     15,
+     16,
+     24,
+     32,
+     48,
+     64
+    ],
+    "shadows": 0,
+    "coloredShadows": 0,
+    "gradientBackgrounds": 0,
+    "gradientText": 0,
+    "backdropBlur": 0,
+    "cardLikeContainers": 0,
+    "shareOfTextInCards": 0,
+    "centeredTextShare": 0,
+    "trackedCapsLabels": 0,
+    "monoShare": 0,
+    "maxCharsPerLine": 4,
+    "interactiveTotal": 20,
+    "interactiveAboveFold": 20,
+    "textCharsAboveFold": 754,
+    "textUnitsAboveFold": 90,
+    "unlabelledCharts": 0,
+    "targetsUnder24px": 13,
+    "controlHeights": [
+     48
+    ],
+    "tableRowHeights": [
+     32
+    ],
+    "pillButtons": 0,
+    "iconOnlyButtons": 0,
+    "emojiAsUI": 0,
+    "fixedOrSticky": 1,
+    "hoverMoveRules": 0,
+    "genericCopyHits": [],
+    "bigNumberClaims": 0
+   },
+   "tells": [],
+   "score": 0
+  },
+  "390": {
+   "facts": {
+    "viewport": "390x844",
+    "fontFamilies": {
+     "IBM Plex Sans": 1
+    },
+    "distinctFontSizes": 4,
+    "fontSizes": [
+     12,
+     14,
+     20,
+     28
+    ],
+    "bodySize": 14,
+    "maxSize": 28,
+    "displayToBodyRatio": 2,
+    "h1": [
+     28
+    ],
+    "h2": [
+     20
+    ],
+    "h3": [],
+    "weights": [
+     400,
+     600
+    ],
+    "distinctTextColors": 4,
+    "distinctBgColors": 4,
+    "saturatedHueBuckets": {
+     "210": 6
+    },
+    "distinctRadii": 0,
+    "topRadii": [],
+    "distinctSpacings": 11,
+    "offFourPxGrid": 4,
+    "spacingValues": [
+     2,
+     3,
+     7,
+     8,
+     14,
+     15,
+     16,
+     24,
+     32,
+     48,
+     64
+    ],
+    "shadows": 0,
+    "coloredShadows": 0,
+    "gradientBackgrounds": 0,
+    "gradientText": 0,
+    "backdropBlur": 0,
+    "cardLikeContainers": 0,
+    "shareOfTextInCards": 0,
+    "centeredTextShare": 0,
+    "trackedCapsLabels": 0,
+    "monoShare": 0,
+    "maxCharsPerLine": null,
+    "interactiveTotal": 17,
+    "interactiveAboveFold": 14,
+    "textCharsAboveFold": 567,
+    "textUnitsAboveFold": 66,
+    "unlabelledCharts": 0,
+    "targetsUnder24px": 13,
+    "controlHeights": [
+     48
+    ],
+    "tableRowHeights": [
+     68
+    ],
+    "pillButtons": 0,
+    "iconOnlyButtons": 0,
+    "emojiAsUI": 0,
+    "fixedOrSticky": 1,
+    "hoverMoveRules": 0,
+    "genericCopyHits": [],
+    "bigNumberClaims": 0
+   },
+   "tells": [],
+   "score": 0
+  }
+ },
+ "slop-landing": {
+  "1440": {
+   "facts": {
+    "viewport": "1440x900",
+    "fontFamilies": {
+     "Inter": 1
+    },
+    "distinctFontSizes": 8,
+    "fontSizes": [
+     14,
+     16,
+     18,
+     20,
+     24,
+     36,
+     48,
+     72
+    ],
+    "bodySize": 16,
+    "maxSize": 72,
+    "displayToBodyRatio": 4.5,
+    "h1": [
+     72
+    ],
+    "h2": [
+     36
+    ],
+    "h3": [
+     20,
+     18
+    ],
+    "weights": [
+     400,
+     500,
+     600,
+     700,
+     800
+    ],
+    "distinctTextColors": 11,
+    "distinctBgColors": 7,
+    "saturatedHueBuckets": {
+     "60": 3,
+     "240": 4
+    },
+    "distinctRadii": 4,
+    "topRadii": [
+     "16px\u00d712",
+     "12px\u00d76",
+     "8px\u00d71",
+     "24px\u00d71"
+    ],
+    "distinctSpacings": 13,
+    "offFourPxGrid": 1,
+    "spacingValues": [
+     4,
+     6,
+     8,
+     12,
+     16,
+     20,
+     24,
+     32,
+     40,
+     48,
+     64,
+     96,
+     160
+    ],
+    "shadows": 13,
+    "coloredShadows": 3,
+    "gradientBackgrounds": 14,
+    "gradientText": 4,
+    "backdropBlur": 1,
+    "cardLikeContainers": 14,
+    "shareOfTextInCards": 0.66,
+    "centeredTextShare": 0.39,
+    "trackedCapsLabels": 2,
+    "monoShare": 0,
+    "maxCharsPerLine": 64,
+    "interactiveTotal": 11,
+    "interactiveAboveFold": 7,
+    "textCharsAboveFold": 407,
+    "textUnitsAboveFold": 19,
+    "unlabelledCharts": 0,
+    "targetsUnder24px": 4,
+    "controlHeights": [
+     36,
+     50,
+     56,
+     62
+    ],
+    "tableRowHeights": [],
+    "pillButtons": 7,
+    "iconOnlyButtons": 0,
+    "emojiAsUI": 20,
+    "fixedOrSticky": 1,
+    "hoverMoveRules": 9,
+    "genericCopyHits": [
+     "supercharge",
+     "seamless",
+     "streamline",
+     "unlock",
+     "revolutionary",
+     "game-changer",
+     "cutting-edge",
+     "blazing",
+     "transform your",
+     "all-in-one",
+     "powerful features",
+     "trusted by",
+     "world-class"
+    ],
+    "bigNumberClaims": 5
+   },
+   "tells": [
+    {
+     "id": "ai-purple",
+     "w": 3,
+     "why": "57% of saturated colours sit in the indigo/violet band"
+    },
+    {
+     "id": "gradient-text",
+     "w": 3,
+     "why": "4 gradient-filled text elements"
+    },
+    {
+     "id": "gradient-everywhere",
+     "w": 2,
+     "why": "14 gradient backgrounds"
+    },
+    {
+     "id": "coloured-glow-shadows",
+     "w": 2,
+     "why": "3 saturated (glow) shadows"
+    },
+    {
+     "id": "emoji-as-ui",
+     "w": 2,
+     "why": "20 emoji used in headings/nav/buttons/icons"
+    },
+    {
+     "id": "card-soup",
+     "w": 2,
+     "why": "14 card containers hold 66% of the text"
+    },
+    {
+     "id": "pill-everything",
+     "w": 1,
+     "why": "7 pill-shaped buttons/links"
+    },
+    {
+     "id": "one-big-radius",
+     "w": 1,
+     "why": "dominant radius 16px on 12 boxes"
+    },
+    {
+     "id": "generic-copy",
+     "w": 2,
+     "why": "generic phrases: supercharge, seamless, streamline, unlock, revolutionary, game-changer, cutting-edge, blazing, transform your, all-in-one, powerful features, trusted by, world-class"
+    },
+    {
+     "id": "big-number-claims",
+     "w": 1,
+     "why": "5 unsupported-looking \"10x / 99.9% / 50K+\" claims \u2014 verify each is real"
+    },
+    {
+     "id": "hover-lift-everywhere",
+     "w": 1,
+     "why": "9 :hover rules that move or scale"
+    },
+    {
+     "id": "centred-section-headings",
+     "w": 1,
+     "why": "4/4 section headings centred"
+    },
+    {
+     "id": "badge-pill-above-hero",
+     "w": 1,
+     "why": "a pill badge (\"New\", \"\u2728 \u2026\") sits above the hero headline"
+    },
+    {
+     "id": "tinted-icon-tiles",
+     "w": 2,
+     "why": "6 icons sitting in pastel rounded squares (the feature-grid kit)"
+    },
+    {
+     "id": "five-star-testimonials",
+     "w": 1,
+     "why": "star-rated testimonial cards \u2014 check every quote and name is real and attributable"
+    },
+    {
+     "id": "most-popular-tier",
+     "w": 0,
+     "why": "three-tier pricing with a \"Most popular\" highlight \u2014 fine if true, a template if not"
+    }
+   ],
+   "score": 25
+  },
+  "390": {
+   "facts": {
+    "viewport": "390x844",
+    "fontFamilies": {
+     "Inter": 1
+    },
+    "distinctFontSizes": 7,
+    "fontSizes": [
+     14,
+     16,
+     18,
+     20,
+     24,
+     36,
+     48
+    ],
+    "bodySize": 16,
+    "maxSize": 48,
+    "displayToBodyRatio": 3,
+    "h1": [
+     48
+    ],
+    "h2": [
+     36
+    ],
+    "h3": [
+     20,
+     18
+    ],
+    "weights": [
+     400,
+     500,
+     600,
+     700,
+     800
+    ],
+    "distinctTextColors": 11,
+    "distinctBgColors": 7,
+    "saturatedHueBuckets": {
+     "60": 3,
+     "240": 4
+    },
+    "distinctRadii": 4,
+    "topRadii": [
+     "16px\u00d712",
+     "12px\u00d76",
+     "8px\u00d71",
+     "24px\u00d71"
+    ],
+    "distinctSpacings": 13,
+    "offFourPxGrid": 1,
+    "spacingValues": [
+     4,
+     6,
+     8,
+     12,
+     16,
+     20,
+     24,
+     32,
+     40,
+     48,
+     64,
+     96,
+     160
+    ],
+    "shadows": 13,
+    "coloredShadows": 3,
+    "gradientBackgrounds": 14,
+    "gradientText": 4,
+    "backdropBlur": 1,
+    "cardLikeContainers": 13,
+    "shareOfTextInCards": 0.62,
+    "centeredTextShare": 0.39,
+    "trackedCapsLabels": 2,
+    "monoShare": 0,
+    "maxCharsPerLine": 35,
+    "interactiveTotal": 7,
+    "interactiveAboveFold": 3,
+    "textCharsAboveFold": 313,
+    "textUnitsAboveFold": 9,
+    "unlabelledCharts": 0,
+    "targetsUnder24px": 0,
+    "controlHeights": [
+     36,
+     50,
+     80,
+     90
+    ],
+    "tableRowHeights": [],
+    "pillButtons": 7,
+    "iconOnlyButtons": 0,
+    "emojiAsUI": 20,
+    "fixedOrSticky": 1,
+    "hoverMoveRules": 9,
+    "genericCopyHits": [
+     "supercharge",
+     "seamless",
+     "streamline",
+     "unlock",
+     "revolutionary",
+     "game-changer",
+     "cutting-edge",
+     "blazing",
+     "transform your",
+     "all-in-one",
+     "powerful features",
+     "trusted by",
+     "world-class"
+    ],
+    "bigNumberClaims": 5
+   },
+   "tells": [
+    {
+     "id": "ai-purple",
+     "w": 3,
+     "why": "57% of saturated colours sit in the indigo/violet band"
+    },
+    {
+     "id": "gradient-text",
+     "w": 3,
+     "why": "4 gradient-filled text elements"
+    },
+    {
+     "id": "gradient-everywhere",
+     "w": 2,
+     "why": "14 gradient backgrounds"
+    },
+    {
+     "id": "coloured-glow-shadows",
+     "w": 2,
+     "why": "3 saturated (glow) shadows"
+    },
+    {
+     "id": "emoji-as-ui",
+     "w": 2,
+     "why": "20 emoji used in headings/nav/buttons/icons"
+    },
+    {
+     "id": "card-soup",
+     "w": 2,
+     "why": "13 card containers hold 62% of the text"
+    },
+    {
+     "id": "pill-everything",
+     "w": 1,
+     "why": "7 pill-shaped buttons/links"
+    },
+    {
+     "id": "one-big-radius",
+     "w": 1,
+     "why": "dominant radius 16px on 12 boxes"
+    },
+    {
+     "id": "generic-copy",
+     "w": 2,
+     "why": "generic phrases: supercharge, seamless, streamline, unlock, revolutionary, game-changer, cutting-edge, blazing, transform your, all-in-one, powerful features, trusted by, world-class"
+    },
+    {
+     "id": "big-number-claims",
+     "w": 1,
+     "why": "5 unsupported-looking \"10x / 99.9% / 50K+\" claims \u2014 verify each is real"
+    },
+    {
+     "id": "hover-lift-everywhere",
+     "w": 1,
+     "why": "9 :hover rules that move or scale"
+    },
+    {
+     "id": "centred-section-headings",
+     "w": 1,
+     "why": "4/4 section headings centred"
+    },
+    {
+     "id": "badge-pill-above-hero",
+     "w": 1,
+     "why": "a pill badge (\"New\", \"\u2728 \u2026\") sits above the hero headline"
+    },
+    {
+     "id": "tinted-icon-tiles",
+     "w": 2,
+     "why": "6 icons sitting in pastel rounded squares (the feature-grid kit)"
+    },
+    {
+     "id": "five-star-testimonials",
+     "w": 1,
+     "why": "star-rated testimonial cards \u2014 check every quote and name is real and attributable"
+    },
+    {
+     "id": "most-popular-tier",
+     "w": 0,
+     "why": "three-tier pricing with a \"Most popular\" highlight \u2014 fine if true, a template if not"
+    }
+   ],
+   "score": 25
+  }
+ },
+ "slop-dashboard": {
+  "1440": {
+   "facts": {
+    "viewport": "1440x900",
+    "fontFamilies": {
+     "Inter": 1
+    },
+    "distinctFontSizes": 5,
+    "fontSizes": [
+     12,
+     14,
+     16,
+     18,
+     30
+    ],
+    "bodySize": 14,
+    "maxSize": 30,
+    "displayToBodyRatio": 2.1,
+    "h1": [
+     30
+    ],
+    "h2": [
+     18
+    ],
+    "h3": [],
+    "weights": [
+     400,
+     500,
+     600,
+     700
+    ],
+    "distinctTextColors": 7,
+    "distinctBgColors": 8,
+    "saturatedHueBuckets": {
+     "150": 4,
+     "270": 3
+    },
+    "distinctRadii": 3,
+    "topRadii": [
+     "12px\u00d710",
+     "16px\u00d710",
+     "8px\u00d79"
+    ],
+    "distinctSpacings": 9,
+    "offFourPxGrid": 1,
+    "spacingValues": [
+     4,
+     8,
+     10,
+     12,
+     16,
+     20,
+     24,
+     32,
+     40
+    ],
+    "shadows": 11,
+    "coloredShadows": 1,
+    "gradientBackgrounds": 17,
+    "gradientText": 0,
+    "backdropBlur": 0,
+    "cardLikeContainers": 9,
+    "shareOfTextInCards": 0.69,
+    "centeredTextShare": 0.07,
+    "trackedCapsLabels": 0,
+    "monoShare": 0,
+    "maxCharsPerLine": 38,
+    "interactiveTotal": 12,
+    "interactiveAboveFold": 12,
+    "textCharsAboveFold": 772,
+    "textUnitsAboveFold": 52,
+    "unlabelledCharts": 2,
+    "targetsUnder24px": 0,
+    "controlHeights": [
+     30,
+     36,
+     40,
+     44
+    ],
+    "tableRowHeights": [],
+    "pillButtons": 4,
+    "iconOnlyButtons": 2,
+    "emojiAsUI": 15,
+    "fixedOrSticky": 1,
+    "hoverMoveRules": 0,
+    "genericCopyHits": [
+     "unlock"
+    ],
+    "bigNumberClaims": 3
+   },
+   "tells": [
+    {
+     "id": "ai-purple",
+     "w": 3,
+     "why": "43% of saturated colours sit in the indigo/violet band"
+    },
+    {
+     "id": "gradient-everywhere",
+     "w": 2,
+     "why": "17 gradient backgrounds"
+    },
+    {
+     "id": "emoji-as-ui",
+     "w": 2,
+     "why": "15 emoji used in headings/nav/buttons/icons"
+    },
+    {
+     "id": "card-soup",
+     "w": 2,
+     "why": "9 card containers hold 69% of the text"
+    },
+    {
+     "id": "pill-everything",
+     "w": 1,
+     "why": "4 pill-shaped buttons/links"
+    },
+    {
+     "id": "one-big-radius",
+     "w": 1,
+     "why": "dominant radius 12px on 10 boxes"
+    },
+    {
+     "id": "big-number-claims",
+     "w": 1,
+     "why": "3 unsupported-looking \"10x / 99.9% / 50K+\" claims \u2014 verify each is real"
+    },
+    {
+     "id": "tinted-icon-tiles",
+     "w": 2,
+     "why": "4 icons sitting in pastel rounded squares (the feature-grid kit)"
+    },
+    {
+     "id": "decorative-charts",
+     "w": 2,
+     "why": "2 chart(s) with no axis values or labels \u2014 a picture of data, not data"
+    },
+    {
+     "id": "kpi-tile-row",
+     "w": 1,
+     "why": "3 KPI tiles with % deltas \u2014 does each number drive a decision, and is the comparison period real?"
+    },
+    {
+     "id": "greeting-header",
+     "w": 1,
+     "why": "a greeting in the page title slot \u2014 the title should name the place and scope"
+    },
+    {
+     "id": "success-toast",
+     "w": 0,
+     "why": "a toast for a routine success \u2014 prefer inline confirmation next to the trigger"
+    }
+   ],
+   "score": 18
+  },
+  "390": {
+   "facts": {
+    "viewport": "390x844",
+    "fontFamilies": {
+     "Inter": 1
+    },
+    "distinctFontSizes": 5,
+    "fontSizes": [
+     12,
+     14,
+     16,
+     18,
+     30
+    ],
+    "bodySize": 14,
+    "maxSize": 30,
+    "displayToBodyRatio": 2.1,
+    "h1": [
+     30
+    ],
+    "h2": [
+     18
+    ],
+    "h3": [],
+    "weights": [
+     400,
+     500,
+     600,
+     700
+    ],
+    "distinctTextColors": 5,
+    "distinctBgColors": 7,
+    "saturatedHueBuckets": {
+     "150": 4,
+     "270": 1
+    },
+    "distinctRadii": 3,
+    "topRadii": [
+     "16px\u00d79",
+     "8px\u00d78",
+     "12px\u00d75"
+    ],
+    "distinctSpacings": 9,
+    "offFourPxGrid": 1,
+    "spacingValues": [
+     4,
+     8,
+     10,
+     12,
+     16,
+     20,
+     24,
+     32,
+     40
+    ],
+    "shadows": 11,
+    "coloredShadows": 1,
+    "gradientBackgrounds": 15,
+    "gradientText": 0,
+    "backdropBlur": 0,
+    "cardLikeContainers": 0,
+    "shareOfTextInCards": 0,
+    "centeredTextShare": 0.07,
+    "trackedCapsLabels": 0,
+    "monoShare": 0,
+    "maxCharsPerLine": 38,
+    "interactiveTotal": 6,
+    "interactiveAboveFold": 4,
+    "textCharsAboveFold": 246,
+    "textUnitsAboveFold": 19,
+    "unlabelledCharts": 2,
+    "targetsUnder24px": 0,
+    "controlHeights": [
+     30,
+     36,
+     40,
+     60
+    ],
+    "tableRowHeights": [],
+    "pillButtons": 3,
+    "iconOnlyButtons": 2,
+    "emojiAsUI": 10,
+    "fixedOrSticky": 1,
+    "hoverMoveRules": 0,
+    "genericCopyHits": [],
+    "bigNumberClaims": 3
+   },
+   "tells": [
+    {
+     "id": "gradient-everywhere",
+     "w": 2,
+     "why": "15 gradient backgrounds"
+    },
+    {
+     "id": "emoji-as-ui",
+     "w": 2,
+     "why": "10 emoji used in headings/nav/buttons/icons"
+    },
+    {
+     "id": "one-big-radius",
+     "w": 1,
+     "why": "dominant radius 16px on 9 boxes"
+    },
+    {
+     "id": "big-number-claims",
+     "w": 1,
+     "why": "3 unsupported-looking \"10x / 99.9% / 50K+\" claims \u2014 verify each is real"
+    },
+    {
+     "id": "tinted-icon-tiles",
+     "w": 2,
+     "why": "4 icons sitting in pastel rounded squares (the feature-grid kit)"
+    },
+    {
+     "id": "decorative-charts",
+     "w": 2,
+     "why": "2 chart(s) with no axis values or labels \u2014 a picture of data, not data"
+    },
+    {
+     "id": "greeting-header",
+     "w": 1,
+     "why": "a greeting in the page title slot \u2014 the title should name the place and scope"
+    },
+    {
+     "id": "success-toast",
+     "w": 0,
+     "why": "a toast for a routine success \u2014 prefer inline confirmation next to the trigger"
+    }
+   ],
+   "score": 11
+  }
+ },
+ "house-style": {
+  "1440": {
+   "facts": {
+    "viewport": "1440x900",
+    "fontFamilies": {
+     "Inter": 0.69,
+     "JetBrains Mono": 0.16,
+     "Instrument Serif": 0.15
+    },
+    "distinctFontSizes": 8,
+    "fontSizes": [
+     12,
+     13,
+     14,
+     15,
+     17,
+     20,
+     56,
+     88
+    ],
+    "bodySize": 20,
+    "maxSize": 88,
+    "displayToBodyRatio": 4.4,
+    "h1": [
+     88
+    ],
+    "h2": [
+     56
+    ],
+    "h3": [
+     19.89
+    ],
+    "weights": [
+     400,
+     700
+    ],
+    "distinctTextColors": 5,
+    "distinctBgColors": 1,
+    "saturatedHueBuckets": {
+     "30": 12
+    },
+    "distinctRadii": 0,
+    "topRadii": [],
+    "distinctSpacings": 11,
+    "offFourPxGrid": 4,
+    "spacingValues": [
+     12,
+     13,
+     14,
+     17,
+     20,
+     22,
+     24,
+     32,
+     48,
+     96,
+     120
+    ],
+    "shadows": 0,
+    "coloredShadows": 0,
+    "gradientBackgrounds": 0,
+    "gradientText": 0,
+    "backdropBlur": 0,
+    "cardLikeContainers": 0,
+    "shareOfTextInCards": 0,
+    "centeredTextShare": 0,
+    "trackedCapsLabels": 2,
+    "monoShare": 0.16,
+    "maxCharsPerLine": 51,
+    "interactiveTotal": 5,
+    "interactiveAboveFold": 5,
+    "textCharsAboveFold": 291,
+    "textUnitsAboveFold": 13,
+    "unlabelledCharts": 0,
+    "targetsUnder24px": 3,
+    "controlHeights": [
+     52
+    ],
+    "tableRowHeights": [],
+    "pillButtons": 0,
+    "iconOnlyButtons": 0,
+    "emojiAsUI": 0,
+    "fixedOrSticky": 0,
+    "hoverMoveRules": 0,
+    "genericCopyHits": [],
+    "bigNumberClaims": 0
+   },
+   "tells": [
+    {
+     "id": "tasteful-default (cream+serif)",
+     "w": 3,
+     "why": "warm cream page background with a serif display face \u2014 the 2025\u201326 \"tasteful\" default"
+    },
+    {
+     "id": "mono/tracked-caps chrome",
+     "w": 1,
+     "why": "2 tracked-caps labels, mono share 16%"
+    },
+    {
+     "id": "eyebrow-above-every-heading",
+     "w": 1,
+     "why": "2/2 section headings have a small-caps eyebrow"
+    }
+   ],
+   "score": 5
+  },
+  "390": {
+   "facts": {
+    "viewport": "390x844",
+    "fontFamilies": {
+     "Inter": 0.69,
+     "JetBrains Mono": 0.16,
+     "Instrument Serif": 0.15
+    },
+    "distinctFontSizes": 8,
+    "fontSizes": [
+     12,
+     13,
+     14,
+     15,
+     17,
+     20,
+     56,
+     88
+    ],
+    "bodySize": 20,
+    "maxSize": 88,
+    "displayToBodyRatio": 4.4,
+    "h1": [
+     88
+    ],
+    "h2": [
+     56
+    ],
+    "h3": [
+     19.89
+    ],
+    "weights": [
+     400,
+     700
+    ],
+    "distinctTextColors": 5,
+    "distinctBgColors": 1,
+    "saturatedHueBuckets": {
+     "30": 12
+    },
+    "distinctRadii": 0,
+    "topRadii": [],
+    "distinctSpacings": 11,
+    "offFourPxGrid": 4,
+    "spacingValues": [
+     12,
+     13,
+     14,
+     17,
+     20,
+     22,
+     24,
+     32,
+     48,
+     96,
+     120
+    ],
+    "shadows": 0,
+    "coloredShadows": 0,
+    "gradientBackgrounds": 0,
+    "gradientText": 0,
+    "backdropBlur": 0,
+    "cardLikeContainers": 0,
+    "shareOfTextInCards": 0,
+    "centeredTextShare": 0,
+    "trackedCapsLabels": 2,
+    "monoShare": 0.16,
+    "maxCharsPerLine": 25,
+    "interactiveTotal": 5,
+    "interactiveAboveFold": 4,
+    "textCharsAboveFold": 219,
+    "textUnitsAboveFold": 9,
+    "unlabelledCharts": 0,
+    "targetsUnder24px": 3,
+    "controlHeights": [
+     52
+    ],
+    "tableRowHeights": [],
+    "pillButtons": 0,
+    "iconOnlyButtons": 0,
+    "emojiAsUI": 0,
+    "fixedOrSticky": 0,
+    "hoverMoveRules": 0,
+    "genericCopyHits": [],
+    "bigNumberClaims": 0
+   },
+   "tells": [
+    {
+     "id": "tasteful-default (cream+serif)",
+     "w": 3,
+     "why": "warm cream page background with a serif display face \u2014 the 2025\u201326 \"tasteful\" default"
+    },
+    {
+     "id": "mono/tracked-caps chrome",
+     "w": 1,
+     "why": "2 tracked-caps labels, mono share 16%"
+    },
+    {
+     "id": "eyebrow-above-every-heading",
+     "w": 1,
+     "why": "2/2 section headings have a small-caps eyebrow"
+    }
+   ],
+   "score": 5
+  }
+ }
+}

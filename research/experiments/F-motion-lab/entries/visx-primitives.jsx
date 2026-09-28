@@ -1,0 +1,1 @@
+import { LinePath } from "@visx/shape"; import { scaleLinear } from "@visx/scale"; import { AxisBottom } from "@visx/axis"; const x=scaleLinear({domain:[0,1],range:[0,100]}); export const A=({d})=> <svg><LinePath data={d} x={d=>x(d.x)} y={d=>x(d.y)}/><AxisBottom scale={x}/></svg>;

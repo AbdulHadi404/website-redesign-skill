@@ -1,0 +1,1 @@
+import { AgCharts, ModuleRegistry, CartesianChartModule, LineSeriesModule, NumberAxisModule, CategoryAxisModule } from "ag-charts-community"; ModuleRegistry.registerModules([CartesianChartModule,LineSeriesModule,NumberAxisModule,CategoryAxisModule]); AgCharts.create({container:document.body,data:[],series:[{type:"line",xKey:"x",yKey:"y"}]});

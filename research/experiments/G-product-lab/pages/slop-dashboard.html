@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/slop.css">
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased">
+  <div class="flex min-h-screen">
+    <aside class="w-64 border-r border-slate-200 bg-white p-6 hidden md:block">
+      <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600"></div><span class="font-bold text-lg">Nexus</span></div>
+      <nav class="mt-10 space-y-2 text-sm">
+        <a class="flex items-center gap-3 rounded-xl bg-violet-50 px-4 py-3 font-medium text-violet-700" href="#">🏠 Dashboard</a>
+        <a class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600" href="#">📈 Analytics</a>
+        <a class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600" href="#">👥 Customers</a>
+        <a class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600" href="#">📦 Products</a>
+        <a class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600" href="#">⚙️ Settings</a>
+      </nav>
+      <div class="mt-10 rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 p-5 text-white"><p class="font-semibold">Upgrade to Pro ✨</p><p class="mt-1 text-sm text-violet-100">Unlock AI insights and more.</p><button class="mt-4 rounded-full bg-white px-4 py-2 text-sm font-semibold text-violet-700">Upgrade</button></div>
+    </aside>
+    <main class="flex-1 p-10">
+      <div class="flex items-center justify-between">
+        <div><h1 class="text-3xl font-bold tracking-tight">Welcome back, Alex 👋</h1><p class="mt-1 text-slate-500">Here's what's happening with your business today.</p></div>
+        <div class="flex items-center gap-3">
+          <button class="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center" aria-label="Search">🔍</button>
+          <button class="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center" aria-label="Notifications">🔔</button>
+          <button class="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center" aria-label="Filter">⚙️</button>
+          <button class="rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/30">+ New Report</button>
+        </div>
+      </div>
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><div class="flex items-center justify-between"><p class="text-sm text-slate-500">Total Revenue</p><div class="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center">💰</div></div><p class="mt-4 text-3xl font-bold">$45,231.89</p><p class="mt-1 text-sm text-emerald-600">+20.1% from last month</p></div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><div class="flex items-center justify-between"><p class="text-sm text-slate-500">Subscriptions</p><div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center">👥</div></div><p class="mt-4 text-3xl font-bold">+2,350</p><p class="mt-1 text-sm text-emerald-600">+180.1% from last month</p></div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><div class="flex items-center justify-between"><p class="text-sm text-slate-500">Sales</p><div class="w-10 h-10 rounded-xl bg-pink-100 flex items-center justify-center">💳</div></div><p class="mt-4 text-3xl font-bold">+12,234</p><p class="mt-1 text-sm text-emerald-600">+19% from last month</p></div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><div class="flex items-center justify-between"><p class="text-sm text-slate-500">Active Now</p><div class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">⚡</div></div><p class="mt-4 text-3xl font-bold">+573</p><p class="mt-1 text-sm text-emerald-600">+201 since last hour</p></div>
+      </div>
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="md:col-span-2 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><div class="flex items-center justify-between"><h2 class="text-lg font-semibold">Overview</h2><button class="rounded-full border border-slate-200 px-3 py-1 text-sm">This year ▾</button></div>
+          <div class="mt-6 h-64 flex items-end gap-3"><div class="flex-1 rounded-t-lg bg-gradient-to-t from-violet-500 to-indigo-400" style="height:40%"></div><div class="flex-1 rounded-t-lg bg-gradient-to-t from-violet-500 to-indigo-400" style="height:70%"></div><div class="flex-1 rounded-t-lg bg-gradient-to-t from-violet-500 to-indigo-400" style="height:55%"></div><div class="flex-1 rounded-t-lg bg-gradient-to-t from-violet-500 to-indigo-400" style="height:90%"></div><div class="flex-1 rounded-t-lg bg-gradient-to-t from-violet-500 to-indigo-400" style="height:35%"></div><div class="flex-1 rounded-t-lg bg-gradient-to-t from-violet-500 to-indigo-400" style="height:80%"></div><div class="flex-1 rounded-t-lg bg-gradient-to-t from-violet-500 to-indigo-400" style="height:60%"></div><div class="flex-1 rounded-t-lg bg-gradient-to-t from-violet-500 to-indigo-400" style="height:75%"></div></div></div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><h2 class="text-lg font-semibold">Recent Sales</h2><p class="text-sm text-slate-500">You made 265 sales this month.</p>
+          <div class="mt-6 space-y-5">
+            <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-gradient-to-br from-violet-400 to-pink-400"></div><div class="flex-1"><p class="text-sm font-medium">Olivia Martin</p><p class="text-xs text-slate-500">olivia.martin@email.com</p></div><p class="font-medium">+$1,999.00</p></div>
+            <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-400"></div><div class="flex-1"><p class="text-sm font-medium">Jackson Lee</p><p class="text-xs text-slate-500">jackson.lee@email.com</p></div><p class="font-medium">+$39.00</p></div>
+            <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-gradient-to-br from-pink-400 to-orange-400"></div><div class="flex-1"><p class="text-sm font-medium">Isabella Nguyen</p><p class="text-xs text-slate-500">isabella.nguyen@email.com</p></div><p class="font-medium">+$299.00</p></div>
+          </div></div>
+      </div>
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><h2 class="text-lg font-semibold">Traffic Sources</h2><div class="mt-6 mx-auto w-40 h-40 rounded-full" style="background:conic-gradient(#8b5cf6 0 45%,#6366f1 45% 70%,#ec4899 70% 88%,#e2e8f0 88%)"></div></div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><h2 class="text-lg font-semibold">Goal Progress</h2><div class="mt-6 space-y-4"><div><p class="text-sm">Revenue</p><div class="mt-1 h-2 rounded-full bg-slate-100"><div class="h-2 w-3/4 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500"></div></div></div><div><p class="text-sm">Users</p><div class="mt-1 h-2 rounded-full bg-slate-100"><div class="h-2 w-1/2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500"></div></div></div></div></div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><h2 class="text-lg font-semibold">AI Insights ✨</h2><p class="mt-4 text-sm text-slate-600">Your revenue is trending up! Consider launching a new campaign to capitalize on this momentum and boost engagement.</p><button class="mt-4 rounded-full bg-violet-600 px-4 py-2 text-sm font-semibold text-white">Generate Report</button></div>
+      </div>
+    </main>
+  </div>
+  <div class="fixed bottom-6 right-6 rounded-xl border border-slate-200 bg-white p-4 shadow-2xl text-sm">✅ Dashboard updated successfully!</div>
+</body>
+</html>

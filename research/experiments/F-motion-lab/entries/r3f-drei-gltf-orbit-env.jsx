@@ -1,0 +1,1 @@
+import { Canvas } from "@react-three/fiber"; import { OrbitControls, useGLTF, Environment } from "@react-three/drei"; const M=()=>{const g=useGLTF("a.glb"); return <primitive object={g.scene}/>}; export const A=()=> <Canvas><M/><OrbitControls/><Environment preset="city"/></Canvas>;

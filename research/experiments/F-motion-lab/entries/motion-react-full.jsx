@@ -1,0 +1,1 @@
+import { motion, AnimatePresence } from "motion/react"; export const A=({show})=> <AnimatePresence>{show && <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}/>}</AnimatePresence>;

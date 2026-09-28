@@ -1,0 +1,1 @@
+import { Renderer, Camera, Transform, Program, Mesh, Box } from "ogl"; const r=new Renderer(); const gl=r.gl; const s=new Transform(); new Mesh(gl,{geometry:new Box(gl),program:new Program(gl,{vertex:"",fragment:""})}).setParent(s); r.render({scene:s,camera:new Camera(gl)});

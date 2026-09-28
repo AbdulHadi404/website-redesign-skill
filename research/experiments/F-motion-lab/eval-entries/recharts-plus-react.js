@@ -1,0 +1,1 @@
+import * as A from "react"; import * as B from "react-dom/client"; import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts"; window.X=[A,B,LineChart,Line,XAxis,YAxis,Tooltip,ResponsiveContainer];

@@ -1,0 +1,32 @@
+[
+ [
+  "ag-charts-modular-line",
+  1351224,
+  406914,
+  325496
+ ],
+ [
+  "echarts-core-line-canvas",
+  502391,
+  171294,
+  146015
+ ],
+ [
+  "meshopt-decoder",
+  26474,
+  7251,
+  6400
+ ],
+ [
+  "motion-js-spring",
+  55276,
+  20371,
+  18623
+ ],
+ [
+  "three-webgpu-all",
+  1082696,
+  298036,
+  239232
+ ]
+]

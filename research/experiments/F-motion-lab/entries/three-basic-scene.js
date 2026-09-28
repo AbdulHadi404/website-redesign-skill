@@ -1,0 +1,1 @@
+import { WebGLRenderer, Scene, PerspectiveCamera, Mesh, BoxGeometry, MeshStandardMaterial, DirectionalLight } from "three"; const r=new WebGLRenderer(); const s=new Scene(); s.add(new Mesh(new BoxGeometry(),new MeshStandardMaterial()),new DirectionalLight()); r.render(s,new PerspectiveCamera());

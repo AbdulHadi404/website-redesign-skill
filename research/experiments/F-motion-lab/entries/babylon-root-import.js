@@ -1,0 +1,1 @@
+import { Engine, Scene, ArcRotateCamera, HemisphericLight, MeshBuilder, Vector3 } from "@babylonjs/core"; const e=new Engine(document.querySelector("canvas")); const s=new Scene(e); new ArcRotateCamera("c",0,0,1,Vector3.Zero(),s); new HemisphericLight("l",Vector3.Up(),s); MeshBuilder.CreateBox("b",{},s); e.runRenderLoop(()=>s.render());
