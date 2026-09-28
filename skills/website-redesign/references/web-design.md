@@ -73,15 +73,15 @@ Budgets per product type, the UI-decision → metric map and the measuring proce
 
 ## 6. Navigation, header, footer
 
-- Header: mark + wordmark left (links home), ≤ 5–7 links, the primary action right; on phones the primary action stays visible and the links go behind a labelled "Menu". The sticky header gains a rule or shadow only once the page has scrolled.
-- Footer: the map of the site (product, company, legal), the legal row, a restated brand line; on a consumer site, the categories or regions served, if real. A large wordmark in the footer is a legitimate identity moment.
+- Header: mark + wordmark left (links home), ≤ 5–7 links, the primary action right; on phones the primary action stays visible and the links go behind a labelled "Menu". While the hero's primary action is on screen, the persistent header CTA is secondary (outline or quiet), so the action colour marks one thing per view; it may take the primary style once the hero action has scrolled away, or on pages without one. A theme switch, if the site has themes, sits in the header on every page at every width, never only in the footer: a control that changes the whole site's legibility must be reachable before the visitor scrolls (the footer can keep a labelled copy). The sticky header gains a rule or shadow only once the page has scrolled.
+- Footer: the map of the site (product, company, legal), the legal row, a restated brand line; on a consumer site, the categories or regions served, if real. The lockup appears at footer size; no viewport-wide wordmark or mark in the footer or behind the hero — identity comes from the system, not scale (a user called it "massive branding" and had it removed; `anti-patterns.md` "Composition").
 - Every section that people might link to gets a real address (no `#` fragments if the project has that rule) and `scroll-margin-top` for the sticky header.
 
 ## 7. Imagery on marketing pages
 
 - Real people who work at the company, real product screens, real objects — looked at. Decorative stock — ignored (`ui-ux.md` §3).
 - One consistent treatment so a set reads as a series; copy always on its own ground (split, fade-to-surface, or panel); hero eager, the rest lazy; credits recorded. Full sourcing rules in `imagery.md`.
-- When there is no photography, the graphics layer is drawn — diagrams, milestone art, glyphs, watermarks — in one line style and the brand palette, and it is inspected element by element (`visual-qa.md`).
+- When there is no photography, the graphics layer is drawn — diagrams, milestone art, glyphs, small watermarks (never a viewport-wide mark) — in one line style and the brand palette, and it is inspected element by element (`visual-qa.md`).
 
 ## 8. Metadata and social
 
@@ -96,7 +96,8 @@ Unique `<title>` and description per page; canonical; Open Graph and Twitter tag
 - [ ] Word count is short enough to be read (aim for headings and first sentences that carry the page alone).
 - [ ] 360/390, 768, 1024, 1280, 1440 rendered and looked at; no horizontal scroll; measure ≤ 80ch everywhere.
 - [ ] LCP element eager and sized; fonts subset/swapped; CLS sources reserved.
-- [ ] Nav ≤ 7 items; mobile menu labelled and thumb-sized; primary action visible at every width.
+- [ ] Nav ≤ 7 items; mobile menu labelled and thumb-sized; primary action visible at every width, and secondary in the header while the hero's is on screen; theme switch (if any) in the header.
+- [ ] Footer lockup at footer size; no viewport-wide wordmark or mark in the footer or behind the hero.
 - [ ] Metadata, social image, favicon, robots.
 
 ## Sources read for this reference

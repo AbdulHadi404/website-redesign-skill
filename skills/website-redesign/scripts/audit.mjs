@@ -46,8 +46,9 @@ const widths = asList(a.widths, ['1440', '390']).map(Number);
 const outDir = a.out || './audit';
 const focusLimit = Number(a.focus) || 40;
 // What kind of surface this is (from the framing step): marketing | app | field | commerce | content | docs | service.
-// It changes which signals are reported: an app is judged by density and task rules, not by hero rules. The
-// category names in categories.md are accepted too and map to the rule set that fits them.
+// It changes which signals are reported: an app is judged by density and task rules, not by hero rules; a service
+// needs no nav landmark; the display-voice signal is for marketing and content only. The category names in
+// categories.md are accepted too and map to the rule set that fits them.
 const KINDS = ['marketing', 'app', 'field', 'commerce', 'content', 'docs', 'service'];
 const ALIASES = { dashboard: 'app', fintech: 'app', admin: 'app', enterprise: 'app', saas: 'app', internal: 'app', frontline: 'field', mobile: 'field',
   ecommerce: 'commerce', shop: 'commerce', store: 'commerce', checkout: 'commerce', public: 'service', government: 'service', form: 'service',
@@ -239,7 +240,8 @@ try {
       if (h1 !== 1) F.push(`${h1} h1 elements (expect exactly one).`);
       if (inv.skippedLevels.length) W.push(`Heading levels skipped: ${inv.skippedLevels.slice(0, 4).join('; ')}`);
       const lm = inv.landmarks;
-      const missing = (kind === 'app' || kind === 'field' ? ['main'] : ['main', 'nav', 'header', 'footer']).filter((k) => !lm[k]);
+      // A linear service (one question per page, a back link) has a header and a footer but no site navigation by design.
+      const missing = (kind === 'app' || kind === 'field' ? ['main'] : kind === 'service' ? ['main', 'header', 'footer'] : ['main', 'nav', 'header', 'footer']).filter((k) => !lm[k]);
       if (missing.length) W.push(`Missing landmarks: ${missing.join(', ')}.`);
       if (!lm.skipLink && width === widths[0]) W.push('No skip link as the first focusable element.');
       if (!inv.lang) F.push('No lang attribute on <html>.');
@@ -331,7 +333,8 @@ try {
       const missingSurfaces = Object.entries(inv.css.surfaces).filter(([, v]) => !v).map(([k]) => k);
       if (missingSurfaces.length && width === widths[0]) W.push(`Browser surfaces left at defaults: ${missingSurfaces.join(', ')}${inv.css.unreadableSheets ? ` (${inv.css.unreadableSheets} cross-origin stylesheets not inspected)` : ''}.`);
       if (inv.bareEmpty.length) S.push(`Empty state written as a bare phrase: ${inv.bareEmpty.slice(0, 3).map((e) => `"${e.text}"`).join(', ')} — say why it is empty and what to do next.`);
-      if (t.families.length === 1 && t.weights.length <= 2 && sizesInUse.length > 3) S.push('One family at one or two weights carries every level — on a marketing page the display level usually needs its own voice (weight, width, optical size, a second family).');
+      // Expressive surfaces only (design-systems.md: marketing and editorial get a display voice); one family is right for a service, app or docs.
+      if ((kind === 'marketing' || kind === 'content') && t.families.length === 1 && t.weights.length <= 2 && sizesInUse.length > 3) S.push(`One family at one or two weights carries every level — on a ${kind === 'content' ? 'editorial' : 'marketing'} page the display level usually needs its own voice (weight, width, optical size, a second family).`);
       if (sg.cliches.length) S.push(`Cliché copy: ${sg.cliches.slice(0, 10).map((c) => `"${c}"`).join(', ')}`);
       if (sg.statClaims.length) S.push(`Big-number claims — verify each is real and sourced: ${sg.statClaims.map((c) => `"${c.text}"`).join(', ')}`);
       if (F.length) { md('**Fails**'); F.forEach((x) => md(`- ✗ ${x}`)); md(); }

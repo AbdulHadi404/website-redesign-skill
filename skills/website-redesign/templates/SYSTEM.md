@@ -1,6 +1,6 @@
 # <Product> — system
 
-For product surfaces (apps, dashboards, account areas, admin). Written in Phase 4, next to `DESIGN.md`; short imperatives, numbers where they exist. The component library already in the repo is the starting point — this document restyles and completes it; it does not replace it (`design-systems.md`).
+For product surfaces (apps, dashboards, account areas, admin). Written in Phase 4, next to `DESIGN.md`. Order of documents: `PRODUCT.md` (when there is one) → `DESIGN.md` → `SYSTEM.md`; this one holds how components carry out the decisions above it, so refer, don't repeat. Short imperatives, numbers where they exist. The component library already in the repo is the starting point — this document restyles and completes it; it does not replace it (`design-systems.md`).
 
 ## Foundations
 
@@ -8,13 +8,13 @@ For product surfaces (apps, dashboards, account areas, admin). Written in Phase 
 
 **Tokens** (three tiers; role names; one grammar, e.g. `color.background.danger.subtle.hovered`):
 
-- Colour roles: surfaces (canvas, surface-1/2/3, overlay), text (strong, default, muted, on-accent), border (subtle, default, strong, focus), action (accent, hover, pressed), selected (neutral), status (danger, warning, success, info — each with text, border, subtle fill), data palette (categorical, sequential, diverging).
-- Type: the productive set — role names (heading, title, body, label, detail, metric, code), sizes, line heights, weights; tabular figures for data.
+- Colour roles: surfaces (canvas, surface-1/2/3, overlay), text (strong, default, muted, on-accent), border (subtle, default, strong, field — the input boundary at ≥ 3:1 on its surface, focus), decorative (the faint neutral for dots, rules and disabled strokes; never text — grep its text uses, placeholders included, before shipping; `design-systems.md` §2), action (accent, hover, pressed), selected (neutral), status (danger, warning, success, info — each with text, border, subtle fill), data palette (categorical, sequential, diverging).
+- Type: the productive set, as fixed roles with line heights — page title (20–28 px) / section / panel title / body 14/20 / secondary / label and caption (≥ 12 px; 11 only for a single uppercase word) / numerals (24–32 px semibold in the UI face, tabular) / code only when users read code (`SKILL.md` commitment 5) — with families and weights (`design-systems.md` §3); tabular figures for data.
 - Space: scale and semantic categories (inset, gap, gutter, control padding).
 - Radii by role (control, container, overlay, pill for tags only); concentric rule (outer = inner + padding).
 - Elevation model: which layers exist and the rule for nesting (never a surface inside a surface).
 - Motion: productive durations and easing; what never animates (`motion.md`).
-- Density modes: comfortable (default) and compact (where, for whom); control heights and row heights per mode; targets never under 24 px (44 on touch).
+- Density modes: comfortable (default) and compact (where, for whom); controls 32 px default, 28 compact, 36–40 on touch-first; rows 40 px comfortable, 32 compact; page padding 24–32 px desktop, 16 px phone; section gaps 20–32 px; page-header band 72–120 px (`app-ui.md` §3); targets never under 24 px (44 on touch).
 
 ## Patterns (one section each, stated as rules)
 

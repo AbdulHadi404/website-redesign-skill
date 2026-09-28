@@ -30,7 +30,7 @@ Run each candidate through these gates in order; the first "no" ends it.
 4. **Never block** — input is accepted while it runs; transitions are interruptible (CSS transitions and springs retarget; keyframes restart from zero); content is visible by default (§5).
 5. **Cost** — animate `transform` and `opacity` (and sparingly `filter`, `clip-path`); nothing that re-lays-out many elements; no work in scroll handlers; a library only if CSS or the Web Animations API cannot do it.
 6. **Reduced motion** — the substitute is defined before shipping (§6).
-7. **Vestibular and attention** — large-area movement, zoom, spin, parallax, scroll-linked movement, or anything auto-playing for more than 5 s needs a pause control (WCAG 2.2.2, A) or goes under reduced motion; never three flashes a second (2.3.1).
+7. **Vestibular and attention** — large-area movement, zoom, spin, parallax and scroll-linked movement are off or crossfaded under reduced motion (§6); anything that auto-plays or auto-updates stops within 5 s or gets a pause control placed before it (WCAG 2.2.2, A) — and reduced motion is respected on top of that, never instead; never three flashes a second (2.3.1).
 
 Write one line per animation into `DESIGN.md`: `trigger · job · properties · duration token · easing token · reduced-motion substitute` — e.g. `row click · orientation · transform, opacity · --dur-medium · --ease-out · crossfade 150 ms`.
 
@@ -40,7 +40,7 @@ IBM Carbon's split, the most useful single idea for broadening a marketing-train
 
 | Surface | Default | Expressive allowed |
 | --- | --- | --- |
-| App / SaaS / admin | productive everywhere | first-run onboarding; success after a long task; an empty-state illustration |
+| App / SaaS / admin | productive everywhere; nothing moves for attention except live state (§6) | first-run onboarding; success after a long task; an empty-state illustration |
 | Dashboard | productive, minimal; value transitions ≤ 250 ms on update | nowhere |
 | Ecommerce | productive for browse, filter, cart, checkout | product gallery; add-to-cart confirmation; campaign pages |
 | Marketing / brand | productive for controls (nav, forms, tabs, accordions) | hero entrance; safe section reveals; one signature page transition |
@@ -62,6 +62,7 @@ Reconciled from Material 3, Carbon, Fluent 2, Kowalski and NN/g:
   --dur-page: 400ms;     /* page or view transition, large container transform */
   --dur-hero: 700ms;     /* one-off marketing entrance; never in apps */
   --stagger: 40ms;       /* 30–80 ms between siblings; total ≤ 300 ms; never blocks input */
+  --delay: 100ms;        /* one step of an entrance or settle delay (a check mark after its ring); calc(var(--delay) * n) */
 
   --ease-out: cubic-bezier(0.2, 0, 0, 1);             /* default: entrances and on-screen moves */
   --ease-in-out: cubic-bezier(0.4, 0.14, 0.3, 1);     /* A → B while visible */
@@ -73,9 +74,11 @@ Reconciled from Material 3, Carbon, Fluent 2, Kowalski and NN/g:
   --spring-expressive: linear(0, 0.103, 0.319, 0.55, 0.745, 0.887, 0.977, 1.025, 1.044, 1.045, 1.037, 1.026, 1.016, 1.008, 1.003, 1, 0.998, 0.998, 0.998, 0.999, 1); /* 560ms, ~4.6% overshoot — marketing only, spatial properties only */
 }
 @media (prefers-reduced-motion: reduce) {
-  :root { --dur-page: 150ms; --dur-hero: 0ms; --stagger: 0ms; --spring-expressive: var(--ease-out); }
+  :root { --dur-page: 150ms; --dur-hero: 0ms; --stagger: 0ms; --delay: 0ms; --spring-expressive: var(--ease-out); }
 }
 ```
+
+Under reduce every delay is zero — `transition-delay`, `animation-delay`, stagger and delay tokens — so a settled state (a check mark after a click) arrives immediately; the substitutes (crossfades ≤ 150 ms, §6) keep running. Write delays only through `--stagger` and `--delay`, so this block reaches them. When only durations were reduced, a check mark still arrived 250 ms after the click (`lessons.md` 2026-09-28, CleoHR website).
 
 Rules: entrances decelerate; **never `ease-in` on anything the user is waiting to see** (an exit may accelerate only when short and nobody waits on it — otherwise exit with the ease-out at ~70% of the entrance duration); never linear for movement (only for progress and scrubbed timelines); never enter from `scale(0)` — start at 0.9–0.97 with opacity 0; popovers scale from their trigger, modals from the centre; opacity and colour never bounce; bounce 0.1–0.3 only for gesture-driven or playful motion; hover motion only under `@media (hover: hover) and (pointer: fine)` (touch fires false hovers); never `transition: all`; switching theme triggers no transitions. For JS springs: Motion `{ type: "spring", stiffness: 700, damping: 47.6 }` (productive) or `{ stiffness: 340, damping: 25.8 }` (expressive). Springs keep velocity when interrupted — use them for drag and anything reversible mid-flight.
 
@@ -94,13 +97,15 @@ dialog:not([open]), [popover]:not(:popover-open) { opacity: 0; transform: scale(
 @starting-style { dialog[open], [popover]:popover-open { opacity: 0; transform: scale(.97); } }
 ```
 
-- **View Transitions** — same-document is Baseline (2025-10); cross-document (`@view-transition { navigation: auto }`) works in Chromium and Safari and falls back to a normal navigation in Firefox, which is harmless. They are **not** skipped under reduced motion; guard them — and do not use `animation-duration: 0s`, which also kills the crossfade (verified):
+- **View Transitions** — same-document is Baseline (2025-10), and React exposes it as `<ViewTransition>` (React 19.3+/Next 16 in the Cake Junction build, 2026-09-28; re-verify the version before relying on it); cross-document (`@view-transition { navigation: auto }`) works in Chromium and Safari and falls back to a normal navigation in Firefox, which is harmless. They are **not** skipped under reduced motion; guard them — and do not use `animation-duration: 0s`, which also kills the crossfade (verified):
 
 ```css
 @media (prefers-reduced-motion: reduce) { ::view-transition-group(*) { animation-name: none; } }
 ```
 
-- **Scroll-driven animations** (`animation-timeline: view()`) — not Baseline (no Firefox); progressive enhancement only, inside `@supports`. A reveal's range must **end at `entry 100%`**: a range ending at a `cover` percentage left the last card on a page stuck at 0.65 opacity at maximum scroll (verified).
+  A shared-element morph animates size on the main thread, so do not start a 3D engine or any other heavy boot during it: engine start-up stretched a 0.56 s morph to 3.8 s. Mount it when the transition finishes, and give both sides the same image file, warmed on hover, focus or touch, so the morph lands on a decoded image (`realtime-3d.md` §7).
+
+- **Scroll-driven animations** (`animation-timeline: view()` or `scroll()`) — not Baseline (no Firefox); progressive enhancement only, inside `@supports`. A reveal's range must **end at `entry 100%`**: a range ending at a `cover` percentage left the last card on a page stuck at 0.65 opacity at maximum scroll (verified).
 
 ```css
 @supports (animation-timeline: view()) {
@@ -112,11 +117,13 @@ dialog:not([open]), [popover]:not(:popover-open) { opacity: 0; transform: scale(
 ```
 
   This is the preferred reveal where supported — no JavaScript, and content is finished without it. The JS fallback is in `implementation.md` ("The reveal, written safely"). Never on a photograph.
+
+  Scroll storytelling (a sequence the scroll plays) is mapped to scroll position and reversible, pinned with `position: sticky` for at most ~2.5 screens, with the finished state as the fallback and as the reduced-motion state. The essential object is visible before the scroll starts.
 - **FLIP / shared layout** — View Transitions for route changes (a matching `view-transition-name`); Motion's `layout`/`layoutId` for in-component reflow on a few elements (it measures layout — never on a 500-row table).
 - **Accordions** — `grid-template-rows: 0fr → 1fr` or `::details-content` (Baseline 2025); `interpolate-size` is Chromium-only.
 - **Gestures** — every drag has a single-pointer alternative (WCAG 2.5.7): reorder → up/down buttons or "Move to…"; swipe-to-delete → a visible delete button; carousel swipe → arrow buttons; slider → click on the track and arrow keys.
 - **Loading** — optimistic updates with a specific revert message; skeletons static under reduced motion; show nothing for waits under ~300 ms; spinners inside the pressed control.
-- **Scroll-jacking** — never in apps, docs, dashboards or checkout (NN/g found most people disoriented). `scroll-behavior: smooth` for anchor jumps, off under reduced motion. If a marketing site insists on smooth wheel scrolling, Lenis (MIT, 5.5 KB) runs on native scroll and switches itself off under reduced motion — but it breaks CSS scroll-snap and stops over iframes.
+- **Scroll-jacking** — never in apps, docs, dashboards or checkout (NN/g found most people disoriented). `scroll-behavior: smooth` for anchor jumps, off under reduced motion. If a marketing site insists on smooth wheel scrolling, Lenis (MIT, 5.5 KB) runs on native scroll and switches itself off under reduced motion — but it breaks CSS scroll-snap and stops over iframes. Never on a site that frames a signature product experience — its motion budget goes to the stage and the hand-over (`art-direction.md` §4).
 
 ## 6. Reduced motion — substitute, don't delete
 
@@ -133,6 +140,7 @@ Reduced motion means fewer and gentler animations, not zero, and never missing c
 | Number counters, chart build animations | final value immediately |
 | Skeleton shimmer | static skeleton |
 | Spinners and progress | keep (essential); prefer determinate bars |
+| Live-state indicator (a pulsing dot) | may keep pulsing gently (stopping within 5 s or pausable, §2 gate 7), and always says its state in words |
 | Press state, focus ring, toggle knob, drag feedback | keep |
 
 Library defaults (read from their source): **Motion for React defaults to `reducedMotion: "never"`** — wrap the app in `<MotionConfig reducedMotion="user">`; GSAP and anime.js do nothing — use `gsap.matchMedia()` / `matchMedia`; AutoAnimate, Lenis and Recharts 3 respect it automatically; Chart.js and ECharts ignore it and animate for 1000 ms — set `animation: false` under reduce (and consider always, on dashboards). `audit.mjs` renders under reduced motion and fails any content that disappears.
@@ -144,6 +152,7 @@ Library defaults (read from their source): **Motion for React defaults to `reduc
 - No scroll handlers doing work: IntersectionObserver, scroll-driven CSS, `scrollend`, passive listeners.
 - Library cost competes with input (INP): parse + evaluate at 4× throttle — `motion/mini` 11 ms, Motion `animate` 18 ms, GSAP core ~45 ms, three.js 67 ms, React + ReactDOM 146 ms, Spline 352 ms.
 - Don't drive many children from one CSS variable; set `transform` on the element itself.
+- Judge motion on a phone and on the real GPU with filmstrips of the transitions (a CDP screencast), not screenshots and not on a desktop monitor alone. On a site that frames a signature product, no script measures the motion limits of its phone budget (`performance.md` §1): read them in DevTools (Performance for `requestAnimationFrame` at rest, Layers for the composited layers that move).
 
 ## 8. Libraries (sizes min+gzip, measured)
 
@@ -161,9 +170,13 @@ A 485–787 KB runtime for one decorative loop is never worth it. Theatre.js stu
 
 ## 9. 3D and advanced visuals
 
+Building a real-time 3D product (a configurator, builder or studio people play with): `realtime-3d.md`. This section is the page-level checklist and budgets, which apply there too.
+
 **3D earns its place** when the user needs to see an object from more than one angle or change it — an ecommerce product viewer (with AR "view in your room"), a configurator, spatial data (buildings, terrain, anatomy, molecules), a hardware product as the hero object used once. **3D is decoration** when it is spinning blobs, particle fields, wireframe globes, a rotating logo, a 3D chart (perspective distorts length), a perpetual background shader, or a scroll-scrubbed camera flight on an app page. If a photograph, a short video or an image sequence answers the question, use that.
 
-Gates: is there a real asset (a low-poly placeholder is worse than photographs)? Can the page afford it (runtime and model load after the page is usable)? Is every fact shown in 3D also in text?
+Gates: is there a real asset (a low-poly placeholder is worse than photographs)? Can the page afford it (runtime and model load after the page is usable)? Is every fact shown in 3D also in text? When a live 3D product exists, the marketing pages around it carry no WebGL: they use stills rendered by the product and hand over to it (`realtime-3d.md` §7); otherwise these gates apply.
+
+Don't turn a site into one canvas to prove it can be done; choose the tool per effect (§8 and below).
 
 | Tool | Size | Use for |
 | --- | --- | --- |
@@ -179,6 +192,7 @@ Checklist for any 3D on a page:
 - [ ] **Poster first** — a real render in the same framing, sized, eager if above the fold. A WebGL canvas never becomes the LCP element; the poster does (verified), and a flat single-colour poster is ignored — optimise the poster.
 - [ ] **Load late** — `loading="lazy"` or tap-to-load; `import()` on IntersectionObserver or first interaction; never in the critical path.
 - [ ] **Render only when needed** — `frameloop="demand"`; pause offscreen and on `visibilitychange`; cap device pixel ratio at 2.
+- [ ] **Nothing runs at rest** — zero `requestAnimationFrame` callbacks while nothing moves (check in DevTools Performance); render on demand, and remove idle loops and frame-rate monitors that keep firing.
 - [ ] **Reduced motion** — no auto-rotate, fly-ins or tilt; a static, well-lit frame with working controls.
 - [ ] **Don't trap scrolling** — `<model-viewer>` defaults to `touch-action="none"`, which swallows vertical scrolling on phones: set `touch-action="pan-y"`; no wheel-zoom without a modifier.
 - [ ] **Accessibility** — `alt` on model-viewer, or `role="img"` + `aria-label` on a canvas; rotate and zoom buttons (WCAG 2.5.7) and keyboard support.

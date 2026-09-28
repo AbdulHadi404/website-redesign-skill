@@ -519,6 +519,24 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       if (ta === 'end') return rtl ? 'left' : 'right';
       return rtl ? 'right' : 'left'; // start, justify, match-parent
     };
+    // Judge alignment from paint, not from text-align: a stacked phone table whose cell is display:flex with
+    // justify-content:space-between (label from ::before) paints the number flush right under text-align:left.
+    // The text's rendered edges (a Range per text node; pseudo-element labels are not in the DOM) against the
+    // cell's content box; text-align decides only when the text fills the box and paint cannot tell.
+    const paintAlign = (cell) => {
+      const cs = getComputedStyle(cell), b = cell.getBoundingClientRect();
+      const L = b.left + parseFloat(cs.borderLeftWidth) + parseFloat(cs.paddingLeft), R = b.right - parseFloat(cs.borderRightWidth) - parseFloat(cs.paddingRight);
+      let l = Infinity, r = -Infinity;
+      const tw = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT), rg = document.createRange();
+      for (let n = tw.nextNode(); n; n = tw.nextNode()) {
+        if (!n.data.trim()) continue;
+        rg.selectNodeContents(n);
+        for (const q of rg.getClientRects()) if (q.width > 1 && q.height > 1) { l = Math.min(l, q.left); r = Math.max(r, q.right); }
+      }
+      const gl = l - L, gr = R - r;
+      if (!(r > l) || gl + gr < 4) return align(cs);
+      return Math.abs(gl - gr) <= 2 ? 'center' : gr < gl ? 'right' : 'left';
+    };
     for (const table of document.querySelectorAll('table, [role=table], [role=grid]')) {
       if (!visible(table)) continue;
       const rows = [...table.querySelectorAll('tbody tr, [role=row]')].filter((r) => r.querySelector('td, [role=cell], [role=gridcell]'));
@@ -537,7 +555,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
         const head = table.querySelector(`thead th:nth-child(${c + 1}), [role=columnheader]:nth-child(${c + 1})`);
         const name = clean(head?.innerText || '') || `column ${c + 1}`;
         const issues = [];
-        const al = [...new Set(cells.map((x) => align(getComputedStyle(x))))];
+        const al = [...new Set(cells.map(paintAlign))];
         if (!(al.length === 1 && al[0] === 'right')) issues.push(`aligned ${al.join('/')} (numbers align right in both directions)`);
         const fv = cs.fontVariantNumeric + ' ' + cs.fontFeatureSettings;
         if (!/tabular-nums|"tnum"/.test(fv)) issues.push('no tabular-nums');

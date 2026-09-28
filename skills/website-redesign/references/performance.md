@@ -6,15 +6,19 @@ Read in Phase 3 (the budget belongs in `DESIGN.md`), Phase 5 (the decisions that
 
 Core Web Vitals at the 75th percentile, phone and desktop separately: **LCP ≤ 2.5 s** (poor > 4 s), **INP ≤ 200 ms** (poor > 500 ms), **CLS ≤ 0.1** (poor > 0.25). Only ~48% of origins pass on phones (Almanac 2025). The realistic phone is a mid-tier Android on 9 Mbps / 100 ms (Russell 2026), not the developer's laptop.
 
-| Budget (phone, compressed) | Marketing / content | Ecommerce | App / dashboard (per route) |
-| --- | --- | --- | --- |
-| JavaScript, initial | **≤ 100 KB** (islands only; 0 for static pages) | ≤ 200 KB | **≤ 300 KB** |
-| CSS | ≤ 50 KB | ≤ 75 KB | ≤ 100 KB |
-| Fonts | ≤ 2 files preloaded, ≤ 100 KB WOFF2 in total | same | same (a system UI font is a valid choice) |
-| LCP image | ≤ 150–250 KB at the rendered width, AVIF | ≤ 200 KB | usually text |
-| Images in the first viewport | ≤ 300 KB | ≤ 400 KB | — |
-| Third parties on the critical path | 1–2 | ≤ 3 | ≤ 2 |
-| DOM in an interactive view | — | ≤ ~1,500 elements on a listing before virtualising | virtualise or `content-visibility` beyond ~2–3k rows |
+| Budget (phone, compressed) | Marketing / content | Ecommerce | App / dashboard (per route) | Signature experience (its own route) |
+| --- | --- | --- | --- | --- |
+| JavaScript, initial | **≤ 100 KB** (islands only; 0 for static pages) | ≤ 200 KB | **≤ 300 KB** | chrome and controls as an app; the engine and scene load late, after a poster, and are not counted against the initial budget of the marketing page that links here (that page stays within its own column) |
+| CSS | ≤ 50 KB | ≤ 75 KB | ≤ 100 KB | as an app |
+| Fonts | ≤ 2 files preloaded, ≤ 100 KB WOFF2 in total | same | same (a system UI font is a valid choice) | same |
+| LCP image | ≤ 150–250 KB at the rendered width, AVIF | ≤ 200 KB | usually text | the poster: a real render in the first frame's framing (`motion.md` §9) |
+| Images in the first viewport | ≤ 300 KB | ≤ 400 KB | — | the poster |
+| Third parties on the critical path | 1–2 | ≤ 3 | ≤ 2 | as an app |
+| DOM in an interactive view | — | ≤ ~1,500 elements on a listing before virtualising | virtualise or `content-visibility` beyond ~2–3k rows | — |
+| 3D models and textures | `motion.md` §9 | same | same | `motion.md` §9's budgets, enforced per asset by the build (`realtime-3d.md` §5) |
+| Frame time | — | — | — | measured on a real GPU (`visual-qa.md` "3D and WebGL experiences"); over budget, step down a quality tier, never design a smaller experience (`realtime-3d.md` §6) |
+
+**Pages around a signature product (lab, phone profile).** When the site frames a signature experience, the marketing pages around it meet a stricter lab budget: **LCP ≤ 2.0 s, INP ≤ 150 ms, CLS ≤ 0.05, zero `requestAnimationFrame` at rest, ≤ 6 composited layers moving per frame**. It is measured in the lab, with `perf.mjs` or Lighthouse on a throttled phone (INP from a user flow, §6). It is stricter than the field thresholds at p75 above and does not replace them: both apply. `perf.mjs` and `audit.mjs` do not measure the last two items, so check them by hand in DevTools: the Performance panel for `requestAnimationFrame` callbacks while nothing moves, and Layers (or Rendering → paint flashing) for what moves per frame. Evidence: the 2026-09-28 Cake Junction row in `lessons.md`.
 
 Write the budget into `DESIGN.md`; the redesign must not be slower than the audit baseline. Compare like with like: when the baseline was broken (its web fonts never loaded, an image 404'd, a script failed), it is flatteringly fast — report both numbers, say what the baseline skipped, and hold the redesign to the budget rather than to the broken number.
 

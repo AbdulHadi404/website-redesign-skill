@@ -15,7 +15,17 @@
  *   { "type": "live",        "trigger": "#export" }                  // toast / async status
  *   { "type": "form-errors", "form": "#settings", "submit": "button[type=submit]" }   // submit: inside the form, or a full selector
  *   { "type": "live", "trigger": "#visit-form button", "before": [{ "fill": ["#name", "Aoife"] }] }   // steps first
+ *   { "type": "live", "trigger": "#street", "keys": ["ArrowDown"] }   // a <select> feeding a status region
+ *   { "type": "live", "trigger": "#length-6", "keys": ["Space"] }     // a radio: Enter would submit its form
  *   { "type": "menu-button", "button": "#account" }
+ *
+ * "before" steps run in order: { "fill": [sel, text] }, { "select": [sel, value or label] }, { "click": sel },
+ * { "tap": sel } (touch devices), { "check": sel }, { "focus": sel }, { "press": key } or { "press": [sel, key] },
+ * { "wait": ms }. A step that fails, or is not one of these, is reported as a warning on the contract.
+ * "keys" (dialog, live): the keys pressed, in order, on the focused trigger to activate it (default ["Enter"]).
+ *
+ * live: the result counts as announced when it reaches a live region, or when focus moves onto or into the new
+ * message (a focused error summary: accessibility.md §7.6). A message that appears with focus left elsewhere fails.
  *
  * Every step is keyboard-first. When a trigger cannot be reached or activated by keyboard the
  * test records the FAIL, then falls back to a mouse click so the rest of the contract is still checked.
@@ -70,7 +80,7 @@ const RECORDER = () => {
   addEventListener('focusin', e => window.__focus.push(e.target.outerHTML.slice(0, 60)));
 };
 
-const active = (page) => page.evaluate(() => { const a = document.activeElement; return a && a !== document.body ? (a.id ? '#' + a.id : a.tagName.toLowerCase()) + ' ' + (a.innerText || a.getAttribute('aria-label') || '').trim().slice(0, 30) : 'body'; });
+const active = (page) => page.evaluate(() => { const a = document.activeElement; return a && a !== document.body ? (a.id ? '#' + a.id : a.tagName.toLowerCase()) + ' ' + (a.innerText || a.getAttribute('aria-label') || '').replace(/\s+/g, ' ').trim().slice(0, 30) : 'body'; });
 async function activate(page, sel, r, keys = ['Enter']) {
   const loc = page.locator(sel).first();
   await loc.waitFor({ state: 'attached', timeout: 3000 });
@@ -86,9 +96,11 @@ async function activate(page, sel, r, keys = ['Enter']) {
   const mut1 = await page.evaluate(() => window.__mut || 0);
   page.off('request', onReq);
   // Something happened if the page changed, the DOM was rewritten (a refresh re-rendering identical text), or it fetched.
-  if (before === after && mut1 === mut0 && requests === 0) { r.fail('2.1.1', `${keys.join('+')} on the focused trigger does nothing — falling back to click`); await loc.click(); await page.waitForTimeout(350); return 'click'; }
+  if (before === after && mut1 === mut0 && requests === 0) { r.fail('2.1.1', `${keys.join(', ')} on the focused trigger does nothing — falling back to click`); await loc.click(); await page.waitForTimeout(350); return 'click'; }
   return 'keyboard';
 }
+// A contract's own activation keys: Enter on a radio submits its form, a <select> changes on the arrow keys.
+const keysOf = (c) => (c.keys ? [].concat(c.keys) : ['Enter']);
 function recorder(type, target) {
   const r = { type, target, passes: [], fails: [], warns: [] };
   r.ok = (m) => r.passes.push(m);
@@ -101,7 +113,7 @@ const tests = {
   async dialog(page, c) {
     const r = recorder('dialog', c.trigger);
     const trigger = await page.locator(c.trigger).first().elementHandle();
-    await activate(page, c.trigger, r);
+    await activate(page, c.trigger, r, keysOf(c));
     const dlg = page.locator('dialog[open], [role=dialog]:visible, [role=alertdialog]:visible').first();
     if (!(await dlg.count())) {
       const layer = await page.evaluate(() => [...document.querySelectorAll('body *')].find(e => { const cs = getComputedStyle(e); return cs.position === 'fixed' && e.getBoundingClientRect().height > 100 && cs.display !== 'none'; })?.outerHTML.slice(0, 80));
@@ -201,29 +213,58 @@ const tests = {
     const label0 = await label();
     // What newly became visible is compared, not what mutated: animation libraries, sticky headers and scroll
     // states rewrite classes and inline styles constantly. Scroll the trigger into view and let that settle first.
-    const texts = () => page.evaluate(() => {
+    // every: all visible text, live regions and long paragraphs included (the baseline for the focus check below)
+    const texts = (every = false) => page.evaluate((every) => {
       const live = '[aria-live]:not([aria-live="off"]),[role=status],[role=alert],[role=log],output';
       const out = [];
       for (const el of document.body.querySelectorAll('*')) {
         const own = [...el.childNodes].filter(n => n.nodeType === 3).map(n => n.nodeValue).join(' ').replace(/\s+/g, ' ').trim();
-        if (!own || own.length > 200 || el.closest(live) || !(el.checkVisibility ? el.checkVisibility({ visibilityProperty: true, opacityProperty: true }) : el.getClientRects().length)) continue;
+        if (!own || (!every && (own.length > 200 || el.closest(live))) || !(el.checkVisibility ? el.checkVisibility({ visibilityProperty: true, opacityProperty: true }) : el.getClientRects().length)) continue;
         out.push(own);
       }
       return out;
-    });
+    }, every);
+    const trigger = await page.locator(c.trigger).first().elementHandle().catch(() => null);
     await page.locator(c.trigger).first().evaluate(el => el.scrollIntoView({ block: 'center', behavior: 'instant' })).catch(() => {});
     await page.waitForTimeout(600);
     const seen0 = new Set(await texts());
+    const shown0 = await texts(true);
     await page.evaluate(() => { window.__announced = []; window.__silent = []; });
-    await activate(page, c.trigger, r);
+    const field = !c.keys && await trigger?.evaluate(el => !!el.form && el.matches('input:not([type=button],[type=submit],[type=reset],[type=image]),select,textarea')).catch(() => false);
+    await activate(page, c.trigger, r, keysOf(c));
     await page.waitForTimeout(400);
+    // Enter in a radio, checkbox or text field submits its form: what follows is the next view, not this widget's message.
+    if (field && !(await trigger.isVisible().catch(() => false))) r.warnf('—', 'Enter on this form field submitted the form (the trigger left the screen), so what follows is the next view — give the contract "keys": ["Space"] for a radio or checkbox, ["ArrowDown"] for a select');
     const label1 = await label();
     const appeared = (await texts()).filter(t => !seen0.has(t) && t !== label1);
     await page.waitForTimeout(800);
     const { announced } = await page.evaluate(() => ({ announced: [...new Set(window.__announced)] }));
+    // Focus moved onto or into the new message: a screen reader reads what receives focus (the focused error summary,
+    // accessibility.md §7.6), so that announces it too. It counts when the focused element, or an ancestor short of one
+    // holding the trigger, is mostly text that was not on screen before — or the new text is the focused field's
+    // description. Focus left on the trigger, on <body> or on a wrapper that merely contains the message does not count.
+    const focused = await page.evaluate(({ t, shown: before, label }) => {
+      const shown = new Set(before);
+      const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
+      const vis = (e) => (e.checkVisibility ? e.checkVisibility({ visibilityProperty: true, opacityProperty: true }) : e.getClientRects().length);
+      const fresh = (el) => [el, ...el.querySelectorAll('*')].reduce((n, e) => { const own = norm([...e.childNodes].filter(x => x.nodeType === 3).map(x => x.nodeValue).join(' ')); return n + (own && own !== label && !shown.has(own) && vis(e) ? own.length : 0); }, 0);
+      const f = document.activeElement; if (!f || f === document.body) return null;
+      const who = f.id ? '#' + f.id : f.tagName.toLowerCase();
+      let hit = null; // the outermost mostly-new box around focus: the message, when focus lands on a link inside it
+      for (let el = f; el && el !== document.body && !(t?.isConnected && el.contains(t)); el = el.parentElement) {
+        const all = norm(el.innerText); const n = fresh(el);
+        if (n && n >= all.length / 2) hit = { who, text: all, inside: el !== f }; else if (hit) break;
+      }
+      if (hit) return hit;
+      const desc = ((f.getAttribute('aria-describedby') || '') + ' ' + (f.getAttribute('aria-errormessage') || '')).split(/\s+/).map(i => i && document.getElementById(i)).filter(Boolean);
+      const d = desc.find(fresh);
+      return d ? { who, text: norm(d.innerText), described: true } : null;
+    }, { t: trigger, shown: shown0, label: label1 });
     const silent = [...new Set(appeared)].slice(0, 3);
     const relabel = label1 && label1 !== label0 ? `; the trigger's own label changed ("${label0}" → "${label1}"), which screen readers do not reliably announce` : '';
-    announced.length ? r.ok(`announced via live region: "${announced.join(' / ')}"`) : r.fail('4.1.3', `Nothing announced${silent.length ? `; visible message not in a live region: "${silent.join(' / ')}"` : ''}${relabel}`);
+    if (announced.length) r.ok(`announced via live region: "${announced.join(' / ')}"`);
+    else if (focused) r.ok(`announced by moving focus to it (${focused.who}${focused.inside ? ', inside the message' : focused.described ? ', as its description' : ''}): "${focused.text.slice(0, 160)}"`);
+    else r.fail('4.1.3', `Nothing announced${silent.length ? `; visible message not in a live region, and focus did not move to it (focus: ${await active(page)}): "${silent.join(' / ')}"` : ''}${relabel}`);
     const regionsAtLoad = await page.evaluate(() => document.querySelectorAll('[aria-live]:not([aria-live="off"]),[role=status],[role=alert],[role=log]').length);
     r.ok(`${regionsAtLoad} live region(s) in the DOM`);
     return r;
@@ -290,22 +331,31 @@ for (const c of contracts) {
   // A widget that is not there should fail in seconds, not after Playwright's 30 s default.
   page.setDefaultTimeout(5000);
   await open(page, url);
-  // Optional set-up steps before the contract runs (fill a form so its async status can be tested, open a panel).
+  // Optional set-up steps before the contract runs (fill a form so its async status can be tested, open a panel,
+  // choose a street). A step that fails or is unknown is reported: skipped silently, it reads as a widget defect.
+  const setup = [];
   for (const s of c.before || []) {
-    if (s.fill) await page.locator(s.fill[0]).first().fill(String(s.fill[1])).catch(() => {});
-    else if (s.click) await page.locator(s.click).first().click({ timeout: 4000 }).catch(() => {});
-    else if (s.check) await page.locator(s.check).first().check({ timeout: 4000 }).catch(() => {});
-    else if (s.wait) await page.waitForTimeout(s.wait);
+    const one = (l) => page.locator(l).first();
+    const step = s.fill ? one(s.fill[0]).fill(String(s.fill[1]), { timeout: 4000 })
+      : s.select ? one(s.select[0]).selectOption([].concat(s.select[1]).map(String), { timeout: 4000 })
+      : s.click ? one(s.click).click({ timeout: 4000 })
+      : s.tap ? one(s.tap).tap({ timeout: 4000 })
+      : s.check ? one(s.check).check({ timeout: 4000 })
+      : s.focus ? one(s.focus).focus({ timeout: 4000 })
+      : s.press ? (Array.isArray(s.press) ? one(s.press[0]).press(s.press[1], { timeout: 4000 }) : page.keyboard.press(s.press))
+      : 'wait' in s ? page.waitForTimeout(s.wait)
+      : Promise.reject(new Error('not a step (fill, select, click, tap, check, focus, press, wait)'));
+    await step.catch((e) => setup.push(`[—] before step ${JSON.stringify(s)} failed: ${e.message.split('\n')[0]}`));
   }
-  try { results.push(await tests[c.type](page, c)); }
+  try { const r = await tests[c.type](page, c); r.warns.unshift(...setup); results.push(r); }
   catch (e) {
     const target = c.trigger || c.tablist || c.button || c.form;
     const vp = page.viewportSize();
     // The commonest cause: a control that exists only at another width (a phone menu tested on a desktop viewport).
     const hidden = await page.locator(target).first().evaluate((el) => !el.checkVisibility?.({ checkVisibilityCSS: true })).catch(() => null);
-    const why = hidden === true ? `${target} exists but is not visible at ${vp.width}×${vp.height} — give the contract "device": "phone" (or run with --device phone)`
+    const why = hidden === true ? `${target} exists but is not visible at ${vp.width}×${vp.height}${setup.length ? ' (a before step failed, see below)' : ' — give the contract "device": "phone" (or run with --device phone)'}`
       : hidden === null ? `${target} not found on the page` : e.message.split('\n')[0];
-    results.push({ type: c.type, target, passes: [], fails: [`test error: ${why}`], warns: [] });
+    results.push({ type: c.type, target, passes: [], fails: [`test error: ${why}`], warns: setup });
   }
   await ctx.close();
 }

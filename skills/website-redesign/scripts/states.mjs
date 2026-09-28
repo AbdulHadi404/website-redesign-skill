@@ -28,7 +28,8 @@
  *       { "name": "focus",    "device": "desktop", "steps": [{ "press": "Tab", "times": 4 }] },
  *       { "name": "hover",    "device": "desktop", "steps": [{ "hover": "tbody tr >> nth=2" }] },
  *       { "name": "dark",     "context": { "colorScheme": "dark" } },
- *       { "name": "saved",    "storage": { "checked": "[\"IE1111\"]" } }
+ *       { "name": "saved",    "storage": { "checked": "[\"IE1111\"]" } },
+ *       { "name": "sent",     "route": { "url": "**\/api/apply", "json": { "ok": true }, "record": true }, "steps": [{ "click": "#send" }, { "wait": 500 }] }
  *     ]
  *   }
  *
@@ -41,7 +42,11 @@
  *   scroll selector | y        scrolls an element into view, or the window to y (absolute). It reaches content a
  *                              finger cannot (a column cut off by overflow: hidden): state checks only, never walkthroughs
  * After each click, tap, press or swipe the screen is compared with the one before; a step that changed nothing
- * visible is reported ("dead tap"). A failing step still leaves a capture (…-failed.png) of where it stopped.
+ * visible is reported ("dead tap"). A failing step still leaves a capture (…-failed.png) of where it stopped, and
+ * says why its target refused: not found, not rendered (hidden by what), zero-size, disabled, outside the viewport,
+ * covered (by what), else Playwright's own reason. On a page wider than the viewport it adds "the page is 940 px wide
+ * at a 390 px viewport — the layout overflows, itself a finding": a finding about the product, not a scenario error,
+ * and a pointer can miss a target nothing covers on such a page (run that state at desktop to get past it).
  * Routes: url (glob), delay (ms), abort, status, body, json, file (relative to this scenario file), contentType,
  * record; several routes as a list. A missing file fails that state only.
  * Payload contract: "record": true on a route, or "record": "<url glob>" (or a list) on a state or the whole file,
@@ -167,6 +172,57 @@ async function swipe(page, cdp, x, y, dx, dy) {
 const ACTS = new Set(['click', 'dblclick', 'tap', 'press', 'swipe']);
 const show = (v) => (typeof v === 'string' ? v : JSON.stringify(v)).slice(0, 60);
 
+// Playwright's last word on why it gave up, from the call log a "Timeout 4000ms exceeded" hides.
+const pwReason = (e) => String(e?.cause?.message || e?.message || '').replace(/\x1b\[[\d;]*m/g, '').split('\n').map((l) => l.trim().replace(/^-\s*/, '')).reverse()
+  .find((l) => /intercepts pointer events|is not (visible|enabled|editable|stable|attached)|outside of the viewport|did not find some options|did not change its state|not an? <|not a checkbox/i.test(l)) || '';
+
+// Why a step's target refused, in a tester's words, measured where the step gave up (Playwright has already scrolled
+// it in): not found, not rendered, zero-size, disabled, outside the screen, covered (by what); else Playwright's own
+// reason. A page wider than the viewport is named whatever the reason: the phone then shows a window onto a wider
+// layout and Playwright's pointer can land beside a target nothing covers (old permit build: 940 px at 390).
+async function whyNot(page, sel, e, op) {
+  const n = await page.locator(sel).count().catch(() => -1);
+  if (n === 0) return 'not found: nothing on the page matches the selector';
+  const d = n > 0 && await page.locator(sel).first().evaluate((el) => {
+    const tag = (x) => `<${x.tagName.toLowerCase()}${x.id ? `#${x.id}` : ''}${[...x.classList].slice(0, 2).map((c) => `.${c}`).join('')}>`;
+    const text = (x) => { const t = (x.getAttribute('aria-label') || x.innerText || '').trim().replace(/\s+/g, ' '); return t ? ` "${t.slice(0, 30)}${t.length > 30 ? '…' : ''}"` : ''; };
+    let hidden = '';
+    for (let x = el; x && !hidden; x = x.parentElement) if (getComputedStyle(x).display === 'none') hidden = `display: none on ${x === el ? 'itself' : tag(x)}${x.hidden ? ', from its hidden attribute' : ''}`;
+    // Screen coordinates: the visual viewport, which on an overflowing phone page is a window onto the layout one.
+    const r = el.getBoundingClientRect(), v = window.visualViewport || { offsetLeft: 0, offsetTop: 0, width: innerWidth, height: innerHeight };
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    const inView = cx >= v.offsetLeft && cx <= v.offsetLeft + v.width && cy >= v.offsetTop && cy <= v.offsetTop + v.height;
+    const hit = inView ? (el.getRootNode().elementFromPoint ? el.getRootNode() : document).elementFromPoint(cx, cy) : null;
+    const inert = el.closest('[inert]');
+    return {
+      rendered: el.getClientRects().length > 0, hidden, visibility: getComputedStyle(el).visibility, inView,
+      box: [r.left - v.offsetLeft, r.top - v.offsetTop, r.width, r.height].map(Math.round), screen: [v.width, v.height].map(Math.round),
+      disabled: el.matches(':disabled') ? (el.hasAttribute('disabled') ? 'disabled attribute' : 'inside a disabled <fieldset>') : el.closest('[aria-disabled=true]') ? 'aria-disabled="true"' : inert ? `inert${inert === el ? '' : `, inside ${tag(inert)}`}` : '',
+      noPointer: getComputedStyle(el).pointerEvents === 'none',
+      cover: !hit || el.contains(hit) || [...(el.labels || [])].some((l) => l.contains(hit)) ? '' : tag(hit) + text(hit),
+      wide: Math.max(document.documentElement.scrollWidth, innerWidth),
+    };
+  }, undefined, { timeout: 2000 }).catch(() => null);
+  if (!d) return '';
+  const vp = page.viewportSize(), pw = pwReason(e), pointer = /^(click|dblclick|hover|check|uncheck|tap|swipe)$/.test(op);
+  const where = `box ${d.box[2]}×${d.box[3]} at ${d.box[0]},${d.box[1]} of the ${d.screen[0]}×${d.screen[1]} screen`;
+  const overflow = vp && d.wide > vp.width + 1 ? `the page is ${d.wide} px wide at a ${vp.width} px viewport — the layout overflows, itself a finding` : '';
+  const why = !d.rendered ? `not rendered (${d.hidden || 'no box'})`
+    : d.visibility !== 'visible' ? `invisible (visibility: ${d.visibility})`
+    : d.box[2] < 1 || d.box[3] < 1 ? `zero-size (${where}): a styled control hiding the real one? act on what is drawn, e.g. its label`
+    : d.disabled ? `disabled (${d.disabled})`
+    // Only a pointer needs it on screen and uncovered: fill, select and wait do not scroll, and do not care.
+    : !pointer ? (pw ? `Playwright says "${pw}" (${where})` : '')
+    : !d.inView ? `outside the viewport (${where}): scrolling does not bring it in`
+    : d.noPointer ? 'it ignores the pointer (pointer-events: none)'
+    : d.cover ? `covered by ${d.cover} (${where})`
+    // Nothing covers it, yet Playwright's pointer hits something else: on an overflowing page its coordinates are off.
+    : /intercepts pointer events/.test(pw) && overflow ? `a pointer aimed at it lands on ${pw.replace(/\s*intercepts pointer events.*/, '')} though nothing covers it (${where})`
+    : pw ? `Playwright says "${pw}" (${where})` : '';
+  if (why) return `exists but ${op === 'wait' ? 'never showed' : 'is not actionable'}: ${[why, overflow].filter(Boolean).join('; ')}`;
+  return overflow ? `${String(e.message || e).split('\n')[0]}; ${overflow}` : '';
+}
+
 /** Run the steps; returns { trail, dead, lastTap }. onStep(i, lastTap) runs after each step (for --each captures). */
 async function run(page, steps = [], { touch = true, onStep } = {}) {
   const trail = [], dead = [];
@@ -187,11 +243,11 @@ async function run(page, steps = [], { touch = true, onStep } = {}) {
         case 'click': case 'dblclick': case 'hover': case 'focus': case 'check': case 'uncheck': {
           if (op === 'click' || op === 'dblclick') { const [x, y] = await center(v).catch(() => [null, null]); if (x !== null) { lastTap = [x, y]; trail.push(`${i + 1}. ${op} ${show(v)} → ${await hitAt(page, x, y)}`); } }
           // An opaque sticky bar over the target intercepts pointer clicks; fall back to the element's own method.
-          await loc(v)[op]({ timeout: 4000 }).catch(async () => {
+          await loc(v)[op]({ timeout: 4000 }).catch(async (pe) => {
             if (op === 'click' || op === 'focus') {
-              await loc(v).evaluate((el, o) => el[o](), op, { timeout: 2000 }).catch(() => { throw new Error(`${op} "${v}": no such element`); });
+              await loc(v).evaluate((el, o) => el[o](), op, { timeout: 2000 }).catch(() => { throw new Error(`${op} "${v}": no such element`, { cause: pe }); });
               if (op === 'click') trail.push(`   ${op} ${show(v)} was blocked for a pointer (covered?) and was dispatched to the element directly`);
-            } else throw new Error(`${op} "${v}": not found or not actionable`);
+            } else throw new Error(`${op} "${v}": not found or not actionable`, { cause: pe });
           });
           break;
         }
@@ -231,7 +287,10 @@ async function run(page, steps = [], { touch = true, onStep } = {}) {
       if (!['wait', 'eval', 'offline'].includes(op) && !trail.some((t) => t.startsWith(`${i + 1}. `))) trail.push(`${i + 1}. ${op} ${show(v)}`);
       if (onStep) await onStep(i, lastTap);
     } catch (e) {
-      const err = new Error(`step ${i + 1} (${op} ${show(v)}): ${String(e.message || e).split('\n')[0]}`);
+      // Say why the target refused, not "Timeout 4000ms exceeded" or "not found or not actionable".
+      const sel = ['fill', 'type', 'select'].includes(op) ? v?.[0] : op === 'swipe' ? v?.at : /^(click|dblclick|hover|focus|check|uncheck|tap|wait|scroll)$/.test(op) ? v : null;
+      const why = typeof sel === 'string' ? await whyNot(page, sel, e, op).catch(() => '') : '';
+      const err = new Error(`step ${i + 1} (${op} ${show(v)}): ${why || String(e.message || e).split('\n')[0]}`);
       err.trail = trail; err.dead = dead;
       throw err;
     }

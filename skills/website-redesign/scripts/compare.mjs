@@ -8,7 +8,11 @@
  *   node compare.mjs --before captures/old --after captures/new --out cmp   # two folders, same file names
  *   node compare.mjs --before a.png --after b.png --diff cmp/diff.png   # changed pixels in red
  *   node compare.mjs --grid a.png b.png c.png --labels old new ref --out sheet.png [--blur 6]
+ *   node compare.mjs --grid new.png references/ledger/*.jpg --blur 6   # no --labels: each panel is captioned with its file name
  *
+ * --labels  one per file, paired by position in the order the files arrive (a shell glob sorts by name,
+ *           not in the order you had in mind). A count that differs from the file count is an error;
+ *           every run prints the file -> label pairing it drew.
  * --blur N  blurs every panel by N px: the squint test. What still reads when
  *           detail is gone is the hierarchy you actually shipped; two blurred
  *           panels that look alike are the same design.
@@ -25,6 +29,18 @@ const a = parseArgs();
 const blur = Number(a.blur) || 0;
 // Several --labels arguments are several labels, commas and all; a single argument may list them with commas.
 const labelList = (v, def = []) => (Array.isArray(v) ? v : v && v !== true ? asList(v) : def);
+// Labels pair with files by position and a shell glob picks the file order, so a list of the wrong length
+// (or in a guessed order) silently names the wrong panel: refuse a count mismatch, and print the pairing.
+function labelsFor(files, def = files.map((f) => path.basename(f))) {
+  const labels = labelList(a.labels, def);
+  const pairs = files.map((f, i) => `  ${f} -> ${labels[i] ?? '(no label)'}`).join('\n');
+  if (labels.length !== files.length) {
+    console.error(`--labels gives ${labels.length} label(s) for ${files.length} file(s). They pair by position, in this file order:\n${pairs}${labels.length > files.length ? `\n  (unused: ${labels.slice(files.length).join(', ')})` : ''}\nGive one label per file in that order, or leave out --labels to caption each panel with its file name.`);
+    process.exit(1);
+  }
+  console.log(pairs);
+  return labels;
+}
 
 async function sheet(files, labels, out) {
   const imgs = await Promise.all(files.map(async (f) => `data:image/png;base64,${(await readFile(f)).toString('base64')}`));
@@ -64,7 +80,7 @@ async function diff(before, after, out) {
 
 if (a.grid) {
   const files = asList(a.grid);
-  await sheet(files, labelList(a.labels), a.out || 'sheet.png');
+  await sheet(files, labelsFor(files), a.out || 'sheet.png');
 } else if (a.dir || (a.before && a.after && (await stat(String(a.before)).catch(() => null))?.isDirectory())) {
   // Pairs by name with the -before/-after label removed, from one folder (the --label convention), from
   // before/ and after/ subfolders, or from --before <dir> --after <dir>.
@@ -83,8 +99,8 @@ if (a.grid) {
   console.log(`${n} before/after sheet(s) in ${outDir}`);
 } else if (a.before && a.after) {
   if (a.diff) await diff(a.before, a.after, a.diff);
-  if (a.out || !a.diff) await sheet([a.before, a.after], labelList(a.labels, ['Before', 'After']), a.out || 'compare.png');
+  if (a.out || !a.diff) await sheet([a.before, a.after], labelsFor([a.before, a.after], ['Before', 'After']), a.out || 'compare.png');
 } else {
-  console.error('Usage: --before a.png --after b.png [--out sheet.png] [--diff diff.png] | --dir captures | --grid a.png b.png --labels x y');
+  console.error('Usage: --before a.png --after b.png [--out sheet.png] [--diff diff.png] | --dir captures | --grid a.png b.png [--labels x y] (one label per file; default: file names)');
   process.exit(1);
 }

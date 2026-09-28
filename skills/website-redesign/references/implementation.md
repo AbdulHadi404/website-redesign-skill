@@ -13,8 +13,8 @@ Goal: the redesign, built in the existing stack, with functionality untouched an
 ## Order of work
 
 1. **Tokens** — colour roles, type sets (expressive and/or productive), spacing, radii, elevation, motion, density, breakpoints. Delete the old ones; do not layer new tokens over them.
-2. **Base** — reset, typography rules, surfaces, container and chapter primitives, focus styles, selection and other browser surfaces.
-3. **Motion** — the reveal system and the concept moves, with a complete reduced-motion block (`motion.md`).
+2. **Base** — reset, typography rules, surfaces, container and chapter primitives, focus styles, selection and other browser surfaces. Set `code, kbd, samp, pre { font-family: inherit }` and point the framework's mono token at the UI face unless the audience reads code (commitment 5 in `SKILL.md`): the browser's default monospace counts, and a stray `font-mono` class follows the token.
+3. **Motion** — the reveal system and the concept moves, with a complete reduced-motion block: under reduced motion every delay is zero as well as the movement substituted (`transition-delay`, `animation-delay`, `--stagger`, `--delay`), so a settled state arrives at once (`motion.md` §4, §6).
 4. **Primitives** — nav, footer, buttons, inputs, chapter wrapper, heading pattern; tags and status only if they are data.
 5. **Product fragments and visuals** — the components that show the product (in its real type size and tokens), diagrams, photo containers, the drawn graphics layer.
 6. **Pages** in the narrative order from `DESIGN.md` (expressive) or top-task order (productive) — every state of every component on them.
@@ -37,6 +37,7 @@ On **productive** surfaces the rule inverts: one layout per kind of task, applie
 - Faithful fragments of real screens — real column names, states and flows — rendered at the product's real type size with its real tokens, and sample data that is obviously illustrative (a "fiction palette" of names and numbers; never a real customer).
 - Show the system moving where it does: a row streaming, a pipeline filling, a number updating.
 - A fragment that shows numbers — a chart, a strip, a table of figures — is a chart at marketing scale: `dataviz.md` applies (labels, units, a period, no decorative sparklines, tabular figures).
+- Drawn product fragments that are illustrations captioned as invented get `user-select: none`, so a drag across the hero does not select fake UI; real controls (a form, an estimator) and real product UI stay selectable (`app-ui.md` §2 keeps read-only values copyable).
 - A live demo the visitor can use gets a prominent, dedicated surface with its own heading, inputs and results on a solid background.
 - Never draw a capability that does not exist.
 
@@ -57,6 +58,9 @@ On **productive** surfaces the rule inverts: one layout per kind of task, applie
 - **Sticky and fixed traps**: a `backdrop-filter`, `filter` or `transform` on an ancestor makes it the containing block for fixed children — put the blur on a pseudo-element. Input-mode media queries go *after* the base rules.
 - **Responsive images in `<picture>`**: the wrapper has no height of its own — size it to the container.
 - **Heights**: heroes sized by content with a modest minimum (`min(100svh, 56rem)`), never `height: 100vh`; parallax containers overscan their section.
+- **Single-column fallbacks are `minmax(0, 1fr)`, never `1fr`**: `1fr` is `minmax(auto, 1fr)`, so a nowrap child sets the track minimum and the column runs past the viewport on phones, hidden by the page's own `overflow: clip` from every detector reading `scrollWidth`. Grid and flex children holding nowrap text get `min-width: 0`.
+- **A drawn glyph component is `inline-block` (or `inline-flex`) with its own size**, never a bare sized `<span>`: its width is ignored in a block context and its SVG fills the column.
+- **Buttons wrap below 380 px**: a `nowrap` primary action with a long label is the usual 320 px reflow failure. Desktop labels still must not wrap (`anti-patterns.md` 'Copy').
 - **RTL-ready**: logical properties throughout, except numeric columns, which are `text-align: right` in both directions (`multilingual.md` §1, §2a).
 
 ## What not to do

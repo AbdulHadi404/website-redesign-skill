@@ -54,7 +54,7 @@ Every surface is an interface — a landing page included: a nav, forms, widgets
 - **Every component fills its state matrix** — interaction (rest, hover, focus-visible, pressed), selection, validation, availability (disabled, inactive, read-only), async (loading, empty, degraded) — and every applicable row is designed and rendered, not defaulted (`app-ui.md` §2, `visual-qa.md`).
 - **Empty states** (first use, nothing configured, no results, cleared): say *why* it is empty, teach the feature in one line ("Star a job to keep it here"), and offer the next action; never a blank container, never "No records" that later fills in.
 - **Error messages**: next to the source; colour *and* icon *and* text (never colour alone); plain language; the precise problem; a constructive next step; the entered text preserved; no blame words ("invalid", "illegal"), no humour, no codes. Validate inline only fields that are error-prone; validate the rest on submit. Modal dialogs only for errors that block progress.
-- **Progressive disclosure**: show what most people need most of the time; put the rest one click away with an obvious label; **never more than two levels** — people get lost between three.
+- **Progressive disclosure**: show what most people need most of the time; put the rest one click away with an obvious label; **never more than two levels** — people get lost between three. In a configurator the disclosure order comes from the options' dependency graph, not from taste (`discovery.md` §3).
 
 ## 5. Forms
 
@@ -90,6 +90,19 @@ Validation and errors — the design-system consensus (GOV.UK, Primer, Carbon, U
 - *Ease-out* (decelerate) for anything entering or anything the user is waiting to see — never *ease-in* there; an exit may accelerate only when it is short and nobody waits on it. Never linear for movement; never enter from `scale(0)`.
 - Motion carries meaning or it goes: where a thing came from, what changed, what to look at next.
 - Animate transform and opacity only; never layout. `prefers-reduced-motion` substitutes (a crossfade for a slide) rather than deleting, and never removes content. Tokens, techniques and library defaults: `motion.md`.
+
+## 7b. Direct manipulation on a canvas (editors, configurators, 3D)
+
+For canvases where people select, orbit, drag and edit objects. The rules hold on every canvas, a signature experience included: its fidelity and feel may be expressive, its chrome and controls are productive (`framing.md` §1).
+
+- **Never move the canvas under the pointer in response to the pointer.** Only persistent panels offset the view; contextual panels (an inspector opened by a selection) float over it. When selecting a cherry opened the inspector and re-centred the view, the cherry slid away before it could be dragged.
+- **Tell a tap from the end of an orbit by pointer travel** (about 6 px). Without it, every orbit ends by selecting whatever was under the finger.
+- **One history entry per gesture.** Record the undo point when a drag or slider gesture starts, update without history while it moves, and commit on release, so one undo reverses the whole gesture.
+- **Drag from a library with a ghost** that shows exactly where the item will land, and hide the ghost where the item cannot go. On touch, lift the ghost above the fingertip, and start a drag from a horizontally scrolling tray only on an upward pull, so a sideways swipe still scrolls the tray.
+- **Every drag has a single-pointer alternative**: tap an item to add it, tap a spot to place it (WCAG 2.5.7, §8).
+- **Start from a beautiful, real default** (the client's signature piece), never an empty scene. On a canvas that is the first-use state (`app-ui.md` §8).
+
+These faults are invisible in screenshots. Find them with a scripted gesture test at a phone device: `states.mjs` tap and swipe steps (tap an object, then swipe from where it was), whose log names what each step hit.
 
 ## 8. Accessibility — the WCAG 2.2 additions on top of 2.1 AA
 

@@ -14,6 +14,8 @@ node scripts/capture.mjs … --variant all          # removal tests for the crit
 node scripts/capture.mjs … --reduced-motion --label reduce ; … --dark --label dark ; … --no-js --label nojs
 ```
 
+In Git Bash on Windows, MSYS rewrites arguments that start with `/` into file paths (`/studio` becomes `C:/Program Files/Git/studio`) and the script captures the wrong page: pass paths without the leading slash or set `MSYS_NO_PATHCONV=1`; the scripts warn when a path looks rewritten.
+
 What the script does, and why (each was a real failure): it scrolls through the page so observers fire and lazy images load, finishes every running animation, awaits every image bitmap, grows the viewport to the document with viewport-unit elements pinned (a `100vh` hero otherwise balloons to the whole new viewport), writes a fold and a full capture, and reports horizontal overflow, phone zoom-out and images that painted flat. `--mode fullpage` uses Playwright's full-page capture at the real viewport instead — in some environments that rasterises correctly and growing is unnecessary; in others it leaves grey boxes. Settle motion by removing the *hidden start state*, never by adding the "shown" class: headless advances compositor transitions unreliably.
 
 **Verify the verifier.**
@@ -31,6 +33,8 @@ node scripts/compare.mjs --grid captures/states/*-after.png --out captures/state
 ```
 
 It records console errors per state and flags a state that renders identical to the first one — the scenario did not take effect (a wrong selector, a route pattern that never matched), so the capture proves nothing. Clicks fall back to the element's own `click()` when a sticky bar intercepts the pointer.
+
+**Flows**: walk every multi-step flow (a builder, a booking, a checkout) end to end on the phone device, on expressive and productive surfaces alike, with `states.mjs --each`: a capture per step. Page captures cannot show what goes wrong between steps: a sticky preview covering the step title after "Next", a button hidden behind a sticky or fixed overlay, a validation that jumps to the wrong step. Step with `tap`, not `click`: the click fallback above presses a button a finger cannot reach, while `tap` reports what it actually hit. `--axe` scans each step with its overlays open. Keep the walk as a Playwright e2e test in the project, so every later change runs it.
 
 Keep the captures; the user should see before/after (`compare.mjs --dir captures`), and the critique needs them.
 
@@ -55,6 +59,7 @@ Compare with the Phase 1 run in `audit/before`. Every ✗ is fixed or justified 
 - Every widget in every state; hover and focus on desktop; targets on mobile (rendered size, not source).
 - Dark and image chapters: text contrast on the actual background (`audit.mjs` lists text over images and gradients for you to check by eye).
 - Density and consistency on product screens: one layout per kind of task, the same control heights, the same spacing steps.
+- The busiest productive screen at 1280 × 800 (`--widths 1280 --height 800`): the first rows of its main object (table, board, form) in the `-fold.png` (`app-ui.md` §3).
 
 Fix defects in source, re-capture, and look again. Do not close the loop on the assumption that a CSS change did what you intended.
 
@@ -86,18 +91,32 @@ Full-page captures are the wrong instrument for illustration: at page scale a tr
 - `<picture>` wrappers have no height of their own; `height: 100%` on the image falls back to intrinsic size — size the wrapper.
 - Parallax layers without overscan expose the section background at the edges.
 - Reveal classes on the same element as a scroll-driven transform fight each other; wrap one in the other.
-- Preview tools sometimes report `innerWidth: 0` or time out on clicks when the pane is hidden; front the pane or use the script.
+- A hidden or throttled preview pane stops painting while its DOM still works: tools report `innerWidth: 0`, time out on clicks or return stale screenshots. Front the pane; until then read the page text and structure, and take the visuals with `capture.mjs`.
 - **An SVG with no `width`/`height`, injected as a string into a flex row, lays out at the row's full width** — a 13 px map pin renders 56 px tall. Size every injected SVG in CSS and add `svg { flex-shrink: 0 }`.
 - **A hero object laid over a photograph can cover almost all of it** — at one width a composition, one breakpoint over a border around a mistake. Give the object a surface made of the design's own material.
 - Framework-scoped styles (Astro, Svelte, Vue) do not reach markup rendered by a child component; a decorative SVG given a class by its parent lays out as a giant block. Use a global selector and check the render.
 - An absolutely positioned `<svg>` with `left` and `right` but no `width` keeps its intrinsic 300 px. Give it an explicit width.
-- An enter animation that starts scaled above 1 adds overhang to the scroll width until it fires — a phantom 10 px horizontal scroll on phones. Clip the ancestor with `overflow-x: clip` (not `hidden`, which breaks sticky children).
-- `body { overflow-x: hidden }` hides the scrollbar, not the fault — and fools an overflow detector that stops at any clipping ancestor. Stop the walk at `body` (`audit.mjs` does).
+- A drawn glyph as a sized `<span>` looks right inside flex and grid parents, which blockify it, and turns column-wide in a plain block (a status dot became a column-wide circle on a value list). Make the component `inline-block` (or `inline-flex`) with its own size, and look at it in one block context.
+- An SVG pattern or ornament stretched with `preserveAspectRatio="none"` keeps its proportions at one width only: at 600 px a row of scallops became five giant bumps. Draw repeating ornaments at true size with a CSS mask (`mask: url(shape.svg) repeat-x / 28px 18px; background: currentColor`) and look at them at 390 and 1440.
+- Square the panel under an edge ornament (a scalloped or piped edge); rounded corners leave gaps at both ends.
+- Server and client must compute the same output. Procedural SVG sorted by float depth ordered symmetric twins differently in Node and in the browser: a hydration mismatch. Round before comparing and add a tiebreak. It is the same class of fault as the calendar mismatch in `multilingual.md` §2a.
+- An enter animation that starts scaled above 1 adds overhang to the scroll width until it fires — a phantom 10 px horizontal scroll on phones. Clip the ancestor with `overflow-x: clip` (not `hidden`, which breaks sticky children), then check element boxes: the clip hides real faults too (next trap).
+- **A page that clips itself lies about overflow.** `overflow-x: clip` or `hidden` on the body, a hero or a section stops a fault reaching `scrollWidth`, so the harness says "no overflow" while the render shows copy cut at the viewport edge (a 390 px hero ran 40 px past it). `body { overflow-x: hidden }` hides the scrollbar, not the fault, and fools a detector that stops at any clipping ancestor; stop the walk at `body`. Inspect element boxes: readable text cut at the viewport edge is a fault unless it is inside a real horizontal scroller or is a single-line ellipsis whose own box fits. `capture.mjs` and `audit.mjs` report text cut by a body- or html-level clip even when `scrollWidth` did not grow.
 - **One overflowing element makes phones load the page zoomed out**: under mobile emulation a 900 px table widened the layout viewport to 924 px at a 390 device width. `capture.mjs` and `audit.mjs` report "layout viewport widened".
+- **`grid-template-columns: 1fr` is `minmax(auto, 1fr)`**: one nowrap child (a search prompt, a URL chip) widens the track past the viewport at 390 and stretches everything else in it. Write `minmax(0, 1fr)`, and give grid or flex children that hold nowrap text `min-width: 0`.
+- A CSS grid with `min-height: 100dvh` stretches its auto rows, so a "short" band grows to a third of the screen. Set the rows explicitly (`auto 1fr`).
 - A `@media (pointer: coarse)` rule placed *before* the base rule is silently overridden — touch buttons stayed 36 px. Check rendered sizes.
 - Text clipped by an `overflow: hidden` card (a table inside a rounded card) is invisible to axe and to overflow detectors; `audit.mjs` reports it.
 - Third-party iframes (reviews, badges, booking) often paint blank in headless captures because of bot challenges; confirm in a browser and give them a solid fallback.
 - Behind a TLS-intercepting proxy (CI, some corporate networks, cloud sandboxes) web fonts can fail silently and every capture renders in fallback fonts; `audit.mjs` reports declared families that are not available.
+
+## 3D and WebGL experiences
+
+- **Judge only on a real GPU in a focused browser.** Embedded preview panes throttle `requestAnimationFrame` when the window is not focused (1 fps where the GPU gave 144; front the window), and the default headless shell renders WebGL in software (SwiftShader). Neither can judge motion or speed. Capture with `capture.mjs --gpu` (or `--headed`), which prints the renderer (`WEBGL_debug_renderer_info`) and flags a software one. Run the project's e2e tests the same way: full Chromium, not the headless shell, with GPU flags (on Windows `--use-angle=d3d11 --ignore-gpu-blocklist --enable-gpu`).
+- **Check lighting before shape on generated geometry.** A dark, brown, faceted or black surface on something pale or metal usually means inverted winding: the normals point inward. Sweeps, lathes and extrusions each have a direction rule (a lathe profile runs bottom to top). Judge the silhouette once the lighting is right.
+- **Procedural detail aliases.** A ridged profile twisted faster than about half a ridge per sample becomes spikes. Budget samples per unit length, not per path.
+- **Calibrate against the client's own photographs** at the same angle, side by side, never from memory. Proportions, the scale of details, what sits on what and the colours come from the photo.
+- **Measure, then state the number.** Measure the frame rate over 3 s at the target viewport and quality tier, and state it with the renderer: "144 fps at 1440×900, High tier, Radeon 680M". "It runs smoothly" is not evidence. Benchmark discipline: `realtime-3d.md` §3.
 
 ## Critique (Phase 7)
 

@@ -45,6 +45,8 @@ One line per point: **objective → element → effect → why** (principle or e
 | 22 | Would it hold up beside the Phase 2 references — in finish, restraint and hierarchy? | all | | | |
 | 23 | **Breaks if:** each of the three things `DESIGN.md` says would betray the direction — found in the renders or not? Name the capture that proves it holds (a direction's own rule is the easiest to stop seeing). | all | | | |
 | 24 | **Images tell the truth:** does any image contradict the copy beside it ("each tile slightly different" over identical repeats), or show the product altered — faded, filtered, idealised — so a buyer would be misled? | where imagery | | | |
+| 25 | **Fold at 1280 × 800:** on the busiest productive screen (`capture.mjs --widths 1280 --height 800`), are the first rows of the main object visible without scrolling, and is the page header one band (72–120 px)? (`app-ui.md` §3) | productive | | | |
+| 26 | **Seam test** (a marketing site exists): moving from the site into the product, is the house recognisable (mark, colour, voice) and the product calmer, denser and faster than the site? (`art-direction.md` §5) | productive | | | |
 
 ## Task walkthroughs (productive routes)
 

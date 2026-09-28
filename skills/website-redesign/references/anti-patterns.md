@@ -24,7 +24,7 @@ Language models sample the centre of the design they have seen. The centre moved
 
 **This skill's own former house style is clusters 1 + 3 + 5**: bone or paper surfaces, a serif display with an italic emphasised phrase, monospace uppercase eyebrows, near-black "ink" chapters, one warm accent, hairline rules. Each is a fine choice once; together they are a template, recognised on sight (a 2026 study of 3.2 M Reddit posts found "cream + serif + sage" the most-named new tell). Claude specifically pulls warm, bookish, craft, family and "premium" subjects toward cream, italic serif and lamplight: when a direction says paper, ivory or cream and the logo does not, treat that palette as already spent. In app UI the equivalent is **the default shadcn look** — the stock style with one accent colour changed; shadcn's author wrote that the defaults made "all apps… look the same".
 
-Symptoms: the palette was chosen from taste rather than sampled from the logo; a serif display "because it is distinctive" (distinctive from the old site, not from the last three outputs); mono uppercase labels on a company that has nothing to do with code; a concept line about the company with nothing on the page derived from its assets.
+Symptoms: the palette was chosen from taste rather than sampled from the logo; a serif display "because it is distinctive" (distinctive from the old site, not from the last three outputs); mono uppercase labels, or a mono face for "just the values" (passwords, IDs, env names, `[placeholders]`, `Ctrl K` hints), on a company that has nothing to do with code — on the marketing site and inside the product alike (commitment 5 in `SKILL.md`); a viewport-wide wordmark in the footer or behind the hero, which is this skill's habit rather than the brand's (see "Composition"); a concept line about the company with nothing on the page derived from its assets.
 
 **Tests, written into `DESIGN.md` before code:**
 
@@ -58,7 +58,7 @@ Symptoms: the palette was chosen from taste rather than sampled from the logo; a
 | --- | --- | --- |
 | Eyebrow above a heading (tracked caps or small label) | it carries information the heading does not; at most one per three sections | front-load the heading instead |
 | Numbered markers (01, 02, 03) | the content really is a sequence | a list or plain headings |
-| Monospace | developer or infrastructure products, code, true machine identifiers | the sans with `tabular-nums` |
+| Monospace | the product's users read code (developer or infrastructure tools, code samples) — `SKILL.md` commitment 5 | the UI face at 500 with `tabular-nums` for IDs, passwords, env names, `[placeholders]`, key hints and timers; a copy button for copied values. The browser's default monospace on `code`/`kbd`/`samp`/`pre` counts: point those elements and the framework's mono token at the UI face |
 | Tracked small capitals as a label system | one device per page, in a face that is not condensed and hard | sentence case in the text face at 600 |
 | Glass / `backdrop-filter` | over a calm ground, with a scrim, on at most one surface | a solid surface |
 | Gradient | one purposeful gradient from the brand's own adjacent hues | solid fills |
@@ -73,18 +73,21 @@ Symptoms: the palette was chosen from taste rather than sampled from the logo; a
 | Big numbers | real, sourced, and the most useful thing to say | words |
 | Carousel | ≤ 5 frames, manual, with visible controls, and the content also reachable elsewhere | a static layout |
 | Library illustration | restyled into one consistent line, palette and radius | drawn SVG from the brand's geometry, photography or none |
-| 3D / WebGL | the object *is* the product, or the data is spatial (`motion.md`) | a photograph or a diagram |
-| Scroll-jacking / smooth-scroll libraries | never on content pages; only inside a contained, skippable story | native scroll |
+| 3D / WebGL | the object *is* the product, or the data is spatial; not on the marketing pages around a live 3D product, which use stills rendered by the product instead (`motion.md` §9) | a photograph or a diagram |
+| Scroll-jacking / smooth-scroll libraries | never on content pages, and never on a site that frames a signature product; elsewhere only inside a contained, skippable story | native scroll |
 
 ## Composition
 
 - Hero = headline + paragraph + two pill buttons + a dashboard screenshot (or a glowing blob), centred; a pill badge ("✨ New …") above the headline; three or more calls to action in the hero; a hero that overflows the first viewport because the sticky header was not counted against it (`calc(100svh - header)`).
+- **Two primary buttons in one viewport.** A persistent header CTA in the action colour beside the hero's primary action gives the first screen two "do this" signals, often in different words. While the hero action is on screen, the header CTA is secondary (outline or quiet); it takes the primary style only once the hero action has scrolled away, or on pages without one.
+- **A hero object that falls below the first phone screen.** Headline, lede, two stacked buttons and a facts row can push the photograph or product past 844 px, so on a phone the "hero" is a paragraph. Order the hero head → object → body on narrow screens (grid areas on desktop), and check the 390 × 844 `-fold.png` from `capture.mjs`.
 - Heading → paragraph → three cards, repeated down the page; identical rounded containers; icon grids (small icon, bold label, two lines, times six); three or more consecutive image-and-text splits (zigzag); fewer than four layout families in eight sections; sections that restate the same mood.
 - Every heading the same size; every section the same width, padding and alignment; more space below a heading than above it.
 - Cards used for content that is a list, a table, a diagram or a paragraph; cards inside cards.
 - The stepper timeline (a thin rule with dots or icons — reads as a progress bar) and its opposite, the grid pretending to be a timeline. A timeline the user will call beautiful has a drawn path through nodes, milestone artwork on alternating sides, and a vertical rail on phones.
-- A site made only of type, rules and data fragments: disciplined, but it reads as unfinished to a founder. Every expressive redesign needs a designed graphics layer in one line style — milestone art, spot illustrations, glyphs, a motif-based watermark family — in the brand's palette.
+- A site made only of type, rules and data fragments: disciplined, but it reads as unfinished to a founder. Every expressive redesign needs a designed graphics layer in one line style — milestone art, spot illustrations, glyphs, a motif-based watermark family of small, complete ornaments, never a viewport-wide mark — in the brand's palette.
 - A hero visual floating on a flat ground with only a watermark behind it: the hero object needs its own surface.
+- **Massive branding as a flourish.** A viewport-wide wordmark or mark parked in the footer or behind the hero is this skill's own habit, not the brand's: it fills a band with nothing a visitor can use. The lockup appears once in the header and once at footer size; identity comes from the system, not from scale. A user asked for it to be removed on sight (`lessons.md` 2026-09-28, CleoHR website).
 - Pill badges and chips as decoration ("NEW", "AI-POWERED", version labels in the hero); scroll cues ("Scroll to explore", bouncing chevrons); decorative locale, time or weather strips.
 
 ## Colour and surface
@@ -102,6 +105,7 @@ Symptoms: the palette was chosen from taste rather than sampled from the logo; a
 - Keeping the existing families because they already load; a single grotesk at one weight; display type that is body type made bigger.
 - Uppercase tracking on long text; centred paragraphs wider than 70 characters; headlines wrapped by chance rather than by intent (`text-wrap: balance`).
 - **Tracked capitals in a condensed or geometric grotesk at 10–13 px as the label system** — eyebrows, field labels, chips, tabs, numerals. To a non-designer it reads as a terminal or a spec sheet even with no monospace loaded. One small-caps device per page at most; the rest sentence case in the text face.
+- **The browser's default monospace on `kbd`/`code`** (a `Ctrl K` or `Esc` hint): it renders a code font nobody chose, and `audit.mjs` fails it like any other monospace (commitment 5 in `SKILL.md`).
 - **Typesetting an object that looks like machine output** (an MRZ strip, a hash, a serial block) as "authenticity": it reads as code. Draw the object (a signature line, a seal) or leave it out.
 - Display over ~6 rem on a long headline; tracking tighter than −0.04 em; `tracking-tighter` on 800+ weights as "the AI hero recipe"; italic descenders clipped by `line-height: 1` (italic words with g, j, p, q, y need ≥ 1.1 and room below).
 - Em-dash saturation in the copy (eight or more at roughly one per 500 characters); Title Case Headings where the brand writes in sentence case.
@@ -111,15 +115,46 @@ Symptoms: the palette was chosen from taste rather than sampled from the logo; a
 
 Different from the landing-page list; they apply to product surfaces (`app-ui.md`):
 
-- Marketing type in a work tool (30–48 px headings; a greeting — "Welcome back, Alex 👋" — in the title slot, where the title should name the place and scope).
+- Marketing type in a work tool: page titles over 28 px (32 px only for a dashboard or home screen whose title stands alone); an eyebrow above and a lead below the title on every screen; a page header taller than ~120 px before the main object; a greeting — "Welcome back, Alex 👋" — in the title slot, where the title should name the place and scope (on a home screen a greeting may sit only as a secondary line under that title).
 - Card soup: two-thirds of the text inside bordered, shadowed, rounded boxes, where real products use tables, lists and panels divided by space.
 - A row of KPI tiles ("$45,231.89 · +20.1% from last month") with no target, no meaning and no link to the records.
 - Decorative charts; boilerplate "AI insights".
-- Low density: 16 px body, 40–48 px controls and 24 px card padding in a *desk* tool used all day. (Not in a field or frontline tool used on a phone with gloves — there it is the requirement; `categories.md`.)
+- Low density: 16 px body, controls 40 px or taller and rows 48 px or taller, and 24 px card padding in a *desk* tool used all day; marketing chapter padding (100+ px) and leads between sections that push the main object below the fold. (Not in a field or frontline tool used on a phone with gloves — there generous targets and type are the requirement; `categories.md`. Chapter padding is wrong in any product.)
 - A toast for every save (confirmation belongs at the trigger); modals for everything; every action a filled button; icon-only toolbars without labels, tooltips or shortcuts.
 - Missing states: blank containers, eternal spinners, "No data".
 - A gradient upsell card in the sidebar competing with the work.
 - Selected items in the accent colour, competing with the primary action (selection takes a neutral fill).
+
+Test: open the busiest screen at 1280 × 800 (`capture.mjs --widths 1280 --height 800`). If the first rows of its main table, board or form are not visible, or anything read daily is under 12 px (11 px only for a single uppercase word) or in tracked capitals other than one- or two-word column or group labels, the marketing site's expression has leaked in (next section).
+
+## Marketing expression transplanted into a productive surface
+
+The failure of "make the app match the site": the brand layer is right and the ergonomics are wrong. It photographs well and tires the people who use it all day. Eyebrows over every heading, long leads under every title and italic emphasis are marketing devices: in an app they are read once and then paid for on every screen. Symptoms, all seen in one redesign (`lessons.md` 2026-09-25, Brio3 app):
+
+- **Display-size page titles on every screen** — a 40 px serif with an eyebrow index above it and a two-line lead below: 180 px of header before the first row of data, on every page, read once and scrolled past for ever. Page titles are 20–28 px, fixed, in one band with the actions (`app-ui.md` §3).
+- **The site's small-caps label device as the product's label system** — 10–11 px tracked mono capitals on window bars, table heads, status words and stat labels. Caps are glanceable for a word or two in isolation (NN/g, "Typography for Glanceable Reading") and tiring down a column of statuses and sentences. Caps only for one- or two-word labels (short column heads, one-word nav-group labels) at 11–12 px, tracked 0.05–0.06 em, which together count as the page's one caps device; statuses and anything scanned down a column in sentence case in the UI face.
+- **Serif record names and serif numerals in lists and KPIs** — a display cut at 18–38 px where a 15–16 px semibold UI face scans faster, and many serif display faces have no tabular figures. The display face gets one job: page titles, plus the sign-in screen (`app-ui.md` §3).
+- **The marketing hero photograph and its tagline on the sign-in screen.** The user is already a customer and sees this door every morning; it is a utility. Form first; brand from the mark and at most one abstract graphic derived from it (`app-ui.md` §12).
+- **"Windows" and editorial frames copied as decoration** around every object, such as title bars that only repeat the title below them.
+- **Marketing hairlines on controls.** A 12–24 % border reads as refined on a landing page and fails WCAG 1.4.11 (3:1) on an input. The accent used as a focus ring often fails 3:1 on a light ground too; the ring takes the darker accent-for-text token (`accessibility.md` §2).
+- **Contrast checked on the main surface only.** Muted text that passes on the page ground fails on the hover row, the zebra stripe, the selected fill, the segmented control's track or the secondary panel. Measure every surface the text sits on, in every theme (`accessibility.md` §2).
+- **Marketing whitespace.** The site's chapter padding and leads between sections carried into the app, so the main object starts below the fold on a laptop (numbers under "App-UI tells").
+
+The test at the end of "App-UI tells" catches most of these.
+
+## Product flows and configurators
+
+- **Shrinking a signature experience to fit the website.** A feature the user described as the reason the business is remembered, built as a stepper with a thumbnail preview between two sections. If people are meant to *play* with it, it needs a full-screen shell, direct manipulation, real materials and light, and a quality bar proved with a prototype (`discovery.md` §5b, `ui-ux.md` §7b).
+
+When the site takes orders, bookings or requests, these read as generated or simply fail:
+
+- **The giant form.** Twenty dropdowns in a column, however well styled. Group decisions into a few chapters, ask what the customer knows ("how many people?") and infer the trade term.
+- **Steps named after the data model.** "Toppings (1)", "Toppings (2)", "Step 7 of 11". Name steps after the customer's decisions, and keep them few enough that the step navigation fits one row on a phone.
+- **Options as words.** A select of trade terms the customer cannot picture. Show each option as a picture of *that option on their thing*, with a text name and the trade term as a small hint.
+- **A preview that only appears at the end.** The customer sees their object change while they choose. On phones the preview is pinned, within the sticky-UI budget (`accessibility.md` §2), and it is labelled honestly (a sketch is not a photo).
+- **A price the business cannot honour.** Instant totals built from invented or placeholder numbers. Show an estimate only from the owner's numbers and only when every part is priced; otherwise say who will quote it and when.
+- **Back loses the choice.** Going back, reloading or closing the tab must not reset the configuration. Keep it in the URL and in local storage, and audit mid-configuration states by seeding them with `--storage`.
+- **Checkout for things that need a human.** Carts and card forms for work that must be confirmed, quoted or scheduled. Model the real workflow (request → quote → approval → deposit) and say what happens next at every step.
 
 ## Imagery and illustration
 

@@ -40,7 +40,7 @@ Read whenever a surface shows numbers as charts or KPI tiles. If the environment
 ## 4. Dashboard rules
 
 1. One screen for the core picture at the primary breakpoint; details one click away.
-2. **KPI tile anatomy**: plain label · value (tabular figures, sensible precision) · comparison (delta vs previous period or target, with sign *and* arrow *and* colour) · period · optional sparkline. Tiles never animate their counters. Three to five tiles that drive decisions — not every number the database has.
+2. **KPI tile anatomy**: plain label · value (tabular figures, sensible precision), set at 24–32 px, semibold, in the UI face — never a decorative display cut (serif display faces often lack tabular figures too) · comparison (delta vs previous period or target, with sign *and* arrow *and* colour) · period · optional sparkline. Tiles never animate their counters. Three to five tiles that drive decisions — not every number the database has.
 3. **Status colours are reserved**: red, amber and green mean status only, never series identity.
 4. **Tables are first-class**: numbers right-aligned with `font-variant-numeric: tabular-nums`, units in the header, sticky header, sortable with `aria-sort`, density toggle (`app-ui.md` §5).
 5. Consistent scales across comparable small multiples; say so when they are independent.

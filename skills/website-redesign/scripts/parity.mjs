@@ -5,6 +5,8 @@
  *   node parity.mjs --before http://localhost:4000 --after http://localhost:3000 \
  *        [--paths / /pricing /about | --crawl 40] [--source src content] [--out parity.md]
  *        [--derived "days late" "/^\d+ days$/" …]   values computed from the data (listed, not failed)
+ *        [--removed "10 minutes" "#human" "captcha" "/old-page/" …]   deliberate removals (listed, not warned)
+ *   node parity.mjs --payloads <old states out dir> <new states out dir> [--out payloads.md]
  *
  * Run the old build (main branch) and the new build (redesign branch) side by
  * side. For every route it compares:
@@ -19,16 +21,120 @@
  *  - element ids (anchors, script and analytics hooks) and form field names
  *    present on the old page and missing on the new one.
  *  - title, meta description, canonical, og:image, h1.
+ * A dropped claim whose value is still on the new page counts as "same value, new format" only when it is surely
+ * the same figure: specific (decimals, digit grouping, 3+ significant digits) or beside its own unit or currency.
+ * --removed declares what was taken out on purpose; each is listed as "declared removed" (DESIGN.md "Remove" lists
+ * it) instead of warned about. One pattern per argument, commas kept. A string matches a claim or quotation that
+ * contains it, or an id ("#human" or "human"), a field ("name" or "form › name") or a route ("/old/") exactly;
+ * /regex/ (with a flag or a regex character) tests all of them. A pattern that matched nothing is reported.
+ *
+ * --payloads: the payload contract, what a form actually sends. states.mjs records requests ("record" on a route
+ * or a state) into <out>/requests/; run the same answers through the old and the new build, then pass both out
+ * dirs. States pair by name (devices may differ), requests by method and path in the order sent. Per request:
+ * byte-identical, or keys removed/added, key order, value types and values that changed, plus a changed method,
+ * path, query or Content-Type. No browser is started.
  * Eastern Arabic and Persian digits are normalised first, so claims on an Arabic page are compared too.
  * This turns "never invent proof" and the audit's preserved-list into checks.
  * It cannot tell a true claim from a false one — only whether it has a source.
  */
 import { readdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { parseArgs, asList, launch, open, settle, urlFor } from './lib/env.mjs';
 
 const a = parseArgs();
-if (!a.before || !a.after) { console.error('Usage: --before <old base URL> --after <new base URL> [--paths …|--crawl N] [--source dirs…]'); process.exit(1); }
+if (a.payloads) {
+  const dirs = [].concat(a.payloads).map(String);
+  if (dirs.length !== 2) { console.error('Usage: node parity.mjs --payloads <old states out dir> <new states out dir> [--out payloads.md]'); process.exit(1); }
+  // A states.mjs out dir or its requests/ folder; one recording per state and device.
+  const readRecs = async (d) => {
+    const dir = existsSync(path.join(d, 'requests')) ? path.join(d, 'requests') : d;
+    const recs = [];
+    for (const f of (await readdir(dir).catch(() => [])).filter((f) => f.endsWith('.json')).sort()) {
+      try { const j = JSON.parse(await readFile(path.join(dir, f), 'utf8')); if (Array.isArray(j.requests)) recs.push({ ...j, state: j.state ?? f.replace(/\.json$/, '') }); } catch { /* not a recording */ }
+    }
+    return { dir, recs };
+  };
+  const [A, B] = await Promise.all(dirs.map(readRecs));
+  if (!A.recs.length || !B.recs.length) { console.error(`No recordings in ${[A, B].filter((x) => !x.recs.length).map((x) => x.dir).join(' and ')} — run states.mjs with "record" on the submit route (see its header).`); process.exit(1); }
+  const kind = (v) => (v === null ? 'null' : Array.isArray(v) ? 'array' : typeof v);
+  const val = (v) => { const t = JSON.stringify(v) ?? String(v); return t.length > 70 ? `${t.slice(0, 67)}…` : t; };
+  // Key by key, recursively: d collects removed, added, order, types, values as readable lines.
+  const diff = (x, y, at, d) => {
+    const tx = kind(x), ty = kind(y), here = at || '(body)', sub = (k) => (at ? `${at}.${k}` : k);
+    if (tx !== ty) return d.types.push(`\`${here}\` ${tx} → ${ty} (${val(x)} → ${val(y)})`);
+    if (tx === 'object') {
+      const kx = Object.keys(x), ky = Object.keys(y);
+      kx.filter((k) => !Object.hasOwn(y, k)).forEach((k) => d.removed.push(`\`${sub(k)}\` (was ${val(x[k])})`));
+      ky.filter((k) => !Object.hasOwn(x, k)).forEach((k) => d.added.push(`\`${sub(k)}\` = ${val(y[k])}`));
+      const cx = kx.filter((k) => Object.hasOwn(y, k)), cy = ky.filter((k) => Object.hasOwn(x, k));
+      if (cx.join('\n') !== cy.join('\n')) d.order.push(`${here}: ${cx.join(', ')} → ${cy.join(', ')}`);
+      cx.forEach((k) => diff(x[k], y[k], sub(k), d));
+    } else if (tx === 'array') {
+      if (x.length !== y.length) d.values.push(`\`${here}\` ${x.length} item(s) → ${y.length}`);
+      for (let i = 0; i < Math.min(x.length, y.length); i++) diff(x[i], y[i], `${here}[${i}]`, d);
+    } else if (x !== y) d.values.push(`\`${here}\` ${val(x)} → ${val(y)}`);
+  };
+  const query = (u) => { const o = {}; for (const [k, v] of new URL(u).searchParams) o[k] = Object.hasOwn(o, k) ? [].concat(o[k], v) : v; return o; };
+  const mediaType = (c) => String(c || 'none').split(';')[0].trim().toLowerCase();
+  const out = [], md = (x = '') => out.push(x);
+  const tally = { same: 0, differ: 0, alone: 0 };
+  const compare = (x, y) => {
+    const lines = [], px = new URL(x.url), py = new URL(y.url), d = { removed: [], added: [], order: [], types: [], values: [] }, dq = { removed: [], added: [], order: [], types: [], values: [] };
+    if (x.method !== y.method || px.pathname !== py.pathname) lines.push(`✗ sent to a different endpoint: ${x.method} ${px.pathname} → ${y.method} ${py.pathname}`);
+    const cx = String(x.contentType || 'none').replace(/;\s*boundary=[^;]+/i, ''), cy = String(y.contentType || 'none').replace(/;\s*boundary=[^;]+/i, '');
+    if (cx.toLowerCase() !== cy.toLowerCase()) lines.push(`${mediaType(cx) !== mediaType(cy) ? '✗' : '⚠'} Content-Type: ${cx} → ${cy}${x.format !== y.format ? ` (the body is now ${y.format}, was ${x.format}: the server parses it differently)` : ''}`);
+    diff(query(x.url), query(y.url), '', dq);
+    const q = [...dq.removed, ...dq.added, ...dq.types, ...dq.values];
+    if (q.length || dq.order.length) lines.push(`⚠ query: ${[...dq.removed.map((k) => `removed ${k}`), ...dq.added.map((k) => `added ${k}`), ...dq.types, ...dq.values, ...dq.order.map((o) => `order ${o}`)].join('; ')}`);
+    const same = x.raw === y.raw;
+    if (!same) {
+      diff(x.body, y.body, '', d);
+      if (d.removed.length) lines.push(`✗ keys removed (the server no longer receives them): ${d.removed.join(', ')}`);
+      if (d.types.length) lines.push(`✗ value type changed: ${d.types.join(', ')}`);
+      if (d.added.length) lines.push(`⚠ keys added (a strict server rejects unknown keys): ${d.added.join(', ')}`);
+      if (d.values.length) lines.push(`⚠ value changed: ${d.values.join(', ')}`);
+      if (d.order.length) lines.push(`◇ key order changed (matters only to code that hashes, signs or compares the raw body): ${d.order.join('; ')}`);
+      if (!lines.length) lines.push('◇ same keys, types and values; the bytes differ (whitespace or escaping)');
+    }
+    const mark = lines.some((l) => l.startsWith('✗')) ? '✗' : lines.some((l) => l.startsWith('⚠')) ? '⚠' : same ? '✓' : '◇';
+    tally[same && !lines.length ? 'same' : 'differ']++;
+    const size = kind(x.body) === 'object' ? ` (${Object.keys(x.body).length} keys, ${x.format})` : x.raw == null ? ' (no body)' : ` (${x.format})`;
+    md(`- ${mark} ${x.method} ${px.pathname}${same ? `: body byte-identical${size}` : ''}`);
+    lines.forEach((l) => md(`  - ${l}`));
+    return d.values.length > 0;
+  };
+  md(`# Payloads: ${A.dir} → ${B.dir}`);
+  md();
+  const names = [...new Set([...A.recs, ...B.recs].map((r) => r.state))];
+  const onlyA = names.filter((n) => !B.recs.some((r) => r.state === n)), onlyB = names.filter((n) => !A.recs.some((r) => r.state === n));
+  md(`States recorded on both sides: ${names.length - onlyA.length - onlyB.length}${onlyA.length ? ` · old only: ${onlyA.join(', ')}` : ''}${onlyB.length ? ` · new only: ${onlyB.join(', ')}` : ''}`);
+  let valuesDiffer = false;
+  for (const x of A.recs) {
+    const peers = B.recs.filter((r) => r.state === x.state);
+    const y = peers.find((r) => r.device === x.device) || peers[0];
+    if (!y) continue;
+    md();
+    md(`## ${x.state}  (old: ${x.device || '?'} · new: ${y.device || '?'})`);
+    if (!x.requests.length && !y.requests.length) { md('- ⚠ no request recorded on either side: check the record glob and that the submit happened (a wait after it).'); continue; }
+    // Pair by method and path in the order sent; what is left pairs in order by method (the endpoint moved).
+    const left = [...y.requests], pairs = [], alone = [];
+    const take = (r, same) => { const i = left.findIndex((q) => q.method === r.method && same(q)); return i >= 0 ? pairs.push([r, left.splice(i, 1)[0]]) : 0; };
+    for (const r of x.requests) if (!take(r, (q) => new URL(q.url).pathname === new URL(r.url).pathname)) alone.push(r);
+    for (const r of alone.splice(0)) if (!take(r, () => true)) alone.push(r);
+    for (const [r, q] of pairs) if (compare(r, q)) valuesDiffer = true;
+    alone.forEach((r) => { tally.alone++; md(`- ✗ ${r.method} ${new URL(r.url).pathname}: sent by the old build only`); });
+    left.forEach((r) => { tally.alone++; md(`- ⚠ ${r.method} ${new URL(r.url).pathname}: sent by the new build only`); });
+  }
+  md();
+  md(`${tally.same + tally.differ} request pair(s): ${tally.same} byte-identical, ${tally.differ} differ${tally.alone ? `, ${tally.alone} sent by one build only` : ''}.`);
+  if (valuesDiffer) md('\nA changed value with the same answers means the new build transforms what was entered (trims, re-cases, reformats), or the two scenarios did not enter the same answers: check which.');
+  const report = out.join('\n');
+  if (a.out) await writeFile(String(a.out), report + '\n');
+  console.log(report);
+  process.exit(0);
+}
+if (!a.before || !a.after) { console.error('Usage: --before <old base URL> --after <new base URL> [--paths …|--crawl N] [--source dirs…] [--removed …]  |  --payloads <old dir> <new dir>'); process.exit(1); }
 const before = String(a.before).replace(/\/$/, ''), after = String(a.after).replace(/\/$/, '');
 const crawlN = a.crawl ? Number(a.crawl) || 30 : 0;
 let paths = asList(a.paths, ['/']);
@@ -132,6 +238,18 @@ for (const dir of asList(a.source)) {
   await walk(dir);
 }
 const sourceNorm = norm(sourceText);
+// --removed: taken out on purpose. One pattern per argument (not split on commas: "10,000 customers"). A /…/ is a
+// regex only with a flag or a regex character, so a route written "/old/" stays a route.
+const removedPats = [].concat(a.removed ?? []).filter((d) => typeof d === 'string').map((d) => { const m = d.match(/^\/(.+)\/([a-z]*)$/); return { d, re: m && (m[2] || /[\\^$.*+?()[\]{}|]/.test(m[1])) ? new RegExp(m[1], m[2]) : null }; });
+const removedUsed = new Set();
+// names: the ways an item can be written (an id with and without #). partial: a claim or quotation that contains it.
+const isRemoved = (names, partial = false) => {
+  const hit = removedPats.find((p) => names.filter(Boolean).some((n) => (p.re ? p.re.test(n) : partial ? n.toLowerCase().includes(p.d.toLowerCase()) : n.toLowerCase() === p.d.toLowerCase().replace(/(.)\/$/, '$1'))));
+  if (hit) removedUsed.add(hit.d);
+  return !!hit;
+};
+const route = (p) => p.replace(/(.)\/$/, '$1');
+const declared = (xs) => `- ◇ declared removed (--removed): ${xs.join(', ')} — DESIGN.md "Remove" should list each.`;
 
 const out = [];
 const md = (s = '') => out.push(s);
@@ -160,10 +278,14 @@ md(`# Parity: ${before} → ${after}`);
 md();
 md(`Routes compared: ${paths.length}${crawlN ? ' (crawled from the old site)' : ''}${asList(a.source).length ? ` · sources searched: ${asList(a.source).join(', ')}` : ''}`);
 md();
-const missing = perPage.filter(({ o, n }) => o.status && o.status < 400 && (!n.status || n.status >= 400));
+const missingAll = perPage.filter(({ o, n }) => o.status && o.status < 400 && (!n.status || n.status >= 400));
+const missing = missingAll.filter(({ p }) => !isRemoved([route(p)]));
 md('## Routes');
 md(missing.length ? missing.map(({ p, n }) => `- ✗ \`${p}\` answered on the old site, ${n.status ? `returns ${n.status}` : `fails (${n.error || 'no response'})`} on the new one — keep it or redirect it.`).join('\n') : '- ✓ every compared route answers on the new site.');
-const orphaned = [...oldAll.links].filter((l) => !newAll.links.has(l));
+const orphanedAll = [...oldAll.links].filter((l) => !newAll.links.has(l));
+const orphaned = orphanedAll.filter((l) => !isRemoved([l]));
+const routesRemoved = [...new Set([...missingAll.filter((x) => !missing.includes(x)).map(({ p }) => route(p)), ...orphanedAll.filter((l) => !orphaned.includes(l))])];
+if (routesRemoved.length) md(declared(routesRemoved.map((l) => `\`${l}\``)));
 if (orphaned.length) md(`- ⚠ linked from the old pages but not from any new page: ${orphaned.slice(0, 20).map((l) => `\`${l}\``).join(', ')}`);
 md();
 
@@ -196,13 +318,33 @@ md();
 if (changingAll.size) { md(`Changing values (timers, clocks, count-up animations) left out of the comparison: ${[...changingAll].slice(0, 8).map((c) => `"${c.replace(/\s+/g, ' ')}"`).join(', ')}`); md(); }
 md('## Claims on the old site missing from the new one');
 const droppedAll = [...oldAll.claims].filter((c) => !has(newNorm, c) && !changingAll.has(c));
+const claimsRemoved = droppedAll.filter((c) => isRemoved([c], true));
 // The same value still on the new page in another format (the unit moved to a column header, "12,748.5" now
-// "12,748.50") is reformatted, not dropped. Percentages and multipliers must keep their unit to count.
-const newValues = new Set([...newNorm.matchAll(/\d[\d,]*(?:\.\d+)?/g)].map((m) => parseFloat(m[0].replace(/,/g, ''))));
-const value = (c) => parseFloat(((c.match(/\d[\d,]*(?:\.\d+)?/) || [''])[0]).replace(/,/g, ''));
-const reformatted = droppedAll.filter((c) => !/%|x\b|×/i.test(c) && value(c) >= 10 && newValues.has(value(c)));
-const dropped = droppedAll.filter((c) => !reformatted.includes(c));
-const droppedQuotes = [...oldAll.quotes].filter((q) => !newNorm.includes(norm(q).slice(0, 60)));
+// "12,748.50") is reformatted, not dropped — when it is surely the same figure. A value specific enough not to be a
+// coincidence (decimals, digit grouping, 3+ significant digits) may sit anywhere on the new page; any other value
+// needs its own unit or currency beside it, in the same sentence with no other number in between: a "10am"
+// elsewhere does not keep "10 minutes". Percentages and multipliers must keep their unit to count.
+const numRe = /\d[\d,]*(?:\.\d+)?/g;
+const newValues = new Set([...newNorm.matchAll(numRe)].map((m) => parseFloat(m[0].replace(/,/g, ''))));
+const digits = (c) => (c.match(/\d[\d,]*(?:\.\d+)?/) || [''])[0];
+const value = (c) => parseFloat(digits(c).replace(/,/g, ''));
+const specific = (c) => /\.\d|\d,\d{3}/.test(digits(c)) || digits(c).replace(/\D/g, '').replace(/^0+|0+$/g, '').length >= 3;
+const unitNear = (c) => {
+  const n = norm(c), u = n.replace(digits(n), ' ').replace(/[+~≈]/g, ' ').trim();
+  const cur = u.match(/[$€£¥₹]|ر\.س|د\.إ|ريال|درهم|جنيه|\b(?:sar|aed|usd|eur|gbp|qar|kwd|bhd|omr|egp|mad|inr)\b/);
+  const word = cur ? null : u.split(/\s+/).pop();
+  if (!cur && !word) return false;
+  // A noun in any number ("minute", "minutes"); a short unit ("%", "x", "kg") as a whole token.
+  const re = cur ? new RegExp(esc(cur[0])) : new RegExp(`(^|[^\\p{L}])${esc(word.length >= 4 ? word.replace(/(?:ies|s)$/, '') : word)}${word.length >= 4 ? '\\p{L}{0,3}' : ''}(?![\\p{L}])`, 'u');
+  return [...newNorm.matchAll(numRe)].some((m) => parseFloat(m[0].replace(/,/g, '')) === value(c)
+    && re.test(`${newNorm.slice(Math.max(0, m.index - 30), m.index).replace(/^[\s\S]*(?:\d|[.!?;](?=\s))/, '')} ${newNorm.slice(m.index + m[0].length, m.index + m[0].length + 30).replace(/(?:\d|[.!?;](?=\s|$))[\s\S]*$/, '')}`));
+};
+const reformatted = droppedAll.filter((c) => !claimsRemoved.includes(c) && newValues.has(value(c)) && ((!/%|x\b|×/i.test(c) && value(c) >= 10 && specific(c)) || unitNear(c)));
+const dropped = droppedAll.filter((c) => !reformatted.includes(c) && !claimsRemoved.includes(c));
+const droppedQuotesAll = [...oldAll.quotes].filter((q) => !newNorm.includes(norm(q).slice(0, 60)));
+const droppedQuotes = droppedQuotesAll.filter((q) => !isRemoved([q], true));
+const quotesRemoved = droppedQuotesAll.filter((q) => !droppedQuotes.includes(q));
+if (claimsRemoved.length || quotesRemoved.length) md(declared([...claimsRemoved.map((c) => `"${c}"`), ...quotesRemoved.map((q) => `“${q.slice(0, 60)}${q.length > 60 ? '…' : ''}”`)]) + '\n');
 if (reformatted.length) md(`- ◇ same value, new format (check the unit is still stated nearby): ${reformatted.slice(0, 15).map((c) => `"${c}"`).join(', ')}${reformatted.length > 15 ? ` and ${reformatted.length - 15} more` : ''}\n`);
 md(dropped.length || droppedQuotes.length ? [
   ...dropped.map((c) => `- ⚠ "${c}"`),
@@ -211,14 +353,20 @@ md(dropped.length || droppedQuotes.length ? [
 md();
 
 md('## Per page: ids, form fields, metadata');
+let allKept = true;
 for (const { p, o, n } of perPage) {
   if (!o.text || !n.text) continue;
   const lines = [];
-  const lostIds = o.ids.filter((id) => !n.ids.includes(id));
+  const lostIdsAll = o.ids.filter((id) => !n.ids.includes(id));
+  const lostIds = lostIdsAll.filter((id) => !isRemoved([`#${id}`, id]));
+  const lostFieldsAll = o.fields.filter((f) => !n.fields.includes(f));
+  const lostFields = lostFieldsAll.filter((f) => !isRemoved([f, f.split(' › ').pop()]));
+  const removedHere = [...lostIdsAll.filter((id) => !lostIds.includes(id)).map((id) => `#${id}`), ...lostFieldsAll.filter((f) => !lostFields.includes(f))];
+  if (removedHere.length) lines.push(declared(removedHere));
   if (lostIds.length) lines.push(`- ⚠ ids gone (anchors, script or analytics hooks?): ${lostIds.slice(0, 15).map((x) => `#${x}`).join(', ')}${lostIds.length > 15 ? ` +${lostIds.length - 15}` : ''}`);
-  const lostFields = o.fields.filter((f) => !n.fields.includes(f));
   if (lostFields.length) lines.push(`- ✗ form fields renamed or removed: ${lostFields.join(', ')}`);
   const lostHooks = (o.hooks || []).filter((h) => !(n.hooks || []).includes(h));
+  if (lostIds.length || lostFields.length || lostHooks.length || !n.meta.h1) allKept = false;
   if (lostHooks.length) lines.push(`- ✗ data-* hooks gone (analytics, tests, scripts?): ${lostHooks.slice(0, 12).join(', ')}`);
   const lostForms = (o.forms || []).filter((f) => !(n.forms || []).includes(f));
   if (lostForms.length) lines.push(`- ✗ form submission changed (id, method or action): ${lostForms.join(', ')} → now ${(n.forms || []).join(', ') || 'no form'}`);
@@ -229,7 +377,9 @@ for (const { p, o, n } of perPage) {
   if (!n.meta.h1) lines.push(o.meta.h1 ? '- ✗ no h1 (the old page had one)' : '- ⚠ no h1 (the old page had none either — fix it now)');
   if (lines.length) { md(`### ${p}`); lines.forEach((l) => md(l)); md(); }
 }
-if (!perPage.some(({ o, n }) => o.text && n.text && ((o.ids || []).some((id) => !n.ids.includes(id)) || o.fields.some((f) => !n.fields.includes(f)) || (o.hooks || []).some((h) => !(n.hooks || []).includes(h)) || !n.meta.h1))) md('- ✓ every id, form field, data-* hook, form submission and piece of metadata is still there.');
+if (allKept) md(`- ✓ every id, form field, data-* hook, form submission and piece of metadata is still there${removedPats.length ? ' (or declared removed)' : ''}.`);
+const unused = removedPats.filter((p) => !removedUsed.has(p.d));
+if (unused.length) { md(); md(`- ⚠ --removed matched nothing that was removed (a typo, or still on the new site?): ${unused.map((p) => `"${p.d}"`).join(', ')}`); }
 
 await browser.close();
 const report = out.join('\n');

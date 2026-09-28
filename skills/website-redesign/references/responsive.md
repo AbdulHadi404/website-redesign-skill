@@ -53,7 +53,7 @@ Then: **container queries** (Baseline widely since 2025-08) for components that 
 | Enterprise admin, 20+ sections | "Menu" drawer with search inside; home surfaces the phone tasks (approve, look up) | drawer or rail | multi-level sidebar, breadcrumbs, in-page tabs |
 | Docs / content | menu + prominent search; on-page TOC in `<details>` | TOC as a drawer | left nav + sticky "On this page" |
 
-Hard rules: hidden navigation is used far less than visible navigation — show the top 3–5 destinations when you can and hide only the long tail; never hide the only search behind an icon in a search-led product; tab bars navigate, toolbars act; at most five bottom tabs; the current location is always visible; mobile menus are labelled, trap focus, close on Escape, restore focus and lock body scroll; the primary action stays visible at every width. One sticky primary action per phone screen at most — padded so it never covers the end of the page or a focused element (`scroll-padding-block-end`), hidden while the in-flow CTA is visible. Bottom sheets (built on `<dialog>`) get a grab handle *and* a close button.
+Hard rules: hidden navigation is used far less than visible navigation — show the top 3–5 destinations when you can and hide only the long tail; never hide the only search behind an icon in a search-led product; tab bars navigate, toolbars act; at most five bottom tabs; the current location is always visible; mobile menus are labelled, trap focus, close on Escape, restore focus and lock body scroll; the primary action stays visible at every width (in the header it is styled secondary while the hero's own primary action is on screen: `web-design.md` §6). One sticky primary action per phone screen at most — padded so it never covers the end of the page or a focused element (`scroll-padding-block-end`), hidden while the in-flow CTA is visible. Bottom sheets (built on `<dialog>`) get a grab handle *and* a close button.
 
 **One-handed use, evidence vs folklore**: roughly half of phone use is one-handed and grips change constantly (Hoober); people tap and look at the centre most accurately. Put primary content and actions near the centre and bottom, frequent destinations in a bottom bar, destructive actions away from busy tap zones — but don't cram everything into the lower third; the static "thumb zone" heat map is folklore.
 
@@ -101,6 +101,7 @@ If CSS changes `display` on table elements, re-add `role="table"`/`row`/`cell`/`
 
 - [ ] Captures at the widths above; no horizontal page scroll (`audit.mjs` names the element); no phone zoom-out from an overflowing child.
 - [ ] Each viewport class looks *designed*: stack order chosen, sizes re-set, nothing squeezed; mid widths (1024, 768) checked as carefully as the ends.
+- [ ] The hero object (photograph, product) is inside the 390 × 844 first viewport — open the `-fold.png`; a headline, lede, two stacked buttons and a facts row can push it below, leaving a paragraph as the hero. Order the hero head → object → body on narrow screens (grid areas on desktop).
 - [ ] Navigation transformed per §5; the open mobile menu captured; primary action visible at every width.
 - [ ] Tables per §6; charts per `dataviz.md` §6.
 - [ ] Targets ≥ 44 px on coarse pointers (check the rendered size — `audit.mjs` counts them); hover-only affordances also reachable by focus and touch.

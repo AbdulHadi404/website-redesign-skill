@@ -26,12 +26,14 @@ Licence traps change the answer: PrimeReact 11 / PrimeVue 5 / PrimeNG 22 went co
 Every mature system uses three tiers under different names — primitive → semantic → component (PatternFly: palette → base → semantic; Fluent: global → alias → component; Material: reference → system → component):
 
 - **Primitive**: the raw scales — `blue-9`, `space-4`, `radius-2`. Never used directly in components.
-- **Semantic** (role): what the value is *for* — `color.background.danger.subtle`, `color.text.muted`, `color.border.focus`, `space.inset.card`. Components use these. Dark mode and brand themes swap semantic → primitive mappings; nothing else changes.
+- **Semantic** (role): what the value is *for* — `color.background.danger.subtle`, `color.text.muted`, `color.border.focus`, `color.border.decorative`, `space.inset.card`. Components use these. Dark mode and brand themes swap semantic → primitive mappings; nothing else changes.
 - **Component**: only where a component needs its own knob (`button.height.compact`).
 
 **One naming grammar, general to specific** — pick one and use it for every token. Atlassian's `color.[property].[role].[emphasis].[state]` (`color.background.selected.bold.pressed`) and PatternFly's `--pf-t--global--background--color--action--plain--clicked` are good models. Name by role, never by value (`--accent`, not `--orange`).
 
 **State tokens are named, not computed**: `…hovered`, `…pressed`, `…selected`, `…disabled` as explicit tokens survive dark mode and brand colours; opacity overlays (Material's 0.08 hover, 0.12 focus/pressed) are one implementation of them.
+
+**Decorative is a role, never text**: the faint neutral for dots, rules and disabled strokes gets its own role, named 'decorative' where it is defined. Grep its text uses, placeholders included, before shipping. A fourth grey leaking onto timestamps and placeholders at about 2.5:1 is the usual contrast failure (`app-ui.md` §13).
 
 **Semantic spacing categories** (PatternFly): *control* (padding inside inputs and buttons), *inset* (inner padding of regions), *gap* (between elements), *gutter* (layout grid). A scale is a scale — Carbon 2, 4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96, 160; GOV.UK is built on 5 px (5–60) and is no worse for it. Consistency of one scale is the quality rule, not a particular base.
 
@@ -41,15 +43,30 @@ Every mature system uses three tiers under different names — primitive → sem
 
 ## 3. Type sets per surface
 
-- **Productive** (product UI): 14 px base (13 in dense tools), fixed sizes, a gentle ratio of 1.125–1.2, role names — heading, title, body, label, detail, metric, code. Carbon: "fixed type styles are a must" inside containers. Atlassian gives dashboard numbers their own `font.metric` style.
+- **Productive** (product UI): 14 px base (13 in dense tools), fixed sizes, a gentle ratio of 1.125–1.2, role names — heading, title, body, label, detail, metric — and code only when the product's users read code (commitment 5 in `SKILL.md`). Carbon: "fixed type styles are a must" inside containers. Material 3 splits its scale the same way: display and headline roles for expressive moments; title, body and label roles for the interface. Atlassian gives dashboard numbers their own `font.metric` style.
 - **Expressive** (marketing, editorial): 16 px base or more, fluid headings (`clamp()`), a steeper ratio (1.25–1.5+), a display face with its own voice. Carbon: "Do not use these styles inside a container".
 - One token system, two sets. A scale stretched over both is wrong for both.
 - **Weight is hierarchy**: bold for titles and button labels; medium beside 1.5 px-stroke icons; regular for anything the user typed (Spectrum 2).
 - Component text (inside controls) is its own style with a line height rounded to even pixels, so labels centre.
 
+Productive roles, with numbers from the systems' source files (Carbon `packages/type/src/styles.ts`, Material `md-sys-typescale` tokens):
+
+| Role | Carbon (productive) | Material 3 | Use |
+| --- | --- | --- | --- |
+| Label / caption | label-01 12/16 | label-medium 12/16 · label-small 11/16 | helper text, meta, captions; 12 px is the floor for anything read, 11 px only for a single uppercase word |
+| Body (dense) | body-compact-01 14/18 | body-medium 14/20 | table cells, rows, controls |
+| Body (reading) | body-01 14/20 · body-02 16/24 | body-large 16/24 | descriptions, notes, anything read in sentences (15–16 px) |
+| Small heading | heading-compact-01 14/18 · heading-compact-02 16/22, semibold | title-small 14/20 · title-medium 16/24, 500 | panel, card and table-group titles |
+| Section heading | heading-03 20/28 | title-large 22/28 | the few section titles on a screen |
+| Page title | heading-04 28/36 · heading-05 32/40 | headline-small 24/32 · headline-medium 28/36 | one per screen; 20–28 px in this skill, 32 only for a dashboard or home screen (`app-ui.md` §3) |
+| Metric | — | — | 24–32 px semibold in the UI face with tabular figures, never a display cut |
+| Display | expressive only (fluid, 60 px+) | display 36–57 | not in the product; sign-in at most |
+
+Values are not code: IDs, passwords, env names, `[placeholders]`, key hints and timers take the label or body role at 500 with tabular figures. Where the framework has a mono token (Tailwind `font-mono`, a `--font-mono` variable), point it at the UI face unless users read code, and set `code, kbd, samp, pre { font-family: inherit }` in the base layer, so a stray class or the browser default cannot render a code font (`implementation.md` "Order of work").
+
 ## 4. Density
 
-Density changes **padding and heights, not font size** (Spectrum 2: "Density controls vertical spacing while keeping font sizes consistent"). Comfortable is the default; compact is offered per table or per user on mouse-and-keyboard surfaces, never on touch. Reference heights: Carbon rows 24 / 32 / 40 / 48 / 64 px; Material steps of 4 px per density level with targets kept ≥ 48 dp; SAP Fiori compact 32 px vs cozy 44 px. Implement density as component sizes (a `data-density` attribute swapping control and row heights), not by redefining the spacing unit — shadcn made a separate compact style rather than changing Tailwind's spacing multiplier for exactly this reason.
+Density changes **padding and heights, not font size** (Spectrum 2: "Density controls vertical spacing while keeping font sizes consistent"). Comfortable is the default; compact is offered per table or per user on mouse-and-keyboard surfaces, never on touch. Reference heights: Carbon rows 24 / 32 / 40 / 48 / 64 px; Material steps of 4 px per density level with targets kept ≥ 48 dp; SAP Fiori compact 32 px vs cozy 44 px. Implement density as component sizes (a `data-density` attribute swapping control and row heights), not by redefining the spacing unit — shadcn made a separate compact style rather than changing Tailwind's spacing multiplier for exactly this reason. This skill's product defaults (controls 32 px, rows 40 px comfortable / 32 compact) are in `app-ui.md` §3.
 
 ## 5. The state matrix
 

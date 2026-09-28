@@ -6,7 +6,9 @@ Written <date>, before implementation. Benchmark for finish: <reference(s)>. Thi
 
 | Route / group | Category | Frequency | Stakes | Posture | Intensity |
 | --- | --- | --- | --- | --- | --- |
-| … | marketing / app / dashboard / commerce / enterprise / docs / fintech / mobile / field / content / service | once · occasional · daily · all day | none · time · money · legal/health | expressive / productive | refine / redesign / rethink |
+| … | marketing / app / dashboard / commerce / enterprise / docs / fintech / mobile / field / content / service / signature | once · occasional · daily · all day | none · time · money · legal/health | expressive / productive / signature | refine / redesign / rethink (a first site: rethink, no baseline) |
+
+If `PRODUCT.md` exists (`discovery.md` §5), the routes, top tasks and success measures come from it (its arrival situations and targets); the principles below are design principles — its product rules are not repeated.
 
 **Audience and context:** who, doing what, on which device, under what pressure.
 
@@ -33,7 +35,7 @@ Written <date>, before implementation. Benchmark for finish: <reference(s)>. Thi
 
 **Brand assets sampled:** logo colours (`palette.mjs --from`), wordmark construction (geometric / humanist / serif / techno / condensed), brand family (parent and sibling surfaces: marks, faces, palettes).
 
-**Measured baseline** (`audit.mjs`, dembrandt): type sizes in use, families, contrast failures, focus, targets, overflow, signals, LCP/CLS.
+**Measured baseline** (`audit.mjs`, dembrandt): type sizes in use, families, contrast failures, focus, targets, overflow, signals, LCP/CLS. (A first site: measured on what the customer meets today — the social profile, a competitor's template, a PDF menu — or "no measured baseline".)
 
 **Must be preserved (functionality and truth):**
 - Routes / anchors: …
@@ -43,7 +45,7 @@ Written <date>, before implementation. Benchmark for finish: <reference(s)>. Thi
 
 **Why the current design fails** (specific, with severity): …
 
-**The five things a stranger notices first** (expressive + redesign only; all five change):
+**The five things a stranger notices first** (expressive + redesign only; all five change; a first site takes them from what the customer meets today and the category template):
 1. … 2. … 3. … 4. … 5. …
 
 ## References
@@ -56,9 +58,11 @@ Written <date>, before implementation. Benchmark for finish: <reference(s)>. Thi
 
 ## Direction
 
-Fill the parts that apply. **Expressive** routes: everything below except "Productive surfaces". **Productive** routes (apps, dashboards, field tools, checkout, services): "Productive surfaces", "First viewport", "Breaks if" and the convergence checks *for the brand layer only*; skip Concept, material-family candidates and the memory test. A two-page site does not need every section of this template at full length — the Brief, Accessibility, Colour, Typography and Keep/replace/remove/create always; the rest as far as they change a decision. When `SYSTEM.md` also exists, each rule lives in one place: `DESIGN.md` holds decisions and their reasons (the accessibility block says *which* commitments this product makes and why); `SYSTEM.md` holds how components carry them out (focus ring, target sizes, error pattern). Refer, don't repeat.
+Fill the parts that apply. **Expressive** routes: everything below except "Productive surfaces". **Productive** routes (apps, dashboards, field tools, checkout, services): "Productive surfaces", "First viewport", "Breaks if" and the convergence checks *for the brand layer only*; skip Concept, material-family candidates and the memory test. **Signature** routes (builder, configurator, studio, visualiser): the experiential quality bar first, then "Productive surfaces" for the chrome and controls around the experience (`discovery.md` §5b). A two-page site does not need every section of this template at full length — the Brief, Accessibility, Colour, Typography and Keep/replace/remove/create always; the rest as far as they change a decision. When `SYSTEM.md` also exists, each rule lives in one place: `DESIGN.md` holds decisions and their reasons (the accessibility block says *which* commitments this product makes and why); `SYSTEM.md` holds how components carry them out (focus ring, target sizes, error pattern). Refer, don't repeat.
 
 **Concept** (expressive surfaces) — one line a founder would recognise as theirs: **"…"**
+
+**Experiential quality bar** (signature routes), in the user's words: "…" (for example "people would screen-record it"). Everything on the route is judged against it, not against a feature list.
 
 **Candidates considered** (three to seven real ones from the company's own world — its moment, material, customers' world, product, industry vernacular — spanning at least three material families), and why each lost: …
 
@@ -66,7 +70,14 @@ Fill the parts that apply. **Expressive** routes: everything below except "Produ
 
 **First viewport, exactly:** what is where, at what scale, and where the primary action sits (for product routes: the top-task screen, same level of detail).
 
-**Productive surfaces** (if any): interaction-model candidates considered (a table with filters, an exceptions-first list, a queue, a map…) and why each won or lost against the top tasks; the chosen interaction model; navigation model; density (and density modes); elevation model (canvas / surface / layer); state language, including freshness and offline (`app-ui.md` §7b); what users have learned that stays; where brand is allowed to show.
+**Productive surfaces** (if any):
+- Interaction model: the candidates considered (a table with filters, an exceptions-first list, a queue, a map…) and why each won or lost against the top tasks; the one chosen: …
+- Brand layer carried over from the marketing site or brand: mark, colour roles and their meanings, display face and its one job, status vocabulary. Expressive devices deliberately not carried over: …
+- Navigation: sidebar groups (≤ 7 per group), phone pattern (`responsive.md` §5), tab titles, accelerators (palette, shortcuts): …
+- Density (and density modes), page-header height budget and what sits above the 1280 × 800 fold; elevation model (canvas / surface / layer); state language, including freshness and offline (`app-ui.md` §7b): …
+- What users have learned that stays: …
+- Brand moments (2–3): sign-in, first-run/empty states, success after a long task, and how each shows the brand: … The sign-in treatment (form first, no marketing hero photograph): … A greeting never takes the title slot.
+- Checklist: `app-ui.md` §14, ticked before implementation.
 
 **Breaks if:** three things that would betray this direction.
 
@@ -81,9 +92,10 @@ Fill the parts that apply. **Expressive** routes: everything below except "Produ
 ## Typography
 
 - Type sets: expressive (marketing) and/or productive (app), each with its ratio and every size listed — every step used somewhere.
+- Product type roles (fixed): see `SYSTEM.md` Foundations.
 - Display: family, weights, axes (opsz, wdth), tracking at display sizes, line height — and why it matches the wordmark's construction or the brand family.
 - Text / UI: family, weights, measure; tabular figures available (`fonts.mjs`)?
-- Data / code face, if any, and why.
+- Monospace: **none** — or the one-line reason this audience reads code (commitment 5 in `SKILL.md`). Where the framework has a mono token, point it at the UI face; `code`/`kbd`/`samp`/`pre` inherit the UI face.
 - Caps/tracked-label device: at most one, and which. Nothing typeset to look like machine output.
 - Scripts and languages: companion faces (`multilingual.md`), size adjustment, RTL.
 - Licence, source and loading for each family (self-hosted? features preserved? no FFL fonts in a public repo).
@@ -98,7 +110,7 @@ Fill the parts that apply. **Expressive** routes: everything below except "Produ
 
 **Scales:** OKLCH, H fixed, L stepped, C shaped (`palette.mjs`); neutral tint hue and chroma; status colours reserved; data palette separate (`dataviz.md`).
 
-**Contrast table:** every text/ground pair actually used, WCAG ratio and APCA Lc on the real ground (`contrast.mjs`).
+**Contrast table:** every text/ground pair actually used, including state grounds on productive surfaces — hover, selected, zebra, secondary panels — and dark mode; WCAG ratio and APCA Lc on the real ground (`contrast.mjs`).
 
 | Token (role) | Value | Use |
 | --- | --- | --- |
@@ -116,11 +128,11 @@ Containers, grid and gutters per breakpoint; spacing scale; vertical rhythm per 
 
 ## Imagery and graphics
 
-(A productive screen with no images or illustrations writes "none" and its icon set here.) Photography / product UI / illustration / diagrams / typography-only — chosen and argued (if the company's world is photographable, "none" must be argued). Source, licence class, treatment, pipeline, credits location. The drawn graphics layer: its line style and the motif it comes from.
+(On a productive route the hero, narrative and imagery budget shrinks to the sign-in and empty states, `app-ui.md` §12. A productive screen with no images or illustrations writes "none" and its icon set here.) Photography / product UI / illustration / diagrams / typography-only — chosen and argued (if the company's world is photographable, "none" must be argued). Source, licence class, treatment, pipeline, credits location. The drawn graphics layer: its line style and the motif it comes from.
 
 ## Motion
 
-Productive vs expressive tokens (durations, easings); the two or three concept moves (expressive surfaces only); the reveal system (finished by default); reduced-motion substitutions; what never moves.
+Productive vs expressive tokens (durations, easings); the two or three concept moves (expressive surfaces only); the reveal system (finished by default); reduced-motion substitutions; what never moves. Sites that frame a signature product: the signature moments list instead of a reveal system, each researched first, with the hand-over into the product (`art-direction.md` §4).
 
 ## Interaction
 
@@ -134,7 +146,7 @@ Productive vs expressive tokens (durations, easings); the two or three concept m
 
 Filled before any code (`accessibility.md` §2). WCAG 2.2 AA; aiming for 2.4.13 and 2.3.3.
 
-- **Contrast table** (above, in Colour) plus non-text pairs: input border, checkbox/toggle outline, focus ring, meaningful icons, chart marks — each ≥ 3:1 on its real ground, per theme.
+- **Contrast table** (above, in Colour) plus non-text pairs: input border, checkbox outline, switch track, focus ring, meaningful icons, chart marks — each ≥ 3:1 on its real ground, per theme.
 - **Focus token:** colour per surface, width, offset; sticky-UI heights → `scroll-padding`: …
 - **Targets:** 24 px floor, 44 px touch-primary; the dense-table action pattern: …
 - **320 px state:** nav, sidebars, toolbars, tables (own scroll region), dialogs: …
@@ -148,6 +160,8 @@ Filled before any code (`accessibility.md` §2). WCAG 2.2 AA; aiming for 2.4.13 
 - **Preserved features:** what the current site already does right (skip link, live regions, captions, …): …
 
 ## Page narrative (expressive routes)
+
+(Productive routes: skip; see the brand moments under "Productive surfaces" above.)
 
 Headline test: the hero sentence a stranger would understand alone — "…"
 
