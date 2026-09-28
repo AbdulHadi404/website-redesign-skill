@@ -1,0 +1,14 @@
+[
+ {"id":"rose-garden","name":"Garden rose","colours":["peach","blush","ivory","deep red"],"price":4.50,"season":[5,6,7,8,9,10],"stock":true,"kind":"focal"},
+ {"id":"rose","name":"Rose","colours":["red","white","pink","yellow"],"price":2.80,"season":[1,2,3,4,5,6,7,8,9,10,11,12],"stock":true,"kind":"focal"},
+ {"id":"peony","name":"Peony","colours":["blush","coral","white"],"price":5.20,"season":[5,6],"stock":true,"kind":"focal"},
+ {"id":"ranunculus","name":"Ranunculus","colours":["apricot","white","burgundy"],"price":3.10,"season":[1,2,3,4,5],"stock":true,"kind":"focal"},
+ {"id":"dahlia","name":"Dahlia","colours":["cafe au lait","burgundy","orange"],"price":3.60,"season":[7,8,9,10],"stock":true,"kind":"focal"},
+ {"id":"tulip","name":"Tulip","colours":["white","pink","purple","yellow"],"price":1.90,"season":[1,2,3,4],"stock":true,"kind":"focal"},
+ {"id":"lisianthus","name":"Lisianthus","colours":["white","lilac"],"price":2.40,"season":[6,7,8,9,10],"stock":true,"kind":"filler"},
+ {"id":"sweet-pea","name":"Sweet pea","colours":["mixed pastel"],"price":1.60,"season":[5,6,7],"stock":false,"kind":"filler"},
+ {"id":"chrysanthemum","name":"Chrysanthemum","colours":["bronze","white","green"],"price":1.80,"season":[1,2,3,4,5,6,7,8,9,10,11,12],"stock":true,"kind":"filler"},
+ {"id":"eucalyptus","name":"Eucalyptus","colours":["silver dollar"],"price":1.40,"season":[1,2,3,4,5,6,7,8,9,10,11,12],"stock":true,"kind":"foliage"},
+ {"id":"pittosporum","name":"Pittosporum","colours":["green"],"price":1.20,"season":[1,2,3,4,5,6,7,8,9,10,11,12],"stock":true,"kind":"foliage"},
+ {"id":"gypsophila","name":"Gypsophila","colours":["white"],"price":1.30,"season":[1,2,3,4,5,6,7,8,9,10,11,12],"stock":true,"kind":"filler"}
+]

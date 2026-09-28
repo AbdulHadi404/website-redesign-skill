@@ -1,0 +1,7 @@
+{"updated":"2026-04-06","vat_note":"All fees exclude VAT at 20%.","packages":[
+ {"id":"sa","name":"Self Assessment tax return","for":"Individuals, landlords, sole traders with simple affairs","from":285,"per":"year","includes":["Tax return prepared and filed","Tax calculation explained","Payment on account reminders"]},
+ {"id":"sole","name":"Sole trader accounts and tax return","for":"Sole traders","bands":[{"turnover":"Up to £50k","price":45,"per":"month"},{"turnover":"£50k–£150k","price":65,"per":"month"},{"turnover":"Over £150k","price":null,"per":"quote"}],"includes":["Year-end accounts","Self Assessment return","Bookkeeping software set-up","Unlimited email and phone questions"]},
+ {"id":"ltd","name":"Limited company package","for":"Limited companies","bands":[{"turnover":"Up to £90k","price":120,"per":"month"},{"turnover":"£90k–£500k","price":175,"per":"month"},{"turnover":"Over £500k","price":null,"per":"quote"}],"includes":["Statutory accounts","Corporation Tax return","Confirmation statement","Directors' Self Assessment (1 director)","Quarterly VAT returns (Making Tax Digital)","Payroll for up to 3 employees"]},
+ {"id":"payroll","name":"Payroll","for":"Any employer","bands":[{"turnover":"Per employee","price":8,"per":"month"}],"includes":["Payslips","RTI submissions","Pension auto-enrolment"]}
+],
+"deadlines":[{"what":"Self Assessment online filing and payment","date":"31 January"},{"what":"Second payment on account","date":"31 July"},{"what":"Paper Self Assessment return","date":"31 October"}]}

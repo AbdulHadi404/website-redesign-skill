@@ -1,0 +1,5 @@
+{"cutoff_same_day":"13:00","zones":[
+ {"id":"A","name":"Zone A","districts":["LS7","LS8","LS6","LS17"],"price":4.95,"same_day":true},
+ {"id":"B","name":"Zone B","districts":["LS1","LS2","LS3","LS4","LS5","LS16","LS18"],"price":7.95,"same_day":false},
+ {"id":"C","name":"Zone C","districts":["LS9","LS10","LS11","LS12","LS13","LS14","LS15","LS19","LS20","LS25","LS26","LS27","LS28"],"price":11.95,"same_day":false}],
+ "collection":{"name":"Collect from the shop","price":0,"address":"14 Harrogate Road, Chapel Allerton, Leeds LS7 3NB"}}

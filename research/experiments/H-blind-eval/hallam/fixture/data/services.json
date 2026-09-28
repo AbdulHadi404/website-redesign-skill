@@ -1,0 +1,5 @@
+[{"id":"tax","name":"Personal tax","summary":"Self Assessment, capital gains, landlords, inheritance tax planning."},
+ {"id":"business","name":"Business accounts","summary":"Year-end accounts for sole traders, partnerships and limited companies."},
+ {"id":"vat","name":"VAT and Making Tax Digital","summary":"Registration, quarterly returns, MTD-compatible software."},
+ {"id":"payroll","name":"Payroll","summary":"Payslips, RTI, pensions auto-enrolment."},
+ {"id":"advice","name":"Business advice","summary":"Start-ups, incorporation, cash flow, R&D tax credits."}]
