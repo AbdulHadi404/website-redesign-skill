@@ -314,7 +314,7 @@ const lcpEffect = (rows, faster) => {
   const held = holding(of(paint), 'paint'), one = of(maybe).length === 1;
   return [
     paint.length && `On ${names(paint)} ${held.length < of(paint).length ? 'some of the lost files hold' : held.length > 1 ? 'the lost files hold' : 'the lost file holds'} up the largest paint (${said(held)}), so ${faster}`,
-    maybe.length && `On ${names(maybe)} ${one ? 'the lost file blocks' : 'the lost files block'} no rendering (${said(of(maybe))}): ${one ? 'it holds' : 'they hold'} up the largest paint only if the page draws it from ${one ? 'it' : 'them'}, so see what its LCP element is`,
+    maybe.length && `On ${names(maybe)} ${one ? 'the lost file blocks' : 'the lost files block'} no rendering (${said(of(maybe))}): LCP is faster here only if the page draws its largest element from ${one ? 'it' : 'them'} (a client-rendered page), so check what its LCP element is`,
     none.length && `On ${names(none)} ${of(none).length === 1 ? 'the lost file cannot' : 'none of the lost files can'} hold up the largest paint (${said(of(none))}), so the LCP there stands`,
   ].filter(Boolean);
 };

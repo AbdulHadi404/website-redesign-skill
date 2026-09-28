@@ -28,13 +28,17 @@
  *
  * live: the message counts as announced when it reaches a live region, or when focus moves (off the trigger) to the
  * message itself — a blocking error summary, accessibility.md §7.6 — so that what a screen reader says on focus
- * carries at least half of the new text. What it says is the focused element's accessible name, description and
- * value from Chromium's accessibility tree (and its aria-errormessage when invalid), the name of a dialog, named group
- * or landmark focus entered (and a dialog's description), and the text inside a focused static container
- * (tabindex="-1") only when that container is mostly new text. So a link or button inside a silent box reads only its
- * own name, a wrapper of old text does not count, and a description that changes on the element that keeps focus is
- * not re-read. Focus moved to a toast fails (§7.4: never). A trigger that loads a new page (a server-rendered form) is
- * judged on that page, where text already there at load is not announced.
+ * carries each new message. What it says is the focused element's accessible name, description and value from
+ * Chromium's accessibility tree (and its aria-errormessage when invalid), the name of a dialog, named group or landmark
+ * focus entered (and a dialog's or group's description), and the text inside a focused static container
+ * (tabindex="-1") only when that container is mostly new text. The new text is grouped into message boxes, and at
+ * least half of every box must be said, matched text node by text node (a <strong> or link mid-sentence is still the
+ * same sentence). The focused control's own name is not a message (a new Retry button is not the error beside it)
+ * unless nothing else is new, nor is a box of new controls, nor another field's error (its aria-describedby), which
+ * that field announces when it takes focus (§6). So a link or button inside a silent box reads only its own name, a
+ * wrapper of old text does not count, and a description that changes on the element that keeps focus is not re-read.
+ * Focus moved to a toast fails (§7.4: never). A trigger that loads a new page (a server-rendered form) is judged on
+ * that page, where text already there at load is not announced.
  *
  * Every step is keyboard-first. When a trigger cannot be reached or activated by keyboard the
  * test records the FAIL, then falls back to a mouse click so the rest of the contract is still checked.
