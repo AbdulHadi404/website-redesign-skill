@@ -63,6 +63,7 @@ export async function runOne(browser, base, o) {
   const qs = new URLSearchParams({ n: String(n) });
   if (load) qs.set('load', String(load));
   if (idle) qs.set('idle', '');
+  for (const k of (o.extra || '').split(',').filter(Boolean)) qs.set(k, '');
   const url = `${base}/${variant}/?${qs}`;
   const out = { variant, n, throttle, reduced, load, idle, url, errors };
   try {

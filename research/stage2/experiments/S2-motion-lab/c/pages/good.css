@@ -1,0 +1,46 @@
+/* "good": the approved spec, built with CSS + a little JS. Tokens from motion.md §4. */
+:root {
+  --dur-micro: 100ms; --dur-small: 150ms; --dur-medium: 240ms; --dur-large: 300ms; --dur-page: 400ms; --dur-hero: 700ms; --dur-count: 800ms;
+  --stagger: 40ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1); --ease-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+}
+.btn { transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.btn:active { transform: scale(0.97); }
+.btn:focus-visible, .plan:focus-visible, #nav a:focus-visible { outline: 3px solid #f2c14e; outline-offset: 2px; }
+#nav a { text-decoration-color: transparent; text-underline-offset: 4px; transition: text-decoration-color var(--dur-small) var(--ease-out); }
+#nav a:hover { text-decoration-color: currentColor; }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { background-color: #095c42; }
+  .btn.secondary:hover { background-color: #cfdcd7; }
+  .plan { transition: transform var(--dur-small) var(--ease-out), box-shadow var(--dur-small) var(--ease-out); }
+  .plan:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgb(0 0 0 / .12); }
+}
+/* sheet: a non-modal dialog that slides up; in and out of display:none without JS */
+#sheet { transform: none; opacity: 1; transition: transform var(--dur-large) var(--ease-out), opacity var(--dur-large) var(--ease-out), display var(--dur-large) allow-discrete; }
+#sheet:not([open]) { transform: translateY(100%); }
+@starting-style { #sheet[open] { transform: translateY(100%); } }
+/* toast */
+.toast { opacity: 0; transform: translateY(8px); transition: opacity var(--dur-medium) var(--ease-out), transform var(--dur-medium) var(--ease-out); pointer-events: none; }
+.toast.show { opacity: 1; transform: none; }
+/* panel: two stacked views, crossfade + slide, interruptible */
+#panel .view { transition: opacity var(--dur-page) var(--ease-out), transform var(--dur-page) var(--ease-out); }
+#panel .view[hidden] { display: grid; opacity: 0; transform: translateX(24px); pointer-events: none; }
+#panel .view.leaving { opacity: 0; transform: translateX(-24px); }
+/* reveal: content finished by default; .motion (added by JS only when allowed) hides it so it can arrive */
+.motion .feature { opacity: 0; transform: translateY(16px); transition: opacity var(--dur-medium) var(--ease-out), transform var(--dur-medium) var(--ease-out); transition-delay: calc(var(--i) * var(--stagger)); }
+.motion .feature.in { opacity: 1; transform: none; }
+/* hero entrance */
+@media (prefers-reduced-motion: no-preference) { #hero-title { animation: rise var(--dur-hero) var(--ease-emphasized) both; } }
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+@media (prefers-reduced-motion: reduce) {
+  :root { --stagger: 0ms; }
+  .plan:hover { transform: none; }
+  #sheet { transition: opacity 150ms var(--ease-out), display 150ms allow-discrete; }
+  #sheet:not([open]) { transform: none; opacity: 0; }
+  @starting-style { #sheet[open] { transform: none; opacity: 0; } }
+  .toast { transform: none; transition: opacity 150ms var(--ease-out); }
+  #panel .view { transition: opacity 150ms var(--ease-out); }
+  #panel .view[hidden], #panel .view.leaving { transform: none; }
+  #hero-title { animation: fadein 150ms var(--ease-out) both; }
+}
+@keyframes fadein { from { opacity: 0; } }

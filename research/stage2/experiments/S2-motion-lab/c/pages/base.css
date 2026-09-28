@@ -10,7 +10,7 @@ header { padding: 16px 32px; } #nav a { margin-right: 20px; color: #17202a; }
 .btn.secondary { background: #e3ebe8; color: #0b3d2c; }
 #plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 24px 32px; }
 .plan { position: relative; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
-#stats { padding: 24px 32px 400px; font-size: 20px; } #stat { font-size: 40px; font-weight: 700; font-variant-numeric: tabular-nums; }
+#stats { padding: 480px 32px 400px; font-size: 20px; } #stat { font-size: 40px; font-weight: 700; font-variant-numeric: tabular-nums; }
 #features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 24px 32px; }
 .feature { background: #fff; border-radius: 12px; padding: 20px; }
 #panel-demo { padding: 24px 32px 200px; }

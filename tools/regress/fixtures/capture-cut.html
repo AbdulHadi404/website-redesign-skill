@@ -1,0 +1,25 @@
+<!doctype html>
+<!-- capture.mjs regress fixture: at 390px the nowrap chip starts inside the viewport and runs past it, and
+     html, body { overflow-x: hidden } hides the rest without making the document any wider (no horizontal overflow,
+     and no widened layout viewport on a phone). Expect "⚠ text past the viewport under a page-level clip" naming
+     span.chip. Not expected: the fully off-screen slide (a carousel slide is not cut) and the second tag inside the
+     .rail scroller (a real scroller: the reader can scroll to it). -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cut at the edge</title>
+<style>
+html,body{overflow-x:hidden}
+body{margin:0;font:16px/1.5 system-ui,sans-serif;color:#111;background:#fff}
+main{padding:16px}
+.hero{display:grid;grid-template-columns:1fr}
+.chip{justify-self:start;white-space:nowrap;padding:4px 10px;border:1px solid #555;border-radius:4px;font-size:15px}
+.slides{position:relative;height:60px}
+.slide{position:absolute;top:0;left:120vw;width:300px;white-space:nowrap}
+.rail{overflow-x:auto;white-space:nowrap}
+.rail span{display:inline-block;width:260px;border:1px solid #555;margin-right:8px}
+</style></head>
+<body><main>
+<h1>Cut at the edge</h1>
+<div class="hero"><span class="chip">Free delivery on every order over forty euros this week</span></div>
+<p>The chip above runs past a phone screen, and the page clips it.</p>
+<div class="slides"><div class="slide">Second slide, waiting off screen</div></div>
+<div class="rail"><span>First tag</span><span>Second tag</span></div>
+</main></body></html>

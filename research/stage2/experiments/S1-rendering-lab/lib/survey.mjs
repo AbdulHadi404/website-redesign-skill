@@ -27,6 +27,7 @@ export const ENTRIES = {
   phaser: { entry: 'phaser.js', pkgs: ['phaser'], kind: '2D game framework', reactBinding: 'none official (the official React template bridges with an EventBus)' },
   three: { entry: 'three.js', pkgs: ['three'], kind: '3D WebGL/WebGPU library', reactBinding: '@react-three/fiber' },
   r3f: { entry: 'r3f.jsx', pkgs: ['@react-three/fiber', 'three'], kind: 'React renderer for three', react: true },
+  'r3f-createroot': { entry: 'r3f-createroot.jsx', pkgs: ['@react-three/fiber', 'three'], kind: 'R3F createRoot + extend (no <Canvas>)', react: true },
   babylon: { entry: 'babylon.js', pkgs: ['@babylonjs/core'], kind: '3D engine', reactBinding: 'react-babylonjs (community)' },
   playcanvas: { entry: 'playcanvas.js', pkgs: ['playcanvas'], kind: '3D engine (+ hosted editor)', reactBinding: '@playcanvas/react' },
   'playcanvas-react': { entry: 'playcanvas-react.jsx', pkgs: ['@playcanvas/react', 'playcanvas'], kind: 'React binding', react: true },

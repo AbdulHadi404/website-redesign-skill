@@ -2,12 +2,12 @@
 
 A skill that makes Claude Code redesign an existing website **or web product** — or build a business's first site from its social media — the way a good studio or product team would. It covers marketing sites, SaaS apps, dashboards, ecommerce, docs, fintech, public services and mobile-first products. The loop:
 
-1. Frame the problem.
-2. Audit and measure what exists.
+1. Frame the problem; when the context is thin, run discovery before the audit.
+2. Audit and measure what exists (for a first site, what the business shows the world today).
 3. Research by problem.
 4. Derive a direction from the company's own truth.
 5. Build a token and component system.
-6. Rebuild in the existing stack.
+6. Rebuild in the existing stack (for a first site, the stack chosen in discovery).
 7. Verify renders, accessibility, responsiveness, performance and truth-parity.
 8. Critique against objectives, and iterate.
 
@@ -24,7 +24,7 @@ It is built against three failures:
 | Phase | What happens |
 | --- | --- |
 | 0. Frame | Each route is classified: category, how often it is used, stakes, expressive, productive or signature. Intensity is chosen (refine / redesign / rethink). A brief with top tasks, constraints and success measures goes at the top of `DESIGN.md`. When context is thin (a brand that lives on social media, an unfamiliar industry, no references, a "website" that is really an ordering or booking app, an empty folder), discovery builds it first (`discovery.md`, `templates/PRODUCT.md`); a signature feature — a builder or configurator people play with — is classified as its own route and never shrunk to fit a page. |
-| 1. Audit | Read the repo like a new design lead. Run the product and **measure** it with the scripts. List what must be preserved (routes, ids, form fields, analytics, legal copy) and which accessibility features already work. |
+| 1. Audit | Read the repo like a new design lead. Run the product and **measure** it with the scripts. List what must be preserved (routes, ids, form fields, analytics, legal copy) and which accessibility features already work. For a first site, what the customer meets today (a social profile, a PDF menu) stands in for the old site. |
 | 2. Research | References are chosen by the problem they solve, and principles go into a take/leave table. |
 | 3. Direction | **Expressive:** concept, candidates, typography, a named colour strategy, composition, imagery, motion. **Productive:** interaction model, density, navigation, elevation, and a marketing site's brand layer carried into the product without its expressive devices. Convergence checks run against the model's prior and against the ledger of past outputs. The accessibility decisions are made here too. |
 | 4. System | Three-tier tokens, type sets per surface, a state matrix, and `SYSTEM.md` for product UI. |
@@ -55,7 +55,7 @@ Measurement replaces guesswork wherever something can be measured. All are in `s
 | Script | Answers |
 | --- | --- |
 | `capture.mjs` | What does every page look like at each width, with reveals finished and images decoded? Also: element shots, reduced-motion, dark, no-JS and forced-colours renders, removal-test variants, and `--gpu` for WebGL, with the renderer printed. |
-| `audit.mjs` | What is measurably wrong, judged by the rules for `--kind` marketing, app, field, commerce, docs or service? Checks overflow and phone zoom-out, contrast on the painted ground, invisible focus, targets, fake controls, clipped text, colour-only status, hidden content, fonts that never loaded, LCP/CLS, axe-core, mixed digit systems and misaligned numeric columns, untranslated strings, finish defects (widows, non-concentric corners, dead bands), and generic-look signals. Also: `--themes light,dark`. It fails on rendered monospace unless `--allow-mono`, and exits 1 on fails. |
+| `audit.mjs` | What is measurably wrong, judged by the rules for `--kind` marketing, app, field, commerce, content, docs or service (a signature route runs `app` for its chrome and controls)? Checks overflow and phone zoom-out, contrast on the painted ground, invisible focus, targets, fake controls, clipped text, colour-only status, hidden content, fonts that never loaded, LCP/CLS, axe-core, mixed digit systems and misaligned numeric columns, untranslated strings, finish defects (widows, non-concentric corners, dead bands), and generic-look signals. Also: `--themes light,dark`. It fails on rendered monospace unless `--allow-mono`, and exits 1 on fails. |
 | `a11y.mjs` | What would keyboard, screen-reader, zoom, forced-colours or colour-blind users hit that rule engines miss? |
 | `widgets.mjs` | Do custom widgets keep their keyboard contracts (dialog, tabs, disclosure, live region, form errors, menu button)? |
 | `states.mjs` | What does each widget look like loading, empty, failing, offline, stale, with 200 items, open or focused? It drives these states from mocked routes and steps, and flags a scenario or step that changed nothing. With `--aria --each` it drives task walkthroughs: touch taps and swipes, a capture per step, and the accessibility tree marked with what a sighted user cannot read on that screen. `--axe` scans each state with axe-core, overlays open. |
@@ -121,7 +121,7 @@ Our checkout converts badly on phones. Redesign the flow; keep the payment
 integration and analytics events exactly as they are.
 ```
 
-Claude writes a `DESIGN.md` (with a `PRODUCT.md` before it when a site is becoming an application, and a `SYSTEM.md` for product UI) in the repo, works on a branch, and reports with before/after captures and the measured results. It stops to ask only for things you own: credentials, a capability the environment lacks, a fact the repo cannot answer, a paid resource, a component-library migration, downloading your social media or reading your stories (which may notify you), creating accounts, pushing a new repository to a remote, or a production deployment.
+Claude writes a `DESIGN.md` (with a `PRODUCT.md` before it when a site is becoming an application, and a `SYSTEM.md` for product UI) in the repo, works on a branch, and reports with before/after captures and the measured results. For a first site the "before" is what the business shows today, and the brief says there is no measured baseline. It stops to ask only for things you own: credentials, a capability the environment lacks, a fact the repo cannot answer, a paid resource, a component-library migration, downloading your social media or reading your stories (which may notify you), creating accounts, pushing a new repository to a remote, or a production deployment.
 
 **Recommended:** a browser capability so live references can be inspected, and network access to image sources for photography. Without them the skill says what it could not do rather than faking it.
 

@@ -57,6 +57,17 @@ export async function writeReport(R, out) {
     L.push('', 'For the Worker variant, "scene fps" is the Worker\'s own rAF cadence and move→frame is measured in the Worker (event timestamp → the Worker finished drawing the frame that used it); "main-thread fps" is the page\'s rAF.', '');
   }
 
+  if (R.presented) {
+    L.push('## Frames that reached the screen (compositor), with and without main-thread load', '', R.presented.note, '');
+    L.push(head(['variant', 'N', 'no load: presented fps', 'load 50/100 ms: presented fps']));
+    const seen = new Set();
+    for (const c of Object.values(R.presented.cells)) {
+      const k = `${c.variant}|${c.n}`; if (seen.has(k)) continue; seen.add(k);
+      L.push(row([c.variant, c.n, f(R.presented.cells[`${k}|load0`]?.fps), f(R.presented.cells[`${k}|load50`]?.fps)]));
+    }
+    L.push('');
+  }
+
   if (R.a11y) {
     L.push('## Accessibility', '');
     L.push(head(['variant', 'focusable by Tab', 'tab stops (N=20)', 'buttons in tree', 'first focus', 'keyboard pick/move/drop', 'tree (first lines)']));
@@ -82,7 +93,7 @@ export async function writeReport(R, out) {
     L.push(head(['variant', 'rAF calls in 5 s', 'busy %', 'renderer CPU %', 'GPU-proc CPU %', 'drag still works', 'runs']));
     for (const v of Object.values(R.reduced)) {
       const s = v.summary;
-      L.push(row([v.cell.variant, f(s.rafCalls, 0), f(s.busyPct), f(s.rendererCpu), f(s.gpuCpu), s.dragOk ? 'yes' : 'no', s.runs]));
+      L.push(row([v.cell.label ?? v.cell.variant, f(s.rafCalls, 0), f(s.busyPct), f(s.rendererCpu), f(s.gpuCpu), s.dragOk ? 'yes' : 'no', s.runs]));
     }
     L.push('');
   }
@@ -91,6 +102,13 @@ export async function writeReport(R, out) {
     L.push(`## WebGL disabled (${R.nowebgl.flags})`, '');
     L.push(head(['variant', 'renderer chosen', 'first frame', 'fps', 'drag works', 'errors']));
     for (const [k, v] of Object.entries(R.nowebgl.variants)) L.push(row([k, v.renderer ?? '—', v.firstFrame ? `${f(v.ttff, 0)} ms` : 'none', f(v.fps), v.dragOk ? 'yes' : 'no', (v.errors || []).join('; ').replace(/\|/g, '/').slice(0, 140)]));
+    L.push('');
+  }
+
+  if (R.contextLoss) {
+    L.push('## WebGL context loss and restore (N=200, animating)', '', R.contextLoss.note, '');
+    L.push(head(['variant', 'recovered', 'lost / restored events', 'scene frames in 1 s after', '% px differ vs before', 'errors']));
+    for (const [k, v] of Object.entries(R.contextLoss.variants)) L.push(row([k, v.recovered ? 'yes' : 'NO', `${v.lostEv ?? '—'} / ${v.restoredEv ?? '—'}`, v.framesAfter ?? '—', f(v.diffPct, 2), (v.errors || []).join('; ').replace(/\|/g, '/').slice(0, 140) || (v.why ?? '')]));
     L.push('');
   }
 

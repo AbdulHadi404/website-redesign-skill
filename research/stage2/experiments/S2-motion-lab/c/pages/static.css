@@ -1,0 +1,11 @@
+/* "static": what an AI plan that promised "subtle, delightful micro-interactions" typically ships. */
+.btn { transition: all .3s ease; }           /* a transition with nothing to transition */
+.plan { transition: all .3s ease; }
+.plan:hover { cursor: pointer; }            /* the "hover state" */
+.fade-in { }                                /* the reveal class the plan named, never styled */
+.fade-in.visible { }
+#sheet:not([open]) { display: none; }
+.toast { display: none; } .toast.show { display: block; }
+@media (prefers-reduced-motion: reduce) {    /* the popular reset: every animation and transition made instant */
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

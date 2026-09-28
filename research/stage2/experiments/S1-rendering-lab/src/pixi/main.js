@@ -1,6 +1,6 @@
 // PixiJS v8: one Sprite per decoration from a Spritesheet (auto-batched into few draw calls),
 // Pixi's federated events for hover/drag, app.ticker for bob and particles.
-import { Application, Assets, Sprite, Container, Circle, UPDATE_PRIORITY } from 'pixi.js';
+import { Application, Assets, Sprite, Container, Circle, UPDATE_PRIORITY, Ticker } from 'pixi.js';
 import {
   W, H, BOB_AMP, HOVER_SCALE, SEL_SCALE, HIT_R, P_COUNT, FREEZE, ASSETS,
   readParams, installHarness, Model, particle, clampX, clampY, itemLabel,
@@ -126,6 +126,9 @@ if (params.freeze) {
 }
 if (params.reduced || params.freeze) {
   app.ticker.stop();
+  // PixiJS's EventsTicker re-tests hover on Ticker.system every frame, so stopping app.ticker is not
+  // enough for a scene that is idle at rest; ?stopSystemTicker stops that one too.
+  if (new URLSearchParams(location.search).has('stopSystemTicker')) Ticker.system.stop();
   update(); app.render();
 } else {
   app.ticker.add(update);

@@ -141,7 +141,7 @@ Reduced motion means fewer and gentler animations, not zero, and never missing c
 | Number counters, chart build animations | final value immediately |
 | Skeleton shimmer | static skeleton |
 | Spinners and progress | keep (essential); prefer determinate bars |
-| Live-state indicator (a pulsing dot) | may keep pulsing gently (stopping within 5 s or pausable, §2 gate 7), and always says its state in words |
+| Live-state indicator (a pulsing dot) | may pulse gently (for at most 5 s, or with a pause control: §2 gate 7), and always says its state in words |
 | Press state, focus ring, toggle knob, drag feedback | keep |
 
 Library defaults (read from their source): **Motion for React defaults to `reducedMotion: "never"`** — wrap the app in `<MotionConfig reducedMotion="user">`; GSAP and anime.js do nothing — use `gsap.matchMedia()` / `matchMedia`; AutoAnimate, Lenis and Recharts 3 respect it automatically; Chart.js and ECharts ignore it and animate for 1000 ms — set `animation: false` under reduce (and consider always, on dashboards). `audit.mjs` renders under reduced motion and fails any content that disappears.
@@ -175,7 +175,7 @@ Building a real-time 3D product (a configurator, builder or studio people play w
 
 **3D earns its place** when the user needs to see an object from more than one angle or change it — an ecommerce product viewer (with AR "view in your room"), a configurator, spatial data (buildings, terrain, anatomy, molecules), a hardware product as the hero object used once. **3D is decoration** when it is spinning blobs, particle fields, wireframe globes, a rotating logo, a 3D chart (perspective distorts length), a perpetual background shader, or a scroll-scrubbed camera flight on an app page. If a photograph, a short video or an image sequence answers the question, use that.
 
-Gates: is there a real asset (a low-poly placeholder is worse than photographs)? Can the page afford it (runtime and model load after the page is usable)? Is every fact shown in 3D also in text? When a live 3D product exists, the marketing pages around it carry no WebGL: they use stills rendered by the product and hand over to it (`realtime-3d.md` §7); otherwise these gates apply.
+Gates: is there a real asset (a low-poly placeholder is worse than photographs)? Can the page afford it (runtime and model load after the page is usable)? Is every fact shown in 3D also in text? When a live 3D product exists, the marketing pages around it carry no WebGL: they use stills rendered by the product and hand over to it (`realtime-3d.md` §7); otherwise the purpose test above ("3D earns its place") and these gates apply.
 
 Don't turn a site into one canvas to prove it can be done; choose the tool per effect (§8 and below).
 
@@ -193,7 +193,7 @@ Checklist for any 3D on a page:
 - [ ] **Poster first** — a real render in the same framing, sized, eager if above the fold. A WebGL canvas never becomes the LCP element; the poster does (verified), and a flat single-colour poster is ignored — optimise the poster.
 - [ ] **Load late** — `loading="lazy"` or tap-to-load; `import()` on IntersectionObserver or first interaction; never in the critical path.
 - [ ] **Render only when needed** — `frameloop="demand"`; pause offscreen and on `visibilitychange`; cap device pixel ratio at 2.
-- [ ] **Nothing runs at rest** — zero `requestAnimationFrame` callbacks while nothing moves (the DevTools check in §7); remove idle loops and frame-rate monitors that keep firing.
+- [ ] **Nothing runs at rest** — zero `requestAnimationFrame` callbacks while nothing moves (check in DevTools Performance, §7); remove idle loops and frame-rate monitors that keep firing.
 - [ ] **Reduced motion** — no auto-rotate, fly-ins or tilt; a static, well-lit frame with working controls.
 - [ ] **Don't trap scrolling** — `<model-viewer>` defaults to `touch-action="none"`, which swallows vertical scrolling on phones: set `touch-action="pan-y"`; no wheel-zoom without a modifier.
 - [ ] **Accessibility** — `alt` on model-viewer, or `role="img"` + `aria-label` on a canvas; rotate and zoom buttons (WCAG 2.5.7) and keyboard support.

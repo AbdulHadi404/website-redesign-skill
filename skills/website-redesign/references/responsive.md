@@ -64,7 +64,7 @@ Hard rules: hidden navigation is used far less than visible navigation — show 
 | Data shape | Narrow-container strategy |
 | --- | --- |
 | Comparison matrix (pricing, specs, timetables, statements) | keep the table: a scroll region (`role="region"`, `tabindex="0"`, `aria-labelledby` the caption, visible focus) + sticky first column + sticky header + an edge-shadow scroll cue |
-| Entity list (orders, tickets, users, results) | below ~34 rem of *container*, each row becomes a card: identifier as heading, 2–4 key fields, status, one action; the rest in the detail view |
+| Entity list (orders, tickets, users, results) — one row per object | below ~34 rem of *container*, each row folds into the name plus one meta line (status and the one or two fields the phone needs), dropping the columns the phone does not need; the rest in the detail view (`app-ui.md` §5). Only a genuine numeric comparison keeps its columns and scrolls, as in the row above |
 | Wide analytic table | priority columns (2–4 shown, a column chooser for the rest), frozen first column, tabular right-aligned numbers, sticky totals |
 | Key → value (one entity) | a `<dl>` in two columns → stacked pairs |
 | Very long (1k–100k rows) | pagination or virtualization; `content-visibility: auto` for low thousands |
@@ -72,9 +72,9 @@ Hard rules: hidden navigation is used far less than visible navigation — show 
 
 If CSS changes `display` on table elements, re-add `role="table"`/`row`/`cell`/`columnheader` or test with VoiceOver and TalkBack — some browsers drop the semantics.
 
-**Dashboards on phones** — decide what someone does with it on a phone (usually check status, triage, approve, look something up — not analyse), then: alerts first → KPI tiles as a Switcher (2-up, then stacked; value, delta, sparkline, no tooltip dependence) → one primary chart, full width, direct labels, fewer ticks, tap for detail → the actionable list as cards → everything else behind "View full report"; filters in a bottom sheet with the date range visible; lazy-mount the rest.
+**Dashboards on phones** — decide what someone does with it on a phone (usually check status, triage, approve, look something up — not analyse), then: alerts first → KPI tiles as a Switcher (2-up, then stacked; value, delta, sparkline, no tooltip dependence) → one primary chart, full width, direct labels, fewer ticks, tap for detail → the actionable list, each row a name and a meta line → everything else behind "View full report"; filters in a bottom sheet with the date range visible; lazy-mount the rest.
 
-**Forms** — one column, labels above, inputs ≥ 44 px tall, the right keyboards, an error summary linking to fields, the submit button in flow or above the keyboard, never block paste.
+**Forms** — one column, labels above, inputs ≥ 44 px tall (a product's touch-first controls may be drawn at 36–40 px with the hit area extended to 44, `app-ui.md` §3), the right keyboards, an error summary linking to fields, the submit button in flow or above the keyboard, never block paste.
 
 **Density** — comfortable by default on coarse pointers; compact allowed on fine pointers in data-heavy tools (targets still ≥ 24 px); the user's choice persisted. A density toggle on a large view is expensive: measured INP 152 ms at 1k rows, 656 ms at 5k, 2,880 ms at 20k — 24–64 ms with `content-visibility: auto` on row groups.
 

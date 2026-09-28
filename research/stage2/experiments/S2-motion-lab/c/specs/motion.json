@@ -1,0 +1,17 @@
+{
+  "tokens": {
+    "duration": { "micro": 100, "small": 150, "medium": 240, "large": 300, "page": 400, "hero": 700 },
+    "easing": { "out": "cubic-bezier(0.2, 0, 0, 1)", "emphasized": "cubic-bezier(0.05, 0.7, 0.1, 1)" }
+  },
+  "motion": [
+    { "id": "cta-press", "trigger": "press", "on": "#cta", "target": "#cta", "properties": ["transform"], "duration": "micro", "easing": "out", "reduced": "keep" },
+    { "id": "cta-hover", "trigger": "hover", "on": "#cta", "target": "#cta", "properties": ["background-color"], "duration": "micro", "easing": "out", "reduced": "keep" },
+    { "id": "plan-hover", "trigger": "hover", "on": "#plan-pro", "target": "#plan-pro", "properties": ["transform", "box-shadow"], "duration": "small", "easing": "out", "reduced": "fade" },
+    { "id": "sheet-open", "trigger": "click", "on": "#open-sheet", "target": "#sheet", "properties": ["transform"], "duration": "large", "easing": "out", "reduced": "fade", "interrupt": 120 },
+    { "id": "toast", "trigger": "click", "on": "#save", "target": "#toast", "properties": ["transform", "opacity"], "duration": "medium", "easing": "out", "reduced": "fade" },
+    { "id": "features-reveal", "trigger": "scroll", "on": "#features", "target": ".feature", "properties": ["transform", "opacity"], "duration": "medium", "easing": "out", "reduced": "static", "stagger": 40 },
+    { "id": "stat-count", "trigger": "scroll", "on": "#stat", "target": "#stat", "properties": ["text"], "duration": 800, "easing": "out", "reduced": "instant" },
+    { "id": "hero-in", "trigger": "load", "target": "#hero-title", "properties": ["transform", "opacity"], "duration": "hero", "easing": "emphasized", "reduced": "fade" },
+    { "id": "panel-swap", "trigger": "click", "on": "#next", "target": "#panel .view", "properties": ["transform", "opacity"], "duration": "page", "easing": "out", "reduced": "fade", "interrupt": 150 }
+  ]
+}

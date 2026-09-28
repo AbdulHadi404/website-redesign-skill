@@ -160,7 +160,7 @@ Green = succeeded / available, red = failed / danger, amber = attention — and 
 - Line-height falls as size rises: 1.5 for body, 1.3 for subheads, 1.05–1.15 for display, 0.95–1.0 only for very large single lines.
 - **Vertical rhythm**: pick the body line-height as the unit and set every vertical margin and padding to a multiple of it; heading line-heights are chosen so they add up to whole units.
 - **Fluid type** on the web: `clamp(min, rem + vw, max)` between the phone and desktop steps, so headings scale with the viewport without a breakpoint per size — with a rem part in the preferred value and **max ≤ 2.5 × min**, or zoom cannot enlarge it enough (WCAG 1.4.4; a 32 → 120 px hero clamp fails, a `5vw` headline does not grow at all when zoomed — `responsive.md` §2).
-- **Two sets on one system** when a repo holds marketing and product: an *expressive* set (16 px base or more, fluid, ratio 1.25–1.5+) and a *productive* set (13–14 px base, fixed sizes, ratio 1.125–1.2, role names — heading, title, body, label, detail, metric, and code only when the users read code, as in C3). Carbon's rule: expressive styles never inside a container. One scale stretched over both is wrong for both (`design-systems.md` §3).
+- **Two sets on one system** when a repo holds marketing and product: an *expressive* set (16 px base or more, fluid, ratio 1.25–1.5+) and a *productive* set (13–14 px base, fixed sizes, ratio 1.125–1.2, role names — page title, section heading, small heading, body, label and caption, metric, and code only when the users read code, as in C3). Carbon's rule: expressive styles never inside a container. One scale stretched over both is wrong for both (`design-systems.md` §3).
 
 ### C3. Choosing and pairing families
 

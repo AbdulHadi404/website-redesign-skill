@@ -48,7 +48,7 @@ Two unrelated companies should land in different places. If the last three outpu
 
 Fill `templates/DESIGN.md`. The decisions that matter most:
 
-**Typography.** A face the whole brand family already uses (`audit.md` §4) is a documented brand asset: keep it and re-set it unless the user says the identity is the problem — distance comes from surfaces, composition, imagery and scale, not from swapping to a fashionable face. A monospace face is the exception: a sibling site that uses one does not make it transferable (`audit.md` §4). Otherwise:
+**Typography.** A face the whole brand family already uses (`audit.md` §4) is a documented brand asset: keep it and re-set it unless the user says the identity is the problem — distance comes from surfaces, composition, imagery and scale, not from swapping to a fashionable face. A monospace face is the exception: a sibling site that uses one does not make it transferable (`audit.md` §4). Otherwise (no family face to keep, or only a mono one):
 
 1. Name the voice from the attributes and the wordmark's construction (`design-theory.md` C3).
 2. Shortlist three faces per role (display, text/UI, code only if the audience reads code) from `resources/type-and-colour.md` and the wider catalogues — **not** from memory, which returns the saturated list.
@@ -67,7 +67,7 @@ Then set the scales (`design-theory.md` C1–C3): an expressive set for marketin
 
 **Product visualisation.** Real screenshots if they exist; otherwise faithful HTML fragments of real screens, at the product's real type size and tokens, with obviously illustrative data (never customer names). Show state and flow — a row expanding, a pipeline filling, a number changing. Never a capability that does not exist.
 
-**Imagery strategy.** Photography, product, illustration, diagrams, or none — chosen and argued (`imagery.md`). If the company's world is photographable and free-licence photography of it exists, "none" has to be argued, not defaulted to. "None" never means no graphics: plan a drawn graphics layer in the brand's line style (milestone art, spot illustrations, glyphs, a motif-based watermark family) so the page has visual events between the type.
+**Imagery strategy.** Photography, product, illustration, diagrams, or none — chosen and argued (`imagery.md`). If the company's world is photographable and free-licence photography of it exists, "none" has to be argued, not defaulted to. "None" never means no graphics: plan a drawn graphics layer in the brand's line style (milestone art, spot illustrations, glyphs, a motif-based watermark family of small, complete ornaments, never a viewport-wide mark: `anti-patterns.md` "Composition") so the page has visual events between the type.
 
 **Motion language.** Two or three moves that carry the concept, plus quiet reveals written to fail visible — or, on productive surfaces, only motion that explains change (`motion.md`). All of it substituted, not deleted, under `prefers-reduced-motion`.
 

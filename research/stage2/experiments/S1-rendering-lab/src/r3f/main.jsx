@@ -137,6 +137,7 @@ function App() {
       dpr={Math.min(devicePixelRatio || 1, 2)}
       frameloop={params.reduced || params.freeze ? 'demand' : 'always'}
       style={{ width: W, height: H, touchAction: 'none' }}
+      fallback={<img src={ASSETS + 'bg.png'} width={W} height={H} alt="A round cake on a table, ready to decorate (the interactive editor needs WebGL)" />}
       onCreated={({ gl }) => {
         lab.info.renderer = `r3f-${gl.capabilities.isWebGL2 ? 'webgl2' : 'webgl'}`;
         for (const t of ['pointerdown', 'pointermove', 'pointerup']) gl.domElement.addEventListener(t, lab.input, { capture: true });

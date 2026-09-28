@@ -5,7 +5,7 @@
 //   node run.mjs --runs 1              # one run per cell (≈ 25 min), for a quick look
 //   node run.mjs --phase main --only pixi,three --n 2000 --throttle 4
 //
-// Phases: build, shots, main, worker, a11y, reduced, nowebgl, survey, report (default: all, in that order).
+// Phases: build, shots, main, worker, present, a11y, contextloss, reduced, nowebgl, survey, report (default: all, in that order).
 // Results merge into results.json by key, so a partial run replaces only the cells it measured.
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -26,7 +26,7 @@ const argv = process.argv.slice(2);
 const arg = (k, d) => { const i = argv.indexOf(`--${k}`); return i < 0 ? d : argv[i + 1]; };
 const list = (k, d) => (arg(k) ? arg(k).split(',') : d);
 const RUNS = Number(arg('runs', 5));
-const PHASES = list('phase', ['build', 'shots', 'main', 'worker', 'a11y', 'reduced', 'nowebgl', 'survey', 'report']);
+const PHASES = list('phase', ['build', 'shots', 'main', 'worker', 'present', 'a11y', 'contextloss', 'reduced', 'nowebgl', 'survey', 'report']);
 const ONLY = arg('only') ? arg('only').split(',') : null;
 const NS = list('n', ['20', '200', '2000']).map(Number);
 const THROTTLES = list('throttle', ['1', '4']).map(Number);
@@ -66,7 +66,7 @@ function summarise(runs) {
 
 async function matrix(browser, base, section, cells) {
   results[section] ??= {};
-  const keyOf = (c) => [c.variant, c.n, `${c.throttle}x`, c.load ? `load${c.load}` : '', c.reduced ? 'reduced' : ''].filter(Boolean).join('|');
+  const keyOf = (c) => [c.label ?? c.variant, c.n, `${c.throttle}x`, c.load ? `load${c.load}` : '', c.reduced ? 'reduced' : ''].filter(Boolean).join('|');
   // Round-robin inside each group of comparable cells (same N, throttle, load, reduced): run 1 of every
   // variant, then run 2 of every variant, … so drifting background load on the shared CPUs hits every
   // variant alike instead of whichever happened to run during a busy minute.
@@ -216,6 +216,89 @@ async function nowebgl(base) {
   await browser.close();
 }
 
+// Frames the display compositor actually presented (viz DrawAndSwap per second, from a trace). rAF on
+// the main thread cannot see compositor-driven CSS animations, which keep moving while the main
+// thread is blocked; this counts what reached the screen, whatever produced it.
+async function presented(browser, base) {
+  results.presented = { note: 'viz Display::DrawAndSwap events per second over a 3 s trace, after 1.5 s warm-up; median of runs. load = 50 ms of main-thread busy work every 100 ms.', cells: {} };
+  for (const load of [0, 50]) {
+    for (const n of [200, 2000]) {
+      for (const v of pick(['dom', 'svg', 'canvas2d', 'canvas2d-worker', 'pixi'])) {
+        const fpsRuns = [];
+        for (let i = 0; i < Math.min(RUNS, 3); i++) {
+          const ctx = await browser.newContext({ viewport: { width: 860, height: 720 }, deviceScaleFactor: 1 });
+          const page = await ctx.newPage();
+          await page.goto(`${base}/${v}/?n=${n}${load ? `&load=${load}` : ''}`);
+          await page.waitForFunction(() => window.__lab?.ttff != null, null, { timeout: 60000 });
+          await page.waitForTimeout(1500);
+          await browser.startTracing(page, { categories: ['viz', 'cc'] });
+          const t0 = Date.now();
+          await page.waitForTimeout(3000);
+          const buf = await browser.stopTracing();
+          const secs = (Date.now() - t0) / 1000;
+          const ev = JSON.parse(buf.toString()).traceEvents;
+          const swaps = ev.filter((e) => e.name === 'Display::DrawAndSwap' && (e.ph === 'X' || e.ph === 'B')).length;
+          fpsRuns.push(Math.round((10 * swaps) / secs) / 10);
+          await ctx.close();
+        }
+        const key = `${v}|${n}|load${load}`;
+        results.presented.cells[key] = { variant: v, n, load, fps: median(fpsRuns), runs: fpsRuns };
+        log('presented', key, JSON.stringify(results.presented.cells[key]));
+        await save();
+      }
+    }
+  }
+}
+
+// WebGL context loss (a phone reclaiming GPU memory, a driver reset): lose and restore the context with
+// WEBGL_lose_context while the scene animates, then check the scene comes back.
+async function contextLoss(browser, base) {
+  results.contextLoss = { note: 'WEBGL_lose_context.loseContext(), 500 ms, restoreContext(), 1.5 s; pixel difference of the stage vs just before the loss (the bob animation alone moves a few %); frames = scene JS frames counted in the 1 s after restore.', variants: {} };
+  const tmp = path.join(os.tmpdir(), 's2-S1-shots'); await mkdir(tmp, { recursive: true });
+  const entries = [];
+  for (const v of pick(['pixi', 'phaser', 'three', 'three-instanced', 'r3f'])) {
+    const ctx = await browser.newContext({ viewport: { width: 860, height: 720 }, deviceScaleFactor: 1 });
+    const page = await ctx.newPage();
+    const errs = [];
+    page.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
+    page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') errs.push(m.text().slice(0, 160)); });
+    await page.goto(`${base}/${v}/?n=200`);
+    await page.waitForFunction(() => window.__lab?.ttff != null, null, { timeout: 60000 });
+    await page.waitForTimeout(800);
+    const a = path.join(tmp, `ctx-${v}-before.png`), b = path.join(tmp, `ctx-${v}-after.png`);
+    await page.locator('#stage').screenshot({ path: a });
+    const lost = await page.evaluate(async () => {
+      const c = document.querySelector('#stage canvas');
+      const gl = c.getContext('webgl2') || c.getContext('webgl');
+      const ext = gl?.getExtension('WEBGL_lose_context');
+      if (!ext) return { ok: false, why: gl ? 'no WEBGL_lose_context' : 'no context from getContext' };
+      let lostEv = 0, restoredEv = 0;
+      c.addEventListener('webglcontextlost', () => lostEv++);
+      c.addEventListener('webglcontextrestored', () => restoredEv++);
+      ext.loseContext();
+      await new Promise((r) => setTimeout(r, 500));
+      ext.restoreContext();
+      await new Promise((r) => setTimeout(r, 1500));
+      window.__lab.start();
+      await new Promise((r) => setTimeout(r, 1000));
+      window.__lab.stop();
+      const st = await window.__lab.stats();
+      return { ok: true, lostEv, restoredEv, framesAfter: st.js.length, isLost: gl.isContextLost() };
+    });
+    await page.locator('#stage').screenshot({ path: b });
+    await ctx.close();
+    const pa = PNG.sync.read(await readFile(a)), pb = PNG.sync.read(await readFile(b));
+    const diff = pixelmatch(pa.data, pb.data, null, pa.width, pa.height, { threshold: 0.1 });
+    const r = { ...lost, diffPct: Math.round((10000 * diff) / (pa.width * pa.height)) / 100, errors: [...new Set(errs)].slice(0, 3) };
+    r.recovered = !!(lost.ok && !lost.isLost && lost.framesAfter > 0 && r.diffPct < 25);
+    results.contextLoss.variants[v] = r;
+    entries.push({ file: b, label: `${v} after restore: ${r.recovered ? 'recovered' : 'NOT recovered'} (${r.diffPct}% px)` });
+    log('contextLoss', v, JSON.stringify(r));
+    await save();
+  }
+  await contactSheet(entries, path.join(here, 'shots', 'context-loss.jpg'));
+}
+
 async function main() {
   log('phases', PHASES.join(','), 'runs', RUNS);
   results.meta = {
@@ -225,7 +308,7 @@ async function main() {
   };
   if (PHASES.includes('build')) { results.build = { ...(results.build || {}), ...(await buildAll()) }; await save(); log('built'); }
   const { server, base } = await serve(DIST);
-  const needBrowser = PHASES.some((p) => ['shots', 'main', 'worker', 'a11y', 'reduced'].includes(p));
+  const needBrowser = PHASES.some((p) => ['shots', 'main', 'worker', 'present', 'a11y', 'contextloss', 'reduced'].includes(p));
   const browser = needBrowser ? await launchBrowser() : null;
   if (browser) {
     const probe = await browser.newPage();
@@ -250,11 +333,14 @@ async function main() {
     for (const throttle of THROTTLES) for (const n of [200, 2000]) for (const variant of pick(['canvas2d', 'canvas2d-worker', 'pixi', 'dom'])) cells.push({ variant, n, throttle, load: 50 });
     await matrix(browser, base, 'worker', cells);
   }
+  if (PHASES.includes('present')) await presented(browser, base);
   if (PHASES.includes('a11y')) await a11y(browser, base);
+  if (PHASES.includes('contextloss')) await contextLoss(browser, base);
   if (PHASES.includes('reduced')) {
     // prefers-reduced-motion: no bob, no particles, render on demand; idle cost with no harness loop.
     const cells = [];
     for (const variant of pick(MAIN)) cells.push({ variant, n: 200, throttle: 1, reduced: true, idle: true, runs: Math.min(RUNS, 3) });
+    if (pick(['pixi']).length) cells.push({ variant: 'pixi', label: 'pixi+Ticker.system.stop()', extra: 'stopSystemTicker', n: 200, throttle: 1, reduced: true, idle: true, runs: Math.min(RUNS, 3) });
     await matrix(browser, base, 'reduced', cells);
   }
   if (browser) await browser.close();

@@ -1,0 +1,145 @@
+<!doctype html>
+<!--
+  Regression fixture for audit.mjs (tools/regress.mjs, group "audit"): numeric-column alignment judged from paint,
+  by column, and the --kind service rules. Every column is tabular with one number of decimals, so alignment is the
+  only numeric finding. Column heads are short, so each column is only as wide as its values.
+
+  "Numeric columns" must name, at 1440 and at 390:
+    Grid (aligned left)   a grid cell 1fr 1fr with a ::before label: digits left in the value track, right edges ragged
+    Gap (aligned left)    a flex cell whose ::before label takes half: the same
+    Mid (aligned center)  centred values
+    Left (aligned left)   plain left-aligned values of different widths
+    Even (aligned left)   left-aligned values of one width (paint cannot tell; text-align decides)
+    Stack (aligned left)  at 1440 only: a plain left-aligned cell there
+  and must not name (right-aligned in paint, whatever sits between the digits and the cell edge):
+    Chip (padded pills), Same (pills of one width), Icon (a trailing svg), Unit (a ::after unit), Link (padded links),
+    Pad (a padded inner box), Right (plain), Acct (currency sign flush left, digits flush right in a flex cell),
+    Start (a right-to-left start column), and Stack at 390 (stacked flex rows, label from ::before, text-align left).
+
+  With --kind service: no "Missing landmarks" (header, main and footer are here; a service needs no nav) and no
+  "One family" signal. With --kind marketing both appear (one family at two weights over five sizes).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charges</title>
+<style>
+  body { margin: 0; font-family: system-ui, sans-serif; font-size: 16px; line-height: 1.5; color: #1a1a1a; background: #fff; }
+  header, footer { padding: 12px 16px; font-size: 14px; }
+  main { padding: 0 16px 24px; }
+  h1 { font-size: 32px; line-height: 1.2; margin: 16px 0; }
+  h2 { font-size: 20px; margin: 24px 0 8px; }
+  p.note { font-size: 13px; }
+  table { border-collapse: collapse; font-size: 14px; }
+  th, td { padding: 6px 12px; text-align: left; font-variant-numeric: tabular-nums; }
+  .r { text-align: right; }
+  .c { text-align: center; }
+  #start th, #start td { text-align: start; }
+  .chip { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #e8eef8; }
+  .lnk { display: inline-block; padding: 4px 8px; color: #1a4fa0; }
+  .kg::after { content: " kg"; }
+  .full { width: 100%; }
+  #grid td.g { display: grid; grid-template-columns: 1fr 1fr; }
+  #grid td.g::before, #gap td.f::before, #stack td.num::before { content: attr(data-label); }
+  #gap td.f { display: flex; gap: 8px; }
+  #gap td.f::before { flex: 0 0 50%; }
+  #acct td.acct { display: flex; justify-content: space-between; }
+  /* The stacked phone table: each row a block, each price a flex row with its label from ::before. No text-align. */
+  @media (max-width: 30em) {
+    #stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    #stack tr { display: block; padding: 8px 0; }
+    #stack th, #stack td { display: block; padding: 0; }
+    #stack td.num { display: flex; justify-content: space-between; padding: 4px 0; }
+  }
+  @media (min-width: 30.01em) { #stack td.num::before { content: none; } }
+</style>
+</head>
+<body>
+<header>Harbour charges</header>
+<main>
+<h1>Charges this quarter</h1>
+<p class="note">Figures in pounds unless marked.</p>
+
+<h2>Right-aligned in paint</h2>
+<table id="chip"><thead><tr><th>Line</th><th>Chip</th></tr></thead><tbody>
+<tr><td>a</td><td class="r"><span class="chip">+3.2%</span></td></tr>
+<tr><td>b</td><td class="r"><span class="chip">−12.5%</span></td></tr>
+<tr><td>c</td><td class="r"><span class="chip">+0.4%</span></td></tr>
+</tbody></table>
+<table id="same"><thead><tr><th>Line</th><th>Same</th></tr></thead><tbody>
+<tr><td>a</td><td class="r"><span class="chip">13.25</span></td></tr>
+<tr><td>b</td><td class="r"><span class="chip">12.50</span></td></tr>
+<tr><td>c</td><td class="r"><span class="chip">40.75</span></td></tr>
+</tbody></table>
+<table id="icon"><thead><tr><th>Line</th><th>Icon</th></tr></thead><tbody>
+<tr><td>a</td><td class="r">1,234.00 <svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="7"/></svg></td></tr>
+<tr><td>b</td><td class="r">56.00 <svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="7"/></svg></td></tr>
+<tr><td>c</td><td class="r">7,890.00 <svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="7"/></svg></td></tr>
+</tbody></table>
+<table id="unit"><thead><tr><th>Line</th><th>Unit</th></tr></thead><tbody>
+<tr><td>a</td><td class="r kg">1,234</td></tr>
+<tr><td>b</td><td class="r kg">56</td></tr>
+<tr><td>c</td><td class="r kg">7,890</td></tr>
+</tbody></table>
+<table id="link"><thead><tr><th>Line</th><th>Link</th></tr></thead><tbody>
+<tr><td>a</td><td class="r"><a class="lnk" href="#a">1,234.00</a></td></tr>
+<tr><td>b</td><td class="r"><a class="lnk" href="#b">56.00</a></td></tr>
+<tr><td>c</td><td class="r"><a class="lnk" href="#c">7,890.00</a></td></tr>
+</tbody></table>
+<table id="pad"><thead><tr><th>Line</th><th>Pad</th></tr></thead><tbody>
+<tr><td>a</td><td class="r" style="padding: 0"><div style="padding: 0 12px">1,234.00</div></td></tr>
+<tr><td>b</td><td class="r" style="padding: 0"><div style="padding: 0 12px">56.00</div></td></tr>
+<tr><td>c</td><td class="r" style="padding: 0"><div style="padding: 0 12px">7,890.00</div></td></tr>
+</tbody></table>
+<table id="right"><thead><tr><th>Line</th><th>Right</th></tr></thead><tbody>
+<tr><td>a</td><td class="r">1,234.00</td></tr>
+<tr><td>b</td><td class="r">56.00</td></tr>
+<tr><td>c</td><td class="r">7,890.00</td></tr>
+</tbody></table>
+<table id="acct" class="full"><thead><tr><th>Line</th><th>Acct</th></tr></thead><tbody>
+<tr><td>Revenue</td><td class="acct"><span>$</span><span>1,234,500.00</span></td></tr>
+<tr><td>Cost</td><td class="acct"><span>$</span><span>95,500.00</span></td></tr>
+<tr><td>Margin</td><td class="acct"><span>$</span><span>1,139,000.00</span></td></tr>
+</tbody></table>
+<table id="start" dir="rtl"><thead><tr><th>Line</th><th>Start</th></tr></thead><tbody>
+<tr><td>a</td><td>1.50</td></tr>
+<tr><td>b</td><td>22.50</td></tr>
+<tr><td>c</td><td>333.50</td></tr>
+</tbody></table>
+<table id="stack" class="full"><thead><tr><th>Zone</th><th class="num">Stack</th></tr></thead><tbody>
+<tr><th>Zone A</th><td class="num" data-label="Stack">£32.00</td></tr>
+<tr><th>Zone B</th><td class="num" data-label="Stack">£128.00</td></tr>
+<tr><th>Zone C</th><td class="num" data-label="Stack">£9.00</td></tr>
+</tbody></table>
+
+<h2>Not right-aligned</h2>
+<table id="grid" class="full"><thead><tr><th>Line</th><th>Grid</th></tr></thead><tbody>
+<tr><td>a</td><td class="g" data-label="Price">£1,280.00</td></tr>
+<tr><td>b</td><td class="g" data-label="Price">£95.50</td></tr>
+<tr><td>c</td><td class="g" data-label="Price">£9.00</td></tr>
+</tbody></table>
+<table id="gap" class="full"><thead><tr><th>Line</th><th>Gap</th></tr></thead><tbody>
+<tr><td>a</td><td class="f" data-label="Price">£1,280.00</td></tr>
+<tr><td>b</td><td class="f" data-label="Price">£95.50</td></tr>
+<tr><td>c</td><td class="f" data-label="Price">£9.00</td></tr>
+</tbody></table>
+<table id="mid"><thead><tr><th>Line</th><th>Mid</th></tr></thead><tbody>
+<tr><td>a</td><td class="c">1.50</td></tr>
+<tr><td>b</td><td class="c">22.50</td></tr>
+<tr><td>c</td><td class="c">333.50</td></tr>
+</tbody></table>
+<table id="left"><thead><tr><th>Line</th><th>Left</th></tr></thead><tbody>
+<tr><td>a</td><td>£1,200.00</td></tr>
+<tr><td>b</td><td>£95.50</td></tr>
+<tr><td>c</td><td>£31.00</td></tr>
+</tbody></table>
+<table id="even"><thead><tr><th>Line</th><th>Even</th></tr></thead><tbody>
+<tr><td>a</td><td>11.50</td></tr>
+<tr><td>b</td><td>22.50</td></tr>
+<tr><td>c</td><td>33.50</td></tr>
+</tbody></table>
+</main>
+<footer>Harbour office</footer>
+</body>
+</html>

@@ -10492,5 +10492,935 @@
    },
    "size": null
   }
+ },
+ "a11y": {
+  "palette-cmdk": {
+   "library": "cmdk",
+   "checks": {
+    "opensFromKeyboard": "1/1",
+    "focusInSearchField": "1/1",
+    "dialogHasName": "1/1",
+    "inputRole": "combobox",
+    "groupHeadingsExposed": "1/1",
+    "optionsAfterFilter": 4,
+    "activeItemExposed": "1/1",
+    "enterRunsActiveCommand": "1/1",
+    "closesAfterRun": "1/1",
+    "focusReturnsToTrigger": "0/1",
+    "emptyStateShown": "1/1",
+    "resultCountOrEmptyAnnounced": "0/1",
+    "escapeCloses": "1/1",
+    "escapeReturnsFocus": "0/1"
+   },
+   "detail": {
+    "trigger": {
+     "tag": "button",
+     "role": null,
+     "label": null,
+     "text": "Open command palette",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "focusOnOpen": {
+     "tag": "input",
+     "role": "combobox",
+     "label": null,
+     "text": "",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "treeOpen": "- dialog \"Command palette\":\n  - text: Command palette\n  - combobox \"Command palette\" [expanded]\n  - listbox \"Suggestions\":\n    - group \"Create\":\n      - option \"New invoice\" [selected]\n      - option \"New client\"\n      - option \"New project\"\n    - group \"Navigate\":\n      - option \"Go to dashboard\"\n      - option \"Go to invoices\"\n      - option \"Go to settings\"\n    - group \"Preferences\":\n      - option \"Switch theme\"\n      - option \"Sign out\"",
+    "afterType": {
+     "tag": "input",
+     "role": "combobox",
+     "label": null,
+     "text": "go",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "afterArrow": {
+     "tag": "input",
+     "role": "combobox",
+     "label": null,
+     "text": "go",
+     "roledescription": null,
+     "activedescendant": "Go to invoices",
+     "describedby": null
+    },
+    "activeItem": "Go to invoices",
+    "ran": "go-invoices",
+    "focusAfterRun": {
+     "tag": "body"
+    },
+    "emptyAnnouncements": [],
+    "focusAfterEscape": {
+     "tag": "body"
+    }
+   },
+   "announcements": [],
+   "pageErrors": []
+  },
+  "palette-rac": {
+   "library": "react-aria-components Autocomplete + Menu",
+   "checks": {
+    "opensFromKeyboard": "1/1",
+    "focusInSearchField": "1/1",
+    "dialogHasName": "1/1",
+    "inputRole": "search",
+    "groupHeadingsExposed": "1/1",
+    "optionsAfterFilter": 3,
+    "activeItemExposed": "0/1",
+    "enterRunsActiveCommand": "1/1",
+    "closesAfterRun": "1/1",
+    "focusReturnsToTrigger": "1/1",
+    "emptyStateShown": "1/1",
+    "resultCountOrEmptyAnnounced": "0/1",
+    "escapeCloses": "0/1",
+    "escapeReturnsFocus": "0/1"
+   },
+   "detail": {
+    "trigger": {
+     "tag": "button",
+     "role": null,
+     "label": null,
+     "text": "Open command palette",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "focusOnOpen": {
+     "tag": "input",
+     "role": null,
+     "label": "Search commands",
+     "text": "",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "treeOpen": "- dialog \"Command palette\":\n  - searchbox \"Search commands\"\n  - menu \"Suggestions\":\n    - group \"Create\":\n      - text: Create\n      - menuitem \"New invoice\"\n      - menuitem \"New client\"\n      - menuitem \"New project\"\n    - group \"Navigate\":\n      - text: Navigate\n      - menuitem \"Go to dashboard\"\n      - menuitem \"Go to invoices\"\n      - menuitem \"Go to settings\"\n    - group \"Preferences\":\n      - text: Preferences\n      - menuitem \"Switch theme\"\n      - menuitem \"Sign out\"",
+    "afterType": {
+     "tag": "input",
+     "role": null,
+     "label": "Search commands",
+     "text": "go",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "afterArrow": {
+     "tag": "input",
+     "role": null,
+     "label": "Search commands",
+     "text": "go",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "activeItem": "Go to invoices",
+    "ran": "go-invoices",
+    "focusAfterRun": {
+     "tag": "button",
+     "role": null,
+     "label": null,
+     "text": "Open command palette",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "emptyAnnouncements": [],
+    "focusAfterEscape": {
+     "tag": "input",
+     "role": null,
+     "label": "Search commands",
+     "text": "",
+     "roledescription": null,
+     "activedescendant": "New invoice",
+     "describedby": null
+    }
+   },
+   "announcements": [],
+   "pageErrors": []
+  },
+  "palette-baseui": {
+   "library": "@base-ui/react Autocomplete (inline) + Dialog",
+   "checks": {
+    "opensFromKeyboard": "1/1",
+    "focusInSearchField": "1/1",
+    "dialogHasName": "1/1",
+    "inputRole": "combobox",
+    "groupHeadingsExposed": "1/1",
+    "optionsAfterFilter": 3,
+    "activeItemExposed": "1/1",
+    "enterRunsActiveCommand": "1/1",
+    "closesAfterRun": "1/1",
+    "focusReturnsToTrigger": "1/1",
+    "emptyStateShown": "1/1",
+    "resultCountOrEmptyAnnounced": "1/1",
+    "escapeCloses": "1/1",
+    "escapeReturnsFocus": "1/1"
+   },
+   "detail": {
+    "trigger": {
+     "tag": "button",
+     "role": null,
+     "label": null,
+     "text": "Open command palette",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "focusOnOpen": {
+     "tag": "input",
+     "role": "combobox",
+     "label": "Search commands",
+     "text": "",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "treeOpen": "- dialog \"Command palette\":\n  - combobox \"Search commands\" [expanded]\n  - status\n  - listbox:\n    - group \"Create\":\n      - option \"New invoice\"\n      - option \"New client\"\n      - option \"New project\"\n    - group \"Navigate\":\n      - option \"Go to dashboard\"\n      - option \"Go to invoices\"\n      - option \"Go to settings\"\n    - group \"Preferences\":\n      - option \"Switch theme\"\n      - option \"Sign out\"",
+    "afterType": {
+     "tag": "input",
+     "role": "combobox",
+     "label": "Search commands",
+     "text": "go",
+     "roledescription": null,
+     "activedescendant": "Go to dashboard",
+     "describedby": null
+    },
+    "afterArrow": {
+     "tag": "input",
+     "role": "combobox",
+     "label": "Search commands",
+     "text": "go",
+     "roledescription": null,
+     "activedescendant": "Go to invoices",
+     "describedby": null
+    },
+    "activeItem": "Go to invoices",
+    "ran": "go-invoices",
+    "focusAfterRun": {
+     "tag": "button",
+     "role": null,
+     "label": null,
+     "text": "Open command palette",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "emptyAnnouncements": [
+     "No results found."
+    ],
+    "focusAfterEscape": {
+     "tag": "button",
+     "role": null,
+     "label": null,
+     "text": "Open command palette",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    }
+   },
+   "announcements": [
+    "No results found."
+   ],
+   "pageErrors": []
+  },
+  "palette-kbar": {
+   "library": "kbar",
+   "checks": {
+    "opensFromKeyboard": "1/1",
+    "focusInSearchField": "1/1",
+    "dialogHasName": "0/1",
+    "inputRole": "combobox",
+    "groupHeadingsExposed": "1/1",
+    "optionsAfterFilter": 4,
+    "activeItemExposed": "1/1",
+    "enterRunsActiveCommand": "1/1",
+    "closesAfterRun": "1/1",
+    "focusReturnsToTrigger": "1/1",
+    "emptyStateShown": "0/1",
+    "resultCountOrEmptyAnnounced": "0/1",
+    "escapeCloses": "1/1",
+    "escapeReturnsFocus": "1/1",
+    "globalShortcutOpens": "1/1"
+   },
+   "detail": {
+    "trigger": {
+     "tag": "button",
+     "role": null,
+     "label": null,
+     "text": "Open command palette",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "focusOnOpen": {
+     "tag": "input",
+     "role": "combobox",
+     "label": null,
+     "text": "",
+     "roledescription": null,
+     "activedescendant": "New invoice",
+     "describedby": null
+    },
+    "treeOpen": "- button \"Before the demo\"\n- main:\n  - heading \"palette-kbar\" [level=1]\n  - button \"Open command palette\"\n- button \"After the demo\"\n- combobox \"Type a command or search…\" [expanded]\n- listbox:\n  - option \"Create\"\n  - option \"New invoice\" [selected]\n  - option \"New client\"\n  - option \"New project\"\n  - option \"Navigate\"\n  - option \"Go to dashboard\"\n  - option \"Go to invoices\"\n  - option \"Go to settings\"\n  - option \"Preferences\"\n  - option \"Switch theme\"\n  - option \"Sign out\"",
+    "afterType": {
+     "tag": "input",
+     "role": "combobox",
+     "label": null,
+     "text": "go",
+     "roledescription": null,
+     "activedescendant": "Go to dashboard",
+     "describedby": null
+    },
+    "afterArrow": {
+     "tag": "input",
+     "role": "combobox",
+     "label": null,
+     "text": "go",
+     "roledescription": null,
+     "activedescendant": "Go to invoices",
+     "describedby": null
+    },
+    "activeItem": "Go to invoices",
+    "ran": "go-invoices",
+    "focusAfterRun": {
+     "tag": "button",
+     "role": null,
+     "label": null,
+     "text": "Open command palette",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "emptyAnnouncements": [],
+    "focusAfterEscape": {
+     "tag": "button",
+     "role": null,
+     "label": null,
+     "text": "Open command palette",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    }
+   },
+   "announcements": [],
+   "pageErrors": []
+  },
+  "dnd-dndkit": {
+   "library": "@dnd-kit/core + @dnd-kit/sortable (defaults)",
+   "checks": {
+    "dragHandleHasName": "1/1",
+    "instructionsAttached": "1/1",
+    "keyboardReorders": "1/1",
+    "focusStaysOnMovedItem": "1/1"
+   },
+   "detail": {
+    "orderBefore": "[\"Brief\",\"Wireframes\",\"Visual design\",\"Build\",\"Launch\"]",
+    "tree": "- list \"Project stages\":\n  - listitem:\n    - button \"Reorder Brief\": ⠿\n    - text: Brief\n  - listitem:\n    - button \"Reorder Wireframes\": ⠿\n    - text: Wireframes\n  - listitem:\n    - button \"Reorder Visual design\": ⠿\n    - text: Visual design\n  - listitem:\n    - button \"Reorder Build\": ⠿\n    - text: Build\n  - listitem:\n    - button \"Reorder Launch\": ⠿\n    - text: Launch\n- status",
+    "firstStop": {
+     "tag": "button",
+     "role": "button",
+     "label": "Reorder Brief",
+     "text": "⠿",
+     "roledescription": "sortable",
+     "activedescendant": null,
+     "describedby": "To pick up a draggable item, press the space bar.\n    While dragging, use the arrow keys to move the item.\n    Press space again to drop the item in its new position, or press escape to cancel."
+    },
+    "instructions": "To pick up a draggable item, press the space bar.\n    While dragging, use the arrow keys to move the item.\n    Press space again to drop the item in its new position, or press escape to cancel.",
+    "keys": [
+     "Space",
+     "ArrowDown",
+     "ArrowDown",
+     "Space"
+    ],
+    "orderAfter": "[\"Wireframes\",\"Visual design\",\"Brief\",\"Build\",\"Launch\"]",
+    "newIndexOfBrief": 2,
+    "focusAfter": {
+     "tag": "button",
+     "role": "button",
+     "label": "Reorder Brief",
+     "text": "⠿",
+     "roledescription": "sortable",
+     "activedescendant": null,
+     "describedby": "To pick up a draggable item, press the space bar.\n    While dragging, use the arrow keys to move the item.\n    Press space again to drop the item in its new position, or press escape to cancel."
+    }
+   },
+   "announcements": [
+    "Draggable item i1 was moved over droppable area i1.",
+    "Draggable item i1 was moved over droppable area i2.",
+    "Draggable item i1 was moved over droppable area i3.",
+    "Draggable item i1 was dropped over droppable area i3"
+   ],
+   "pageErrors": []
+  },
+  "dnd-dndkit-react": {
+   "library": "@dnd-kit/react (defaults)",
+   "checks": {
+    "dragHandleHasName": "1/1",
+    "instructionsAttached": "1/1",
+    "keyboardReorders": "1/1",
+    "focusStaysOnMovedItem": "1/1"
+   },
+   "detail": {
+    "orderBefore": "[\"Brief\",\"Wireframes\",\"Visual design\",\"Build\",\"Launch\"]",
+    "tree": "- list \"Project stages\":\n  - listitem:\n    - button \"Reorder Brief\": ⠿\n    - text: Brief\n  - listitem:\n    - button \"Reorder Wireframes\": ⠿\n    - text: Wireframes\n  - listitem:\n    - button \"Reorder Visual design\": ⠿\n    - text: Visual design\n  - listitem:\n    - button \"Reorder Build\": ⠿\n    - text: Build\n  - listitem:\n    - button \"Reorder Launch\": ⠿\n    - text: Launch",
+    "firstStop": {
+     "tag": "button",
+     "role": null,
+     "label": "Reorder Brief",
+     "text": "⠿",
+     "roledescription": "draggable",
+     "activedescendant": null,
+     "describedby": "To pick up a draggable item, press the space bar. While dragging, use the arrow keys to move the item in a given direction. Press space again to drop the item in its new position, or press escape to c"
+    },
+    "instructions": "To pick up a draggable item, press the space bar. While dragging, use the arrow keys to move the item in a given direction. Press space again to drop the item in its new position, or press escape to c",
+    "keys": [
+     "Space",
+     "ArrowDown",
+     "ArrowDown",
+     "Space"
+    ],
+    "orderAfter": "[\"Wireframes\",\"Visual design\",\"Brief\",\"Build\",\"Launch\"]",
+    "newIndexOfBrief": 2,
+    "focusAfter": {
+     "tag": "button",
+     "role": null,
+     "label": "Reorder Brief",
+     "text": "⠿",
+     "roledescription": "draggable",
+     "activedescendant": null,
+     "describedby": "To pick up a draggable item, press the space bar. While dragging, use the arrow keys to move the item in a given direction. Press space again to drop the item in its new position, or press escape to c"
+    }
+   },
+   "announcements": [
+    "Picked up draggable item i1.",
+    "Draggable item i1 was dropped over droppable target i1"
+   ],
+   "pageErrors": []
+  },
+  "dnd-rac": {
+   "library": "react-aria-components GridList + useDragAndDrop",
+   "checks": {
+    "dragHandleHasName": "1/1",
+    "instructionsAttached": "0/1",
+    "keyboardReorders": "1/1",
+    "focusStaysOnMovedItem": "1/1"
+   },
+   "detail": {
+    "orderBefore": "[\"Brief\",\"Wireframes\",\"Visual design\",\"Build\",\"Launch\"]",
+    "tree": "- grid \"Project stages\":\n  - row \"Brief\":\n    - gridcell \"Reorder Brief Brief\":\n      - button \"Reorder Brief\": ⠿\n      - text: Brief\n  - row \"Wireframes\":\n    - gridcell \"Reorder Wireframes Wireframes\":\n      - button \"Reorder Wireframes\": ⠿\n      - text: Wireframes\n  - row \"Visual design\":\n    - gridcell \"Reorder Visual design Visual design\":\n      - button \"Reorder Visual design\": ⠿\n      - text: Visual design\n  - row \"Build\":\n    - gridcell \"Reorder Build Build\":\n      - button \"Reorder Build\": ⠿\n      - text: Build\n  - row \"Launch\":\n    - gridcell \"Reorder Launch Launch\":\n      - button \"Reorder Launch\": ⠿\n      - text: Launch",
+    "firstStop": {
+     "tag": "div",
+     "role": "row",
+     "label": "Brief",
+     "text": "⠿\nBrief",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "instructions": null,
+    "walk": [
+     [
+      "ArrowRight",
+      "⠿"
+     ],
+     [
+      "Enter",
+      "Insert between Brief and Wireframes"
+     ],
+     [
+      "ArrowDown",
+      "Insert between Wireframes and Visual design"
+     ],
+     [
+      "ArrowDown",
+      "Insert between Visual design and Build"
+     ],
+     [
+      "ArrowDown",
+      "Insert between Build and Launch"
+     ],
+     [
+      "Enter",
+      "⠿\nBrief"
+     ]
+    ],
+    "keys": [
+     "ArrowRight",
+     "Enter",
+     "ArrowDown",
+     "ArrowDown",
+     "ArrowDown",
+     "Enter"
+    ],
+    "orderAfter": "[\"Wireframes\",\"Visual design\",\"Build\",\"Brief\",\"Launch\"]",
+    "newIndexOfBrief": 3,
+    "focusAfter": {
+     "tag": "div",
+     "role": "row",
+     "label": "Brief",
+     "text": "⠿\nBrief",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    }
+   },
+   "announcements": [
+    "Insert between Brief and Wireframes",
+    "Started dragging. Press Tab to navigate to a drop target, then press Enter to drop, or press Escape to cancel.",
+    "Started dragging. Press Tab to navigate to a drop target, then press Enter to drop, or press Escape to cancel.Drop complete."
+   ],
+   "pageErrors": []
+  },
+  "dnd-pragmatic": {
+   "library": "@atlaskit/pragmatic-drag-and-drop + an action menu (the library's documented keyboard alternative)",
+   "checks": {
+    "dragHandleHasName": "1/1",
+    "instructionsAttached": "0/1",
+    "keyboardReorders": "1/1",
+    "focusStaysOnMovedItem": "1/1"
+   },
+   "detail": {
+    "orderBefore": "[\"Brief\",\"Wireframes\",\"Visual design\",\"Build\",\"Launch\"]",
+    "tree": "- list \"Project stages\":\n  - listitem:\n    - button \"Reorder Brief\": ⠿\n    - text: Brief\n  - listitem:\n    - button \"Reorder Wireframes\": ⠿\n    - text: Wireframes\n  - listitem:\n    - button \"Reorder Visual design\": ⠿\n    - text: Visual design\n  - listitem:\n    - button \"Reorder Build\": ⠿\n    - text: Build\n  - listitem:\n    - button \"Reorder Launch\": ⠿\n    - text: Launch",
+    "firstStop": {
+     "tag": "button",
+     "role": null,
+     "label": "Reorder Brief",
+     "text": "⠿",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "instructions": null,
+    "keys": [
+     "Enter",
+     "Enter",
+     "Enter",
+     "ArrowDown",
+     "Enter"
+    ],
+    "orderAfter": "[\"Wireframes\",\"Visual design\",\"Brief\",\"Build\",\"Launch\"]",
+    "newIndexOfBrief": 2,
+    "focusAfter": {
+     "tag": "button",
+     "role": null,
+     "label": "Reorder Brief",
+     "text": "⠿",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    }
+   },
+   "announcements": [],
+   "pageErrors": []
+  },
+  "dnd-pangea": {
+   "library": "@hello-pangea/dnd",
+   "checks": {
+    "dragHandleHasName": "1/1",
+    "instructionsAttached": "1/1",
+    "keyboardReorders": "1/1",
+    "focusStaysOnMovedItem": "1/1"
+   },
+   "detail": {
+    "orderBefore": "[\"Brief\",\"Wireframes\",\"Visual design\",\"Build\",\"Launch\"]",
+    "tree": "- list \"Project stages\":\n  - button \"Brief\"\n  - button \"Wireframes\"\n  - button \"Visual design\"\n  - button \"Build\"\n  - button \"Launch\"",
+    "firstStop": {
+     "tag": "li",
+     "role": "button",
+     "label": null,
+     "text": "Brief",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": "Press space bar to start a drag.\n  When dragging you can use the arrow keys to move the item around and escape to cancel.\n  Some screen readers may require you to be in focus mode or to use your pass "
+    },
+    "instructions": "Press space bar to start a drag.\n  When dragging you can use the arrow keys to move the item around and escape to cancel.\n  Some screen readers may require you to be in focus mode or to use your pass ",
+    "keys": [
+     "Space",
+     "ArrowDown",
+     "ArrowDown",
+     "Space"
+    ],
+    "orderAfter": "[\"Wireframes\",\"Visual design\",\"Brief\",\"Build\",\"Launch\"]",
+    "newIndexOfBrief": 2,
+    "focusAfter": {
+     "tag": "li",
+     "role": "button",
+     "label": null,
+     "text": "Brief",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": "Press space bar to start a drag.\n  When dragging you can use the arrow keys to move the item around and escape to cancel.\n  Some screen readers may require you to be in focus mode or to use your pass "
+    }
+   },
+   "announcements": [
+    "You have lifted an item in position 1",
+    "You have moved the item from position 1 to position 2",
+    "You have moved the item from position 1 to position 3",
+    "You have dropped the item. You have moved the item from position 1 to position 3"
+   ],
+   "pageErrors": []
+  },
+  "panels-rrp": {
+   "library": "react-resizable-panels",
+   "checks": {
+    "pointerResizes": "1/1",
+    "separatorFocusable": "1/1",
+    "roleSeparator": "1/1",
+    "hasValueNow": "1/1",
+    "hasName": "1/1",
+    "arrowsResize": "1/1",
+    "homeKey": "1/1",
+    "enterTogglesCollapse": "1/1"
+   },
+   "detail": {
+    "widthStart": 268,
+    "tree": "- text: Navigation\n- separator \"Resize navigation\"\n- text: Content",
+    "widthAfterPointer": 348,
+    "firstStop": {
+     "tag": "div",
+     "role": "separator",
+     "label": "Resize navigation",
+     "text": "",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "separator": {
+     "aria-label": "Resize navigation",
+     "aria-orientation": "vertical",
+     "role": "separator",
+     "tabindex": "0",
+     "aria-controls": "nav",
+     "aria-valuemax": "100",
+     "aria-valuemin": "0",
+     "aria-valuenow": "30"
+    },
+    "widthAfterArrows": 402,
+    "valueAfterArrows": "45",
+    "widthAfterEnd": 894,
+    "widthAfterHome": 0,
+    "widthAfterEnter": 894,
+    "stepPercent": 5
+   },
+   "announcements": [],
+   "pageErrors": []
+  },
+  "panels-ark": {
+   "library": "@ark-ui/react Splitter",
+   "checks": {
+    "pointerResizes": "1/1",
+    "separatorFocusable": "1/1",
+    "roleSeparator": "1/1",
+    "hasValueNow": "1/1",
+    "hasName": "1/1",
+    "arrowsResize": "1/1",
+    "homeKey": "1/1",
+    "enterTogglesCollapse": "1/1"
+   },
+   "detail": {
+    "widthStart": 268,
+    "tree": "- text: Navigation\n- separator \"Resize navigation\"\n- text: Content",
+    "widthAfterPointer": 348,
+    "firstStop": {
+     "tag": "button",
+     "role": "separator",
+     "label": "Resize navigation",
+     "text": "",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "separator": {
+     "role": "separator",
+     "tabindex": "0",
+     "aria-valuenow": "30",
+     "aria-valuemin": "15",
+     "aria-valuemax": "100",
+     "aria-orientation": "horizontal",
+     "aria-controls": "splitter:_r_0_:panel:nav splitter:_r_0_:panel:main",
+     "aria-label": "Resize navigation"
+    },
+    "widthAfterArrows": 295,
+    "valueAfterArrows": "33",
+    "widthAfterEnd": 894,
+    "widthAfterHome": 0,
+    "widthAfterEnter": 402,
+    "stepPercent": 1
+   },
+   "announcements": [],
+   "pageErrors": []
+  },
+  "panels-allotment": {
+   "library": "allotment",
+   "checks": {
+    "pointerResizes": "1/1",
+    "separatorFocusable": "0/1",
+    "roleSeparator": "0/1",
+    "hasValueNow": "0/1",
+    "hasName": "0/1",
+    "arrowsResize": "0/1",
+    "homeKey": "0/1",
+    "enterTogglesCollapse": "0/1"
+   },
+   "detail": {
+    "widthStart": 270,
+    "tree": "- text: Navigation Content",
+    "widthAfterPointer": 350,
+    "firstStop": {
+     "tag": "button",
+     "role": null,
+     "label": null,
+     "text": "After the demo",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "separator": {},
+    "widthAfterArrows": 270,
+    "valueAfterArrows": null,
+    "widthAfterEnd": 270,
+    "widthAfterHome": 270,
+    "widthAfterEnter": 270,
+    "stepPercent": null
+   },
+   "announcements": [],
+   "pageErrors": []
+  },
+  "flow-xyflow": {
+   "library": "@xyflow/react",
+   "checks": {
+    "nodesFocusable": "1/1",
+    "nodesHaveNameByDefault": "0/1",
+    "nodeNameWhenAriaLabelSet": "1/1",
+    "edgesFocusable": "1/1",
+    "edgesHaveName": "1/1",
+    "handlesKeyboardReachable": "0/1",
+    "controlsNamed": "1/1",
+    "tabReachesNode": "1/1",
+    "enterSelects": "1/1",
+    "arrowsMoveSelectedNode": "1/1",
+    "deleteKeyRemovesNode": "1/1",
+    "focusSurvivesDelete": "0/1"
+   },
+   "detail": {
+    "tree": "- application:\n  - img:\n    - group \"Edge from a to b\"\n  - img:\n    - group \"Edge from b to c\"\n  - group \"Order placed\"\n  - group: Payment captured\n  - group: Shipped\n  - img\n  - button \"Zoom In\":\n    - img\n  - button \"Zoom Out\":\n    - img\n  - button \"Fit View\":\n    - img\n  - button \"Toggle Interactivity\":\n    - img\n  - link \"React Flow attribution\":\n    - /url: https://reactflow.dev?utm_source=attribution\n    - text: React Flow",
+    "nodes": [
+     {
+      "id": "a",
+      "role": "group",
+      "roledescription": "node",
+      "label": "Order placed",
+      "tabindex": "0",
+      "describedby": true
+     },
+     {
+      "id": "b",
+      "role": "group",
+      "roledescription": "node",
+      "label": null,
+      "tabindex": "0",
+      "describedby": true
+     },
+     {
+      "id": "c",
+      "role": "group",
+      "roledescription": "node",
+      "label": null,
+      "tabindex": "0",
+      "describedby": true
+     }
+    ],
+    "edges": [
+     {
+      "role": "group",
+      "label": "Edge from a to b",
+      "tabindex": "0",
+      "roledescription": "edge"
+     },
+     {
+      "role": "group",
+      "label": "Edge from b to c",
+      "tabindex": "0",
+      "roledescription": "edge"
+     }
+    ],
+    "focusedNode": {
+     "tag": "div",
+     "role": "group",
+     "label": "Order placed",
+     "text": "Order placed",
+     "roledescription": "node",
+     "activedescendant": null,
+     "describedby": "Press enter or space to select a node. You can then use the arrow keys to move the node around. Press delete to remove it and escape to cancel."
+    },
+    "posStart": "translate(0px, 0px)",
+    "posAfter": "translate(10px, 5px)",
+    "nodeCountAfterDelete": 2,
+    "edgeCountAfterDelete": 1,
+    "focusAfterDelete": {
+     "tag": "body"
+    }
+   },
+   "announcements": [
+    "Moved selected node right. New position, x: 0, y: 0",
+    "Moved selected node right. New position, x: 5, y: 0",
+    "Moved selected node down. New position, x: 10, y: 0"
+   ],
+   "pageErrors": []
+  },
+  "canvas-konva": {
+   "library": "konva + react-konva (Transformer), no extra work",
+   "checks": {
+    "shapesInAccessibilityTree": "0/1",
+    "anyFocusableInCanvas": "0/1",
+    "tabLeavesCanvasImmediately": "1/1"
+   },
+   "detail": {
+    "tree": "",
+    "focusables": 0,
+    "afterTab": {
+     "tag": "button",
+     "role": null,
+     "label": null,
+     "text": "After the demo",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    }
+   },
+   "announcements": [],
+   "pageErrors": []
+  },
+  "canvas-konva-a11y": {
+   "library": "konva + react-konva + an accessible layers list and inspector (this lab)",
+   "checks": {
+    "shapesInAccessibilityTree": "1/1",
+    "tabReachesLayers": "1/1",
+    "arrowSelectsShape": "1/1",
+    "inspectorFieldMovesShape": "1/1",
+    "deleteRemovesShape": "1/1",
+    "focusStaysInList": "1/1"
+   },
+   "detail": {
+    "tree": "- heading \"Layers\" [level=2]\n- listbox \"Layers\":\n  - option \"Label background, 200 by 120 at 40, 40\" [selected]\n  - option \"Logo block, 120 by 80 at 280, 60\"\n  - option \"Price badge, 90 by 90 at 440, 120\"\n- group \"Position of Label background\":\n  - text: Position of Label background X\n  - spinbutton \"X\": \"40\"\n  - text: \"Y\"\n  - spinbutton \"Y\": \"40\"\n- status\n- img",
+    "first": {
+     "tag": "ul",
+     "role": "listbox",
+     "label": null,
+     "text": "Label background, 200 by 120 at 40, 40\nLogo block, 120 by 80",
+     "roledescription": null,
+     "activedescendant": "Label background, 200 by 120 at 40, 40",
+     "describedby": null
+    },
+    "afterArrow": {
+     "tag": "ul",
+     "role": "listbox",
+     "label": null,
+     "text": "Label background, 200 by 120 at 40, 40\nLogo block, 120 by 80",
+     "roledescription": null,
+     "activedescendant": "Logo block, 120 by 80 at 280, 60",
+     "describedby": null
+    },
+    "selected": "r2",
+    "field": {
+     "tag": "input",
+     "role": null,
+     "label": null,
+     "text": "280",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "focusAfterDelete": {
+     "tag": "ul",
+     "role": "listbox",
+     "label": null,
+     "text": "Label background, 200 by 120 at 40, 40\nPrice badge, 90 by 90",
+     "roledescription": null,
+     "activedescendant": "Price badge, 90 by 90 at 440, 120",
+     "describedby": null
+    }
+   },
+   "announcements": [
+    "Logo block deleted. 2 objects left."
+   ],
+   "pageErrors": []
+  },
+  "canvas-tldraw": {
+   "library": "tldraw (evaluated in a development environment; production needs a licence key)",
+   "checks": {
+    "shapesInAccessibilityTree": "0/1",
+    "skipToCanvasButton": "1/1",
+    "selectionAnnounced": "1/1",
+    "arrowsMoveSelection": "1/1"
+   },
+   "detail": {
+    "watermark": true,
+    "tree": "- application \"tldraw\":\n  - document:\n    - button \"Move focus to canvas\"\n    - navigation:\n      - button \"Menu\"\n      - button \"Page 1\"\n      - toolbar \"Actions\":\n        - button \"Undo — Ctrl + Z\" [disabled]\n        - button \"Redo — Ctrl + ⇧ + Z\" [disabled]\n        - button \"Delete — ⌫\" [disabled]\n        - button \"Duplicate — Ctrl + D\" [disabled]\n        - button \"Actions\"\n    - toolbar \"Color\":\n      - radiogroup:\n        - radio \"Color — Black (selected)\" [checked]\n        - radio \"Color — Grey\"\n        - radio \"Color — Light violet\"\n        - radio \"Color — Violet\"\n        - radio \"Color — Blue\"\n        - radio \"Color — Light blue\"\n        - radio \"Color — Yellow\"\n        - radio \"Color — Orange\"\n        - radio \"Color — Green\"\n        - radio \"Color — Light green\"\n        - radio \"Color — Light red\"\n        - radio \"Color — Red\"\n    - slider \"Opacity — 100%\"\n    - toolbar \"Fill\":\n      - radiogroup:\n        - radio \"Fill — None (selected)\" [checked]\n        - radio \"Fill — Semi\"\n        - radio \"Fill — Solid\"\n      - button \"Fill\"\n    - toolbar \"Dash\":\n      - radiogroup:\n        - radio \"Dash — Draw (selected)\" [checked]\n        - radio \"Dash — Dashed\"\n        - radio \"Dash — Dotted\"\n        - radio \"Dash — Solid\"\n    - toolbar \"Size\":\n      - radiogroup:\n        - radio \"Size — Small\"\n        - radio \"Size — Medium (selected)\" [checked]\n        - radio \"Size — Large\"\n        - radio \"Size — Extra large\"",
+    "skip": {
+     "tag": "button",
+     "role": null,
+     "label": null,
+     "text": "Move focus to canvas",
+     "roledescription": null,
+     "activedescendant": null,
+     "describedby": null
+    },
+    "afterSkip": [
+     "[inserted] Brief, Rectangle. 1 of 3"
+    ],
+    "afterTab": [
+     "[inserted] Brief, Rectangle. 1 of 3",
+     "Build, Ellipse. 2 of 3"
+    ],
+    "move": [
+     "[[320,80]]",
+     "[[322,80]]"
+    ]
+   },
+   "announcements": [
+    "[inserted] Brief, Rectangle. 1 of 3",
+    "Build, Ellipse. 2 of 3"
+   ],
+   "pageErrors": [
+    "Failed to fetch",
+    "Failed to fetch"
+   ]
+  },
+  "canvas-excalidraw": {
+   "library": "@excalidraw/excalidraw",
+   "checks": {
+    "shapesInAccessibilityTree": "0/1",
+    "toolbarNamed": "1/1",
+    "tabSelectsAnElement": "0/1",
+    "arrowsMoveSelection": "1/1"
+   },
+   "detail": {
+    "tree": "- region \"Shapes\":\n  - heading \"Shapes\" [level=2]\n  - radio \"Selection\" [checked]\n  - radio \"Rectangle\"\n  - radio \"Diamond\"\n  - radio \"Ellipse\"\n  - radio \"Arrow\"\n  - radio \"Line\"\n  - radio \"Draw\"\n  - radio \"Text\"\n  - radio \"Insert image\"\n  - radio \"Eraser\"\n  - button \"More tools\"\n  - checkbox \"Library\"\n  - checkbox \"Keep selected tool active after drawing\"\n  - radio \"Hand (panning tool) — H\"\n- button\n- button \"Undo\" [disabled]\n- button \"Redo\" [disabled]\n- img\n- text: Drawing canvas",
+    "toolbar": [
+     "radio \"Selection\"",
+     "radio \"Rectangle\"",
+     "radio \"Diamond\"",
+     "radio \"Ellipse\"",
+     "radio \"Arrow\"",
+     "radio \"Line\"",
+     "radio \"Draw\"",
+     "radio \"Text\"",
+     "radio \"Insert image\"",
+     "radio \"Eraser\"",
+     "radio \"Hand (panning tool) — H\""
+    ],
+    "selectedAfterCtrlA": 3
+   },
+   "announcements": [],
+   "pageErrors": []
+  }
  }
 }

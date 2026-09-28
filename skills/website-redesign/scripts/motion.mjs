@@ -143,10 +143,13 @@ function pageInit() {
   window.__mqReduce = 0;
   window.matchMedia = (q) => { if (/prefers-reduced-motion/.test(q)) window.__mqReduce++; return mm(q); };
   window.__styleChurn = new Map();
-  const t0 = performance.now();
+  const t0 = performance.now(); const last = new WeakMap();
+  // only inline changes that move something count (an opacity-only fade is a valid reduced-motion substitute)
+  const sig = (el) => { const st = el.style; return [st.transform, st.translate, st.scale, st.rotate, st.top, st.left, st.right, st.bottom, st.marginTop, st.marginLeft, st.width, st.height].join('|'); };
   const mo = new MutationObserver((list) => {
     if (performance.now() - t0 > 4000) { mo.disconnect(); return; }
-    for (const r of list) { const el = r.target; if (!(el instanceof Element)) continue; window.__styleChurn.set(el, (window.__styleChurn.get(el) || 0) + 1); }
+    for (const r of list) { const el = r.target; if (!(el instanceof HTMLElement || el instanceof SVGElement)) continue; const k = sig(el); if (last.get(el) === k) continue; last.set(el, k);
+      window.__styleChurn.set(el, (window.__styleChurn.get(el) || 0) + 1); }
   });
   const go = () => mo.observe(document.documentElement, { attributes: true, attributeFilter: ['style'], subtree: true });
   if (document.documentElement) go(); else document.addEventListener('DOMContentLoaded', go);
@@ -211,7 +214,8 @@ function pageHelpers() {
     const kids = [...el.querySelectorAll('*')].slice(0, 6).map((k) => { const cs = getComputedStyle(k); return [cs.color, cs.opacity, cs.transform, cs.translate, cs.backgroundColor, cs.fill, cs.stroke].join('|'); });
     return [f(el), f(el, '::before'), f(el, '::after'), ...kids].join('§');
   };
-  const finishAll = (el) => { for (const x of el.getAnimations?.({ subtree: true }) ?? []) { try { if (x.effect?.getComputedTiming?.().iterations !== Infinity) x.finish(); } catch { /* ignore */ } } };
+  // finish what ends; hold loops (a pulsing button) at their first frame, so two reads compare states, not loop phases
+  const finishAll = (el) => { for (const x of el.getAnimations?.({ subtree: true }) ?? []) { try { if (x.effect?.getComputedTiming?.().iterations !== Infinity) x.finish(); else { x.pause(); x.currentTime = 0; } } catch { /* ignore */ } } };
   const visible = (el) => { const r = el.getBoundingClientRect(); const cs = getComputedStyle(el); return r.width > 2 && r.height > 2 && cs.visibility !== 'hidden' && cs.display !== 'none' && +cs.opacity > 0.05 && !el.closest('[inert],[aria-hidden="true"]'); };
   window.__mh = { describe, LAYOUT, MOVE, splitTop, ms, read, animInfo, readVT, fingerprint, finishAll, visible };
 }
@@ -277,13 +281,14 @@ function samplerStart({ sel, on, ms }) {
   window.__on = on ? [...document.querySelectorAll(on)].slice(0, 1) : els.slice(0, 1);
   window.__inputs = [];
   const frames = []; const anims = new Map(); const t0 = performance.now();
-  window.__sample = { frames, anims, n: els.length, t0, done: false };
+  window.__sample = { frames, anims, n: els.length, t0, done: false, delays: [], inView: els.map((e) => { const r = e.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; }) };
   const tick = () => {
     const t = performance.now();
     const v = els.map((e) => (e.isConnected ? read(e) : null));
     const list = [...els.flatMap((e) => (e.isConnected ? e.getAnimations({ subtree: true }) : [])), ...document.getAnimations().filter((x) => (x.effect?.pseudoElement || '').startsWith('::view-transition'))];
     for (const x of list) { const info = animInfo(x); const k = `${info.kind}|${info.name}|${info.pseudo}|${info.target}|${info.duration}|${info.delay}`; if (!anims.has(k)) anims.set(k, { ...info, firstSeen: t - t0 }); }
     frames.push({ t: t - t0, v, vt: readVT(), running: list.filter((x) => x.playState === 'running').length });
+    els.forEach((e, i) => { if (window.__sample.delays[i] == null) { const d = e.getAnimations().filter((x) => x.effect?.getComputedTiming?.().iterations !== Infinity).map((x) => x.effect.getTiming().delay || 0); if (d.length) window.__sample.delays[i] = Math.max(...d); } });
     if (t - t0 < ms) requestAnimationFrame(tick); else window.__sample.done = true;
   };
   requestAnimationFrame(tick);
@@ -291,7 +296,7 @@ function samplerStart({ sel, on, ms }) {
 }
 function samplerCollect() {
   const s = window.__sample;
-  return s ? { frames: s.frames, anims: [...s.anims.values()], n: s.n, t0: s.t0, done: s.done, inputs: window.__inputs.map((e) => ({ ...e, t: e.t - s.t0 })) } : null;
+  return s ? { frames: s.frames, anims: [...s.anims.values()], n: s.n, t0: s.t0, done: s.done, delays: s.delays, inView: s.inView, inputs: window.__inputs.map((e) => ({ ...e, t: e.t - s.t0 })) } : null;
 }
 
 // ---------------------------------------------------------------- sample analysis (Node side)
@@ -331,7 +336,7 @@ function classify(stats) {
 }
 function dominant(stats) {
   let best = null, score = 0;
-  for (const [ch, s] of Object.entries(stats || {})) if (CH[ch] && s.range != null) { const k = s.range / CH[ch]; if (k > score) { score = k; best = ch; } }
+  for (const [ch, s] of Object.entries(stats || {})) if (CH[ch] && s.range != null && s.changes >= 3) { const k = s.range / CH[ch]; if (k > score) { score = k; best = ch; } }
   return best;
 }
 /** Fit the sampled progress curve of one channel against candidate easings; lower RMS is better. */
@@ -446,6 +451,11 @@ if (!a['no-audit']) {
       }
     }
   }
+  for (const [name, kf] of Object.entries(inv.keyframes)) {
+    // keyframes no element uses at load (a toast, a reveal that runs later) still ship
+    if (kf.layout.length && !flags.some((f) => f.kind === 'layout-keyframes' && f.detail.includes(`@keyframes ${name} `))) once('layout-keyframes', `@keyframes ${name}`, `@keyframes ${name} animates ${kf.layout.join(', ')} (not running at load)`, 'warn');
+    if (kf.scale0 && !flags.some((f) => f.kind === 'scale-zero' && f.detail.includes(`@keyframes ${name} `))) once('scale-zero', `@keyframes ${name}`, `@keyframes ${name} enters from scale(0) — start at 0.9–0.97 with opacity 0 (not running at load)`, 'warn');
+  }
   for (const an of lm.anims) {
     const lay = an.props.filter((p) => LAYOUT_RE.test(p));
     if (lay.length && an.kind === 'waapi') once('layout-keyframes', an.target, `a running animation moves ${lay.join(', ')}`, 'warn');
@@ -542,11 +552,16 @@ async function trigger(page, entry, ms) {
   }
   if (kind !== 'scroll' && kind !== 'load') await page.evaluate((s) => document.querySelector(s)?.scrollIntoView({ block: 'center', behavior: 'instant' }), on);
   if (kind === 'hover' || kind === 'press') await page.mouse.move(1, 1);
-  if (kind === 'press') { await page.hover(on, { timeout: 3000 }).catch(() => {}); await page.waitForTimeout(400); }
+  if (kind === 'press') {
+    await page.hover(on, { timeout: 3000 }).catch(() => {});
+    await page.waitForFunction((s) => { const e = document.querySelector(s); return !e || !e.getAnimations({ subtree: true }).some((x) => x.playState === 'running' && x.effect?.getComputedTiming?.().iterations !== Infinity); }, entry.target, { timeout: 2000 }).catch(() => {});
+    await page.waitForTimeout(150);
+  }
   await page.waitForTimeout(250);
   const box = async () => page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, on);
   const n = await page.evaluate(samplerStart, { sel: entry.target, on, ms });
   if (!n) return { error: `target ${entry.target} not found` };
+  await page.waitForTimeout(150); // pre-roll: channels already changing now (a loop) are not the trigger's doing
   const p = await box();
   if (!p && kind !== 'load') return { error: `${on} not found` };
   const t0 = Date.now();
@@ -572,7 +587,7 @@ async function trigger(page, entry, ms) {
 async function runEntry(entry, mode, film) {
   const { ctx, page, errors } = await newPage(mode);
   const dur = resolveDuration(entry.duration);
-  const ms = Math.max(1200, (dur?.max || 400) * 3 + (entry.stagger || 0) * 12 + (entry.interrupt || 0));
+  const ms = Math.max(1500, (dur?.max || 400) * 3.5 + (entry.stagger || 0) * 12 + (entry.interrupt || 0) + (entry.trigger === 'scroll' ? 600 : 0)) + 150;
   let cast = null;
   let data;
   try {
@@ -625,8 +640,13 @@ function triggerTime(data, entry) {
 function analyse(entry, data) {
   if (!data || data.error) return { error: data?.error || 'no data' };
   const tT = triggerTime(data, entry);
-  const perTarget = [];
-  for (let i = 0; i < data.n; i++) { const st = channelStats(data.frames, i, tT); perTarget.push({ stats: st, cls: classify(st) }); }
+  const perTarget = []; const ambient = new Set();
+  for (let i = 0; i < data.n; i++) {
+    const pre = entry.trigger === 'load' ? null : channelStats(data.frames.filter((f) => f.t < tT - 1), i, 0);
+    const st = channelStats(data.frames, i, tT);
+    for (const [ch, x] of Object.entries(pre || {})) if (x.changes >= 2 && st?.[ch]) { delete st[ch]; ambient.add(ch); } // a loop, not the trigger
+    perTarget.push({ stats: st, cls: classify(st) });
+  }
   const vtFrames = data.frames.filter((f) => f.t >= tT && f.vt);
   const vt = vtFrames.length ? { frames: vtFrames.length, moves: new Set(vtFrames.map((f) => f.vt.move)).size > 3, fades: new Set(vtFrames.map((f) => f.vt.fade)).size > 3, span: vtFrames.at(-1).t - vtFrames[0].t } : null;
   const anims = data.anims.filter((x) => x.firstSeen >= tT - 20 || entry.trigger === 'load');
@@ -643,18 +663,24 @@ function analyse(entry, data) {
   const observed = spans.length ? Math.max(...spans) : textSpans.length ? Math.max(...textSpans) : vt ? Math.round(vt.span) : null;
   const starts = perTarget.map((p) => { const ch = dominant(p.stats); return ch ? p.stats[ch].firstFrameBefore : null; });
   const gaps = starts.filter((x) => x != null).map((x, i, arr) => (i ? x - arr[i - 1] : null)).filter((x) => x != null);
-  const stagger = gaps.length ? Math.round(gaps.reduce((s, x) => s + x, 0) / gaps.length) : null;
+  // stagger: the declared per-element delays when the animations are CSS/WAAPI, else the sampled start times
+  const dl = (data.delays || []).filter((x) => x != null);
+  const dGaps = dl.length > 1 ? [...dl].sort((x, y) => x - y).map((x, i, arr) => (i ? x - arr[i - 1] : null)).filter((x) => x != null) : [];
+  const stagger = dGaps.length && dGaps.some((x) => x > 0) ? Math.round(dGaps.reduce((s, x) => s + x, 0) / dGaps.length) : gaps.length ? Math.round(gaps.reduce((s, x) => s + x, 0) / gaps.length) : null;
+  const staggerSource = dGaps.length && dGaps.some((x) => x > 0) ? 'declared' : gaps.length ? 'sampled' : null;
   const changedProps = new Set();
   for (const p of perTarget) for (const [ch, s] of Object.entries(p.stats || {})) if (s.changes >= 3 || (s.changes && ch === 'text')) changedProps.add({ tx: 'transform', ty: 'transform', sx: 'transform', sy: 'transform', rot: 'transform', op: 'opacity', ow: 'width', oh: 'height', ol: 'left/margin', ot: 'top/margin', bg: 'background-color', color: 'color', shadow: 'box-shadow', filter: 'filter', clip: 'clip-path', outline: 'outline', text: 'text' }[ch]);
   for (const x of anims) if (!x.pseudo.startsWith('::view-transition')) for (const pr of x.props) changedProps.add(pr); // a view-transition group always animates width/height
   const ch0 = dominant(perTarget[0]?.stats);
   const fin = data.frames.at(-1)?.v?.[0] || null;
   const scrollLinked = anims.some((x) => x.timeline !== 'document');
-  return { tT: Math.round(tT), state, moves, fades, layout, vt, declared, observed, stagger, scrollLinked, props: [...changedProps], anims: anims.slice(0, 8), dominant: ch0,
+  const inViewAtStart = entry.trigger === 'scroll' && (data.inView || []).some(Boolean);
+  return { tT: Math.round(tT), state, moves, fades, layout, vt, declared, observed, stagger, staggerSource, scrollLinked, inViewAtStart, props: [...changedProps], anims: anims.slice(0, 8), dominant: ch0,
     final: fin && { op: fin.op, vis: fin.vis, tx: fin.tx, ty: fin.ty, sx: fin.sx, text: fin.text }, targets: data.n, perTarget: perTarget.map((p) => p.cls.state),
-    interrupt: entry.interrupt ? interruptInfo(entry, data, ch0) : null, frames: data.frames.length };
+    interrupt: entry.interrupt ? interruptInfo(entry, data, ch0, state) : null, frames: data.frames.length, ambient: [...ambient] };
 }
-function interruptInfo(entry, data, ch) {
+function interruptInfo(entry, data, ch, state) {
+  if (state !== 'animates') return { result: 'n/a (nothing animates)' };
   const want = entry.trigger === 'press' ? 'pointerdown' : entry.trigger === 'hover' ? 'mouseover' : 'click';
   const evs = data.inputs.filter((e) => e.type === want || (entry.trigger === 'press' && e.type === 'click'));
   if (entry.trigger === 'click') {
@@ -671,7 +697,7 @@ function interruptInfo(entry, data, ch) {
 function judge(entry, n, r) {
   const problems = [];
   if (n.error) return { pass: false, problems: [`normal run: ${n.error}`] };
-  if (n.state === 'none') problems.push('static: nothing changed after the trigger');
+  if (n.state === 'none') problems.push(`static: nothing changed after the trigger${n.inViewAtStart ? ' (the target was already in view before the scroll: it may have played at load)' : ''}`);
   else if (n.state === 'instant') problems.push('static: changed in one frame (no animation)');
   const dur = resolveDuration(entry.duration);
   const durCheck = n.scrollLinked ? null : n.declared ?? n.observed;
@@ -704,7 +730,7 @@ function judge(entry, n, r) {
   let reduced = null;
   if (r && !r.error) {
     const outcome = r.state === 'none' ? 'nothing changes' : r.state === 'instant' ? 'stops (instant)' : r.moves ? 'still moves' : 'substituted (fade/colour)';
-    const lost = n.final && r.final && ((n.final.vis && !r.final.vis) || (n.final.op > 0.5 && r.final.op < 0.5) || (n.final.text && r.final.text !== n.final.text));
+    const lost = n.final && r.final && ((n.final.vis && !r.final.vis) || (n.final.vis && r.final.vis && n.final.op > 0.5 && r.final.op < 0.5) || (n.final.text && r.final.text !== n.final.text));
     const exp = String(entry.reduced || '').toLowerCase();
     let ok = true;
     if (lost) { ok = false; problems.push('reduced motion: the content ends in a different state (hidden or unfinished)'); }
@@ -734,6 +760,7 @@ if (spec) {
       n.fit = fitEasing(dn.frames, 0, n.dominant, cands);
     }
     const j = judge(entry, n, r);
+    if (a.dump) { n.frames = dn?.frames; r.frames = dr?.frames; n.inputs = dn?.inputs; }
     const row = { id: entry.id, trigger: entry.trigger, on: entry.on, target: entry.target, spec: { properties: entry.properties, duration: entry.duration, easing: entry.easing, reduced: entry.reduced, stagger: entry.stagger },
       normal: n, reduce: r, ...j };
     report.spec.push(row);
@@ -778,7 +805,7 @@ if (spec) {
     const n = x.normal || {}; const r = x.reduced;
     const d = n.declared != null ? `${n.declared}ms` : n.observed != null ? `~${n.observed}ms` : '—';
     const e = x.easing?.declared ? x.easing.declared.join(' / ') : x.easing?.estimated ? `≈ ${x.easing.estimated}` : '—';
-    md.push(`| ${esc(x.id)} | ${esc(x.trigger)} | ${esc(n.error || n.state)}${n.vt ? ' (view transition)' : ''}${n.stagger ? `, stagger ${n.stagger}ms` : ''} | ${d} (spec ${esc(x.spec?.duration ?? '—')}) | ${esc(e)} | ${esc(r ? `${r.expected} → ${r.outcome}` : '—')} | ${x.pass ? '✓' : `✗ ${esc(x.problems.join('; '))}`} |`);
+    md.push(`| ${esc(x.id)} | ${esc(x.trigger)} | ${esc(n.error || n.state)}${n.vt ? ' (view transition)' : ''}${x.spec?.stagger && n.stagger != null ? `, stagger ${n.stagger}ms (${n.staggerSource})` : ''} | ${d} (spec ${esc(x.spec?.duration ?? '—')}) | ${esc(e)} | ${esc(r ? `${r.expected} → ${r.outcome}` : '—')} | ${x.pass ? '✓' : `✗ ${esc(x.problems.join('; '))}`} |`);
   }
   md.push('');
   const fl = report.spec.filter((x) => x.filmstrip); if (fl.length) md.push(`Filmstrips: ${fl.map((x) => `\`${x.filmstrip}\``).join(', ')}`, '');
@@ -807,7 +834,7 @@ if (report.audit) {
 md.push('## Limits', '', '- Computed styles only: canvas, WebGL, Lottie and Rive frames are invisible (their `<canvas>` is one element). JS libraries that animate inline styles (GSAP, anime.js, React Spring) are sampled, but their easing is estimated from samples, not declared.',
   '- Timings are headless Chromium on this machine; judge feel on a real device (motion.md §7). A hover check needs a fine pointer; `--device phone` skips it.', '');
 await writeFile(path.join(outDir, 'motion.md'), md.join('\n'));
-const strip = (k, v) => (k === 'frames' && Array.isArray(v) ? undefined : v);
+const strip = (k, v) => (k === 'frames' && Array.isArray(v) && !a.dump ? undefined : v);
 await writeFile(path.join(outDir, 'motion.json'), JSON.stringify(report, strip, 1));
 const failed = report.spec.filter((x) => !x.pass).length;
 console.log(`${path.join(outDir, 'motion.md')}${spec ? ` — spec ${report.spec.length - failed}/${report.spec.length} pass` : ''}; ${flags.length} flag(s)`);

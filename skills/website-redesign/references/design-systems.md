@@ -43,7 +43,7 @@ Every mature system uses three tiers under different names — primitive → sem
 
 ## 3. Type sets per surface
 
-- **Productive** (product UI): 14 px base (13 in dense tools), fixed sizes, a gentle ratio of 1.125–1.2, role names — heading, title, body, label, detail, metric — and code only when the product's users read code (commitment 5 in `SKILL.md`). Carbon: "fixed type styles are a must" inside containers. Material 3 splits its scale the same way: display and headline roles for expressive moments; title, body and label roles for the interface. Atlassian gives dashboard numbers their own `font.metric` style.
+- **Productive** (product UI): 14 px base (13 in dense tools), fixed sizes, a gentle ratio of 1.125–1.2, role names — page title, section heading, small heading, body, label and caption, metric (the table below) — and code only when the product's users read code (commitment 5 in `SKILL.md`). Carbon: "fixed type styles are a must" inside containers. Material 3 splits its scale the same way: display and headline roles for expressive moments; title, body and label roles for the interface. Atlassian gives dashboard numbers their own `font.metric` style.
 - **Expressive** (marketing, editorial): 16 px base or more, fluid headings (`clamp()`), a steeper ratio (1.25–1.5+), a display face with its own voice. Carbon: "Do not use these styles inside a container".
 - One token system, two sets. A scale stretched over both is wrong for both.
 - **Weight is hierarchy**: bold for titles and button labels; medium beside 1.5 px-stroke icons; regular for anything the user typed (Spectrum 2).

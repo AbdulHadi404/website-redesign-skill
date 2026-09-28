@@ -3,7 +3,7 @@
 //
 //   npm install --legacy-peer-deps --ignore-scripts     (once; versions are pinned in package.json)
 //   NODE_USE_ENV_PROXY=1 node run.mjs                   all steps
-//   node run.mjs --only size,a11y                      a subset: meta, licence, activity, size, a11y
+//   node run.mjs --only size,a11y                      a subset: meta, licence, activity, size, theming, a11y
 //   node run.mjs --runs 5                              repetitions per a11y demo (median of timings; pass/fail must agree)
 //
 // Steps
@@ -11,6 +11,7 @@
 //   licence   the LICENSE file shipped in each installed package, classified from its text (not the package.json field)
 //   activity  GitHub over git (treeless, shallow since 2025-09-28): commits, human authors, top author share
 //   size      esbuild minimal usage per candidate (React/Vue/Svelte external), gzip -9; initial vs lazy JS, CSS, WASM
+//   theming   CSS files the package ships and the custom properties they define (how it takes a design system)
 //   a11y      demos/*.jsx built with React and driven by Playwright: keyboard operation and the accessibility tree
 //
 // Network: meta and activity need the npm registry and github.com; size, licence and a11y run offline.
@@ -22,10 +23,11 @@ import { fileURLToPath } from 'node:url';
 import { categories, candidates } from './catalogue.mjs';
 import { registry, licence, activity, readmeNotice, CUTOFF } from './lib/meta.mjs';
 import { measure } from './lib/size.mjs';
+import { theming } from './lib/theming.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
-const only = argv.includes('--only') ? argv[argv.indexOf('--only') + 1].split(',') : ['meta', 'licence', 'activity', 'size', 'a11y'];
+const only = argv.includes('--only') ? argv[argv.indexOf('--only') + 1].split(',') : ['meta', 'licence', 'activity', 'size', 'theming', 'a11y'];
 const RUNS = argv.includes('--runs') ? +argv[argv.indexOf('--runs') + 1] : 5;
 const WORK = process.env.S4_WORK || path.join(os.tmpdir(), 's2-S4');
 const resultsFile = path.join(here, 'results.json');
@@ -80,6 +82,15 @@ if (only.includes('size')) {
     delete r.packageList;
     results.candidates[c.id].size = r;
     console.log(' ', c.id.padEnd(24), r.ok ? `initial ${(r.initialGz / 1024).toFixed(1)} KB gz · all JS ${(r.jsGz / 1024).toFixed(1)} · css ${(r.cssGz / 1024).toFixed(1)} · assets ${(r.assetsGz / 1024).toFixed(1)} · ${r.packages} pkgs` : 'ERR ' + r.error);
+  }
+}
+
+if (only.includes('theming')) {
+  console.log('== theming surface (shipped CSS)');
+  for (const c of candidates) {
+    const t = [];
+    for (const p of c.pkgs) { const r = await theming(here, p); if (r && r.cssFiles) t.push({ pkg: p, ...r }); }
+    results.candidates[c.id].theming = t;
   }
 }
 

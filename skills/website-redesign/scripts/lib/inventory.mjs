@@ -88,6 +88,11 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
 
   const sizes = new Map(), families = new Map(), weights = new Map(), textColours = new Map();
   const contrast = [], unknownGround = [], gradientText = [], emoji = [], smallText = [], caps = [], cliches = new Set(), statClaims = [];
+  // Monospace faces: whole words, so display faces such as Monoton or Monotype Corsiva are not taken for code fonts.
+  const MONO = /\bmono\b|mono(space|\s)|\bcode\b|courier|consolas|menlo|monaco|sfmono|inconsolata|iosevka|anonymous pro|monaspace|lucida console|lucida sans typewriter|nanum gothic coding|pragmata|fixedsys|^hack$/i;
+  const families1 = (stack) => stack.split(',').map((f) => f.replace(/["']/g, '').trim()).filter(Boolean);
+  const monoCand = []; // { el, text, stack, tag } whose rendered face is resolved once `probe` exists (below)
+  const srOnly = (el, box = el.getBoundingClientRect()) => { const c = getComputedStyle(el); return (box.width <= 2 && box.height <= 2) || c.clip === 'rect(0px, 0px, 0px, 0px)' || /inset\(50%\)/.test(c.clipPath); };
   let totalChars = 0;
   for (const [el, raw] of textEls) {
     if (!visible(el)) continue;
@@ -100,7 +105,11 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     const fam = cs.fontFamily.split(',')[0].replace(/["']/g, '').trim();
     families.set(fam, (families.get(fam) || 0) + n);
     weights.set(cs.fontWeight, (weights.get(cs.fontWeight) || 0) + n);
-    if (px < 12 && n > 2) smallText.push({ selector: sel(el), px, text: short(text, 40) });
+    if (!srOnly(el)) monoCand.push({ el, text, stack: cs.fontFamily, tag: el.tagName.toLowerCase() });
+    // The product-UI caps rule allows a one- or two-word uppercase label at 11px (a status, a column head); anything
+    // else under 12px is reported.
+    const capsLabel = px >= 11 && (cs.textTransform === 'uppercase' || (text === text.toUpperCase() && text !== text.toLowerCase())) && text.split(' ').length <= 2;
+    if (px < 12 && n > 2 && !capsLabel) smallText.push({ selector: sel(el), px, text: short(text, 40) });
     if (cs.textTransform === 'uppercase' && n > 24) caps.push({ selector: sel(el), text: short(text, 40), tracking: cs.letterSpacing });
     if (EMOJI.test(text) && (el.closest('h1,h2,h3,h4,button,a,[role=button],nav') || n <= 3)) emoji.push({ selector: sel(el), text: short(text, 40) });
     for (const m of text.matchAll(CLICHES)) cliches.add(m[0].toLowerCase());
@@ -358,6 +367,45 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   const GENERIC = /^(serif|sans-serif|monospace|cursive|fantasy|system-ui|ui-sans-serif|ui-serif|ui-monospace|ui-rounded|emoji|math|fangsong|-apple-system|blinkmacsystemfont|inherit|initial)$/i;
   const unavailableFamilies = [...families.keys()].filter((f) => !GENERIC.test(f) && families.get(f) / Math.max(totalChars, 1) >= 0.02 && probe(f));
 
+  // ---- monospace text: the face actually rendered, form-control values and placeholders included -------------
+  // The first family decides, unless it is unavailable: then the stack falls through (the same width probe) to the
+  // next family that renders, and a fallback to a monospace face counts as monospace.
+  const probed = new Map();
+  const missing = (f) => { const k = f.toLowerCase(); if (!probed.has(k)) probed.set(k, probe(f)); return probed.get(k); };
+  const monoFace = (stack) => {
+    const fams = families1(stack);
+    for (let i = 0; i < fams.length; i++) {
+      const f = fams[i];
+      const generic = GENERIC.test(f);
+      if (generic && !/^(inherit|initial)$/i.test(f)) return /mono/i.test(f) ? (i ? `${fams[0]} → ${f}` : f) : null;
+      if (!generic && missing(f)) continue;
+      return MONO.test(f) ? (i ? `${fams[0]} → ${f}` : f) : null;
+    }
+    return null;
+  };
+  // Only stacks that name a monospace face anywhere are worth probing.
+  const monoItems = [];
+  for (const c of monoCand) {
+    if (!/mono|code|courier|consolas|menlo|monaco|inconsolata|iosevka|anonymous|monaspace|lucida|coding|pragmata|fixedsys|hack/i.test(c.stack)) continue;
+    const family = monoFace(c.stack);
+    if (family) monoItems.push({ selector: sel(c.el), text: short(c.text, 40), family, tag: c.tag, code: !!c.el.closest('kbd, code, samp, pre') });
+  }
+  const NO_TEXT = /^(hidden|checkbox|radio|range|color|file|image|reset|submit|button)$/i;
+  for (const el of document.querySelectorAll('input, textarea, select')) {
+    if ((el.tagName === 'INPUT' && NO_TEXT.test(el.type)) || !visible(el) || srOnly(el)) continue;
+    const value = el.tagName === 'SELECT' ? (el.selectedOptions?.[0]?.text || '') : el.value || '';
+    const ph = !value.trim() && (el.getAttribute('placeholder') || '').trim();
+    if (!value.trim() && !ph) continue;
+    const stack = ph ? getComputedStyle(el, '::placeholder').fontFamily : getComputedStyle(el).fontFamily;
+    const family = monoFace(stack);
+    // A password is named, never quoted.
+    const text = ph ? `placeholder: ${ph}` : el.type === 'password' ? '(password)' : value;
+    if (family) monoItems.push({ selector: sel(el), text: short(text, 40), family, tag: el.tagName.toLowerCase(), code: false });
+  }
+  // Browser defaults first (code, kbd, samp and pre render monospace unless the page sets them), then the rest.
+  monoItems.sort((p, q) => q.code - p.code);
+  const mono = { count: monoItems.length, items: monoItems.slice(0, 10).map(({ code, ...m }) => m) };
+
   // ---- system inventory: surfaces, radii, shadows, spacing ---------------
   const radii = new Map(), shadows = new Map(), spacing = new Map(), gradients = [];
   let cards = 0, pills = 0, blur = 0, iconTiles = 0, buttonsLike = 0;
@@ -519,23 +567,51 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       if (ta === 'end') return rtl ? 'left' : 'right';
       return rtl ? 'right' : 'left'; // start, justify, match-parent
     };
-    // Judge alignment from paint, not from text-align: a stacked phone table whose cell is display:flex with
-    // justify-content:space-between (label from ::before) paints the number flush right under text-align:left.
-    // The text's rendered edges (a Range per text node; pseudo-element labels are not in the DOM) against the
-    // cell's content box; text-align decides only when the text fills the box and paint cannot tell.
-    const paintAlign = (cell) => {
+    // Judge alignment from paint, not from text-align (a stacked phone cell that is display:flex with
+    // justify-content:space-between paints its number flush right under text-align:left), and judge the column, not
+    // the cell: place values line up when the digits' right edges coincide from row to row, whatever sits between
+    // them and the cell's edge (a pill's padding, a trailing icon, a ::after unit, a padded link or inner box).
+    // Only text nodes that hold digits are measured (a Range each), so a ::before label and a currency sign set in
+    // a box of its own (accounting style) do not count. Offsets are taken from each cell's content box.
+    // Right edges constant and left edges ragged = right; the reverse = left; both ragged about one centre = centre.
+    // When every value paints the same width both edges coincide and paint cannot tell: the text-align of the box
+    // that lays out the digits decides, or, in a flex or grid cell (where text-align does not place the items), the
+    // side with the clearly larger gap.
+    const DIGIT = /[\d٠-٩۰-۹]/;
+    const digitBox = (cell) => {
       const cs = getComputedStyle(cell), b = cell.getBoundingClientRect();
       const L = b.left + parseFloat(cs.borderLeftWidth) + parseFloat(cs.paddingLeft), R = b.right - parseFloat(cs.borderRightWidth) - parseFloat(cs.paddingRight);
-      let l = Infinity, r = -Infinity;
+      let l = Infinity, r = -Infinity, flexy = /flex|grid/.test(cs.display), laidOut = null;
       const tw = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT), rg = document.createRange();
       for (let n = tw.nextNode(); n; n = tw.nextNode()) {
-        if (!n.data.trim()) continue;
+        if (!DIGIT.test(n.data) || !n.parentElement) continue;
+        const pb = n.parentElement.getBoundingClientRect();
+        if (pb.width <= 2 || srOnly(n.parentElement, pb)) continue; // visually hidden text is not painted in the cell
         rg.selectNodeContents(n);
-        for (const q of rg.getClientRects()) if (q.width > 1 && q.height > 1) { l = Math.min(l, q.left); r = Math.max(r, q.right); }
+        let hit = false;
+        for (const q of rg.getClientRects()) if (q.width > 1 && q.height > 1 && q.right > b.left && q.left < b.right) { l = Math.min(l, q.left); r = Math.max(r, q.right); hit = true; }
+        if (!hit) continue;
+        for (let e = n.parentElement; e && e !== cell; e = e.parentElement) {
+          const ecs = getComputedStyle(e);
+          if (!laidOut && !/^(inline|contents)$/.test(ecs.display)) laidOut = ecs;
+          if (/flex|grid/.test(ecs.display)) flexy = true;
+        }
       }
-      const gl = l - L, gr = R - r;
-      if (!(r > l) || gl + gr < 4) return align(cs);
-      return Math.abs(gl - gr) <= 2 ? 'center' : gr < gl ? 'right' : 'left';
+      if (!(r > l)) return null;
+      return { gl: l - L, gr: R - r, ta: align(laidOut || cs), flexy };
+    };
+    const fallback = (m) => (m.flexy && m.gl + m.gr >= 4 ? (Math.abs(m.gl - m.gr) <= 2 ? 'center' : m.gr < m.gl ? 'right' : 'left') : m.ta);
+    const columnAlign = (cells) => {
+      const m = cells.map(digitBox).filter(Boolean);
+      if (!m.length) return [...new Set(cells.map((c) => align(getComputedStyle(c))))];
+      if (m.length >= 2) {
+        const spread = (f) => { const v = m.map(f); return Math.max(...v) - Math.min(...v); };
+        const sL = spread((x) => x.gl), sR = spread((x) => x.gr), sC = spread((x) => x.gl - x.gr);
+        if (sR <= 1 && sL > 1) return ['right'];
+        if (sL <= 1 && sR > 1) return ['left'];
+        if (sL > 1 && sR > 1 && sC <= 2) return ['center'];
+      }
+      return [...new Set(m.map(fallback))];
     };
     for (const table of document.querySelectorAll('table, [role=table], [role=grid]')) {
       if (!visible(table)) continue;
@@ -555,7 +631,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
         const head = table.querySelector(`thead th:nth-child(${c + 1}), [role=columnheader]:nth-child(${c + 1})`);
         const name = clean(head?.innerText || '') || `column ${c + 1}`;
         const issues = [];
-        const al = [...new Set(cells.map(paintAlign))];
+        const al = columnAlign(cells.filter((x) => NUM.test(clean(x.innerText || ''))));
         if (!(al.length === 1 && al[0] === 'right')) issues.push(`aligned ${al.join('/')} (numbers align right in both directions)`);
         const fv = cs.fontVariantNumeric + ' ' + cs.fontFeatureSettings;
         if (!/tabular-nums|"tnum"/.test(fv)) issues.push('no tabular-nums');
@@ -724,7 +800,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     title: document.title, lang: document.documentElement.lang || null,
     targets: { total: targets.length, under24: small.filter((s) => !s.spacingException), under24SpacingOk: small.filter((s) => s.spacingException).length, under44, under44List, under48: under48Els.length, under48List: under48Els.slice(0, 6).map((t) => ({ selector: sel(t.el), w: Math.round(t.r.width), h: Math.round(t.r.height), name: short(t.el.getAttribute('aria-label') || t.el.textContent || '', 24) })) },
     fakeControls: fakeControls.slice(0, 15), fakeControlCount: fakeControls.length,
-    clippedText: clippedText.slice(0, 10), clippedCount: clippedText.length, colourOnly: colourOnly.slice(0, 10), colourOnlyCount: colourOnly.length, bareEmpty, unavailableFamilies,
+    clippedText: clippedText.slice(0, 10), clippedCount: clippedText.length, colourOnly: colourOnly.slice(0, 10), colourOnlyCount: colourOnly.length, bareEmpty, unavailableFamilies, mono,
     images,
     system: {
       radii: top(radii, 10).map(([r, n]) => ({ radius: r, count: n })), shadowKinds: shadows.size, shadowTop: top(shadows, 4).map(([s, n]) => ({ shadow: s, count: n })),

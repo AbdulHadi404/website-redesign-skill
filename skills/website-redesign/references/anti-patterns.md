@@ -66,7 +66,7 @@ Symptoms: the palette was chosen from taste rather than sampled from the logo; a
 | An accented word in a headline (italic, colour, face switch) | the brand's voice genuinely uses it, once | weight, size or plain words |
 | Serif display with italic emphasis | the wordmark or brand family is built that way | a face derived from the wordmark's construction |
 | Cream / paper ground | the logo or brand family uses it | a ground derived from the brand's colours |
-| Dark theme | the use scene is dark (night use, media, long screen sessions) — one sentence of physical scene | light, or both themes |
+| Dark theme | the use scene is dark (night use, media) — one sentence of physical scene; an app used all day offers both and follows the OS (`design-theory.md` B8) | light, or both themes |
 | Pill shapes | small controls, tags, filters | a radius scale by role |
 | Cards | independent, actionable objects (a product, a document, a person) | lists, tables, panels divided by space |
 | Hover lift / scale | objects that can be picked up or dragged; `@media (hover: hover)` only | a contrast change |

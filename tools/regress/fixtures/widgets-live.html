@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Live contracts</title>
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; margin: 0; padding: 20px; }
+  section { margin: 0 0 24px; }
+  .toast { position: fixed; right: 16px; bottom: 16px; background: #222; color: #fff; padding: 12px 16px; }
+  [role=alertdialog] { position: fixed; top: 20%; left: 20%; right: 20%; background: #fff; border: 2px solid; padding: 16px; }
+  .error-summary { border: 4px solid #b00; padding: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Live contracts</h1>
+  <p>A paragraph that is on the page before anything is activated, long enough that a wrapper holding it is mostly old text.</p>
+
+  <!-- 1. The new text is the trigger's own description; focus stays on the trigger. Not re-read: fails. -->
+  <section>
+    <label for="code">Voucher code</label>
+    <input id="code" aria-describedby="code-msg"> <span id="code-msg"></span>
+  </section>
+
+  <!-- 2. A silent box appears; focus moves to a new Retry button outside it. Only "Retry" is read: fails. -->
+  <section>
+    <button id="save" type="button">Save</button>
+    <div id="save-err" hidden><h2>Could not save</h2><p>The server did not answer.</p></div>
+    <p><span>A caption that was already beside the retry control.</span> <button id="retry" type="button" hidden>Retry</button></p>
+  </section>
+
+  <!-- 3. A silent box appears; focus moves to a link inside it. Only the link's name is read: fails. -->
+  <section>
+    <button id="pay" type="button">Pay</button>
+    <div id="declined" hidden><h2>Payment declined</h2><p>Your card was declined by the bank. <a id="help" href="#help-text">Get help</a></p></div>
+  </section>
+
+  <!-- 4. A toast that takes focus (accessibility.md §7.4): fails. -->
+  <section>
+    <button id="copy" type="button">Copy link</button>
+    <div id="toast" class="toast" tabindex="-1" hidden>Link copied</div>
+  </section>
+
+  <!-- 5. A blocking error summary, no live region, focus moved to it (§7.6): passes. -->
+  <section>
+    <label for="email">Email address</label> <input id="email" type="email">
+    <span id="email-error" hidden></span>
+    <button id="send" type="button">Send</button>
+    <div id="problem" class="error-summary" tabindex="-1" hidden>
+      <h2>There is a problem</h2>
+      <ul><li><a href="#email">Enter your email address</a></li></ul>
+    </div>
+  </section>
+
+  <!-- 6. Focus moves from the trigger to a field whose new error is its description: passes. -->
+  <section>
+    <label for="phone">Phone</label> <input id="phone" type="tel"> <span id="phone-error" hidden></span>
+    <button id="check-phone" type="button">Check phone</button>
+  </section>
+
+  <!-- 7. An alertdialog: focus on its button, the dialog's name and description are read: passes. -->
+  <section>
+    <button id="del" type="button">Delete file</button>
+    <div role="alertdialog" id="confirm" aria-modal="true" aria-labelledby="cf-title" aria-describedby="cf-text" hidden>
+      <h2 id="cf-title">Could not delete</h2>
+      <p id="cf-text">The file is open on another device.</p>
+      <button id="cf-ok" type="button">OK</button>
+    </div>
+  </section>
+
+  <!-- 8. A radio in a server form: Enter submits it (not tested); Space chooses it and the price is announced. -->
+  <form action="widgets-done.html" method="get">
+    <fieldset><legend>How long?</legend>
+      <input type="radio" id="len6" name="len" value="6"><label for="len6">6 months</label>
+      <input type="radio" id="len12" name="len" value="12"><label for="len12">12 months</label>
+    </fieldset>
+    <p id="price" role="status"></p>
+    <button type="submit">Continue</button>
+  </form>
+
+  <!-- 9. A server-rendered subscribe form: the next page's flash message is not announced (a finding, not a test error). -->
+  <form action="widgets-done.html" method="get">
+    <label for="sub-email">Newsletter email</label> <input id="sub-email" name="em" value="a@example.com">
+    <button id="sub" type="submit">Subscribe</button>
+  </form>
+
+  <!-- 10. A status region that exists before (the control), used with a before step that fails. -->
+  <section>
+    <button id="export" type="button">Export</button>
+    <p id="export-status" role="status"></p>
+  </section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+$('code').addEventListener('keydown', (e) => { if (e.key === 'Enter') { $('code-msg').textContent = 'Voucher codes are 8 characters'; $('code').setAttribute('aria-invalid', 'true'); } });
+$('save').onclick = () => { $('save-err').hidden = false; $('retry').hidden = false; $('retry').focus(); };
+$('pay').onclick = () => { $('declined').hidden = false; $('help').focus(); };
+$('copy').onclick = () => { $('toast').hidden = false; $('toast').focus(); };
+$('send').onclick = () => {
+  $('email-error').textContent = 'Error: Enter your email address'; $('email-error').hidden = false;
+  $('email').setAttribute('aria-invalid', 'true'); $('email').setAttribute('aria-describedby', 'email-error');
+  $('problem').hidden = false; $('problem').focus();
+};
+$('check-phone').onclick = () => {
+  $('phone-error').textContent = 'Enter a phone number, like 01632 960 001'; $('phone-error').hidden = false;
+  $('phone').setAttribute('aria-invalid', 'true'); $('phone').setAttribute('aria-describedby', 'phone-error'); $('phone').focus();
+};
+$('del').onclick = () => { $('confirm').hidden = false; $('cf-ok').focus(); };
+$('cf-ok').onclick = () => { $('confirm').hidden = true; $('del').focus(); };
+for (const r of document.querySelectorAll('[name=len]')) r.onchange = () => { $('price').textContent = r.value === '6' ? 'Your permit will cost £70.' : 'Your permit will cost £120.'; };
+$('export').onclick = () => { $('export-status').textContent = 'Export started. We will email the file.'; };
+</script>
+</body>
+</html>

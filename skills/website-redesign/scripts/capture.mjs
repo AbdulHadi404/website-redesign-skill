@@ -24,7 +24,8 @@
  *   --mode m       grow (default) or fullpage — see below
  *   --gpu          ask for hardware WebGL: full Chromium with the GPU blocklist ignored and GPU
  *                  rasterisation on (ANGLE on Windows and macOS); needs a machine with a GPU
- *   --headed       run a visible browser window (needs a display; on a Linux server, xvfb-run)
+ *   --headed       run a visible browser window (needs a display; on a Linux server xvfb-run
+ *                  gives it one, but no GPU)
  *   --chrome path  Chromium binary (or CHROME_PATH)
  *
  * In Git Bash on Windows pass paths without the leading slash or set MSYS_NO_PATHCONV=1 (the scripts warn).
@@ -57,7 +58,10 @@
  * and prints overflow warnings with the offending elements: horizontal
  * overflow (the document is wider than the viewport), and text that runs past
  * the viewport edge where the page clips itself (overflow-x: hidden or clip on
- * html or body), which hides it without making the page any wider.
+ * html or body). With both html and body clipping, the document does not get
+ * any wider, so only the second warning sees the cut. Text a reader can still
+ * reach (the page scrolls sideways to it, or a phone shows the page zoomed
+ * out) is left to the overflow and layout-viewport warnings.
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -232,10 +236,29 @@ try {
         rendererShown = true;
         await printRenderer(context);
       }
+      // Text past the viewport edge with nothing but html/body (or nothing) clipping it. What the reader can still
+      // reach is not cut: without a page-level clip the page scrolls sideways to it (the overflow warning names it),
+      // and a phone whose layout viewport widened shows it zoomed out. Past the start edge (left in a left-to-right
+      // page) nothing scrolls, clip or not.
+      const edge = over.cutAtEdge?.length ? await page.evaluate(() => ({
+        clip: [document.documentElement, document.body].some((e) => e && getComputedStyle(e).overflowX !== 'visible'),
+        rtl: getComputedStyle(document.body || document.documentElement).direction === 'rtl',
+      })).catch(() => ({ clip: true, rtl: false })) : { clip: false, rtl: false };
+      const reach = edge.clip ? Math.max(0, layoutW - over.viewport) : Math.max(0, over.by); // px past the end edge still in reach
+      const past = (over.cutAtEdge || []).map((c) => {
+        const side = c.edge === 'left' || !(c.right > over.viewport + 1) ? 'left' : 'right';
+        const px = Math.abs(c.past ?? (side === 'right' ? c.right - over.viewport : NaN)); // px past that edge
+        return { ...c, side, px: px > 0 ? px : null };
+      });
+      // Start edge: always cut. End edge: cut when it lies beyond what the reader can reach.
+      const isCut = (c) => (c.side === 'right') === edge.rtl || (c.px == null ? edge.clip && reach === 0 : c.px > reach + 1);
+      const cut = past.filter(isCut);
+      // Text that overflows its own box widens the page without any element box doing so: name it there.
+      const culprits = over.culprits.length ? over.culprits : past.filter((c) => !isCut(c));
       const note = [`${fullH}px tall`, pinned ? `${pinned} viewport-height elements pinned` : null,
         mobile && layoutW > width ? `⚠ layout viewport widened to ${layoutW}px — phones show this page zoomed out` : null,
-        over.overflow ? `⚠ horizontal overflow by ${over.by}px: ${over.culprits.map((c) => c.selector).join(', ')}` : null,
-        over.cutAtEdge?.length ? `⚠ text past the viewport under a page-level clip: ${over.cutAtEdge.map((c) => `${c.selector} (${Math.round(c.past ?? c.right - over.viewport)}px)`).join(', ')}` : null,
+        over.overflow ? `⚠ horizontal overflow by ${over.by}px: ${culprits.map((c) => c.selector).join(', ')}` : null,
+        cut.length ? `⚠ text past the viewport ${edge.clip ? 'under a page-level clip' : 'where no scroll reaches it'}: ${cut.map((c) => `${c.selector} (${c.px == null ? `${c.side} edge` : `${Math.round(c.px)}px${c.side === 'left' ? ' left' : ''}`})`).join(', ')}` : null,
         flat?.length ? `⚠ ${flat.length} image(s) painted flat (${flat.slice(0, 3).join(', ')}) — either something on the page covers them, or the capture failed to rasterise them: check in a browser, or retry with --mode ${mode === 'grow' ? 'fullpage' : 'grow'}` : null,
         variants.length ? `variants: ${variants.join(', ')}` : null].filter(Boolean).join(' · ');
       console.log(`${stem}.png  (${note})`);

@@ -48,7 +48,7 @@ For each top task, walk it in the running product, signed in as the role that do
 
 - **What the family already owns**: a display face used across the parent and every product is a documented brand asset, except a monospace face, which is not inherited unless this audience reads code (commitment 5 in `SKILL.md`). The mark's construction is one too. Those survive unless the user says the identity itself is the problem.
 - **Where this product must differ**: a sibling is not a competitor — *the same house, a different room*.
-- **What a productive route takes**: the brand layer only — mark, colour roles, the display face for one job, status vocabulary, tone — never the site's type scale, layouts or hero imagery (`app-ui.md` §1). The family test compares brand layers, not layouts: "match the site" never means "replicate the site".
+- **What a productive route takes**: the brand layer only — mark, colour roles, the display face for one job, status vocabulary, tone — never the site's type scale, layouts or hero imagery (`app-ui.md` §1). The seam test (`art-direction.md` §5) compares brand layers, not layouts: "match the site" never means "replicate the site".
 
 A redesign drawn without this step produces a good-looking orphan.
 
