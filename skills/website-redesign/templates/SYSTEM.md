@@ -1,6 +1,6 @@
 # <Product> — system
 
-For product surfaces (apps, dashboards, account areas, admin). Written in Phase 4, next to `DESIGN.md`. Order of documents: `PRODUCT.md` (when there is one) → `DESIGN.md` → `SYSTEM.md`; this one holds how components carry out the decisions above it, so refer, don't repeat. Short imperatives, numbers where they exist. The component library already in the repo is the starting point — this document restyles and completes it; it does not replace it (`design-systems.md`).
+For product surfaces (apps, dashboards, account areas, admin). Written in Phase 4, next to `DESIGN.md`. Order of documents: `PRODUCT.md` (when there is one) → `DESIGN.md` → `SYSTEM.md`; this one holds how components carry out the decisions above it, so refer, don't repeat. Short imperatives, numbers where they exist. The component library already in the repo is the starting point — this document restyles and completes it; it does not replace it (`design-systems.md`). For a small service (a start page and one flow), fill only the sections with a component decision of their own — usually forms and errors, focus, targets and the one table — or fold them into `DESIGN.md` as a "System" section; do not restate `DESIGN.md`.
 
 ## Foundations
 

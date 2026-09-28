@@ -4,7 +4,7 @@ Read before anything else. When the context is thin — no site, a brand that li
 
 ## 1. Classify every route
 
-Most repositories hold more than one kind of surface — a marketing site and an app, a storefront and an account area, docs and a dashboard. Classify **per route or route group**, not per repo. One company, two philosophies is normal: Twenty CRM's marketing site sets body at 16–18 px with display up to 120 px and four expressive families; its app uses a 13 px root, one family, a 24 px maximum and 32 px table rows — and the marketing site renders its product mock-ups *at the app's 13 px using the app's real tokens*.
+Most repositories hold more than one kind of surface — a marketing site and an app, a storefront and an account area, docs and a dashboard. Classify **per route or route group**, not per repo, and by the job the route does for the people who use it, not by how it is built today: a public-service start page dressed as a marketing hero is a service page, and the hero is part of what the redesign fixes. One company, two philosophies is normal: Twenty CRM's marketing site sets body at 16–18 px with display up to 120 px and four expressive families; its app uses a 13 px root, one family, a 24 px maximum and 32 px table rows — and the marketing site renders its product mock-ups *at the app's 13 px using the app's real tokens*.
 
 **How to tell a visited route from a used one**
 

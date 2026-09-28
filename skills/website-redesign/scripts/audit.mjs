@@ -251,9 +251,15 @@ try {
         });
         axeViews++;
         for (const v of axe) {
-          const e = byRule.get(v.id) || { id: v.id, impact: v.impact, help: v.help, experimental: v.experimental, views: [], nodes: [] };
+          const e = byRule.get(v.id) || { id: v.id, impact: v.impact, help: v.help, experimental: v.experimental, views: [], nodes: new Map() };
           e.views.push(view);
-          for (const n of v.nodes) if (e.nodes.length < 5) e.nodes.push({ at: view, ...n });
+          // One entry per node and reason, with the first view it was seen in: the same footer failing in eight views
+          // is one line, so five lines show five different nodes.
+          for (const n of v.nodes) {
+            const k = `${n.target}\n${n.summary}`;
+            if (e.nodes.has(k)) e.nodes.get(k).more++;
+            else if (e.nodes.size < 50) e.nodes.set(k, { at: view, ...n, more: 0 });
+          }
           byRule.set(v.id, e);
         }
       }
@@ -417,7 +423,8 @@ if (axePath) {
   if (!rules.length) md(`No violations in ${axeViews} view${axeViews === 1 ? '' : 's'}.`);
   for (const r of rules) {
     md(`- [${r.impact || 'n/a'}] ${r.id} — ${r.help} (${r.views.length} view${r.views.length === 1 ? '' : 's'})${r.experimental ? ' — experimental rule, review each' : ''}`);
-    for (const n of r.nodes) md(`  - ${n.at}: \`${n.target}\`${n.summary ? ` — ${n.summary}` : ''}`);
+    for (const n of [...r.nodes.values()].slice(0, 5)) md(`  - ${n.at}${n.more ? ` (+${n.more} more view${n.more === 1 ? '' : 's'})` : ''}: \`${n.target}\`${n.summary ? ` — ${n.summary}` : ''}`);
+    if (r.nodes.size > 5) md(`  - … ${r.nodes.size - 5}${r.nodes.size >= 50 ? '+' : ''} more node${r.nodes.size - 5 === 1 ? '' : 's'} (each view's JSON has them all)`);
   }
   md();
 }

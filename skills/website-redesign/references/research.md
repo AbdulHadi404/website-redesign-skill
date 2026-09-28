@@ -9,7 +9,7 @@ Name the two or three hardest problems the audit found, then choose references t
 - "Show a complex product simply" · "build trust without customer logos" · "make a 40-column table scannable" · "make a first-time form feel short" · "sell a service with no UI" · "make one screen serve experts and first-timers".
 - Interaction problems: "configure a made-to-order product" · "quote before checkout" · "book against finite capacity" · "personalise a template".
 
-Aim for 4–8 references:
+Aim for 4–8 references — fewer when one canonical system answers the problem (the GOV.UK Design System for a UK public-service form): then that system, read from its source, plus one or two contrasts. Never pad the count with references recalled rather than looked at:
 
 - The reference the user named, if any — a quality bar, never a template.
 - Two or three direct competitors — in the same city or niche for a local business, noting their price bands — or the closest adjacent category (see what the category expects — Jakob's law — and where everyone looks the same).
