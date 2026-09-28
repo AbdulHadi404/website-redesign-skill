@@ -4,7 +4,7 @@ You cannot judge a redesign from source. Every conclusion about how the product 
 
 ## Capturing reliably
 
-Run the project with its own dev server (or a production build for routes with heavy client bundles), then:
+Prefer a production build served by the project's preview server; a dev server reloads while it optimises dependencies, injects its own toolbar, and serves unminified bundles. The scripts survive dev servers (they wait out reloads and hide known dev toolbars), but measure performance only on a build. Then:
 
 ```bash
 node scripts/capture.mjs --base http://localhost:3000 --paths / /pricing /app \
@@ -74,7 +74,7 @@ Full-page captures are the wrong instrument for illustration: at page scale a tr
 
 ## Rendering traps seen repeatedly
 
-- Dev servers may serve a heavy client bundle (an embedded CMS, a demo) blank on first load while dependencies pre-bundle; verify such routes on a production build.
+- Dev servers may serve a heavy client bundle (an embedded CMS, a demo) blank on first load while dependencies pre-bundle, and Vite-based servers reload the page — repeatedly, when link prefetching discovers new routes — during the first visits; verify such routes on a production build. A script report of "the page kept reloading" means exactly this.
 - A `backdrop-filter`, `filter` or `transform` on a sticky header makes it the containing block for fixed descendants — the mobile menu renders inside the 70 px bar. Put the blur on a pseudo-element.
 - `<picture>` wrappers have no height of their own; `height: 100%` on the image falls back to intrinsic size — size the wrapper.
 - Parallax layers without overscan expose the section background at the edges.

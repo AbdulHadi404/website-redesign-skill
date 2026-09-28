@@ -113,7 +113,11 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     // Sample the painted ground under the middle of the element's first line box.
     const range = document.createRange();
     range.selectNodeContents(el);
-    const box = [...range.getClientRects()].find((r) => r.width > 1 && r.height > 1) || el.getBoundingClientRect();
+    const firstBox = () => [...range.getClientRects()].find((r) => r.width > 1 && r.height > 1) || el.getBoundingClientRect();
+    let box = firstBox();
+    // elementsFromPoint only sees the viewport: bring text below a capped viewport into view first
+    // (instant, so a CSS scroll-behavior: smooth does not leave the sample in mid-scroll).
+    if (box.top >= innerHeight || box.bottom <= 0) { scrollTo({ top: scrollY + box.top - innerHeight / 2, behavior: 'instant' }); box = firstBox(); }
     const cx = Math.min(Math.max(box.left + Math.min(box.width / 2, 20), 1), innerWidth - 1);
     const cy = Math.min(Math.max(box.top + box.height / 2, 1), innerHeight - 1);
     const stack = document.elementsFromPoint(cx, cy);
@@ -172,6 +176,8 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     skipLink: !!firstFocusable && firstFocusable.tagName === 'A' && /^#./.test(firstFocusable.getAttribute('href') || ''),
   };
 
+  scrollTo({ top: 0, behavior: 'instant' });
+
   // ---- interactive targets -----------------------------------------------
   const INTERACTIVE = 'a[href], button, input:not([type=hidden]), select, textarea, summary, [role=button], [role=link], [role=tab], [role=checkbox], [role=switch], [role=menuitem], [role=option], [role=radio]';
   const targets = [...document.querySelectorAll(INTERACTIVE)].filter(visible).map((el) => {
@@ -184,10 +190,16 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     if (t.inline) continue;
     const { r } = t;
     if (r.width >= 24 && r.height >= 24) continue;
-    // WCAG 2.5.8 spacing exception: a 24px circle on the target's centre touches no other target.
+    // WCAG 2.5.8 spacing exception: a 24px-diameter circle centred on the target intersects no other
+    // target, and no other undersized target's circle (centres ≥ 24px apart). Touching is allowed.
     const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-    const crowded = targets.some((o) => o !== t && !o.el.contains(t.el) && !t.el.contains(o.el) &&
-      Math.max(o.r.left - cx, 0, cx - o.r.right) ** 2 + Math.max(o.r.top - cy, 0, cy - o.r.bottom) ** 2 < 12 * 12 * 4);
+    const crowded = targets.some((o) => {
+      if (o === t || o.el.contains(t.el) || t.el.contains(o.el)) return false;
+      const toRect = Math.hypot(Math.max(o.r.left - cx, 0, cx - o.r.right), Math.max(o.r.top - cy, 0, cy - o.r.bottom));
+      if (toRect < 12) return true;
+      const undersized = !o.inline && (o.r.width < 24 || o.r.height < 24);
+      return undersized && Math.hypot(o.r.left + o.r.width / 2 - cx, o.r.top + o.r.height / 2 - cy) < 24;
+    });
     small.push({ selector: sel(t.el), w: Math.round(r.width), h: Math.round(r.height), name: short(t.el.getAttribute('aria-label') || t.el.textContent || t.el.getAttribute('title') || '', 30), spacingException: !crowded });
   }
   const under44 = targets.filter((t) => !t.inline && (t.r.width < 44 || t.r.height < 44)).length;
@@ -246,6 +258,9 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     const c = rgba(cs.backgroundColor);
     if (c[3] < 0.5 || hue(c) === null || el.textContent.trim()) continue;
     if (el.getAttribute('aria-label') || el.getAttribute('title') || el.getAttribute('role') === 'img') continue;
+    // Window chrome (the red/amber/green dots on a code or browser mock): a row of 2+ dots with no text.
+    const sibs = el.parentElement ? [...el.parentElement.children] : [];
+    if (sibs.length >= 2 && !el.parentElement.textContent.trim() && sibs.every((d) => !d.children.length && d.getBoundingClientRect().width <= 16)) continue;
     const cell = el.closest('td, li, [role=cell], [role=gridcell]') || el.parentElement;
     const words = cell ? cell.textContent.replace(/\s+/g, '').length : 0;
     if (words === 0) colourOnly.push({ selector: sel(el), colour: hex(c) });

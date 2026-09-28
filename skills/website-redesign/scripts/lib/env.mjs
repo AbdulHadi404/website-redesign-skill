@@ -121,7 +121,59 @@ export function urlFor(base, p) {
  * images eager, finish every running CSS/Web animation, wait for fonts and
  * for every image bitmap to decode.
  */
-export async function settle(page, { settleMs = 600 } = {}) {
+/**
+ * Load a URL and wait until it stops reloading. Dev servers (Vite, Astro, Next)
+ * reload the page — sometimes several times — while they optimise dependencies
+ * discovered on first visit (prefetching links makes it worse); evaluating
+ * during a reload throws "Execution context was destroyed". Only full loads
+ * count: routers that call history.replaceState on scroll fire same-document
+ * navigations constantly and are harmless. Returns the first response (or null).
+ */
+export async function open(page, url, { timeout = 60000, quietMs = 1500, maxWaitMs = 20000 } = {}) {
+  let loads = 0;
+  const onLoad = () => { loads++; };
+  page.on('load', onLoad);
+  const res = await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 })
+    .catch(() => page.goto(url, { waitUntil: 'load', timeout }).catch(() => null));
+  const t0 = Date.now();
+  for (let seen = loads; Date.now() - t0 < maxWaitMs;) {
+    await page.waitForTimeout(quietMs);
+    if (loads === seen) break;
+    seen = loads;
+    await page.waitForLoadState('load', { timeout }).catch(() => {});
+  }
+  page.off('load', onLoad);
+  page.__reloads = loads - 1;
+  // Framework dev toolbars are not part of the site: they sit over the page in captures, take focus
+  // in keyboard walks and fail accessibility checks. Error overlays are left alone — they are findings.
+  page.__devOverlays = await page.evaluate((sel) => {
+    const found = [...document.querySelectorAll(sel)].map((e) => e.tagName.toLowerCase());
+    document.querySelectorAll(sel).forEach((e) => e.remove());
+    const s = document.createElement('style'); s.textContent = `${sel} { display: none !important; }`; document.head?.append(s);
+    return found;
+  }, DEV_TOOLBARS).catch(() => []);
+  return res;
+}
+
+export const DEV_TOOLBARS = 'astro-dev-toolbar, astro-dev-overlay, nextjs-portal, #__nuxt-devtools-container, vercel-live-feedback, #__vconsole';
+
+const destroyed = (e) => /Execution context was destroyed|Cannot find context|navigat/i.test(String(e?.message));
+/** Run fn; if a late reload destroyed the page context, wait for the page to go quiet and try again. */
+export async function retrying(page, fn, tries = 4) {
+  for (let i = 0; ; i++) {
+    try { return await fn(); } catch (e) {
+      if (i >= tries - 1 || !destroyed(e)) throw e;
+      await page.waitForLoadState('load').catch(() => {});
+      await page.waitForTimeout(1500);
+    }
+  }
+}
+
+export async function settle(page, opts = {}) {
+  return retrying(page, () => settleOnce(page, opts));
+}
+
+async function settleOnce(page, { settleMs = 600 } = {}) {
   await page.evaluate(async () => { await document.fonts?.ready; });
   await page.evaluate(async () => {
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

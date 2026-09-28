@@ -23,7 +23,7 @@
  */
 import { readdir, readFile, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { parseArgs, asList, launch, settle, urlFor } from './lib/env.mjs';
+import { parseArgs, asList, launch, open, settle, urlFor } from './lib/env.mjs';
 
 const a = parseArgs();
 if (!a.before || !a.after) { console.error('Usage: --before <old base URL> --after <new base URL> [--paths …|--crawl N] [--source dirs…]'); process.exit(1); }
@@ -57,7 +57,7 @@ function extract() {
 async function load(base, p) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   try {
-    const res = await page.goto(urlFor(base, p), { waitUntil: 'networkidle', timeout: 45000 }).catch(() => page.goto(urlFor(base, p), { waitUntil: 'load', timeout: 60000 }));
+    const res = await open(page, urlFor(base, p));
     const status = res ? res.status() : 0;
     if (status >= 400) return { status };
     await settle(page, { settleMs: 300 });

@@ -47,7 +47,7 @@
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { parseArgs, asList, launch, settle, decodeImages, finishMotion, growToDocument, slugFor, urlFor, importModule } from './lib/env.mjs';
+import { parseArgs, asList, launch, open, settle, decodeImages, finishMotion, growToDocument, slugFor, urlFor, importModule } from './lib/env.mjs';
 import { overflowCulprits } from './lib/probes.mjs';
 
 const a = parseArgs();
@@ -107,6 +107,7 @@ const { browser } = await launch({ chrome: a.chrome });
 try {
   for (const p of paths) {
     for (const width of widths) {
+     try {
       const mobile = width < 768;
       const h0 = Number(a.height) || (mobile ? 844 : 900);
       const context = await browser.newContext({
@@ -121,11 +122,7 @@ try {
       });
       const page = await context.newPage();
       const url = urlFor(base, p);
-      try {
-        await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
-      } catch {
-        await page.goto(url, { waitUntil: 'load', timeout: 60000 });
-      }
+      await open(page, url);
       await settle(page);
       const slug = slugFor(p);
       const stem = path.join(outDir, `${slug}-${width}${label}`);
@@ -171,7 +168,7 @@ try {
         // clipped label or a mark outside its frame looks like texture.
         const hi = await browser.newContext({ viewport: { width, height: h0 }, deviceScaleFactor: 3, isMobile: mobile, hasTouch: mobile });
         const ep = await hi.newPage();
-        await ep.goto(url, { waitUntil: 'load', timeout: 60000 });
+        await open(ep, url);
         await settle(ep);
         for (const sel of selectors) {
           const els = await ep.$$(sel);
@@ -183,6 +180,13 @@ try {
         }
         await hi.close();
       }
+     } catch (e) {
+      for (const c of browser.contexts()) await c.close().catch(() => {});
+      const why = /Execution context was destroyed|navigat/i.test(String(e?.message))
+        ? 'the page kept reloading (a dev server optimising dependencies?) — capture a production build, or open the page once first'
+        : String(e?.message || e).split('\n')[0];
+      console.error(`✗ ${p} at ${width}px not captured: ${why}`);
+     }
     }
   }
 } finally {

@@ -28,7 +28,7 @@
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { launch } from './lib/env.mjs';
+import { launch, open } from './lib/env.mjs';
 
 const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i === -1 ? d : args[i + 1]; };
@@ -77,7 +77,7 @@ const describe = `(el) => {
 async function newPage(opts = {}) {
   const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1, ...opts });
   const page = await ctx.newPage();
-  await page.goto(url, { waitUntil: 'load' });
+  await open(page, url);
   await page.evaluate(() => document.fonts?.ready);
   await page.waitForTimeout(300);
   return page;
@@ -166,7 +166,7 @@ async function newPage(opts = {}) {
     if (el.closest('h1,h2,h3,h4,h5,h6,[role=heading],button,a,label,th,legend,caption,summary')) return false;
     const t = (el.innerText || '').trim(); if (!t || t.length > 60 || el.children.length > 1) return false;
     const cs = getComputedStyle(el); const body = parseFloat(getComputedStyle(document.body).fontSize);
-    return parseFloat(cs.fontSize) >= body * 1.25 && +cs.fontWeight >= 600 && !/^[\d$€£%.,\s▲▼+-]+$/.test(t) && cs.display === 'block';
+    return parseFloat(cs.fontSize) >= body * 1.25 && +cs.fontWeight >= 600 && !/^[~<>]?[\d$€£¥%.,\s▲▼+\-−×xKkMmBb]+$/.test(t) && cs.display === 'block';
   }).map(el => el.innerText.trim()));
   for (const t of fakeHeadings) add('WARN', 'outline', '1.3.1', `Looks like a heading but is not marked up as one: "${t}"`);
   const outline = await page.locator('body').ariaSnapshot();
@@ -208,9 +208,14 @@ async function newPage(opts = {}) {
       // inline exception: a link inside a sentence
       const cs = getComputedStyle(el);
       if (cs.display === 'inline' && el.parentElement && (el.parentElement.innerText || '').trim().length > (el.innerText || '').trim().length + 10) return;
-      // spacing exception: a 24px circle centred on the target must not intersect another target or its circle
+      // spacing exception: a 24px-diameter circle centred on the target must not intersect another target,
+      // nor another undersized target's circle (centres ≥ 24px apart); touching is allowed
       const cx = r.x + r.width / 2, cy = r.y + r.height / 2;
-      const clash = rects.some((o, j) => j !== i && Math.hypot((o.x + o.width / 2) - cx, (o.y + o.height / 2) - cy) < 24);
+      const clash = rects.some((o, j) => {
+        if (j === i || els[j].contains(el) || el.contains(els[j])) return false;
+        if (Math.hypot(Math.max(o.left - cx, 0, cx - o.right), Math.max(o.top - cy, 0, cy - o.bottom)) < 12) return true;
+        return (o.width < 24 || o.height < 24) && Math.hypot((o.x + o.width / 2) - cx, (o.y + o.height / 2) - cy) < 24;
+      });
       if (clash) out.push({ w: Math.round(r.width), h: Math.round(r.height), where: el.outerHTML.slice(0, 80) });
     });
     return out;
@@ -312,6 +317,8 @@ async function newPage(opts = {}) {
 // ---------- 4. keyboard walk ----------
 async function keyboardWalk(page, { shots = true, label = 'default', limit = maxTabs } = {}) {
   const stops = [];
+  // Smooth scrolling would leave each newly focused element mid-scroll, and "off-screen", when it is measured.
+  await page.addStyleTag({ content: 'html, body { scroll-behavior: auto !important; }' });
   await page.mouse.move(0, 0);
   await page.evaluate(() => { document.activeElement?.blur(); window.scrollTo(0, 0); });
   for (let i = 0; i < limit; i++) {
@@ -424,7 +431,7 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
 // ---------- 10. reflow and zoom ----------
 for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
-  const page = await ctx.newPage(); await page.goto(url, { waitUntil: 'load' }); await page.waitForTimeout(300);
+  const page = await ctx.newPage(); await open(page, url); await page.waitForTimeout(300);
   const r = await page.evaluate((describeSrc) => {
     const d = eval(describeSrc);
     const vw = document.documentElement.clientWidth;

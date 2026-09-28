@@ -33,7 +33,7 @@
  */
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { parseArgs, asList, launch, settle, growToDocument, resolveModule, slugFor, urlFor } from './lib/env.mjs';
+import { parseArgs, asList, launch, open, settle, finishMotion, growToDocument, resolveModule, slugFor, urlFor } from './lib/env.mjs';
 import { overflowCulprits } from './lib/probes.mjs';
 import { pageInventory, hiddenContent } from './lib/inventory.mjs';
 import { scriptsDir } from './lib/env.mjs';
@@ -113,11 +113,16 @@ async function focusWalk(page, limit = focusLimit) {
 }
 
 const summary = [];
+// One page failing must not end the run; say why it failed in the report.
+const pageFailure = (e) => /Execution context was destroyed|navigat/i.test(String(e?.message))
+  ? 'the page kept reloading while it was measured. Dev servers (Vite, Astro, Next) reload while they optimise dependencies, and link prefetching triggers more of it — audit a production build (`npm run build`, then the preview server), or open each page once before auditing.'
+  : String(e?.message || e).split('\n')[0];
 const md = (s = '') => summary.push(s);
 
 try {
   // No-JS pass once per page, at the first width.
   for (const p of paths) {
+    try {
     const url = urlFor(base, p);
     const slug = slugFor(p);
     md(`## ${p}  (${kind})`);
@@ -125,7 +130,7 @@ try {
     {
       const ctx = await browser.newContext({ viewport: { width: widths[0], height: 900 }, javaScriptEnabled: false });
       const page = await ctx.newPage();
-      await page.goto(url, { waitUntil: 'load', timeout: 60000 }).catch(() => {});
+      await open(page, url);
       const hidden = await page.evaluate(hiddenContent).catch(() => []);
       await ctx.close();
       if (hidden.length) md(`- ✗ **Invisible without JavaScript** (${hidden.length}): ${hidden.slice(0, 6).join(', ')} — content must be finished by default; let a script hide it only to animate it in (see implementation.md, "The reveal, written safely").`);
@@ -134,7 +139,7 @@ try {
       // Reduced-motion parity: anything visible normally must be visible under reduce.
       const ctx = await browser.newContext({ viewport: { width: widths[0], height: 900 }, reducedMotion: 'reduce' });
       const page = await ctx.newPage();
-      await page.goto(url, { waitUntil: 'load', timeout: 60000 }).catch(() => {});
+      await open(page, url);
       await settle(page);
       const hidden = await page.evaluate(hiddenContent).catch(() => []);
       await ctx.close();
@@ -152,7 +157,7 @@ try {
       page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text().split('\n')[0].slice(0, 140)); });
       page.on('requestfailed', (r) => errors.push(`request failed: ${r.url().slice(0, 100)} (${r.failure()?.errorText})`));
       const t0 = Date.now();
-      await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 }).catch(() => page.goto(url, { waitUntil: 'load', timeout: 60000 }));
+      await open(page, url);
       const loadMs = Date.now() - t0;
       const lazyAttrs = await page.evaluate(() => [...document.images].map((i) => i.getAttribute('loading')));
       await page.waitForTimeout(500);
@@ -169,6 +174,9 @@ try {
       const layoutW = await page.evaluate(() => innerWidth);
       const overflow = await page.evaluate(overflowCulprits);
       await growToDocument(page, width);
+      // Growing the viewport fires scroll-reveal observers; let those transitions finish before measuring.
+      await page.waitForTimeout(250);
+      await finishMotion(page);
       const inv = await page.evaluate(pageInventory, { initialViewportHeight: h0, lazyAttrs, saturated: saturatedFile.faces });
 
       let axe = null;
@@ -294,6 +302,11 @@ try {
       if (F.length) { md('**Fails**'); F.forEach((x) => md(`- ✗ ${x}`)); md(); }
       if (W.length) { md('**Measurements and warnings**'); W.forEach((x) => md(`- ${x}`)); md(); }
       if (S.length) { md('**Generic-look signals** (review, not rules)'); S.forEach((x) => md(`- ◆ ${x}`)); md(); }
+    }
+    } catch (e) {
+      for (const c of browser.contexts()) await c.close().catch(() => {});
+      md(`- ✗ **Could not audit ${p}**: ${pageFailure(e)}`);
+      md();
     }
   }
 } finally {

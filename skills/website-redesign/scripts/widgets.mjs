@@ -18,7 +18,7 @@
  */
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { launch } from './lib/env.mjs';
+import { launch, open } from './lib/env.mjs';
 
 const [url, file] = process.argv.slice(2);
 if (!url || !file) { console.error('usage: node widgets.mjs <url> contracts.json'); process.exit(2); }
@@ -223,7 +223,7 @@ for (const c of contracts) {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   await ctx.addInitScript(RECORDER);
   const page = await ctx.newPage();
-  await page.goto(url, { waitUntil: 'load' });
+  await open(page, url);
   try { results.push(await tests[c.type](page, c)); }
   catch (e) { results.push({ type: c.type, target: c.trigger || c.tablist || c.button || c.form, passes: [], fails: [`test error: ${e.message.split('\n')[0]}`], warns: [] }); }
   await ctx.close();
