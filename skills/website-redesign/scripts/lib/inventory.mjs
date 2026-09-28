@@ -170,7 +170,8 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   }
 
   // ---- headings and landmarks --------------------------------------------
-  const headings = [...document.querySelectorAll('h1,h2,h3,h4,h5,h6,[role=heading]')].filter(visible).map((h) => ({
+  // Visually hidden headings (the 1×1 clip pattern) are for screen readers: their browser-default size is not part of the scale.
+  const headings = [...document.querySelectorAll('h1,h2,h3,h4,h5,h6,[role=heading]')].filter(visible).filter((h) => { const b = h.getBoundingClientRect(); return b.width > 2 && b.height > 2; }).map((h) => ({
     level: h.getAttribute('aria-level') ? +h.getAttribute('aria-level') : +h.tagName[1], text: short(h.textContent, 70), px: parseFloat(getComputedStyle(h).fontSize),
   }));
   const skipped = [];
@@ -317,8 +318,13 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     if (sibs.length >= 2 && !el.parentElement.textContent.trim() && sibs.every((d) => !d.children.length && d.getBoundingClientRect().width <= 16)) continue;
     const cell = el.closest('td, li, [role=cell], [role=gridcell]') || el.parentElement;
     const words = cell ? cell.textContent.replace(/\s+/g, '').length : 0;
-    if (words === 0) colourOnly.push({ selector: sel(el), colour: hex(c) });
+    // A bar (clearly wider or taller than a dot) encodes length, not a category.
+    if (Math.max(r.width, r.height) > Math.min(r.width, r.height) * 1.8) continue;
+    if (words === 0) colourOnly.push({ selector: sel(el), colour: hex(c), hue: Math.round(hue(c) / 30) });
   }
+  // WCAG 1.4.1 is about colour being the only way to tell things apart: dots in a single hue signal presence
+  // (an "unread" mark), which is visible without colour vision. Report only when two or more hues are in play.
+  if (new Set(colourOnly.map((d) => d.hue)).size < 2) colourOnly.length = 0;
 
   // ---- empty states written as a bare phrase --------------------------------
   const bareEmpty = [];
@@ -472,6 +478,88 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   const byLevel = {};
   for (const h of headings) if (h.level) byLevel[h.level] = Math.max(byLevel[h.level] || 0, h.px);
   const lv = Object.keys(byLevel).map(Number).sort((p, q) => p - q);
+  // ---- numbers and scripts (multilingual.md §2a) ------------------------------------------------------
+  // Measured, because the defects a bilingual or financial screen is judged by are invisible in a capture review:
+  // two digit systems in one row, numeric columns aligned by text direction instead of place value, decimals that
+  // vary down a column, inputs that silently drop Arabic digits, untranslated strings on a language variant.
+  const numbers = { mixedDigits: [], columns: [], numberInputs: 0, otherScript: [] };
+  {
+    const LATIN = /[0-9]/, EASTERN = /[\u0660-\u0669\u06F0-\u06F9]/;
+    const BIDI = /[\u200E\u200F\u061C\u202A-\u202E\u2066-\u2069]/g;
+    const clean = (t) => t.replace(BIDI, '').replace(/\s+/g, ' ').trim();
+    // For mixing, only numerals that are values count: an invoice number or VAT id in Latin digits is an identifier.
+    const valueDigits = (t) => clean(t).replace(/\b[A-Z]{2,}[-_]?[\d-]+\b/g, '').replace(/\b\d{9,}\b/g, '');
+    const ROWS = 'tr, [role=row], li, dd, [class*=kpi], [class*=stat], [class*=metric], [class*=total]';
+    for (const row of document.querySelectorAll(ROWS)) {
+      // The innermost row only: a KPI strip and each of its tiles would otherwise both be reported.
+      if (!visible(row) || row.querySelector(ROWS)) continue;
+      const t = valueDigits(row.innerText || '');
+      if (LATIN.test(t) && EASTERN.test(t)) { numbers.mixedDigits.push(`\`${sel(row)}\` "${clean(row.innerText).slice(0, 60)}"`); if (numbers.mixedDigits.length >= 5) break; }
+    }
+    const NUM = /^[+\-\u2212(]?\s*(?:[A-Z]{3}|[$€£¥₹﷼]|ر\.س|د\.إ)?\s*[+\-\u2212]?[\d\u0660-\u0669\u06F0-\u06F9][\d\u0660-\u0669\u06F0-\u06F9,.\u066B\u066C\s']*\s*(?:%|\u066A|[A-Z]{3}|ر\.س|د\.إ|[KMB])?\)?$/;
+    const decimals = (t) => { const m = t.match(/[.\u066B]([\d\u0660-\u0669\u06F0-\u06F9]+)\D*$/); return m ? m[1].length : 0; };
+    const align = (cs) => {
+      const rtl = cs.direction === 'rtl', ta = cs.textAlign;
+      if (ta === 'right' || ta === '-webkit-right') return 'right';
+      if (ta === 'left' || ta === '-webkit-left') return 'left';
+      if (ta === 'center' || ta === '-webkit-center') return 'center';
+      if (ta === 'end') return rtl ? 'left' : 'right';
+      return rtl ? 'right' : 'left'; // start, justify, match-parent
+    };
+    for (const table of document.querySelectorAll('table, [role=table], [role=grid]')) {
+      if (!visible(table)) continue;
+      const rows = [...table.querySelectorAll('tbody tr, [role=row]')].filter((r) => r.querySelector('td, [role=cell], [role=gridcell]'));
+      if (rows.length < 3) continue;
+      const cols = Math.max(...rows.map((r) => r.children.length));
+      for (let c = 0; c < cols; c++) {
+        const cells = rows.map((r) => r.children[c]).filter((x) => x && visible(x));
+        const vals = cells.map((x) => clean(x.innerText || '')).filter(Boolean);
+        const numeric = vals.filter((v) => NUM.test(v));
+        if (vals.length < 3 || numeric.length < vals.length * 0.8) continue;
+        // Identifiers (invoice numbers, years, phone numbers) are numeric but not quantities: skip integer-only
+        // columns whose values all have the same length, like IDs, unless they carry currency or grouping.
+        const quantity = numeric.some((v) => /[,.\u066B\u066C%\u066A$€£¥₹﷼]|ر\.س|[A-Z]{3}/.test(v)) || new Set(numeric.map((v) => v.length)).size > 1;
+        if (!quantity) continue;
+        const cs = getComputedStyle(cells[0]);
+        const head = table.querySelector(`thead th:nth-child(${c + 1}), [role=columnheader]:nth-child(${c + 1})`);
+        const name = clean(head?.innerText || '') || `column ${c + 1}`;
+        const issues = [];
+        const al = [...new Set(cells.map((x) => align(getComputedStyle(x))))];
+        if (!(al.length === 1 && al[0] === 'right')) issues.push(`aligned ${al.join('/')} (numbers align right in both directions)`);
+        const fv = cs.fontVariantNumeric + ' ' + cs.fontFeatureSettings;
+        if (!/tabular-nums|"tnum"/.test(fv)) issues.push('no tabular-nums');
+        const dec = new Set(numeric.map(decimals));
+        if (dec.size > 1) issues.push(`decimals vary (${[...dec].sort().join(', ')} places)`);
+        if (issues.length) numbers.columns.push(`"${name.slice(0, 30)}": ${issues.join('; ')}`);
+        if (numbers.columns.length >= 6) break;
+      }
+    }
+    const lang = (document.documentElement.lang || '').toLowerCase();
+    const rtlLang = /^(ar|fa|ur|he|ps|ku|sd|ug|yi)\b/.test(lang) || document.documentElement.dir === 'rtl';
+    if (rtlLang || /^(ar|fa|ur)/.test(lang)) numbers.numberInputs = document.querySelectorAll('input[type=number]').length;
+    // Arabic-script text on a Latin-script page (by its lang, or by the majority of its letters when it has none),
+    // in text or in placeholders and labels, with no lang of its own.
+    const body = document.body.innerText || '';
+    const arabicLetters = (body.match(/[\u0600-\u06FF]/g) || []).length, latinLetters = (body.match(/[A-Za-z\u00C0-\u024F]/g) || []).length;
+    const latinPage = lang ? !/^(ar|fa|ur|ps|ku|sd|ug)\b/.test(lang) : latinLetters > arabicLetters * 2;
+    if (latinPage) {
+      const arabicOwn = (el) => { const o = el.closest('[lang]'); return o && o !== document.documentElement && /^(ar|fa|ur|ps|ku|sd|ug)/i.test(o.lang); };
+      const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      for (let n = tw.nextNode(); n && numbers.otherScript.length < 6; n = tw.nextNode()) {
+        const t = clean(n.data);
+        // A string mixing both scripts ("سند · Sanad") is usually a bilingual brand lockup, a proper name.
+        if (!/[\u0600-\u06FF]{2,}/.test(t) || /[A-Za-z]{3,}/.test(t) || !n.parentElement || !visible(n.parentElement) || arabicOwn(n.parentElement)) continue;
+        numbers.otherScript.push(`\`${sel(n.parentElement)}\` "${t.slice(0, 40)}"`);
+      }
+      for (const el of document.querySelectorAll('[placeholder], [aria-label], [title], input[type=submit][value], input[type=button][value]')) {
+        if (numbers.otherScript.length >= 6) break;
+        const t = clean(el.getAttribute('placeholder') || el.getAttribute('aria-label') || el.getAttribute('title') || el.value || '');
+        if (/[\u0600-\u06FF]{2,}/.test(t) && !/[A-Za-z]{3,}/.test(t) && visible(el) && !arabicOwn(el)) numbers.otherScript.push(`\`${sel(el)}\` placeholder/label "${t.slice(0, 40)}"`);
+      }
+    }
+    numbers.pageLang = lang || (latinPage ? 'none (Latin text)' : 'none');
+  }
+
   // ---- dead bands: tall horizontal strips with nothing in them ----------------------------------------
   // Occupancy of the document height by text, media, controls and background images, in 8px strips. A run of
   // empty strips taller than about half a screen is a dead band (a 100svh hero on a tall screen, a parallax gap,
@@ -571,7 +659,8 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   const charsInCards = outerCards.reduce((n, c) => n + (c.innerText || '').replace(/\s+/g, '').length, 0);
   const pageChars = Math.max(1, (document.body.innerText || '').replace(/\s+/g, '').length);
   const kpiTiles = cardEls.filter((c) => /[+−-]?\d+(\.\d+)?\s?%/.test(c.innerText || '') && [...c.querySelectorAll('*')].some((x) => parseFloat(getComputedStyle(x).fontSize) >= 24)).length;
-  const greeting = /\b(welcome back|good (morning|afternoon|evening)|hello|hi),?\s+\w+/i.test(hs.map((h) => h.textContent).join(' ') + ' ' + [...document.querySelectorAll('h1, [class*=title]')].slice(0, 3).map((e) => e.textContent).join(' '));
+  // Greetings in the languages this skill has met (Arabic interfaces greet as often as English ones).
+  const greeting = /(^|[\s,.!])(welcome back|good (morning|afternoon|evening)|hello|hi|hey|bonjour|bonsoir|bienvenue|hola|buenos d[ií]as|bienvenid[oa]|hallo|guten (morgen|tag|abend)|willkommen|ol[aá]|bom dia|bem-vind[oa]|merhaba|g[uü]nayd[ıi]n|ho[sş] geldin|مرحب[\u0600-\u06FF\u064B-\u065F]*|أهل[\u0600-\u06FF\u064B-\u065F]*|اهل[\u0600-\u06FF]*|صباح الخير|مساء الخير|هلا|سلام|خوش آمدید|درود)[\s,،!]+\S+/i.test(hs.map((h) => h.textContent).join(' ') + ' ' + [...document.querySelectorAll('h1, [class*=title]')].slice(0, 3).map((e) => e.textContent).join(' '));
   const iconOnly = [...document.querySelectorAll('button, [role=button], a')].filter((b) => visible(b) && !b.textContent.trim() && b.getBoundingClientRect().width <= 48).length;
   const charts = [...document.querySelectorAll('svg, canvas')].filter((g) => {
     const r = g.getBoundingClientRect();
@@ -614,7 +703,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       gradientText, emoji: emoji.slice(0, 10), cliches: [...cliches], statClaims: statClaims.slice(0, 10), gradients: gradients.length, violetGradients: gradients.filter((g) => g.violet).length,
       backdropBlur: blur, cards, pills, buttonsLike, iconTiles, domNodes: all.length,
       mainGround, creamGround, eyebrows, eyebrowExamples, sectionCount, accentedHeadlines: accentedHeadlines.slice(0, 5), sideStripes, stripeExamples, glows, oneRadius, centredShare, nearMisses, leftEdges: edges.length, radiusMismatch,
-      emDashes, middleDots, arrowCtas, aphorisms, headingRatio, bodyPx, flatSteps, headingInversions, widows, deadBands,
+      emDashes, middleDots, arrowCtas, aphorisms, headingRatio, bodyPx, flatSteps, headingInversions, widows, deadBands, numbers,
       cardTextShare: Math.round((charsInCards / pageChars) * 100), outerCards: outerCards.length, kpiTiles, greeting, iconOnly, unlabelledCharts: charts,
       controlHeights: [...new Set(controls)].sort((x, y) => x - y), maxPx, hoverMoves, badgeAboveH1,
     },

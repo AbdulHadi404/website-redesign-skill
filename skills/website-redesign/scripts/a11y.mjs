@@ -273,6 +273,26 @@ async function newPage(opts = {}) {
       const r = g.getBoundingClientRect();
       if (shapes && !named && r.width * r.height > 48 * 48) out.push(['WARN', '1.1.1', `SVG graphic (${Math.round(r.width)}×${Math.round(r.height)}, ${shapes} shapes) has no text alternative — role="img" + name, or a data table / text summary for charts`, d(g.parentElement) + ' > svg']);
     }
+    // language of parts (3.1.2): a run in another script with no lang of its own. Arabic-script text on a
+    // Latin-script page, and language names in the switcher ("English" on an Arabic page) — proper names and
+    // mixed bilingual lockups ("سند · Sanad") are exempt.
+    {
+      const pageLang = (document.documentElement.lang || '').toLowerCase();
+      const body = document.body.innerText || '';
+      const rtlPage = pageLang ? /^(ar|fa|ur|ps|ku|sd|ug)\b/.test(pageLang) : (body.match(/[\u0600-\u06FF]/g) || []).length * 2 > (body.match(/[A-Za-z]/g) || []).length;
+      const LANG_NAMES = /^(english|français|francais|español|espanol|deutsch|italiano|português|portugues|türkçe|nederlands|русский|中文|日本語|한국어)$/i;
+      const seen = new Set();
+      for (const el of document.querySelectorAll('a, button, span, p, li, label, option, h1, h2, h3, h4, td, th, div')) {
+        const own = [...el.childNodes].filter(n => n.nodeType === 3).map(n => n.data).join(' ').replace(/\s+/g, ' ').trim();
+        if (!own || seen.has(own) || el.closest('[lang]') !== document.documentElement && el.closest('[lang]')) continue;
+        const arabicRun = /[\u0600-\u06FF]{2,}/.test(own) && !/[A-Za-z]{3,}/.test(own);
+        if ((!rtlPage && arabicRun) || (rtlPage && LANG_NAMES.test(own))) {
+          seen.add(own);
+          out.push(['WARN', '3.1.2', `"${own.slice(0, 40)}" is in another language than the page (${pageLang || 'no lang'}) and has no lang attribute — screen readers read it with the wrong voice`, d(el)]);
+          if (seen.size >= 6) break;
+        }
+      }
+    }
     // id references that point at nothing. aria-controls is left out: libraries (Radix and others) point it at
     // a popup that exists only while open.
     const missing = (el, attr) => (el.getAttribute(attr) || '').split(/\s+/).filter((id) => id && !document.getElementById(id));
@@ -476,13 +496,40 @@ for (const [w, h, label] of [[320, 256, '400%'], [640, 512, '200%']]) {
     const scrollsOwnAxis = el => { for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) { const o = getComputedStyle(n).overflowX; if (o === 'auto' || o === 'scroll') return true; } return false; };
     const off = [...document.querySelectorAll('body *')].filter(el => { const r = el.getBoundingClientRect(); return r.right > vw + 1 && r.width > 0 && getComputedStyle(el).position !== 'fixed' && !scrollsOwnAxis(el); });
     const roots = off.filter(el => !off.includes(el.parentElement)).slice(0, 6).map(el => `${d(el)} (right edge ${Math.round(el.getBoundingClientRect().right)}px)`);
-    return { scrollWidth: document.documentElement.scrollWidth, vw, roots };
+    // Content that does not scroll but is cut off: an ancestor with overflow hidden/clip (not a scroller) hides
+    // more than half of it. Reflow passes on scroll width alone while a table loses six of eight columns.
+    const cut = { controls: [], text: [] };
+    for (const el of document.querySelectorAll('body *')) {
+      const r = el.getBoundingClientRect();
+      if (r.width <= 2 || r.height <= 2) continue;
+      const control = el.matches('a[href],button,input,select,textarea,[role=button],[tabindex="0"]');
+      const ownText = [...el.childNodes].some(n => n.nodeType === 3 && n.data.trim().length > 1);
+      if (!control && !ownText) continue;
+      let x0 = r.left, x1 = r.right, y0 = r.top, y1 = r.bottom, by = null;
+      for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+        const cs = getComputedStyle(a);
+        if (cs.position === 'fixed') break;
+        const hx = /hidden|clip/.test(cs.overflowX), hy = /hidden|clip/.test(cs.overflowY);
+        if (!hx && !hy) continue;
+        const ar = a.getBoundingClientRect();
+        if (ar.width <= 2 || ar.height <= 2) { by = null; x0 = x1; break; } // the visually-hidden pattern
+        if (hx) { x0 = Math.max(x0, ar.left); x1 = Math.min(x1, ar.right); }
+        if (hy) { y0 = Math.max(y0, ar.top); y1 = Math.min(y1, ar.bottom); }
+        by = by || a;
+      }
+      const shown = Math.max(0, x1 - x0) * Math.max(0, y1 - y0);
+      if (by && shown < r.width * r.height * 0.5) (control ? cut.controls : cut.text).push({ el: d(el), by: d(by) });
+    }
+    const parentsOnly = list => list.filter((x, i) => !list.slice(0, i).some(y => y.by === x.by && y.el === x.el));
+    return { scrollWidth: document.documentElement.scrollWidth, vw, roots, cutControls: parentsOnly(cut.controls).slice(0, 6), cutText: cut.text.length, cutTextBy: [...new Set(cut.text.map(x => x.by))].slice(0, 3) };
   }, describe);
   await page.screenshot({ path: path.join(outDir, `reflow-${w}.png`), fullPage: true });
   if (r.scrollWidth > r.vw + 1) {
     const twoD = r.roots.length && r.roots.every(x => /^(table|pre|canvas|svg|iframe)|map/i.test(x));
     add(twoD ? 'WARN' : 'FAIL', 'reflow', w === 320 ? '1.4.10' : '1.4.4', `Horizontal scrolling at ${w}px (${label} zoom of 1280): page is ${r.scrollWidth}px wide${twoD ? ' — only 2-D content overflows (exception), but wrap it in its own scroll container' : ''}`, r.roots.join(' | '));
   }
+  if (r.cutControls.length) add('FAIL', 'reflow', w === 320 ? '1.4.10' : '1.4.4', `${r.cutControls.length} control(s) cut off at ${w}px by overflow hidden — not reachable by scrolling`, r.cutControls.map(x => `${x.el} in ${x.by}`).join(' | '));
+  if (r.cutText) add(r.cutText >= 10 ? 'FAIL' : 'WARN', 'reflow', w === 320 ? '1.4.10' : '1.4.4', `${r.cutText} text element(s) cut off at ${w}px by overflow hidden (not a scroller)`, r.cutTextBy.join(' | '));
   report.data[`reflow-${w}`] = r;
   await ctx.close();
 }

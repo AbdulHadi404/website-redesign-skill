@@ -42,14 +42,17 @@
  *                              finger cannot (a column cut off by overflow: hidden): state checks only, never walkthroughs
  * After each click, tap, press or swipe the screen is compared with the one before; a step that changed nothing
  * visible is reported ("dead tap"). A failing step still leaves a capture (…-failed.png) of where it stopped.
- * Routes: url (glob), delay (ms), abort, status, body, json, file, contentType; several routes as a list.
+ * Routes: url (glob), delay (ms), abort, status, body, json, file (relative to this scenario file), contentType;
+ * several routes as a list. A missing file fails that state only.
  * "shot": "viewport" (default) | "full" | a selector (element capture, 2× density).
  *
  * Every state gets a fresh context. Console and page errors are recorded per state. A state whose capture is
- * pixel-identical to the first state's (usually "idle") is flagged: the scenario most likely did not take
- * effect — a wrong selector, a route that never matched — and the capture proves nothing.
+ * pixel-identical to any earlier state's is flagged: either the scenario did not take effect (a wrong selector,
+ * a route that never matched) or the product draws both states the same way (loading, error and offline all
+ * rendering as an empty page is the common case) — the capture proves nothing until you know which.
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { parseArgs, asList, launch, open, finishMotion, importModule, urlFor } from './lib/env.mjs';
 import { seenTree } from './lib/seen.mjs';
@@ -74,12 +77,15 @@ const deviceName = (d) => (typeof d === 'object' ? `${d.width}x${d.height}` : d 
 
 const PNG = (await importModule('pngjs'))?.PNG ?? null;
 const pixelmatch = await importModule('pixelmatch');
+// Near-identical counts too: a clock ticking between loads changes a few hundred pixels; a real state change
+// (even one focus ring) changes thousands.
+const decoded = new WeakMap();
+const decode = (b) => { if (!decoded.has(b)) decoded.set(b, PNG.sync.read(b)); return decoded.get(b); };
 const identical = (x, y) => {
   if (!PNG || !pixelmatch) return false;
-  const p = PNG.sync.read(x), q = PNG.sync.read(y);
+  if (x.equals(y)) return true;
+  const p = decode(x), q = decode(y);
   if (p.width !== q.width || p.height !== q.height) return false;
-  // Near-identical counts too: a clock ticking between loads changes a few hundred pixels; a real state change
-  // (even one focus ring) changes thousands.
   return pixelmatch(p.data, q.data, null, p.width, p.height, { threshold: 0.05 }) <= p.width * p.height * 0.0005;
 };
 
@@ -104,13 +110,16 @@ const hitAt = (page, x, y, tap = true) => page.evaluate(([x, y, tap]) => {
   return `${role}${name ? ` "${name}"` : ''} ${Math.round(r.width)}×${Math.round(r.height)}${note}`;
 }, [x, y, tap]).catch(() => '?');
 
+// Fixture files resolve relative to the scenario file, not the working directory.
+const fixture = (f) => path.resolve(path.dirname(file), f);
+
 async function applyRoutes(page, routes) {
   for (const r of [].concat(routes || [])) {
     await page.route(r.url, async (route) => {
       if (r.delay) await new Promise((res) => setTimeout(res, r.delay));
       if (r.abort) return route.abort(typeof r.abort === 'string' ? r.abort : 'internetdisconnected').catch(() => {});
       if (r.status || r.body !== undefined || r.json !== undefined || r.file) {
-        const body = r.file ? await readFile(path.resolve(path.dirname(file), r.file)) : r.json !== undefined ? JSON.stringify(r.json) : r.body ?? '';
+        const body = r.file ? await readFile(fixture(r.file)).catch(() => '') : r.json !== undefined ? JSON.stringify(r.json) : r.body ?? '';
         return route.fulfill({ status: r.status || 200, body, contentType: r.contentType || (r.json !== undefined || /\.json$/.test(r.file || '') ? 'application/json' : 'text/plain') }).catch(() => {});
       }
       return route.continue().catch(() => {});
@@ -215,7 +224,7 @@ const unmarkTap = (page) => page.evaluate(() => document.getElementById('__tap_m
 
 const { browser } = await launch({ chrome: a.chrome });
 const results = [];
-let first = null;
+const shots = []; // every capture so far, for the identical-pair check
 try {
   for (const st of spec.states || []) {
     if (only && !only.includes(st.name)) continue;
@@ -230,6 +239,7 @@ try {
     if (Object.keys(storage).length) await ctx.addInitScript((kv) => { try { for (const [k, v] of Object.entries(kv)) localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v)); } catch { /* storage blocked */ } }, storage);
     await applyRoutes(page, [].concat(spec.route || [], st.route || []));
     const url = urlFor(base, st.path || spec.path || '/');
+    const missingFiles = [].concat(spec.route || [], st.route || []).filter((r) => r.file && !existsSync(fixture(r.file))).map((r) => fixture(r.file));
     const entry = { name: st.name, device: deviceName(dev), file: null, errors, note: '', trail: [], dead: [] };
     const stem = path.join(outDir, `${st.name}-${entry.device}${label}`);
     const shot = st.shot || 'viewport';
@@ -243,6 +253,7 @@ try {
     };
     const each = a.each || st.each || spec.each;
     try {
+      if (missingFiles.length) throw new Error(`fixture file not found: ${missingFiles.join(', ')} (route files resolve relative to the scenario file)`);
       // A delayed route keeps the page "loading" on purpose: do not wait for the network to go quiet.
       if ([].concat(st.route || []).some((r) => r.delay)) await page.goto(url, { waitUntil: 'commit' }).catch(() => {});
       else await open(page, url);
@@ -257,14 +268,21 @@ try {
       const f = `${stem}.png`;
       const buf = await capture(f, r.lastTap);
       entry.file = f;
-      if (!first) first = { name: st.name, buf, shot, device: entry.device };
-      else if (!(a.aria && r.lastTap) && first.shot === shot && first.device === entry.device && identical(first.buf, buf)) entry.note = `identical to "${first.name}" — the scenario probably did not take effect (selector, route pattern?)`;
+      // Compared with every earlier state, not only the first: loading, error and offline rendering the same
+      // is a finding about the product (it has no such states), not only about the scenario.
+      if (!(a.aria && r.lastTap)) {
+        const twin = shots.find((o) => o.shot === shot && o.device === entry.device && identical(o.buf, buf));
+        if (twin) entry.note = twin === shots[0]
+          ? `identical to "${twin.name}" — the scenario did not take effect (selector, route pattern?), or the product has no such state`
+          : `identical to "${twin.name}" — the product shows these two states the same way, or one scenario did not take effect`;
+        shots.push({ name: st.name, buf, shot, device: entry.device });
+      }
     } catch (e) {
       entry.trail = e.trail || entry.trail; entry.dead = e.dead || entry.dead;
       entry.note = `failed: ${String(e.message || e).split('\n')[0]}`;
       // Show where it stopped: the next step is chosen from this screen.
       const f = `${stem}-failed.png`;
-      if (await page.screenshot({ path: f }).then(() => true).catch(() => false)) {
+      if (page.url() !== 'about:blank' && await page.screenshot({ path: f }).then(() => true).catch(() => false)) {
         entry.note += ` — screen at failure: ${path.basename(f)}`;
         if (a.aria) await writeFile(f.replace(/\.png$/, '.aria.yml'), await seenTree(page).catch(() => ''));
       }

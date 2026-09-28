@@ -45,9 +45,16 @@ const paths = asList(a.paths, ['/']);
 const widths = asList(a.widths, ['1440', '390']).map(Number);
 const outDir = a.out || './audit';
 const focusLimit = Number(a.focus) || 40;
-// What kind of surface this is (from the framing step): marketing | app | commerce | content | docs | service.
-// It changes which signals are reported: an app is judged by density and task rules, not by hero rules.
-const kind = a.kind || 'marketing';
+// What kind of surface this is (from the framing step): marketing | app | field | commerce | content | docs | service.
+// It changes which signals are reported: an app is judged by density and task rules, not by hero rules. The
+// category names in categories.md are accepted too and map to the rule set that fits them.
+const KINDS = ['marketing', 'app', 'field', 'commerce', 'content', 'docs', 'service'];
+const ALIASES = { dashboard: 'app', fintech: 'app', admin: 'app', enterprise: 'app', saas: 'app', internal: 'app', frontline: 'field', mobile: 'field',
+  ecommerce: 'commerce', shop: 'commerce', store: 'commerce', checkout: 'commerce', public: 'service', government: 'service', form: 'service',
+  editorial: 'content', blog: 'content', news: 'content', documentation: 'docs', landing: 'marketing', portfolio: 'marketing' };
+const kindAsked = String(a.kind || 'marketing').toLowerCase();
+const kind = KINDS.includes(kindAsked) ? kindAsked : ALIASES[kindAsked];
+if (!kind) { console.error(`Unknown --kind "${kindAsked}". Use ${KINDS.join(' | ')} (or a category: ${Object.keys(ALIASES).join(', ')}).`); process.exit(2); }
 const axePath = a['no-axe'] ? null : resolveModule('axe-core/axe.min.js');
 const saturatedFile = JSON.parse(await readFile(path.join(scriptsDir, 'lib/saturated-fonts.json'), 'utf8'));
 
@@ -134,7 +141,7 @@ try {
     try {
     const url = urlFor(base, p);
     const slug = slugFor(p);
-    md(`## ${p}  (${kind})`);
+    md(`## ${p}  (${kind}${kindAsked !== kind ? `, as ${kindAsked}` : ''})`);
     md();
     {
       const ctx = await browser.newContext({ viewport: { width: widths[0], height: 900 }, javaScriptEnabled: false });
@@ -180,6 +187,10 @@ try {
 
       await settle(page);
       const focus = await focusWalk(page);
+      // Leave no control focused: a skip link the walk left on screen would be measured by the inventory and by axe
+      // (it once covered the logo link and produced a target-size failure that no clean run reproduces).
+      await page.evaluate(() => { document.activeElement?.blur?.(); scrollTo(0, 0); }).catch(() => {});
+      await page.mouse.move(0, 0).catch(() => {});
       const layoutW = await page.evaluate(() => innerWidth);
       const overflow = await page.evaluate(overflowCulprits);
       await growToDocument(page, width);
@@ -302,6 +313,11 @@ try {
       if (sg.headingRatio && sg.headingRatio < 2 && !mobile && kind === 'marketing') S.push(`Largest heading is only ${sg.headingRatio}× the body size (${sg.bodyPx}px) — a flat scale for a marketing page (fine for product UI).`);
       if (sg.radiusMismatch?.length) W.push(`Nested corners not concentric: ${sg.radiusMismatch.slice(0, 4).join('; ')} — an inner radius near its parent's corner should be about the outer radius minus the gap, or the corners read as two shapes.`);
       if (sg.nearMisses?.length) W.push(`Near-miss alignment — text blocks whose left edges sit 1–4px apart (${sg.leftEdges} shared edges in all): ${sg.nearMisses.slice(0, 5).join('; ')} — put them on one edge or separate them deliberately.`);
+      const nb = sg.numbers || {};
+      if (nb.mixedDigits?.length) F.push(`Two digit systems in one row (Western 0–9 and Eastern Arabic ٠–٩): ${nb.mixedDigits.join('; ')} — choose one in code (multilingual.md §2a).`);
+      if (nb.numberInputs) F.push(`${nb.numberInputs} <input type="number"> on a right-to-left page — it silently drops Arabic digits typed by the user; use type="text" inputmode="decimal" and normalise (multilingual.md §2a).`);
+      if (nb.columns?.length) W.push(`Numeric columns: ${nb.columns.join('; ')} — right-aligned, tabular, one number of decimals per column (dataviz.md, multilingual.md §2a).`);
+      if (nb.otherScript?.length) W.push(`Arabic-script text on a Latin-script page (lang: ${nb.pageLang}) with no lang of its own: ${nb.otherScript.join('; ')} — untranslated strings, or missing lang="ar" (WCAG 3.1.2).`);
       if (sg.deadBands?.length) W.push(`Dead bands at ${width}px (tall strips with no text, media or controls): ${sg.deadBands.join('; ')} — cap tall heroes (\`min(100svh, 56rem)\`), remove spacers, or give the space a job.`);
       if (sg.widows?.length) W.push(`Headline widows at ${width}px: ${sg.widows.slice(0, 4).join('; ')} — \`text-wrap: balance\` (or \`pretty\`), a \`max-width\` in \`ch\`, or a rewrite.`);
       if (sg.headingInversions?.length) W.push(`Heading sizes inverted: ${sg.headingInversions.join(', ')} — the visual outline contradicts the document outline.`);
