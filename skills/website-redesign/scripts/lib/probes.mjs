@@ -43,10 +43,12 @@ export function overflowCulprits() {
   // well `html { overflow-y: scroll }` (overflow-x then computes to auto) with `body { overflow-x: hidden }`, leave
   // scrollWidth at the viewport width, the check above sees nothing, and the render shows copy cut at the edge (a
   // nowrap chip that widened a `1fr` track, a label pushed out of a flex row). With html's overflow visible, body's
-  // goes to the viewport instead and body clips nothing itself. Text cut by a clipping container below body is
-  // inventory.mjs clippedText's finding, not this one; text inside a real scroller is reachable; a single-line
-  // ellipsis whose own box fits is a deliberate truncation; a box wholly off-screen (a carousel slide) is not cut.
-  // When the page does overflow, text inside a culprit above is already reported.
+  // goes to the viewport instead and body clips nothing itself (`clip` says which: 'body', 'viewport' or null).
+  // Text cut by a clipping container below body is inventory.mjs clippedText's finding, not this one; text inside a
+  // real scroller is reachable; a single-line ellipsis whose own box fits is a deliberate truncation; a box wholly
+  // off-screen (a carousel slide) is not cut. When the page does overflow, text inside a culprit above is already
+  // reported, and text that runs out of its own box past the end edge is added to the culprits (`text: true`): it
+  // widened the page, and no element box did.
   // Each item says whether a sideways scroll of the page reaches it (`reach`: past the end edge, within the
   // scrollable width, and the page scroller is not clipped) and whether it is past the start edge (`start`: left in
   // a left-to-right page, where nothing ever scrolls). Text the page scrolls to is still listed (callers name it as
@@ -59,7 +61,7 @@ export function overflowCulprits() {
   const rtl = bcs.direction === 'rtl';
   const bodyRange = /auto|scroll/.test(bodyX) ? document.body.scrollWidth - document.body.clientWidth : 0;
   const scrollerPage = [document.body, doc].some((t) => /auto|scroll/.test(getComputedStyle(t).overflowX));
-  const cutAtEdge = [];
+  const cutAtEdge = [], textCulprits = [];
   const NO_TEXT = /^(hidden|checkbox|radio|range|color|file|image)$/i;
   const nowrap = (c) => c.whiteSpace === 'nowrap' || c.whiteSpace === 'pre' || c.textWrapMode === 'nowrap';
   const shortText = (t) => t.replace(/\s+/g, ' ').trim().slice(0, 40);
@@ -110,14 +112,16 @@ export function overflowCulprits() {
     // viewport, or body when it scrolls its own box). A fixed box does not move when the page scrolls.
     const past = pastRight ? R - vw : -L, start = rtl ? pastRight : !pastRight;
     const fixed = (() => { for (let e = el; e && e !== doc; e = e.parentElement) if (getComputedStyle(e).position === 'fixed') return true; return false; })();
-    const reach = !start && !fixed && ((!clips(viewportX) && past <= by + 1) || past <= bodyRange + 1);
-    if (reach && scrollerPage) continue;
+    const grows = by > 0 && !start && !fixed && past <= by + 1; // it widened the document
+    const reach = (grows && !clips(viewportX)) || (!start && !fixed && past <= bodyRange + 1);
     if (by > 0 && culpritEls.some((c) => c === el || c.contains(el))) continue;
     if (reported.some((r) => r.contains(el))) continue;
     reported.push(el);
+    if (grows && textCulprits.length < 8) textCulprits.push({ selector: sel(el), right: Math.round(R), width: Math.round(eb.width), past: Math.round(past), ...(pastRight ? {} : { edge: 'left' }), text: true });
+    if (reach && scrollerPage) continue;
     const text = shortText(control ? (el.type === 'password' ? '(password)' : el.value || el.getAttribute('placeholder') || '') : own.map((n) => n.nodeValue).join(' '));
     cutAtEdge.push({ selector: sel(el), right: Math.round(R), past: Math.round(past), ...(pastRight ? {} : { edge: 'left' }), text, reach, start });
     if (cutAtEdge.length >= 8) break;
   }
-  return { overflow: by > 0, by, viewport: vw, culprits: out.slice(0, 8), cutAtEdge, clip };
+  return { overflow: by > 0, by, viewport: vw, culprits: [...out, ...textCulprits].slice(0, 8), cutAtEdge, clip };
 }

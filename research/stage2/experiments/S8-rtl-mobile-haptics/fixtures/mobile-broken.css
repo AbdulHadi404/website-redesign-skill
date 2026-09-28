@@ -1,4 +1,4 @@
-/* Mobile fixture — BROKEN variant: fixed bars ignore safe areas, hover-only row actions, 28 px icon buttons packed
+/* Mobile fixture — BROKEN variant: viewport-fit=cover in the meta but fixed bars never pad with env(), hover-only row actions, 28 px icon buttons packed
    together, the primary action in the top corner, 14 px inputs (iOS zooms on focus) */
 * { box-sizing: border-box; }
 button, a { -webkit-tap-highlight-color: transparent; }

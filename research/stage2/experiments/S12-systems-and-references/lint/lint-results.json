@@ -278,7 +278,7 @@
   },
   "js-E2-atlaskit-ensure-design-token-usage": {
    "note": "@atlaskit/eslint-plugin-design-system ensure-design-token-usage (domains color + spacing)",
-   "lintMs": 40,
+   "lintMs": 43,
    "fatal": [],
    "violations": 11,
    "ok": 16,
@@ -314,7 +314,7 @@
   },
   "js-E3-better-tailwindcss-locked": {
    "note": "eslint-plugin-better-tailwindcss: no-unknown-classes against the locked @theme + no-restricted-classes for arbitrary token-owned values",
-   "lintMs": 455,
+   "lintMs": 622,
    "fatal": [],
    "violations": 11,
    "ok": 16,
@@ -344,7 +344,7 @@
   },
   "js-E4-tailwindcss-plugin-locked": {
    "note": "eslint-plugin-tailwindcss v4: no-arbitrary-value + no-custom-classname against the locked @theme",
-   "lintMs": 102,
+   "lintMs": 138,
    "fatal": [],
    "violations": 11,
    "ok": 16,
@@ -377,7 +377,7 @@
   },
   "js-E1s-core-scoped-hex": {
    "note": "E1 with hex strings reported only in colour positions (property value, colour attribute, colour-named variable)",
-   "lintMs": 50,
+   "lintMs": 31,
    "fatal": [],
    "violations": 11,
    "ok": 16,
@@ -407,7 +407,7 @@
   },
   "js-E1t-style-scoped": {
    "note": "second round, recommended (warning level): E1 checks only inside style contexts, anchored key regexes, token-owned keys only, lengths > 2 px, no percentages",
-   "lintMs": 81,
+   "lintMs": 266,
    "fatal": [],
    "violations": 11,
    "ok": 16,
@@ -437,7 +437,7 @@
   },
   "js-E5t-style-scoped-plus-better-tailwindcss": {
    "note": "second round: E1t + E3",
-   "lintMs": 26,
+   "lintMs": 109,
    "fatal": [],
    "violations": 11,
    "ok": 16,
@@ -467,7 +467,7 @@
   },
   "js-E5-core-plus-better-tailwindcss": {
    "note": "E1s + E3 (recommended hand-over for a Tailwind React codebase)",
-   "lintMs": 29,
+   "lintMs": 76,
    "fatal": [],
    "violations": 11,
    "ok": 16,
@@ -2714,6 +2714,32 @@
        "nudge ≤ 2px": 5,
        "raw colour": 2
       },
+      "topRepeated": [
+       [
+        "gap: 0.5em",
+        2
+       ],
+       [
+        "border-radius: calc((0.5px + 0.2em) * var(--radius-factor))",
+        2
+       ],
+       [
+        "border-bottom-left-radius: 0px",
+        2
+       ],
+       [
+        "border-bottom-right-radius: 0px",
+        2
+       ],
+       [
+        "border-top-left-radius: 0px",
+        2
+       ],
+       [
+        "border-top-right-radius: 0px",
+        2
+       ]
+      ],
       "sample": [
        {
         "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-menu.css",
@@ -3083,6 +3109,32 @@
        "positional": 1,
        "raw colour": 2
       },
+      "topRepeated": [
+       [
+        "background-color: white",
+        2
+       ],
+       [
+        "margin-top: 3px",
+        1
+       ],
+       [
+        "margin-bottom: 3px",
+        1
+       ],
+       [
+        "margin-left: -0.5px",
+        1
+       ],
+       [
+        "margin-right: -0.5px",
+        1
+       ],
+       [
+        "inset: 1px",
+        1
+       ]
+      ],
       "sample": [
        {
         "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
@@ -3170,6 +3222,24 @@
        "raw length > 2px": 3,
        "raw colour": 2
       },
+      "topRepeated": [
+       [
+        "background-color: white",
+        2
+       ],
+       [
+        "margin-top: 3px",
+        1
+       ],
+       [
+        "margin-bottom: 3px",
+        1
+       ],
+       [
+        "padding-right: 5px",
+        1
+       ]
+      ],
       "sample": [
        {
         "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
@@ -3215,6 +3285,24 @@
        "raw length > 2px": 3,
        "raw colour": 2
       },
+      "topRepeated": [
+       [
+        "background-color: white",
+        2
+       ],
+       [
+        "margin-top: 3px",
+        1
+       ],
+       [
+        "margin-bottom: 3px",
+        1
+       ],
+       [
+        "padding-right: 5px",
+        1
+       ]
+      ],
       "sample": [
        {
         "file": "radix-themes/packages/radix-ui-themes/src/components/segmented-control.css",
@@ -3265,6 +3353,32 @@
        "nudge ≤ 2px": 5,
        "raw colour": 2
       },
+      "topRepeated": [
+       [
+        "box-shadow:",
+        32
+       ],
+       [
+        "box-shadow: inset 0 0 0 1px var(--accent-a8)",
+        5
+       ],
+       [
+        "box-shadow: inset 0 0 0 1px var(--gray-a7)",
+        4
+       ],
+       [
+        "box-shadow: inset 0 0 0 1px var(--gray-a6)",
+        4
+       ],
+       [
+        "box-shadow: inset 0 0 0 1px var(--focus-a5), inset 0 0 0 1px var(--gray-a5)",
+        4
+       ],
+       [
+        "border-radius: 100%",
+        3
+       ]
+      ],
       "sample": [
        {
         "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
@@ -4050,6 +4164,32 @@
        "nudge ≤ 2px": 5,
        "raw colour": 2
       },
+      "topRepeated": [
+       [
+        "box-shadow:",
+        32
+       ],
+       [
+        "border-radius: max(var(--radius-2), var(--radius-full))",
+        6
+       ],
+       [
+        "box-shadow: inset 0 0 0 1px var(--accent-a8)",
+        5
+       ],
+       [
+        "box-shadow: inset 0 0 0 1px var(--gray-a7)",
+        4
+       ],
+       [
+        "box-shadow: inset 0 0 0 1px var(--gray-a6)",
+        4
+       ],
+       [
+        "border-radius: max(var(--radius-3), var(--radius-full))",
+        4
+       ]
+      ],
       "sample": [
        {
         "file": "radix-themes/packages/radix-ui-themes/src/components/_internal/base-button.css",
@@ -5394,6 +5534,32 @@
        "derived-from-var": 12,
        "raw colour": 14
       },
+      "topRepeated": [
+       [
+        "font-size: 12px",
+        13
+       ],
+       [
+        "margin: 0px",
+        9
+       ],
+       [
+        "inset: 4px",
+        6
+       ],
+       [
+        "padding-inline-end: calc(40px - 12px)",
+        6
+       ],
+       [
+        "left: 0px",
+        5
+       ],
+       [
+        "padding: 0px",
+        5
+       ]
+      ],
       "sample": [
        {
         "file": "npm/tldraw/package/src/lib/ui.css",
@@ -6737,6 +6903,32 @@
        "nudge ≤ 2px": 19,
        "raw colour": 14
       },
+      "topRepeated": [
+       [
+        "font-size: 12px",
+        13
+       ],
+       [
+        "inset: 4px",
+        6
+       ],
+       [
+        "background: linear-gradient(270deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+        4
+       ],
+       [
+        "border-radius: 10px",
+        3
+       ],
+       [
+        "margin-left: -2px",
+        3
+       ],
+       [
+        "padding-inline-end: calc(40px - 12px)",
+        3
+       ]
+      ],
       "sample": [
        {
         "file": "npm/tldraw/package/src/lib/ui.css",
@@ -7553,6 +7745,32 @@
        "negative margin > 2px": 3,
        "raw colour": 14
       },
+      "topRepeated": [
+       [
+        "font-size: 12px",
+        13
+       ],
+       [
+        "background: linear-gradient(270deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+        4
+       ],
+       [
+        "border-radius: 10px",
+        3
+       ],
+       [
+        "padding-inline-end: calc(40px - 12px)",
+        3
+       ],
+       [
+        "background: linear-gradient(0deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+        3
+       ],
+       [
+        "background: linear-gradient(180deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+        3
+       ]
+      ],
       "sample": [
        {
         "file": "npm/tldraw/package/src/lib/ui.css",
@@ -8076,6 +8294,32 @@
        "negative margin > 2px": 3,
        "raw colour": 14
       },
+      "topRepeated": [
+       [
+        "font-size: 12px",
+        13
+       ],
+       [
+        "inset: 4px",
+        6
+       ],
+       [
+        "background: linear-gradient(270deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+        4
+       ],
+       [
+        "border-radius: 10px",
+        3
+       ],
+       [
+        "padding-inline-end: calc(40px - 12px)",
+        3
+       ],
+       [
+        "background: linear-gradient(0deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+        3
+       ]
+      ],
       "sample": [
        {
         "file": "npm/tldraw/package/src/lib/ui.css",
@@ -8720,6 +8964,32 @@
        "zero-with-unit": 27,
        "negative margin > 2px": 3
       },
+      "topRepeated": [
+       [
+        "font-size: 12px",
+        13
+       ],
+       [
+        "margin: 0px",
+        9
+       ],
+       [
+        "padding: 0px",
+        5
+       ],
+       [
+        "padding: 0px var(--tl-space-4)",
+        3
+       ],
+       [
+        "margin-left: -2px",
+        3
+       ],
+       [
+        "border-radius: 10px",
+        3
+       ]
+      ],
       "sample": [
        {
         "file": "npm/tldraw/package/src/lib/ui.css",
@@ -9540,6 +9810,32 @@
        "zero-with-unit": 27,
        "negative margin > 2px": 3
       },
+      "topRepeated": [
+       [
+        "font-size: 12px",
+        13
+       ],
+       [
+        "margin: 0px",
+        9
+       ],
+       [
+        "background: linear-gradient(270deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+        8
+       ],
+       [
+        "background: linear-gradient(0deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+        6
+       ],
+       [
+        "background: linear-gradient(",
+        6
+       ],
+       [
+        "background: linear-gradient(180deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+        6
+       ]
+      ],
       "sample": [
        {
         "file": "npm/tldraw/package/src/lib/ui.css",
@@ -10626,6 +10922,32 @@
        "derived-from-var": 12,
        "negative margin > 2px": 4
       },
+      "topRepeated": [
+       [
+        "border-color: #0000",
+        13
+       ],
+       [
+        "border-radius: 0 0 100px 100px",
+        8
+       ],
+       [
+        "border-radius: 100px 100px 0 0",
+        8
+       ],
+       [
+        "border-radius: 2px",
+        7
+       ],
+       [
+        "border: 1px solid #0000",
+        6
+       ],
+       [
+        "background-color: #0000",
+        6
+       ]
+      ],
       "sample": [
        {
         "file": "npm/ckeditor5/package/dist/ckeditor5.css",
@@ -12244,6 +12566,32 @@
        "negative margin > 2px": 4,
        "derived-from-var": 6
       },
+      "topRepeated": [
+       [
+        "border-color: #0000",
+        13
+       ],
+       [
+        "border-radius: 2px",
+        7
+       ],
+       [
+        "border: 1px solid #0000",
+        6
+       ],
+       [
+        "background-color: #0000",
+        6
+       ],
+       [
+        "outline: 1px solid #ffffff80",
+        4
+       ],
+       [
+        "color: #fff",
+        4
+       ]
+      ],
       "sample": [
        {
         "file": "npm/ckeditor5/package/dist/ckeditor5.css",
@@ -13545,6 +13893,32 @@
        "negative margin > 2px": 4,
        "derived-from-var": 6
       },
+      "topRepeated": [
+       [
+        "border-color: #0000",
+        13
+       ],
+       [
+        "border: 1px solid #0000",
+        6
+       ],
+       [
+        "background-color: #0000",
+        6
+       ],
+       [
+        "outline: 1px solid #ffffff80",
+        4
+       ],
+       [
+        "color: #fff",
+        4
+       ],
+       [
+        "border-radius: 0 0 100px 100px",
+        4
+       ]
+      ],
       "sample": [
        {
         "file": "npm/ckeditor5/package/dist/ckeditor5.css",
@@ -14511,6 +14885,32 @@
        "negative margin > 2px": 4,
        "derived-from-var": 6
       },
+      "topRepeated": [
+       [
+        "border-color: #0000",
+        13
+       ],
+       [
+        "border: 1px solid #0000",
+        6
+       ],
+       [
+        "background-color: #0000",
+        6
+       ],
+       [
+        "outline: 1px solid #ffffff80",
+        4
+       ],
+       [
+        "color: #fff",
+        4
+       ],
+       [
+        "border-radius: 0 0 100px 100px",
+        4
+       ]
+      ],
       "sample": [
        {
         "file": "npm/ckeditor5/package/dist/ckeditor5.css",
@@ -15576,6 +15976,32 @@
        "em-relative": 27,
        "negative margin > 2px": 4
       },
+      "topRepeated": [
+       [
+        "border-color: #0000",
+        13
+       ],
+       [
+        "box-shadow: var(--ck-drop-shadow), 0 0",
+        8
+       ],
+       [
+        "border-radius: 2px",
+        7
+       ],
+       [
+        "border: 1px solid #0000",
+        6
+       ],
+       [
+        "background-color: #0000",
+        6
+       ],
+       [
+        "box-shadow: var(--ck-focus-outer-shadow), 0 0",
+        5
+       ]
+      ],
       "sample": [
        {
         "file": "npm/ckeditor5/package/dist/ckeditor5.css",
@@ -17131,6 +17557,32 @@
        "em-relative": 27,
        "negative margin > 2px": 4
       },
+      "topRepeated": [
+       [
+        "border-color: #0000",
+        13
+       ],
+       [
+        "box-shadow: var(--ck-drop-shadow), 0 0",
+        8
+       ],
+       [
+        "border-radius: 2px",
+        7
+       ],
+       [
+        "border: 1px solid #0000",
+        6
+       ],
+       [
+        "background-color: #0000",
+        6
+       ],
+       [
+        "box-shadow: var(--ck-focus-outer-shadow), 0 0",
+        5
+       ]
+      ],
       "sample": [
        {
         "file": "npm/ckeditor5/package/dist/ckeditor5.css",
@@ -19107,6 +19559,32 @@
        "em-relative": 4,
        "negative margin > 2px": 5
       },
+      "topRepeated": [
+       [
+        "top: 4px",
+        12
+       ],
+       [
+        "left: 4px",
+        11
+       ],
+       [
+        "background: linear-gradient(to left, #ff0000 3%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)",
+        7
+       ],
+       [
+        "top: 1px",
+        5
+       ],
+       [
+        "border-radius: 2px",
+        5
+       ],
+       [
+        "right: -3px",
+        4
+       ]
+      ],
       "sample": [
        {
         "file": "npm/ag-grid-community/package/styles/ag-grid.css",
@@ -20402,6 +20880,32 @@
        "nudge ≤ 2px": 18,
        "negative margin > 2px": 5
       },
+      "topRepeated": [
+       [
+        "top: 4px",
+        12
+       ],
+       [
+        "left: 4px",
+        11
+       ],
+       [
+        "background: linear-gradient(to left, #ff0000 3%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)",
+        7
+       ],
+       [
+        "top: 1px",
+        5
+       ],
+       [
+        "border-radius: 2px",
+        5
+       ],
+       [
+        "right: -3px",
+        4
+       ]
+      ],
       "sample": [
        {
         "file": "npm/ag-grid-community/package/styles/ag-grid.css",
@@ -21436,6 +21940,32 @@
        "raw length > 2px": 33,
        "negative margin > 2px": 5
       },
+      "topRepeated": [
+       [
+        "background: linear-gradient(to left, #ff0000 3%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)",
+        7
+       ],
+       [
+        "border-radius: 5px",
+        3
+       ],
+       [
+        "background-image: linear-gradient(to right, white, rgba(204, 154, 129, 0))",
+        2
+       ],
+       [
+        "background-image: linear-gradient(to top, black, rgba(204, 154, 129, 0))",
+        2
+       ],
+       [
+        "border: 2px solid white",
+        2
+       ],
+       [
+        "border-radius: 12px",
+        2
+       ]
+      ],
       "sample": [
        {
         "file": "npm/ag-grid-community/package/styles/ag-grid.css",
@@ -21862,6 +22392,32 @@
        "positional": 50,
        "negative margin > 2px": 5
       },
+      "topRepeated": [
+       [
+        "top: 4px",
+        12
+       ],
+       [
+        "left: 4px",
+        11
+       ],
+       [
+        "background: linear-gradient(to left, #ff0000 3%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)",
+        7
+       ],
+       [
+        "right: -3px",
+        4
+       ],
+       [
+        "left: -3px",
+        4
+       ],
+       [
+        "border-radius: 5px",
+        3
+       ]
+      ],
       "sample": [
        {
         "file": "npm/ag-grid-community/package/styles/ag-grid.css",
@@ -22641,6 +23197,32 @@
        "em-relative": 4,
        "negative margin > 2px": 5
       },
+      "topRepeated": [
+       [
+        "border-radius: 2px",
+        5
+       ],
+       [
+        "border-radius: 5px",
+        3
+       ],
+       [
+        "border-radius: 1px",
+        3
+       ],
+       [
+        "background: linear-gradient(to bottom, var(--ag-internal-spectrum-alpha-color), var(--ag-internal-spectrum-alpha-color)) white",
+        2
+       ],
+       [
+        "border: 2px solid white",
+        2
+       ],
+       [
+        "background: black",
+        2
+       ]
+      ],
       "sample": [
        {
         "file": "npm/ag-grid-community/package/styles/ag-grid.css",
@@ -23217,6 +23799,32 @@
        "em-relative": 4,
        "negative margin > 2px": 5
       },
+      "topRepeated": [
+       [
+        "margin-left: calc(var(--ag-grid-size) * 2)",
+        7
+       ],
+       [
+        "margin-right: calc(var(--ag-grid-size) * 2)",
+        5
+       ],
+       [
+        "gap: calc(var(--ag-grid-size) * 2)",
+        5
+       ],
+       [
+        "border-radius: 2px",
+        5
+       ],
+       [
+        "background: color-mix(in srgb, var(--ag-border-color) 35%, transparent)",
+        4
+       ],
+       [
+        "padding-right: calc(var(--ag-icon-size) + var(--ag-grid-size) * 2)",
+        4
+       ]
+      ],
       "sample": [
        {
         "file": "npm/ag-grid-community/package/styles/ag-grid.css",

@@ -1,0 +1,21 @@
+{
+ "url": "http://127.0.0.1:42205/ext/regress/capture-reach-rtl.html",
+ "mode": "as-served",
+ "width": 1280,
+ "summary": {
+  "FAIL": 0,
+  "WARN": 0,
+  "INFO": 0
+ },
+ "mirror": null,
+ "css": {
+  "rules": 6,
+  "physicalRules": 0,
+  "overrideRules": 0,
+  "logicalRules": 1
+ },
+ "keys": [],
+ "icons": [],
+ "findings": [],
+ "ms": 215
+}

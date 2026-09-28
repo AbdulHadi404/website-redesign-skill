@@ -1,0 +1,1190 @@
+{
+ "judge": "the builder of the moves (Claude, this stream), not blind to what the moves are; blind to which move and which side each sheet shows (sheet ids and sides randomised, key not opened until all 104 sheets were judged)",
+ "method": "Each captures/blind/p*.jpg sheet viewed once, in id order, as the image viewer shows it: 1440 sheets at about 0.6x (two 1440 px panels in an 1850 px image), 390 sheets at about 2.2x CSS px (phone captures at DPR 2), zoom sheets at 2x the capture. For each: seen = any difference noticed at that size without flicking; better = the side that looks more finished, '=' when no difference or no preference. Scored against the key afterwards (run.mjs, results.json blindScore).",
+ "keySnapshot": {
+  "p01": {
+   "variant": "focusring",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p02": {
+   "variant": "focusring",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "B"
+  },
+  "p03": {
+   "variant": "leading",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "A"
+  },
+  "p04": {
+   "variant": "depth",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "A"
+  },
+  "p05": {
+   "variant": "align",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "B"
+  },
+  "p06": {
+   "variant": "iconstroke",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p07": {
+   "variant": "opsz",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "p08": {
+   "variant": "rhythm",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "B"
+  },
+  "p09": {
+   "variant": "leading",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "B"
+  },
+  "p10": {
+   "variant": "opsz",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "A"
+  },
+  "p11": {
+   "variant": "focusring",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "B"
+  },
+  "p12": {
+   "variant": "scale",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p13": {
+   "variant": "squircle",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "p14": {
+   "variant": "radius",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "B"
+  },
+  "p15": {
+   "variant": "border",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "A"
+  },
+  "p16": {
+   "variant": "squircle",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "B"
+  },
+  "p17": {
+   "variant": "radius",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p18": {
+   "variant": "radius",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "A"
+  },
+  "p19": {
+   "variant": "tnum",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "B"
+  },
+  "p20": {
+   "variant": "wrap",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "A"
+  },
+  "p21": {
+   "variant": "hang",
+   "reference": "base",
+   "view": "window-1440 .pricing",
+   "variantSide": "B"
+  },
+  "p22": {
+   "variant": "leading",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "B"
+  },
+  "p23": {
+   "variant": "border",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "A"
+  },
+  "p24": {
+   "variant": "tnum",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p25": {
+   "variant": "tracking",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "B"
+  },
+  "p26": {
+   "variant": "scale",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "B"
+  },
+  "p27": {
+   "variant": "grain",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p28": {
+   "variant": "depth",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "B"
+  },
+  "p29": {
+   "variant": "rhythm",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "p30": {
+   "variant": "scale",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "B"
+  },
+  "p31": {
+   "variant": "accent",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p32": {
+   "variant": "shadow",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p33": {
+   "variant": "shadow",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "B"
+  },
+  "p34": {
+   "variant": "grain",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "B"
+  },
+  "p35": {
+   "variant": "border",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "p36": {
+   "variant": "tracking",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p37": {
+   "variant": "radius",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p38": {
+   "variant": "focusring",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "p39": {
+   "variant": "null",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p40": {
+   "variant": "imgoutline",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "p41": {
+   "variant": "squircle",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "B"
+  },
+  "p42": {
+   "variant": "crop",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "p43": {
+   "variant": "buttons",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "p44": {
+   "variant": "squircle",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p45": {
+   "variant": "depth",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "p46": {
+   "variant": "align",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p47": {
+   "variant": "radius",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "A"
+  },
+  "p48": {
+   "variant": "opsz",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "A"
+  },
+  "p49": {
+   "variant": "grain",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "B"
+  },
+  "p50": {
+   "variant": "wrap",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p51": {
+   "variant": "leading",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "p52": {
+   "variant": "accent",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "B"
+  },
+  "p53": {
+   "variant": "grain",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p54": {
+   "variant": "crop",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "p55": {
+   "variant": "tnum",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p56": {
+   "variant": "wrap",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p57": {
+   "variant": "rhythm",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "A"
+  },
+  "p58": {
+   "variant": "buttons",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "B"
+  },
+  "p59": {
+   "variant": "align",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "A"
+  },
+  "p60": {
+   "variant": "smoothing",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "p61": {
+   "variant": "tnum",
+   "reference": "base",
+   "view": "window-1440 .pricing",
+   "variantSide": "B"
+  },
+  "p62": {
+   "variant": "neutrals",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p63": {
+   "variant": "hang",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "B"
+  },
+  "p64": {
+   "variant": "hang",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "p65": {
+   "variant": "hang",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p66": {
+   "variant": "iconstroke",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "A"
+  },
+  "p67": {
+   "variant": "border",
+   "reference": "base",
+   "view": "window-1440 .pricing",
+   "variantSide": "A"
+  },
+  "p68": {
+   "variant": "tnum",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "A"
+  },
+  "p69": {
+   "variant": "iconstroke",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p70": {
+   "variant": "scale",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "B"
+  },
+  "p71": {
+   "variant": "rhythm",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "A"
+  },
+  "p72": {
+   "variant": "wrap",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "B"
+  },
+  "p73": {
+   "variant": "tracking",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "B"
+  },
+  "p74": {
+   "variant": "border",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "p75": {
+   "variant": "tracking",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "A"
+  },
+  "p76": {
+   "variant": "opsz",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p77": {
+   "variant": "iconalign",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "p78": {
+   "variant": "wrap",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "B"
+  },
+  "p79": {
+   "variant": "squircle",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "B"
+  },
+  "p80": {
+   "variant": "iconalign",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "p81": {
+   "variant": "opsz",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "B"
+  },
+  "p82": {
+   "variant": "iconalign",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "B"
+  },
+  "p83": {
+   "variant": "null",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "p84": {
+   "variant": "shadow",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p85": {
+   "variant": "accent",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "B"
+  },
+  "p86": {
+   "variant": "iconstroke",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "B"
+  },
+  "p87": {
+   "variant": "grain",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "A"
+  },
+  "p88": {
+   "variant": "iconalign",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "A"
+  },
+  "p89": {
+   "variant": "accent",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "p90": {
+   "variant": "leading",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "p91": {
+   "variant": "neutrals",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p92": {
+   "variant": "imgoutline",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "p93": {
+   "variant": "tracking",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p94": {
+   "variant": "align",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p95": {
+   "variant": "crop",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "B"
+  },
+  "p96": {
+   "variant": "buttons",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "A"
+  },
+  "p97": {
+   "variant": "iconstroke",
+   "reference": "base",
+   "view": "zoom-390",
+   "variantSide": "A"
+  },
+  "p98": {
+   "variant": "depth",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "p99": {
+   "variant": "scale",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "p100": {
+   "variant": "align",
+   "reference": "base",
+   "view": "zoom-1440",
+   "variantSide": "A"
+  },
+  "p101": {
+   "variant": "rhythm",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "p102": {
+   "variant": "accent",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "B"
+  },
+  "p103": {
+   "variant": "buttons",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "p104": {
+   "variant": "smoothing",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  }
+ },
+ "sheets": {
+  "p01": {
+   "seen": true,
+   "better": "B",
+   "note": "a different ring on the main button: B's is a coloured ring with a gap"
+  },
+  "p02": {
+   "seen": true,
+   "better": "B",
+   "note": "A: dark default ring hugging the button; B: coloured ring with a gap"
+  },
+  "p03": {
+   "seen": true,
+   "better": "=",
+   "note": "spacing between the paragraph, list and buttons differs"
+  },
+  "p04": {
+   "seen": true,
+   "better": "=",
+   "note": "only a grey shape at the top edge differs"
+  },
+  "p05": {
+   "seen": true,
+   "better": "=",
+   "note": "labels sit higher in their buttons in B"
+  },
+  "p06": {
+   "seen": true,
+   "better": "B",
+   "note": "B's icons lighter and consistent"
+  },
+  "p07": {
+   "seen": true,
+   "better": "=",
+   "note": "text slightly wider in B; a list item breaks differently"
+  },
+  "p08": {
+   "seen": true,
+   "better": "=",
+   "note": "different spacing above the button"
+  },
+  "p09": {
+   "seen": true,
+   "better": "=",
+   "note": "labels sit at different heights"
+  },
+  "p10": {
+   "seen": true,
+   "better": "=",
+   "note": "headline letterforms slightly wider in B"
+  },
+  "p11": {
+   "seen": true,
+   "better": "B",
+   "note": "coloured ring with a gap vs default ring"
+  },
+  "p12": {
+   "seen": true,
+   "better": "A",
+   "note": "A's headline larger and breaks without a lone word"
+  },
+  "p13": {
+   "seen": false,
+   "better": "="
+  },
+  "p14": {
+   "seen": false,
+   "better": "="
+  },
+  "p15": {
+   "seen": true,
+   "better": "A",
+   "note": "A's secondary button edge lighter"
+  },
+  "p16": {
+   "seen": true,
+   "better": "A",
+   "note": "B: red fill pokes out at the ends of the focus ring"
+  },
+  "p17": {
+   "seen": false,
+   "better": "="
+  },
+  "p18": {
+   "seen": true,
+   "better": "=",
+   "note": "header button edge slightly lighter in one"
+  },
+  "p19": {
+   "seen": true,
+   "better": "=",
+   "note": "column positions shift slightly"
+  },
+  "p20": {
+   "seen": true,
+   "better": "A",
+   "note": "A's quote lines are even"
+  },
+  "p21": {
+   "seen": true,
+   "better": "=",
+   "note": "bullets sit further left in B"
+  },
+  "p22": {
+   "seen": true,
+   "better": "=",
+   "note": "the quote is set tighter in B"
+  },
+  "p23": {
+   "seen": false,
+   "better": "="
+  },
+  "p24": {
+   "seen": true,
+   "better": "=",
+   "note": "only by flicking: chips and column positions differ"
+  },
+  "p25": {
+   "seen": true,
+   "better": "=",
+   "note": "heading narrower and quote breaks differently in B"
+  },
+  "p26": {
+   "seen": true,
+   "better": "=",
+   "note": "different spacing"
+  },
+  "p27": {
+   "seen": true,
+   "better": "=",
+   "note": "faint texture on A's hero ground, only on a close look"
+  },
+  "p28": {
+   "seen": true,
+   "better": "=",
+   "note": "B has a darker plane under the notification"
+  },
+  "p29": {
+   "seen": true,
+   "better": "A",
+   "note": "A has more space around the hero"
+  },
+  "p30": {
+   "seen": true,
+   "better": "=",
+   "note": "B's headline larger"
+  },
+  "p31": {
+   "seen": true,
+   "better": "B",
+   "note": "B uses the accent only on the main button"
+  },
+  "p32": {
+   "seen": true,
+   "better": "B",
+   "note": "B's notification casts a softer, deeper shadow"
+  },
+  "p33": {
+   "seen": false,
+   "better": "="
+  },
+  "p34": {
+   "seen": true,
+   "better": "=",
+   "note": "B has visible texture"
+  },
+  "p35": {
+   "seen": false,
+   "better": "="
+  },
+  "p36": {
+   "seen": true,
+   "better": "A",
+   "note": "A's headline set slightly tighter"
+  },
+  "p37": {
+   "seen": false,
+   "better": "="
+  },
+  "p38": {
+   "seen": true,
+   "better": "B",
+   "note": "a different focus ring on the primary button: B's is a solid ring with a gap"
+  },
+  "p39": {
+   "seen": false,
+   "better": "="
+  },
+  "p40": {
+   "seen": false,
+   "better": "="
+  },
+  "p41": {
+   "seen": true,
+   "better": "A",
+   "note": "B: the button's fill shows outside the focus ring at the corner (ring and fill have different corner shapes)"
+  },
+  "p42": {
+   "seen": false,
+   "better": "="
+  },
+  "p43": {
+   "seen": true,
+   "better": "A",
+   "note": "A's buttons are larger and more generous"
+  },
+  "p44": {
+   "seen": true,
+   "better": "B",
+   "note": "A: red fill pokes out of the focus ring at both ends"
+  },
+  "p45": {
+   "seen": true,
+   "better": "A",
+   "note": "B has a grey slab behind the panel's right edge; at 390 it reads as a stray shape"
+  },
+  "p46": {
+   "seen": true,
+   "better": "B",
+   "note": "B: section heading on the column edge, logo on the content edge"
+  },
+  "p47": {
+   "seen": true,
+   "better": "=",
+   "note": "chips: pill vs rounded rectangle; no preference"
+  },
+  "p48": {
+   "seen": true,
+   "better": "=",
+   "note": "one card's text wraps differently"
+  },
+  "p49": {
+   "seen": false,
+   "better": "="
+  },
+  "p50": {
+   "seen": true,
+   "better": "A",
+   "note": "A's headline has no one-word last line"
+  },
+  "p51": {
+   "seen": true,
+   "better": "B",
+   "note": "B's headline is set tighter"
+  },
+  "p52": {
+   "seen": true,
+   "better": "B",
+   "note": "selected chip neutral instead of accent"
+  },
+  "p53": {
+   "seen": false,
+   "better": "="
+  },
+  "p54": {
+   "seen": false,
+   "better": "="
+  },
+  "p55": {
+   "seen": true,
+   "better": "=",
+   "note": "the totals row spacing differs slightly"
+  },
+  "p56": {
+   "seen": true,
+   "better": "B",
+   "note": "B's headline lines are even"
+  },
+  "p57": {
+   "seen": true,
+   "better": "A",
+   "note": "A has more space around the section"
+  },
+  "p58": {
+   "seen": true,
+   "better": "=",
+   "note": "button label weight differs, barely"
+  },
+  "p59": {
+   "seen": true,
+   "better": "A",
+   "note": "A: heading and lede on the column edge"
+  },
+  "p60": {
+   "seen": false,
+   "better": "="
+  },
+  "p61": {
+   "seen": false,
+   "better": "="
+  },
+  "p62": {
+   "seen": true,
+   "better": "B",
+   "note": "B's hero ground is warmer"
+  },
+  "p63": {
+   "seen": true,
+   "better": "=",
+   "note": "crop: the tick column moves out of the frame in B"
+  },
+  "p64": {
+   "seen": true,
+   "better": "A",
+   "note": "A's list text lines up with the paragraph above"
+  },
+  "p65": {
+   "seen": false,
+   "better": "="
+  },
+  "p66": {
+   "seen": false,
+   "better": "="
+  },
+  "p67": {
+   "seen": false,
+   "better": "="
+  },
+  "p68": {
+   "seen": true,
+   "better": "A",
+   "note": "A's figures line up in columns"
+  },
+  "p69": {
+   "seen": true,
+   "better": "A",
+   "note": "A's ticks lighter and larger, closer to the text weight"
+  },
+  "p70": {
+   "seen": true,
+   "better": "B",
+   "note": "B's section heading larger"
+  },
+  "p71": {
+   "seen": true,
+   "better": "B",
+   "note": "B's headline set tighter"
+  },
+  "p72": {
+   "seen": true,
+   "better": "=",
+   "note": "different line breaks in the headline"
+  },
+  "p73": {
+   "seen": true,
+   "better": "B",
+   "note": "B's headline slightly tighter"
+  },
+  "p74": {
+   "seen": false,
+   "better": "="
+  },
+  "p75": {
+   "seen": true,
+   "better": "=",
+   "note": "glyph widths differ in the headline"
+  },
+  "p76": {
+   "seen": true,
+   "better": "=",
+   "note": "buttons and table text differ slightly"
+  },
+  "p77": {
+   "seen": false,
+   "better": "=",
+   "note": "only by flicking: button labels a pixel or two lower in B"
+  },
+  "p78": {
+   "seen": true,
+   "better": "=",
+   "note": "different headline breaks"
+  },
+  "p79": {
+   "seen": false,
+   "better": "="
+  },
+  "p80": {
+   "seen": false,
+   "better": "="
+  },
+  "p81": {
+   "seen": true,
+   "better": "=",
+   "note": "a list item breaks differently"
+  },
+  "p82": {
+   "seen": true,
+   "better": "=",
+   "note": "button label and play glyph shift a pixel"
+  },
+  "p83": {
+   "seen": false,
+   "better": "="
+  },
+  "p84": {
+   "seen": false,
+   "better": "="
+  },
+  "p85": {
+   "seen": true,
+   "better": "A",
+   "note": "B's Publish button is outlined; the panel's own primary action loses weight"
+  },
+  "p86": {
+   "seen": true,
+   "better": "B",
+   "note": "B's three icons are one family"
+  },
+  "p87": {
+   "seen": true,
+   "better": "=",
+   "note": "A has visible texture"
+  },
+  "p88": {
+   "seen": true,
+   "better": "=",
+   "note": "labels shift vertically in their boxes"
+  },
+  "p89": {
+   "seen": true,
+   "better": "B",
+   "note": "B uses the accent only on the main button"
+  },
+  "p90": {
+   "seen": true,
+   "better": "A",
+   "note": "A's headline set tighter"
+  },
+  "p91": {
+   "seen": true,
+   "better": "A",
+   "note": "A's hero ground is warmer"
+  },
+  "p92": {
+   "seen": false,
+   "better": "="
+  },
+  "p93": {
+   "seen": true,
+   "better": "A",
+   "note": "B's headline breaks leave 'you go' on its own"
+  },
+  "p94": {
+   "seen": true,
+   "better": "A",
+   "note": "A's headline set tighter"
+  },
+  "p95": {
+   "seen": true,
+   "better": "B",
+   "note": "B's crop keeps the whole cup rim"
+  },
+  "p96": {
+   "seen": true,
+   "better": "=",
+   "note": "corner shapes of the chips and field differ"
+  },
+  "p97": {
+   "seen": false,
+   "better": "="
+  },
+  "p98": {
+   "seen": true,
+   "better": "B",
+   "note": "B stages the panel on a darker plane with the notification overlapping"
+  },
+  "p99": {
+   "seen": true,
+   "better": "B",
+   "note": "A's bigger headline breaks into four lines with 'go' alone"
+  },
+  "p100": {
+   "seen": true,
+   "better": "=",
+   "note": "spacing differs"
+  },
+  "p101": {
+   "seen": true,
+   "better": "A",
+   "note": "A has more space between the groups"
+  },
+  "p102": {
+   "seen": true,
+   "better": "B",
+   "note": "B's feature icons are neutral"
+  },
+  "p103": {
+   "seen": true,
+   "better": "B",
+   "note": "B's button labels are bolder"
+  },
+  "p104": {
+   "seen": false,
+   "better": "="
+  }
+ },
+ "stacks": {
+  "stack-top5": [
+   "rhythm",
+   "scale",
+   "align",
+   "leading",
+   "neutrals"
+  ],
+  "stack-bottom5": [
+   "radius",
+   "border",
+   "iconalign",
+   "squircle",
+   "shadow"
+  ],
+  "stack-rest": [
+   "accent",
+   "depth",
+   "crop",
+   "shadow",
+   "border",
+   "radius",
+   "squircle",
+   "grain",
+   "imgoutline",
+   "iconstroke",
+   "iconalign",
+   "buttons",
+   "focusring",
+   "wrap",
+   "tracking",
+   "tnum",
+   "opsz",
+   "smoothing",
+   "hang"
+  ],
+  "stack-all": [
+   "scale",
+   "rhythm",
+   "align",
+   "depth",
+   "accent",
+   "crop",
+   "shadow",
+   "border",
+   "radius",
+   "squircle",
+   "grain",
+   "imgoutline",
+   "neutrals",
+   "iconstroke",
+   "iconalign",
+   "buttons",
+   "focusring",
+   "wrap",
+   "tracking",
+   "leading",
+   "tnum",
+   "opsz",
+   "smoothing",
+   "hang"
+  ]
+ },
+ "stackRule": "top5: seen in both first viewports (1440 at 0.6x and 390) with the largest glance measure; bottom5: moves that change the first viewport but were seen in at most one of the two first-viewport sheets, smallest glance measure first (excluded: the no-change control, font smoothing, which is a no-op off macOS, and crop and image hairline, which do not reach the first viewport); rest: every move except the top five; all: every move except the control."
+}

@@ -1,0 +1,31 @@
+{
+ "url": "http://127.0.0.1:42205/ext/regress/parity/old.html",
+ "mode": "as-served",
+ "width": 1280,
+ "summary": {
+  "FAIL": 1,
+  "WARN": 0,
+  "INFO": 0
+ },
+ "mirror": null,
+ "css": {
+  "rules": 1,
+  "physicalRules": 0,
+  "overrideRules": 0,
+  "logicalRules": 0
+ },
+ "keys": [],
+ "icons": [],
+ "findings": [
+  {
+   "level": "FAIL",
+   "check": "bidi",
+   "message": "LTR data shown in scrambled order in RTL text — wrap in <bdi dir=\"ltr\"> or format with Intl",
+   "count": 1,
+   "examples": [
+    "span: \"+12.4%\" reads as \"% 12 . 4 +\""
+   ]
+  }
+ ],
+ "ms": 253
+}

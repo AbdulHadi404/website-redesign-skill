@@ -23,7 +23,9 @@ export const FONTS = [
 // UI strings, from ordinary to worst case. ar_stack stacks hamza + haraka on alef above and below, shadda + fatha.
 export const STRINGS = {
   la: { latin: 'Hxgjpy', latin_acc: 'ÉÅÇgjpy' },
-  ar: { ar_plain: 'الخدمات الإلكترونية', ar_vocal: 'كُتُبٌ جَمِيلَةٌ', ar_stack: 'أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ' },
+  // two strings per category: the second is heavy on descenders and below-marks (kasra, kasratan), which the first lacks
+  ar: { ar_plain: 'الخدمات الإلكترونية', ar_plain2: 'جميع الحقوق محفوظة ويمكن مراجعتها', ar_vocal: 'كُتُبٌ جَمِيلَةٌ', ar_vocal2: 'يُرِيدُ جِيرَانِي عِنَبًا',
+    ar_stack: 'أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ', ar_stack2: 'إِنَّ جِئْتُمْ بِأَسْئِلَةٍ لِأُمِّي' },
   ur: { ur_plain: 'اردو زبان میں خوش آمدید', ar_stack: 'أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ' },
 };
 const LH = [1.0, 1.1, 1.2, 1.25, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 2.0, 2.2];
@@ -137,12 +139,28 @@ export async function run(browser, base) {
       });
       const firstSafe = sweep.find((r) => r.overTopPx <= 1 && r.overBottomPx <= 1)?.L ?? null;
       const maxErr = Math.max(...sweep.map((r) => Math.max(Math.abs(r.overTopPx - r.predTopPx), Math.abs(r.overBottomPx - r.predBottomPx))));
+      // Windows (DirectWrite) builds the content area from winAscent/winDescent unless USE_TYPO_METRICS is set (then
+      // typo) [K]; macOS (CoreText) uses hhea like FreeType here [K]. Same ink, other A/D: the floor on Windows.
+      const F = rec.file, Aw = F.useTypoMetrics ? F.typoAscender : F.winAscent, Dw = F.useTypoMetrics ? F.typoDescender : F.winDescent;
+      const lminWin = Math.max(2 * a.inkAscent - Aw + Dw, 2 * a.inkDescent - Dw + Aw, a.inkAscent + a.inkDescent);
       rec.strings[k] = {
         text: s, inkAscent: +a.inkAscent.toFixed(3), inkDescent: +a.inkDescent.toFixed(3), lineAscent: +A.toFixed(3), lineDescent: +D.toFixed(3),
-        minLineHeight: +lmin.toFixed(2), firstSafeInSweep: firstSafe, probeMaxErrorPx60: +maxErr.toFixed(1),
+        minLineHeight: +lmin.toFixed(2), minLineHeightWindows: +lminWin.toFixed(2), firstSafeInSweep: firstSafe, probeMaxErrorPx60: +maxErr.toFixed(1),
         fontkitVsCanvasEm: fkInk[k].error ? fkInk[k].error : +Math.max(Math.abs(fkInk[k].inkAscent - a.inkAscent), Math.abs(fkInk[k].inkDescent - a.inkDescent)).toFixed(3),
         clipAt: Object.fromEntries(sweep.filter((r) => [1.0, 1.2, 1.5].includes(r.L)).map((r) => [r.L, { topPx60: r.overTopPx, bottomPx60: r.overBottomPx }])),
       };
+    }
+    // which table this engine took the line box from (hhea / typo / win), from the canvas font box
+    const s0 = Object.values(rec.strings)[0], F = rec.file, near = (x, y) => Math.abs(x - y) < 0.006;
+    rec.linuxMetricsFrom = near(s0.lineAscent, F.hheaAscent) && near(s0.lineDescent, F.hheaDescent) ? 'hhea' : near(s0.lineAscent, F.typoAscender) && near(s0.lineDescent, F.typoDescender) ? 'typo' : near(s0.lineAscent, F.winAscent) && near(s0.lineDescent, F.winDescent) ? 'win' : 'other';
+    // conservative floors per content class: the max over its strings, and each class includes the lighter ones
+    if (script === 'ar') {
+      const mx = (ks, f) => Math.max(...ks.map((x) => rec.strings[x][f]));
+      rec.floors = {};
+      for (const [f, tag] of [['minLineHeight', 'linuxMac'], ['minLineHeightWindows', 'windows']]) {
+        const plain = mx(['ar_plain', 'ar_plain2'], f), vocal = Math.max(plain, mx(['ar_vocal', 'ar_vocal2'], f)), stacked = Math.max(vocal, mx(['ar_stack', 'ar_stack2'], f));
+        rec.floors[tag] = { plain: +plain.toFixed(2), vocalised: +vocal.toFixed(2), stacked: +stacked.toFixed(2) };
+      }
     }
     out.fonts[family] = rec;
   }

@@ -163,7 +163,10 @@ export function probePage() {
     const rr = document.createRange(); rr.selectNodeContents(t); const tx = rr.getClientRects()[0]?.left;
     const pr = document.createRange(); pr.selectNodeContents(prev); const px0 = pr.getClientRects()[0]?.left;
     if (tx == null || px0 == null) continue;
-    hang.push({ el: name(list), textIndentFromAbove: +(tx - px0).toFixed(1), hung: Math.abs(tx - px0) < 1 });
+    const indent = tx - px0;
+    // a bullet can only hang where the margin can take it (the gutter left of the column is wider than the indent)
+    if (Math.abs(indent) >= 1 && px0 < indent + 4) { hang.push({ el: name(list), textIndentFromAbove: +indent.toFixed(1), hung: true, note: 'no margin to hang into' }); continue; }
+    hang.push({ el: name(list), textIndentFromAbove: +indent.toFixed(1), hung: Math.abs(indent) < 1 });
   }
   res.hanging = { flag: hang.some((h) => !h.hung), value: `${hang.filter((h) => !h.hung).length} of ${hang.length} lists and quotes with the text edge indented past the edge above`, detail: hang };
 

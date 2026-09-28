@@ -285,13 +285,10 @@ try {
       const edgeText = overflow.cutAtEdge || [];
       const zoom = mobile ? Math.max(0, layoutW - width) : 0;
       const isCut = (c) => c.start || (!c.reach && c.past > zoom + 1);
-      const cut = edgeText.filter(isCut), reached = edgeText.filter((c) => !isCut(c));
+      const cut = edgeText.filter(isCut);
       const pastEdge = (c) => `${c.past}px past the ${c.edge === 'left' ? 'left' : 'right'} edge`;
-      if (overflow.overflow) {
-        // Text that runs out of its own box widens the page with no element box doing so: name that text.
-        const named = overflow.culprits.length ? overflow.culprits.map((c) => `\`${c.selector}\` (${c.width}px wide)`) : (reached.length ? reached : cut).map((c) => `\`${c.selector}\` (its text runs ${pastEdge(c)})`);
-        F.push(`Horizontal overflow by ${overflow.by}px${named.length ? `: ${named.join(', ')}` : ''}`);
-      }
+      // A culprit with `text` is text that runs out of its own box: it widened the page, and no element box did.
+      if (overflow.overflow) F.push(`Horizontal overflow by ${overflow.by}px${overflow.culprits.length ? `: ${overflow.culprits.map((c) => `\`${c.selector}\` (${c.text ? `its text runs ${pastEdge(c)}` : `${c.width}px wide`})`).join(', ')}` : ''}`);
       // Reported even when overflow.overflow is false: a page that clips itself never grows scrollWidth.
       const why = overflow.clip === 'body' ? 'hidden by a clipping ancestor (the page clips itself, so scrollWidth did not grow)'
         : overflow.clip === 'viewport' ? 'where no scroll reaches it (overflow-x on html or body stops the page scrolling sideways)'

@@ -1,6 +1,6 @@
 {
  "env": {
-  "date": "2026-09-28T22:08:31.845Z",
+  "date": "2026-09-28T23:51:22.379Z",
   "node": "v22.22.2",
   "cpus": 4,
   "platform": "linux",
@@ -2464,6 +2464,32 @@
    "motion/react useScroll": 0,
    "theatre sequence played once": 0,
    "CSS transition (finished)": 0
+  },
+  "motionReduceRepro": {
+   "no-preference": {
+    "xIntermediateFrames": 33,
+    "opacityIntermediateFrames": 33,
+    "press_a": {
+     "intermediateFrames": 14,
+     "final": 0.8
+    },
+    "press_b": {
+     "intermediateFrames": 14,
+     "final": 0.8
+    }
+   },
+   "reduce": {
+    "xIntermediateFrames": 0,
+    "opacityIntermediateFrames": 32,
+    "press_a": {
+     "intermediateFrames": 0,
+     "final": 0.8
+    },
+    "press_b": {
+     "intermediateFrames": 14,
+     "final": 0.8
+    }
+   }
   }
  },
  "b": {
@@ -3051,13 +3077,113 @@
    "runs": 5,
    "cpuThrottle": 4,
    "note": "WebGL2 is SwiftShader (CPU): rive-webgl2 numbers are pessimistic and only comparable among themselves"
+  },
+  "restCheck": {
+   "rive-canvas": {
+    "idle": {
+     "rafPerS": 58,
+     "distinctFrames": 1
+    },
+    "settled": {
+     "rafPerS": 58.666666666666664,
+     "distinctFrames": 1
+    },
+    "stopped": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    }
+   },
+   "rive-rating": {
+    "idle": {
+     "rafPerS": 59,
+     "distinctFrames": 1
+    },
+    "settled": {
+     "rafPerS": 57,
+     "distinctFrames": 1
+    },
+    "stopped": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    }
+   },
+   "rive-canvas-lite": {
+    "idle": {
+     "rafPerS": 55.666666666666664,
+     "distinctFrames": 1
+    },
+    "settled": {
+     "rafPerS": 58.666666666666664,
+     "distinctFrames": 1
+    },
+    "stopped": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    }
+   },
+   "dotlottie": {
+    "idle": {
+     "rafPerS": 59.666666666666664,
+     "distinctFrames": 1
+    },
+    "settled": {
+     "rafPerS": 60,
+     "distinctFrames": 1
+    },
+    "stopped": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    }
+   },
+   "dotlottie-worker": {
+    "idle": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    },
+    "settled": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    },
+    "stopped": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    }
+   },
+   "lottie-svg": {
+    "idle": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    },
+    "settled": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    },
+    "stopped": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    }
+   },
+   "css-svg": {
+    "idle": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    },
+    "settled": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    },
+    "stopped": {
+     "rafPerS": 0,
+     "distinctFrames": 1
+    }
+   }
   }
  },
  "c": {
   "pages": {
    "static": {
-    "exit": 1,
-    "seconds": 95,
+    "exit": null,
+    "seconds": 89,
     "specPass": "0/9",
     "spec": {
      "tp": 11,
@@ -3115,15 +3241,12 @@
     }
    },
    "good": {
-    "exit": 1,
-    "seconds": 107,
-    "specPass": "7/9",
+    "exit": null,
+    "seconds": 98,
+    "specPass": "9/9",
     "spec": {
      "tp": 0,
-     "fp": [
-      "cta-hover|reduced",
-      "sheet-open|props"
-     ],
+     "fp": [],
      "fn": []
     },
     "flags": {
@@ -3135,13 +3258,9 @@
     },
     "problems": {
      "cta-press": [],
-     "cta-hover": [
-      "reduced motion removed essential feedback (stops (instant))"
-     ],
+     "cta-hover": [],
      "plan-hover": [],
-     "sheet-open": [
-      "layout jumps in one frame (width, height, left/margin, top/margin): a layout property changed without transitioning"
-     ],
+     "sheet-open": [],
      "toast": [],
      "features-reveal": [],
      "stat-count": [],
@@ -3150,7 +3269,7 @@
     },
     "reduced": {
      "cta-press": "still moves",
-     "cta-hover": "stops (instant)",
+     "cta-hover": "substituted (fade/colour)",
      "plan-hover": "substituted (fade/colour)",
      "sheet-open": "substituted (fade/colour)",
      "toast": "substituted (fade/colour)",
@@ -3161,14 +3280,12 @@
     }
    },
    "over": {
-    "exit": 1,
-    "seconds": 104,
+    "exit": null,
+    "seconds": 92,
     "specPass": "0/9",
     "spec": {
      "tp": 31,
-     "fp": [
-      "sheet-open|interrupt"
-     ],
+     "fp": [],
      "fn": []
     },
     "flags": {
@@ -3200,8 +3317,7 @@
       "easing cubic-bezier(0.68, -0.55, 0.27, 1.55) / ease is not out (cubic-bezier(0.2, 0, 0, 1))",
       "animates layout properties not in the spec: height, top/margin, padding-bottom, padding-top",
       "spec'd properties that did not change: transform",
-      "reduced motion: still moves — spec says fade",
-      "interrupted after 120ms: jumps"
+      "reduced motion: still moves — spec says fade"
      ],
      "toast": [
       "duration 900ms outside medium (240ms)",
@@ -3217,9 +3333,9 @@
       "reduced motion: still moves — spec says static"
      ],
      "stat-count": [
-      "duration 2494ms (fitted to samples, linear) outside 800ms",
-      "sampled curve fits linear better than out (rms 0.069 vs 0.005)",
-      "reduced motion: substituted (fade/colour) — spec says instant"
+      "duration ~2495–2516ms (sampled: last visible change – fitted) outside 800ms",
+      "sampled curve fits linear better than out (rms 0.072 vs 0.003)",
+      "reduced motion: still animates (text or custom property) — spec says instant"
      ],
      "hero-in": [
       "duration 1500ms outside hero (700ms)",
@@ -3240,21 +3356,18 @@
      "sheet-open": "still moves",
      "toast": "still moves",
      "features-reveal": "still moves",
-     "stat-count": "substituted (fade/colour)",
+     "stat-count": "still animates (text or custom property)",
      "hero-in": "still moves",
      "panel-swap": "still moves"
     }
    },
    "gsap": {
-    "exit": 1,
-    "seconds": 96,
-    "specPass": "7/9",
+    "exit": null,
+    "seconds": 91,
+    "specPass": "9/9",
     "spec": {
      "tp": 0,
-     "fp": [
-      "sheet-open|props",
-      "hero-in|duration"
-     ],
+     "fp": [],
      "fn": []
     },
     "flags": {
@@ -3268,15 +3381,11 @@
      "cta-press": [],
      "cta-hover": [],
      "plan-hover": [],
-     "sheet-open": [
-      "layout jumps in one frame (width, height, left/margin, top/margin): a layout property changed without transitioning"
-     ],
+     "sheet-open": [],
      "toast": [],
      "features-reveal": [],
      "stat-count": [],
-     "hero-in": [
-      "duration 1640ms (fitted to samples, spec easing) outside hero (700ms)"
-     ],
+     "hero-in": [],
      "panel-swap": []
     },
     "reduced": {
@@ -3294,16 +3403,10 @@
   },
   "totals": {
    "specFindings": {
-    "precision": 0.894,
+    "precision": 1,
     "recall": 1,
     "tp": 42,
-    "fp": [
-     "good:cta-hover|reduced",
-     "good:sheet-open|props",
-     "over:sheet-open|interrupt",
-     "gsap:sheet-open|props",
-     "gsap:hero-in|duration"
-    ],
+    "fp": [],
     "fn": []
    },
    "flags": {
@@ -3313,130 +3416,12 @@
     "fp": [],
     "fn": []
    },
-   "entryVerdicts": "32/36"
+   "entryVerdicts": "36/36"
   },
   "heldout": {
-   "agreementNormal": "40/42",
-   "agreementReduce": "35/41",
-   "disagreements": [
-    {
-     "page": "css",
-     "id": "ticker",
-     "motionMjs": {
-      "normal": "none",
-      "reduce": "nothing changes",
-      "problems": [
-       "static: nothing changed after the trigger"
-      ]
-     },
-     "partA": {
-      "normal": "moves",
-      "reduce": "moves"
-     },
-     "agreeNormal": false,
-     "agreeReduce": false
-    },
-    {
-     "page": "motion",
-     "id": "ticker",
-     "motionMjs": {
-      "normal": "animates",
-      "reduce": "substituted (fade/colour)",
-      "problems": [
-       "reduced motion: substituted (fade/colour) — spec says instant"
-      ]
-     },
-     "partA": {
-      "normal": "moves",
-      "reduce": "moves"
-     },
-     "agreeNormal": true,
-     "agreeReduce": false
-    },
-    {
-     "page": "motion-react",
-     "id": "sheet",
-     "motionMjs": {
-      "problems": [
-       "normal run: target #sheet not found"
-      ]
-     },
-     "partA": {
-      "normal": "moves",
-      "reduce": "moves"
-     },
-     "agreeNormal": false,
-     "agreeReduce": false
-    },
-    {
-     "page": "motion-react",
-     "id": "ticker",
-     "motionMjs": {
-      "normal": "animates",
-      "reduce": "substituted (fade/colour)",
-      "problems": [
-       "reduced motion: substituted (fade/colour) — spec says instant"
-      ]
-     },
-     "partA": {
-      "normal": "moves",
-      "reduce": "moves"
-     },
-     "agreeNormal": true,
-     "agreeReduce": false
-    },
-    {
-     "page": "gsap",
-     "id": "ticker",
-     "motionMjs": {
-      "normal": "animates",
-      "reduce": "substituted (fade/colour)",
-      "problems": [
-       "reduced motion: substituted (fade/colour) — spec says instant"
-      ]
-     },
-     "partA": {
-      "normal": "moves",
-      "reduce": "moves"
-     },
-     "agreeNormal": true,
-     "agreeReduce": false
-    },
-    {
-     "page": "anime",
-     "id": "ticker",
-     "motionMjs": {
-      "normal": "animates",
-      "reduce": "substituted (fade/colour)",
-      "problems": [
-       "reduced motion: substituted (fade/colour) — spec says instant"
-      ]
-     },
-     "partA": {
-      "normal": "moves",
-      "reduce": "moves"
-     },
-     "agreeNormal": true,
-     "agreeReduce": false
-    },
-    {
-     "page": "spring",
-     "id": "ticker",
-     "motionMjs": {
-      "normal": "animates",
-      "reduce": "substituted (fade/colour)",
-      "problems": [
-       "reduced motion: substituted (fade/colour) — spec says instant"
-      ]
-     },
-     "partA": {
-      "normal": "moves",
-      "reduce": "moves"
-     },
-     "agreeNormal": true,
-     "agreeReduce": false
-    }
-   ]
+   "agreementNormal": "42/42",
+   "agreementReduce": "42/42",
+   "disagreements": []
   }
  }
 }

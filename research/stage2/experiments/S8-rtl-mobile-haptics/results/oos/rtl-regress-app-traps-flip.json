@@ -1,0 +1,26 @@
+{
+ "url": "http://127.0.0.1:42205/ext/regress/app-traps.html",
+ "mode": "flip",
+ "width": 1280,
+ "summary": {
+  "FAIL": 0,
+  "WARN": 0,
+  "INFO": 0
+ },
+ "mirror": {
+  "checked": 13,
+  "notMirrored": 0,
+  "roots": 0,
+  "keptPhysical": 0
+ },
+ "css": {
+  "rules": 13,
+  "physicalRules": 0,
+  "overrideRules": 0,
+  "logicalRules": 0
+ },
+ "keys": [],
+ "icons": [],
+ "findings": [],
+ "ms": 398
+}

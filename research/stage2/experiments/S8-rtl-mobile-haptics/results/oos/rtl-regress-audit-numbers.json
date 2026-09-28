@@ -1,0 +1,32 @@
+{
+ "url": "http://127.0.0.1:42205/ext/regress/audit-numbers.html",
+ "mode": "as-served",
+ "width": 1280,
+ "summary": {
+  "FAIL": 0,
+  "WARN": 0,
+  "INFO": 1
+ },
+ "mirror": null,
+ "css": {
+  "rules": 26,
+  "physicalRules": 2,
+  "overrideRules": 0,
+  "logicalRules": 1
+ },
+ "keys": [],
+ "icons": [],
+ "findings": [
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "Rules with physical inline-axis values (2 of 26 rules; 0 RTL overrides; 1 rules use logical properties)",
+   "count": 2,
+   "examples": [
+    "th, td { text-align:left }",
+    ".r { text-align:right }"
+   ]
+  }
+ ],
+ "ms": 230
+}

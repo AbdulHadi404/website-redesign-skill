@@ -59,4 +59,33 @@ if [ ! -d "$ext/bootstrap/.git" ]; then
   (cd "$ext/bootstrap" && git sparse-checkout set dist/css dist/js site/src/assets/examples)
 fi
 (cd "$ext/bootstrap" && { [ "$(git rev-parse HEAD)" = "$BS" ] || { git fetch -q --depth 1 origin "$BS" && git checkout -q "$BS"; }; })
+# Icon metadata the RTL icon classifier is generated from (lab/icon-lists.mjs → lib/icon-names.json), pinned.
+mkdir -p "$ext/sources"
+[ -s "$ext/sources/codex-icons.ts" ] || curl -sSfL -o "$ext/sources/codex-icons.ts" https://raw.githubusercontent.com/wikimedia/design-codex/8a1caafc584ac3b22e4b87bd02593b3f5346b28e/packages/codex-icons/src/icons.ts
+[ -s "$ext/sources/flutter-icons.dart" ] || curl -sSfL -o "$ext/sources/flutter-icons.dart" https://raw.githubusercontent.com/flutter/flutter/929df566a7c3800cb44bfadbac4de6f718ca0377/packages/flutter/lib/src/material/icons.dart
+# aegov (MIT) tab keyboard handler, for lab/keys.mjs
+[ -s "$ext/sources/aegov-custom.js" ] || curl -sSfL -o "$ext/sources/aegov-custom.js" https://raw.githubusercontent.com/TDRA-ae/aegov-dls/d309bb51cf061e3d10844598748b256c39df2f16/js/src/components/custom.js
+
+# Out-of-sample pages for the checkers (run.mjs part "oos"). GOV-SA's 2020 design system (licence: "gpl-3.0" in its
+# package.json only; used here as a test input, not redistributed): its dist page, as shipped (LTR) and with dir=rtl.
+if [ ! -d "$ext/design-system-gov.sa/.git" ]; then
+  git clone -q --depth 1 --filter=blob:none --sparse https://github.com/GOV-SA/design-system-gov.sa.git "$ext/design-system-gov.sa"
+  (cd "$ext/design-system-gov.sa" && git sparse-checkout set dist)
+fi
+GOVSA=babbe608c242b70d4f3074e0cda8a5fdb719d30a
+(cd "$ext/design-system-gov.sa" && { [ "$(git rev-parse HEAD)" = "$GOVSA" ] || { git fetch -q --depth 1 origin "$GOVSA" && git checkout -q "$GOVSA"; }; })
+for d in ltr rtl; do
+  mkdir -p "$ext/govsa-$d" && cp -r "$ext/design-system-gov.sa/dist/." "$ext/govsa-$d/"
+  # the dist page ships without its stylesheet and script tags; add them, and set the direction for the RTL copy
+  node -e 'const fs=require("fs");const [f,d]=process.argv.slice(1);let h=fs.readFileSync(f,"utf8");if(!h.includes("govsa-ds.css"))h=h.replace("</head>","<link rel=\"stylesheet\" href=\"css/govsa-ds.css\"></head>").replace("</body>","<script src=\"js/govsa-ds.js\"></script></body>");if(d==="rtl")h=h.replace("<html dir=\"ltr\">","<html dir=\"rtl\" lang=\"ar\">");fs.writeFileSync(f,h)' "$ext/govsa-$d/index.html" "$d"
+done
+
+# Pages from this repository's tools/regress fixtures, read at a pinned commit (git show; the working tree is left alone).
+REPO="$(cd "$here/../../../.." && pwd)"; RC=f62da940d83bec304072008e0a3328ae5afb9e78
+mkdir -p "$ext/regress/govuk" "$ext/regress/parity"
+for f in govuk.html govuk/govuk-frontend.min.css govuk/LICENSE.txt dashboard.html app-traps.html audit-numbers.html capture-reach-rtl.html; do
+  [ -s "$ext/regress/$f" ] || git -C "$REPO" show "$RC:tools/regress/fixtures/$f" > "$ext/regress/$f"
+done
+for v in new old; do [ -s "$ext/regress/parity/$v.html" ] || git -C "$REPO" show "$RC:tools/regress/fixtures/parity/$v/index.html" > "$ext/regress/parity/$v.html"; done
+
 echo "fetched: $(ls "$fonts"/*.ttf | wc -l) fonts, $(ls "$fonts"/served/*.woff2 | wc -l) served subsets, riyal probes $(ls "$fonts"/riyal/*.woff2 2>/dev/null | wc -l); bootstrap $(cd "$ext/bootstrap" && git log -1 --format=%h)"

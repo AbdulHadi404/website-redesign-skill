@@ -29,6 +29,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { launch } from '/home/user/website-redesign-skill/skills/website-redesign/scripts/lib/env.mjs';
 import { glyphClipProbe } from './lib/glyph-probe.mjs';
+import { classifyIcon, classifyIconLegacy } from './lib/icon-classify.mjs';
 const require = createRequire('/home/user/website-redesign-skill/skills/website-redesign/scripts/package.json');
 const { PNG } = require('pngjs');
 
@@ -125,17 +126,8 @@ export function findIcons() {
   return out;
 }
 
-const MEDIA = /play|pause|stop|record|rewind|fast[-_ ]?forward|skip|media|volume/i;
-const DIRECTIONAL = /(arrow|chevron|caret|angle|triangle)[\s_-]*(left|right|back|forward|next|prev|start|end)|(^|[\s_#-])(back|forward|next|prev|previous)([\s_-]|$)|undo|redo|reply|send|external|open[-_ ]?in[-_ ]?new|launch|indent|outdent|(^|[\s_-])list([\s_-]|$)|list-(ul|bullet)|align-(left|right)|trending|first[-_]page|last[-_]page|sidebar|double-?chevron|redirect/i;
-const NEVER = /clock|time|schedule|alarm|timer|refresh|sync|reload|rotate|replay|history|check|tick|done|success|search|magnif|logo|brand|close|x-mark|menu|hamburger|cart|bag|heart|star|user|person|home|settings|gear|bell|mail|phone|calendar|camera|trash|delete|plus|minus|download|upload|sort|filter|alert|info|warning|error/i;
-const AMBIGUOUS = /help|question|quote|attach|paperclip|chart|graph|log[-_ ]?(in|out)|sign[-_ ]?(in|out)|exit|cut|copy|paste|volume|speaker|edit|pencil/i;
-export function classifyIcon(name) {
-  if (MEDIA.test(name)) return /volume|speaker/i.test(name) ? 'ambiguous' : 'never';
-  if (AMBIGUOUS.test(name)) return 'ambiguous';
-  if (DIRECTIONAL.test(name)) return 'directional';
-  if (NEVER.test(name)) return 'never';
-  return 'unknown';
-}
+// the classifier and its name lists live in lib/icon-classify.mjs (generated from Codex, Flutter, Material, Firefox)
+export { classifyIcon };
 
 // ---------------------------------------------------------------- in-page: static checks on the RTL render
 export function staticChecks(opts = {}) {
@@ -166,12 +158,30 @@ export function staticChecks(opts = {}) {
     const dataLike = /^(?=.*\d)\s*[+\-−]?\s*[$€£¥]?[\d\s().,:%+\-−/]+\s*$|\S+@\S+\.\S+|^\s*(https?:\/\/|www\.)|^\s*[A-Z]{2}\d{2}[\d\sA-Z]{8,}$|\d{1,2}:\d{2}\s*[-–]\s*\d{1,2}:\d{2}/.test(t);
     if (blockDir === 'rtl' && !AR.test(t) && !/[֐-׿]/.test(t) && /[0-9A-Za-z]/.test(t) && (dataLike || !opts.flip)) {
       const toks = tokens(t); if (toks.length < 2) continue;
-      const xs = toks.map(({ t: s, i }) => { const r = document.createRange(); r.setStart(n, i); r.setEnd(n, i + s.length); return r.getBoundingClientRect().left; });
-      const order = xs.map((x, k) => [x, k]).sort((a, b) => a[0] - b[0]).map(([, k]) => k);
-      if (!order.every((k, j) => k === j)) {
+      const bx = toks.map(({ t: s, i }) => { const r = document.createRange(); r.setStart(n, i); r.setEnd(n, i + s.length); const b = r.getBoundingClientRect(); return { x: b.left, top: b.top, bottom: b.bottom, rects: r.getClientRects().length }; });
+      // Order is only meaningful within one line box: a wrapped phrase puts later words on a lower line, further LEFT in
+      // an RTL block. Group tokens by line (vertical centre within half a line of the line's first token), then compare
+      // visual and logical order line by line. opts.legacyBidi reproduces the first version (one sort over the whole node).
+      let groups;
+      if (opts.legacyBidi) groups = [toks.map((_, k) => k)];
+      else {
+        groups = [];
+        const byY = toks.map((_, k) => k).filter((k) => bx[k].rects === 1).sort((a, b) => (bx[a].top + bx[a].bottom) - (bx[b].top + bx[b].bottom) || a - b);
+        for (const k of byY) {
+          const c = (bx[k].top + bx[k].bottom) / 2, g = groups[groups.length - 1];
+          if (g && Math.abs(c - g.c) < Math.max(4, (bx[g.ks[0]].bottom - bx[g.ks[0]].top) / 2)) g.ks.push(k); else groups.push({ c, ks: [k] });
+        }
+        groups = groups.map((g) => g.ks.sort((a, b) => a - b));
+      }
+      for (const ks of groups) {
+        if (ks.length < 2) continue;
+        const order = ks.map((k) => [bx[k].x, k]).sort((a, b) => a[0] - b[0]).map(([, k]) => k);
+        if (order.every((k, j) => k === ks[j])) continue;
         const alnum = order.filter((k) => /[0-9A-Za-z]/.test(toks[k].t));
         const alnumInOrder = alnum.every((k, j) => j === 0 || k > alnum[j - 1]);
-        res.scrambled.push({ where: sel(el), text: t.trim().slice(0, 40), shown: order.map((k) => toks[k].t).join(' '), punctuationOnly: alnumInOrder && !dataLike });
+        const lineText = t.slice(toks[ks[0]].i, toks[ks[ks.length - 1]].i + toks[ks[ks.length - 1]].t.length);
+        res.scrambled.push({ where: sel(el), text: (groups.length > 1 ? lineText : t.trim()).slice(0, 40), shown: order.map((k) => toks[k].t).join(' '), punctuationOnly: alnumInOrder && !dataLike, lines: groups.length });
+        break; // one report per text node
       }
     }
 
@@ -261,7 +271,10 @@ async function iconShots(page, icons) {
 }
 
 // ---------------------------------------------------------------- main
-export async function check(browser, url, { flip = false, width = 1280 } = {}) {
+export async function check(browser, url, { flip = false, width = 1280, legacy = false } = {}) {
+  // legacy: the first version's bidi order (one sort per text node), glyph clip edges (scrollers not unrolled) and icon
+  // lists (hand-written regexes), for the before/after runs in run.mjs
+  const classify = legacy ? classifyIconLegacy : classifyIcon;
   const ctx = await browser.newContext({ viewport: { width, height: 900 }, deviceScaleFactor: 2, reducedMotion: 'reduce' });
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: 'load' });
@@ -281,12 +294,12 @@ export async function check(browser, url, { flip = false, width = 1280 } = {}) {
     const iconsB = await page.evaluate(findIcons);
     const shotsB = await iconShots(page, iconsB);
     // boxes
-    const failing = new Set(); const kept = new Map();
+    const failing = new Set(); const kept = new Map(); const off = new Map();
     for (const a of A) {
       const b = B[a.i]; if (!b || b.ltrIsland || b.display === 'inline' && !['svg', 'img'].includes(b.tag)) continue;
       if (a.taBlock === 'right' && b.taBlock === 'right') continue; // deliberately right-aligned in both (numeric cells)
       const expectLeft = a.W - a.right;
-      if (Math.abs(b.left - expectLeft) > 2 && Math.abs(b.right - b.left - (a.right - a.left)) < 2) failing.add(a.i);
+      if (Math.abs(b.left - expectLeft) > 2 && Math.abs(b.right - b.left - (a.right - a.left)) < 2) { failing.add(a.i); off.set(a.i, Math.round(Math.abs(b.left - expectLeft))); }
       const why = [];
       for (const [l, r, name] of [['ml', 'mr', 'margin'], ['pl', 'pr', 'padding'], ['bl', 'br', 'border']]) if (a[l] !== a[r] && b[l] === a[l] && b[r] === a[r]) why.push(`${name}-left ${a[l]} / right ${a[r]}`);
       // a physical reset of a UA logical default (ul { padding-left: 0 } over padding-inline-start: 40px) leaks on the other side in RTL
@@ -302,45 +315,58 @@ export async function check(browser, url, { flip = false, width = 1280 } = {}) {
     const roots = [...failing].filter((i) => !failing.has(parentOf[i]));
     mirror = { checked: A.length, notMirrored: failing.size, roots: roots.length, keptPhysical: kept.size };
     const reason = (i) => kept.get(i) ? ` — ${kept.get(i).why}` : kept.get(parentOf[i]) ? ` — parent ${descr[parentOf[i]]}: ${kept.get(parentOf[i]).why}` : '';
-    if (roots.length) add('FAIL', 'mirror', 'Boxes that do not mirror when the page turns RTL (topmost only)', roots.map((i) => `${descr[i]}${reason(i)}`));
+    // a box more than 8 px from its mirrored place is visibly wrong; 3–8 px is an asymmetry to look at (often a partial
+    // [dir=rtl] override that adds the new side without resetting the old one)
+    const far = roots.filter((i) => legacy || off.get(i) > 8), near = roots.filter((i) => !legacy && off.get(i) <= 8); // legacy: every root FAILs
+    if (far.length) add('FAIL', 'mirror', 'Boxes that do not mirror when the page turns RTL (topmost only; > 8 px from the mirrored place)', far.map((i) => `${descr[i]} (${off.get(i)} px off)${reason(i)}`));
+    if (near.length) add('WARN', 'mirror', 'Boxes 3–8 px from their mirrored place in RTL (topmost only)', near.map((i) => `${descr[i]} (${off.get(i)} px off)${reason(i)}`));
     const keptList = [...kept.entries()].map(([i, k]) => `${descr[i]}: ${k.why}`);
     if (keptList.length) add('WARN', 'mirror', 'Physical values that stay the same in RTL (computed styles, LTR vs RTL render)', keptList);
     // icons by pixels
     for (const ic of iconsA) {
       const a = shotsA[ic.k], b = shotsB[ic.k]; if (!a || !b) continue;
-      const verdict = compareIcon(a, b), cls = classifyIcon(ic.name), icB = iconsB[ic.k] || ic;
-      iconVerdicts.push({ name: ic.name, class: cls, pixels: verdict, context: ic.context, island: icB.ltrIsland });
-
+      const verdict = compareIcon(a, b), c = classify(ic.name, ic.context), icB = iconsB[ic.k] || ic;
+      iconVerdicts.push({ name: ic.name, class: c.class, strength: c.strength, sources: c.sources, family: c.family, note: c.note, pixels: verdict, context: ic.context, island: icB.ltrIsland });
     }
+    const lbl = (v) => `${v.name}${v.context ? ` in "${v.context}"` : ''}${v.sources ? ` [${v.sources.join('+')}]` : ''}`;
     const dirNot = iconVerdicts.filter((v) => v.class === 'directional' && v.pixels === 'same' && !v.island);
     const neverYes = iconVerdicts.filter((v) => v.class === 'never' && v.pixels === 'mirrored');
-    if (dirNot.length) add('FAIL', 'icons', 'Directional icons that do not mirror', dirNot.map((v) => `${v.name}${v.context ? ` in "${v.context}"` : ''}`));
-    if (neverYes.length) add('FAIL', 'icons', 'Icons that must not mirror but do (media, clocks, checks, search, objects)', neverYes.map((v) => `${v.name}${v.context ? ` in "${v.context}"` : ''}`));
+    for (const [lvl, st] of [['FAIL', 'strong'], ['WARN', 'weak']]) {
+      const d = dirNot.filter((v) => v.strength === st), n = neverYes.filter((v) => v.strength === st);
+      if (d.length) add(lvl, 'icons', `Directional icons that do not mirror${st === 'weak' ? ' (one source mirrors this name)' : ''}`, d.map(lbl));
+      if (n.length) add(lvl, 'icons', `Icons that must not mirror but do (${st === 'strong' ? 'checks, media, circular time, search' : 'one source: calendar, edit, keyboard, camera'})`, n.map(lbl));
+    }
     const amb = iconVerdicts.filter((v) => v.class === 'ambiguous');
-    if (amb.length) add('INFO', 'icons', 'Icons the sources disagree on — record the decision (mirrored here: yes/no)', amb.map((v) => `${v.name}: ${v.pixels}`));
+    if (amb.length) add('INFO', 'icons', 'Icons the sources disagree on — record the decision (mirrored here: yes/no)', amb.map((v) => `${v.name}: ${v.pixels} — ${v.note || ''}`));
   } else {
     // static: flipped state from transforms, semantics from the control's label
     const icons = await page.evaluate(findIcons);
     for (const ic of icons) {
-      const cls = classifyIcon(ic.name);
-      if (ic.ltrIsland ? cls !== 'never' : ic.dir !== 'rtl') continue; // a media player kept LTR still must not flip its icons
-      iconVerdicts.push({ name: ic.name, class: cls, flipped: ic.flipped, context: ic.context });
+      const c = classify(ic.name, ic.context);
+      if (ic.ltrIsland ? c.class !== 'never' : ic.dir !== 'rtl') continue; // a media player kept LTR still must not flip its icons
+      iconVerdicts.push({ name: ic.name, class: c.class, strength: c.strength, sources: c.sources, family: c.family, note: c.note, flipped: ic.flipped, context: ic.context });
     }
+    const lbl = (v) => `${v.name}${v.context ? ` in "${v.context}"` : ''}${v.sources ? ` [${v.sources.join('+')}]` : ''}`;
     const pointing = (v) => { const side = /right|forward|next|end/i.test(v.name) ? 'right' : /left|back|prev|start/i.test(v.name) ? 'left' : null; if (!side) return null; return v.flipped ? (side === 'right' ? 'left' : 'right') : side; };
+    // what the control does, from its label (English and Arabic): forward actions must point left in RTL, backward ones right
+    const FWD = legacy ? /next|التالي|forward|continue|متابعة|تقدم|rel=next|save|حفظ|submit/i : /\bnext\b|التالي|التالى|forward|continue|proceed|متابعة|تابع|استمر|أكمل|اكمل|المزيد|اقرأ|read more|learn more|see all|view all|عرض الكل|get started|ابدأ|rel=next|\bsave\b|حفظ|submit|إرسال|ارسال|أرسل|\bsend\b/i;
+    const BWD = legacy ? /prev|السابق|back|رجوع|عودة|rel=prev/i : /\bprev|السابق|\bback\b|رجوع|عودة|العودة|ارجع|الرجوع|للخلف|rel=prev/i;
     const wrongWay = iconVerdicts.filter((v) => {
       if (v.class !== 'directional') return false;
       const p = pointing(v); if (!p) return false;
-      if (/next|التالي|forward|continue|متابعة|تقدم|rel=next|save|حفظ|submit/i.test(v.context)) return p === 'right';
-      if (/prev|السابق|back|رجوع|عودة|rel=prev/i.test(v.context)) return p === 'left';
+      if (FWD.test(v.context)) return p === 'right';
+      if (BWD.test(v.context)) return p === 'left';
       return false;
     });
     if (wrongWay.length) add('FAIL', 'icons', 'Arrows that point against the RTL reading direction for their action', wrongWay.map((v) => `${v.name} in "${v.context}"`));
-    const neverFlipped = iconVerdicts.filter((v) => v.class === 'never' && v.flipped);
-    if (neverFlipped.length) add('FAIL', 'icons', 'Icons that must not mirror but are flipped (media, clocks, checks, search, objects)', neverFlipped.map((v) => `${v.name}${v.context ? ` in "${v.context}"` : ''}`));
+    for (const [lvl, st] of [['FAIL', 'strong'], ['WARN', 'weak']]) {
+      const n = iconVerdicts.filter((v) => v.class === 'never' && v.strength === st && v.flipped);
+      if (n.length) add(lvl, 'icons', `Icons that must not mirror but are flipped (${st === 'strong' ? 'checks, media, circular time, search' : 'one source: calendar, edit, keyboard, camera'})`, n.map(lbl));
+    }
     const unflippedDir = iconVerdicts.filter((v) => v.class === 'directional' && !v.flipped && !wrongWay.includes(v));
-    if (unflippedDir.length) add('WARN', 'icons', 'Directional icons with no flip in RTL — confirm each points the reading way (or was swapped for its mirror)', unflippedDir.map((v) => `${v.name}${v.context ? ` in "${v.context}"` : ''}`));
+    if (unflippedDir.length) add('WARN', 'icons', 'Directional icons with no flip in RTL — confirm each points the reading way (or was swapped for its mirror)', unflippedDir.map(lbl));
     const amb = iconVerdicts.filter((v) => v.class === 'ambiguous');
-    if (amb.length) add('INFO', 'icons', 'Icons the sources disagree on — record the decision', amb.map((v) => `${v.name}: ${v.flipped ? 'flipped' : 'not flipped'}`));
+    if (amb.length) add('INFO', 'icons', 'Icons the sources disagree on — record the decision', amb.map((v) => `${v.name}: ${v.flipped ? 'flipped' : 'not flipped'} — ${v.note || ''}`));
   }
   // CSS findings
   if (css.physicalRules.length) add(flip ? 'WARN' : 'INFO', 'css', `Rules with physical inline-axis values (${css.physicalRules.length} of ${css.rules} rules; ${css.overrideRules} RTL overrides; ${css.logicalRules} rules use logical properties${css.crossOrigin ? `; ${css.crossOrigin} cross-origin sheets not read` : ''})`, css.physicalRules.map((r) => `${r.selector} { ${r.props} }`));
@@ -348,7 +374,7 @@ export async function check(browser, url, { flip = false, width = 1280 } = {}) {
   if (css.transformsX.length) add('INFO', 'css', 'Transforms with an x translation (drawers, slides): transforms never flip with dir', css.transformsX);
   if (css.shadowsX) add('INFO', 'css', `${css.shadowsX} box-shadows with an x offset: decide whether the light source mirrors (Material: elevation shadows fall straight down)`);
   // static rendered checks on the RTL state
-  const st = await page.evaluate(staticChecks, { flip });
+  const st = await page.evaluate(staticChecks, { flip, legacyBidi: legacy });
   if (!st.htmlDir && st.bodyDir === 'rtl') add('WARN', 'structure', 'dir="rtl" is on <body>, not <html>: the root, scrollbars and anything outside body stay LTR');
   if (st.align.length) add('FAIL', 'align', 'text-align: left inside RTL text', st.align);
   if (st.tracking.length) add('FAIL', 'arabic', 'Letter-spacing on Arabic text (breaks or spaces the joins)', st.tracking);
@@ -362,8 +388,8 @@ export async function check(browser, url, { flip = false, width = 1280 } = {}) {
   if (rtlData.length) add('WARN', 'bidi', 'Email/phone/URL/IBAN fields that inherit RTL: values starting with digits or ending in punctuation will scramble', rtlData.map((i) => `${i.field} [${i.type}]`));
   const leftDrawers = st.drawers.filter((d) => d.side === 'left');
   if (leftDrawers.length) add('FAIL', 'drawers', 'Off-canvas panels parked off the LEFT edge in RTL: they slide in from the wrong side', leftDrawers.map((d) => d.panel));
-  const glyphs = await page.evaluate(glyphClipProbe, { scripts: 'arabic' });
-  if (glyphs.clipped.length) add('FAIL', 'arabic', `Arabic glyphs cut by a clipping box (${glyphs.clipped.length} of ${glyphs.checked} clipped text runs)`, glyphs.clipped.map((g) => `${g.selector} in ${g.clipper}: top ${g.topPx}px, bottom ${g.bottomPx}px cut (${g.font}, line-height ${g.lineHeight}) "${g.text}"`));
+  const glyphs = await page.evaluate(glyphClipProbe, { scripts: 'arabic', scrollAware: !legacy });
+  if (glyphs.clipped.length) add('FAIL', 'arabic', `Arabic glyphs cut by a clipping box (${glyphs.clipped.length} of ${glyphs.checked} clipped text runs)`, glyphs.clipped.map((g) => `${g.selector} in ${g.clipper}${g.scroller ? ' (scroller)' : ''}: top ${g.topPx}px, bottom ${g.bottomPx}px cut (${g.font}, line-height ${g.lineHeight}) "${g.text}"`));
   const keys = await arrowKeys(page);
   const back = keys.filter((k) => k.arrowLeftMoves.startsWith('right'));
   if (back.length) add('FAIL', 'keys', 'Arrow keys run backwards in RTL: ArrowLeft moves focus to the right', back.map((k) => k.group));

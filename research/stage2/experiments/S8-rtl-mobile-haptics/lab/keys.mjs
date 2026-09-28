@@ -1,10 +1,31 @@
 // RTL keyboard semantics: does an arrow key move the way it points? Native range and radio group in Chromium, an
-// RTL-aware tablist and a copied-from-LTR tablist; and what the skill's widgets.mjs tabs contract says about each.
+// RTL-aware tablist and a copied-from-LTR tablist, the UAE design system's own tab handler (aegov custom.js, run as
+// shipped on its tab markup in RTL); and what the skill's widgets.mjs tabs contract says about each.
+
+// aegov-dls@d309bb5 js/src/components/custom.js (MIT): its tab keyboard block, loaded verbatim into a page with the
+// system's tab markup (data-tabs-toggle, role=tab buttons) in RTL. Written to <ext>/aegov-tabs.html.
+export async function buildAegovPage() {
+  const src = await readFile(path.join(ext, 'sources', 'aegov-custom.js'), 'utf8');
+  const a = src.indexOf('// Tabs ARIA keyboard navigation'), b = src.indexOf('// Auto focus for model close button');
+  const block = src.slice(a, b);
+  const html = `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>aegov tabs in RTL</title>
+<style>body{font:16px/1.6 system-ui,sans-serif;margin:24px} ul{display:flex;gap:4px;list-style:none;padding:0} button{padding:6px 12px;border:1px solid #888;background:#fff;font:inherit}</style></head><body>
+<ul data-tabs-toggle="#tab-content" role="tablist" aria-label="aegov">
+${['الطلبات', 'الفواتير', 'الإعدادات'].map((t, i) => `<li role="presentation"><button id="g${i + 1}" data-tabs-target="#gp${i + 1}" type="button" role="tab" aria-controls="gp${i + 1}" aria-selected="${i === 0}">${t}</button></li>`).join('\n')}
+</ul>
+<div id="tab-content">${[1, 2, 3].map((i) => `<div id="gp${i}" role="tabpanel">${i}</div>`).join('')}</div>
+<script>
+${block}
+</script></body></html>`;
+  await (await import('node:fs/promises')).writeFile(path.join(ext, 'aegov-tabs.html'), html);
+  return '/ext/aegov-tabs.html';
+}
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { root } from '../lib/server.mjs';
+import { readFile } from 'node:fs/promises';
+import { root, ext } from '../lib/server.mjs';
 const run$ = promisify(execFile);
 const SKILL = '/home/user/website-redesign-skill/skills/website-redesign/scripts';
 
@@ -26,6 +47,21 @@ export async function run(browser, base) {
     }
     res.tabs[id] = out;
   }
+  // the aegov handler as shipped
+  const aegovUrl = await buildAegovPage();
+  {
+    const out = {};
+    for (const key of ['ArrowLeft', 'ArrowRight']) {
+      await page.goto(base + aegovUrl);
+      await page.focus('#g2');
+      const x0 = await page.evaluate(() => { const r = document.activeElement.getBoundingClientRect(); return r.left + r.width / 2; });
+      await page.keyboard.press(key);
+      const r = await page.evaluate(() => { const a = document.activeElement; const b = a.getBoundingClientRect(); return { id: a.id, x: b.left + b.width / 2 }; });
+      out[key] = { movedTo: r.id === 'g3' ? 'next (DOM)' : r.id === 'g1' ? 'previous (DOM)' : 'stayed', visual: r.x < x0 ? 'left' : r.x > x0 ? 'right' : 'none', followsArrow: (key === 'ArrowLeft') === (r.x < x0) };
+    }
+    res.tabs['aegov (custom.js as shipped)'] = out;
+  }
+  await page.goto(base + '/fixtures/rtl-keys.html');
   // native range in RTL
   await page.reload();
   const range = {};

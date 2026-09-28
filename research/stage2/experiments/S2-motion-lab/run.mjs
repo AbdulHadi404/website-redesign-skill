@@ -34,6 +34,7 @@ if (only.includes('x')) {
   const { reproMotionReduce } = await import('./a/repro-motion-reduce.mjs'); const { restB } = await import('./b/rest-b.mjs');
   results.a.motionReduceRepro = await reproMotionReduce(); results.b.restCheck = await restB();
 }
-if (only.includes('c')) { const { runC } = await import('./c/run-c.mjs'); results.c = await runC(); }
+if (only.includes('c')) { const { runC } = await import('./c/run-c.mjs'); const prev = results.c; results.c = await runC({ rescore: !!args.rescore });
+  if (args.rescore && prev) for (const [v, p] of Object.entries(results.c.pages)) p.seconds = prev.pages?.[v]?.seconds; } // --rescore: re-score the last reports
 await writeFile(file, JSON.stringify(results, null, 1));
 console.log(`results.json written (${only.join(', ')})`);

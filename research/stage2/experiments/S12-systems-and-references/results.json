@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-28T22:36:44.634Z",
+ "generated": "2026-09-28T23:46:35.910Z",
  "node": "v22.22.2",
  "cpus": 4,
  "tenant": {
@@ -68,8 +68,23 @@
   ],
   "gates": {
    "text": 4.5,
-   "lc": 60,
    "nonText": 3,
+   "lcFill": 0,
+   "lcText": 0,
+   "lcTextSoft": 75,
+   "labelRule": "wcag-first",
+   "warnLabelLc": 75,
+   "nearGroundRatio": 1.5,
+   "nearGroundChroma": 0.1
+  },
+  "gatesFirstRound": {
+   "text": 4.5,
+   "nonText": 3,
+   "lcFill": 60,
+   "lcText": 60,
+   "lcTextSoft": 0,
+   "labelRule": "apca-first",
+   "warnLabelLc": 0,
    "nearGroundRatio": 1.5,
    "nearGroundChroma": 0.1
   },
@@ -105,6 +120,7 @@
     "nonTextPass": 61.1,
     "buttonBoundaryPass": 62.5,
     "tenantModesAllGates": "4/24",
+    "tenantModesWithApcaWarning": 0,
     "light": {
      "textPass": 35,
      "fidelityMedianDE": 0,
@@ -139,6 +155,7 @@
     "nonTextPass": 61.1,
     "buttonBoundaryPass": 62.5,
     "tenantModesAllGates": "11/24",
+    "tenantModesWithApcaWarning": 0,
     "light": {
      "textPass": 58.3,
      "fidelityMedianDE": 0,
@@ -172,6 +189,7 @@
     "nonTextPass": 61.1,
     "buttonBoundaryPass": 62.5,
     "tenantModesAllGates": "11/24",
+    "tenantModesWithApcaWarning": 0,
     "light": {
      "textPass": 58.3,
      "fidelityMedianDE": 0,
@@ -205,6 +223,7 @@
     "nonTextPass": 50,
     "buttonBoundaryPass": 75,
     "tenantModesAllGates": "3/24",
+    "tenantModesWithApcaWarning": 0,
     "light": {
      "textPass": 60,
      "fidelityMedianDE": 0,
@@ -239,6 +258,7 @@
     "nonTextPass": 100,
     "buttonBoundaryPass": 100,
     "tenantModesAllGates": "24/24",
+    "tenantModesWithApcaWarning": 0,
     "light": {
      "textPass": 100,
      "fidelityMedianDE": 11,
@@ -264,6 +284,7 @@
     "nonTextPass": 100,
     "buttonBoundaryPass": 100,
     "tenantModesAllGates": "24/24",
+    "tenantModesWithApcaWarning": 0,
     "light": {
      "textPass": 100,
      "fidelityMedianDE": 24.75,
@@ -289,6 +310,7 @@
     "nonTextPass": 100,
     "buttonBoundaryPass": 100,
     "tenantModesAllGates": "24/24",
+    "tenantModesWithApcaWarning": 0,
     "light": {
      "textPass": 100,
      "fidelityMedianDE": 17.65,
@@ -304,33 +326,99 @@
     "failingPairs": {}
    },
    {
+    "method": "M7-palette-mjs",
+    "label": "The skill's scripts/palette.mjs --brand --dark, roles as the script advises",
+    "textPairs": 120,
+    "textPassWcag": 65.8,
+    "textPassWcagAndLc60": 45.8,
+    "textPassWcagAndLc75": 15,
+    "nonTextPairs": 72,
+    "nonTextPass": 88.9,
+    "buttonBoundaryPass": 79.2,
+    "tenantModesAllGates": "3/24",
+    "tenantModesWithApcaWarning": 0,
+    "light": {
+     "textPass": 61.7,
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 0,
+     "exactFill": 12
+    },
+    "dark": {
+     "textPass": 70,
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 62,
+     "exactFill": 8
+    },
+    "failingPairs": {
+     "T5": 12,
+     "N1": 5,
+     "T1": 14,
+     "T2": 13,
+     "N3": 3,
+     "T4": 2
+    }
+   },
+   {
+    "method": "M7f-palette-mjs-wcag-label",
+    "label": "palette.mjs with the proposed label fix (WCAG-passing label, APCA breaks ties)",
+    "textPairs": 120,
+    "textPassWcag": 87.5,
+    "textPassWcagAndLc60": 45,
+    "textPassWcagAndLc75": 14.2,
+    "nonTextPairs": 72,
+    "nonTextPass": 88.9,
+    "buttonBoundaryPass": 79.2,
+    "tenantModesAllGates": "9/24",
+    "tenantModesWithApcaWarning": 0,
+    "light": {
+     "textPass": 75,
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 0,
+     "exactFill": 12
+    },
+    "dark": {
+     "textPass": 100,
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 62,
+     "exactFill": 8
+    },
+    "failingPairs": {
+     "T5": 12,
+     "N1": 5,
+     "T2": 1,
+     "N3": 3,
+     "T4": 2
+    }
+   },
+   {
     "method": "M6-s12",
-    "label": "S12 rules: exact tenant fill where safe, OKLCH-L solved strong accent, WCAG 4.5 + APCA Lc 60 gates",
+    "label": "S12 rules, second round: WCAG gates, WCAG-first label, APCA as a size-aware warning, derived text also Lc 75",
     "textPairs": 120,
     "textPassWcag": 100,
-    "textPassWcagAndLc60": 100,
-    "textPassWcagAndLc75": 42.5,
+    "textPassWcagAndLc60": 81.7,
+    "textPassWcagAndLc75": 80,
     "nonTextPairs": 72,
     "nonTextPass": 100,
     "buttonBoundaryPass": 100,
     "tenantModesAllGates": "24/24",
+    "tenantModesWithApcaWarning": 13,
     "light": {
      "textPass": 100,
-     "fidelityMedianDE": 1.75,
-     "fidelityMaxDE": 38.9,
-     "exactFill": 6
+     "fidelityMedianDE": 0,
+     "fidelityMaxDE": 28.9,
+     "exactFill": 11
     },
     "dark": {
      "textPass": 100,
-     "fidelityMedianDE": 4.8,
+     "fidelityMedianDE": 0,
      "fidelityMaxDE": 49.6,
-     "exactFill": 5
+     "exactFill": 10
     },
     "failingPairs": {}
    },
    {
     "method": "M6w-s12-wcag-only",
-    "label": "S12 rules with the WCAG gate only (no APCA)",
+    "label": "S12 first-round code with the WCAG gate only (APCA-first label, no Lc target anywhere)",
     "textPairs": 120,
     "textPassWcag": 100,
     "textPassWcagAndLc60": 70.8,
@@ -339,6 +427,7 @@
     "nonTextPass": 100,
     "buttonBoundaryPass": 100,
     "tenantModesAllGates": "24/24",
+    "tenantModesWithApcaWarning": 0,
     "light": {
      "textPass": 100,
      "fidelityMedianDE": 0.7,
@@ -354,8 +443,34 @@
     "failingPairs": {}
    },
    {
+    "method": "M6a-s12-apca-gate",
+    "label": "S12 first round as reported: APCA Lc 60 as a hard gate on every text pair, APCA-first label",
+    "textPairs": 120,
+    "textPassWcag": 100,
+    "textPassWcagAndLc60": 100,
+    "textPassWcagAndLc75": 42.5,
+    "nonTextPairs": 72,
+    "nonTextPass": 100,
+    "buttonBoundaryPass": 100,
+    "tenantModesAllGates": "24/24",
+    "tenantModesWithApcaWarning": 0,
+    "light": {
+     "textPass": 100,
+     "fidelityMedianDE": 1.75,
+     "fidelityMaxDE": 38.9,
+     "exactFill": 6
+    },
+    "dark": {
+     "textPass": 100,
+     "fidelityMedianDE": 4.8,
+     "fidelityMaxDE": 49.6,
+     "exactFill": 5
+    },
+    "failingPairs": {}
+   },
+   {
     "method": "M6s-s12-lc75",
-    "label": "S12 rules with APCA Lc 75 on every text pair (body-text strict)",
+    "label": "S12 first round with APCA Lc 75 as a hard gate on every text pair",
     "textPairs": 120,
     "textPassWcag": 100,
     "textPassWcagAndLc60": 100,
@@ -364,6 +479,7 @@
     "nonTextPass": 100,
     "buttonBoundaryPass": 100,
     "tenantModesAllGates": "24/24",
+    "tenantModesWithApcaWarning": 0,
     "light": {
      "textPass": 100,
      "fidelityMedianDE": 4.5,
@@ -422,12 +538,424 @@
    "shareBestLabelBelowLc60": 11.3,
    "shareBestLabelBelowLc75": 46
   },
+  "random": {
+   "colours": 1500,
+   "seed": 12,
+   "paletteSubsample": 100,
+   "methods": {
+    "M6-s12": {
+     "tenantModes": 3000,
+     "errors": 0,
+     "allGatesPass": 100,
+     "textPairsFailing": 0,
+     "nonTextPairsFailing": 0,
+     "fillMoved": 7.9,
+     "movedWhy": {
+      "no label passes the gate": 164,
+      "near the page ground": 72
+     },
+     "failingPairs": {},
+     "failingExamples": [],
+     "movedDE": {
+      "median": 1.4,
+      "p90": 25.5,
+      "max": 32.1
+     },
+     "apcaLabelWarnings": 47.7,
+     "ms": 25697
+    },
+    "M6a-s12-apca-gate": {
+     "tenantModes": 3000,
+     "errors": 0,
+     "allGatesPass": 100,
+     "textPairsFailing": 0,
+     "nonTextPairsFailing": 0,
+     "fillMoved": 37.5,
+     "movedWhy": {
+      "no label passes the gate": 1054,
+      "near the page ground": 72
+     },
+     "failingPairs": {},
+     "failingExamples": [],
+     "movedDE": {
+      "median": 5.4,
+      "p90": 9.5,
+      "max": 40.6
+     },
+     "apcaLabelWarnings": 0,
+     "ms": 25990
+    },
+    "M3-atlassian": {
+     "tenantModes": 3000,
+     "errors": 0,
+     "allGatesPass": 99.9,
+     "textPairsFailing": 0,
+     "nonTextPairsFailing": 0,
+     "fillMoved": 58.5,
+     "movedWhy": {
+      "method re-tones": 1754
+     },
+     "failingPairs": {
+      "T1": 3
+     },
+     "failingExamples": [
+      "#3B904F/light: T1 3.97:1",
+      "#009504/light: T1 3.96:1",
+      "#41920B/light: T1 3.93:1"
+     ],
+     "movedDE": {
+      "median": 19.55,
+      "p90": 40,
+      "max": 80.1
+     },
+     "apcaLabelWarnings": 0,
+     "ms": 5060
+    },
+    "M4-m3-tonalspot": {
+     "tenantModes": 3000,
+     "errors": 0,
+     "allGatesPass": 100,
+     "textPairsFailing": 0,
+     "nonTextPairsFailing": 0,
+     "fillMoved": 100,
+     "movedWhy": {
+      "method re-tones": 3000
+     },
+     "failingPairs": {},
+     "failingExamples": [],
+     "movedDE": {
+      "median": 20.2,
+      "p90": 41,
+      "max": 65.1
+     },
+     "apcaLabelWarnings": 0,
+     "ms": 6526
+    },
+    "M7-palette-mjs": {
+     "tenantModes": 200,
+     "errors": 0,
+     "allGatesPass": 12,
+     "textPairsFailing": 34.2,
+     "nonTextPairsFailing": 11.7,
+     "fillMoved": 19,
+     "movedWhy": {
+      "method re-tones": 38
+     },
+     "failingPairs": {
+      "T5": 100,
+      "T1": 108,
+      "T2": 99,
+      "N3": 30,
+      "N1": 40,
+      "T4": 35
+     },
+     "failingExamples": [
+      "#491394/light: T5 4.1:1",
+      "#491394/dark: T1 3.86:1, T2 3.17:1, N3 2.98:1",
+      "#F02703/light: T1 4.2:1, T5 4.1:1",
+      "#F02703/dark: T1 4.2:1, T2 3.56:1, N3 2.89:1",
+      "#B2A38E/light: T5 4.14:1, N1 2.46:1"
+     ],
+     "movedDE": {
+      "median": 17.05,
+      "p90": 37.1,
+      "max": 43.5
+     },
+     "apcaLabelWarnings": 0,
+     "ms": 192
+    },
+    "M7f-palette-mjs-wcag-label": {
+     "tenantModes": 200,
+     "errors": 0,
+     "allGatesPass": 35.5,
+     "textPairsFailing": 15.7,
+     "nonTextPairsFailing": 11.7,
+     "fillMoved": 19,
+     "movedWhy": {
+      "method re-tones": 38
+     },
+     "failingPairs": {
+      "T5": 100,
+      "N3": 30,
+      "T1": 6,
+      "T2": 16,
+      "N1": 40,
+      "T4": 35
+     },
+     "failingExamples": [
+      "#491394/light: T5 4.1:1",
+      "#491394/dark: N3 2.98:1",
+      "#F02703/light: T1 4.49:1, T2 3.66:1, T5 4.1:1",
+      "#F02703/dark: T1 4.49:1, N3 2.89:1",
+      "#B2A38E/light: T5 4.14:1, N1 2.46:1"
+     ],
+     "movedDE": {
+      "median": 17.05,
+      "p90": 37.1,
+      "max": 43.5
+     },
+     "apcaLabelWarnings": 0,
+     "ms": 237
+    }
+   }
+  },
+  "inputProbe": [
+   {
+    "input": "#0000FF80",
+    "atlassianIsValidBrandHex": false,
+    "firstRound": {
+     "alpha": 0.5019607843137255,
+     "label": "#FFFFFF",
+     "reportedRatio": 8.59,
+     "paintedOnWhite": "#7F7FFF",
+     "paintedRatio": 3.29
+    },
+    "secondRound": {
+     "rejected": "tenant colour must be an opaque 6-digit hex (#RRGGBB), got \"#0000FF80\""
+    }
+   },
+   {
+    "input": "transparent",
+    "atlassianIsValidBrandHex": false,
+    "firstRound": {
+     "alpha": 0,
+     "label": "#FFFFFF",
+     "reportedRatio": 21,
+     "paintedOnWhite": "#FFFFFF",
+     "paintedRatio": 1
+    },
+    "secondRound": {
+     "rejected": "tenant colour must be an opaque 6-digit hex (#RRGGBB), got \"transparent\""
+    }
+   },
+   {
+    "input": "rgba(255, 0, 0, 0.5)",
+    "atlassianIsValidBrandHex": false,
+    "firstRound": {
+     "alpha": 0.5,
+     "label": "#1C1D21",
+     "reportedRatio": 4.21,
+     "paintedOnWhite": "#FF8080",
+     "paintedRatio": 6.91
+    },
+    "secondRound": {
+     "rejected": "tenant colour must be an opaque 6-digit hex (#RRGGBB), got \"rgba(255, 0, 0, 0.5)\""
+    }
+   },
+   {
+    "input": "#F00",
+    "atlassianIsValidBrandHex": false,
+    "firstRound": {
+     "alpha": 1,
+     "label": "#1C1D21",
+     "reportedRatio": 4.21,
+     "paintedOnWhite": "#FF0000",
+     "paintedRatio": 4.21
+    },
+    "secondRound": {
+     "rejected": "tenant colour must be an opaque 6-digit hex (#RRGGBB), got \"#F00\""
+    }
+   },
+   {
+    "input": "red",
+    "atlassianIsValidBrandHex": false,
+    "firstRound": {
+     "alpha": 1,
+     "label": "#1C1D21",
+     "reportedRatio": 4.21,
+     "paintedOnWhite": "#FF0000",
+     "paintedRatio": 4.21
+    },
+    "secondRound": {
+     "rejected": "tenant colour must be an opaque 6-digit hex (#RRGGBB), got \"red\""
+    }
+   },
+   {
+    "input": " #1a3cf2",
+    "atlassianIsValidBrandHex": false,
+    "firstRound": {
+     "alpha": 1,
+     "label": "#FFFFFF",
+     "reportedRatio": 7.07,
+     "paintedOnWhite": "#1A3CF2",
+     "paintedRatio": 7.07
+    },
+    "secondRound": {
+     "accent": "#1A3CF2"
+    }
+   },
+   {
+    "input": "oklch(0.6 0.2 30)",
+    "atlassianIsValidBrandHex": false,
+    "firstRound": {
+     "alpha": 1,
+     "label": "#FFFFFF",
+     "reportedRatio": 4.34,
+     "paintedOnWhite": "#DE3E2D",
+     "paintedRatio": 4.34
+    },
+    "secondRound": {
+     "rejected": "tenant colour must be an opaque 6-digit hex (#RRGGBB), got \"oklch(0.6 0.2 30)\""
+    }
+   },
+   {
+    "input": "#1A3CF2",
+    "atlassianIsValidBrandHex": true,
+    "firstRound": {
+     "alpha": 1,
+     "label": "#FFFFFF",
+     "reportedRatio": 7.07,
+     "paintedOnWhite": "#1A3CF2",
+     "paintedRatio": 7.07
+    },
+    "secondRound": {
+     "accent": "#1A3CF2"
+    }
+   }
+  ],
+  "tailwindTenant": {
+   "tailwind": "4.3.3",
+   "variants": {
+    "theme (plain) · tenant on subtree": {
+     "bgAccentRule": ".bg-accent { background-color: var(--color-accent); }",
+     "pass": false,
+     "checks": [
+      {
+       "el": "root",
+       "expect": "rgb(26, 60, 242)",
+       "got": "rgb(26, 60, 242)",
+       "ok": true
+      },
+      {
+       "el": "acme",
+       "expect": "rgb(255, 0, 0)",
+       "got": "rgb(26, 60, 242)",
+       "ok": false
+      },
+      {
+       "el": "acmeText",
+       "expect": "rgb(255, 0, 0)",
+       "got": "rgb(26, 60, 242)",
+       "ok": false
+      },
+      {
+       "el": "zen",
+       "expect": "rgb(0, 168, 107)",
+       "got": "rgb(26, 60, 242)",
+       "ok": false
+      },
+      {
+       "el": "zenSurface",
+       "expect": "rgb(230, 246, 238)",
+       "got": "rgb(246, 246, 247)",
+       "ok": false
+      },
+      {
+       "el": "acme50",
+       "expect": "tenant red at 50%",
+       "got": "oklab(0.485259 -0.019565 -0.26596 / 0.5)",
+       "ok": false
+      }
+     ]
+    },
+    "theme (plain) · tenant on html": {
+     "bgAccentRule": ".bg-accent { background-color: var(--color-accent); }",
+     "pass": true,
+     "checks": [
+      {
+       "el": "acme",
+       "expect": "rgb(255, 0, 0)",
+       "got": "rgb(255, 0, 0)",
+       "ok": true
+      },
+      {
+       "el": "acmeText",
+       "expect": "rgb(255, 0, 0)",
+       "got": "rgb(255, 0, 0)",
+       "ok": true
+      },
+      {
+       "el": "acme50",
+       "expect": "tenant red at 50%",
+       "got": "oklab(0.627966 0.22488 0.125859 / 0.5)",
+       "ok": true
+      }
+     ]
+    },
+    "theme inline · tenant on subtree": {
+     "bgAccentRule": ".bg-accent { background-color: var(--tenant-accent); }",
+     "pass": true,
+     "checks": [
+      {
+       "el": "root",
+       "expect": "rgb(26, 60, 242)",
+       "got": "rgb(26, 60, 242)",
+       "ok": true
+      },
+      {
+       "el": "acme",
+       "expect": "rgb(255, 0, 0)",
+       "got": "rgb(255, 0, 0)",
+       "ok": true
+      },
+      {
+       "el": "acmeText",
+       "expect": "rgb(255, 0, 0)",
+       "got": "rgb(255, 0, 0)",
+       "ok": true
+      },
+      {
+       "el": "zen",
+       "expect": "rgb(0, 168, 107)",
+       "got": "rgb(0, 168, 107)",
+       "ok": true
+      },
+      {
+       "el": "zenSurface",
+       "expect": "rgb(230, 246, 238)",
+       "got": "rgb(230, 246, 238)",
+       "ok": true
+      },
+      {
+       "el": "acme50",
+       "expect": "tenant red at 50%",
+       "got": "oklab(0.627966 0.22488 0.125859 / 0.5)",
+       "ok": true
+      }
+     ]
+    },
+    "theme inline · tenant on html": {
+     "bgAccentRule": ".bg-accent { background-color: var(--tenant-accent); }",
+     "pass": true,
+     "checks": [
+      {
+       "el": "acme",
+       "expect": "rgb(255, 0, 0)",
+       "got": "rgb(255, 0, 0)",
+       "ok": true
+      },
+      {
+       "el": "acmeText",
+       "expect": "rgb(255, 0, 0)",
+       "got": "rgb(255, 0, 0)",
+       "ok": true
+      },
+      {
+       "el": "acme50",
+       "expect": "tenant red at 50%",
+       "got": "oklab(0.627966 0.22488 0.125859 / 0.5)",
+       "ok": true
+      }
+     ]
+    }
+   }
+  },
   "axeCheck": {
    "axeVersion": "4.13.0",
-   "pairChecks": 1200,
+   "pairChecks": 1560,
    "agreement": 99.8,
-   "axeFailingPairs": 179,
-   "computedFailingPairs": 182,
+   "axeFailingPairs": 235,
+   "computedFailingPairs": 238,
    "disagreements": [
     {
      "method": "M0-naive",
@@ -463,360 +991,816 @@
     "tenant": "yellow",
     "hex": "#FFFF00",
     "mode": "light",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#7A7900",
      "label": "#FFFFFF",
-     "dE": 41.9
+     "dE": 41.9,
+     "wcag": 4.6,
+     "lc": 77
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#7A7900",
+     "label": "#FFFFFF",
+     "dE": 41.9,
+     "wcag": 4.6,
+     "lc": 77
     },
     "darkLabel": {
      "fill": "#FFFF00",
      "label": "#171707",
-     "dE": 0
+     "dE": 0,
+     "wcag": 16.83,
+     "lc": 100
+    },
+    "darkLabelReadsWell": {
+     "fill": "#FFFF00",
+     "label": "#171707",
+     "dE": 0,
+     "wcag": 16.83,
+     "lc": 100
     }
    },
    {
     "tenant": "yellow",
     "hex": "#FFFF00",
     "mode": "dark",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#7A7900",
      "label": "#FFFFFF",
-     "dE": 41.9
+     "dE": 41.9,
+     "wcag": 4.6,
+     "lc": 77
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#7A7900",
+     "label": "#FFFFFF",
+     "dE": 41.9,
+     "wcag": 4.6,
+     "lc": 77
     },
     "darkLabel": {
      "fill": "#FFFF00",
      "label": "#171707",
-     "dE": 0
+     "dE": 0,
+     "wcag": 16.83,
+     "lc": 100
+    },
+    "darkLabelReadsWell": {
+     "fill": "#FFFF00",
+     "label": "#171707",
+     "dE": 0,
+     "wcag": 16.83,
+     "lc": 100
     }
    },
    {
     "tenant": "near-white",
     "hex": "#F0F0F0",
     "mode": "light",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#767676",
      "label": "#FFFFFF",
-     "dE": 38.9
+     "dE": 38.9,
+     "wcag": 4.54,
+     "lc": 77
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#767676",
+     "label": "#FFFFFF",
+     "dE": 38.9,
+     "wcag": 4.54,
+     "lc": 77
     },
     "darkLabel": {
      "fill": "#D2D2D2",
      "label": "#161616",
-     "dE": 9.1
+     "dE": 9.1,
+     "wcag": 11.97,
+     "lc": 79
+    },
+    "darkLabelReadsWell": {
+     "fill": "#D2D2D2",
+     "label": "#161616",
+     "dE": 9.1,
+     "wcag": 11.97,
+     "lc": 79
     }
    },
    {
     "tenant": "near-white",
     "hex": "#F0F0F0",
     "mode": "dark",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#767676",
      "label": "#FFFFFF",
-     "dE": 38.9
+     "dE": 38.9,
+     "wcag": 4.54,
+     "lc": 77
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#767676",
+     "label": "#FFFFFF",
+     "dE": 38.9,
+     "wcag": 4.54,
+     "lc": 77
     },
     "darkLabel": {
      "fill": "#F0F0F0",
      "label": "#161616",
-     "dE": 0
+     "dE": 0,
+     "wcag": 15.88,
+     "lc": 96
+    },
+    "darkLabelReadsWell": {
+     "fill": "#F0F0F0",
+     "label": "#161616",
+     "dE": 0,
+     "wcag": 15.88,
+     "lc": 96
     }
    },
    {
     "tenant": "black",
     "hex": "#000000",
     "mode": "light",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#000000",
      "label": "#FFFFFF",
-     "dE": 0
+     "dE": 0,
+     "wcag": 21,
+     "lc": 108
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#000000",
+     "label": "#FFFFFF",
+     "dE": 0,
+     "wcag": 21,
+     "lc": 108
     },
     "darkLabel": {
-     "fill": "#B1B1B1",
+     "fill": "#7F7F7F",
      "label": "#161616",
-     "dE": 76
+     "dE": 59.6,
+     "wcag": 4.52,
+     "lc": 35
+    },
+    "darkLabelReadsWell": {
+     "fill": "#CCCCCC",
+     "label": "#161616",
+     "dE": 84.5,
+     "wcag": 11.27,
+     "lc": 75
     }
    },
    {
     "tenant": "black",
     "hex": "#000000",
     "mode": "dark",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#343434",
      "label": "#FFFFFF",
-     "dE": 32.5
+     "dE": 32.5,
+     "wcag": 12.45,
+     "lc": 102
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#343434",
+     "label": "#FFFFFF",
+     "dE": 32.5,
+     "wcag": 12.45,
+     "lc": 102
     },
     "darkLabel": {
-     "fill": "#B1B1B1",
+     "fill": "#7F7F7F",
      "label": "#161616",
-     "dE": 76
+     "dE": 59.6,
+     "wcag": 4.52,
+     "lc": 35
+    },
+    "darkLabelReadsWell": {
+     "fill": "#CCCCCC",
+     "label": "#161616",
+     "dE": 84.5,
+     "wcag": 11.27,
+     "lc": 75
     }
    },
    {
     "tenant": "pure red",
     "hex": "#FF0000",
     "mode": "light",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#EE0000",
      "label": "#FFFFFF",
-     "dE": 3.5
+     "dE": 3.5,
+     "wcag": 4.53,
+     "lc": 74
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#E80000",
+     "label": "#FFFFFF",
+     "dE": 4.7,
+     "wcag": 4.74,
+     "lc": 75
     },
     "darkLabel": {
-     "fill": "#FF9281",
+     "fill": "#FF0000",
      "label": "#22110E",
-     "dE": 18.9
+     "dE": 0,
+     "wcag": 4.55,
+     "lc": 39
+    },
+    "darkLabelReadsWell": {
+     "fill": "#FFBDB0",
+     "label": "#22110E",
+     "dE": 28.9,
+     "wcag": 11.4,
+     "lc": 76
     }
    },
    {
     "tenant": "pure red",
     "hex": "#FF0000",
     "mode": "dark",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#EE0000",
      "label": "#FFFFFF",
-     "dE": 3.5
+     "dE": 3.5,
+     "wcag": 4.53,
+     "lc": 74
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#E80000",
+     "label": "#FFFFFF",
+     "dE": 4.7,
+     "wcag": 4.74,
+     "lc": 75
     },
     "darkLabel": {
-     "fill": "#FF9281",
+     "fill": "#FF0000",
      "label": "#22110E",
-     "dE": 18.9
+     "dE": 0,
+     "wcag": 4.55,
+     "lc": 39
+    },
+    "darkLabelReadsWell": {
+     "fill": "#FFBDB0",
+     "label": "#22110E",
+     "dE": 28.9,
+     "wcag": 11.4,
+     "lc": 76
     }
    },
    {
     "tenant": "grey",
     "hex": "#8A8F98",
     "mode": "light",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#72767D",
      "label": "#FFFFFF",
-     "dE": 8.4
+     "dE": 8.4,
+     "wcag": 4.56,
+     "lc": 77
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#72767D",
+     "label": "#FFFFFF",
+     "dE": 8.4,
+     "wcag": 4.56,
+     "lc": 77
     },
     "darkLabel": {
-     "fill": "#ADB1B9",
+     "fill": "#8A8F98",
      "label": "#151618",
-     "dE": 11.1
+     "dE": 0,
+     "wcag": 5.57,
+     "lc": 43
+    },
+    "darkLabelReadsWell": {
+     "fill": "#C8CCD4",
+     "label": "#151618",
+     "dE": 19.6,
+     "wcag": 11.25,
+     "lc": 75
     }
    },
    {
     "tenant": "grey",
     "hex": "#8A8F98",
     "mode": "dark",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#72767D",
      "label": "#FFFFFF",
-     "dE": 8.4
+     "dE": 8.4,
+     "wcag": 4.56,
+     "lc": 77
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#72767D",
+     "label": "#FFFFFF",
+     "dE": 8.4,
+     "wcag": 4.56,
+     "lc": 77
     },
     "darkLabel": {
-     "fill": "#ADB1B9",
+     "fill": "#8A8F98",
      "label": "#151618",
-     "dE": 11.1
+     "dE": 0,
+     "wcag": 5.57,
+     "lc": 43
+    },
+    "darkLabelReadsWell": {
+     "fill": "#C8CCD4",
+     "label": "#151618",
+     "dE": 19.6,
+     "wcag": 11.25,
+     "lc": 75
     }
    },
    {
     "tenant": "blue",
     "hex": "#1A3CF2",
     "mode": "light",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#1A3CF2",
      "label": "#FFFFFF",
-     "dE": 0
+     "dE": 0,
+     "wcag": 7.07,
+     "lc": 88
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#1A3CF2",
+     "label": "#FFFFFF",
+     "dE": 0,
+     "wcag": 7.07,
+     "lc": 88
     },
     "darkLabel": {
-     "fill": "#85B0FF",
+     "fill": "#4377FF",
      "label": "#101624",
-     "dE": 30.8
+     "dE": 13.7,
+     "wcag": 4.58,
+     "lc": 36
+    },
+    "darkLabelReadsWell": {
+     "fill": "#B0CDFF",
+     "label": "#101624",
+     "dE": 40.6,
+     "wcag": 11.2,
+     "lc": 75
     }
    },
    {
     "tenant": "blue",
     "hex": "#1A3CF2",
     "mode": "dark",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#1A3CF2",
      "label": "#FFFFFF",
-     "dE": 0
+     "dE": 0,
+     "wcag": 7.07,
+     "lc": 88
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#1A3CF2",
+     "label": "#FFFFFF",
+     "dE": 0,
+     "wcag": 7.07,
+     "lc": 88
     },
     "darkLabel": {
-     "fill": "#85B0FF",
+     "fill": "#4377FF",
      "label": "#101624",
-     "dE": 30.8
+     "dE": 13.7,
+     "wcag": 4.58,
+     "lc": 36
+    },
+    "darkLabelReadsWell": {
+     "fill": "#B0CDFF",
+     "label": "#101624",
+     "dE": 40.6,
+     "wcag": 11.2,
+     "lc": 75
     }
    },
    {
     "tenant": "jade",
     "hex": "#00A86B",
     "mode": "light",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#00884F",
      "label": "#FFFFFF",
-     "dE": 9.5
+     "dE": 9.5,
+     "wcag": 4.53,
+     "lc": 76
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#00884F",
+     "label": "#FFFFFF",
+     "dE": 9.5,
+     "wcag": 4.53,
+     "lc": 76
     },
     "darkLabel": {
-     "fill": "#3FC787",
+     "fill": "#00A86B",
      "label": "#091A11",
-     "dE": 9.6
+     "dE": 0,
+     "wcag": 5.84,
+     "lc": 46
+    },
+    "darkLabelReadsWell": {
+     "fill": "#60E3A2",
+     "label": "#091A11",
+     "dE": 18.1,
+     "wcag": 11.14,
+     "lc": 75
     }
    },
    {
     "tenant": "jade",
     "hex": "#00A86B",
     "mode": "dark",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#00884F",
      "label": "#FFFFFF",
-     "dE": 9.5
+     "dE": 9.5,
+     "wcag": 4.53,
+     "lc": 76
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#00884F",
+     "label": "#FFFFFF",
+     "dE": 9.5,
+     "wcag": 4.53,
+     "lc": 76
     },
     "darkLabel": {
-     "fill": "#3FC787",
+     "fill": "#00A86B",
      "label": "#091A11",
-     "dE": 9.6
+     "dE": 0,
+     "wcag": 5.84,
+     "lc": 46
+    },
+    "darkLabelReadsWell": {
+     "fill": "#60E3A2",
+     "label": "#091A11",
+     "dE": 18.1,
+     "wcag": 11.14,
+     "lc": 75
     }
    },
    {
     "tenant": "orange",
     "hex": "#FF7A00",
     "mode": "light",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#BF5700",
      "label": "#FFFFFF",
-     "dE": 14.9
+     "dE": 14.9,
+     "wcag": 4.59,
+     "lc": 77
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#BF5700",
+     "label": "#FFFFFF",
+     "dE": 14.9,
+     "wcag": 4.59,
+     "lc": 77
     },
     "darkLabel": {
-     "fill": "#FF964D",
+     "fill": "#FF7A00",
      "label": "#211209",
-     "dE": 6.1
+     "dE": 0,
+     "wcag": 6.96,
+     "lc": 53
+    },
+    "darkLabelReadsWell": {
+     "fill": "#FFC098",
+     "label": "#211209",
+     "dE": 16.6,
+     "wcag": 11.47,
+     "lc": 76
     }
    },
    {
     "tenant": "orange",
     "hex": "#FF7A00",
     "mode": "dark",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#BF5700",
      "label": "#FFFFFF",
-     "dE": 14.9
+     "dE": 14.9,
+     "wcag": 4.59,
+     "lc": 77
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#BF5700",
+     "label": "#FFFFFF",
+     "dE": 14.9,
+     "wcag": 4.59,
+     "lc": 77
     },
     "darkLabel": {
-     "fill": "#FF964D",
+     "fill": "#FF7A00",
      "label": "#211209",
-     "dE": 6.1
+     "dE": 0,
+     "wcag": 6.96,
+     "lc": 53
+    },
+    "darkLabelReadsWell": {
+     "fill": "#FFC098",
+     "label": "#211209",
+     "dE": 16.6,
+     "wcag": 11.47,
+     "lc": 76
     }
    },
    {
     "tenant": "cyan",
     "hex": "#00D1FF",
     "mode": "light",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#0080A1",
      "label": "#FFFFFF",
-     "dE": 24.3
+     "dE": 24.3,
+     "wcag": 4.56,
+     "lc": 77
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#0080A1",
+     "label": "#FFFFFF",
+     "dE": 24.3,
+     "wcag": 4.56,
+     "lc": 77
     },
     "darkLabel": {
      "fill": "#00D1FF",
      "label": "#041920",
-     "dE": 0
+     "dE": 0,
+     "wcag": 9.93,
+     "lc": 69
+    },
+    "darkLabelReadsWell": {
+     "fill": "#4DDDFF",
+     "label": "#041920",
+     "dE": 4.3,
+     "wcag": 11.25,
+     "lc": 76
     }
    },
    {
     "tenant": "cyan",
     "hex": "#00D1FF",
     "mode": "dark",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#0080A1",
      "label": "#FFFFFF",
-     "dE": 24.3
+     "dE": 24.3,
+     "wcag": 4.56,
+     "lc": 77
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#0080A1",
+     "label": "#FFFFFF",
+     "dE": 24.3,
+     "wcag": 4.56,
+     "lc": 77
     },
     "darkLabel": {
      "fill": "#00D1FF",
      "label": "#041920",
-     "dE": 0
+     "dE": 0,
+     "wcag": 9.93,
+     "lc": 69
+    },
+    "darkLabelReadsWell": {
+     "fill": "#4DDDFF",
+     "label": "#041920",
+     "dE": 4.3,
+     "wcag": 11.25,
+     "lc": 76
     }
    },
    {
     "tenant": "purple",
     "hex": "#6B21A8",
     "mode": "light",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#6B21A8",
      "label": "#FFFFFF",
-     "dE": 0
+     "dE": 0,
+     "wcag": 8.72,
+     "lc": 93
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#6B21A8",
+     "label": "#FFFFFF",
+     "dE": 0,
+     "wcag": 8.72,
+     "lc": 93
     },
     "darkLabel": {
-     "fill": "#CD9BFF",
+     "fill": "#A05EE5",
      "label": "#191321",
-     "dE": 33.9
+     "dE": 18,
+     "wcag": 4.52,
+     "lc": 36
+    },
+    "darkLabelReadsWell": {
+     "fill": "#DEC0FF",
+     "label": "#191321",
+     "dE": 42.9,
+     "wcag": 11.32,
+     "lc": 75
     }
    },
    {
     "tenant": "purple",
     "hex": "#6B21A8",
     "mode": "dark",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#6B21A8",
      "label": "#FFFFFF",
-     "dE": 0
+     "dE": 0,
+     "wcag": 8.72,
+     "lc": 93
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#6B21A8",
+     "label": "#FFFFFF",
+     "dE": 0,
+     "wcag": 8.72,
+     "lc": 93
     },
     "darkLabel": {
-     "fill": "#CD9BFF",
+     "fill": "#A05EE5",
      "label": "#191321",
-     "dE": 33.9
+     "dE": 18,
+     "wcag": 4.52,
+     "lc": 36
+    },
+    "darkLabelReadsWell": {
+     "fill": "#DEC0FF",
+     "label": "#191321",
+     "dE": 42.9,
+     "wcag": 11.32,
+     "lc": 75
     }
    },
    {
     "tenant": "navy",
     "hex": "#0B1F3A",
     "mode": "light",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#0B1F3A",
      "label": "#FFFFFF",
-     "dE": 0
+     "dE": 0,
+     "wcag": 16.52,
+     "lc": 106
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#0B1F3A",
+     "label": "#FFFFFF",
+     "dE": 0,
+     "wcag": 16.52,
+     "lc": 106
     },
     "darkLabel": {
-     "fill": "#99B3D6",
+     "fill": "#6A82A3",
      "label": "#11161E",
-     "dE": 52
+     "dE": 36.1,
+     "wcag": 4.61,
+     "lc": 36
+    },
+    "darkLabelReadsWell": {
+     "fill": "#B4CEF2",
+     "label": "#11161E",
+     "dE": 60.5,
+     "wcag": 11.28,
+     "lc": 75
     }
    },
    {
     "tenant": "navy",
     "hex": "#0B1F3A",
     "mode": "dark",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#203551",
      "label": "#FFFFFF",
-     "dE": 8.6
+     "dE": 8.6,
+     "wcag": 12.43,
+     "lc": 102
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#203551",
+     "label": "#FFFFFF",
+     "dE": 8.6,
+     "wcag": 12.43,
+     "lc": 102
     },
     "darkLabel": {
-     "fill": "#99B3D6",
+     "fill": "#6A82A3",
      "label": "#11161E",
-     "dE": 52
+     "dE": 36.1,
+     "wcag": 4.61,
+     "lc": 36
+    },
+    "darkLabelReadsWell": {
+     "fill": "#B4CEF2",
+     "label": "#11161E",
+     "dE": 60.5,
+     "wcag": 11.28,
+     "lc": 75
     }
    },
    {
     "tenant": "pink",
     "hex": "#FF69B4",
     "mode": "light",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#CF3B8A",
      "label": "#FFFFFF",
-     "dE": 13.5
+     "dE": 13.5,
+     "wcag": 4.52,
+     "lc": 76
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#CF3B8A",
+     "label": "#FFFFFF",
+     "dE": 13.5,
+     "wcag": 4.52,
+     "lc": 76
     },
     "darkLabel": {
-     "fill": "#FF88C5",
+     "fill": "#FF69B4",
      "label": "#201017",
-     "dE": 6.1
+     "dE": 0,
+     "wcag": 6.91,
+     "lc": 52
+    },
+    "darkLabelReadsWell": {
+     "fill": "#FFB8DB",
+     "label": "#201017",
+     "dE": 16.7,
+     "wcag": 11.44,
+     "lc": 76
     }
    },
    {
     "tenant": "pink",
     "hex": "#FF69B4",
     "mode": "dark",
+    "apcaLevel": 75,
     "whiteLabel": {
      "fill": "#CF3B8A",
      "label": "#FFFFFF",
-     "dE": 13.5
+     "dE": 13.5,
+     "wcag": 4.52,
+     "lc": 76
+    },
+    "whiteLabelReadsWell": {
+     "fill": "#CF3B8A",
+     "label": "#FFFFFF",
+     "dE": 13.5,
+     "wcag": 4.52,
+     "lc": 76
     },
     "darkLabel": {
-     "fill": "#FF88C5",
+     "fill": "#FF69B4",
      "label": "#201017",
-     "dE": 6.1
+     "dE": 0,
+     "wcag": 6.91,
+     "lc": 52
+    },
+    "darkLabelReadsWell": {
+     "fill": "#FFB8DB",
+     "label": "#201017",
+     "dE": 16.7,
+     "wcag": 11.44,
+     "lc": 76
     }
    }
   ],
@@ -827,11 +1811,12 @@
     "in": "#FFFF00",
     "accent": "#FFFF00",
     "onAccent": "#171707",
-    "strong": "#747300",
+    "strong": "#626200",
     "subtle": "#F4F6DB",
-    "buttonBorder": "#747300",
+    "buttonBorder": "#626200",
     "fidelityDE": 0,
-    "flags": []
+    "flags": [],
+    "warnings": []
    },
    {
     "tenant": "yellow",
@@ -843,21 +1828,25 @@
     "subtle": "#2D2E03",
     "buttonBorder": null,
     "fidelityDE": 0,
-    "flags": []
+    "flags": [],
+    "warnings": []
    },
    {
     "tenant": "near-white",
     "mode": "light",
     "in": "#F0F0F0",
-    "accent": "#767676",
-    "onAccent": "#FFFFFF",
-    "strong": "#6F6F6F",
+    "accent": "#949494",
+    "onAccent": "#161616",
+    "strong": "#5D5D5D",
     "subtle": "#F3F3F3",
     "buttonBorder": null,
-    "fidelityDE": 38.9,
+    "fidelityDE": 28.9,
     "flags": [
      "tenant colour ≈ page ground: fill moved",
      "achromatic brand: selection needs a non-colour cue (weight, check, bar)"
+    ],
+    "warnings": [
+     "label reads weak: APCA Lc 46 < 75 for 14px/600; offer the nearest fill that meets it"
     ]
    },
    {
@@ -872,7 +1861,8 @@
     "fidelityDE": 0,
     "flags": [
      "achromatic brand: selection needs a non-colour cue (weight, check, bar)"
-    ]
+    ],
+    "warnings": []
    },
    {
     "tenant": "black",
@@ -886,7 +1876,8 @@
     "fidelityDE": 0,
     "flags": [
      "achromatic brand: selection needs a non-colour cue (weight, check, bar)"
-    ]
+    ],
+    "warnings": []
    },
    {
     "tenant": "black",
@@ -894,73 +1885,82 @@
     "in": "#000000",
     "accent": "#626262",
     "onAccent": "#FFFFFF",
-    "strong": "#B9B9B9",
+    "strong": "#D2D2D2",
     "subtle": "#2B2B2B",
     "buttonBorder": null,
     "fidelityDE": 49.6,
     "flags": [
      "tenant colour ≈ page ground: fill moved",
      "achromatic brand: selection needs a non-colour cue (weight, check, bar)"
-    ]
+    ],
+    "warnings": []
    },
    {
     "tenant": "pure red",
     "mode": "light",
     "in": "#FF0000",
-    "accent": "#EE0000",
-    "onAccent": "#FFFFFF",
-    "strong": "#DF0000",
+    "accent": "#FF0000",
+    "onAccent": "#22110E",
+    "strong": "#AF0000",
     "subtle": "#FFEEEB",
     "buttonBorder": null,
-    "fidelityDE": 3.5,
+    "fidelityDE": 0,
     "flags": [
-     "no legible label on tenant colour: fill lightness moved",
      "accent hue ≈ danger: danger states must carry icon + word, never colour alone"
+    ],
+    "warnings": [
+     "label reads weak: APCA Lc 39 < 75 for 14px/600; offer the nearest fill that meets it"
     ]
    },
    {
     "tenant": "pure red",
     "mode": "dark",
     "in": "#FF0000",
-    "accent": "#EE0000",
-    "onAccent": "#FFFFFF",
-    "strong": "#FF9E8E",
+    "accent": "#FF0000",
+    "onAccent": "#22110E",
+    "strong": "#FFC6BB",
     "subtle": "#451E19",
     "buttonBorder": null,
-    "fidelityDE": 3.5,
+    "fidelityDE": 0,
     "flags": [
-     "no legible label on tenant colour: fill lightness moved",
      "accent hue ≈ danger: danger states must carry icon + word, never colour alone"
+    ],
+    "warnings": [
+     "label reads weak: APCA Lc 39 < 75 for 14px/600; offer the nearest fill that meets it"
     ]
    },
    {
     "tenant": "grey",
     "mode": "light",
     "in": "#8A8F98",
-    "accent": "#72767D",
-    "onAccent": "#FFFFFF",
-    "strong": "#6B6E76",
+    "accent": "#8A8F98",
+    "onAccent": "#151618",
+    "strong": "#5A5D64",
     "subtle": "#F2F3F6",
     "buttonBorder": null,
-    "fidelityDE": 8.4,
+    "fidelityDE": 0,
     "flags": [
-     "no legible label on tenant colour: fill lightness moved",
      "achromatic brand: selection needs a non-colour cue (weight, check, bar)"
+    ],
+    "warnings": [
+     "label reads weak: APCA Lc 43 < 75 for 14px/600; offer the nearest fill that meets it"
     ]
    },
    {
     "tenant": "grey",
     "mode": "dark",
     "in": "#8A8F98",
-    "accent": "#72767D",
-    "onAccent": "#FFFFFF",
-    "strong": "#B5B9C1",
+    "accent": "#8A8F98",
+    "onAccent": "#151618",
+    "strong": "#CED2DA",
     "subtle": "#2A2B2E",
     "buttonBorder": null,
-    "fidelityDE": 8.4,
+    "fidelityDE": 0,
     "flags": [
-     "no legible label on tenant colour: fill lightness moved",
      "achromatic brand: selection needs a non-colour cue (weight, check, bar)"
+    ],
+    "warnings": [
+     "label reads weak: APCA Lc 43 < 75 for 14px/600; offer the nearest fill that meets it"
     ]
    },
    {
@@ -973,7 +1973,8 @@
     "subtle": "#ECF4FF",
     "buttonBorder": null,
     "fidelityDE": 0,
-    "flags": []
+    "flags": [],
+    "warnings": []
    },
    {
     "tenant": "blue",
@@ -981,72 +1982,81 @@
     "in": "#1A3CF2",
     "accent": "#1A3CF2",
     "onAccent": "#FFFFFF",
-    "strong": "#92B9FF",
+    "strong": "#BCD4FF",
     "subtle": "#1D2A49",
-    "buttonBorder": "#92B9FF",
+    "buttonBorder": "#BCD4FF",
     "fidelityDE": 0,
-    "flags": []
+    "flags": [],
+    "warnings": []
    },
    {
     "tenant": "jade",
     "mode": "light",
     "in": "#00A86B",
-    "accent": "#3FC787",
+    "accent": "#00A86B",
     "onAccent": "#091A11",
-    "strong": "#00814C",
+    "strong": "#006D3E",
     "subtle": "#E0FBEB",
-    "buttonBorder": "#00814C",
-    "fidelityDE": 9.6,
+    "buttonBorder": null,
+    "fidelityDE": 0,
     "flags": [
-     "no legible label on tenant colour: fill lightness moved",
      "accent hue ≈ success: success states must carry icon + word, never colour alone"
+    ],
+    "warnings": [
+     "label reads weak: APCA Lc 46 < 75 for 14px/600; offer the nearest fill that meets it"
     ]
    },
    {
     "tenant": "jade",
     "mode": "dark",
     "in": "#00A86B",
-    "accent": "#3FC787",
+    "accent": "#00A86B",
     "onAccent": "#091A11",
-    "strong": "#4BD091",
+    "strong": "#69EBA9",
     "subtle": "#083420",
     "buttonBorder": null,
-    "fidelityDE": 9.6,
+    "fidelityDE": 0,
     "flags": [
-     "no legible label on tenant colour: fill lightness moved",
      "accent hue ≈ success: success states must carry icon + word, never colour alone"
+    ],
+    "warnings": [
+     "label reads weak: APCA Lc 46 < 75 for 14px/600; offer the nearest fill that meets it"
     ]
    },
    {
     "tenant": "orange",
     "mode": "light",
     "in": "#FF7A00",
-    "accent": "#FF964D",
+    "accent": "#FF7A00",
     "onAccent": "#211209",
-    "strong": "#B35000",
+    "strong": "#943F00",
     "subtle": "#FFEEE1",
-    "buttonBorder": "#B35000",
-    "fidelityDE": 6.1,
+    "buttonBorder": "#943F00",
+    "fidelityDE": 0,
     "flags": [
-     "no legible label on tenant colour: fill lightness moved",
      "accent hue ≈ danger: danger states must carry icon + word, never colour alone",
      "accent hue ≈ warning: warning states must carry icon + word, never colour alone"
+    ],
+    "warnings": [
+     "label reads weak: APCA Lc 53 < 75 for 14px/600; offer the nearest fill that meets it"
     ]
    },
    {
     "tenant": "orange",
     "mode": "dark",
     "in": "#FF7A00",
-    "accent": "#FF964D",
+    "accent": "#FF7A00",
     "onAccent": "#211209",
-    "strong": "#FFA163",
+    "strong": "#FFC6A0",
     "subtle": "#42210C",
     "buttonBorder": null,
-    "fidelityDE": 6.1,
+    "fidelityDE": 0,
     "flags": [
-     "no legible label on tenant colour: fill lightness moved",
      "accent hue ≈ danger: danger states must carry icon + word, never colour alone",
      "accent hue ≈ warning: warning states must carry icon + word, never colour alone"
+    ],
+    "warnings": [
+     "label reads weak: APCA Lc 53 < 75 for 14px/600; offer the nearest fill that meets it"
     ]
    },
    {
@@ -1055,11 +2065,14 @@
     "in": "#00D1FF",
     "accent": "#00D1FF",
     "onAccent": "#041920",
-    "strong": "#007999",
+    "strong": "#006683",
     "subtle": "#DDF9FF",
-    "buttonBorder": "#007999",
+    "buttonBorder": "#006683",
     "fidelityDE": 0,
-    "flags": []
+    "flags": [],
+    "warnings": [
+     "label reads weak: APCA Lc 69 < 75 for 14px/600; offer the nearest fill that meets it"
+    ]
    },
    {
     "tenant": "cyan",
@@ -1067,11 +2080,14 @@
     "in": "#00D1FF",
     "accent": "#00D1FF",
     "onAccent": "#041920",
-    "strong": "#00D1FF",
+    "strong": "#71E3FF",
     "subtle": "#003140",
     "buttonBorder": null,
     "fidelityDE": 0,
-    "flags": []
+    "flags": [],
+    "warnings": [
+     "label reads weak: APCA Lc 69 < 75 for 14px/600; offer the nearest fill that meets it"
+    ]
    },
    {
     "tenant": "purple",
@@ -1083,7 +2099,8 @@
     "subtle": "#F8EFFF",
     "buttonBorder": null,
     "fidelityDE": 0,
-    "flags": []
+    "flags": [],
+    "warnings": []
    },
    {
     "tenant": "purple",
@@ -1091,11 +2108,12 @@
     "in": "#6B21A8",
     "accent": "#6B21A8",
     "onAccent": "#FFFFFF",
-    "strong": "#D2A7FF",
+    "strong": "#E2C7FF",
     "subtle": "#322343",
-    "buttonBorder": "#D2A7FF",
+    "buttonBorder": "#E2C7FF",
     "fidelityDE": 0,
-    "flags": []
+    "flags": [],
+    "warnings": []
    },
    {
     "tenant": "navy",
@@ -1107,7 +2125,8 @@
     "subtle": "#ECF4FF",
     "buttonBorder": null,
     "fidelityDE": 0,
-    "flags": []
+    "flags": [],
+    "warnings": []
    },
    {
     "tenant": "navy",
@@ -1115,46 +2134,337 @@
     "in": "#0B1F3A",
     "accent": "#4B6281",
     "onAccent": "#FFFFFF",
-    "strong": "#A1BBDE",
+    "strong": "#BAD5F9",
     "subtle": "#222C3A",
     "buttonBorder": null,
     "fidelityDE": 25.1,
     "flags": [
      "tenant colour ≈ page ground: fill moved"
-    ]
+    ],
+    "warnings": []
    },
    {
     "tenant": "pink",
     "mode": "light",
     "in": "#FF69B4",
-    "accent": "#FF88C5",
+    "accent": "#FF69B4",
     "onAccent": "#201017",
-    "strong": "#C43081",
+    "strong": "#A30066",
     "subtle": "#FFEBF6",
-    "buttonBorder": "#C43081",
-    "fidelityDE": 6.1,
-    "flags": [
-     "no legible label on tenant colour: fill lightness moved"
+    "buttonBorder": "#A30066",
+    "fidelityDE": 0,
+    "flags": [],
+    "warnings": [
+     "label reads weak: APCA Lc 52 < 75 for 14px/600; offer the nearest fill that meets it"
     ]
    },
    {
     "tenant": "pink",
     "mode": "dark",
     "in": "#FF69B4",
-    "accent": "#FF88C5",
+    "accent": "#FF69B4",
     "onAccent": "#201017",
-    "strong": "#FF97CC",
+    "strong": "#FFC1DF",
     "subtle": "#411E2E",
     "buttonBorder": null,
-    "fidelityDE": 6.1,
-    "flags": [
-     "no legible label on tenant colour: fill lightness moved"
+    "fidelityDE": 0,
+    "flags": [],
+    "warnings": [
+     "label reads weak: APCA Lc 52 < 75 for 14px/600; offer the nearest fill that meets it"
+    ]
+   }
+  ],
+  "paletteCases": [
+   {
+    "tenant": "yellow",
+    "mode": "light",
+    "step9": "#FFFF00",
+    "label": "#111111",
+    "step11": "#767500",
+    "focus": "#767500",
+    "failing": [
+     "T5 4.19:1",
+     "N1 1.07:1"
+    ]
+   },
+   {
+    "tenant": "yellow",
+    "mode": "dark",
+    "step9": "#FFFF00",
+    "label": "#111111",
+    "step11": "#B7B834",
+    "focus": "#717100",
+    "failing": []
+   },
+   {
+    "tenant": "near-white",
+    "mode": "light",
+    "step9": "#F0F0F0",
+    "label": "#111111",
+    "step11": "#717171",
+    "focus": "#717171",
+    "failing": [
+     "T5 4.17:1",
+     "N1 1.14:1"
+    ]
+   },
+   {
+    "tenant": "near-white",
+    "mode": "dark",
+    "step9": "#F0F0F0",
+    "label": "#111111",
+    "step11": "#B3B3B3",
+    "focus": "#6C6C6C",
+    "failing": []
+   },
+   {
+    "tenant": "black",
+    "mode": "light",
+    "step9": "#000000",
+    "label": "#FFFFFF",
+    "step11": "#717171",
+    "focus": "#717171",
+    "failing": [
+     "T5 4.17:1"
+    ]
+   },
+   {
+    "tenant": "black",
+    "mode": "dark",
+    "step9": "#868686",
+    "label": "#FFFFFF",
+    "step11": "#B3B3B3",
+    "focus": "#6C6C6C",
+    "failing": [
+     "T1 3.64:1",
+     "T2 3:1"
+    ]
+   },
+   {
+    "tenant": "pure red",
+    "mode": "light",
+    "step9": "#FF0000",
+    "label": "#FFFFFF",
+    "step11": "#CA3D30",
+    "focus": "#FF0000",
+    "failing": [
+     "T1 4:1",
+     "T5 4.12:1"
+    ]
+   },
+   {
+    "tenant": "pure red",
+    "mode": "dark",
+    "step9": "#FF0000",
+    "label": "#FFFFFF",
+    "step11": "#FF9584",
+    "focus": "#CC0000",
+    "failing": [
+     "T1 4:1",
+     "T2 3.43:1",
+     "N3 2.86:1"
+    ]
+   },
+   {
+    "tenant": "grey",
+    "mode": "light",
+    "step9": "#8A8F98",
+    "label": "#FFFFFF",
+    "step11": "#6E7177",
+    "focus": "#8A8F98",
+    "failing": [
+     "T1 3.25:1",
+     "T2 3.97:1",
+     "T5 4.17:1"
+    ]
+   },
+   {
+    "tenant": "grey",
+    "mode": "dark",
+    "step9": "#8A8F98",
+    "label": "#FFFFFF",
+    "step11": "#AFB3BA",
+    "focus": "#686C73",
+    "failing": [
+     "T1 3.25:1",
+     "T2 2.69:1"
+    ]
+   },
+   {
+    "tenant": "blue",
+    "mode": "light",
+    "step9": "#1A3CF2",
+    "label": "#FFFFFF",
+    "step11": "#3F69E0",
+    "focus": "#3F69E0",
+    "failing": [
+     "T5 4.14:1"
+    ]
+   },
+   {
+    "tenant": "blue",
+    "mode": "dark",
+    "step9": "#4175FF",
+    "label": "#FFFFFF",
+    "step11": "#8AB3FF",
+    "focus": "#2D59EC",
+    "failing": [
+     "T1 4.03:1",
+     "T2 3.45:1"
+    ]
+   },
+   {
+    "tenant": "jade",
+    "mode": "light",
+    "step9": "#00A86B",
+    "label": "#FFFFFF",
+    "step11": "#2B8057",
+    "focus": "#00995C",
+    "failing": [
+     "T1 3.08:1",
+     "T2 3.68:1",
+     "T4 4.49:1",
+     "T5 4.18:1"
+    ]
+   },
+   {
+    "tenant": "jade",
+    "mode": "dark",
+    "step9": "#00A86B",
+    "label": "#FFFFFF",
+    "step11": "#71C396",
+    "focus": "#008150",
+    "failing": [
+     "T1 3.08:1",
+     "T2 2.56:1"
+    ]
+   },
+   {
+    "tenant": "orange",
+    "mode": "light",
+    "step9": "#FF7A00",
+    "label": "#FFFFFF",
+    "step11": "#AF591C",
+    "focus": "#AF591C",
+    "failing": [
+     "T1 2.61:1",
+     "T2 3.14:1",
+     "T5 4.11:1",
+     "N1 2.61:1"
+    ]
+   },
+   {
+    "tenant": "orange",
+    "mode": "dark",
+    "step9": "#FF7A00",
+    "label": "#FFFFFF",
+    "step11": "#F99B64",
+    "focus": "#AA4D00",
+    "failing": [
+     "T1 2.61:1",
+     "T2 2.25:1"
+    ]
+   },
+   {
+    "tenant": "cyan",
+    "mode": "light",
+    "step9": "#00D1FF",
+    "label": "#111111",
+    "step11": "#007C99",
+    "focus": "#007C99",
+    "failing": [
+     "T4 4.48:1",
+     "T5 4.15:1",
+     "N1 1.82:1"
+    ]
+   },
+   {
+    "tenant": "cyan",
+    "mode": "dark",
+    "step9": "#00D1FF",
+    "label": "#111111",
+    "step11": "#5CBFDE",
+    "focus": "#00799A",
+    "failing": []
+   },
+   {
+    "tenant": "purple",
+    "mode": "light",
+    "step9": "#6B21A8",
+    "label": "#FFFFFF",
+    "step11": "#875DB7",
+    "focus": "#875DB7",
+    "failing": [
+     "T5 4.13:1"
+    ]
+   },
+   {
+    "tenant": "purple",
+    "mode": "dark",
+    "step9": "#9E65DC",
+    "label": "#FFFFFF",
+    "step11": "#CAA0FF",
+    "focus": "#814CB9",
+    "failing": [
+     "T1 3.93:1",
+     "T2 3.23:1",
+     "N3 2.94:1"
+    ]
+   },
+   {
+    "tenant": "navy",
+    "mode": "light",
+    "step9": "#0B1F3A",
+    "label": "#FFFFFF",
+    "step11": "#627289",
+    "focus": "#627289",
+    "failing": [
+     "T5 4.16:1"
+    ]
+   },
+   {
+    "tenant": "navy",
+    "mode": "dark",
+    "step9": "#7288A6",
+    "label": "#FFFFFF",
+    "step11": "#A3B4CD",
+    "focus": "#596D89",
+    "failing": [
+     "T1 3.63:1",
+     "T2 2.99:1"
+    ]
+   },
+   {
+    "tenant": "pink",
+    "mode": "light",
+    "step9": "#FF69B4",
+    "label": "#FFFFFF",
+    "step11": "#AF4E7D",
+    "focus": "#AF4E7D",
+    "failing": [
+     "T1 2.65:1",
+     "T2 3.23:1",
+     "T5 4.13:1",
+     "N1 2.65:1"
+    ]
+   },
+   {
+    "tenant": "pink",
+    "mode": "dark",
+    "step9": "#FF69B4",
+    "label": "#FFFFFF",
+    "step11": "#FA91C1",
+    "focus": "#AF3776",
+    "failing": [
+     "T1 2.65:1",
+     "T2 2.29:1",
+     "N3 2.91:1"
     ]
    }
   ]
  },
  "lint": {
-  "note": "Full messages and held-out flag lists are in lint/lint-results.json.",
+  "note": "Full messages, every held-out flag with its category/verdict, and the reference set are in lint/lint-results.json.",
   "versions": {
    "stylelint": "17.15.0",
    "stylelint-declaration-strict-value": "1.12.1",
@@ -1166,6 +2476,38 @@
   },
   "fixture": {
    "stylelint": {
+    "css-E-token-props-no-nudges": {
+     "note": "second round, recommended: core rules; lengths flagged only on padding/margin/gap/font-size/radius and only above 2 px (0.125rem), either sign; positional properties not checked",
+     "violations": 12,
+     "ok": 26,
+     "caught": 12,
+     "missed": 0,
+     "falsePositives": 2,
+     "recall": 100,
+     "precision": 85.7,
+     "missLines": [],
+     "falsePositiveLines": [
+      26,
+      42
+     ],
+     "unlabelledLinesFlagged": []
+    },
+    "css-E+pos-opt-in-positional": {
+     "note": "E plus top/right/bottom/left/inset (the opt-in), to show what positional checking adds",
+     "violations": 12,
+     "ok": 26,
+     "caught": 12,
+     "missed": 0,
+     "falsePositives": 2,
+     "recall": 100,
+     "precision": 85.7,
+     "missLines": [],
+     "falsePositiveLines": [
+      26,
+      42
+     ],
+     "unlabelledLinesFlagged": []
+    },
     "css-A-builtins": {
      "note": "stylelint core rules only: color-no-hex, color-named, function-disallowed-list, declaration-property-unit-disallowed-list",
      "violations": 12,
@@ -1251,7 +2593,7 @@
    "eslint": {
     "js-E1-core-no-restricted-syntax": {
      "note": "ESLint core rule with AST selectors, zero dependencies",
-     "lintMs": 110,
+     "lintMs": 82,
      "fatal": [],
      "violations": 11,
      "ok": 16,
@@ -1271,7 +2613,7 @@
     },
     "js-E2-atlaskit-ensure-design-token-usage": {
      "note": "@atlaskit/eslint-plugin-design-system ensure-design-token-usage (domains color + spacing)",
-     "lintMs": 40,
+     "lintMs": 43,
      "fatal": [],
      "violations": 11,
      "ok": 16,
@@ -1294,7 +2636,7 @@
     },
     "js-E3-better-tailwindcss-locked": {
      "note": "eslint-plugin-better-tailwindcss: no-unknown-classes against the locked @theme + no-restricted-classes for arbitrary token-owned values",
-     "lintMs": 807,
+     "lintMs": 622,
      "fatal": [],
      "violations": 11,
      "ok": 16,
@@ -1317,7 +2659,7 @@
     },
     "js-E4-tailwindcss-plugin-locked": {
      "note": "eslint-plugin-tailwindcss v4: no-arbitrary-value + no-custom-classname against the locked @theme",
-     "lintMs": 128,
+     "lintMs": 138,
      "fatal": [],
      "violations": 11,
      "ok": 16,
@@ -1342,7 +2684,7 @@
     },
     "js-E1s-core-scoped-hex": {
      "note": "E1 with hex strings reported only in colour positions (property value, colour attribute, colour-named variable)",
-     "lintMs": 15,
+     "lintMs": 31,
      "fatal": [],
      "violations": 11,
      "ok": 16,
@@ -1357,9 +2699,44 @@
      "falsePositiveLines": [],
      "unlabelledLinesFlagged": []
     },
+    "js-E1t-style-scoped": {
+     "note": "second round, recommended (warning level): E1 checks only inside style contexts, anchored key regexes, token-owned keys only, lengths > 2 px, no percentages",
+     "lintMs": 266,
+     "fatal": [],
+     "violations": 11,
+     "ok": 16,
+     "caught": 7,
+     "missed": 4,
+     "falsePositives": 0,
+     "recall": 63.6,
+     "precision": 100,
+     "missLines": [
+      19,
+      20,
+      21,
+      22
+     ],
+     "falsePositiveLines": [],
+     "unlabelledLinesFlagged": []
+    },
+    "js-E5t-style-scoped-plus-better-tailwindcss": {
+     "note": "second round: E1t + E3",
+     "lintMs": 109,
+     "fatal": [],
+     "violations": 11,
+     "ok": 16,
+     "caught": 11,
+     "missed": 0,
+     "falsePositives": 0,
+     "recall": 100,
+     "precision": 100,
+     "missLines": [],
+     "falsePositiveLines": [],
+     "unlabelledLinesFlagged": []
+    },
     "js-E5-core-plus-better-tailwindcss": {
      "note": "E1s + E3 (recommended hand-over for a Tailwind React codebase)",
-     "lintMs": 68,
+     "lintMs": 76,
      "fatal": [],
      "violations": 11,
      "ok": 16,
@@ -1431,75 +2808,1270 @@
    "tailwindVersion": "4.3.3"
   },
   "heldOut": {
-   "tsxFiles": 163,
-   "tsxLines": 16911,
-   "cssFiles": 61,
-   "cssLines": 7380,
-   "eslint": {
-    "js-E1-core-no-restricted-syntax": {
-     "flags": 10,
-     "filesFlagged": 7
+   "tsx": {
+    "shadcn/ui new-york-v4": {
+     "files": 163,
+     "lines": 16911,
+     "setups": {
+      "js-E1-core-no-restricted-syntax": {
+       "flags": 10,
+       "verdicts": {
+        "false positive": 10
+       },
+       "contexts": {
+        "not-style": 10
+       },
+       "kinds": {
+        "nudge ≤ 2px": 4,
+        "raw length": 2,
+        "other": 3,
+        "positional": 1
+       },
+       "referenceCaught": 0
+      },
+      "js-E1s-core-scoped-hex": {
+       "flags": 10,
+       "verdicts": {
+        "false positive": 10
+       },
+       "contexts": {
+        "not-style": 10
+       },
+       "kinds": {
+        "nudge ≤ 2px": 4,
+        "raw length": 2,
+        "other": 3,
+        "positional": 1
+       },
+       "referenceCaught": 0
+      },
+      "js-E1t-style-scoped": {
+       "flags": 0,
+       "verdicts": {},
+       "contexts": {},
+       "kinds": {},
+       "referenceCaught": 0
+      },
+      "js-E3r-better-tailwindcss-restricted-only": {
+       "flags": 37,
+       "verdicts": {},
+       "contexts": {
+        "tailwind-class": 37
+       },
+       "kinds": {
+        "class": 37
+       },
+       "referenceCaught": null,
+       "categories": {
+        "raw-literal": 27,
+        "derived-from-var": 5,
+        "keyword": 5
+       },
+       "topLiterals": [
+        [
+         "focus-visible:ring-[3px]",
+         16
+        ],
+        [
+         "rounded-[2px]",
+         3
+        ],
+        [
+         "text-[0.8rem]",
+         2
+        ],
+        [
+         "rounded-[calc(var(--radius)-5px)]",
+         2
+        ],
+        [
+         "bg-[Canvas]",
+         2
+        ]
+       ]
+      }
+     },
+     "referenceRawStyleValues": 0
     },
-    "js-E1s-core-scoped-hex": {
-     "flags": 10,
-     "filesFlagged": 7
+    "tldraw 5.4.2 src/lib": {
+     "files": 149,
+     "lines": 29188,
+     "setups": {
+      "js-E1-core-no-restricted-syntax": {
+       "flags": 25,
+       "verdicts": {
+        "false positive": 23,
+        "true positive": 1,
+        "debatable": 1
+       },
+       "contexts": {
+        "not-style": 20,
+        "style-attr": 5
+       },
+       "kinds": {
+        "named colour": 8,
+        "raw length": 5,
+        "percent": 1,
+        "nudge ≤ 2px": 3,
+        "other": 4,
+        "raw colour": 2,
+        "visually-hidden idiom": 2
+       },
+       "referenceCaught": 1
+      },
+      "js-E1s-core-scoped-hex": {
+       "flags": 23,
+       "verdicts": {
+        "false positive": 21,
+        "true positive": 1,
+        "debatable": 1
+       },
+       "contexts": {
+        "not-style": 18,
+        "style-attr": 5
+       },
+       "kinds": {
+        "named colour": 8,
+        "raw length": 5,
+        "percent": 1,
+        "nudge ≤ 2px": 3,
+        "other": 4,
+        "visually-hidden idiom": 2
+       },
+       "referenceCaught": 1
+      },
+      "js-E1t-style-scoped": {
+       "flags": 1,
+       "verdicts": {
+        "true positive": 1
+       },
+       "contexts": {
+        "style-attr": 1
+       },
+       "kinds": {
+        "raw length": 1
+       },
+       "referenceCaught": 1
+      }
+     },
+     "referenceRawStyleValues": 26
     },
-    "js-E3r-better-tailwindcss-restricted-only": {
-     "flags": 37,
-     "filesFlagged": 22,
-     "categories": {
-      "raw-literal": 27,
-      "derived-from-var": 5,
-      "keyword": 5
-     }
+    "@blocknote/react 0.55.0": {
+     "files": 109,
+     "lines": 12592,
+     "setups": {
+      "js-E1-core-no-restricted-syntax": {
+       "flags": 10,
+       "verdicts": {
+        "false positive": 10
+       },
+       "contexts": {
+        "style-attr": 2,
+        "not-style": 8
+       },
+       "kinds": {
+        "positional": 2,
+        "raw length": 5,
+        "named colour": 3
+       },
+       "referenceCaught": 0
+      },
+      "js-E1s-core-scoped-hex": {
+       "flags": 10,
+       "verdicts": {
+        "false positive": 10
+       },
+       "contexts": {
+        "style-attr": 2,
+        "not-style": 8
+       },
+       "kinds": {
+        "positional": 2,
+        "raw length": 5,
+        "named colour": 3
+       },
+       "referenceCaught": 0
+      },
+      "js-E1t-style-scoped": {
+       "flags": 0,
+       "verdicts": {},
+       "contexts": {},
+       "kinds": {},
+       "referenceCaught": 0
+      }
+     },
+     "referenceRawStyleValues": 0
+    },
+    "@blocknote/shadcn 0.55.0": {
+     "files": 46,
+     "lines": 3188,
+     "setups": {
+      "js-E1-core-no-restricted-syntax": {
+       "flags": 2,
+       "verdicts": {
+        "false positive": 1,
+        "true positive": 1
+       },
+       "contexts": {
+        "not-style": 1,
+        "jsx-colour-attr": 1
+       },
+       "kinds": {
+        "nudge ≤ 2px": 1,
+        "raw colour": 1
+       },
+       "referenceCaught": 1
+      },
+      "js-E1s-core-scoped-hex": {
+       "flags": 2,
+       "verdicts": {
+        "false positive": 1,
+        "true positive": 1
+       },
+       "contexts": {
+        "not-style": 1,
+        "jsx-colour-attr": 1
+       },
+       "kinds": {
+        "nudge ≤ 2px": 1,
+        "raw colour": 1
+       },
+       "referenceCaught": 1
+      },
+      "js-E1t-style-scoped": {
+       "flags": 1,
+       "verdicts": {
+        "true positive": 1
+       },
+       "contexts": {
+        "jsx-colour-attr": 1
+       },
+       "kinds": {
+        "raw colour": 1
+       },
+       "referenceCaught": 1
+      }
+     },
+     "referenceRawStyleValues": 1
+    },
+    "react-arborist 3.16.0": {
+     "files": 13,
+     "lines": 788,
+     "setups": {
+      "js-E1-core-no-restricted-syntax": {
+       "flags": 3,
+       "verdicts": {
+        "true positive": 1,
+        "debatable": 1,
+        "false positive": 1
+       },
+       "contexts": {
+        "style-named": 3
+       },
+       "kinds": {
+        "raw colour": 1,
+        "nudge ≤ 2px": 1,
+        "percent": 1
+       },
+       "referenceCaught": 1
+      },
+      "js-E1s-core-scoped-hex": {
+       "flags": 3,
+       "verdicts": {
+        "true positive": 1,
+        "debatable": 1,
+        "false positive": 1
+       },
+       "contexts": {
+        "style-named": 3
+       },
+       "kinds": {
+        "raw colour": 1,
+        "nudge ≤ 2px": 1,
+        "percent": 1
+       },
+       "referenceCaught": 1
+      },
+      "js-E1t-style-scoped": {
+       "flags": 0,
+       "verdicts": {},
+       "contexts": {},
+       "kinds": {},
+       "referenceCaught": 0
+      }
+     },
+     "referenceRawStyleValues": 2
+    },
+    "@lexical/react 0.52.0": {
+     "files": 39,
+     "lines": 6910,
+     "setups": {
+      "js-E1-core-no-restricted-syntax": {
+       "flags": 3,
+       "verdicts": {
+        "true positive": 2,
+        "false positive": 1
+       },
+       "contexts": {
+        "style-attr": 2,
+        "not-style": 1
+       },
+       "kinds": {
+        "raw colour": 1,
+        "raw length": 2
+       },
+       "referenceCaught": 2
+      },
+      "js-E1s-core-scoped-hex": {
+       "flags": 3,
+       "verdicts": {
+        "true positive": 2,
+        "false positive": 1
+       },
+       "contexts": {
+        "style-attr": 2,
+        "not-style": 1
+       },
+       "kinds": {
+        "raw colour": 1,
+        "raw length": 2
+       },
+       "referenceCaught": 2
+      },
+      "js-E1t-style-scoped": {
+       "flags": 3,
+       "verdicts": {
+        "true positive": 3
+       },
+       "contexts": {
+        "style-attr": 3
+       },
+       "kinds": {
+        "raw colour": 2,
+        "raw length": 1
+       },
+       "referenceCaught": 3
+      }
+     },
+     "referenceRawStyleValues": 3
     }
    },
-   "stylelint": {
-    "css-A-builtins": {
-     "flags": 51,
-     "byRule": {
-      "declaration-property-unit-disallowed-list": 49,
-      "color-named": 2
-     },
-     "categories": {
-      "derived-from-var": 16,
-      "em-relative": 8,
-      "zero-with-unit": 16,
-      "raw-literal": 11
+   "css": {
+    "Radix Themes components": {
+     "files": 61,
+     "lines": 7380,
+     "setups": {
+      "css-A-builtins": {
+       "flags": 51,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "derived-from-var": 16,
+        "em-relative": 7,
+        "zero-with-unit": 16,
+        "positional": 2,
+        "raw length > 2px": 3,
+        "nudge ≤ 2px": 5,
+        "raw colour": 2
+       },
+       "topRepeated": [
+        [
+         "gap: 0.5em",
+         2
+        ],
+        [
+         "border-radius: calc((0.5px + 0.2em) * var(--radius-factor))",
+         2
+        ],
+        [
+         "border-bottom-left-radius: 0px",
+         2
+        ],
+        [
+         "border-bottom-right-radius: 0px",
+         2
+        ],
+        [
+         "border-top-left-radius: 0px",
+         2
+        ],
+        [
+         "border-top-right-radius: 0px",
+         2
+        ]
+       ]
+      },
+      "css-D-builtins-bare-lengths": {
+       "flags": 11,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "raw length > 2px": 3,
+        "nudge ≤ 2px": 5,
+        "positional": 1,
+        "raw colour": 2
+       },
+       "topRepeated": [
+        [
+         "background-color: white",
+         2
+        ],
+        [
+         "margin-top: 3px",
+         1
+        ],
+        [
+         "margin-bottom: 3px",
+         1
+        ],
+        [
+         "margin-left: -0.5px",
+         1
+        ],
+        [
+         "margin-right: -0.5px",
+         1
+        ],
+        [
+         "inset: 1px",
+         1
+        ]
+       ]
+      },
+      "css-E-token-props-no-nudges": {
+       "flags": 5,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "raw length > 2px": 3,
+        "raw colour": 2
+       },
+       "topRepeated": [
+        [
+         "background-color: white",
+         2
+        ],
+        [
+         "margin-top: 3px",
+         1
+        ],
+        [
+         "margin-bottom: 3px",
+         1
+        ],
+        [
+         "padding-right: 5px",
+         1
+        ]
+       ]
+      },
+      "css-E+pos-opt-in-positional": {
+       "flags": 5,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "raw length > 2px": 3,
+        "raw colour": 2
+       },
+       "topRepeated": [
+        [
+         "background-color: white",
+         2
+        ],
+        [
+         "margin-top: 3px",
+         1
+        ],
+        [
+         "margin-bottom: 3px",
+         1
+        ],
+        [
+         "padding-right: 5px",
+         1
+        ]
+       ]
+      },
+      "css-B1-strict-value-defaults": {
+       "flags": 110,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "other": 35,
+        "derived-from-var": 43,
+        "em-relative": 7,
+        "zero-with-unit": 15,
+        "raw length > 2px": 3,
+        "nudge ≤ 2px": 5,
+        "raw colour": 2
+       },
+       "topRepeated": [
+        [
+         "box-shadow:",
+         32
+        ],
+        [
+         "box-shadow: inset 0 0 0 1px var(--accent-a8)",
+         5
+        ],
+        [
+         "box-shadow: inset 0 0 0 1px var(--gray-a7)",
+         4
+        ],
+        [
+         "box-shadow: inset 0 0 0 1px var(--gray-a6)",
+         4
+        ],
+        [
+         "box-shadow: inset 0 0 0 1px var(--focus-a5), inset 0 0 0 1px var(--gray-a5)",
+         4
+        ],
+        [
+         "border-radius: 100%",
+         3
+        ]
+       ]
+      },
+      "css-B2-strict-value-no-functions": {
+       "flags": 189,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "other": 37,
+        "derived-from-var": 120,
+        "em-relative": 7,
+        "zero-with-unit": 15,
+        "raw length > 2px": 3,
+        "nudge ≤ 2px": 5,
+        "raw colour": 2
+       },
+       "topRepeated": [
+        [
+         "box-shadow:",
+         32
+        ],
+        [
+         "border-radius: max(var(--radius-2), var(--radius-full))",
+         6
+        ],
+        [
+         "box-shadow: inset 0 0 0 1px var(--accent-a8)",
+         5
+        ],
+        [
+         "box-shadow: inset 0 0 0 1px var(--gray-a7)",
+         4
+        ],
+        [
+         "box-shadow: inset 0 0 0 1px var(--gray-a6)",
+         4
+        ],
+        [
+         "border-radius: max(var(--radius-3), var(--radius-full))",
+         4
+        ]
+       ]
+      }
      }
     },
-    "css-D-builtins-bare-lengths": {
-     "flags": 11,
-     "byRule": {
-      "declaration-property-value-disallowed-list": 9,
-      "color-named": 2
-     },
-     "categories": {
-      "raw-literal": 11
+    "tldraw 5.4.2 ui.css": {
+     "files": 1,
+     "lines": 2337,
+     "setups": {
+      "css-A-builtins": {
+       "flags": 190,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "raw length > 2px": 63,
+        "zero-with-unit": 46,
+        "positional": 29,
+        "negative margin > 2px": 3,
+        "nudge ≤ 2px": 23,
+        "derived-from-var": 12,
+        "raw colour": 14
+       },
+       "topRepeated": [
+        [
+         "font-size: 12px",
+         13
+        ],
+        [
+         "margin: 0px",
+         9
+        ],
+        [
+         "inset: 4px",
+         6
+        ],
+        [
+         "padding-inline-end: calc(40px - 12px)",
+         6
+        ],
+        [
+         "left: 0px",
+         5
+        ],
+        [
+         "padding: 0px",
+         5
+        ]
+       ]
+      },
+      "css-D-builtins-bare-lengths": {
+       "flags": 115,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "raw length > 2px": 56,
+        "positional": 23,
+        "negative margin > 2px": 3,
+        "nudge ≤ 2px": 19,
+        "raw colour": 14
+       },
+       "topRepeated": [
+        [
+         "font-size: 12px",
+         13
+        ],
+        [
+         "inset: 4px",
+         6
+        ],
+        [
+         "background: linear-gradient(270deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+         4
+        ],
+        [
+         "border-radius: 10px",
+         3
+        ],
+        [
+         "margin-left: -2px",
+         3
+        ],
+        [
+         "padding-inline-end: calc(40px - 12px)",
+         3
+        ]
+       ]
+      },
+      "css-E-token-props-no-nudges": {
+       "flags": 73,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "raw length > 2px": 56,
+        "negative margin > 2px": 3,
+        "raw colour": 14
+       },
+       "topRepeated": [
+        [
+         "font-size: 12px",
+         13
+        ],
+        [
+         "background: linear-gradient(270deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+         4
+        ],
+        [
+         "border-radius: 10px",
+         3
+        ],
+        [
+         "padding-inline-end: calc(40px - 12px)",
+         3
+        ],
+        [
+         "background: linear-gradient(0deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+         3
+        ],
+        [
+         "background: linear-gradient(180deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+         3
+        ]
+       ]
+      },
+      "css-E+pos-opt-in-positional": {
+       "flags": 90,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "raw length > 2px": 56,
+        "positional": 17,
+        "negative margin > 2px": 3,
+        "raw colour": 14
+       },
+       "topRepeated": [
+        [
+         "font-size: 12px",
+         13
+        ],
+        [
+         "inset: 4px",
+         6
+        ],
+        [
+         "background: linear-gradient(270deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+         4
+        ],
+        [
+         "border-radius: 10px",
+         3
+        ],
+        [
+         "padding-inline-end: calc(40px - 12px)",
+         3
+        ],
+        [
+         "background: linear-gradient(0deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+         3
+        ]
+       ]
+      },
+      "css-B1-strict-value-defaults": {
+       "flags": 115,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "derived-from-var": 9,
+        "other": 3,
+        "raw length > 2px": 53,
+        "nudge ≤ 2px": 20,
+        "zero-with-unit": 27,
+        "negative margin > 2px": 3
+       },
+       "topRepeated": [
+        [
+         "font-size: 12px",
+         13
+        ],
+        [
+         "margin: 0px",
+         9
+        ],
+        [
+         "padding: 0px",
+         5
+        ],
+        [
+         "padding: 0px var(--tl-space-4)",
+         3
+        ],
+        [
+         "margin-left: -2px",
+         3
+        ],
+        [
+         "border-radius: 10px",
+         3
+        ]
+       ]
+      },
+      "css-B2-strict-value-no-functions": {
+       "flags": 152,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "raw colour": 24,
+        "other": 9,
+        "derived-from-var": 13,
+        "raw length > 2px": 56,
+        "nudge ≤ 2px": 20,
+        "zero-with-unit": 27,
+        "negative margin > 2px": 3
+       },
+       "topRepeated": [
+        [
+         "font-size: 12px",
+         13
+        ],
+        [
+         "margin: 0px",
+         9
+        ],
+        [
+         "background: linear-gradient(270deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+         8
+        ],
+        [
+         "background: linear-gradient(0deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+         6
+        ],
+        [
+         "background: linear-gradient(",
+         6
+        ],
+        [
+         "background: linear-gradient(180deg, rgba(144, 144, 144, 0) 0%, var(--tl-color-muted-2) 100%)",
+         6
+        ]
+       ]
+      }
      }
     },
-    "css-B1-strict-value-defaults": {
-     "flags": 110,
-     "byRule": {
-      "scale-unlimited/declaration-strict-value": 110
-     },
-     "categories": {
-      "raw-literal": 45,
-      "derived-from-var": 43,
-      "em-relative": 7,
-      "zero-with-unit": 15
+    "ckeditor5 48.5.2 dist/ckeditor5.css": {
+     "files": 1,
+     "lines": 7625,
+     "setups": {
+      "css-A-builtins": {
+       "flags": 229,
+       "tokenDefinitionsExcluded": 101,
+       "categories": {
+        "raw colour": 90,
+        "token-definition": 101,
+        "raw length > 2px": 46,
+        "nudge ≤ 2px": 21,
+        "positional": 28,
+        "em-relative": 28,
+        "derived-from-var": 12,
+        "negative margin > 2px": 4
+       },
+       "topRepeated": [
+        [
+         "border-color: #0000",
+         13
+        ],
+        [
+         "border-radius: 0 0 100px 100px",
+         8
+        ],
+        [
+         "border-radius: 100px 100px 0 0",
+         8
+        ],
+        [
+         "border-radius: 2px",
+         7
+        ],
+        [
+         "border: 1px solid #0000",
+         6
+        ],
+        [
+         "background-color: #0000",
+         6
+        ]
+       ]
+      },
+      "css-D-builtins-bare-lengths": {
+       "flags": 184,
+       "tokenDefinitionsExcluded": 101,
+       "categories": {
+        "raw colour": 90,
+        "token-definition": 101,
+        "raw length > 2px": 36,
+        "nudge ≤ 2px": 21,
+        "positional": 27,
+        "negative margin > 2px": 4,
+        "derived-from-var": 6
+       },
+       "topRepeated": [
+        [
+         "border-color: #0000",
+         13
+        ],
+        [
+         "border-radius: 2px",
+         7
+        ],
+        [
+         "border: 1px solid #0000",
+         6
+        ],
+        [
+         "background-color: #0000",
+         6
+        ],
+        [
+         "outline: 1px solid #ffffff80",
+         4
+        ],
+        [
+         "color: #fff",
+         4
+        ]
+       ]
+      },
+      "css-E-token-props-no-nudges": {
+       "flags": 136,
+       "tokenDefinitionsExcluded": 100,
+       "categories": {
+        "raw colour": 90,
+        "token-definition": 100,
+        "raw length > 2px": 36,
+        "negative margin > 2px": 4,
+        "derived-from-var": 6
+       },
+       "topRepeated": [
+        [
+         "border-color: #0000",
+         13
+        ],
+        [
+         "border: 1px solid #0000",
+         6
+        ],
+        [
+         "background-color: #0000",
+         6
+        ],
+        [
+         "outline: 1px solid #ffffff80",
+         4
+        ],
+        [
+         "color: #fff",
+         4
+        ],
+        [
+         "border-radius: 0 0 100px 100px",
+         4
+        ]
+       ]
+      },
+      "css-E+pos-opt-in-positional": {
+       "flags": 150,
+       "tokenDefinitionsExcluded": 100,
+       "categories": {
+        "raw colour": 90,
+        "token-definition": 100,
+        "raw length > 2px": 36,
+        "positional": 14,
+        "negative margin > 2px": 4,
+        "derived-from-var": 6
+       },
+       "topRepeated": [
+        [
+         "border-color: #0000",
+         13
+        ],
+        [
+         "border: 1px solid #0000",
+         6
+        ],
+        [
+         "background-color: #0000",
+         6
+        ],
+        [
+         "outline: 1px solid #ffffff80",
+         4
+        ],
+        [
+         "color: #fff",
+         4
+        ],
+        [
+         "border-radius: 0 0 100px 100px",
+         4
+        ]
+       ]
+      },
+      "css-B1-strict-value-defaults": {
+       "flags": 220,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "raw colour": 93,
+        "derived-from-var": 30,
+        "other": 9,
+        "raw length > 2px": 36,
+        "nudge ≤ 2px": 21,
+        "em-relative": 27,
+        "negative margin > 2px": 4
+       },
+       "topRepeated": [
+        [
+         "border-color: #0000",
+         13
+        ],
+        [
+         "box-shadow: var(--ck-drop-shadow), 0 0",
+         8
+        ],
+        [
+         "border-radius: 2px",
+         7
+        ],
+        [
+         "border: 1px solid #0000",
+         6
+        ],
+        [
+         "background-color: #0000",
+         6
+        ],
+        [
+         "box-shadow: var(--ck-focus-outer-shadow), 0 0",
+         5
+        ]
+       ]
+      },
+      "css-B2-strict-value-no-functions": {
+       "flags": 279,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "raw colour": 99,
+        "other": 11,
+        "derived-from-var": 81,
+        "raw length > 2px": 36,
+        "nudge ≤ 2px": 21,
+        "em-relative": 27,
+        "negative margin > 2px": 4
+       },
+       "topRepeated": [
+        [
+         "border-color: #0000",
+         13
+        ],
+        [
+         "box-shadow: var(--ck-drop-shadow), 0 0",
+         8
+        ],
+        [
+         "border-radius: 2px",
+         7
+        ],
+        [
+         "border: 1px solid #0000",
+         6
+        ],
+        [
+         "background-color: #0000",
+         6
+        ],
+        [
+         "box-shadow: var(--ck-focus-outer-shadow), 0 0",
+         5
+        ]
+       ]
+      }
      }
     },
-    "css-B2-strict-value-no-functions": {
-     "flags": 189,
-     "byRule": {
-      "scale-unlimited/declaration-strict-value": 189
-     },
-     "categories": {
-      "raw-literal": 47,
-      "derived-from-var": 120,
-      "em-relative": 7,
-      "zero-with-unit": 15
+    "ag-grid-community 36.2.0 styles/ag-grid.css": {
+     "files": 1,
+     "lines": 8588,
+     "setups": {
+      "css-A-builtins": {
+       "flags": 183,
+       "tokenDefinitionsExcluded": 41,
+       "categories": {
+        "token-definition": 41,
+        "raw colour": 21,
+        "zero-with-unit": 10,
+        "positional": 69,
+        "raw length > 2px": 34,
+        "nudge ≤ 2px": 18,
+        "derived-from-var": 22,
+        "em-relative": 4,
+        "negative margin > 2px": 5
+       },
+       "topRepeated": [
+        [
+         "top: 4px",
+         12
+        ],
+        [
+         "left: 4px",
+         11
+        ],
+        [
+         "background: linear-gradient(to left, #ff0000 3%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)",
+         7
+        ],
+        [
+         "top: 1px",
+         5
+        ],
+        [
+         "border-radius: 2px",
+         5
+        ],
+        [
+         "right: -3px",
+         4
+        ]
+       ]
+      },
+      "css-D-builtins-bare-lengths": {
+       "flags": 146,
+       "tokenDefinitionsExcluded": 40,
+       "categories": {
+        "token-definition": 40,
+        "raw colour": 21,
+        "positional": 69,
+        "raw length > 2px": 33,
+        "nudge ≤ 2px": 18,
+        "negative margin > 2px": 5
+       },
+       "topRepeated": [
+        [
+         "top: 4px",
+         12
+        ],
+        [
+         "left: 4px",
+         11
+        ],
+        [
+         "background: linear-gradient(to left, #ff0000 3%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)",
+         7
+        ],
+        [
+         "top: 1px",
+         5
+        ],
+        [
+         "border-radius: 2px",
+         5
+        ],
+        [
+         "right: -3px",
+         4
+        ]
+       ]
+      },
+      "css-E-token-props-no-nudges": {
+       "flags": 59,
+       "tokenDefinitionsExcluded": 40,
+       "categories": {
+        "token-definition": 40,
+        "raw colour": 21,
+        "raw length > 2px": 33,
+        "negative margin > 2px": 5
+       },
+       "topRepeated": [
+        [
+         "background: linear-gradient(to left, #ff0000 3%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)",
+         7
+        ],
+        [
+         "border-radius: 5px",
+         3
+        ],
+        [
+         "background-image: linear-gradient(to right, white, rgba(204, 154, 129, 0))",
+         2
+        ],
+        [
+         "background-image: linear-gradient(to top, black, rgba(204, 154, 129, 0))",
+         2
+        ],
+        [
+         "border: 2px solid white",
+         2
+        ],
+        [
+         "border-radius: 12px",
+         2
+        ]
+       ]
+      },
+      "css-E+pos-opt-in-positional": {
+       "flags": 109,
+       "tokenDefinitionsExcluded": 40,
+       "categories": {
+        "token-definition": 40,
+        "raw colour": 21,
+        "raw length > 2px": 33,
+        "positional": 50,
+        "negative margin > 2px": 5
+       },
+       "topRepeated": [
+        [
+         "top: 4px",
+         12
+        ],
+        [
+         "left: 4px",
+         11
+        ],
+        [
+         "background: linear-gradient(to left, #ff0000 3%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)",
+         7
+        ],
+        [
+         "right: -3px",
+         4
+        ],
+        [
+         "left: -3px",
+         4
+        ],
+        [
+         "border-radius: 5px",
+         3
+        ]
+       ]
+      },
+      "css-B1-strict-value-defaults": {
+       "flags": 80,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "raw colour": 11,
+        "derived-from-var": 5,
+        "other": 3,
+        "zero-with-unit": 2,
+        "raw length > 2px": 32,
+        "nudge ≤ 2px": 18,
+        "em-relative": 4,
+        "negative margin > 2px": 5
+       },
+       "topRepeated": [
+        [
+         "border-radius: 2px",
+         5
+        ],
+        [
+         "border-radius: 5px",
+         3
+        ],
+        [
+         "border-radius: 1px",
+         3
+        ],
+        [
+         "background: linear-gradient(to bottom, var(--ag-internal-spectrum-alpha-color), var(--ag-internal-spectrum-alpha-color)) white",
+         2
+        ],
+        [
+         "border: 2px solid white",
+         2
+        ],
+        [
+         "background: black",
+         2
+        ]
+       ]
+      },
+      "css-B2-strict-value-no-functions": {
+       "flags": 219,
+       "tokenDefinitionsExcluded": 0,
+       "categories": {
+        "raw colour": 14,
+        "derived-from-var": 141,
+        "other": 3,
+        "zero-with-unit": 2,
+        "raw length > 2px": 32,
+        "nudge ≤ 2px": 18,
+        "em-relative": 4,
+        "negative margin > 2px": 5
+       },
+       "topRepeated": [
+        [
+         "margin-left: calc(var(--ag-grid-size) * 2)",
+         7
+        ],
+        [
+         "margin-right: calc(var(--ag-grid-size) * 2)",
+         5
+        ],
+        [
+         "gap: calc(var(--ag-grid-size) * 2)",
+         5
+        ],
+        [
+         "border-radius: 2px",
+         5
+        ],
+        [
+         "background: color-mix(in srgb, var(--ag-border-color) 35%, transparent)",
+         4
+        ],
+        [
+         "padding-right: calc(var(--ag-icon-size) + var(--ag-grid-size) * 2)",
+         4
+        ]
+       ]
+      }
      }
     }
    }
@@ -1512,33 +4084,33 @@
     "case": "scanner 4 ms/key",
     "kind": "scan",
     "runs": 5,
-    "correct": 4,
-    "detectedAsScan": 4,
-    "leakedIntoField": 1,
-    "gapMedian": 10,
-    "gapMax": 146
+    "correct": 5,
+    "detectedAsScan": 5,
+    "leakedIntoField": 0,
+    "gapMedian": 7,
+    "gapMax": 20
    },
    {
     "detector": "burst-gate 35 ms",
     "case": "scanner 15 ms/key",
     "kind": "scan",
     "runs": 5,
-    "correct": 2,
-    "detectedAsScan": 2,
-    "leakedIntoField": 3,
-    "gapMedian": 19,
-    "gapMax": 84
+    "correct": 5,
+    "detectedAsScan": 5,
+    "leakedIntoField": 0,
+    "gapMedian": 18,
+    "gapMax": 39
    },
    {
     "detector": "burst-gate 35 ms",
     "case": "scanner 25 ms/key",
     "kind": "scan",
     "runs": 5,
-    "correct": 1,
-    "detectedAsScan": 1,
-    "leakedIntoField": 4,
-    "gapMedian": 31,
-    "gapMax": 284
+    "correct": 5,
+    "detectedAsScan": 5,
+    "leakedIntoField": 0,
+    "gapMedian": 28,
+    "gapMax": 38
    },
    {
     "detector": "burst-gate 35 ms",
@@ -1548,7 +4120,7 @@
     "correct": 0,
     "detectedAsScan": 0,
     "leakedIntoField": 5,
-    "gapMedian": 45,
+    "gapMedian": 44,
     "gapMax": 81
    },
    {
@@ -1559,8 +4131,8 @@
     "correct": 5,
     "detectedAsScan": 0,
     "leakedIntoField": 0,
-    "gapMedian": 66,
-    "gapMax": 120
+    "gapMedian": 65,
+    "gapMax": 77
    },
    {
     "detector": "burst-gate 35 ms",
@@ -1571,7 +4143,7 @@
     "detectedAsScan": 0,
     "leakedIntoField": 0,
     "gapMedian": 95,
-    "gapMax": 122
+    "gapMax": 102
    },
    {
     "detector": "burst-gate 35 ms",
@@ -1581,8 +4153,8 @@
     "correct": 5,
     "detectedAsScan": 0,
     "leakedIntoField": 0,
-    "gapMedian": 155,
-    "gapMax": 169
+    "gapMedian": 157,
+    "gapMax": 183
    },
    {
     "detector": "burst-gate 35 ms",
@@ -1592,8 +4164,8 @@
     "correct": 5,
     "detectedAsScan": 0,
     "leakedIntoField": 0,
-    "gapMedian": 128,
-    "gapMax": 153
+    "gapMedian": 130,
+    "gapMax": 170
    },
    {
     "detector": "burst-gate 35 ms",
@@ -1603,7 +4175,7 @@
     "correct": 5,
     "detectedAsScan": 0,
     "leakedIntoField": 0,
-    "gapMedian": 76,
+    "gapMedian": 77,
     "gapMax": 93
    },
    {
@@ -1611,22 +4183,22 @@
     "case": "scanner 4 ms/key",
     "kind": "scan",
     "runs": 5,
-    "correct": 4,
-    "detectedAsScan": 4,
-    "leakedIntoField": 1,
-    "gapMedian": 9,
-    "gapMax": 113
+    "correct": 5,
+    "detectedAsScan": 5,
+    "leakedIntoField": 0,
+    "gapMedian": 7,
+    "gapMax": 70
    },
    {
     "detector": "burst-gate 50 ms",
     "case": "scanner 15 ms/key",
     "kind": "scan",
     "runs": 5,
-    "correct": 4,
-    "detectedAsScan": 4,
-    "leakedIntoField": 1,
+    "correct": 5,
+    "detectedAsScan": 5,
+    "leakedIntoField": 0,
     "gapMedian": 19,
-    "gapMax": 98
+    "gapMax": 47
    },
    {
     "detector": "burst-gate 50 ms",
@@ -1637,18 +4209,18 @@
     "detectedAsScan": 5,
     "leakedIntoField": 0,
     "gapMedian": 28,
-    "gapMax": 67
+    "gapMax": 58
    },
    {
     "detector": "burst-gate 50 ms",
     "case": "scanner 40 ms/key",
     "kind": "scan",
     "runs": 5,
-    "correct": 1,
-    "detectedAsScan": 1,
-    "leakedIntoField": 4,
+    "correct": 3,
+    "detectedAsScan": 3,
+    "leakedIntoField": 2,
     "gapMedian": 44,
-    "gapMax": 68
+    "gapMax": 104
    },
    {
     "detector": "burst-gate 50 ms",
@@ -1658,8 +4230,8 @@
     "correct": 5,
     "detectedAsScan": 0,
     "leakedIntoField": 0,
-    "gapMedian": 70,
-    "gapMax": 102
+    "gapMedian": 66,
+    "gapMax": 81
    },
    {
     "detector": "burst-gate 50 ms",
@@ -1669,8 +4241,8 @@
     "correct": 5,
     "detectedAsScan": 0,
     "leakedIntoField": 0,
-    "gapMedian": 99,
-    "gapMax": 371
+    "gapMedian": 96,
+    "gapMax": 104
    },
    {
     "detector": "burst-gate 50 ms",
@@ -1680,8 +4252,8 @@
     "correct": 5,
     "detectedAsScan": 0,
     "leakedIntoField": 0,
-    "gapMedian": 157,
-    "gapMax": 185
+    "gapMedian": 155,
+    "gapMax": 164
    },
    {
     "detector": "burst-gate 50 ms",
@@ -1692,7 +4264,7 @@
     "detectedAsScan": 0,
     "leakedIntoField": 0,
     "gapMedian": 126,
-    "gapMax": 177
+    "gapMax": 168
    },
    {
     "detector": "burst-gate 50 ms",
@@ -1703,7 +4275,7 @@
     "detectedAsScan": 0,
     "leakedIntoField": 0,
     "gapMedian": 76,
-    "gapMax": 114
+    "gapMax": 86
    },
    {
     "detector": "onscan.js 1.5.2 defaults",
@@ -1714,7 +4286,7 @@
     "detectedAsScan": 5,
     "leakedIntoField": 5,
     "gapMedian": 8,
-    "gapMax": 63
+    "gapMax": 32
    },
    {
     "detector": "onscan.js 1.5.2 defaults",
@@ -1724,8 +4296,8 @@
     "correct": 0,
     "detectedAsScan": 5,
     "leakedIntoField": 5,
-    "gapMedian": 18,
-    "gapMax": 51
+    "gapMedian": 19,
+    "gapMax": 38
    },
    {
     "detector": "onscan.js 1.5.2 defaults",
@@ -1733,10 +4305,10 @@
     "kind": "scan",
     "runs": 5,
     "correct": 0,
-    "detectedAsScan": 0,
+    "detectedAsScan": 4,
     "leakedIntoField": 5,
     "gapMedian": 29,
-    "gapMax": 99
+    "gapMax": 42
    },
    {
     "detector": "onscan.js 1.5.2 defaults",
@@ -1747,7 +4319,7 @@
     "detectedAsScan": 0,
     "leakedIntoField": 5,
     "gapMedian": 44,
-    "gapMax": 91
+    "gapMax": 53
    },
    {
     "detector": "onscan.js 1.5.2 defaults",
@@ -1758,7 +4330,7 @@
     "detectedAsScan": 0,
     "leakedIntoField": 0,
     "gapMedian": 65,
-    "gapMax": 86
+    "gapMax": 72
    },
    {
     "detector": "onscan.js 1.5.2 defaults",
@@ -1768,8 +4340,8 @@
     "correct": 5,
     "detectedAsScan": 0,
     "leakedIntoField": 0,
-    "gapMedian": 95,
-    "gapMax": 122
+    "gapMedian": 96,
+    "gapMax": 115
    },
    {
     "detector": "onscan.js 1.5.2 defaults",
@@ -1780,7 +4352,7 @@
     "detectedAsScan": 0,
     "leakedIntoField": 0,
     "gapMedian": 156,
-    "gapMax": 185
+    "gapMax": 187
    },
    {
     "detector": "onscan.js 1.5.2 defaults",
@@ -1790,8 +4362,8 @@
     "correct": 5,
     "detectedAsScan": 0,
     "leakedIntoField": 0,
-    "gapMedian": 127,
-    "gapMax": 206
+    "gapMedian": 131,
+    "gapMax": 159
    },
    {
     "detector": "onscan.js 1.5.2 defaults",
@@ -1802,81 +4374,73 @@
     "detectedAsScan": 0,
     "leakedIntoField": 0,
     "gapMedian": 75,
-    "gapMax": 133
+    "gapMax": 102
    }
   ],
   "rum": [
    {
+    "version": "v2",
     "session": "dead control clicked 4× (150 ms apart)",
     "expect": {
      "rage_click": 1,
      "dead_click": "≥1"
     },
+    "matched": 5,
     "runs": [
      {
-      "inp_max": 8,
+      "inp_max": 0,
       "inp_rating": "good",
       "inp_target": "#dead",
       "rage_click": 1,
-      "dead_click": 4
+      "dead_click": 1
      },
      {
-      "inp_max": 16,
+      "inp_max": 0,
       "inp_rating": "good",
       "inp_target": "#dead",
       "rage_click": 1,
-      "dead_click": 4
-     },
-     {
-      "inp_max": 24,
-      "inp_rating": "good",
-      "inp_target": "#dead",
-      "rage_click": 1,
-      "dead_click": 4
+      "dead_click": 1
      },
      {
       "inp_max": 8,
       "inp_rating": "good",
       "inp_target": "#dead",
       "rage_click": 1,
-      "dead_click": 4
+      "dead_click": 1
      },
      {
-      "inp_max": 72,
+      "inp_max": 0,
       "inp_rating": "good",
       "inp_target": "#dead",
       "rage_click": 1,
-      "dead_click": 4
+      "dead_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 1
      }
     ]
    },
    {
+    "version": "v2",
     "session": "slow pay button clicked 3× while waiting (250 ms apart; answers after 1.5 s)",
     "expect": {
      "rage_click": 1,
      "dead_click": 0
     },
+    "matched": 5,
     "runs": [
      {
-      "inp_max": 8,
+      "inp_max": 16,
       "inp_rating": "good",
       "inp_target": "#slow",
       "rage_click": 1
      },
      {
       "inp_max": 8,
-      "inp_rating": "good",
-      "inp_target": "#slow",
-      "rage_click": 1
-     },
-     {
-      "inp_max": 8,
-      "inp_rating": "good",
-      "inp_target": "#slow",
-      "rage_click": 1
-     },
-     {
-      "inp_max": 40,
       "inp_rating": "good",
       "inp_target": "#slow",
       "rage_click": 1
@@ -1886,60 +4450,76 @@
       "inp_rating": "good",
       "inp_target": "#slow",
       "rage_click": 1
+     },
+     {
+      "inp_max": 24,
+      "inp_rating": "good",
+      "inp_target": "#slow",
+      "rage_click": 1
+     },
+     {
+      "inp_max": 24,
+      "inp_rating": "good",
+      "inp_target": "#slow",
+      "rage_click": 1
      }
     ]
    },
    {
+    "version": "v2",
     "session": "double-click a word in a paragraph",
     "expect": {
      "rage_click": 0,
      "dead_click": 0
     },
+    "matched": 5,
     "runs": [
-     {
-      "inp_max": 8,
-      "inp_rating": "good",
-      "inp_target": "#para"
-     },
-     {
-      "inp_max": 8,
-      "inp_rating": "good",
-      "inp_target": "#para"
-     },
-     {
-      "inp_max": 8,
-      "inp_rating": "good",
-      "inp_target": "#para"
-     },
      {
       "inp_max": 0,
       "inp_rating": "good",
       "inp_target": "#para"
      },
      {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
       "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "inp_max": 8,
       "inp_rating": "good",
       "inp_target": "#para"
      }
     ]
    },
    {
+    "version": "v2",
     "session": "triple-click to select a paragraph",
     "expect": {
      "rage_click": 0,
      "dead_click": 0,
      "triple_click_select": 1
     },
+    "matched": 5,
     "runs": [
      {
       "triple_click_select": 1,
-      "inp_max": 8,
+      "inp_max": 16,
       "inp_rating": "good",
       "inp_target": "#para"
      },
      {
       "triple_click_select": 1,
-      "inp_max": 8,
+      "inp_max": 16,
       "inp_rating": "good",
       "inp_target": "#para"
      },
@@ -1964,24 +4544,26 @@
     ]
    },
    {
+    "version": "v2",
     "session": "working button clicked once",
     "expect": {
      "rage_click": 0,
      "dead_click": 0
     },
+    "matched": 5,
     "runs": [
      {
-      "inp_max": 16,
+      "inp_max": 8,
       "inp_rating": "good",
       "inp_target": "#ok"
      },
      {
-      "inp_max": 16,
+      "inp_max": 8,
       "inp_rating": "good",
       "inp_target": "#ok"
      },
      {
-      "inp_max": 16,
+      "inp_max": 0,
       "inp_rating": "good",
       "inp_target": "#ok"
      },
@@ -1998,11 +4580,13 @@
     ]
    },
    {
+    "version": "v2",
     "session": "janky handler (350 ms busy loop)",
     "expect": {
      "inp_over_200ms": 1,
      "inp_target": "#jank"
     },
+    "matched": 5,
     "runs": [
      {
       "inp_max": 360,
@@ -2011,7 +4595,581 @@
       "inp_target": "#jank"
      },
      {
+      "inp_max": 432,
+      "inp_rating": "needs-improvement",
+      "inp_over_200ms": 1,
+      "inp_target": "#jank"
+     },
+     {
       "inp_max": 352,
+      "inp_rating": "needs-improvement",
+      "inp_over_200ms": 1,
+      "inp_target": "#jank"
+     },
+     {
+      "inp_max": 360,
+      "inp_rating": "needs-improvement",
+      "inp_over_200ms": 1,
+      "inp_target": "#jank"
+     },
+     {
+      "inp_max": 384,
+      "inp_rating": "needs-improvement",
+      "inp_over_200ms": 1,
+      "inp_target": "#jank"
+     }
+    ]
+   },
+   {
+    "version": "v2",
+    "session": "handler that throws",
+    "expect": {
+     "js_error": 1
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "js_error": 1,
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#boom"
+     },
+     {
+      "js_error": 1,
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#boom"
+     },
+     {
+      "js_error": 1,
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#boom"
+     },
+     {
+      "js_error": 1,
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#boom"
+     },
+     {
+      "js_error": 1,
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#boom"
+     }
+    ]
+   },
+   {
+    "version": "v2",
+    "session": "rage: dead control clicked 3× 600 ms apart (PostHog rule: each < 1 s after the previous)",
+    "expect": {
+     "rage_click": 1
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 0,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 2
+     },
+     {
+      "inp_max": 0,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 2
+     },
+     {
+      "inp_max": 48,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 2
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 2
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 2
+     }
+    ]
+   },
+   {
+    "version": "v2",
+    "session": "click an email field and type",
+    "expect": {
+     "dead_click": 0,
+     "rage_click": 0
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#email"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#email"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#email"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#email"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#email"
+     }
+    ]
+   },
+   {
+    "version": "v2",
+    "session": "click the label of the email field",
+    "expect": {
+     "dead_click": 0
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 24,
+      "inp_rating": "good",
+      "inp_target": "html>body>p>label"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "html>body>p>label"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "html>body>p>label"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "html>body>p>label"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "html>body>p>label"
+     }
+    ]
+   },
+   {
+    "version": "v2",
+    "session": "toggle a checkbox",
+    "expect": {
+     "dead_click": 0
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#agree"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#agree"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#agree"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#agree"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#agree"
+     }
+    ]
+   },
+   {
+    "version": "v2",
+    "session": "control that answers by scrolling a list (no DOM change)",
+    "expect": {
+     "dead_click": 0
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#more"
+     },
+     {
+      "inp_max": 32,
+      "inp_rating": "good",
+      "inp_target": "#more"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#more"
+     },
+     {
+      "inp_max": 24,
+      "inp_rating": "good",
+      "inp_target": "#more"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#more"
+     }
+    ]
+   },
+   {
+    "version": "v2",
+    "session": "truly dead button clicked once",
+    "expect": {
+     "dead_click": 1
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn",
+      "dead_click": 1
+     }
+    ]
+   },
+   {
+    "version": "v2",
+    "session": "truly dead button, then a working button 400 ms later (known limit: the second masks the first)",
+    "expect": {
+     "dead_click": 0,
+     "note": "true answer 1; PostHog has the same limit"
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 24,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     }
+    ]
+   },
+   {
+    "version": "v2",
+    "session": "truly dead button on a page with a 1.5 s DOM ticker (known limit: background mutations mask it)",
+    "expect": {
+     "dead_click": 0,
+     "note": "true answer 1; PostHog has the same limit"
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "dead control clicked 4× (150 ms apart)",
+    "expect": {
+     "rage_click": 1,
+     "dead_click": "≥1"
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 4
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 4
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 4
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 4
+     },
+     {
+      "inp_max": 32,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "rage_click": 1,
+      "dead_click": 4
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "slow pay button clicked 3× while waiting (250 ms apart; answers after 1.5 s)",
+    "expect": {
+     "rage_click": 1,
+     "dead_click": 0
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#slow",
+      "rage_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#slow",
+      "rage_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#slow",
+      "rage_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#slow",
+      "rage_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#slow",
+      "rage_click": 1
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "double-click a word in a paragraph",
+    "expect": {
+     "rage_click": 0,
+     "dead_click": 0
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 0,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "triple-click to select a paragraph",
+    "expect": {
+     "rage_click": 0,
+     "dead_click": 0,
+     "triple_click_select": 1
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "triple_click_select": 1,
+      "inp_max": 24,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "triple_click_select": 1,
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "triple_click_select": 1,
+      "inp_max": 32,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "triple_click_select": 1,
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     },
+     {
+      "triple_click_select": 1,
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#para"
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "working button clicked once",
+    "expect": {
+     "rage_click": 0,
+     "dead_click": 0
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#ok"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#ok"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#ok"
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#ok"
+     },
+     {
+      "inp_max": 112,
+      "inp_rating": "good",
+      "inp_target": "#ok"
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "janky handler (350 ms busy loop)",
+    "expect": {
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 368,
       "inp_rating": "needs-improvement",
       "inp_over_200ms": 1,
       "inp_target": "#jank"
@@ -2023,7 +5181,13 @@
       "inp_target": "#jank"
      },
      {
-      "inp_max": 352,
+      "inp_max": 360,
+      "inp_rating": "needs-improvement",
+      "inp_over_200ms": 1,
+      "inp_target": "#jank"
+     },
+     {
+      "inp_max": 360,
       "inp_rating": "needs-improvement",
       "inp_over_200ms": 1,
       "inp_target": "#jank"
@@ -2037,14 +5201,28 @@
     ]
    },
    {
+    "version": "v1",
     "session": "handler that throws",
     "expect": {
      "js_error": 1
     },
+    "matched": 5,
     "runs": [
      {
       "js_error": 1,
-      "inp_max": 16,
+      "inp_max": 24,
+      "inp_rating": "good",
+      "inp_target": "#boom"
+     },
+     {
+      "js_error": 1,
+      "inp_max": 24,
+      "inp_rating": "good",
+      "inp_target": "#boom"
+     },
+     {
+      "js_error": 1,
+      "inp_max": 24,
       "inp_rating": "good",
       "inp_target": "#boom"
      },
@@ -2056,27 +5234,594 @@
      },
      {
       "js_error": 1,
-      "inp_max": 8,
-      "inp_rating": "good",
-      "inp_target": "#boom"
-     },
-     {
-      "js_error": 1,
-      "inp_max": 16,
-      "inp_rating": "good",
-      "inp_target": "#boom"
-     },
-     {
-      "js_error": 1,
-      "inp_max": 0,
+      "inp_max": 24,
       "inp_rating": "good",
       "inp_target": "#boom"
      }
     ]
+   },
+   {
+    "version": "v1",
+    "session": "rage: dead control clicked 3× 600 ms apart (PostHog rule: each < 1 s after the previous)",
+    "expect": {
+     "rage_click": 1
+    },
+    "matched": 0,
+    "runs": [
+     {
+      "inp_max": 0,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "dead_click": 3
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "dead_click": 3
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "dead_click": 3
+     },
+     {
+      "inp_max": 0,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "dead_click": 3
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#dead",
+      "dead_click": 3
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "click an email field and type",
+    "expect": {
+     "dead_click": 0,
+     "rage_click": 0
+    },
+    "matched": 0,
+    "runs": [
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#email",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#email",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#email",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#email",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#email",
+      "dead_click": 1
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "click the label of the email field",
+    "expect": {
+     "dead_click": 0
+    },
+    "matched": 0,
+    "runs": [
+     {
+      "inp_max": 24,
+      "inp_rating": "good",
+      "inp_target": "html>body>p>label",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 24,
+      "inp_rating": "good",
+      "inp_target": "html>body>p>label",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "html>body>p>label",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "html>body>p>label",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "html>body>p>label",
+      "dead_click": 1
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "toggle a checkbox",
+    "expect": {
+     "dead_click": 0
+    },
+    "matched": 0,
+    "runs": [
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#agree",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#agree",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#agree",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#agree",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#agree",
+      "dead_click": 1
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "control that answers by scrolling a list (no DOM change)",
+    "expect": {
+     "dead_click": 0
+    },
+    "matched": 0,
+    "runs": [
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#more",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#more",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#more",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#more",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#more",
+      "dead_click": 1
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "truly dead button clicked once",
+    "expect": {
+     "dead_click": 1
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 24,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn",
+      "dead_click": 1
+     },
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn",
+      "dead_click": 1
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "truly dead button, then a working button 400 ms later (known limit: the second masks the first)",
+    "expect": {
+     "dead_click": 0,
+     "note": "true answer 1; PostHog has the same limit"
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 0,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     }
+    ]
+   },
+   {
+    "version": "v1",
+    "session": "truly dead button on a page with a 1.5 s DOM ticker (known limit: background mutations mask it)",
+    "expect": {
+     "dead_click": 0,
+     "note": "true answer 1; PostHog has the same limit"
+    },
+    "matched": 5,
+    "runs": [
+     {
+      "inp_max": 16,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     },
+     {
+      "inp_max": 8,
+      "inp_rating": "good",
+      "inp_target": "#deadbtn"
+     }
+    ]
    }
   ],
+  "rumFixtures": {
+   "a11y-wizard-noticker.html": {
+    "candidates": [
+     "a: responds",
+     "a: responds",
+     "h1: not an affordance",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "label: responds",
+     "input[file]: responds",
+     "label: responds",
+     "input[file]: responds",
+     "label: responds",
+     "input: responds",
+     "label: responds",
+     "select: responds",
+     "label: responds",
+     "input: responds",
+     "label: responds",
+     "input: responds",
+     "label: responds",
+     "input: responds",
+     "label: responds",
+     "select: responds",
+     "label: responds",
+     "select: responds"
+    ],
+    "isolated": {
+     "v1": {
+      "clicked": 31,
+      "trulyDead": 0,
+      "deadReportedOnDead": 0,
+      "falseDeadOnResponding": [
+       "h1",
+       "label",
+       "input[file]",
+       "label",
+       "input[file]",
+       "label",
+       "input",
+       "label",
+       "select",
+       "label",
+       "input",
+       "label",
+       "input",
+       "label",
+       "input",
+       "label",
+       "select",
+       "label",
+       "select"
+      ],
+      "missedDead": [],
+      "otherEvents": []
+     },
+     "v2": {
+      "clicked": 31,
+      "trulyDead": 0,
+      "deadReportedOnDead": 0,
+      "falseDeadOnResponding": [],
+      "missedDead": [],
+      "otherEvents": []
+     }
+    },
+    "sequence": {
+     "v1": {
+      "clicked": 31,
+      "trulyDead": 0,
+      "events": [
+       "dead_click #cor-country",
+       "dead_click #cor-country"
+      ]
+     },
+     "v2": {
+      "clicked": 31,
+      "trulyDead": 0,
+      "events": [
+       "rage_click #step-check > dl > div.row > dd.act > a"
+      ]
+     }
+    }
+   },
+   "a11y-wizard.html": {
+    "candidates": [
+     "a: responds",
+     "a: responds",
+     "h1: not an affordance",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "a: responds",
+     "label: responds",
+     "input[file]: responds",
+     "label: responds",
+     "input[file]: responds",
+     "label: responds",
+     "input: responds",
+     "label: responds",
+     "select: responds",
+     "label: responds",
+     "input: responds",
+     "label: responds",
+     "input: responds",
+     "label: responds",
+     "input: responds",
+     "label: responds",
+     "select: responds",
+     "label: responds",
+     "select: responds"
+    ],
+    "isolated": {
+     "v1": {
+      "clicked": 31,
+      "trulyDead": 0,
+      "deadReportedOnDead": 0,
+      "falseDeadOnResponding": [],
+      "missedDead": [],
+      "otherEvents": []
+     },
+     "v2": {
+      "clicked": 31,
+      "trulyDead": 0,
+      "deadReportedOnDead": 0,
+      "falseDeadOnResponding": [],
+      "missedDead": [],
+      "otherEvents": []
+     }
+    },
+    "sequence": {
+     "v1": {
+      "clicked": 31,
+      "trulyDead": 0,
+      "events": []
+     },
+     "v2": {
+      "clicked": 31,
+      "trulyDead": 0,
+      "events": [
+       "rage_click #step-check > dl > div.row > dd.act > a"
+      ]
+     }
+    }
+   },
+   "dashboard.html": {
+    "candidates": [
+     "div: dead",
+     "div: dead",
+     "div: dead",
+     "div: dead",
+     "button: dead",
+     "button: dead",
+     "button: dead",
+     "td: dead",
+     "td: dead",
+     "td: dead",
+     "input: responds"
+    ],
+    "isolated": {
+     "v1": {
+      "clicked": 11,
+      "trulyDead": 10,
+      "deadReportedOnDead": 10,
+      "falseDeadOnResponding": [
+       "input"
+      ],
+      "missedDead": [],
+      "otherEvents": []
+     },
+     "v2": {
+      "clicked": 11,
+      "trulyDead": 10,
+      "deadReportedOnDead": 10,
+      "falseDeadOnResponding": [],
+      "missedDead": [],
+      "otherEvents": []
+     }
+    },
+    "sequence": {
+     "v1": {
+      "clicked": 11,
+      "trulyDead": 10,
+      "events": [
+       "dead_click div.side > div.item",
+       "dead_click main > div.row > div.card > input"
+      ]
+     },
+     "v2": {
+      "clicked": 11,
+      "trulyDead": 10,
+      "events": [
+       "dead_click div.side > div.item",
+       "dead_click div.side > div.item",
+       "dead_click div.side > div.item",
+       "rage_click main > div.top > div > button.iconbtn",
+       "dead_click div.side > div.item",
+       "dead_click main > div.top > div > button.iconbtn",
+       "dead_click main > div.top > div > button.iconbtn",
+       "dead_click main > div.top > div > button.iconbtn",
+       "dead_click main > div.row > div.card > table > tbody > tr > td.rowact",
+       "dead_click main > div.row > div.card > table > tbody > tr > td.rowact",
+       "dead_click main > div.row > div.card > table > tbody > tr > td.rowact"
+      ]
+     }
+    }
+   },
+   "app-traps.html": {
+    "candidates": [
+     "label: responds",
+     "input: responds"
+    ],
+    "isolated": {
+     "v1": {
+      "clicked": 2,
+      "trulyDead": 0,
+      "deadReportedOnDead": 0,
+      "falseDeadOnResponding": [
+       "label",
+       "input"
+      ],
+      "missedDead": [],
+      "otherEvents": []
+     },
+     "v2": {
+      "clicked": 2,
+      "trulyDead": 0,
+      "deadReportedOnDead": 0,
+      "falseDeadOnResponding": [],
+      "missedDead": [],
+      "otherEvents": []
+     }
+    },
+    "sequence": {
+     "v1": {
+      "clicked": 2,
+      "trulyDead": 0,
+      "events": [
+       "dead_click main > label > input",
+       "dead_click main > label > input"
+      ]
+     },
+     "v2": {
+      "clicked": 2,
+      "trulyDead": 0,
+      "events": []
+     }
+    }
+   }
+  },
   "sizes": {
-   "rumSnippetGzipBytes": 1852,
+   "rumSnippetGzipBytes": 2962,
+   "rumV1SnippetGzipBytes": 1925,
    "webVitalsAttributionGzipBytes": 5465,
    "webVitalsVersion": "6.2.2"
   },

@@ -1,0 +1,107 @@
+{
+ "url": "http://127.0.0.1:42205/ext/regress/dashboard.html",
+ "width": 390,
+ "height": 844,
+ "insets": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "env": {
+  "viewportMeta": "width=device-width, initial-scale=1",
+  "hoverNone": true,
+  "coarse": true,
+  "cover": false,
+  "resizesContent": false
+ },
+ "summary": {
+  "FAIL": 1,
+  "WARN": 3,
+  "INFO": 3
+ },
+ "thumb": {
+  "model": {
+   "pxPerMm": 6.1,
+   "pivotOutsideMm": 5,
+   "pivotUpMm": 15,
+   "near": 25,
+   "natural": 65,
+   "stretch": 85,
+   "edgeMm": 5
+  },
+  "primaries": [],
+  "tabbar": []
+ },
+ "inputs": [
+  {
+   "field": "",
+   "purpose": "text",
+   "keyboard": "text"
+  }
+ ],
+ "findings": [
+  {
+   "level": "INFO",
+   "check": "safe-area",
+   "message": "No viewport-fit=cover: the browser keeps the page inside the safe area (letterboxed in landscape; env() insets are 0), so bars cannot sit under the notch or home indicator. Choose cover only for an edge-to-edge design, and then pad bars with env()",
+   "examples": []
+  },
+  {
+   "level": "FAIL",
+   "check": "targets",
+   "message": "Targets under 24 px without the spacing exception (WCAG 2.5.8)",
+   "count": 2,
+   "examples": [
+    "button.iconbtn 18×18",
+    "button.iconbtn 18×18"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "targets",
+   "message": "Targets under 44 px on a coarse pointer (buttons, fixed-bar links)",
+   "count": 3,
+   "examples": [
+    "button.iconbtn 18×18",
+    "button.iconbtn 18×18",
+    "button.iconbtn 18×18"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "targets",
+   "message": "Small targets packed closer than 8 px (mis-taps)",
+   "count": 3,
+   "examples": [
+    "button.iconbtn (3px from button.iconbtn)",
+    "button.iconbtn (6px from button.iconbtn)",
+    "button.iconbtn (3px from button.iconbtn)"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "targets",
+   "message": "Small targets hugging the screen edge, where touch error is largest",
+   "count": 1,
+   "examples": [
+    "button.iconbtn"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "keyboards",
+   "message": "Fields that bring the wrong keyboard or miss autofill",
+   "count": 1,
+   "examples": [
+    " (Add a note...): font-size 13.3333px: iOS Safari zooms the page on focus"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "keyboard",
+   "message": "No interactive-widget=resizes-content: the keyboard overlays the page (resizes-visual, the default in Chrome Android and on iOS) and fixed bars stay behind it — check focused fields over a real keyboard on a device",
+   "examples": []
+  }
+ ]
+}

@@ -1,0 +1,156 @@
+<!doctype html>
+<!-- S12 copy of tools/regress/fixtures/a11y-wizard.html at commit 4e324ca (pinned: the original changed during this stream). -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check your answers – Resident parking permits</title>
+<!--
+  a11y.mjs regression page, modelled on the round-4 blind-eval permit build (a multi-step application whose other
+  steps sit in the DOM, hidden). What a11y.mjs must and must not report here:
+  - The steps with the `hidden` attribute, the closed drawer (visibility: hidden) and the content-visibility: hidden
+    panel hold one defect for almost every check. None of it is rendered, so none of it may be reported.
+  - The visible file inputs and the visible select of street names take no autocomplete token (one file input's
+    label, "a document showing your address", would match street-address), and a file input, drawn as browsers draw
+    it (no field border, a button with a 2px outset border), has a boundary. "Website address" is not a postal
+    address. In the correspondence address, "address" is the group each field belongs to (Rails-style
+    address[postcode], address[town], address[country]): the fields warn with postal-code, address-level2 and
+    country-name, the two selects included (the country select's label also says "address").
+  - The "Draft" badge blinks (visibility toggled by an animation, hidden 92% of each 1.5s cycle) and has no
+    reduced-motion override: one FAIL (2.3.3) and one WARN (2.2.2), whatever phase the probe samples. "Saving…" is
+    flashed by a script for 150ms every 1.5s: a WARN for content that changes on its own.
+  - The "Change" links use a gold fill with an ink bar under the box (the fill alone is 1.7:1 on white). Heights are
+    fixed so that "Change make" straddles the fold at 1280x720: Tab scrolls it only until its box is in, flush with
+    the bottom edge, and the bar lands below the viewport. Every Change link passes 2.4.13. The "Help with this
+    form" link, whose focus is a 1px grey dotted outline, still warns.
+  - Still reported, to show the checks run: "Your answers are saved." looks like a heading, and "Full name" and
+    "Address line 1" have no autocomplete. The blink is the only FAIL.
+-->
+<style>
+  body { font: 19px/1.4 system-ui, sans-serif; color: #0f2733; margin: 0; background: #fff; }
+  header { border-bottom: 6px solid #0b4f6c; padding: 0 24px; height: 48px; box-sizing: border-box; line-height: 42px; }
+  .intro { height: 362px; display: flow-root; } /* with the 48px header and 24px padding, row 6 ("Make") centres on y = 720 */
+  main { max-width: 760px; margin: 0 auto; padding: 24px 24px 48px; }
+  a { color: #0b4f6c; text-decoration: underline; }
+  a:focus { outline: 3px solid transparent; background: #f2c14e; color: #0f2733; text-decoration: none; box-shadow: 0 -2px #f2c14e, 0 4px #0f2733; }
+  a.weak:focus { outline: 1px dotted #aaa; background: none; box-shadow: none; color: #0b4f6c; text-decoration: underline; }
+  .skip { position: absolute; left: -9999px; }
+  .skip:focus { position: static; display: inline-block; margin: 8px; }
+  .visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; clip-path: inset(50%) !important; border: 0 !important; white-space: nowrap !important; }
+  h1 { font-size: 36px; margin: 16px 0 24px; }
+  h2 { font-size: 24px; margin: 32px 0 12px; }
+  dl { margin: 0; }
+  .row { display: flex; flex-wrap: wrap; gap: 4px 16px; border-bottom: 1px solid #b1b4b6; padding: 13px 0 12px; line-height: 26px; min-height: 52px; box-sizing: border-box; }
+  .row dt { flex: 0 0 34%; font-weight: 700; margin: 0; }
+  .row dd { flex: 1; margin: 0; min-width: 0; overflow-wrap: anywhere; }
+  .row dd.act { flex: 0 0 auto; text-align: right; }
+  .said { font-size: 1.5em; font-weight: 700; margin: 24px 0; }
+  label { display: block; font-weight: 700; margin: 20px 0 6px; }
+  input, select { font: inherit; border: 2px solid #0f2733; padding: 8px; min-height: 48px; box-sizing: border-box; max-width: 100%; }
+  input[type=file] { border: 0; padding: 0; } /* as browsers draw it: no field, a button with a 2px outset border */
+  input:focus, select:focus { outline: 3px solid #f2c14e; box-shadow: inset 0 0 0 2px #0f2733; }
+  .drawer { visibility: hidden; position: absolute; top: 48px; left: 0; width: 240px; background: #fff; }
+  .panel { content-visibility: hidden; }
+  .faint { border: 1px solid #eee; }
+  .clip { height: 20px; overflow: hidden; }
+  .spin { width: 20px; height: 20px; border: 3px solid #0b4f6c; border-right-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .tiny { display: inline-block; width: 12px; height: 12px; }
+  .bare { border: 0; background: #0b4f6c; color: #fff; padding: 12px; }
+  .draft { display: inline-block; font-size: 14px; line-height: 20px; padding: 0 6px; border: 2px solid #0f2733; margin-left: 8px; animation: blink 1.5s steps(1, end) infinite; }
+  @keyframes blink { 0% { visibility: visible; } 8% { visibility: hidden; } } /* on for 0.12s, off for 1.38s */
+  .saving { font-size: 14px; margin-left: 8px; }
+  fieldset { border: 0; padding: 0; margin: 32px 0 0; }
+  legend { font-size: 24px; font-weight: 700; padding: 0; }
+</style></head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header>Harbourside Council · Resident parking permits<span class="draft">Draft</span><span class="saving" id="saving" style="visibility: hidden">Saving…</span></header>
+<script>
+  const saving = document.getElementById('saving');
+  setInterval(() => { saving.style.visibility = 'visible'; setTimeout(() => { saving.style.visibility = 'hidden'; }, 150); }, 1500);
+</script>
+<main id="main">
+  <!-- Steps the resident is not on: hidden, so not rendered. -->
+  <section id="step-street" hidden>
+    <h1><label for="street-hidden">Which street do you live on?</label></h1>
+    <select id="street-hidden" name="street_hidden"><option>Mill Road</option></select>
+    <p class="said">Mill Road is in zone C.</p>
+  </section>
+  <section id="step-permit" hidden>
+    <h1>Your permit</h1>
+    <input type="radio" name="length" value="3"> 3 months <input type="radio" name="length" value="12"> 12 months
+    <p class="said">Your permit will cost £128.</p>
+    <table><tr><td>3 months</td><td>£40</td></tr><tr><td>12 months</td><td>£128</td></tr></table>
+    <span>مرحبا بكم</span>
+  </section>
+  <section id="step-details" hidden>
+    <label for="phone-hidden">Phone number *</label><input id="phone-hidden" name="phone" type="tel">
+    <input aria-labelledby="nowhere" name="email_hidden" type="email">
+    <label for="gone">Postcode</label>
+    <input type="password" name="pin" onpaste="return false">
+    <div class="clip">Text that is longer than its box and clipped by overflow: hidden, twice over, on a narrow line.</div>
+    <ul role="menu"><li><a role="menuitem" href="#a">One</a></li><li><a role="menuitem" href="#b">Two</a></li></ul>
+    <span class="spin"></span>
+  </section>
+
+  <!-- A closed drawer: laid out (off to the left of the column), but visibility: hidden. -->
+  <div class="drawer">
+    <p class="said">Menu and settings</p>
+    <label for="mobile-d">Mobile phone</label><input id="mobile-d" name="mobile" class="faint">
+    <button class="bare" type="button"></button>
+    <span role="button" tabindex="-1" style="display:inline-block;width:40px;height:40px">x</span>
+    <a class="tiny" href="#t1"></a><a class="tiny" href="#t2"></a>
+    <svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="30" fill="#0b4f6c"/></svg>
+    <table><tr><td>a</td><td>b</td></tr><tr><td>c</td><td>d</td></tr></table>
+    <span class="spin"></span>
+  </div>
+  <!-- A collapsed panel: content-visibility: hidden. -->
+  <div class="panel">
+    <p class="said">Saved applications</p>
+    <label for="surname-p">Surname</label><input id="surname-p" name="surname">
+  </div>
+
+  <!-- The step on screen: check your answers. -->
+  <section id="step-check">
+    <div class="intro">
+    <a href="#details">Back</a>
+    <h1 tabindex="-1">Check your answers</h1>
+    <p class="said">Your answers are saved.</p>
+    <p><a class="weak" href="#help">Help with this form</a></p>
+    </div>
+    <dl>
+      <div class="row"><dt>Street</dt><dd>Mill Road</dd><dd class="act"><a href="#street">Change<span class="visually-hidden"> street</span></a></dd></div>
+      <div class="row"><dt>Zone</dt><dd>C, Castle Green</dd><dd class="act"></dd></div>
+      <div class="row"><dt>Permit length</dt><dd>12 months</dd><dd class="act"><a href="#permit">Change<span class="visually-hidden"> permit length</span></a></dd></div>
+      <div class="row"><dt>Blue Badge</dt><dd>No</dd><dd class="act"><a href="#badge">Change<span class="visually-hidden"> Blue Badge</span></a></dd></div>
+      <div class="row"><dt>Registration number</dt><dd>HX19 KDA</dd><dd class="act"><a href="#reg">Change<span class="visually-hidden"> registration number</span></a></dd></div>
+      <div class="row"><dt>Make</dt><dd>Skoda</dd><dd class="act"><a href="#make">Change<span class="visually-hidden"> make</span></a></dd></div>
+      <div class="row"><dt>Name</dt><dd>Ada Lovelace</dd><dd class="act"><a href="#name">Change<span class="visually-hidden"> name</span></a></dd></div>
+      <div class="row"><dt>Address</dt><dd>14 Mill Road</dd><dd class="act"><a href="#address">Change<span class="visually-hidden"> address</span></a></dd></div>
+      <div class="row"><dt>Postcode</dt><dd>HB2 7QT</dd><dd class="act"><a href="#postcode">Change<span class="visually-hidden"> postcode</span></a></dd></div>
+      <div class="row"><dt>Email</dt><dd>ada@example.org</dd><dd class="act"><a href="#email">Change<span class="visually-hidden"> email</span></a></dd></div>
+      <div class="row"><dt>Phone</dt><dd>07700 900123</dd><dd class="act"><a href="#phone">Change<span class="visually-hidden"> phone</span></a></dd></div>
+    </dl>
+    <h2>Anything to add</h2>
+    <label for="proof">Proof of address (optional)</label>
+    <input id="proof" name="proof_of_address" type="file">
+    <label for="doc">Upload a document showing your address (optional)</label>
+    <input id="doc" name="address_document" type="file">
+    <label for="site">Website address (businesses only)</label>
+    <input id="site" name="business_website">
+    <label for="street">Which street do you live on?</label>
+    <select id="street" name="street"><option value="">Choose a street</option><option>Mill Road</option><option>Quay Street</option></select>
+    <label for="contact">Full name</label>
+    <input id="contact" name="full_name">
+    <label for="line1">Address line 1</label>
+    <input id="line1" name="address_line1">
+    <fieldset>
+      <legend>Correspondence address (if different)</legend>
+      <label for="cor-postcode">Postcode</label>
+      <input id="cor-postcode" name="address[postcode]">
+      <label for="cor-town">Town or city</label>
+      <select id="cor-town" name="address[town]"><option value="">Choose a town</option><option>Harbourside</option><option>Castle Green</option></select>
+      <label for="cor-country">Country (the country your correspondence address is in)</label>
+      <select id="cor-country" name="address[country]"><option>United Kingdom</option><option>Ireland</option></select>
+    </fieldset>
+  </section>
+</main>
+</body></html>

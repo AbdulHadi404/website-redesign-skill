@@ -592,11 +592,13 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       const cs = getComputedStyle(cell), b = cell.getBoundingClientRect();
       let laidOut = null;
       const nodes = [];
-      const tw = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT);
+      const tw = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT), rg = document.createRange();
       for (let n = tw.nextNode(); n; n = tw.nextNode()) {
         if (!DIGIT.test(n.data) || !n.parentElement) continue;
         const pb = n.parentElement.getBoundingClientRect();
         if (pb.width <= 2 || srOnly(n.parentElement, pb)) continue; // visually hidden text is not painted in the cell
+        rg.selectNodeContents(n);
+        if (![...rg.getClientRects()].some((q) => q.width > 1 && q.height > 1 && q.right > b.left && q.left < b.right)) continue;
         nodes.push(n);
         for (let e = n.parentElement; e && e !== cell && !laidOut; e = e.parentElement) {
           const ecs = getComputedStyle(e);

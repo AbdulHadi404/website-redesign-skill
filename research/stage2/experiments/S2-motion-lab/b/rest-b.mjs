@@ -19,14 +19,16 @@ export async function restB(runs = 3) {
   const { base, close } = await serve(); const { browser } = await launch();
   const out = {};
   for (const v of ['rive-canvas', 'rive-rating', 'rive-canvas-lite', 'dotlottie', 'dotlottie-worker', 'lottie-svg', 'css-svg']) {
-    const rows = { idle: [], settled: [] };
-    for (let r = 0; r < runs; r++) for (const phase of ['idle', 'settled']) {
+    const rows = { idle: [], settled: [], stopped: [] };
+    for (let r = 0; r < runs; r++) for (const phase of ['idle', 'settled', 'stopped']) {
       const ctx = await browser.newContext({ viewport: { width: 400, height: 260 } });
       await ctx.addInitScript(() => { const raf = window.requestAnimationFrame.bind(window); window.__n = 0; window.requestAnimationFrame = (cb) => raf((t) => { window.__n++; cb(t); }); });
       const page = await ctx.newPage(); const cdp = await ctx.newCDPSession(page);
       await page.goto(`${base}/captures/b/${v}.html`); await page.waitForFunction(() => window.__loaded, null, { timeout: 15000 }).catch(() => {});
       await page.waitForTimeout(1500);
       if (phase === 'settled') { await page.evaluate(() => window.__toggle?.()); await page.waitForTimeout(2500); }
+      // stopped: the runtimes' own switches — Rive stopRendering(), dotLottie freeze() (the page's job when the element is settled or off-screen)
+      if (phase === 'stopped') { await page.evaluate(() => { window.__r?.stopRendering?.(); window.__d?.freeze?.(); }); await page.waitForTimeout(300); }
       const frames = []; cdp.on('Page.screencastFrame', async (f) => { frames.push({ data: f.data, w: f.metadata.deviceWidth, h: f.metadata.deviceHeight }); try { await cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }); } catch { /* closed */ } });
       await cdp.send('Page.startScreencast', { format: 'png' });
       const n0 = await page.evaluate(() => window.__n); await page.waitForTimeout(3000); const n1 = await page.evaluate(() => window.__n);

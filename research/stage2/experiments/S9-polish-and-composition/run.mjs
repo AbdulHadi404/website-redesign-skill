@@ -9,7 +9,7 @@
  *
  * Steps: fetch fonts (fetch-assets.mjs) -> serve page/ with each variant's move classes -> render the phone image
  * -> capture every variant at 1440 and 390 with the skill's capture.mjs -> measure each variant against the
- * baseline (pixelmatch %, CIEDE2000 JND area, JND area after a 4x downscale) on the first viewport, the full
+ * baseline (pixelmatch %, CIEDE2000 > 1 and > 2.3 areas, the > 2.3 area after a 4x downscale) on the first viewport, the full
  * page and viewport-sized windows on the sections below the fold -> run the polish probe (lib/probe.mjs) on
  * every variant -> build blind A/B sheets with the skill's compare.mjs (sides and pair ids randomised with a
  * fixed seed; the key goes to blind-key.json, never onto a sheet) -> stacks from judgements.json -> shots/.
@@ -55,7 +55,7 @@ function run(cmd, argv) {
     const c = spawn(cmd, argv, { env: { ...process.env, NODE_USE_ENV_PROXY: '1' } });
     let out = '', err = '';
     c.stdout.on('data', (d) => { out += d; }); c.stderr.on('data', (d) => { err += d; });
-    c.on('close', (code) => (code === 0 ? resolve(out) : reject(new Error(`${cmd} ${argv.slice(0, 4).join(' ')} … failed (${code}):\n${err.slice(-2000)}`))));
+    c.on('close', (code, sig) => (code === 0 ? resolve(err ? `${out}\n--- stderr ---\n${err}` : out) : reject(new Error(`${cmd} ${argv.slice(0, 4).join(' ')} … failed (${code ?? sig}):\n${err.slice(-2000)}`))));
   });
 }
 const exists = async (f) => !!(await stat(f).catch(() => null));
@@ -64,10 +64,22 @@ const capFile = (v, w, fold) => path.join(PAGES, `v-${v}-${w}${fold ? '-fold' : 
 async function capture(list) {
   await mkdir(PAGES, { recursive: true });
   const t0 = Date.now();
-  const out = await run('node', [path.join(SCRIPTS, 'capture.mjs'), '--base', server.base, '--paths', ...list.map((v) => `/v/${v}/`), '--widths', WIDTHS.join(','), '--out', PAGES]);
-  await writeFile(path.join(CAP, `capture-${list[0]}-${list.length}.log`), out);
+  // Captured in batches, and any variant whose files are missing afterwards is captured again: on a shared
+  // machine a long capture process can die part-way (seen once here), and a batch loses less.
+  const missing = async () => { const m = []; for (const v of list) for (const w of WIDTHS) if (!(await exists(capFile(v, w, true))) || !(await exists(capFile(v, w, false)))) { m.push(v); break; } return m; };
+  for (const v of list) for (const w of WIDTHS) for (const f of [capFile(v, w, true), capFile(v, w, false)]) await rm(f, { force: true });
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const todo = await missing();
+    if (!todo.length) break;
+    for (let i = 0; i < todo.length; i += 6) {
+      const batch = todo.slice(i, i + 6);
+      const out = await run('node', [path.join(SCRIPTS, 'capture.mjs'), '--base', server.base, '--paths', ...batch.map((v) => `/v/${v}/`), '--widths', WIDTHS.join(','), '--out', PAGES]).catch((e) => String(e));
+      await writeFile(path.join(CAP, `capture-${batch[0]}-a${attempt}.log`), out);
+    }
+  }
+  const left = await missing();
+  if (left.length) throw new Error(`captures still missing after 3 attempts: ${left.join(', ')}`);
   log(`  captured ${list.length} variants x ${WIDTHS.length} widths in ${((Date.now() - t0) / 1000).toFixed(0)} s`);
-  for (const v of list) for (const w of WIDTHS) if (!(await exists(capFile(v, w, true)))) throw new Error(`missing capture ${capFile(v, w, true)}`);
 }
 
 async function boxes(browser, list) {
@@ -111,15 +123,15 @@ async function measureVariant(v, bx, ref = 'base') {
     const [A, B] = [await readPng(capFile(ref, w, true)), await readPng(capFile(v, w, true))];
     const fold = measure(A, B, { diffOut: true });
     const [FA, FB] = [await readPng(capFile(ref, w, false)), await readPng(capFile(v, w, false))];
-    const full = measure(FA, FB);
+    const full = measure(FA, FB, { fullRes: false }); // full pages: pixelmatch and the glance measure only (speed)
     const windows = {};
     for (const s of WINDOWS) {
       const ya = Math.max(0, (bx[ref][w][s].top - 64) * dpr), yb = Math.max(0, (bx[v][w][s].top - 64) * dpr);
       const m = measure(crop(FA, 0, ya, FA.width, h * dpr), crop(FB, 0, yb, FB.width, h * dpr));
-      windows[s] = { pm: m.pm, jnd: m.jnd, thumb: m.thumb, meanDE: m.meanDE, ya, yb };
+      windows[s] = { pm: m.pm, jnd1: m.jnd1, jnd: m.jnd, thumb: m.thumb, meanDE: m.meanDE, ya, yb };
     }
     const { diff, ...foldRest } = fold;
-    r[w] = { fold: foldRest, full: { pm: full.pm, jnd: full.jnd, thumb: full.thumb, heights: [FA.height, FB.height] }, windows, hot: hotWindow(diff, 400 * dpr / (w < 768 ? 2 : 1), 250 * dpr / (w < 768 ? 2 : 1)) };
+    r[w] = { fold: foldRest, full: { pm: full.pm, thumb: full.thumb, heights: [FA.height, FB.height] }, windows, hot: hotWindow(diff, 400 * dpr / (w < 768 ? 2 : 1), 250 * dpr / (w < 768 ? 2 : 1)) };
     await mkdir(path.join(CAP, 'diff'), { recursive: true });
     await writePng(path.join(CAP, 'diff', `${v}-${w}-fold.png`), diff);
   }
@@ -165,21 +177,22 @@ async function viewFiles(v, w, view, hot, ref = 'base', bx) {
 }
 
 // A contact sheet drawn by the browser (the layout compare.mjs cannot do: many panels in a grid, with captions).
-async function contact(conv, panels, out, { cols = 5, width = 360, title = '' } = {}) {
+async function contact(conv, panels, out, { cols = 5, width = 360, title = '', filter = '' } = {}) {
   const imgs = await Promise.all(panels.map(async (p) => ({ ...p, src: `data:image/png;base64,${(await readFile(p.file)).toString('base64')}` })));
-  const page = await conv.context().newPage();
+  const ctx = await conv.context().browser().newContext();
+  const page = await ctx.newPage();
   await page.setViewportSize({ width: cols * (width + 16) + 32, height: 1000 });
   await page.setContent(`<!doctype html><body style="margin:0;background:#e9e9e7;font:600 13px/1.3 system-ui,sans-serif;color:#222">
     <div id="g" style="padding:16px;display:grid;grid-template-columns:repeat(${cols},${width}px);gap:16px;width:max-content">
     ${title ? `<div style="grid-column:1/-1;font-size:15px">${title}</div>` : ''}
-    ${imgs.map((p) => `<figure style="margin:0"><figcaption style="margin:0 0 6px;height:34px;overflow:hidden">${p.caption}</figcaption><img src="${p.src}" style="width:100%;display:block;box-shadow:0 0 0 1px #0002"></figure>`).join('')}
+    ${imgs.map((p) => `<figure style="margin:0"><figcaption style="margin:0 0 6px;height:34px;overflow:hidden">${p.caption}</figcaption><img src="${p.src}" style="width:100%;display:block;box-shadow:0 0 0 1px #0002;${filter ? `filter:${filter}` : ''}"></figure>`).join('')}
     </div></body>`);
   await page.evaluate(() => Promise.all([...document.images].map((i) => i.decode())));
   const g = await page.$('#g'); const box = await g.boundingBox();
   await page.setViewportSize({ width: Math.ceil(box.width), height: Math.ceil(box.height) });
   const buf = await g.screenshot({ type: 'jpeg', quality: 80 });
   await writeFile(out, buf);
-  await page.close();
+  await ctx.close();
 }
 
 // ---------------------------------------------------------------- main
@@ -234,7 +247,17 @@ try {
     }
     log(`singles: ${items.length} blind sheets`);
     const key = await blindSheets(items, conv, 'p', rng(SEED));
-    await writeFile(path.join(ROOT, 'blind-key.json'), JSON.stringify({ note: 'Key for captures/blind/*.jpg. A reviewer judging the sheets must not open this file or run.mjs output logs first.', seed: SEED, pairs: key }, null, 1));
+    // Moves whose change below the fold pixelmatch does not flag (pm 0) but CIEDE2000 does (a 10% hairline, a
+    // tint): an extra window sheet each, in their own id series so the p-series stays as judged.
+    const extra = [];
+    for (const m of MOVES) {
+      const wins = Object.entries(measures[m.id][1440].windows);
+      if (wins.some(([, x]) => x.pm > 0)) continue;
+      const win = wins.sort((x, y) => y[1].jnd1 - x[1].jnd1)[0];
+      if (win && win[1].jnd1 > 0) { const [a, b] = await viewFiles(m.id, 1440, win[0], null, 'base', bx); extra.push({ variant: m.id, view: `window-1440 ${win[0]}`, a, b }); }
+    }
+    const keyQ = extra.length ? await blindSheets(extra, conv, 'q', rng(SEED + 2)) : {};
+    await writeFile(path.join(ROOT, 'blind-key.json'), JSON.stringify({ note: 'Key for captures/blind/*.jpg. A reviewer judging the sheets must not open this file or run.mjs output logs first.', seed: SEED, pairs: { ...key, ...keyQ } }, null, 1));
     results.singles = { measures, probe, detected, boxes: bx };
     // shots: the diff heat maps of the first viewport, every move, at both widths
     for (const w of WIDTHS) {
@@ -270,10 +293,33 @@ try {
       await run('node', [path.join(SCRIPTS, 'compare.mjs'), '--grid', capFile('base', w, true), ...names.map((n) => capFile(n, w, true)), '--labels', 'Baseline', ...names.map((n) => `${n} (${STACKS[n].length} moves)`), '--labels-as-given', '--out', path.join(CAP, `stacks-${w}.png`)]);
       await toJpeg(conv, await readPng(path.join(CAP, `stacks-${w}.png`)), path.join(SHOTS, `stacks-fold-${w}.jpg`), 0.8, w === 1440 ? 0.75 : 0.6);
     }
+    // the value-structure (notan) view: greyscale and blurred, where the eye lands before it reads
+    await contact(conv, ['base', ...names].map((v) => ({ file: capFile(v, 1440, true), caption: v === 'base' ? 'Baseline' : `${v} (${STACKS[v].length} moves)` })), path.join(SHOTS, 'value-structure-1440.jpg'), { cols: names.length + 1, width: 480, filter: 'grayscale(1) blur(4px)', title: 'First viewport at 1440, greyscale and blurred 4 px (at 1/3 scale): the value masses the eye meets first.' });
   }
 } finally {
   await browser.close();
   await server.close();
+}
+
+// the builder's forced choices on the blind sheets (judgements.json "sheets"), scored against the key
+if (judgements?.sheets) {
+  // Score against the key the judge was shown (the snapshot in judgements.json); warn if this run's key differs,
+  // which would mean the sheets were regenerated differently from the ones judged.
+  const bk = JSON.parse(await readFile(path.join(ROOT, 'blind-key.json'), 'utf8'));
+  const keyAll = { ...(judgements.keySnapshot || bk.pairs), ...(judgements.stackKeySnapshot || bk.stackPairs || {}) };
+  const drift = Object.keys(judgements.keySnapshot || {}).filter((id) => JSON.stringify(bk.pairs?.[id]) !== JSON.stringify(judgements.keySnapshot[id]));
+  if (drift.length) console.warn(`⚠ ${drift.length} blind sheets differ from the ones judged (${drift.slice(0, 5).join(', ')}…): judgements are scored against the snapshot`);
+  const rows = Object.entries(judgements.sheets).filter(([id]) => keyAll[id]).map(([id, j]) => {
+    const k = keyAll[id];
+    const control = k.variant === 'null';
+    // "better": the side judged more finished; "=" when no difference was seen or no preference
+    const correct = control ? j.better === '=' : j.better === k.variantSide;
+    const reversed = !control && j.better !== '=' && j.better !== k.variantSide;
+    return { id, ...k, seen: j.seen, better: j.better, correct, reversed, note: j.note };
+  });
+  const by = (f) => rows.reduce((m, r) => { (m[f(r)] ||= []).push(r); return m; }, {});
+  const summary = Object.fromEntries(Object.entries(by((r) => r.view.split(' ')[0])).map(([v, rs]) => [v, { n: rs.length, seen: rs.filter((r) => r.seen).length, correct: rs.filter((r) => r.correct).length, reversed: rs.filter((r) => r.reversed).length }]));
+  results.blindScore = { judge: judgements.judge, summary, rows };
 }
 
 // the judgements (written by hand from the blind sheets, see README) joined with the measures

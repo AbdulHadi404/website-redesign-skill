@@ -5,7 +5,7 @@
 //   node run.mjs --runs 1              # one run per cell (≈ 25 min), for a quick look
 //   node run.mjs --phase main --only pixi,three --n 2000 --throttle 4
 //
-// Phases: build, shots, main, worker, present, a11y, contextloss, reduced, nowebgl, survey, report (default: all, in that order).
+// Phases: build, shots, main, worker, present, domprobe, a11y, contextloss, reduced, nowebgl, survey, report (default: all, in that order).
 // Results merge into results.json by key, so a partial run replaces only the cells it measured.
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -20,13 +20,14 @@ import { launchBrowser, runOne, median } from './lib/measure.mjs';
 import { contactSheet } from './lib/sheet.mjs';
 import { runSurvey } from './lib/survey.mjs';
 import { writeReport } from './lib/report.mjs';
+import { domProbe } from './lib/domprobe.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
 const arg = (k, d) => { const i = argv.indexOf(`--${k}`); return i < 0 ? d : argv[i + 1]; };
 const list = (k, d) => (arg(k) ? arg(k).split(',') : d);
 const RUNS = Number(arg('runs', 5));
-const PHASES = list('phase', ['build', 'shots', 'main', 'worker', 'present', 'a11y', 'contextloss', 'reduced', 'nowebgl', 'survey', 'report']);
+const PHASES = list('phase', ['build', 'shots', 'main', 'worker', 'present', 'domprobe', 'a11y', 'contextloss', 'reduced', 'nowebgl', 'survey', 'report']);
 const ONLY = arg('only') ? arg('only').split(',') : null;
 const NS = list('n', ['20', '200', '2000']).map(Number);
 const THROTTLES = list('throttle', ['1', '4']).map(Number);
@@ -220,21 +221,25 @@ async function nowebgl(base) {
 // the main thread cannot see compositor-driven CSS animations, which keep moving while the main
 // thread is blocked; this counts what reached the screen, whatever produced it.
 async function presented(browser, base) {
-  results.presented = { note: 'viz Display::DrawAndSwap events per second over a 3 s trace, after 1.5 s warm-up; median of runs. load = 50 ms of main-thread busy work every 100 ms.', cells: {} };
+  results.presented = { note: 'viz Display::DrawAndSwap events per second over a 3 s trace, after 1.5 s warm-up, with the harness rAF loop off (?idle), so only the page\'s own work runs; busy % = main-thread TaskDuration share; median of runs. load = 50 ms of main-thread busy work every 100 ms.', cells: {} };
   for (const load of [0, 50]) {
     for (const n of [200, 2000]) {
       for (const v of pick(['dom', 'svg', 'canvas2d', 'canvas2d-worker', 'pixi'])) {
-        const fpsRuns = [];
+        const fpsRuns = [], busyRuns = [];
         for (let i = 0; i < Math.min(RUNS, 3); i++) {
           const ctx = await browser.newContext({ viewport: { width: 860, height: 720 }, deviceScaleFactor: 1 });
           const page = await ctx.newPage();
-          await page.goto(`${base}/${v}/?n=${n}${load ? `&load=${load}` : ''}`);
+          const cdp = await ctx.newCDPSession(page); await cdp.send('Performance.enable');
+          await page.goto(`${base}/${v}/?n=${n}&idle${load ? `&load=${load}` : ''}`);
           await page.waitForFunction(() => window.__lab?.ttff != null, null, { timeout: 60000 });
           await page.waitForTimeout(1500);
+          const m0 = Object.fromEntries((await cdp.send('Performance.getMetrics')).metrics.map((x) => [x.name, x.value]));
           await browser.startTracing(page, { categories: ['viz', 'cc'] });
           const t0 = Date.now();
           await page.waitForTimeout(3000);
           const buf = await browser.stopTracing();
+          const m1 = Object.fromEntries((await cdp.send('Performance.getMetrics')).metrics.map((x) => [x.name, x.value]));
+          busyRuns.push(Math.round((1000 * (m1.TaskDuration - m0.TaskDuration)) / (m1.Timestamp - m0.Timestamp)) / 10);
           const secs = (Date.now() - t0) / 1000;
           const ev = JSON.parse(buf.toString()).traceEvents;
           const swaps = ev.filter((e) => e.name === 'Display::DrawAndSwap' && (e.ph === 'X' || e.ph === 'B')).length;
@@ -242,7 +247,7 @@ async function presented(browser, base) {
           await ctx.close();
         }
         const key = `${v}|${n}|load${load}`;
-        results.presented.cells[key] = { variant: v, n, load, fps: median(fpsRuns), runs: fpsRuns };
+        results.presented.cells[key] = { variant: v, n, load, fps: median(fpsRuns), busyPct: median(busyRuns), runs: fpsRuns };
         log('presented', key, JSON.stringify(results.presented.cells[key]));
         await save();
       }
@@ -308,7 +313,7 @@ async function main() {
   };
   if (PHASES.includes('build')) { results.build = { ...(results.build || {}), ...(await buildAll()) }; await save(); log('built'); }
   const { server, base } = await serve(DIST);
-  const needBrowser = PHASES.some((p) => ['shots', 'main', 'worker', 'present', 'a11y', 'contextloss', 'reduced'].includes(p));
+  const needBrowser = PHASES.some((p) => ['shots', 'main', 'worker', 'present', 'domprobe', 'a11y', 'contextloss', 'reduced'].includes(p));
   const browser = needBrowser ? await launchBrowser() : null;
   if (browser) {
     const probe = await browser.newPage();
@@ -334,6 +339,7 @@ async function main() {
     await matrix(browser, base, 'worker', cells);
   }
   if (PHASES.includes('present')) await presented(browser, base);
+  if (PHASES.includes('domprobe')) { results.domProbe = await domProbe(browser, { runs: Math.min(RUNS, 3) }); await save(); }
   if (PHASES.includes('a11y')) await a11y(browser, base);
   if (PHASES.includes('contextloss')) await contextLoss(browser, base);
   if (PHASES.includes('reduced')) {

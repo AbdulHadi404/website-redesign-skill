@@ -1,20 +1,20 @@
-# Motion check — http://127.0.0.1:37679/captures/c/gsap.html
+# Motion check — http://127.0.0.1:34867/captures/c/gsap.html
 
 2026-09-28 · desktop · Chromium 141.0.7390.37 · tokens from spec: micro 100, small 150, medium 240, large 300, page 400, hero 700
 
-## Spec: 7/9 entries pass
+## Spec: 9/9 entries pass
 
 | id | trigger | normal | duration | easing | reduced (spec → seen) | verdict |
 | --- | --- | --- | --- | --- | --- | --- |
-| cta-press | press | animates | ~82ms (spec micro) | ≈ __spec | keep → still moves | ✓ |
+| cta-press | press | animates | ~73ms (spec micro) | ≈ __spec | keep → still moves | ✓ |
 | cta-hover | hover | animates | 100ms (spec micro) | cubic-bezier(0.2, 0, 0, 1) | keep → substituted (fade/colour) | ✓ |
-| plan-hover | hover | animates | ~86ms (spec small) | ≈ __spec | fade → substituted (fade/colour) | ✓ |
-| sheet-open | click | animates | ~438ms (spec large) | — | fade → substituted (fade/colour) | ✗ layout jumps in one frame (width, height, left/margin, top/margin): a layout property changed without transitioning |
-| toast | click | animates | ~233ms (spec medium) | ≈ __spec | fade → substituted (fade/colour) | ✓ |
-| features-reveal | scroll | animates, stagger 27ms (sampled) | ~269ms (spec medium) | ≈ __spec | static → nothing changes | ✓ |
-| stat-count | scroll | animates | ~793ms (spec 800) | ≈ __spec | instant → nothing changes | ✓ |
-| hero-in | load | animates | ~425ms (spec hero) | ≈ __spec | fade → substituted (fade/colour) | ✓ |
-| panel-swap | click | animates | ~556ms (spec page) | — | fade → substituted (fade/colour) | ✗ interrupted after 150ms: jumps |
+| plan-hover | hover | animates | ~104ms (spec small) | ≈ __spec | fade → substituted (fade/colour) | ✓ |
+| sheet-open | click | animates | ~434ms (spec large) | — | fade → substituted (fade/colour) | ✓ |
+| toast | click | animates | ~229ms (spec medium) | ≈ __spec | fade → substituted (fade/colour) | ✓ |
+| features-reveal | scroll | animates, stagger 28ms (sampled) | ~258ms (spec medium) | ≈ __spec | static → nothing changes | ✓ |
+| stat-count | scroll | animates | ~790ms (spec 800) | ≈ __spec | instant → nothing changes | ✓ |
+| hero-in | load | animates | ~446ms (spec hero) | ≈ __spec | fade → substituted (fade/colour) | ✓ |
+| panel-swap | click | animates | ~493ms (spec page) | — | fade → substituted (fade/colour) | ✓ |
 
 Filmstrips: `filmstrip-cta-press.jpg`, `filmstrip-cta-hover.jpg`, `filmstrip-plan-hover.jpg`, `filmstrip-toast.jpg`, `filmstrip-features-reveal.jpg`, `filmstrip-stat-count.jpg`, `filmstrip-hero-in.jpg`, `filmstrip-panel-swap.jpg`
 

@@ -1,4 +1,5 @@
-// Validates lib/glyph-probe.mjs against pixels. Five common clipping components × three strings × five Arabic
+// Validates lib/glyph-probe.mjs against pixels (in-sample: these are the recipes, faces and strings the probe was
+// developed on; lab/clip-truth.mjs adds scroll containers and real pages). Five common clipping components × three strings × five Arabic
 // faces. Ground truth: screenshot as built, then with every clip removed; rows that differ above or below the
 // clipping box are ink the component cut off. Writes shots/clip-sheet.jpg.
 import { createRequire } from 'node:module';
@@ -21,9 +22,7 @@ const COMPONENTS = {
   hero: 'font-size:40px; line-height:1.1; font-weight:300; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; max-width:400px', // the UAE DS hero title recipe: line-clamp-2, display line-height 1.1
 };
 
-export async function run(browser, base) {
-  const ctx = await browser.newContext({ viewport: { width: 1400, height: 900 }, deviceScaleFactor: 1 });
-  const page = await ctx.newPage();
+export async function buildRecipePage(page, base) {
   await page.goto(base + '/fixtures/blank.html');
   await page.evaluate(async ({ FONTS, STR, COMPONENTS }) => {
     document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl';
@@ -39,6 +38,12 @@ export async function run(browser, base) {
     for (const f of FONTS) await document.fonts.load(`16px "T-${f}"`, 'عربي');
     await document.fonts.ready;
   }, { FONTS, STR, COMPONENTS });
+}
+
+export async function run(browser, base) {
+  const ctx = await browser.newContext({ viewport: { width: 1400, height: 900 }, deviceScaleFactor: 1 });
+  const page = await ctx.newPage();
+  await buildRecipePage(page, base);
   const rects = await page.evaluate(() => [...document.querySelectorAll('[data-case]')].map((e) => { const r = e.getBoundingClientRect(); return { id: e.id, c: e.dataset.case, top: r.top, bottom: r.bottom, left: r.left, right: r.right, oneLine: r.height < 1.5 * parseFloat(getComputedStyle(e).lineHeight) }; }));
   const H = await page.evaluate(() => document.documentElement.scrollHeight);
   await page.setViewportSize({ width: 1400, height: H });

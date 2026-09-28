@@ -25,6 +25,8 @@ document.getElementById('slow').addEventListener('click', () => setTimeout(() =>
 document.getElementById('ok').addEventListener('click', () => { out.textContent = 'Note added'; });
 document.getElementById('jank').addEventListener('click', () => { const t = performance.now(); while (performance.now() - t < 350) {} out.textContent = 'Total updated'; });
 document.getElementById('boom').addEventListener('click', () => { out.textContent = 'Saving…'; setTimeout(() => { throw new Error('address API 500'); }, 0); });
+// ?ticker=1: a clock-like element updated every 1.5 s, as live dashboards and "saving…" indicators do
+if (/[?&]ticker=1\b/.test(location.search)) { const tick = document.createElement('p'); document.body.append(tick); setInterval(() => { tick.textContent = new Date().toLocaleTimeString(); }, 1500); }
 // responds by scrolling a list only: no DOM mutation
 document.getElementById('more').addEventListener('click', () => { document.getElementById('list').scrollBy(0, 70); });
 </script>

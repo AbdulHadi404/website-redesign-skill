@@ -7,7 +7,7 @@ export const MOVES = [
   { id: 'scale', family: 'composition', name: 'Scale contrast (h1 48 to 64 px, h2 32 to 44 px)', where: ['.hero-copy', '.how h2'], claim: 'one clearly dominant element makes the page read as designed' },
   { id: 'rhythm', family: 'composition', name: 'Spacing rhythm and proximity (one scale; tight in groups, generous between)', where: ['.hero', '.how'], claim: 'more, and more deliberate, space reads as premium and calm' },
   { id: 'align', family: 'composition', name: 'Alignment (one container edge, headings on the column, panel on the h1 cap line)', where: ['.site-header', '.how'], claim: 'alignment is the cheapest quality' },
-  { id: 'depth', family: 'composition', name: 'Depth and layering (background band, panel straddling it, notification overlapping)', where: ['.hero'], claim: 'overlap and planes make a hero read as staged, not placed' },
+  { id: 'depth', family: 'composition', name: 'Depth and layering (a darker stage behind the panel, the notification overlapping the panel)', where: ['.hero'], claim: 'overlap and planes make a hero read as staged, not placed' },
   { id: 'accent', family: 'composition', name: 'Accent restraint (accent only on the primary action)', where: ['.hero', '.how'], claim: 'a rare accent creates a focal point (von Restorff)' },
   { id: 'crop', family: 'composition', name: 'Crop for the subject (rim and crema kept, headroom)', where: ['.statement'], claim: 'a crop that respects the subject reads as art-directed' },
   // surface

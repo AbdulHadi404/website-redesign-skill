@@ -1,0 +1,52 @@
+<!doctype html>
+<!-- S12 copy of tools/regress/fixtures/app-traps.html at commit 4e324ca (pinned: the original changed during this stream). -->
+<!--
+  Regression fixture for audit.mjs --kind app (tools/regress.mjs, group "audit"). At 390px it must report:
+  - ✗ "Monospace text rendered": the unstyled <kbd> (browser-default monospace) and the monospace <input> value;
+    not with --allow-mono (then a warning lists them instead)
+  - ✗ "Text past the viewport": the nowrap chip in the one-column grid (1fr is minmax(auto, 1fr)) runs about 40px
+    past a 390px viewport. html and body both clip: with html's overflow not visible, body clips its own box and
+    scrollWidth does not grow, so "Horizontal overflow" and "Phone layout viewport widened" stay silent. (A clip on
+    body alone moves to the viewport: scrollWidth grows and the overflow check names the chip. audit-gutter.html is
+    the other way to get here: html { overflow-y: scroll } with body { overflow-x: hidden }.)
+  - "Text under 12px": the lowercase 11px note, and not the single uppercase 11px label (the product-UI caps rule)
+  - exit code 1 (a page with a fail)
+  Everything else is meant to be clean: contrast, alt, landmarks, one h1, lang.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shift board</title>
+<style>
+  * { box-sizing: border-box; }
+  html { overflow-x: clip; }
+  body { margin: 0; overflow-x: clip; font-family: system-ui, sans-serif; font-size: 16px; line-height: 1.5; color: #1a1a1a; background: #fff; }
+  header, footer { padding: 12px 16px; border-bottom: 1px solid #ccc; }
+  footer { border-top: 1px solid #ccc; border-bottom: 0; }
+  main { padding: 0 16px 24px; }
+  h1 { font-size: 24px; margin: 16px 0 8px; }
+  .hero { display: grid; grid-template-columns: 1fr; gap: 8px; margin: 0 0 16px; }
+  .chip { display: inline-block; padding: 4px 10px; border: 1px solid #555; border-radius: 4px; font-size: 16px; }
+  label { display: block; margin: 12px 0; }
+  input { font-size: 16px; padding: 8px; border: 1px solid #555; border-radius: 4px; width: 12rem; }
+  .meta { display: flex; gap: 12px; align-items: baseline; color: #333; }
+</style>
+</head>
+<body>
+<header>Shift board</header>
+<main>
+  <h1>Night shift</h1>
+  <div class="hero">
+    <span class="chip" style="white-space: nowrap">Line 4 handover: check chiller log before starting</span>
+  </div>
+  <p>Open the command menu with <kbd>Ctrl K</kbd> to jump to a line.</p>
+  <label>Env <input value="ENV_PROD_42" style="font-family: monospace"></label>
+  <div class="meta">
+    <span style="font-size: 11px; text-transform: uppercase">status</span>
+    <span style="font-size: 11px">updated two minutes ago by the night shift</span>
+  </div>
+</main>
+<footer>Plant 2</footer>
+</body>
+</html>

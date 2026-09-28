@@ -1,0 +1,42 @@
+{
+ "url": "http://127.0.0.1:42205/fixtures/bidi-wrap.html",
+ "mode": "as-served",
+ "width": 1280,
+ "summary": {
+  "FAIL": 1,
+  "WARN": 1,
+  "INFO": 0
+ },
+ "mirror": null,
+ "css": {
+  "rules": 21,
+  "physicalRules": 0,
+  "overrideRules": 0,
+  "logicalRules": 0
+ },
+ "keys": [],
+ "icons": [],
+ "findings": [
+  {
+   "level": "FAIL",
+   "check": "bidi",
+   "message": "LTR data shown in scrambled order in RTL text — wrap in <bdi dir=\"ltr\"> or format with Intl",
+   "count": 3,
+   "examples": [
+    "#f-phone: \"+966 50\" reads as \"50 966 +\"",
+    "#f-hours: \"09:00 - 17:00\" reads as \"17 : 00 - 09 : 00\"",
+    "#f-change: \"-4.2%\" reads as \"4 . 2 % -\""
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "bidi",
+   "message": "LTR phrases in RTL text without dir/lang: their punctuation jumps to the other end",
+   "count": 1,
+   "examples": [
+    "#w-para: \"support for help.\""
+   ]
+  }
+ ],
+ "ms": 364
+}

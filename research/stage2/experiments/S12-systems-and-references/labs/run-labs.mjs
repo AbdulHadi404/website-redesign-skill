@@ -79,6 +79,7 @@ const SESSIONS = [
   { id: 'control that answers by scrolling a list (no DOM change)', expect: { dead_click: 0 }, act: async (p) => { await p.click('#more'); } },
   { id: 'truly dead button clicked once', expect: { dead_click: 1 }, act: async (p) => { await p.click('#deadbtn'); } },
   { id: 'truly dead button, then a working button 400 ms later (known limit: the second masks the first)', expect: { dead_click: 0, note: 'true answer 1; PostHog has the same limit' }, act: async (p) => { await p.click('#deadbtn'); await p.waitForTimeout(400); await p.click('#ok'); } },
+  { id: 'truly dead button on a page with a 1.5 s DOM ticker (known limit: background mutations mask it)', q: 'ticker=1', expect: { dead_click: 0, note: 'true answer 1; PostHog has the same limit' }, act: async (p) => { await p.click('#deadbtn'); } },
 ];
 function countLog(log) {
   const c = {};
@@ -102,7 +103,8 @@ async function rum(browser) {
     for (const s of SESSIONS) {
       const once = async () => {
         const page = await browser.newPage();
-        await page.goto(url('rum-lab.html', version === 'v1' ? '?v=1' : ''));
+        const q = [version === 'v1' ? 'v=1' : '', s.q ?? ''].filter(Boolean).join('&');
+        await page.goto(url('rum-lab.html', q ? '?' + q : ''));
         await page.waitForTimeout(200);
         await s.act(page);
         await page.waitForTimeout(2800);
@@ -120,13 +122,15 @@ async function rum(browser) {
 }
 
 // The same snippets injected into three regression fixtures they were not written against
-// (tools/regress/fixtures: a11y-wizard, dashboard, app-traps — none contains a script, so only native
-// behaviour can answer a click: links navigate, labels forward, form controls change; every other
-// clickable-looking element is truly dead). Each visible clickable-looking element is clicked
+// (tools/regress/fixtures: a11y-wizard, dashboard, app-traps). No script in them answers a click (the one
+// script is a ticker), so only native behaviour can answer: links navigate, labels forward, form controls
+// change; every other clickable-looking element is truly dead. Each visible clickable-looking element is clicked
 // (text fields are then typed into), once in its own page ("isolated") and once in a 400 ms sequence
 // on one page ("sequence", the reviewer's probe).
-const FIXTURES = ['a11y-wizard.html', 'dashboard.html', 'app-traps.html'];
-const FX_DIR = new URL('../../../../../tools/regress/fixtures/', import.meta.url);
+// Pinned copies in ./fixtures (the originals changed during this stream): a11y-wizard gained a 1.5 s
+// "saving" ticker, so it is run as committed AND with that one script removed (a11y-wizard-noticker).
+const FIXTURES = ['a11y-wizard-noticker.html', 'a11y-wizard.html', 'dashboard.html', 'app-traps.html'];
+const FX_DIR = new URL('fixtures/', import.meta.url);
 async function fixtures(browser) {
   const wv = await readFile(new URL('../node_modules/web-vitals/dist/web-vitals.attribution.iife.js', here), 'utf8');
   const src = { v1: await readFile(new URL('rum-v1.js', here), 'utf8'), v2: await readFile(new URL('rum.js', here), 'utf8') };

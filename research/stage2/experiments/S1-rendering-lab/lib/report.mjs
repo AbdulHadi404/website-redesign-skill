@@ -59,12 +59,19 @@ export async function writeReport(R, out) {
 
   if (R.presented) {
     L.push('## Frames that reached the screen (compositor), with and without main-thread load', '', R.presented.note, '');
-    L.push(head(['variant', 'N', 'no load: presented fps', 'load 50/100 ms: presented fps']));
+    L.push(head(['variant', 'N', 'no load: presented fps', 'no load: main busy %', 'load 50/100 ms: presented fps']));
     const seen = new Set();
     for (const c of Object.values(R.presented.cells)) {
       const k = `${c.variant}|${c.n}`; if (seen.has(k)) continue; seen.add(k);
-      L.push(row([c.variant, c.n, f(R.presented.cells[`${k}|load0`]?.fps), f(R.presented.cells[`${k}|load50`]?.fps)]));
+      L.push(row([c.variant, c.n, f(R.presented.cells[`${k}|load0`]?.fps), f(R.presented.cells[`${k}|load0`]?.busyPct), f(R.presented.cells[`${k}|load50`]?.fps)]));
     }
+    L.push('');
+  }
+
+  if (R.domProbe) {
+    L.push('## Compositor-driven CSS animations and the main thread (plain divs)', '', R.domProbe.note, '');
+    L.push(head(['mode', 'N', 'style recalcs / s', 'ms each', 'main busy %']));
+    for (const c of Object.values(R.domProbe.cells)) L.push(row([c.mode, c.n, f(c.recalcsPerSec), f(c.msEach, 2), f(c.busyPct)]));
     L.push('');
   }
 

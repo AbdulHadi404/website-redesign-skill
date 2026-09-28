@@ -186,7 +186,7 @@ async function focusHeard(page, t, shown, label) {
     const CTL = 'a[href],button,input,select,textarea,summary,[role=button],[role=link],[role=menuitem],[role=tab],[role=option],[role=checkbox],[role=radio],[role=switch]';
     const pieces = fresh.map((p, i) => ({ segs: p.segs, len: p.own.length, box: uniq.indexOf(boxes[i]), own: f.contains(p.e) || labels.some(l => l.contains(p.e)), bound: bound.some(b => b.contains(p.e)), ctl: !!p.e.closest(CTL) }));
     window.__wcAx = chain;
-    return { pieces, boxes: uniq.map(b => norm(b.innerText).slice(0, 80)), who: who(f), n: chain.length, content: norm(f.innerText), errmsg, mostlyNew: mostlyNew(f), toast: toast ? `${who(layer)} "${norm(layer.innerText).slice(0, 60)}"` : null };
+    return { pieces, boxes: uniq.map(b => { const s = norm(b.innerText); return s.length > 80 ? `${s.slice(0, 79)}…` : s; }), who: who(f), n: chain.length, content: norm(f.innerText), errmsg, mostlyNew: mostlyNew(f), toast: toast ? `${who(layer)} "${norm(layer.innerText).slice(0, 60)}"` : null };
   }, { t, shown, label }).catch(() => null);
   if (!dom) return null;
   // Names and descriptions from Chromium's own accessibility tree (aria-labelledby, <label>, aria-describedby …).
@@ -394,7 +394,7 @@ const tests = {
     await page.waitForTimeout(800);
     const { announced } = await page.evaluate(() => ({ announced: [...new Set(window.__announced)] })).catch(() => ({ announced: [] }));
     // Focus moved to the message itself (a focused error summary, accessibility.md §7.6) announces it too, when what a
-    // screen reader says on that focus carries the new text: see focusHeard() and the header. Focus that stays on the
+    // screen reader says on that focus carries each new message: see focusHeard() and the header. Focus that stays on the
     // re-rendered trigger has not moved.
     const onTrigger = newPage ? false : await loc.evaluate(el => el === document.activeElement, null, { timeout: 1000 }).catch(() => false);
     const heard = onTrigger ? null : await focusHeard(page, newPage ? null : trigger, shown0, label1);
@@ -409,7 +409,7 @@ const tests = {
       const focus = !heard?.who ? `focus did not move to it (focus: ${await active(page)})`
         : heard.wrapper ? `focus moved to ${heard.who}, a box of mostly older text, not to the message itself`
         : `focus moved to ${heard.who}, which reads ${heard.heard ? `only "${heard.heard.slice(0, 80)}"` : 'nothing'}`;
-      if (heard?.partial) r.fail('4.1.3', `Not all announced: focus moved to ${heard.who}, which reads "${heard.heard.slice(0, 80)}", but this other new text is not in a live region and focus does not read it: "${msgs.join(' / ')}"${relabel}`);
+      if (heard?.partial) r.fail('4.1.3', `Not all announced: focus moved to ${heard.who}, which reads "${heard.heard.slice(0, 80)}", but this other new text is not in a live region and focus does not read it: "${msgs.join(' / ')}"${newPage ? '; the trigger loaded a new page' : ''}${relabel}`);
       else r.fail('4.1.3', `Nothing announced${msgs.length ? `; visible message not in a live region, and ${focus}: "${msgs.join(' / ')}"` : ''}${newPage ? '; the trigger loaded a new page, where text already there at load is not announced' : ''}${relabel}`);
     }
     const regionsAtLoad = await page.evaluate(() => document.querySelectorAll('[aria-live]:not([aria-live="off"]),[role=status],[role=alert],[role=log]').length).catch(() => '?');

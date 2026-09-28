@@ -4,17 +4,19 @@
  *
  *   node mobile-check.mjs <url> [--width 390 --height 844] [--insets 59,34,0,0] [--keyboard 336] [--shot shots/x.jpg]
  *
- *  safe-area  env(safe-area-inset-*) emulated through CDP Emulation.setSafeAreaInsetsOverride (top,bottom,left,right;
- *             default iPhone 15/16 portrait 59/34): controls in fixed or sticky bars that end up under the notch/Dynamic
- *             Island or the home indicator; whether the viewport meta has viewport-fit=cover
+ *  safe-area  only when the page opts in with viewport-fit=cover (without it the browser keeps the page inside the safe
+ *             area and env() is 0 on iOS): env(safe-area-inset-*) emulated through CDP Emulation.setSafeAreaInsetsOverride
+ *             (top,bottom,left,right; default iPhone 15/16 portrait 59/34), then controls in fixed or sticky bars that end
+ *             up under the notch/Dynamic Island or the home indicator. The CDP override itself ignores viewport-fit.
  *  targets    controls under 24 px without the 2.5.8 spacing exception; under 44 px on a coarse pointer; small controls
  *             packed closer than 8 px; small controls hugging the screen edge
  *  hover      content revealed only by :hover (rule scan) and invisible on this touch device
  *  pressed    controls with no visible pressed state (:active forced through CDP) and no tap highlight
  *  keyboards  what keyboard each field brings (type + inputmode), and the attribute mistakes (type=number for codes,
  *             no autocomplete, font-size < 16 px so iOS zooms on focus)
- *  keyboard   with the viewport shortened by an on-screen keyboard (resizes-content model): fixed bars that cover the
- *             focused field
+ *  keyboard   only when the page opts in with interactive-widget=resizes-content (Chrome Android 108+, Firefox Android
+ *             133+): the viewport shortened by an on-screen keyboard, then fixed bars that cover the focused field. The
+ *             default (resizes-visual; iOS) leaves fixed bars behind the keyboard and is not modelled here.
  *  thumb      where the primary action and the tab bar sit against a one-handed reach model, drawn over the fold
  *             capture (a heuristic: see THUMB below)
  */
@@ -107,22 +109,28 @@ function judgeInput(i) {
   return { field: i.field, label: i.label, purpose, keyboard: kb, issues };
 }
 
-export async function mobileCheck(browser, url, { width = 390, height = 844, insets = [59, 34, 0, 0], keyboard = 336, shot = null } = {}) {
+// legacy: the first version (insets applied and the keyboard modelled whatever the viewport meta says), for before/after
+export async function mobileCheck(browser, url, { width = 390, height = 844, insets = [59, 34, 0, 0], keyboard = 336, shot = null, legacy = false } = {}) {
   const ctx = await browser.newContext({ viewport: { width, height }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 });
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: 'load' });
   const cdp = await ctx.newCDPSession(page);
-  const [top, bottom, left, right] = insets;
-  await cdp.send('Emulation.setSafeAreaInsetsOverride', { insets: { top, topMax: top, bottom, bottomMax: bottom, left, leftMax: left, right, rightMax: right } });
-  await page.waitForTimeout(150);
   const findings = []; const add = (level, check, message, examples = []) => findings.push({ level, check, message, count: examples.length || undefined, examples: examples.slice(0, 60) });
   const env = await page.evaluate(() => ({ viewportMeta: document.querySelector('meta[name=viewport]')?.content || null, hoverNone: matchMedia('(hover: none)').matches, coarse: matchMedia('(pointer: coarse)').matches }));
-  if (!/viewport-fit\s*=\s*cover/.test(env.viewportMeta || '')) add('WARN', 'safe-area', 'No viewport-fit=cover: iOS keeps content out of the notch in landscape (letterboxed bars) and env() insets stay 0 — decide, and check fixed bars on a device');
+  const cover = /viewport-fit\s*=\s*cover/.test(env.viewportMeta || ''), resizesContent = /interactive-widget\s*=\s*resizes-content/.test(env.viewportMeta || '');
+  env.cover = cover; env.resizesContent = resizesContent;
+  // Without viewport-fit=cover the page lives inside the safe area (iOS: letterboxed in landscape, env() = 0), so there is
+  // nothing to emulate; the CDP override would set env() anyway, which no iPhone does.
+  const applied = cover || legacy ? insets : [0, 0, 0, 0];
+  const [top, bottom, left, right] = applied;
+  if (cover || legacy) { await cdp.send('Emulation.setSafeAreaInsetsOverride', { insets: { top, topMax: top, bottom, bottomMax: bottom, left, leftMax: left, right, rightMax: right } }); await page.waitForTimeout(150); }
+  if (!cover) add(legacy ? 'WARN' : 'INFO', 'safe-area', legacy ? 'No viewport-fit=cover: iOS keeps content out of the notch in landscape (letterboxed bars) and env() insets stay 0 — decide, and check fixed bars on a device'
+    : 'No viewport-fit=cover: the browser keeps the page inside the safe area (letterboxed in landscape; env() insets are 0), so bars cannot sit under the notch or home indicator. Choose cover only for an edge-to-edge design, and then pad bars with env()');
   const C = await page.evaluate(controls);
   const H = height, W = width;
   // safe areas: controls in fixed/sticky bars inside the inset zones
   const under = C.filter((c) => c.fixed && ((c.vy + c.h > H - bottom + 2 && bottom) || (c.vy < top - 2 && top && c.fixedPos))).map((c) => `${c.sel} ${c.vy < top ? `top ${Math.round(top - c.vy)}px under the status bar/island` : `${Math.round(c.vy + c.h - (H - bottom))}px into the home-indicator zone`}`);
-  if (under.length) add('FAIL', 'safe-area', `Controls in fixed/sticky bars inside the safe-area insets (emulated ${top}/${bottom}/${left}/${right})`, under);
+  if (under.length) add('FAIL', 'safe-area', `Controls in fixed/sticky bars inside the safe-area insets (viewport-fit=cover; emulated ${top}/${bottom}/${left}/${right})`, under);
   // targets
   const small = C.filter((c) => !['input', 'textarea', 'select'].includes(c.tag));
   const rects = small.map((c) => ({ ...c, cx: c.x + c.w / 2, cy: c.y + c.h / 2 }));
@@ -168,10 +176,11 @@ export async function mobileCheck(browser, url, { width = 390, height = 844, ins
     const ex = I.flatMap((i) => i.issues.filter(([l]) => l === lvl).map(([, m]) => `${i.field} (${i.label}): ${m}`));
     if (ex.length) add(lvl, 'keyboards', lvl === 'FAIL' ? 'Fields whose type breaks input' : 'Fields that bring the wrong keyboard or miss autofill', ex);
   }
-  // keyboard open (resizes-content model): fixed bars over the focused field
+  // keyboard open (resizes-content model, only when the page asks for it): fixed bars over the focused field
   const covered = [];
-  await page.setViewportSize({ width, height: height - keyboard });
-  for (const i of I) {
+  if (!resizesContent && !legacy) add('INFO', 'keyboard', 'No interactive-widget=resizes-content: the keyboard overlays the page (resizes-visual, the default in Chrome Android and on iOS) and fixed bars stay behind it — check focused fields over a real keyboard on a device');
+  if (resizesContent || legacy) await page.setViewportSize({ width, height: height - keyboard });
+  for (const i of (resizesContent || legacy) ? I : []) {
     const r = await page.evaluate((f) => {
       const el = f.startsWith('#') ? document.querySelector(f) : document.querySelector(`[name="${f}"]`); if (!el) return null;
       el.focus(); el.scrollIntoView({ block: 'nearest' }); const b = el.getBoundingClientRect();
@@ -217,7 +226,7 @@ export async function mobileCheck(browser, url, { width = 390, height = 844, ins
   }
   await ctx.close();
   const summary = { FAIL: findings.filter((f) => f.level === 'FAIL').length, WARN: findings.filter((f) => f.level === 'WARN').length, INFO: findings.filter((f) => f.level === 'INFO').length };
-  return { url, width, height, insets, env, summary, thumb, inputs: I.map(({ field, purpose, keyboard }) => ({ field, purpose, keyboard })), findings };
+  return { url, width, height, insets: applied, env, summary, thumb, inputs: I.map(({ field, purpose, keyboard }) => ({ field, purpose, keyboard })), findings };
 }
 
 export function print(r) {

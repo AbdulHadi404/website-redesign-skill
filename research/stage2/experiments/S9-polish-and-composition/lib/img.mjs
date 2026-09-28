@@ -1,6 +1,7 @@
 // Image helpers: PNG IO, crops, and three difference measures between two captures of the same page.
 //   pm     pixelmatch (threshold 0.1, anti-aliasing ignored), the measure compare.mjs prints: % of pixels
-//   jnd    CIEDE2000 > 2.3 (about one just-noticeable difference) at full resolution: % of pixels
+//   jnd1   CIEDE2000 > 1.0 (about one just-noticeable difference, side by side) at full resolution: % of pixels
+//   jnd    CIEDE2000 > 2.3 (about two JNDs: clearly different side by side) at full resolution: % of pixels
 //   thumb  CIEDE2000 > 2.3 after a 4x box downscale (a thumbnail, roughly what survives a glance): % of pixels
 import { readFile, writeFile } from 'node:fs/promises';
 import { PNG } from 'pngjs';
@@ -74,21 +75,22 @@ export function de2000([L1, a1, b1], [L2, a2, b2]) {
 }
 
 function jndShare(A, B, jnd = 2.3) {
-  let n = 0, sum = 0, changed = 0;
+  let n = 0, n1 = 0, sum = 0, changed = 0;
   const cache = new Map();
   const L = (d, i) => { const k = (d[i] << 16) | (d[i + 1] << 8) | d[i + 2]; let v = cache.get(k); if (!v) { v = lab(d[i], d[i + 1], d[i + 2]); if (cache.size < 2e5) cache.set(k, v); } return v; };
   for (let i = 0; i < A.data.length; i += 4) {
     if (A.data[i] === B.data[i] && A.data[i + 1] === B.data[i + 1] && A.data[i + 2] === B.data[i + 2]) continue;
     changed++;
     const d = de2000(L(A.data, i), L(B.data, i));
+    if (d > 1) n1++;
     if (d > jnd) { n++; sum += d; }
   }
   const px = A.width * A.height;
-  return { jnd: (n / px) * 100, any: (changed / px) * 100, meanDE: n ? sum / n : 0 };
+  return { jnd: (n / px) * 100, jnd1: (n1 / px) * 100, any: (changed / px) * 100, meanDE: n ? sum / n : 0 };
 }
 
 /** Compare two images over their common area. Returns percentages and the bounding box of pixelmatch changes. */
-export function measure(A0, B0, { diffOut } = {}) {
+export function measure(A0, B0, { diffOut, fullRes = true } = {}) {
   const w = Math.min(A0.width, B0.width), h = Math.min(A0.height, B0.height);
   const A = crop(A0, 0, 0, w, h), B = crop(B0, 0, 0, w, h);
   const out = new PNG({ width: w, height: h });
@@ -98,12 +100,12 @@ export function measure(A0, B0, { diffOut } = {}) {
     const i = (y * w + x) * 4;
     if (out.data[i] === 255 && out.data[i + 1] === 0 && out.data[i + 2] === 0) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
   }
-  const full = jndShare(A, B);
+  const full = fullRes ? jndShare(A, B) : { jnd: NaN, jnd1: NaN, any: NaN, meanDE: NaN };
   const k = 4;
   const thumb = jndShare(downscale(A, k), downscale(B, k));
   return {
     size: [w, h], sizeDiffers: A0.width !== B0.width || A0.height !== B0.height ? [[A0.width, A0.height], [B0.width, B0.height]] : undefined,
-    pm: +((n / (w * h)) * 100).toFixed(4), any: +full.any.toFixed(4), jnd: +full.jnd.toFixed(4), meanDE: +full.meanDE.toFixed(2), thumb: +thumb.jnd.toFixed(4),
+    pm: +((n / (w * h)) * 100).toFixed(4), any: +full.any.toFixed(4), jnd1: +full.jnd1.toFixed(4), jnd: +full.jnd.toFixed(4), meanDE: +full.meanDE.toFixed(2), thumb: +thumb.jnd.toFixed(4),
     bbox: x1 >= 0 ? [x0, y0, x1 - x0 + 1, y1 - y0 + 1] : null,
     diff: diffOut ? out : undefined,
   };

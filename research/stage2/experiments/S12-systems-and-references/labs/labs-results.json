@@ -5,28 +5,30 @@
    "case": "scanner 4 ms/key",
    "kind": "scan",
    "runs": 5,
-   "correct": 4,
-   "detectedAsScan": 4,
-   "leakedIntoField": 1,
-   "gapMedian": 10,
-   "gapMax": 146,
+   "correct": 5,
+   "detectedAsScan": 5,
+   "leakedIntoField": 0,
+   "gapMedian": 7,
+   "gapMax": 20,
    "sample": {
-    "scans": [],
-    "value": "4006381333931",
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "",
     "gaps": [
      10,
-     26,
+     7,
+     7,
+     9,
+     6,
      6,
      10,
-     11,
-     57,
-     33,
-     16,
-     17,
-     10,
-     146,
-     9,
-     5
+     6,
+     6,
+     6,
+     6,
+     7,
+     9
     ]
    }
   },
@@ -35,30 +37,30 @@
    "case": "scanner 15 ms/key",
    "kind": "scan",
    "runs": 5,
-   "correct": 2,
-   "detectedAsScan": 2,
-   "leakedIntoField": 3,
-   "gapMedian": 19,
-   "gapMax": 84,
+   "correct": 5,
+   "detectedAsScan": 5,
+   "leakedIntoField": 0,
+   "gapMedian": 18,
+   "gapMax": 39,
    "sample": {
     "scans": [
      "4006381333931"
     ],
     "value": "",
     "gaps": [
-     27,
+     24,
      17,
+     18,
      17,
+     18,
      17,
-     30,
-     23,
+     18,
      17,
-     19,
-     22,
-     28,
+     16,
+     18,
+     18,
      17,
-     22,
-     26
+     17
     ]
    }
   },
@@ -67,29 +69,29 @@
    "case": "scanner 25 ms/key",
    "kind": "scan",
    "runs": 5,
-   "correct": 1,
-   "detectedAsScan": 1,
-   "leakedIntoField": 4,
-   "gapMedian": 31,
-   "gapMax": 284,
+   "correct": 5,
+   "detectedAsScan": 5,
+   "leakedIntoField": 0,
+   "gapMedian": 28,
+   "gapMax": 38,
    "sample": {
     "scans": [
-     "006381333931"
+     "4006381333931"
     ],
-    "value": "4",
+    "value": "",
     "gaps": [
-     284,
-     32,
-     38,
-     28,
-     29,
-     26,
      33,
      27,
-     29,
-     28,
-     29,
      27,
+     28,
+     26,
+     28,
+     30,
+     28,
+     28,
+     27,
+     27,
+     30,
      27
     ]
    }
@@ -102,25 +104,25 @@
    "correct": 0,
    "detectedAsScan": 0,
    "leakedIntoField": 5,
-   "gapMedian": 45,
+   "gapMedian": 44,
    "gapMax": 81,
    "sample": {
     "scans": [],
     "value": "4006381333931",
     "gaps": [
-     53,
+     46,
+     44,
+     44,
+     43,
+     44,
+     44,
+     44,
+     42,
+     42,
+     43,
+     44,
      45,
-     44,
-     44,
-     48,
-     81,
-     48,
-     47,
-     56,
-     44,
-     52,
-     44,
-     56
+     44
     ]
    }
   },
@@ -132,18 +134,18 @@
    "correct": 5,
    "detectedAsScan": 0,
    "leakedIntoField": 0,
-   "gapMedian": 66,
-   "gapMax": 120,
+   "gapMedian": 65,
+   "gapMax": 77,
    "sample": {
     "scans": [],
     "value": "coffee",
     "gaps": [
-     65,
-     66,
-     65,
+     63,
+     64,
+     69,
      64,
      63,
-     66
+     77
     ]
    }
   },
@@ -156,17 +158,17 @@
    "detectedAsScan": 0,
    "leakedIntoField": 0,
    "gapMedian": 95,
-   "gapMax": 122,
+   "gapMax": 102,
    "sample": {
     "scans": [],
     "value": "coffee",
     "gaps": [
-     97,
+     98,
      94,
-     95,
-     110,
-     101,
-     95
+     97,
+     93,
+     94,
+     94
     ]
    }
   },
@@ -178,18 +180,18 @@
    "correct": 5,
    "detectedAsScan": 0,
    "leakedIntoField": 0,
-   "gapMedian": 155,
-   "gapMax": 169,
+   "gapMedian": 157,
+   "gapMax": 183,
    "sample": {
     "scans": [],
     "value": "coffee",
     "gaps": [
-     157,
-     155,
+     163,
      154,
-     155,
-     155,
-     155
+     166,
+     161,
+     156,
+     153
     ]
    }
   },
@@ -201,18 +203,18 @@
    "correct": 5,
    "detectedAsScan": 0,
    "leakedIntoField": 0,
-   "gapMedian": 128,
-   "gapMax": 153,
+   "gapMedian": 130,
+   "gapMax": 170,
    "sample": {
     "scans": [],
     "value": "coffee",
     "gaps": [
-     125,
-     24,
-     133,
-     115,
-     148,
-     125
+     124,
+     31,
+     164,
+     130,
+     164,
+     123
     ]
    }
   },
@@ -224,17 +226,17 @@
    "correct": 5,
    "detectedAsScan": 0,
    "leakedIntoField": 0,
-   "gapMedian": 76,
+   "gapMedian": 77,
    "gapMax": 93,
    "sample": {
     "scans": [],
     "value": "400638",
     "gaps": [
-     78,
-     76,
      75,
-     77,
+     75,
      74,
+     88,
+     90,
      74
     ]
    }
@@ -244,30 +246,30 @@
    "case": "scanner 4 ms/key",
    "kind": "scan",
    "runs": 5,
-   "correct": 4,
-   "detectedAsScan": 4,
-   "leakedIntoField": 1,
-   "gapMedian": 9,
-   "gapMax": 113,
+   "correct": 5,
+   "detectedAsScan": 5,
+   "leakedIntoField": 0,
+   "gapMedian": 7,
+   "gapMax": 70,
    "sample": {
     "scans": [
      "4006381333931"
     ],
     "value": "",
     "gaps": [
-     32,
-     14,
-     28,
-     18,
-     19,
-     8,
-     15,
-     16,
-     46,
+     10,
+     7,
+     7,
      6,
-     37,
-     24,
-     35
+     6,
+     6,
+     6,
+     6,
+     5,
+     9,
+     6,
+     8,
+     22
     ]
    }
   },
@@ -276,30 +278,30 @@
    "case": "scanner 15 ms/key",
    "kind": "scan",
    "runs": 5,
-   "correct": 4,
-   "detectedAsScan": 4,
-   "leakedIntoField": 1,
+   "correct": 5,
+   "detectedAsScan": 5,
+   "leakedIntoField": 0,
    "gapMedian": 19,
-   "gapMax": 98,
+   "gapMax": 47,
    "sample": {
     "scans": [
      "4006381333931"
     ],
     "value": "",
     "gaps": [
-     42,
+     22,
+     47,
+     21,
+     17,
+     17,
+     19,
+     21,
      19,
      17,
-     18,
-     55,
-     22,
-     17,
-     24,
+     34,
      18,
      17,
-     17,
-     18,
-     18
+     17
     ]
    }
   },
@@ -312,26 +314,26 @@
    "detectedAsScan": 5,
    "leakedIntoField": 0,
    "gapMedian": 28,
-   "gapMax": 67,
+   "gapMax": 58,
    "sample": {
     "scans": [
      "4006381333931"
     ],
     "value": "",
     "gaps": [
-     30,
-     27,
-     27,
-     32,
-     27,
+     29,
+     58,
+     28,
+     29,
      28,
      28,
-     41,
-     48,
-     33,
+     27,
      28,
-     41,
-     28
+     29,
+     27,
+     26,
+     29,
+     32
     ]
    }
   },
@@ -340,30 +342,28 @@
    "case": "scanner 40 ms/key",
    "kind": "scan",
    "runs": 5,
-   "correct": 1,
-   "detectedAsScan": 1,
-   "leakedIntoField": 4,
+   "correct": 3,
+   "detectedAsScan": 3,
+   "leakedIntoField": 2,
    "gapMedian": 44,
-   "gapMax": 68,
+   "gapMax": 104,
    "sample": {
-    "scans": [
-     "4006381333931"
-    ],
-    "value": "",
+    "scans": [],
+    "value": "4006381333931",
     "gaps": [
-     45,
-     41,
-     44,
-     42,
-     41,
-     46,
-     42,
-     42,
-     42,
-     42,
-     42,
+     56,
      43,
-     42
+     45,
+     53,
+     47,
+     51,
+     74,
+     104,
+     55,
+     66,
+     48,
+     44,
+     43
     ]
    }
   },
@@ -375,18 +375,18 @@
    "correct": 5,
    "detectedAsScan": 0,
    "leakedIntoField": 0,
-   "gapMedian": 70,
-   "gapMax": 102,
+   "gapMedian": 66,
+   "gapMax": 81,
    "sample": {
     "scans": [],
     "value": "coffee",
     "gaps": [
-     71,
+     65,
+     65,
      64,
-     78,
-     84,
-     71,
-     64
+     65,
+     64,
+     65
     ]
    }
   },
@@ -398,18 +398,18 @@
    "correct": 5,
    "detectedAsScan": 0,
    "leakedIntoField": 0,
-   "gapMedian": 99,
-   "gapMax": 371,
+   "gapMedian": 96,
+   "gapMax": 104,
    "sample": {
     "scans": [],
     "value": "coffee",
     "gaps": [
-     113,
-     97,
+     101,
      95,
-     96,
-     103,
-     94
+     94,
+     102,
+     104,
+     103
     ]
    }
   },
@@ -421,18 +421,18 @@
    "correct": 5,
    "detectedAsScan": 0,
    "leakedIntoField": 0,
-   "gapMedian": 157,
-   "gapMax": 185,
+   "gapMedian": 155,
+   "gapMax": 164,
    "sample": {
     "scans": [],
     "value": "coffee",
     "gaps": [
-     185,
-     162,
-     160,
-     164,
-     160,
-     155
+     155,
+     154,
+     155,
+     154,
+     155,
+     157
     ]
    }
   },
@@ -445,17 +445,17 @@
    "detectedAsScan": 0,
    "leakedIntoField": 0,
    "gapMedian": 126,
-   "gapMax": 177,
+   "gapMax": 168,
    "sample": {
     "scans": [],
     "value": "coffee",
     "gaps": [
-     177,
-     24,
-     139,
-     114,
-     147,
-     123
+     126,
+     25,
+     132,
+     115,
+     148,
+     125
     ]
    }
   },
@@ -468,17 +468,17 @@
    "detectedAsScan": 0,
    "leakedIntoField": 0,
    "gapMedian": 76,
-   "gapMax": 114,
+   "gapMax": 86,
    "sample": {
     "scans": [],
     "value": "400638",
     "gaps": [
-     114,
-     76,
-     75,
-     76,
-     81,
-     77
+     73,
+     72,
+     73,
+     74,
+     73,
+     75
     ]
    }
   },
@@ -491,26 +491,26 @@
    "detectedAsScan": 5,
    "leakedIntoField": 5,
    "gapMedian": 8,
-   "gapMax": 63,
+   "gapMax": 32,
    "sample": {
     "scans": [
      "4006381333931"
     ],
     "value": "4006381333931",
     "gaps": [
-     53,
-     44,
-     12,
-     10,
-     63,
+     9,
      7,
-     11,
-     5,
-     12,
+     7,
+     7,
+     6,
+     13,
+     6,
+     7,
      7,
      6,
      8,
-     7
+     6,
+     12
     ]
    }
   },
@@ -522,27 +522,27 @@
    "correct": 0,
    "detectedAsScan": 5,
    "leakedIntoField": 5,
-   "gapMedian": 18,
-   "gapMax": 51,
+   "gapMedian": 19,
+   "gapMax": 38,
    "sample": {
     "scans": [
      "4006381333931"
     ],
     "value": "4006381333931",
     "gaps": [
+     21,
      18,
+     20,
+     21,
      18,
-     17,
-     25,
-     17,
-     17,
-     18,
+     22,
+     20,
      19,
      18,
-     18,
-     19,
-     18,
-     17
+     23,
+     22,
+     20,
+     19
     ]
    }
   },
@@ -552,25 +552,27 @@
    "kind": "scan",
    "runs": 5,
    "correct": 0,
-   "detectedAsScan": 0,
+   "detectedAsScan": 4,
    "leakedIntoField": 5,
    "gapMedian": 29,
-   "gapMax": 99,
+   "gapMax": 42,
    "sample": {
-    "scans": [],
+    "scans": [
+     "4006381333931"
+    ],
     "value": "4006381333931",
     "gaps": [
-     69,
-     30,
+     32,
      29,
      30,
-     27,
-     27,
      29,
+     29,
+     30,
      28,
-     30,
-     31,
-     27,
+     28,
+     28,
+     37,
+     28,
      28,
      28
     ]
@@ -585,24 +587,24 @@
    "detectedAsScan": 0,
    "leakedIntoField": 5,
    "gapMedian": 44,
-   "gapMax": 91,
+   "gapMax": 53,
    "sample": {
     "scans": [],
     "value": "4006381333931",
     "gaps": [
-     43,
-     49,
-     44,
-     42,
-     43,
-     44,
-     45,
-     44,
-     91,
-     50,
+     46,
      44,
      46,
-     45
+     43,
+     42,
+     50,
+     44,
+     43,
+     48,
+     43,
+     43,
+     44,
+     43
     ]
    }
   },
@@ -615,17 +617,17 @@
    "detectedAsScan": 0,
    "leakedIntoField": 0,
    "gapMedian": 65,
-   "gapMax": 86,
+   "gapMax": 72,
    "sample": {
     "scans": [],
     "value": "coffee",
     "gaps": [
      65,
-     63,
+     64,
+     64,
      65,
-     83,
-     68,
-     64
+     67,
+     67
     ]
    }
   },
@@ -637,18 +639,18 @@
    "correct": 5,
    "detectedAsScan": 0,
    "leakedIntoField": 0,
-   "gapMedian": 95,
-   "gapMax": 122,
+   "gapMedian": 96,
+   "gapMax": 115,
    "sample": {
     "scans": [],
     "value": "coffee",
     "gaps": [
-     100,
-     104,
-     107,
-     94,
+     96,
      95,
-     94
+     95,
+     96,
+     95,
+     95
     ]
    }
   },
@@ -661,17 +663,17 @@
    "detectedAsScan": 0,
    "leakedIntoField": 0,
    "gapMedian": 156,
-   "gapMax": 185,
+   "gapMax": 187,
    "sample": {
     "scans": [],
     "value": "coffee",
     "gaps": [
-     158,
+     163,
+     155,
+     155,
      155,
      154,
-     162,
-     159,
-     155
+     153
     ]
    }
   },
@@ -683,18 +685,18 @@
    "correct": 5,
    "detectedAsScan": 0,
    "leakedIntoField": 0,
-   "gapMedian": 127,
-   "gapMax": 206,
+   "gapMedian": 131,
+   "gapMax": 159,
    "sample": {
     "scans": [],
     "value": "coffee",
     "gaps": [
      126,
-     26,
+     24,
      134,
      115,
-     169,
-     129
+     143,
+     123
     ]
    }
   },
@@ -707,16 +709,16 @@
    "detectedAsScan": 0,
    "leakedIntoField": 0,
    "gapMedian": 75,
-   "gapMax": 133,
+   "gapMax": 102,
    "sample": {
     "scans": [],
     "value": "400638",
     "gaps": [
-     83,
+     77,
+     95,
+     102,
      75,
      74,
-     75,
-     80,
      74
     ]
    }
@@ -724,76 +726,68 @@
  ],
  "rum": [
   {
+   "version": "v2",
    "session": "dead control clicked 4× (150 ms apart)",
    "expect": {
     "rage_click": 1,
     "dead_click": "≥1"
    },
+   "matched": 5,
    "runs": [
     {
-     "inp_max": 8,
+     "inp_max": 0,
      "inp_rating": "good",
      "inp_target": "#dead",
      "rage_click": 1,
-     "dead_click": 4
+     "dead_click": 1
     },
     {
-     "inp_max": 16,
+     "inp_max": 0,
      "inp_rating": "good",
      "inp_target": "#dead",
      "rage_click": 1,
-     "dead_click": 4
-    },
-    {
-     "inp_max": 24,
-     "inp_rating": "good",
-     "inp_target": "#dead",
-     "rage_click": 1,
-     "dead_click": 4
+     "dead_click": 1
     },
     {
      "inp_max": 8,
      "inp_rating": "good",
      "inp_target": "#dead",
      "rage_click": 1,
-     "dead_click": 4
+     "dead_click": 1
     },
     {
-     "inp_max": 72,
+     "inp_max": 0,
      "inp_rating": "good",
      "inp_target": "#dead",
      "rage_click": 1,
-     "dead_click": 4
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 1
     }
    ]
   },
   {
+   "version": "v2",
    "session": "slow pay button clicked 3× while waiting (250 ms apart; answers after 1.5 s)",
    "expect": {
     "rage_click": 1,
     "dead_click": 0
    },
+   "matched": 5,
    "runs": [
     {
-     "inp_max": 8,
+     "inp_max": 16,
      "inp_rating": "good",
      "inp_target": "#slow",
      "rage_click": 1
     },
     {
      "inp_max": 8,
-     "inp_rating": "good",
-     "inp_target": "#slow",
-     "rage_click": 1
-    },
-    {
-     "inp_max": 8,
-     "inp_rating": "good",
-     "inp_target": "#slow",
-     "rage_click": 1
-    },
-    {
-     "inp_max": 40,
      "inp_rating": "good",
      "inp_target": "#slow",
      "rage_click": 1
@@ -803,60 +797,76 @@
      "inp_rating": "good",
      "inp_target": "#slow",
      "rage_click": 1
+    },
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
     }
    ]
   },
   {
+   "version": "v2",
    "session": "double-click a word in a paragraph",
    "expect": {
     "rage_click": 0,
     "dead_click": 0
    },
+   "matched": 5,
    "runs": [
-    {
-     "inp_max": 8,
-     "inp_rating": "good",
-     "inp_target": "#para"
-    },
-    {
-     "inp_max": 8,
-     "inp_rating": "good",
-     "inp_target": "#para"
-    },
-    {
-     "inp_max": 8,
-     "inp_rating": "good",
-     "inp_target": "#para"
-    },
     {
      "inp_max": 0,
      "inp_rating": "good",
      "inp_target": "#para"
     },
     {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
      "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
      "inp_rating": "good",
      "inp_target": "#para"
     }
    ]
   },
   {
+   "version": "v2",
    "session": "triple-click to select a paragraph",
    "expect": {
     "rage_click": 0,
     "dead_click": 0,
     "triple_click_select": 1
    },
+   "matched": 5,
    "runs": [
     {
      "triple_click_select": 1,
-     "inp_max": 8,
+     "inp_max": 16,
      "inp_rating": "good",
      "inp_target": "#para"
     },
     {
      "triple_click_select": 1,
-     "inp_max": 8,
+     "inp_max": 16,
      "inp_rating": "good",
      "inp_target": "#para"
     },
@@ -881,24 +891,26 @@
    ]
   },
   {
+   "version": "v2",
    "session": "working button clicked once",
    "expect": {
     "rage_click": 0,
     "dead_click": 0
    },
+   "matched": 5,
    "runs": [
     {
-     "inp_max": 16,
+     "inp_max": 8,
      "inp_rating": "good",
      "inp_target": "#ok"
     },
     {
-     "inp_max": 16,
+     "inp_max": 8,
      "inp_rating": "good",
      "inp_target": "#ok"
     },
     {
-     "inp_max": 16,
+     "inp_max": 0,
      "inp_rating": "good",
      "inp_target": "#ok"
     },
@@ -915,11 +927,13 @@
    ]
   },
   {
+   "version": "v2",
    "session": "janky handler (350 ms busy loop)",
    "expect": {
     "inp_over_200ms": 1,
     "inp_target": "#jank"
    },
+   "matched": 5,
    "runs": [
     {
      "inp_max": 360,
@@ -928,7 +942,581 @@
      "inp_target": "#jank"
     },
     {
+     "inp_max": 432,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
      "inp_max": 352,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 360,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 384,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "handler that throws",
+   "expect": {
+    "js_error": 1
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "js_error": 1,
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "rage: dead control clicked 3× 600 ms apart (PostHog rule: each < 1 s after the previous)",
+   "expect": {
+    "rage_click": 1
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 2
+    },
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 2
+    },
+    {
+     "inp_max": 48,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 2
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 2
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 2
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "click an email field and type",
+   "expect": {
+    "dead_click": 0,
+    "rage_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#email"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#email"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#email"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#email"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#email"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "click the label of the email field",
+   "expect": {
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "toggle a checkbox",
+   "expect": {
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#agree"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "control that answers by scrolling a list (no DOM change)",
+   "expect": {
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#more"
+    },
+    {
+     "inp_max": 32,
+     "inp_rating": "good",
+     "inp_target": "#more"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#more"
+    },
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#more"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#more"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "truly dead button clicked once",
+   "expect": {
+    "dead_click": 1
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "truly dead button, then a working button 400 ms later (known limit: the second masks the first)",
+   "expect": {
+    "dead_click": 0,
+    "note": "true answer 1; PostHog has the same limit"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "truly dead button on a page with a 1.5 s DOM ticker (known limit: background mutations mask it)",
+   "expect": {
+    "dead_click": 0,
+    "note": "true answer 1; PostHog has the same limit"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "dead control clicked 4× (150 ms apart)",
+   "expect": {
+    "rage_click": 1,
+    "dead_click": "≥1"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    },
+    {
+     "inp_max": 32,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "slow pay button clicked 3× while waiting (250 ms apart; answers after 1.5 s)",
+   "expect": {
+    "rage_click": 1,
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "double-click a word in a paragraph",
+   "expect": {
+    "rage_click": 0,
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "triple-click to select a paragraph",
+   "expect": {
+    "rage_click": 0,
+    "dead_click": 0,
+    "triple_click_select": 1
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "triple_click_select": 1,
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 32,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "working button clicked once",
+   "expect": {
+    "rage_click": 0,
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 112,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "janky handler (350 ms busy loop)",
+   "expect": {
+    "inp_over_200ms": 1,
+    "inp_target": "#jank"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 368,
      "inp_rating": "needs-improvement",
      "inp_over_200ms": 1,
      "inp_target": "#jank"
@@ -940,7 +1528,13 @@
      "inp_target": "#jank"
     },
     {
-     "inp_max": 352,
+     "inp_max": 360,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 360,
      "inp_rating": "needs-improvement",
      "inp_over_200ms": 1,
      "inp_target": "#jank"
@@ -954,14 +1548,28 @@
    ]
   },
   {
+   "version": "v1",
    "session": "handler that throws",
    "expect": {
     "js_error": 1
    },
+   "matched": 5,
    "runs": [
     {
      "js_error": 1,
-     "inp_max": 16,
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 24,
      "inp_rating": "good",
      "inp_target": "#boom"
     },
@@ -973,27 +1581,594 @@
     },
     {
      "js_error": 1,
-     "inp_max": 8,
-     "inp_rating": "good",
-     "inp_target": "#boom"
-    },
-    {
-     "js_error": 1,
-     "inp_max": 16,
-     "inp_rating": "good",
-     "inp_target": "#boom"
-    },
-    {
-     "js_error": 1,
-     "inp_max": 0,
+     "inp_max": 24,
      "inp_rating": "good",
      "inp_target": "#boom"
     }
    ]
+  },
+  {
+   "version": "v1",
+   "session": "rage: dead control clicked 3× 600 ms apart (PostHog rule: each < 1 s after the previous)",
+   "expect": {
+    "rage_click": 1
+   },
+   "matched": 0,
+   "runs": [
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "dead_click": 3
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "dead_click": 3
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "dead_click": 3
+    },
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "dead_click": 3
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "dead_click": 3
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "click an email field and type",
+   "expect": {
+    "dead_click": 0,
+    "rage_click": 0
+   },
+   "matched": 0,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#email",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#email",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#email",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#email",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#email",
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "click the label of the email field",
+   "expect": {
+    "dead_click": 0
+   },
+   "matched": 0,
+   "runs": [
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label",
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "toggle a checkbox",
+   "expect": {
+    "dead_click": 0
+   },
+   "matched": 0,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#agree",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree",
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "control that answers by scrolling a list (no DOM change)",
+   "expect": {
+    "dead_click": 0
+   },
+   "matched": 0,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#more",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#more",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#more",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#more",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#more",
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "truly dead button clicked once",
+   "expect": {
+    "dead_click": 1
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "truly dead button, then a working button 400 ms later (known limit: the second masks the first)",
+   "expect": {
+    "dead_click": 0,
+    "note": "true answer 1; PostHog has the same limit"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "truly dead button on a page with a 1.5 s DOM ticker (known limit: background mutations mask it)",
+   "expect": {
+    "dead_click": 0,
+    "note": "true answer 1; PostHog has the same limit"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    }
+   ]
   }
  ],
+ "rumFixtures": {
+  "a11y-wizard-noticker.html": {
+   "candidates": [
+    "a: responds",
+    "a: responds",
+    "h1: not an affordance",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "label: responds",
+    "input[file]: responds",
+    "label: responds",
+    "input[file]: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "select: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "select: responds",
+    "label: responds",
+    "select: responds"
+   ],
+   "isolated": {
+    "v1": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "deadReportedOnDead": 0,
+     "falseDeadOnResponding": [
+      "h1",
+      "label",
+      "input[file]",
+      "label",
+      "input[file]",
+      "label",
+      "input",
+      "label",
+      "select",
+      "label",
+      "input",
+      "label",
+      "input",
+      "label",
+      "input",
+      "label",
+      "select",
+      "label",
+      "select"
+     ],
+     "missedDead": [],
+     "otherEvents": []
+    },
+    "v2": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "deadReportedOnDead": 0,
+     "falseDeadOnResponding": [],
+     "missedDead": [],
+     "otherEvents": []
+    }
+   },
+   "sequence": {
+    "v1": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "events": [
+      "dead_click #cor-country",
+      "dead_click #cor-country"
+     ]
+    },
+    "v2": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "events": [
+      "rage_click #step-check > dl > div.row > dd.act > a"
+     ]
+    }
+   }
+  },
+  "a11y-wizard.html": {
+   "candidates": [
+    "a: responds",
+    "a: responds",
+    "h1: not an affordance",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "label: responds",
+    "input[file]: responds",
+    "label: responds",
+    "input[file]: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "select: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "select: responds",
+    "label: responds",
+    "select: responds"
+   ],
+   "isolated": {
+    "v1": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "deadReportedOnDead": 0,
+     "falseDeadOnResponding": [],
+     "missedDead": [],
+     "otherEvents": []
+    },
+    "v2": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "deadReportedOnDead": 0,
+     "falseDeadOnResponding": [],
+     "missedDead": [],
+     "otherEvents": []
+    }
+   },
+   "sequence": {
+    "v1": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "events": []
+    },
+    "v2": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "events": [
+      "rage_click #step-check > dl > div.row > dd.act > a"
+     ]
+    }
+   }
+  },
+  "dashboard.html": {
+   "candidates": [
+    "div: dead",
+    "div: dead",
+    "div: dead",
+    "div: dead",
+    "button: dead",
+    "button: dead",
+    "button: dead",
+    "td: dead",
+    "td: dead",
+    "td: dead",
+    "input: responds"
+   ],
+   "isolated": {
+    "v1": {
+     "clicked": 11,
+     "trulyDead": 10,
+     "deadReportedOnDead": 10,
+     "falseDeadOnResponding": [
+      "input"
+     ],
+     "missedDead": [],
+     "otherEvents": []
+    },
+    "v2": {
+     "clicked": 11,
+     "trulyDead": 10,
+     "deadReportedOnDead": 10,
+     "falseDeadOnResponding": [],
+     "missedDead": [],
+     "otherEvents": []
+    }
+   },
+   "sequence": {
+    "v1": {
+     "clicked": 11,
+     "trulyDead": 10,
+     "events": [
+      "dead_click div.side > div.item",
+      "dead_click main > div.row > div.card > input"
+     ]
+    },
+    "v2": {
+     "clicked": 11,
+     "trulyDead": 10,
+     "events": [
+      "dead_click div.side > div.item",
+      "dead_click div.side > div.item",
+      "dead_click div.side > div.item",
+      "rage_click main > div.top > div > button.iconbtn",
+      "dead_click div.side > div.item",
+      "dead_click main > div.top > div > button.iconbtn",
+      "dead_click main > div.top > div > button.iconbtn",
+      "dead_click main > div.top > div > button.iconbtn",
+      "dead_click main > div.row > div.card > table > tbody > tr > td.rowact",
+      "dead_click main > div.row > div.card > table > tbody > tr > td.rowact",
+      "dead_click main > div.row > div.card > table > tbody > tr > td.rowact"
+     ]
+    }
+   }
+  },
+  "app-traps.html": {
+   "candidates": [
+    "label: responds",
+    "input: responds"
+   ],
+   "isolated": {
+    "v1": {
+     "clicked": 2,
+     "trulyDead": 0,
+     "deadReportedOnDead": 0,
+     "falseDeadOnResponding": [
+      "label",
+      "input"
+     ],
+     "missedDead": [],
+     "otherEvents": []
+    },
+    "v2": {
+     "clicked": 2,
+     "trulyDead": 0,
+     "deadReportedOnDead": 0,
+     "falseDeadOnResponding": [],
+     "missedDead": [],
+     "otherEvents": []
+    }
+   },
+   "sequence": {
+    "v1": {
+     "clicked": 2,
+     "trulyDead": 0,
+     "events": [
+      "dead_click main > label > input",
+      "dead_click main > label > input"
+     ]
+    },
+    "v2": {
+     "clicked": 2,
+     "trulyDead": 0,
+     "events": []
+    }
+   }
+  }
+ },
  "sizes": {
-  "rumSnippetGzipBytes": 1852,
+  "rumSnippetGzipBytes": 2962,
+  "rumV1SnippetGzipBytes": 1925,
   "webVitalsAttributionGzipBytes": 5465,
   "webVitalsVersion": "6.2.2"
  },

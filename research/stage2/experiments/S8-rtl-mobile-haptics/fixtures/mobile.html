@@ -3,9 +3,13 @@
 <head>
 <meta charset="utf-8">
 <script>
-  // ?variant=broken → the same screen with the mobile mistakes the checker should find
-  window.BROKEN = new URLSearchParams(location.search).get('variant') === 'broken';
-  document.write(BROKEN ? '<meta name="viewport" content="width=device-width, initial-scale=1">' : '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">');
+  // ?variant=broken → the same screen with the mobile mistakes the checker should find. Both variants carry the same
+  // viewport meta (edge-to-edge, keyboard resizes the layout); the broken CSS never pads for the insets or the keyboard.
+  // &meta=plain → the broken screen without viewport-fit=cover / interactive-widget: the browser then keeps the page
+  // inside the safe area and overlays the keyboard, so those two checks have nothing to say.
+  const q = new URLSearchParams(location.search);
+  window.BROKEN = q.get('variant') === 'broken';
+  document.write(q.get('meta') === 'plain' ? '<meta name="viewport" content="width=device-width, initial-scale=1">' : '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">');
   document.write(`<link rel="stylesheet" href="/fixtures/mobile${BROKEN ? '-broken' : ''}.css">`);
 </script>
 <title>Product · Mobile fixture</title>

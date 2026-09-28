@@ -1,0 +1,18 @@
+{
+  "name": "s11-loading-tiers-offmain",
+  "private": true,
+  "type": "module",
+  "description": "Stage-2 stream S11: device tiers, loading strategies, off-main-thread work. `node run.mjs` rebuilds fixtures and re-measures everything into results.json.",
+  "scripts": {
+    "all": "node run.mjs"
+  },
+  "dependencies": {
+    "@mdn/browser-compat-data": "latest",
+    "@pmndrs/detect-gpu": "^6.0.24",
+    "blurhash": "latest",
+    "comlink": "latest",
+    "esbuild": "latest",
+    "sharp": "latest",
+    "thumbhash": "latest"
+  }
+}

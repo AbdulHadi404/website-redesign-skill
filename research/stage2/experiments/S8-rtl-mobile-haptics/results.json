@@ -1,5 +1,5 @@
 {
- "date": "2026-09-28T23:09:46.102Z",
+ "date": "2026-09-28T23:55:42.514Z",
  "chromium": "141.0.7390.37",
  "node": "v22.22.2",
  "parts": {
@@ -4903,6 +4903,1358 @@
      "WARN keyboards: 6"
     ],
     "ms": 941
+   }
+  },
+  "icons": {
+   "codexIcons": 293,
+   "codexFlip": 89,
+   "codexRtlAsset": 10,
+   "flutterBase": 2233,
+   "flutterBaseMirror": 76,
+   "mirrorKeys": 161,
+   "mirrorBoth": 4
+  },
+  "oos": {
+   "rtl": {
+    "bs-album-rtl": {
+     "mode": "as-served",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 0,
+       "INFO": 2
+      },
+      "failExamples": 0,
+      "failByCheck": {},
+      "ms": 568
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 0,
+       "INFO": 2
+      },
+      "failExamples": 0,
+      "failByCheck": {},
+      "ms": 346,
+      "fails": []
+     }
+    },
+    "bs-blog-rtl": {
+     "mode": "as-served",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 1,
+       "INFO": 2
+      },
+      "failExamples": 6,
+      "failByCheck": {
+       "arabic": 6
+      },
+      "ms": 341
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 2,
+       "WARN": 0,
+       "INFO": 2
+      },
+      "failExamples": 8,
+      "failByCheck": {
+       "icons": 2,
+       "arabic": 6
+      },
+      "ms": 394,
+      "fails": [
+       {
+        "check": "icons",
+        "example": "bi #chevron-right in \"أكمل القراءة\"",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "icons",
+        "example": "bi #chevron-right in \"أكمل القراءة\"",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "arabic",
+        "example": "h1.display-4.fst-italic (italic)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "arabic",
+        "example": "h3.pb-4.mb-4 (italic)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "arabic",
+        "example": "h4.fst-italic (italic)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "arabic",
+        "example": "h4.fst-italic (italic)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "arabic",
+        "example": "h4.fst-italic (italic)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "arabic",
+        "example": "h4.fst-italic (italic)",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    },
+    "bs-carousel-rtl": {
+     "mode": "as-served",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 0,
+       "INFO": 2
+      },
+      "failExamples": 1,
+      "failByCheck": {
+       "bidi": 1
+      },
+      "ms": 310
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 0,
+       "INFO": 2
+      },
+      "failExamples": 1,
+      "failByCheck": {
+       "bidi": 1
+      },
+      "ms": 299,
+      "fails": [
+       {
+        "check": "bidi",
+        "example": "p: \"© 2017–2026 Company, Inc. ·\" reads as \"· . Company , Inc 2026 – 2017 ©\"",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    },
+    "bs-album-flip": {
+     "mode": "flip",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 2,
+       "INFO": 1
+      },
+      "failExamples": 2,
+      "failByCheck": {
+       "mirror": 2
+      },
+      "ms": 764
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 2,
+       "INFO": 1
+      },
+      "failExamples": 2,
+      "failByCheck": {
+       "mirror": 2
+      },
+      "ms": 886,
+      "fails": [
+       {
+        "check": "mirror",
+        "example": "a.navbar-brand.d-flex (16 px off) — margin-left 0px / right 16px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "p.float-end.mb-1 (1025 px off) — float right",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    },
+    "bs-carousel-flip": {
+     "mode": "flip",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 2,
+       "WARN": 2,
+       "INFO": 1
+      },
+      "failExamples": 11,
+      "failByCheck": {
+       "mirror": 9,
+       "align": 2
+      },
+      "ms": 491
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 2,
+       "WARN": 3,
+       "INFO": 1
+      },
+      "failExamples": 10,
+      "failByCheck": {
+       "mirror": 8,
+       "align": 2
+      },
+      "ms": 767,
+      "fails": [
+       {
+        "check": "mirror",
+        "example": "a.navbar-brand (16 px off) — margin-left 0px / right 16px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.nav-item (640 px off) — parent ul.navbar-nav.me-auto: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.nav-item (640 px off) — parent ul.navbar-nav.me-auto: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.nav-item (640 px off) — parent ul.navbar-nav.me-auto: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "a.btn.btn-lg (723 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "button.carousel-control-prev (1088 px off) — left 0px / right 1088px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "button.carousel-control-next (1088 px off) — left 1088px / right 0px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "p.float-end (1025 px off) — float right",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "align",
+        "example": "h1",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "align",
+        "example": "p.opacity-75",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    },
+    "bs-sidebars-flip": {
+     "mode": "flip",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 2,
+       "INFO": 1
+      },
+      "failExamples": 28,
+      "failByCheck": {
+       "mirror": 28
+      },
+      "ms": 3980
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 3,
+       "INFO": 1
+      },
+      "failExamples": 24,
+      "failByCheck": {
+       "mirror": 24
+      },
+      "ms": 4528,
+      "fails": [
+       {
+        "check": "mirror",
+        "example": "a.d-flex.align-items-center (108 px off) — margin-left 0px / right 108.281px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "a.d-flex.align-items-center (108 px off) — margin-left 0px / right 108.281px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (32 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (32 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (32 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (32 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "svg.bi.pe-none (32 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "button.btn.btn-toggle (40 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "a.link-body-emphasis.d-inline-flex (60 px off) — margin-left 20px / right 0px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "a.link-body-emphasis.d-inline-flex (60 px off) — margin-left 20px / right 0px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "a.link-body-emphasis.d-inline-flex (60 px off) — margin-left 20px / right 0px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "button.btn.btn-toggle (40 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "button.btn.btn-toggle (40 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "button.btn.btn-toggle (40 px off)",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    },
+    "govsa-flip": {
+     "mode": "flip",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 2,
+       "WARN": 2,
+       "INFO": 1
+      },
+      "failExamples": 46,
+      "failByCheck": {
+       "mirror": 43,
+       "arabic": 3
+      },
+      "ms": 2472
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 3,
+       "INFO": 1
+      },
+      "failExamples": 38,
+      "failByCheck": {
+       "mirror": 38
+      },
+      "ms": 3306,
+      "fails": [
+       {
+        "check": "mirror",
+        "example": "div.govsa-header__search__container (24 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "img (24 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "input (57 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "input (22 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "span.govsa-checkbox__checkmark (114 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "input.govsa-input-checkbox (19 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "span.govsa-radio__checkmark (144 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "#customSwitches (243 px off) — left 0px / right 242.5px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "div.col-7.govsa-card__tag (113 px off) — float left",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "div.col-7.govsa-card__tag (125 px off) — float left",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "div.col-7.govsa-card__tag (113 px off) — float left",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "div.col-7.govsa-card__tag (113 px off) — float left",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item (40 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item (40 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item.active-page (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item.disabled (40 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item (40 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item.active-page (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item.disabled (40 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item (40 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item.active-page (43 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item (46 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.page-item (46 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "#carouselExampleIndicators (192 px off) — margin-left 192.328px / right 0px",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "i.govsa-icon.govsa--Color (219 px off) — float right",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "i.govsa-icon.govsa--Color (219 px off) — float right",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "i.govsa-icon.govsa--Color (219 px off) — float right",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "i.govsa-icon.govsa--Color (219 px off) — float right",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "li.nav-item.govsa-tab--active (40 px off) — parent ul.nav.nav-tabs: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "div.text-center (927 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "div.text-center (33 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "div.text-center (959 px off)",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    },
+    "govsa-rtl": {
+     "mode": "as-served",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 2,
+       "WARN": 1,
+       "INFO": 2
+      },
+      "failExamples": 56,
+      "failByCheck": {
+       "bidi": 53,
+       "arabic": 3
+      },
+      "ms": 766
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 1,
+       "INFO": 2
+      },
+      "failExamples": 1,
+      "failByCheck": {
+       "bidi": 1
+      },
+      "ms": 774,
+      "fails": [
+       {
+        "check": "bidi",
+        "example": "span: \"60% of vistors said yes from 2843 Feedba\" reads as \"of vistors said yes from 2843 Feedback 60 %\"",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    },
+    "regress-parity-new": {
+     "mode": "as-served",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 0,
+       "INFO": 0
+      },
+      "failExamples": 0,
+      "failByCheck": {},
+      "ms": 432
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 0,
+       "INFO": 0
+      },
+      "failExamples": 0,
+      "failByCheck": {},
+      "ms": 425,
+      "fails": []
+     }
+    },
+    "regress-parity-old": {
+     "mode": "as-served",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 0,
+       "INFO": 0
+      },
+      "failExamples": 1,
+      "failByCheck": {
+       "bidi": 1
+      },
+      "ms": 195
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 0,
+       "INFO": 0
+      },
+      "failExamples": 1,
+      "failByCheck": {
+       "bidi": 1
+      },
+      "ms": 253,
+      "fails": [
+       {
+        "check": "bidi",
+        "example": "span: \"+12.4%\" reads as \"% 12 . 4 +\"",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    },
+    "regress-capture-reach-rtl": {
+     "mode": "as-served",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 0,
+       "INFO": 0
+      },
+      "failExamples": 0,
+      "failByCheck": {},
+      "ms": 323
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 0,
+       "INFO": 0
+      },
+      "failExamples": 0,
+      "failByCheck": {},
+      "ms": 215,
+      "fails": []
+     }
+    },
+    "regress-audit-numbers": {
+     "mode": "as-served",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 0,
+       "INFO": 1
+      },
+      "failExamples": 0,
+      "failByCheck": {},
+      "ms": 243
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 0,
+       "INFO": 1
+      },
+      "failExamples": 0,
+      "failByCheck": {},
+      "ms": 230,
+      "fails": []
+     }
+    },
+    "regress-govuk-flip": {
+     "mode": "flip",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 3,
+       "WARN": 3,
+       "INFO": 0
+      },
+      "failExamples": 8,
+      "failByCheck": {
+       "mirror": 2,
+       "align": 4,
+       "bidi": 2
+      },
+      "ms": 464
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 2,
+       "WARN": 3,
+       "INFO": 0
+      },
+      "failExamples": 6,
+      "failByCheck": {
+       "mirror": 2,
+       "align": 4
+      },
+      "ms": 542,
+      "fails": [
+       {
+        "check": "mirror",
+        "example": "span.govuk-header__logotype (10 px off)",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "mirror",
+        "example": "div.govuk-grid-column-two-thirds (330 px off) — float left",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "align",
+        "example": "caption.govuk-table__caption.govuk-table__caption--m",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "align",
+        "example": "th.govuk-table__header",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "align",
+        "example": "th.govuk-table__header",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "align",
+        "example": "th.govuk-table__header",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    },
+    "regress-dashboard-flip": {
+     "mode": "flip",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 2,
+       "WARN": 2,
+       "INFO": 1
+      },
+      "failExamples": 10,
+      "failByCheck": {
+       "mirror": 3,
+       "align": 7
+      },
+      "ms": 446
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 3,
+       "INFO": 1
+      },
+      "failExamples": 7,
+      "failByCheck": {
+       "align": 7
+      },
+      "ms": 523,
+      "fails": [
+       {
+        "check": "align",
+        "example": "th",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "align",
+        "example": "th",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "align",
+        "example": "th",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "align",
+        "example": "th",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "align",
+        "example": "th",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "align",
+        "example": "th",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "align",
+        "example": "th",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    },
+    "regress-app-traps-flip": {
+     "mode": "flip",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 0,
+       "INFO": 0
+      },
+      "failExamples": 0,
+      "failByCheck": {},
+      "ms": 408
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 0,
+       "INFO": 0
+      },
+      "failExamples": 0,
+      "failByCheck": {},
+      "ms": 398,
+      "fails": []
+     }
+    },
+    "aegov-tabs": {
+     "mode": "as-served",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 0,
+       "INFO": 0
+      },
+      "failExamples": 1,
+      "failByCheck": {
+       "keys": 1
+      },
+      "ms": 219
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 0,
+       "INFO": 0
+      },
+      "failExamples": 1,
+      "failByCheck": {
+       "keys": 1
+      },
+      "ms": 228,
+      "fails": [
+       {
+        "check": "keys",
+        "example": "tablist \"aegov\"",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    },
+    "bidi-wrap": {
+     "mode": "as-served",
+     "firstVersion": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 0,
+       "INFO": 0
+      },
+      "failExamples": 7,
+      "failByCheck": {
+       "bidi": 7
+      },
+      "ms": 360
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 1,
+       "INFO": 0
+      },
+      "failExamples": 3,
+      "failByCheck": {
+       "bidi": 3
+      },
+      "ms": 364,
+      "fails": [
+       {
+        "check": "bidi",
+        "example": "#f-phone: \"+966 50\" reads as \"50 966 +\"",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "bidi",
+        "example": "#f-hours: \"09:00 - 17:00\" reads as \"17 : 00 - 09 : 00\"",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "bidi",
+        "example": "#f-change: \"-4.2%\" reads as \"4 . 2 % -\"",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    }
+   },
+   "mobile": {
+    "regress-govuk": {
+     "firstVersion": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 1,
+       "INFO": 1
+      },
+      "env": {
+       "cover": true,
+       "resizesContent": false
+      },
+      "findings": [
+       "WARN targets: 4",
+       "INFO targets: 4"
+      ],
+      "failExamples": 0
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 1,
+       "INFO": 2
+      },
+      "env": {
+       "cover": true,
+       "resizesContent": false
+      },
+      "findings": [
+       "WARN targets: 4",
+       "INFO targets: 4",
+       "INFO keyboard: "
+      ],
+      "failExamples": 0,
+      "fails": []
+     }
+    },
+    "regress-dashboard": {
+     "firstVersion": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 4,
+       "INFO": 1
+      },
+      "env": {
+       "cover": false,
+       "resizesContent": false
+      },
+      "findings": [
+       "WARN safe-area: ",
+       "FAIL targets: 2",
+       "WARN targets: 3",
+       "WARN targets: 3",
+       "INFO targets: 1",
+       "WARN keyboards: 1"
+      ],
+      "failExamples": 2
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 3,
+       "INFO": 3
+      },
+      "env": {
+       "cover": false,
+       "resizesContent": false
+      },
+      "findings": [
+       "INFO safe-area: ",
+       "FAIL targets: 2",
+       "WARN targets: 3",
+       "WARN targets: 3",
+       "INFO targets: 1",
+       "WARN keyboards: 1",
+       "INFO keyboard: "
+      ],
+      "failExamples": 2,
+      "fails": [
+       {
+        "check": "targets",
+        "example": "button.iconbtn 18×18",
+        "verdict": "unlabelled"
+       },
+       {
+        "check": "targets",
+        "example": "button.iconbtn 18×18",
+        "verdict": "unlabelled"
+       }
+      ]
+     }
+    },
+    "regress-app-traps": {
+     "firstVersion": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 1,
+       "INFO": 0
+      },
+      "env": {
+       "cover": false,
+       "resizesContent": false
+      },
+      "findings": [
+       "WARN safe-area: "
+      ],
+      "failExamples": 0
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 0,
+       "INFO": 2
+      },
+      "env": {
+       "cover": false,
+       "resizesContent": false
+      },
+      "findings": [
+       "INFO safe-area: ",
+       "INFO keyboard: "
+      ],
+      "failExamples": 0,
+      "fails": []
+     }
+    },
+    "bs-album-rtl": {
+     "firstVersion": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 4,
+       "INFO": 1
+      },
+      "env": {
+       "cover": false,
+       "resizesContent": false
+      },
+      "findings": [
+       "WARN safe-area: ",
+       "WARN targets: 22",
+       "WARN targets: 20",
+       "INFO targets: 13",
+       "WARN pressed: 5"
+      ],
+      "failExamples": 0
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 3,
+       "INFO": 3
+      },
+      "env": {
+       "cover": false,
+       "resizesContent": false
+      },
+      "findings": [
+       "INFO safe-area: ",
+       "WARN targets: 22",
+       "WARN targets: 20",
+       "INFO targets: 13",
+       "WARN pressed: 5",
+       "INFO keyboard: "
+      ],
+      "failExamples": 0,
+      "fails": []
+     }
+    },
+    "bs-offcanvas-navbar": {
+     "firstVersion": {
+      "summary": {
+       "FAIL": 1,
+       "WARN": 4,
+       "INFO": 1
+      },
+      "env": {
+       "cover": false,
+       "resizesContent": false
+      },
+      "findings": [
+       "WARN safe-area: ",
+       "FAIL safe-area: 2",
+       "WARN targets: 7",
+       "WARN targets: 9",
+       "INFO targets: 7",
+       "WARN pressed: 16"
+      ],
+      "failExamples": 2
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 3,
+       "INFO": 3
+      },
+      "env": {
+       "cover": false,
+       "resizesContent": false
+      },
+      "findings": [
+       "INFO safe-area: ",
+       "WARN targets: 7",
+       "WARN targets: 9",
+       "INFO targets: 7",
+       "WARN pressed: 16",
+       "INFO keyboard: "
+      ],
+      "failExamples": 0,
+      "fails": []
+     }
+    },
+    "govsa": {
+     "firstVersion": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 5,
+       "INFO": 1
+      },
+      "env": {
+       "cover": false,
+       "resizesContent": false
+      },
+      "findings": [
+       "WARN safe-area: ",
+       "WARN targets: 164",
+       "WARN targets: 100",
+       "INFO targets: 49",
+       "WARN pressed: 24",
+       "WARN keyboards: 9"
+      ],
+      "failExamples": 0
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 4,
+       "INFO": 3
+      },
+      "env": {
+       "cover": false,
+       "resizesContent": false
+      },
+      "findings": [
+       "INFO safe-area: ",
+       "WARN targets: 164",
+       "WARN targets: 100",
+       "INFO targets: 49",
+       "WARN pressed: 24",
+       "WARN keyboards: 9",
+       "INFO keyboard: "
+      ],
+      "failExamples": 0,
+      "fails": []
+     }
+    },
+    "regress-parity-new": {
+     "firstVersion": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 2,
+       "INFO": 0
+      },
+      "env": {
+       "cover": false,
+       "resizesContent": false
+      },
+      "findings": [
+       "WARN safe-area: ",
+       "WARN keyboards: 3"
+      ],
+      "failExamples": 0
+     },
+     "fixed": {
+      "summary": {
+       "FAIL": 0,
+       "WARN": 1,
+       "INFO": 2
+      },
+      "env": {
+       "cover": false,
+       "resizesContent": false
+      },
+      "findings": [
+       "INFO safe-area: ",
+       "WARN keyboards: 3",
+       "INFO keyboard: "
+      ],
+      "failExamples": 0,
+      "fails": []
+     }
+    }
+   },
+   "totals": {
+    "rtlFirstVersionFails": 177,
+    "rtlFixed": {
+     "fails": 102,
+     "TP": 0,
+     "FP": 0,
+     "unlabelled": 102
+    },
+    "mobileFirstVersionFails": 4,
+    "mobileFixed": {
+     "fails": 2,
+     "TP": 0,
+     "FP": 0,
+     "unlabelled": 2
+    },
+    "byCheck": {
+     "icons": {
+      "fails": 2,
+      "TP": 0,
+      "FP": 0,
+      "unlabelled": 2
+     },
+     "arabic": {
+      "fails": 6,
+      "TP": 0,
+      "FP": 0,
+      "unlabelled": 6
+     },
+     "bidi": {
+      "fails": 6,
+      "TP": 0,
+      "FP": 0,
+      "unlabelled": 6
+     },
+     "mirror": {
+      "fails": 74,
+      "TP": 0,
+      "FP": 0,
+      "unlabelled": 74
+     },
+     "align": {
+      "fails": 13,
+      "TP": 0,
+      "FP": 0,
+      "unlabelled": 13
+     },
+     "keys": {
+      "fails": 1,
+      "TP": 0,
+      "FP": 0,
+      "unlabelled": 1
+     },
+     "targets": {
+      "fails": 2,
+      "TP": 0,
+      "FP": 0,
+      "unlabelled": 2
+     }
+    }
    }
   }
  }

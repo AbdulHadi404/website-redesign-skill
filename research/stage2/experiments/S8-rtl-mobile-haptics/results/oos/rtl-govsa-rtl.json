@@ -1,0 +1,144 @@
+{
+ "url": "http://127.0.0.1:42205/ext/govsa-rtl/index.html",
+ "mode": "as-served",
+ "width": 1280,
+ "summary": {
+  "FAIL": 1,
+  "WARN": 1,
+  "INFO": 2
+ },
+ "mirror": null,
+ "css": {
+  "rules": 4055,
+  "physicalRules": 649,
+  "overrideRules": 41,
+  "logicalRules": 2
+ },
+ "keys": [],
+ "icons": [
+  {
+   "name": "./govsa-icons/icon/closeTag.svg",
+   "class": "unknown",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "./govsa-icons/icon/closeTag.svg",
+   "class": "unknown",
+   "flipped": false,
+   "context": ""
+  }
+ ],
+ "findings": [
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "Rules with physical inline-axis values (649 of 4055 rules; 41 RTL overrides; 2 rules use logical properties)",
+   "count": 649,
+   "examples": [
+    "body { text-align:left }",
+    "dd { margin-left:0px }",
+    "caption { text-align:left }",
+    ".list-unstyled { padding-left:0px }",
+    ".list-inline { padding-left:0px }",
+    ".list-inline-item:not(:last-child) { margin-right:0.5rem }",
+    ".offset-1 { margin-left:8.33333% }",
+    ".offset-2 { margin-left:16.6667% }",
+    ".offset-3 { margin-left:25% }",
+    ".offset-4 { margin-left:33.3333% }",
+    ".offset-5 { margin-left:41.6667% }",
+    ".offset-6 { margin-left:50% }",
+    ".offset-7 { margin-left:58.3333% }",
+    ".offset-8 { margin-left:66.6667% }",
+    ".offset-9 { margin-left:75% }",
+    ".offset-10 { margin-left:83.3333% }",
+    ".offset-11 { margin-left:91.6667% }",
+    ".offset-sm-0 { margin-left:0px }",
+    ".offset-sm-1 { margin-left:8.33333% }",
+    ".offset-sm-2 { margin-left:16.6667% }",
+    ".offset-sm-3 { margin-left:25% }",
+    ".offset-sm-4 { margin-left:33.3333% }",
+    ".offset-sm-5 { margin-left:41.6667% }",
+    ".offset-sm-6 { margin-left:50% }",
+    ".offset-sm-7 { margin-left:58.3333% }",
+    ".offset-sm-8 { margin-left:66.6667% }",
+    ".offset-sm-9 { margin-left:75% }",
+    ".offset-sm-10 { margin-left:83.3333% }",
+    ".offset-sm-11 { margin-left:91.6667% }",
+    ".offset-md-0 { margin-left:0px }",
+    ".offset-md-1 { margin-left:8.33333% }",
+    ".offset-md-2 { margin-left:16.6667% }",
+    ".offset-md-3 { margin-left:25% }",
+    ".offset-md-4 { margin-left:33.3333% }",
+    ".offset-md-5 { margin-left:41.6667% }",
+    ".offset-md-6 { margin-left:50% }",
+    ".offset-md-7 { margin-left:58.3333% }",
+    ".offset-md-8 { margin-left:66.6667% }",
+    ".offset-md-9 { margin-left:75% }",
+    ".offset-md-10 { margin-left:83.3333% }",
+    ".offset-md-11 { margin-left:91.6667% }",
+    ".offset-lg-0 { margin-left:0px }",
+    ".offset-lg-1 { margin-left:8.33333% }",
+    ".offset-lg-2 { margin-left:16.6667% }",
+    ".offset-lg-3 { margin-left:25% }",
+    ".offset-lg-4 { margin-left:33.3333% }",
+    ".offset-lg-5 { margin-left:41.6667% }",
+    ".offset-lg-6 { margin-left:50% }",
+    ".offset-lg-7 { margin-left:58.3333% }",
+    ".offset-lg-8 { margin-left:66.6667% }",
+    ".offset-lg-9 { margin-left:75% }",
+    ".offset-lg-10 { margin-left:83.3333% }",
+    ".offset-lg-11 { margin-left:91.6667% }",
+    ".offset-xl-0 { margin-left:0px }",
+    ".offset-xl-1 { margin-left:8.33333% }",
+    ".offset-xl-2 { margin-left:16.6667% }",
+    ".offset-xl-3 { margin-left:25% }",
+    ".offset-xl-4 { margin-left:33.3333% }",
+    ".offset-xl-5 { margin-left:41.6667% }",
+    ".offset-xl-6 { margin-left:50% }"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "Transforms with an x translation (drawers, slides): transforms never flip with dir",
+   "count": 5,
+   "examples": [
+    ".carousel-item-next:not(.carousel-item-left), .active.carousel-item-right { transform: translateX(100%) }",
+    ".carousel-item-prev:not(.carousel-item-right), .active.carousel-item-left { transform: translateX(-100%) }",
+    ".govsa-header__navigation-m .govsa-header__navigation__checkbox:checked ~ .govsa-header__navigation__button span { transform: rotate(45deg) translate(-6.5px, -7px) }",
+    ".govsa-header__navigation-m .govsa-header__navigation__menu { transform: translate(-100%, 0px) }",
+    "[dir=\"rtl\"] .govsa-header__navigation-m .govsa-header__navigation__menu { transform: translate(100%, 0px) }"
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "bidi",
+   "message": "LTR data shown in scrambled order in RTL text — wrap in <bdi dir=\"ltr\"> or format with Intl",
+   "count": 1,
+   "examples": [
+    "span: \"60% of vistors said yes from 2843 Feedba\" reads as \"of vistors said yes from 2843 Feedback 60 %\""
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "bidi",
+   "message": "LTR phrases in RTL text without dir/lang: their punctuation jumps to the other end",
+   "count": 11,
+   "examples": [
+    "h6.mb-4: \"Estate Shareholding\n                    \"",
+    "p.body--2: \"supporting text below as a natur.\"",
+    "p: \"eiusmod tempor incididunt ut labore et d\"",
+    "p: \"incididunt ut labore et dolore magna.\"",
+    "span.govsa-errorMessage: \"! Error message\"",
+    "p.text-center: \"Lorem ipsum dolor sit amet, consectetur \"",
+    "button.footer-link.bg-green-dark: \"A+\"",
+    "small: \"A-\"",
+    "span: \"© GOV.SA All Rights Reserved 2019\"",
+    "button.footer-link.bg-green-dark: \"A+\"",
+    "small: \"A-\""
+   ]
+  }
+ ],
+ "ms": 774
+}

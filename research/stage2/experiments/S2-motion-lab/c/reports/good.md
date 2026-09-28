@@ -1,15 +1,15 @@
-# Motion check — http://127.0.0.1:37679/captures/c/good.html
+# Motion check — http://127.0.0.1:34867/captures/c/good.html
 
 2026-09-28 · desktop · Chromium 141.0.7390.37 · tokens from page custom properties: micro 100, small 150, medium 240, large 300, page 400, hero 700, count 800
 
-## Spec: 8/9 entries pass
+## Spec: 9/9 entries pass
 
 | id | trigger | normal | duration | easing | reduced (spec → seen) | verdict |
 | --- | --- | --- | --- | --- | --- | --- |
 | cta-press | press | animates | 100ms (spec micro) | cubic-bezier(0.2, 0, 0, 1) | keep → still moves | ✓ |
 | cta-hover | hover | animates | 100ms (spec micro) | cubic-bezier(0.2, 0, 0, 1) | keep → substituted (fade/colour) | ✓ |
 | plan-hover | hover | animates | 150ms (spec small) | cubic-bezier(0.2, 0, 0, 1) | fade → substituted (fade/colour) | ✓ |
-| sheet-open | click | animates | 300ms (spec large) | cubic-bezier(0.2, 0, 0, 1) / ease | fade → substituted (fade/colour) | ✗ layout jumps in one frame (width, height, left/margin, top/margin): a layout property changed without transitioning |
+| sheet-open | click | animates | 300ms (spec large) | cubic-bezier(0.2, 0, 0, 1) / ease | fade → substituted (fade/colour) | ✓ |
 | toast | click | animates | 240ms (spec medium) | cubic-bezier(0.2, 0, 0, 1) | fade → substituted (fade/colour) | ✓ |
 | features-reveal | scroll | animates, stagger 40ms (declared) | 240ms (spec medium) | cubic-bezier(0.2, 0, 0, 1) | static → nothing changes | ✓ |
 | stat-count | scroll | animates | ~783ms (spec 800) | ≈ __spec | instant → nothing changes | ✓ |

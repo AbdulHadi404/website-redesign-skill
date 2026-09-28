@@ -256,7 +256,8 @@ export async function behaviour(url) {
           const { hist, M } = window.__cake; let a = 7; const rnd = () => { a = (a * 16807) % 2147483647; return a / 2147483647; };
           const commit = [], preview = [];
           for (let i = 0; i < 120; i++) { const next = M.randomise({ ...hist.present, people: M.PEOPLE[i % 5].id }, rnd); const t = performance.now(); hist.commit(next, { label: 'bench' }); commit.push(performance.now() - t); }
-          hist.commit({ ...hist.present, people: 12, tiers: 1, decorations: ['flowers'] }, { label: 'bench' }); hist.begin();
+          // the heaviest cake the options allow (three tiers, three decorations): the drag's worst case
+          hist.commit({ ...hist.present, people: 50, tiers: 3, shape: 'round', message: 'plaque', text: 'Congratulations', decorations: ['flowers', 'goldleaf', 'sprinkles'] }, { label: 'bench' }); hist.begin();
           for (let i = 0; i < 120; i++) { const t = performance.now(); hist.preview({ ...hist.present, flowerPos: Math.sin(i / 10) }); preview.push(performance.now() - t); }
           // the same drag done the first way: the whole view (cake, slice, text, price, panel) re-rendered per move
           const full = [];

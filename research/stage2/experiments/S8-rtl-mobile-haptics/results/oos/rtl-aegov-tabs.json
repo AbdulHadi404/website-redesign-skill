@@ -1,0 +1,36 @@
+{
+ "url": "http://127.0.0.1:42205/ext/aegov-tabs.html",
+ "mode": "as-served",
+ "width": 1280,
+ "summary": {
+  "FAIL": 1,
+  "WARN": 0,
+  "INFO": 0
+ },
+ "mirror": null,
+ "css": {
+  "rules": 4,
+  "physicalRules": 0,
+  "overrideRules": 0,
+  "logicalRules": 0
+ },
+ "keys": [
+  {
+   "group": "tablist \"aegov\"",
+   "arrowLeftMoves": "right (backwards)"
+  }
+ ],
+ "icons": [],
+ "findings": [
+  {
+   "level": "FAIL",
+   "check": "keys",
+   "message": "Arrow keys run backwards in RTL: ArrowLeft moves focus to the right",
+   "count": 1,
+   "examples": [
+    "tablist \"aegov\""
+   ]
+  }
+ ],
+ "ms": 228
+}

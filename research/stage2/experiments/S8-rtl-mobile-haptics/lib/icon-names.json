@@ -1,0 +1,682 @@
+{
+ "generated": "lab/icon-lists.mjs",
+ "sources": {
+  "codex": "wikimedia/design-codex@8a1caafc packages/codex-icons/src/icons.ts",
+  "flutter": "flutter/flutter@929df566 packages/flutter/lib/src/material/icons.dart",
+  "material": "Material bidirectionality (2014 text, as quoted in github.com/albatrosary/material-design-jp Usability/Bidirectionality.md)",
+  "firefox": "mozilla/gecko-dev docs/code-quality/coding-style/rtl_guidelines.rst \"What NOT to mirror\"",
+  "codexGuide": "design-codex style-guide/bidirectionality.md Icons"
+ },
+ "counts": {
+  "codexIcons": 293,
+  "codexFlip": 89,
+  "codexRtlAsset": 10,
+  "flutterBase": 2233,
+  "flutterBaseMirror": 76,
+  "mirrorKeys": 161,
+  "mirrorBoth": 4
+ },
+ "mirror": {
+  "arrow-next": [
+   "codex"
+  ],
+  "arrow-previous": [
+   "codex"
+  ],
+  "article": [
+   "codex"
+  ],
+  "article-disambiguation": [
+   "codex"
+  ],
+  "article-found-not": [
+   "codex"
+  ],
+  "article-redirect": [
+   "codex"
+  ],
+  "articles": [
+   "codex"
+  ],
+  "articles-search": [
+   "codex"
+  ],
+  "bookmark-list": [
+   "codex"
+  ],
+  "browser": [
+   "codex"
+  ],
+  "copy": [
+   "codex"
+  ],
+  "cut": [
+   "codex"
+  ],
+  "diffs": [
+   "codex"
+  ],
+  "chevron-double-end": [
+   "codex"
+  ],
+  "chevron-double-start": [
+   "codex"
+  ],
+  "edit-undo": [
+   "codex"
+  ],
+  "feedback": [
+   "codex"
+  ],
+  "flag": [
+   "codex"
+  ],
+  "folder-placeholder": [
+   "codex"
+  ],
+  "argument-function": [
+   "codex"
+  ],
+  "funnel-match": [
+   "codex"
+  ],
+  "bright-half": [
+   "codex"
+  ],
+  "half-star": [
+   "codex",
+   "flutter"
+  ],
+  "help": [
+   "codex",
+   "flutter"
+  ],
+  "help-notice": [
+   "codex"
+  ],
+  "add-image": [
+   "codex"
+  ],
+  "gallery-image": [
+   "codex"
+  ],
+  "image-lock": [
+   "codex"
+  ],
+  "indent": [
+   "codex"
+  ],
+  "instance": [
+   "codex"
+  ],
+  "literal": [
+   "codex"
+  ],
+  "journal": [
+   "codex"
+  ],
+  "layout": [
+   "codex"
+  ],
+  "level-none": [
+   "codex"
+  ],
+  "level-one": [
+   "codex"
+  ],
+  "level-three": [
+   "codex"
+  ],
+  "level-two": [
+   "codex"
+  ],
+  "external-link": [
+   "codex"
+  ],
+  "bullet-list": [
+   "codex"
+  ],
+  "list-numbered": [
+   "codex"
+  ],
+  "in-log": [
+   "codex"
+  ],
+  "log-out": [
+   "codex"
+  ],
+  "map": [
+   "codex"
+  ],
+  "merge": [
+   "codex"
+  ],
+  "first-move": [
+   "codex"
+  ],
+  "last-move": [
+   "codex"
+  ],
+  "window": [
+   "codex"
+  ],
+  "newline": [
+   "codex"
+  ],
+  "newspaper": [
+   "codex"
+  ],
+  "next": [
+   "codex"
+  ],
+  "conversation-ongoing": [
+   "codex"
+  ],
+  "outdent": [
+   "codex"
+  ],
+  "palette": [
+   "codex"
+  ],
+  "paste": [
+   "codex"
+  ],
+  "previous": [
+   "codex"
+  ],
+  "puzzle": [
+   "codex"
+  ],
+  "quotes": [
+   "codex"
+  ],
+  "changes-recent": [
+   "codex"
+  ],
+  "redo": [
+   "codex",
+   "flutter"
+  ],
+  "reference": [
+   "codex"
+  ],
+  "existing-reference": [
+   "codex"
+  ],
+  "references": [
+   "codex"
+  ],
+  "signature": [
+   "codex"
+  ],
+  "pages-special": [
+   "codex"
+  ],
+  "bubble-speech": [
+   "codex"
+  ],
+  "add-bubble-speech": [
+   "codex"
+  ],
+  "alert-bubble-speech": [
+   "codex"
+  ],
+  "bubbles-speech": [
+   "codex"
+  ],
+  "subscript": [
+   "codex"
+  ],
+  "superscript": [
+   "codex"
+  ],
+  "add-after-column-table": [
+   "codex"
+  ],
+  "add-before-column-table": [
+   "codex"
+  ],
+  "after-column-move-table": [
+   "codex"
+  ],
+  "before-column-move-table": [
+   "codex"
+  ],
+  "tag": [
+   "codex"
+  ],
+  "tabs": [
+   "codex"
+  ],
+  "add-template": [
+   "codex"
+  ],
+  "flow-text": [
+   "codex"
+  ],
+  "summary-text": [
+   "codex"
+  ],
+  "flag-un": [
+   "codex"
+  ],
+  "undo": [
+   "codex",
+   "flutter"
+  ],
+  "update": [
+   "codex"
+  ],
+  "add-user": [
+   "codex"
+  ],
+  "chat-user": [
+   "codex"
+  ],
+  "contributions-user": [
+   "codex"
+  ],
+  "group-user": [
+   "codex"
+  ],
+  "mentor-user": [
+   "codex"
+  ],
+  "pages-user": [
+   "codex"
+  ],
+  "rights-user": [
+   "codex"
+  ],
+  "talk-user": [
+   "codex"
+  ],
+  "temporary-user": [
+   "codex"
+  ],
+  "location-temporary-user": [
+   "codex"
+  ],
+  "down-volume": [
+   "codex"
+  ],
+  "off-volume": [
+   "codex"
+  ],
+  "up-volume": [
+   "codex"
+  ],
+  "details-view": [
+   "codex"
+  ],
+  "watchlist": [
+   "codex"
+  ],
+  "arrow-back": [
+   "flutter"
+  ],
+  "arrow-forward": [
+   "flutter"
+  ],
+  "arrow-left": [
+   "flutter"
+  ],
+  "arrow-right": [
+   "flutter"
+  ],
+  "assignment": [
+   "flutter"
+  ],
+  "assignment-return": [
+   "flutter"
+  ],
+  "backspace": [
+   "flutter"
+  ],
+  "battery-unknown": [
+   "flutter"
+  ],
+  "call-made": [
+   "flutter"
+  ],
+  "call-merge": [
+   "flutter"
+  ],
+  "call-missed": [
+   "flutter"
+  ],
+  "call-missed-outgoing": [
+   "flutter"
+  ],
+  "call-received": [
+   "flutter"
+  ],
+  "call-split": [
+   "flutter"
+  ],
+  "chevron-left": [
+   "flutter"
+  ],
+  "chevron-right": [
+   "flutter"
+  ],
+  "chrome-mode-reader": [
+   "flutter"
+  ],
+  "device-unknown": [
+   "flutter"
+  ],
+  "dvr": [
+   "flutter"
+  ],
+  "event-note": [
+   "flutter"
+  ],
+  "featured-list-play": [
+   "flutter"
+  ],
+  "featured-video": [
+   "flutter"
+  ],
+  "first-page": [
+   "flutter"
+  ],
+  "flight-land": [
+   "flutter"
+  ],
+  "flight-takeoff": [
+   "flutter"
+  ],
+  "decrease-format-indent": [
+   "flutter"
+  ],
+  "format-increase-indent": [
+   "flutter"
+  ],
+  "bulleted-format-list": [
+   "flutter"
+  ],
+  "forward": [
+   "flutter"
+  ],
+  "functions": [
+   "flutter"
+  ],
+  "input": [
+   "flutter"
+  ],
+  "backspace-keyboard": [
+   "flutter"
+  ],
+  "keyboard-tab": [
+   "flutter"
+  ],
+  "label": [
+   "flutter"
+  ],
+  "important-label": [
+   "flutter"
+  ],
+  "label-off": [
+   "flutter"
+  ],
+  "last-page": [
+   "flutter"
+  ],
+  "launch": [
+   "flutter"
+  ],
+  "list": [
+   "flutter"
+  ],
+  "help-live": [
+   "flutter"
+  ],
+  "mobile-screen-share": [
+   "flutter"
+  ],
+  "chart-multiline": [
+   "flutter"
+  ],
+  "before-navigate": [
+   "flutter"
+  ],
+  "navigate-next": [
+   "flutter"
+  ],
+  "next-week": [
+   "flutter"
+  ],
+  "note": [
+   "flutter"
+  ],
+  "in-open": [
+   "flutter"
+  ],
+  "add-playlist": [
+   "flutter"
+  ],
+  "music-queue": [
+   "flutter"
+  ],
+  "reply": [
+   "flutter"
+  ],
+  "all-reply": [
+   "flutter"
+  ],
+  "screen-share": [
+   "flutter"
+  ],
+  "send": [
+   "flutter"
+  ],
+  "short-text": [
+   "flutter"
+  ],
+  "chart-show": [
+   "flutter"
+  ],
+  "sort": [
+   "flutter"
+  ],
+  "subject": [
+   "flutter"
+  ],
+  "toc": [
+   "flutter"
+  ],
+  "down-trending": [
+   "flutter"
+  ],
+  "flat-trending": [
+   "flutter"
+  ],
+  "trending-up": [
+   "flutter"
+  ],
+  "list-view": [
+   "flutter"
+  ],
+  "quilt-view": [
+   "flutter"
+  ],
+  "text-wrap": [
+   "flutter"
+  ]
+ },
+ "never": {
+  "check": {
+   "tokens": [
+    "check",
+    "checkmark",
+    "tick",
+    "done",
+    "check2"
+   ],
+   "sources": [
+    "material",
+    "firefox",
+    "codex"
+   ]
+  },
+  "media": {
+   "tokens": [
+    "play",
+    "pause",
+    "stop",
+    "rewind",
+    "eject",
+    "record",
+    "skip",
+    "fast-forward",
+    "media"
+   ],
+   "sources": [
+    "material",
+    "firefox",
+    "codex"
+   ]
+  },
+  "circularTime": {
+   "tokens": [
+    "clock",
+    "alarm",
+    "timer",
+    "history",
+    "schedule",
+    "refresh",
+    "reload",
+    "sync",
+    "autorenew",
+    "restart",
+    "spinner",
+    "loader",
+    "clockwise",
+    "counterclockwise",
+    "repeat",
+    "rotate",
+    "hourglass",
+    "stopwatch"
+   ],
+   "sources": [
+    "material",
+    "codex"
+   ]
+  },
+  "search": {
+   "tokens": [
+    "search",
+    "magnifier",
+    "magnifying",
+    "zoom"
+   ],
+   "sources": [
+    "material",
+    "codex (right-hand objects)"
+   ]
+  },
+  "calendar": {
+   "tokens": [
+    "calendar"
+   ],
+   "sources": [
+    "codex"
+   ]
+  },
+  "edit": {
+   "tokens": [
+    "edit",
+    "pencil",
+    "pen"
+   ],
+   "sources": [
+    "codex (right-hand objects)"
+   ]
+  },
+  "keyboard": {
+   "tokens": [
+    "keyboard"
+   ],
+   "sources": [
+    "material (physical objects)"
+   ]
+  },
+  "camera": {
+   "tokens": [
+    "camera"
+   ],
+   "sources": [
+    "material"
+   ]
+  }
+ },
+ "ambiguous": {
+  "volume": {
+   "tokens": [
+    "volume",
+    "speaker",
+    "mute",
+    "unmute",
+    "sound",
+    "audio"
+   ],
+   "note": "Material and Codex mirror the speaker, Flutter does not; inside an LTR media player keep the player direction"
+  },
+  "help": {
+   "tokens": [
+    "help",
+    "question",
+    "questionmark"
+   ],
+   "note": "mirror for Arabic, Persian, Urdu (Codex, Flutter); Codex keeps it for Hebrew and Yiddish"
+  },
+  "logInOut": {
+   "tokens": [
+    "login",
+    "logout",
+    "log-in",
+    "log-out",
+    "signin",
+    "signout",
+    "sign-in",
+    "sign-out",
+    "exit",
+    "box-arrow-in",
+    "door"
+   ],
+   "note": "Codex flips LogIn/LogOut, Flutter does not"
+  },
+  "quote": {
+   "tokens": [
+    "quote",
+    "quotes",
+    "blockquote"
+   ],
+   "note": "Codex flips Quotes, Flutter keeps format_quote"
+  },
+  "chart": {
+   "tokens": [
+    "chart",
+    "graph",
+    "trending",
+    "analytics",
+    "bar-chart",
+    "line-chart",
+    "show-chart"
+   ],
+   "note": "time axis: Material and Firefox run time right-to-left, Apple and Codex keep graphs"
+  },
+  "clipboard": {
+   "tokens": [
+    "copy",
+    "cut",
+    "paste",
+    "content-copy",
+    "content-paste",
+    "content-cut"
+   ],
+   "note": "Codex flips Copy/Cut/Paste, Flutter does not"
+  }
+ }
+}
