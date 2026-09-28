@@ -92,3 +92,10 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches &&
 ```
 
 No JavaScript, a background tab, or a reduced-motion preference all render the finished page rather than a column of holes.
+
+## Three layout rules learned the hard way
+
+- **Single-column fallbacks are `minmax(0, 1fr)`, never `1fr`.** `1fr` alone is `minmax(auto, 1fr)`; a nowrap child sets the track's minimum and the column runs past the viewport on phones, where the page's own `overflow: clip` then hides it from every detector that reads `scrollWidth`. Grid and flex children that hold nowrap text also get `min-width: 0`.
+- **A drawn glyph component is `inline-block` (or `inline-flex`) with its own size.** A bare `<span>` with a width is ignored in a block context and its SVG fills the column.
+- **The reduced-motion block zeroes delays as well as durations.** `transition-delay: 0s !important` beside `transition-duration: 0.01ms !important`, or a settled state still arrives late.
+
