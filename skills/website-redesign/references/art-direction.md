@@ -19,7 +19,7 @@ Expressive surfaces (marketing, brand, editorial) get an **art direction**: a co
 
 ## 2. Candidates, then one
 
-List **five to seven candidate concepts** drawn from the sources above, spanning at least three material families (if more than three share one family — all "paper", all "signal" — dig further). Name **what the direction refuses**: the page this category always ships, *and* its predictable opposite (both are ruts). Develop two or three into **style tiles** (type, colour, a few UI elements, one image — no layout) or **element collages** (real fragments: a nav, a card, a chart, a headline), differing in *family* — surfaces, type voice, imagery strategy, composition — not in values. Critique them against the brief and the category dials, pick one whole, and record why the others lost. Never merge parts of two directions: blending averages them back to the default.
+List **five to seven candidate concepts** drawn from the sources above, spanning at least three material families (if more than three share one family — all "paper", all "signal" — dig further). Name **what the direction refuses**: the page this category always ships, *and* its predictable opposite (both are ruts). Develop two or three into **style tiles** (type, colour, a few UI elements, one image — no layout) or **element collages** (real fragments: a nav, a card, a chart, a headline), differing in *family* — surfaces, type voice, imagery strategy, composition — not in values. Critique them against the brief and the category dials, pick one whole, and record why the others lost. Never merge parts of two directions: blending averages them back to the default. (Shared *content* is not merging: when every direction must show the same product fragment, the directions differ in how they frame and dress it.) Candidates are thinking, not paperwork: three real ones beat seven written to meet a count — but if all three share one material family, keep digging.
 
 If subagents are available, one or two can propose independent directions from the audit and brief alone (never your draft); compare on company-specificity and clarity, pick one whole.
 
@@ -71,7 +71,7 @@ Then set the scales (`design-theory.md` C2, C5): an expressive set for marketing
 
 ## 5. Convergence checks (before code)
 
-Write each into `DESIGN.md`:
+Write each into `DESIGN.md`. On **productive** routes they apply to the brand layer only — type, colour roles, marks, tone, empty and success moments; the interaction model is judged by the top tasks and by what users have learned, and "a competitor's app works the same way" is often the right answer, not a failure. A passing productive answer reads like: "the layout follows the task (exceptions first, search pinned); the brand layer — logo palette, wordmark face, droplet status marks — would not fit a competitor".
 
 - **Similar-brief test**: one line describing what this plan would be for a different company in the same category. Same plan → it is the prior.
 - **Category test**: guessable from the category alone, or from the category plus "avoid the obvious"? Rework until neither is obvious.
@@ -81,7 +81,7 @@ Write each into `DESIGN.md`:
 
 ## 6. Productive surfaces: the interaction direction
 
-For apps, dashboards, admin, checkout and services, decide in writing (`app-ui.md`, `categories.md`):
+For apps, dashboards, admin, checkout, services and field tools, decide in writing (`app-ui.md`, `categories.md`). The candidates in §2 become **interaction-model candidates** (a table with filters, an exceptions-first list, a map, a queue, a calendar), judged against the top tasks:
 
 - **Interaction model** — what the user manipulates (records, documents, a canvas, a queue), and how: inline editing vs forms vs side panels; optimistic updates with undo; keyboard shortcuts for top tasks; a command palette if actions are many.
 - **Navigation model** — places (sidebar, ≤ two levels), views of one object (tabs), commands (palette), with state in the URL.

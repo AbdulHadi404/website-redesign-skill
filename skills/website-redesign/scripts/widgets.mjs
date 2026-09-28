@@ -10,7 +10,8 @@
  *   { "type": "tabs",        "tablist": "[role=tablist]" }
  *   { "type": "disclosure",  "button": "#adv-toggle" }
  *   { "type": "live",        "trigger": "#export" }                  // toast / async status
- *   { "type": "form-errors", "form": "#settings", "submit": "button[type=submit]" }
+ *   { "type": "form-errors", "form": "#settings", "submit": "button[type=submit]" }   // submit: inside the form, or a full selector
+ *   { "type": "live", "trigger": "#visit-form button", "before": [{ "fill": ["#name", "Aoife"] }] }   // steps first
  *   { "type": "menu-button", "button": "#account" }
  *
  * Every step is keyboard-first. When a trigger cannot be reached or activated by keyboard the
@@ -270,6 +271,13 @@ for (const c of contracts) {
   await ctx.addInitScript(RECORDER);
   const page = await ctx.newPage();
   await open(page, url);
+  // Optional set-up steps before the contract runs (fill a form so its async status can be tested, open a panel).
+  for (const s of c.before || []) {
+    if (s.fill) await page.locator(s.fill[0]).first().fill(String(s.fill[1])).catch(() => {});
+    else if (s.click) await page.locator(s.click).first().click({ timeout: 4000 }).catch(() => {});
+    else if (s.check) await page.locator(s.check).first().check({ timeout: 4000 }).catch(() => {});
+    else if (s.wait) await page.waitForTimeout(s.wait);
+  }
   try { results.push(await tests[c.type](page, c)); }
   catch (e) { results.push({ type: c.type, target: c.trigger || c.tablist || c.button || c.form, passes: [], fails: [`test error: ${e.message.split('\n')[0]}`], warns: [] }); }
   await ctx.close();

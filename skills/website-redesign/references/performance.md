@@ -16,7 +16,7 @@ Core Web Vitals at the 75th percentile, phone and desktop separately: **LCP ≤ 
 | Third parties on the critical path | 1–2 | ≤ 3 | ≤ 2 |
 | DOM in an interactive view | — | ≤ ~1,500 elements on a listing before virtualising | virtualise or `content-visibility` beyond ~2–3k rows |
 
-Write the budget into `DESIGN.md`; the redesign must not be slower than the audit baseline.
+Write the budget into `DESIGN.md`; the redesign must not be slower than the audit baseline. Compare like with like: when the baseline was broken (its web fonts never loaded, an image 404'd, a script failed), it is flatteringly fast — report both numbers, say what the baseline skipped, and hold the redesign to the budget rather than to the broken number.
 
 ## 2. What each UI decision costs
 
@@ -56,7 +56,7 @@ Write the budget into `DESIGN.md`; the redesign must not be slower than the audi
 
 - **Self-host** (cache partitioning since 2020 means a CDN font is never shared across sites; self-hosting also keeps OpenType features and avoids the EU privacy problem — `resources/type-and-colour.md`). WOFF2 only; keep at least a Latin `unicode-range` subset; keep full layout features when subsetting scripts that need shaping (Arabic, Devanagari).
 - Preload at most the one or two files used above the fold (`crossorigin` even on the same origin). `font-display: swap` for text, `optional` where a first-visit fallback is acceptable (0 CLS), never `block` for body.
-- **Fallback metrics** (fontaine, Capsize, `next/font`, Astro's Fonts API): compute overrides from the exact fallback face *and weight*; a wrong override is worse than none (measured CLS 0.0029 → 0.0753). Safari honours `size-adjust` but not `ascent-/descent-/line-gap-override`. Measure CLS after adding them.
+- **Fallback metrics** (`scripts/fonts.mjs <file> --fallback arial` prints the `@font-face`; or fontaine, Capsize, `next/font`, Astro's Fonts API): compute overrides from the exact fallback face *and weight*; a wrong override is worse than none (measured CLS 0.0029 → 0.0753). Safari honours `size-adjust` but not `ascent-/descent-/line-gap-override`. Measure CLS after adding them.
 - A variable font pays off from the second weight (Playfair latin: one static weight 23 KB, the 400–900 variable 38 KB).
 
 ## 5. JavaScript

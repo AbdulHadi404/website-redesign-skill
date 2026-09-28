@@ -16,6 +16,7 @@ Most repositories hold more than one kind of surface — a marketing site and an
 | Dev tools and docs | reach a working integration; find the exact answer | productive (docs), expressive (dev-tool marketing) |
 | Fintech / banking | know where the money stands; move it safely | reassuring |
 | Mobile-first consumer | one thing, quickly, one-handed, interrupted | tactile |
+| Field / frontline tool | spot the exception and act on it, gloved, in glare, with patchy signal | robust |
 | Content / editorial | read, understand, return | reading |
 | Public service | complete a mandatory task first time, whoever you are | plain |
 

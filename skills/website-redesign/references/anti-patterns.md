@@ -115,7 +115,7 @@ Different from the landing-page list; they apply to product surfaces (`app-ui.md
 - Card soup: two-thirds of the text inside bordered, shadowed, rounded boxes, where real products use tables, lists and panels divided by space.
 - A row of KPI tiles ("$45,231.89 · +20.1% from last month") with no target, no meaning and no link to the records.
 - Decorative charts; boilerplate "AI insights".
-- Low density: 16 px body, 40–48 px controls and 24 px card padding in a tool used all day.
+- Low density: 16 px body, 40–48 px controls and 24 px card padding in a *desk* tool used all day. (Not in a field or frontline tool used on a phone with gloves — there it is the requirement; `categories.md`.)
 - A toast for every save (confirmation belongs at the trigger); modals for everything; every action a filled button; icon-only toolbars without labels, tooltips or shortcuts.
 - Missing states: blank containers, eternal spinners, "No data".
 - A gradient upsell card in the sidebar competing with the work.

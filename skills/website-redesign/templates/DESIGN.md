@@ -6,7 +6,7 @@ Written <date>, before implementation. Benchmark for finish: <reference(s)>. Thi
 
 | Route / group | Category | Frequency | Stakes | Posture | Intensity |
 | --- | --- | --- | --- | --- | --- |
-| … | marketing / app / dashboard / commerce / enterprise / docs / fintech / mobile / content / service | once · occasional · daily · all day | none · time · money · legal/health | expressive / productive | refine / redesign / rethink |
+| … | marketing / app / dashboard / commerce / enterprise / docs / fintech / mobile / field / content / service | once · occasional · daily · all day | none · time · money · legal/health | expressive / productive | refine / redesign / rethink |
 
 **Audience and context:** who, doing what, on which device, under what pressure.
 
@@ -56,6 +56,8 @@ Written <date>, before implementation. Benchmark for finish: <reference(s)>. Thi
 
 ## Direction
 
+Fill the parts that apply. **Expressive** routes: everything below except "Productive surfaces". **Productive** routes (apps, dashboards, field tools, checkout, services): "Productive surfaces", "First viewport", "Breaks if" and the convergence checks *for the brand layer only*; skip Concept, material-family candidates and the memory test. A two-page site does not need every section of this template at full length — the Brief, Accessibility, Colour, Typography and Keep/replace/remove/create always; the rest as far as they change a decision.
+
 **Concept** (expressive surfaces) — one line a founder would recognise as theirs: **"…"**
 
 **Candidates considered** (5–7 from the company's own world — its moment, material, customers' world, product, industry vernacular — spanning at least three material families), and why each lost: …
@@ -64,7 +66,7 @@ Written <date>, before implementation. Benchmark for finish: <reference(s)>. Thi
 
 **First viewport, exactly:** what is where, at what scale, and where the primary action sits (for product routes: the top-task screen, same level of detail).
 
-**Productive surfaces** (if any): interaction model; navigation model; density (and density modes); elevation model (canvas / surface / layer); state language; where brand is allowed to show.
+**Productive surfaces** (if any): interaction-model candidates considered (a table with filters, an exceptions-first list, a queue, a map…) and why each won or lost against the top tasks; the chosen interaction model; navigation model; density (and density modes); elevation model (canvas / surface / layer); state language, including freshness and offline (`app-ui.md` §7b); what users have learned that stays; where brand is allowed to show.
 
 **Breaks if:** three things that would betray this direction.
 

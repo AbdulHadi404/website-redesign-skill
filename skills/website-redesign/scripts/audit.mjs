@@ -5,7 +5,7 @@
  * inputs to judgement, and a clean report is not a good design.
  *
  *   node audit.mjs --base http://localhost:3000 --paths / /pricing \
- *        [--kind marketing|app|commerce|content|docs|service] [--widths 1440,390]
+ *        [--kind marketing|app|field|commerce|content|docs|service] [--widths 1440,390]
  *        [--out ./audit] [--no-axe] [--focus 40]
  *
  * Per page and width it measures:
@@ -228,7 +228,7 @@ try {
       if (h1 !== 1) F.push(`${h1} h1 elements (expect exactly one).`);
       if (inv.skippedLevels.length) W.push(`Heading levels skipped: ${inv.skippedLevels.slice(0, 4).join('; ')}`);
       const lm = inv.landmarks;
-      const missing = (kind === 'app' ? ['main', 'nav'] : ['main', 'nav', 'header', 'footer']).filter((k) => !lm[k]);
+      const missing = (kind === 'app' || kind === 'field' ? ['main'] : ['main', 'nav', 'header', 'footer']).filter((k) => !lm[k]);
       if (missing.length) W.push(`Missing landmarks: ${missing.join(', ')}.`);
       if (!lm.skipLink && width === widths[0]) W.push('No skip link as the first focusable element.');
       if (!inv.lang) F.push('No lang attribute on <html>.');
@@ -281,7 +281,7 @@ try {
       if (sg.glows) S.push(`Zero-offset coloured glow shadows ×${sg.glows}.`);
       if (sg.oneRadius) S.push(`One radius (${sg.oneRadius}px) on over 80% of rounded elements — the card-kit look.`);
       if (sg.centredShare > 60 && kind !== 'app') S.push(`${sg.centredShare}% of text blocks are centred.`);
-      if (kind === 'app') {
+      if (kind === 'app' || kind === 'field') {
         if (sg.maxPx >= 32) S.push(`Largest text is ${sg.maxPx}px in an app view — work tools rarely need more than 24–28px; the page title names the place and scope.`);
         if (sg.greeting) S.push('A greeting ("Welcome back, …", "Good morning, …") sits in the title slot.');
         if (sg.outerCards >= 6 && sg.cardTextShare > 45) S.push(`${sg.outerCards} card containers hold ${sg.cardTextShare}% of the text — collections belong in tables and lists; name one elevation model.`);
@@ -289,7 +289,12 @@ try {
         if (sg.unlabelledCharts) S.push(`${sg.unlabelledCharts} chart(s) with no text, title or axis labels — a picture of data, not data.`);
         if (sg.iconOnly >= 3) S.push(`${sg.iconOnly} icon-only controls — visible labels for anything not universal; tooltip and shortcut on desktop.`);
         const minCtl = sg.controlHeights.length ? Math.min(...sg.controlHeights) : 0;
-        if (sg.bodyPx >= 16 && minCtl >= 40) S.push(`Body ${sg.bodyPx}px with controls ≥ ${minCtl}px — marketing density in a work tool (apps: 13–14px body, 28–32px controls).`);
+        if (kind === 'app' && sg.bodyPx >= 16 && minCtl >= 40) S.push(`Body ${sg.bodyPx}px with controls ≥ ${minCtl}px — marketing density in a desk work tool (apps: 13–14px body, 28–32px controls; a field tool used with gloves is different: --kind field).`);
+        if (kind === 'field' && mobile) {
+          const small = inv.targets.under48List || [];
+          if (small.length) F.push(`${inv.targets.under48} controls under 48px on a field tool (gloves, glare): ${small.map((u) => `\`${u.selector}\` ${u.w}×${u.h}${u.name ? ` "${u.name}"` : ''}`).join(', ')}${inv.targets.under48 > small.length ? ', …' : ''} — 48px minimum, 56px for gloved hands.`);
+          if (sg.bodyPx < 16) W.push(`Body text ${sg.bodyPx}px on a field tool — 16–18px reads at arm's length in glare.`);
+        }
       } else {
         if (sg.badgeAboveH1) S.push('A pill badge sits directly above the headline ("✨ New …").');
         if (sg.hoverMoves >= 3) S.push(`${sg.hoverMoves} :hover rules that move or scale — hover should change contrast; lift only what can be picked up.`);

@@ -23,7 +23,14 @@ What the script does, and why (each was a real failure): it scrolls through the 
 - **If you cannot see images** (no vision in this session or provider), say so and switch to DOM evidence — `audit.mjs` output, bounding boxes, `naturalWidth`, overflow, console — without claiming a visual review.
 - A flat-image warning means either the page covers the image or the capture failed to paint it; check in a browser before "fixing" the page.
 
-**Driving widgets**: use the element's own `click()` (`page.$eval(sel, el => el.click())`) rather than a synthetic pointer — an opaque sticky masthead over the target intercepts pointer clicks and the failure says nothing about the widget. Render every state of every widget (the matrix in `app-ui.md` §2): idle, hover, focus, loading, success, empty, error, disabled/read-only, with long and many and zero items.
+**Driving widgets**: render every state of every widget (the matrix in `app-ui.md` §2) — idle, hover, focus, loading, success, empty, error, offline and stale, disabled/read-only, with long, many and zero items — with `states.mjs`: one JSON file of states, each a route to mock (delay, fail, 500, a fixture of 0 or 200 items), a storage seed, a device, and a few steps (click, fill, press, hover). Write it once in Phase 1 against the old build and run the same file on the new one: the before/after pairs are then like for like.
+
+```bash
+node scripts/states.mjs states.json --base http://localhost:3000 --out captures/states --label after
+node scripts/compare.mjs --grid captures/states/*-after.png --out captures/states/sheet.png
+```
+
+It records console errors per state and flags a state that renders identical to the first one — the scenario did not take effect (a wrong selector, a route pattern that never matched), so the capture proves nothing. Clicks fall back to the element's own `click()` when a sticky bar intercepts the pointer.
 
 Keep the captures; the user should see before/after (`compare.mjs --dir captures`), and the critique needs them.
 

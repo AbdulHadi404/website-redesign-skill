@@ -14,7 +14,7 @@ Read in Phases 3–5 whenever a route is a productive surface (`framing.md`). A 
 
 ## 2. The state matrix
 
-Replace "five states" with the matrix; fill the applicable rows for every component, then render each in Phase 6.
+Replace "five states" with the matrix; fill the applicable rows for every component, then render each in Phase 6 with `scripts/states.mjs` (mock the data to reach loading, empty, error, offline, many; `visual-qa.md`).
 
 | Family | State | Visual change | Semantics / behaviour | Focusable | Contrast |
 | --- | --- | --- | --- | --- | --- |
@@ -91,7 +91,20 @@ Also render the **content extremes**: 0, 1, typical and 100+ items; 1-character 
 | Modal (alert dialog) | destructive or irreversible confirmation; a blocking problem | never for success or general information |
 | Full-page confirmation | outcomes worth keeping (payment, submission with a reference) | the user may copy, print or screenshot it |
 
+A toast or snackbar with an action keeps the action *outside* its live region: announce the message only, or "Undo Dismiss" is read aloud with it.
+
 Default to **no message** when the interface already shows the result (the updated row is the confirmation; a temporary inline check beats a toast). Primer deprecated its toast over accessibility; auto-dismissing toasts collide with WCAG 2.2.1. "Completed" is quiet; colour belongs to what still needs doing. Status is colour + icon + words.
+
+## 7b. Data freshness, offline and sync — say what is true
+
+Any screen that shows data fetched from somewhere can be wrong about the present. Designing for that is part of the product, not an edge case (it decided the outcome in a blind test of this skill on a field tool):
+
+- **Freshness is always visible** where decisions are made: "Updated 05:42", "Updating…", "No signal · saved 05:42". Never "Synced" unless a sync just succeeded.
+- **Keep the last good copy and label it as a copy**; warn when it belongs to an earlier period (yesterday's milking, last week's stock). A cached copy shown as current is worse than no data.
+- **Service workers cache the app shell, not the data as if it were live**; if data is cached for offline use, the UI says so on every view that shows it.
+- **Actions taken offline** are kept locally, labelled ("on this phone"), undoable, and replayed or flagged when the connection returns; never silently dropped.
+- **Refresh is real**: it re-fetches, shows progress, and reports failure with a retry.
+- **Render these states** (offline on first load, offline with a saved copy, stale copy, server error, slow): `states.mjs` routes can abort, delay or fail the data request.
 
 ## 8. Loading, empty, error
 

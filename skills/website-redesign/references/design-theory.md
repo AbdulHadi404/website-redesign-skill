@@ -173,7 +173,7 @@ Green = succeeded / available, red = failed / danger, amber = attention — and 
 
 - Load only the weights used; `font-display: swap` (or `optional` for non-critical faces); self-host (a CDN font is never shared across sites since cache partitioning, and the EU has fined Google-hosted fonts); subset keeping the layout features you use; a variable font from the second weight on.
 - **Google Fonts and Fontsource strip optional OpenType features** (`zero`, `onum`, `case`, small caps, stylistic sets, character variants) and serve axes only when requested — CSS that asks for them silently does nothing. Self-host the upstream file when the design relies on them (`resources/type-and-colour.md`).
-- Metric-matched fallbacks computed from the *actual* fallback face and weight (fontaine, Capsize, framework font modules); a wrong override measured 26× worse CLS than none (`performance.md` §4).
+- Metric-matched fallbacks computed from the *actual* fallback face and weight (`scripts/fonts.mjs <file> --fallback arial:700`, or fontaine, Capsize, framework font modules); a wrong override measured 26× worse CLS than none (`performance.md` §4).
 - Body colour is a dark tint of the brand hue, not #000; secondary text one step lighter; muted one more — all three measured on every surface they appear on.
 - `text-wrap: balance` for headings, `max-width` in `ch` for measure, `font-variant-numeric: tabular-nums` where figures align, `hanging-punctuation` where supported.
 - Never let a JSX/Astro entity swallow a leading space (a rendering trap noted in this repo's own docs): write the character.

@@ -4,6 +4,13 @@
  *
  *   node fonts.mjs path/to/Font.woff2 [more files…]
  *   node fonts.mjs --google "Inter" "IBM Plex Sans Arabic" "Source Serif 4"
+ *   node fonts.mjs brand.woff2 --fallback arial        # metric-matched fallback @font-face (no layout shift on swap)
+ *   node fonts.mjs brand-700.woff2 --fallback arial:700 --family "Brand"   # match the weight you fall back to
+ *
+ * --fallback takes arial, helvetica, helveticaNeue, timesNewRoman, georgia, segoeUI, roboto, verdana, tahoma,
+ * trebuchetMS, courierNew, appleSystem, notoSans, openSans, ubuntu (optionally :700, :italic), or a path to a
+ * local font file. It prints size-adjust and ascent/descent/line-gap overrides computed from the real metrics
+ * (Capsize, MIT), the way fontaine and next/font do.
  *
  * Reports per face: format and size, weight/style, variable axes (wght, opsz,
  * wdth, slnt…), glyph count, scripts in the layout tables, script subsets
@@ -78,6 +85,26 @@ async function inspect(buf, label, extra = {}) {
   console.log(`  layout scripts: ${[...scripts].join(' ') || '—'} · covers: ${Object.entries(coverage).filter(([, v]) => v).map(([k]) => k).join(', ')}`);
 }
 
+// Metric-matched fallback: the fallback face scaled and its vertical metrics overridden so that text set in it
+// occupies the same space as the web font — no reflow (CLS) when the web font arrives.
+async function fallbackFace(buf, label) {
+  const unpack = await importModule('@capsizecss/unpack'), core = await importModule('@capsizecss/core');
+  if (!unpack?.fromBuffer || !core?.createFontStack) { console.log('  fallback: install @capsizecss/core and @capsizecss/unpack (`npm install` in this folder)'); return; }
+  const web = await unpack.fromBuffer(buf);
+  const [fbName, variant] = String(a.fallback).split(':');
+  let fb;
+  if (/\.(ttf|otf|woff2?)$/i.test(fbName)) fb = await unpack.fromBuffer(await readFile(fbName));
+  else {
+    const lib = JSON.parse(await readFile(path.join(path.dirname(new URL(import.meta.url).pathname), 'lib/fallback-metrics.json'), 'utf8')).fonts;
+    const key = Object.keys(lib).find((k) => k.toLowerCase() === fbName.toLowerCase());
+    if (!key) { console.log(`  fallback: unknown "${fbName}" — one of ${Object.keys(lib).join(', ')}, or a font file path`); return; }
+    fb = variant ? (lib[key].variants?.[variant] || lib[key]) : lib[key];
+  }
+  const family = String(a.family || web.familyName || label).replace(/"/g, '');
+  const { fontFamily, fontFaces } = core.createFontStack([{ ...web, familyName: family }, fb]);
+  console.log(`  metric-matched fallback (${fb.fullName || fb.familyName}):\n    font-family: ${fontFamily};\n${String(fontFaces).trim().split('\n').map((l) => '    ' + l).join('\n')}`);
+}
+
 async function google(family) {
   const q = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(family).replace(/%20/g, '+')}:ital,wght@0,400;0,700&display=swap`;
   let css = await fetch(q, { headers: { 'user-agent': UA } }).then((r) => (r.ok ? r.text() : null)).catch(() => null);
@@ -90,6 +117,7 @@ async function google(family) {
   const buf = Buffer.from(await fetch(url).then((r) => r.arrayBuffer()));
   // The latin subset is inspected for figures and features; for a script-specific family inspect that subset too.
   await inspect(buf, `${family} (Google Fonts, ${pick.subset} subset)`, { subsets, bytes: buf.length, format: 'woff2' });
+  if (a.fallback) await fallbackFace(buf, family);
   const script = faces.find((f) => ['arabic', 'hebrew', 'devanagari', 'thai', 'bengali'].includes(f.subset));
   if (script) {
     const u = /url\(([^)]+)\)/.exec(script.body)[1];
@@ -103,5 +131,6 @@ for (const f of families) await google(f);
 for (const file of a._) {
   const buf = await readFile(file);
   await inspect(buf, path.basename(file), { bytes: (await stat(file)).size, format: path.extname(file).slice(1) });
+  if (a.fallback) await fallbackFace(buf, file);
 }
 if (!families.length && !a._.length) console.error('Usage: node fonts.mjs <font files…>  |  --google "Family" ["Family" …]');

@@ -77,6 +77,18 @@ Measured reference points: Primer body 14 px with 3 type sizes on an issues page
 - **Good:** 16–17 px body; targets ≥ 44 × 44 pt (48 dp); one or two prominent buttons per view, with *style*, not size, marking the preferred one (Apple HIG); a tab bar for navigation (≤ 5 single-word items, never used for actions, never hidden or disabled); primary actions in the lower two-thirds; every gesture with a visible alternative; physical, interruptible motion; offline and slow-network states; safe-area insets; inputs ≥ 16 px (iOS zooms smaller ones).
 - **Do not import from desktop marketing:** hover-dependent affordances, wide multi-column heroes, tiny tracked-caps labels. Details: `responsive.md`.
 
+## Field and frontline tools (work done away from a desk)
+
+Farm, warehouse, clinical, site, retail-floor and delivery tools: a phone or rugged tablet used many times a shift, one-handed or gloved, in glare, noise or cold, with patchy signal and constant interruption. The dashboard and SaaS numbers above are desk numbers; applying them here produces the missed alert. (Found in a blind test of this skill on a dairy herd screen: the desk defaults and the "low density" app tell both pushed toward exactly the wrong thing.)
+
+- **Goal:** spot the exception, find the record, act on it, and trust what the screen says about how fresh it is.
+- **Dials:** body 16–18 px; key figures 20–32 px; targets **48 px minimum, 56 px for gloved or wet hands**, with 8 px between; density low–medium, **exceptions first** (the items needing action before the full list); motion none; colour reserved for status, with a word and a shape beside it; contrast aiming at 7:1 for outdoor glare; one screen per job plus search.
+- **Input:** search that tolerates how people type identifiers (spaces, case, partial tag numbers); a numeric-keypad mode (`inputmode="numeric"`) for codes; no drag, swipe-only or long-press as the only way; no hover.
+- **Connectivity honesty:** always say how fresh the data is ("Updated 05:42", "No signal · saved 05:42"); keep the last good copy and label it as a copy; never show "Synced" without a successful sync; a service worker caches the app shell, never the data as if it were current; retry that the user can see.
+- **Interruption:** actions are undoable and survive a reload (kept locally and labelled "on this phone" until they sync); drafts persist; the screen reopens where it was.
+- **Success:** time to detect and act on an exception, missed-alert rate, errors, and whether it still works on a bad day (no signal, gloves, sun).
+- **Typical failures:** a desk table squeezed onto a phone (the status column cut off); an alerts panel below forty rows; a sync button that always says "Synced"; tiny icon buttons; colour-only status in sunlight.
+
 ## Content and editorial
 
 - **Goal:** read, understand, come back. Weight belongs to the article.
@@ -91,4 +103,4 @@ Measured reference points: Primer body 14 px with 3 type sizes on an issues page
 
 ## When a repo holds several categories
 
-Give each its own type set and density on one token system (Carbon's productive and expressive sets are the model). Share the truth: the marketing site shows the product in the product's real tokens, with obviously fictional data. Never let marketing type, motion or gradients leak into the app, or app density into the landing page.
+Give each its own type set and density on one token system (Carbon's productive and expressive sets are the model). Share the truth: the marketing site shows the product in the product's real tokens, with obviously fictional data. When the product is out of scope *and* still wears the look the redesign is removing, do not import that look back into the marketing site: render the fragment in the new tokens at the product's real type size and density, say so in `DESIGN.md`, and recommend a refine of the product so the two meet. Never let marketing type, motion or gradients leak into the app, or app density into the landing page.

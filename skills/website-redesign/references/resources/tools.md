@@ -7,9 +7,10 @@ Checked 2026-09-28. The scripts in this skill cover the common path; the rest ar
 | Script | What it answers |
 | --- | --- |
 | `capture.mjs` | What does every page look like at each width, fold and full, with reveals finished and images decoded? Element shots at 3× for artwork; `--variant no-text,no-images,no-shadows` for the removal tests; `--reduced-motion`, `--dark`, `--no-js`, `--forced-colors`; self-checks for images that painted flat |
-| `audit.mjs` | What is measurably wrong, and which generic-look signals are present? (`--kind` switches marketing vs app rules) |
+| `audit.mjs` | What is measurably wrong, and which generic-look signals are present? (`--kind` switches marketing, app and field rules) |
 | `a11y.mjs` | What would a keyboard, screen-reader, zoom, forced-colours or colour-blind user hit that rule engines cannot see? |
 | `widgets.mjs` | Does each custom widget keep its keyboard contract (dialog, tabs, disclosure, live region, form errors, menu button)? |
+| `states.mjs` | What does each widget look like loading, empty, failing, offline, stale, with 200 items, open, focused — driven by mocked routes and steps, not imagined? |
 | `parity.mjs` | What did the redesign add without a source, drop, or break (routes, ids, form fields, metadata)? |
 | `contrast.mjs` | Does this text/ground pair pass WCAG 2, and what is its APCA Lc? |
 | `palette.mjs` | What colours are in the logo, and what role scales follow from the brand colour? |

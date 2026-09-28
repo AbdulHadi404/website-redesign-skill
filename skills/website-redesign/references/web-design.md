@@ -35,13 +35,13 @@ Two numbers from the same research: a load delay of 1 → 3 s raises bounce by *
 
 ## 3. Chapters and rhythm
 
-A page is a sequence of chapters, each with one job, one composition and one surface:
+A page is a sequence of chapters, each with one job, one composition and one surface. The table is vocabulary, not a recipe — every row is a form this skill has already shipped somewhere (`ledger.md`); read the ledger first and pick against it. The hero-beside-a-product-panel and the drawn timeline, in particular, recur across past outputs:
 
 | Chapter kind | Composition | When |
 | --- | --- | --- |
 | Hero | split (copy / object), or one statement over a product panel | always first |
 | Product / demo | the product at full width on its own panel, with a heading that says what to try | early — the product is the proof |
-| Diagram / process | a drawn path with nodes and milestone art; vertical rail on phones | "how it works" |
+| Diagram / process | a sequence drawn in the company's own terms — a path, a schedule, an annotated product screen, a numbered register — whichever the company's world suggests; vertical on phones | "how it works" |
 | Index / register | a ruled list, a two-column table, a numbered ledger | features, FAQ, what is included |
 | Statement | one line at display size, one action | a claim, a price, the closing |
 | Split | copy beside a panel or drawn object | a secondary product feature, referrals, a comparison |

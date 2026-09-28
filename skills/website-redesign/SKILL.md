@@ -22,31 +22,31 @@ Two failures are common and both feel like success from the inside. On a marketi
 
 ## Workflow
 
-Work through the phases in order; each has a reference with the detailed method. Read a reference when you reach its phase, not all at once. Small jobs take the fast path: 0 → 1 → 4 → 5 → 6 → 8, never skipping 0 or 6.
+Work through the phases in order; each has a reference with the detailed method. Read a reference when you reach its phase, not all at once — and read by posture: on a productive route, Phase 3 needs `art-direction.md` §6, the app tells in `anti-patterns.md`, `design-theory.md` B5–B7 and C1–C4, and `app-ui.md`, not the expressive method. A **small job** — a refine of one page, one flow or one component family, with no new identity — takes the fast path: 0 → 1 → 4 → 5 → 6 → 8, never skipping 0 or 6. Anything with a new visual identity, or more than a handful of pages, takes the full path.
 
 | Phase | Output | Read |
 | --- | --- | --- |
 | 0. Frame | The brief at the top of `DESIGN.md`: route → category map, frequency, stakes, intensity, top tasks, constraints, success measures | `references/framing.md`, `references/categories.md` |
 | 1. Audit | Written audit: company, users and tasks, preserved-list, measured baseline (`audit.mjs`, dembrandt), heuristic findings with severity, UI stack inventory | `references/audit.md` |
 | 2. Research | 4–8 references chosen by problem, principles extracted, a take/leave table | `references/research.md`, `references/resources/README.md` |
-| 3. Direction | Expressive: concept, candidates, typography, colour strategy, composition, imagery, motion. Productive: interaction model, density, navigation, elevation model. Keep / replace / remove / create | `references/art-direction.md`, `references/design-theory.md`, `references/anti-patterns.md`, `references/lessons.md`, `references/ledger.md`; `references/logo-design.md` if a mark is in scope |
+| 3. Direction | Expressive: concept, candidates, typography, colour strategy, composition, imagery, motion. Productive: interaction model, density, navigation, elevation model. Keep / replace / remove / create | Expressive: `references/art-direction.md`, `references/design-theory.md`, `references/anti-patterns.md`, `references/lessons.md`, `references/ledger.md`; `references/logo-design.md` if a mark is in scope. Productive: `references/app-ui.md`, `art-direction.md` §6, the app tells in `anti-patterns.md`, `design-theory.md` B5–B7 and C1–C4 |
 | 4. System | Tokens (colour roles, type sets, spacing, radii, elevation, motion), component inventory, state matrix; `SYSTEM.md` for product UI | `references/design-systems.md`, `references/app-ui.md` (product surfaces), `references/multilingual.md` (RTL / non-Latin) |
 | 5. Build | The redesign in the existing stack on a branch; assets licensed and localised | `references/implementation.md`, `references/ui-ux.md`, `references/imagery.md`, `references/motion.md`, `references/resources/` |
-| 6. Verify | Renders at 1440 / 1280 / 1024 / 768 / 390 (+ element shots, states); `audit.mjs` clean or justified; accessibility, responsive and performance passes | `references/visual-qa.md`, `references/accessibility.md`, `references/responsive.md`, `references/performance.md` |
+| 6. Verify | Renders at 1440 / 1280 / 1024 / 768 / 390 (+ element shots, and every widget state via `states.mjs`); `audit.mjs` clean or justified; accessibility, responsive and performance passes | `references/visual-qa.md`, `references/accessibility.md`, `references/responsive.md`, `references/performance.md` |
 | 7. Critique | `templates/critique.md` filled from renders, ideally by a fresh-context reviewer; every "no" fixed and re-rendered | `references/visual-qa.md` §Critique |
 | 8. Hand-off | Build, tests, `parity.mjs` against the old site, links, forms, metadata; commit, push, report | `references/technical-qa.md` |
 
 Three gates sit inside this sequence:
 
 - **Before Phase 3 (direction):** the brief exists. Every route has a category and an intensity; top tasks are confirmed by the user or written down as assumptions.
-- **Before Phase 5 (build):** `DESIGN.md` passes its own checks — for expressive redesigns, all five first-notice things change and *keep* is shorter than *replace + create*; for every direction, the similar-brief test, the category test and the ledger comparison are written down (`art-direction.md`); the Accessibility block is filled — no palette without its contrast table, no component without its native element or APG pattern, no motion without its reduced-motion substitute (`accessibility.md` §2). A direction that fails them only gets more expensive to discover later.
-- **Before Phase 8 (hand-off):** the critique has no remaining "no"; `audit.mjs` and `a11y.mjs` show no fail you have not fixed or justified in writing, and every widget contract passes; `parity.mjs` shows no unsourced claim and no lost route, id or form field.
+- **Before Phase 5 (build):** `DESIGN.md` passes its own checks — for expressive redesigns, all five first-notice things change and *keep* is shorter than *replace + create*, and the similar-brief test, the category test and the ledger comparison are written down (`art-direction.md`); for productive routes the same tests apply to the brand layer only (type, colour roles, marks, tone), and the interaction model is judged by the top tasks, not by distance; the Accessibility block is filled — no palette without its contrast table, no component without its native element or APG pattern, no motion without its reduced-motion substitute (`accessibility.md` §2). A direction that fails them only gets more expensive to discover later.
+- **Before Phase 8 (hand-off):** the critique has no remaining "no"; `audit.mjs`, `a11y.mjs` and `widgets.mjs` show no fail you have not fixed or justified in writing — a script false positive is justified with the evidence that disproves it (a capture, a probe, a request log), never by assertion; `parity.mjs` shows no unsourced claim and no lost route, id or form field.
 
 Do not skip to implementation because the direction "feels obvious". The direction that feels obvious before the audit is usually the generic one; the one that feels obvious after several redesigns is usually this skill's own habit.
 
 ### Phase 0 — Frame
 
-Classify each route (marketing, SaaS app, dashboard, commerce, enterprise, docs/dev tool, fintech, mobile-first consumer, content, public service), note how often people use it and what is at stake, and choose the intensity: **refine** (fix problems inside the current identity), **redesign** (new visual system, same information architecture and flows), or **rethink** (structure, flows and system). The user's words set the starting point ("make it look premium" is a redesign of an expressive surface; "our dashboard is hard to use" is a refine or rethink of a productive one); the evidence can argue for more or less. Write the brief (`framing.md`). The category sets the dials for everything after: body size and density, motion and novelty budget, what colour is for, what gets visual weight, and which metrics define success (`categories.md`).
+Classify each route (marketing, SaaS app, dashboard, commerce, enterprise, docs/dev tool, fintech, mobile-first consumer, field/frontline tool, content, public service), note how often people use it and what is at stake, and choose the intensity: **refine** (fix problems inside the current identity), **redesign** (new visual system, same information architecture and flows), or **rethink** (structure, flows and system). The user's words set the starting point ("make it look premium" is a redesign of an expressive surface; "our dashboard is hard to use" is a refine or rethink of a productive one); the evidence can argue for more or less. Write the brief (`framing.md`). The category sets the dials for everything after: body size and density, motion and novelty budget, what colour is for, what gets visual weight, and which metrics define success (`categories.md`).
 
 ### Phase 1 — Audit (understand before judging)
 
@@ -78,7 +78,7 @@ Fill `templates/critique.md` from the renders: objective → element → effect 
 
 ### Phase 8 — Hand-off
 
-Typecheck, lint, build and test with the project's own commands. Run `scripts/parity.mjs` against the old build: every new number and quote sourced, every dropped fact deliberate, every old route, id and form field accounted for. Click every link, submit every form, check metadata and the social image. Commit with a message that explains the direction, push the branch, use the project's preview mechanism if it has one. Do not deploy to production unless asked. Add a row to `references/ledger.md`.
+Typecheck, lint, build and test with the project's own commands. Run `scripts/parity.mjs` against the old build: every new number and quote sourced, every dropped fact deliberate, every old route, id and form field accounted for. Click every link, submit every form, check metadata and the social image. Commit with a message that explains the direction; push the branch when the remote is the project's own (a local mirror or a test fixture is not), and use the project's preview mechanism if it has one. Do not deploy to production unless asked. Add a row to `references/ledger.md` — or, when this skill is installed read-only or shared by a team, put the row and any lesson in the report for its maintainer instead of editing it mid-job.
 
 ## Scripts
 
@@ -87,16 +87,19 @@ All in `scripts/` (run `npm install` there once; Playwright-based; each prints w
 | Script | Use it for |
 | --- | --- |
 | `capture.mjs` | Full-page and first-viewport captures at several widths; element shots at 3× for artwork; `--reduced-motion`, `--dark`, `--no-js`, `--forced-colors` renders; `--variant` removal tests (no text, no images, no shadows) |
-| `audit.mjs` | Measured audit of a rendered page (`--kind marketing|app|commerce|content|docs|service`): overflow and zoom-out, contrast on the painted ground, invisible focus, targets, fake controls, clipped content, colour-only status, headings/landmarks, images, no-JS and reduced-motion hidden content, console errors, type/spacing/radius inventory, unavailable fonts, LCP/CLS, axe-core, generic-look signals |
+| `audit.mjs` | Measured audit of a rendered page (`--kind marketing|app|field|commerce|content|docs|service`): overflow and zoom-out, contrast on the painted ground, invisible focus, targets, fake controls, clipped content, colour-only status, headings/landmarks, images, no-JS and reduced-motion hidden content, console errors, type/spacing/radius inventory, unavailable fonts, LCP/CLS, axe-core, generic-look signals |
 | `a11y.mjs` | What rule engines miss: keyboard walk with focus visibility, focus hidden under sticky UI, traps, pointer-only controls, names from the accessibility tree, form-control contrast, autocomplete, reflow at 320/640, text spacing, forced colours, colour-vision renders, motion |
 | `widgets.mjs` | Keyboard contracts of custom widgets — dialog, tabs, disclosure, live region, form errors, menu button — from a small JSON of selectors |
-| `parity.mjs` | Old site vs new: unsourced and dropped claims, missing routes, lost ids and form fields, metadata |
+| `states.mjs` | Every widget state rendered: loading, empty, error, offline, stale, long and many items, open, focused — from a JSON of routes, fixtures and steps; flags scenarios that changed nothing |
+| `parity.mjs` | Old site vs new: unsourced and dropped claims, missing routes, lost ids, form fields, `data-*` analytics hooks and form submissions, metadata |
 | `contrast.mjs` | WCAG 2 and APCA for any CSS colours or token files |
 | `palette.mjs` | Sample a logo's colours; build 12-step OKLCH role scales (light/dark) with solved text steps |
 | `fonts.mjs` | What a font can do before you choose it: axes, tabular figures, features, script coverage, x-height |
 | `compare.mjs` | Before/after sheets, blurred squint sheets, pixel diffs for regressions |
 
 Scripts report facts, not taste. A clean audit is not a good design, and a signal is a question to answer, not a rule to obey.
+
+References cite evidence as `research/…`: that folder lives in the skill's repository (github.com/AbdulHadi404/website-redesign-skill), not in an installed copy. It is background — nothing in it is needed to act.
 
 ## The knowledge base
 
@@ -118,7 +121,7 @@ Every revision the user asks for is evidence that something in this skill let th
 2. Change the skill so it is less likely next time, at the cheapest point (framing, audit or direction beats a warning at the end). If the lesson is mechanical, put it in a script — prose that describes a check the tools do not perform is how the capture bug survived three lessons.
 3. Log it in `references/lessons.md`; record the finished output in `references/ledger.md`.
 
-Do this proactively and tell the user what changed in the skill.
+Do this proactively and tell the user what changed in the skill. If the skill's folder is read-only or shared, write the proposed change in the report instead of editing it.
 
 ## Reporting
 

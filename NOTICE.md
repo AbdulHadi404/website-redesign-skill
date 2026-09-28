@@ -14,6 +14,7 @@ This repository is MIT-licensed (`LICENSE`). Some rules in `skills/website-redes
 | Ilm-Alan, frontend-design | MIT | The "Breaks if:" line in a direction | `references/art-direction.md`, `templates/DESIGN.md` |
 | plugin87, ux-ui-agent-skills | MIT | The idea of a parity gate between old and new sites before hand-off, implemented independently in `scripts/parity.mjs` | `scripts/parity.mjs` |
 | huashu-design (github.com/alchaincyf/huashu-design) | MIT | Checking copy changes by text diff, independently of the renderer | `scripts/parity.mjs` |
+| Capsize (github.com/seek-oss/capsize): `@capsizecss/core` and `@capsizecss/unpack` as dependencies; system-font metrics extracted from `@capsizecss/metrics` 4.3.0 | MIT | Metric-matched fallback `@font-face` in `fonts.mjs --fallback`; `scripts/lib/fallback-metrics.json` | `scripts/fonts.mjs`, `scripts/lib/fallback-metrics.json` |
 | W3C WAI-ARIA Authoring Practices, WCAG 2.2 and Understanding documents, COGA "Making Content Usable" | W3C Software and Document licence | Keyboard contracts, criteria wording and the cognitive-accessibility patterns, paraphrased | `references/accessibility.md` |
 | GOV.UK Design System (github.com/alphagov/govuk-design-system) | MIT (code), OGL v3.0 (content) | The error summary and error message pattern, and validation timing | `references/accessibility.md`, `references/ui-ux.md`, `references/app-ui.md` |
 

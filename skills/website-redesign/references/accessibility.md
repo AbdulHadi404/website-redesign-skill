@@ -152,7 +152,7 @@ The GOV.UK pattern, which is the most tested error design in public:
 - A visible `<label for>` above every field; hints as separate text tied by `aria-describedby`; radio and checkbox groups in `<fieldset><legend>`. **Never placeholder as label** — axe passes it; `a11y.mjs` does not.
 - Mark **optional** fields "(optional)"; if asterisks are used, explain them once and set `required`. Never colour alone.
 - **Validate on submit.** Not on blur; live only after the first submit, or for a character count.
-- On error: keep every answer; prefix `<title>` with "Error: "; put an **error summary** at the top of `main` (above the `h1`) headed "There is a problem", **move focus to it**, and link each message to its field (the first field of a group, the first radio). Beside each field: the same words, a hidden "Error:" prefix, `aria-invalid="true"` and the message id in `aria-describedby`.
+- On error: keep every answer; prefix `<title>` with "Error: " when the form is the page; put an **error summary** at the top of the form's own region — the top of `main`, above the `h1`, when the form is the page (GOV.UK); the top of the form when it is one section of a longer page — headed "There is a problem", **move focus to it**, and link each message to its field (the first field of a group, the first radio). Beside each field: the same words, a hidden "Error:" prefix, `aria-invalid="true"` and the message id in `aria-describedby`.
 - **Wording**: what happened and how to fix it, in the label's words ("Enter how many hours you work a week"); separate messages for empty, too long and wrong format; no "invalid", "please", "sorry", "oops" or codes.
 - Accept varied formats; strip spaces and punctuation from numbers and codes.
 - `type` and `inputmode` right (`inputmode="numeric"` for codes and card numbers); `autocomplete` tokens on every personal-data field (`name`, `email`, `tel`, `street-address`, `postal-code`, `country-name`, `bday`, `organization`, `username`, `current-password`, `new-password`, `one-time-code`, `cc-*`); `spellcheck="false"` on emails and codes.
@@ -164,7 +164,7 @@ The GOV.UK pattern, which is the most tested error design in public:
 1. The region **exists, empty, before** the update; text goes in later. A region inserted together with its text is often not announced.
 2. `role="status"` for toasts, "Saved", result counts, cart updates, loading → loaded. `role="alert"` only for urgent, blocking problems. No `aria-live` on tickers, live charts or chat logs without throttling — announce summaries.
 3. Short and self-contained ("Export started. We'll email the file."). To repeat an identical message, clear the region first.
-4. Focus never moves to a toast. A toast with an action (Undo) stays until dismissed, or the action is reachable elsewhere.
+4. Focus never moves to a toast. A toast with an action (Undo) stays until dismissed, or the action is reachable elsewhere — and its buttons sit outside the live region, so only the message is announced.
 5. Async: "Loading…" in the status region after ~1 s, then "12 results"; `aria-busy="true"` on the region being replaced.
 6. Blocking form errors move focus to the summary — focus does the announcing.
 7. A spinner is silent on its own: `<p role="status"><span class="spinner" aria-hidden="true"></span> Syncing…</p>`.
@@ -234,7 +234,7 @@ Per key template (landing, list/table, detail, form or checkout, dashboard) and 
 4. **Forms**: submit empty, then with wrong formats — §6 end to end, including paste, show-password and no validation on blur.
 5. **Zoom and reflow**: 320 × 256 and 640 × 512, and 200% zoom at 1280.
 6. **Text spacing** render: nothing clipped or overlapping.
-7. **Forced colours**, dark and light: every control has a boundary; focus, icons, selected states and charts visible.
+7. **Forced colours**, dark and light: every control has a boundary; focus, icons, selected states and charts visible; logos and transparent images still visible (a navy logo vanishes on the black canvas — give it a backplate or `forced-color-adjust: none` with its own ground).
 8. **Colour vision** renders: every status, trend, series, required marker and error still distinguishable.
 9. **Motion**: under reduced motion no parallax, auto-rotation, large movement or smooth scrolling; without it, anything moving > 5 s has a pause control before it.
 10. **Contrast on real renders**: dark mode and image or tinted chapters; non-text pairs against the `DESIGN.md` table.

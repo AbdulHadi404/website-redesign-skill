@@ -36,6 +36,7 @@ On **productive** surfaces the rule inverts: one layout per kind of task, applie
 
 - Faithful fragments of real screens — real column names, states and flows — rendered at the product's real type size with its real tokens, and sample data that is obviously illustrative (a "fiction palette" of names and numbers; never a real customer).
 - Show the system moving where it does: a row streaming, a pipeline filling, a number updating.
+- A fragment that shows numbers — a chart, a strip, a table of figures — is a chart at marketing scale: `dataviz.md` applies (labels, units, a period, no decorative sparklines, tabular figures).
 - A live demo the visitor can use gets a prominent, dedicated surface with its own heading, inputs and results on a solid background.
 - Never draw a capability that does not exist.
 

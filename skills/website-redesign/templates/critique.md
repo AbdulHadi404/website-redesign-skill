@@ -23,7 +23,7 @@ One line per point: **objective → element → effect → why** (principle or e
 | --- | --- | --- | --- | --- | --- |
 | 1 | Is the surface appropriate to its category — density, type sizes, motion, colour's job (`categories.md`)? | all | | | |
 | 2 | Can each top task be done from this screen with obvious next steps, on a phone and by keyboard? | all | | | |
-| 3 | **Swap test:** replace the company and product names — would the page still fit the nearest competitor? (A yes here caps the whole critique.) | all | | | |
+| 3 | **Swap test:** replace the company and product names — would the page still fit the nearest competitor? (A yes here caps the whole critique.) On productive routes, ask it of the brand layer only (type, colour roles, marks, tone): a familiar interaction model is often right. | all | | | |
 | 4 | Is anything reading as generated — the model's prior, the SaaS kit, the tells in `anti-patterns.md`? Every `audit.mjs` signal fixed or justified in `DESIGN.md`? | all | | | |
 | 5 | Would a stranger call before/after two different companies' work? Are the five first-notice things all changed? | expressive + redesign | | | |
 | 6 | Is the first viewport memorable without reading the copy? Does the hero pass the headline test, with the action continuing its sentence? | expressive | | | |
@@ -32,9 +32,9 @@ One line per point: **objective → element → effect → why** (principle or e
 | 9 | Are boxes and cards rare, and only where content is card-shaped? One elevation model? | all | | | |
 | 10 | Is the product shown (real UI, faithful fragments, a demo), not only described? | expressive | | | |
 | 11 | Does every image have a purpose and one treatment? **Image removed:** does the first viewport lose information? | where imagery | | | |
-| 12 | **Content-free render** (`* { color: transparent }`, logo hidden): still recognisably this design? **Shadows removed:** still finished? | expressive | | | |
+| 12 | **Content-free render** (`capture.mjs --variant no-text`: glyphs and logo gone, icons and shapes kept): still recognisably this design? **Shadows removed** (`--variant no-shadows`): still finished? | expressive | | | |
 | 13 | **Headlines only** (h1–h3 in order): does the story or the structure read? | all | | | |
-| 14 | **Blurred** first viewport beside the old site and the last `ledger.md` project (`compare.mjs --blur`): could a stranger mistake them? | expressive | | | |
+| 14 | **Blurred** first viewport beside the old site and the last `ledger.md` project that has a capture (`compare.mjs --grid … --blur 6`); where the ledger row has no capture, compare the one-sentence directions in words: could a stranger mistake them? | expressive | | | |
 | 15 | One primary action per view, one colour everywhere; selected ≠ accent? | all | | | |
 | 16 | Every widget's applicable states designed *and rendered* — loading, empty, error, disabled/read-only, long content, 0/1/many (`app-ui.md` state matrix)? | all with widgets | | | |
 | 17 | Colour budget per the named strategy; every text pair ≥ 4.5:1 (3:1 large) on its real ground; no meaning by colour alone? | all | | | |
