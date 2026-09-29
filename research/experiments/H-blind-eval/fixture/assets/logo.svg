@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 96" role="img" aria-label="Milkline">
+  <!-- Supplied by the brand agency, 2021. Wordmark set in Nunito Black (rounded humanist sans), tracked -10. -->
+  <path d="M40 10 C 40 10, 14 42, 14 60 a 26 26 0 0 0 52 0 C 66 42, 40 10, 40 10 Z" fill="#2FA4D7"/>
+  <rect x="6" y="80" width="68" height="7" rx="3.5" fill="#14365C"/>
+  <text x="88" y="66" font-family="Nunito, 'Nunito Sans', sans-serif" font-weight="900" font-size="54" letter-spacing="-1" fill="#14365C">milkline</text>
+</svg>

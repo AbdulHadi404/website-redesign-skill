@@ -1,0 +1,21 @@
+<!doctype html>
+<!-- capture.mjs regress fixture (run at 390): an edge-to-edge phone page (viewport-fit=cover) with a fixed header that
+     does not pad for the status bar and a fixed tab bar that pads with env(safe-area-inset-bottom). With the default
+     insets the line says "safe-area insets 59/34 px emulated (viewport-fit=cover)" and the tab bar (green) grows by
+     34px: at y = 770 (CSS px) the fold shows green, where it shows the page's white without insets. ?meta=plain drops
+     viewport-fit=cover before the capture reads the meta: no insets, no line, the tab bar keeps its 56px. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Insets</title>
+<script>if (/meta=plain/.test(location.search)) document.querySelector('meta[name=viewport]').content = 'width=device-width,initial-scale=1';</script>
+<style>
+body{margin:0;font:16px/1.5 system-ui,sans-serif;color:#111;background:#fff}
+.top{position:fixed;top:0;inset-inline:0;height:48px;display:flex;align-items:center;gap:12px;padding:0 12px;background:#123;color:#fff}
+.top button{width:32px;height:32px;border:0;border-radius:6px;background:#fff}
+main{padding:64px 16px 120px}
+.tabs{position:fixed;bottom:0;inset-inline:0;height:56px;padding-bottom:env(safe-area-inset-bottom);display:flex;background:#0a5}
+.tabs a{flex:1;display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none}
+</style></head>
+<body>
+<header class="top"><button aria-label="Menu"></button><span>Orders</span></header>
+<main><h1>Today</h1><p>Three orders are waiting for a driver.</p></main>
+<nav class="tabs"><a href="#">Orders</a><a href="#">Drivers</a><a href="#">Account</a></nav>
+</body></html>

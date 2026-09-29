@@ -1,0 +1,1 @@
+import { select, scaleLinear, scaleUtc, line, axisBottom, axisLeft, extent, max } from "d3"; const x=scaleUtc().domain(extent([new Date()])); const y=scaleLinear().domain([0,max([1])]); const s=select("svg"); s.append("g").call(axisBottom(x)); s.append("g").call(axisLeft(y)); s.append("path").attr("d",line().x(d=>x(d)).y(d=>y(d))([]));

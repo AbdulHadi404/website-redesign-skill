@@ -1,0 +1,17 @@
+<!doctype html>
+<!-- capture.mjs regress fixture: overflow-x: hidden on body alone, run at 390 and 1024. Its value moves to the viewport,
+     so the nowrap line that runs out of its own 200px box (at the end side) still grows scrollWidth. At 390 a phone
+     widens its layout viewport and shows the whole line zoomed out: expect the layout-viewport and horizontal-overflow
+     warnings naming div.box, and no "text past the viewport" line (the reader sees the text, small). At 1024 nothing
+     scrolls to it: expect horizontal overflow naming div.box and "⚠ text past the viewport under a page-level clip"
+     naming div.box. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Body clip</title>
+<style>
+body{overflow-x:hidden;margin:0;font:16px/1.5 system-ui,sans-serif;color:#111;background:#fff}
+main{padding:16px}
+.box{width:200px;margin-inline-start:auto;white-space:nowrap;border:1px solid #555}
+</style></head>
+<body><main>
+<h1>Body clip</h1>
+<div class="box">Free delivery on every order over forty euros this week, and on every order over twenty euros for members</div>
+</main></body></html>

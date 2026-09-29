@@ -1,6 +1,6 @@
-# UI / UX — the interaction rules a marketing site still has to obey
+# UI / UX — the interaction rules every surface obeys
 
-A landing page is an interface: a nav, forms, widgets, links, states, motion, and people using it on a phone with one thumb. Read this before implementation (Phase 5) and again during technical QA (Phase 8). Numbers are the ones the sources give. Companion: `design-theory.md` (visual system), `web-design.md` (page structure), `technical-qa.md` (the checklist).
+Every surface is an interface — a landing page included: a nav, forms, widgets, links, states, motion, and people using it on a phone with one thumb. §1 is the Phase 1 heuristic checklist for any surface (`audit.md` §6); read the rest before implementation (Phase 5) and again during technical QA (Phase 8). Product screens add `app-ui.md`. Numbers are the ones the sources give. Companion: `design-theory.md` (visual system), `web-design.md` (page structure), `technical-qa.md` (the checklist).
 
 ## 1. The two frameworks everything else hangs on
 
@@ -49,11 +49,12 @@ A landing page is an interface: a nav, forms, widgets, links, states, motion, an
 ## 4. Feedback, time and states
 
 - **Response-time limits** (Nielsen): **0.1 s** feels instantaneous (direct manipulation — hover, press, toggle); **1 s** keeps the flow of thought (a spinner is unnecessary but the delay is noticed); **10 s** is the limit of attention — beyond it, a percent-done indicator with an estimate. Between 2 and 10 s, quiet feedback (a busy state on the control, a subtle progress line).
-- **Skeleton screens beat spinners**: a spinner draws attention to the wait; a skeleton that fills in draws attention to progress. Use skeletons for content areas, spinners only inside the control that was pressed.
-- **Every widget has five states** — idle, loading, active/success, empty, error — and every one is designed, not defaulted. Render each during QA (`visual-qa.md`).
+- **Loading thresholds** (Primer, consistent with the limits above): a container (table, list, tile) shows nothing under 1 s; 1–3 s a skeleton or an indeterminate indicator; 3–10 s determinate progress; beyond 10 s a background task the user can leave. An action's inline spinner, inside the pressed control, appears after a 150–300 ms delay and stays at least 300–500 ms once shown, so it never flashes (`app-ui.md` §8).
+- **Skeleton screens beat spinners** for content areas: a skeleton that fills in draws attention to progress. Skeletons only for containers (tables, lists, tiles), shaped like the final layout; spinners only inside the control that was pressed.
+- **Every component fills its state matrix** — interaction (rest, hover, focus-visible, pressed), selection, validation, availability (disabled, inactive, read-only), async (loading, empty, degraded) — and every applicable row is designed and rendered, not defaulted (`app-ui.md` §2, `visual-qa.md`).
 - **Empty states** (first use, nothing configured, no results, cleared): say *why* it is empty, teach the feature in one line ("Star a job to keep it here"), and offer the next action; never a blank container, never "No records" that later fills in.
-- **Error messages**: next to the source; colour *and* icon *and* text (never colour alone); plain language; the precise problem; a constructive next step; the entered text preserved; no blame words ("invalid", "illegal"), no humour, no codes. Validate inline only fields that are error-prone; validate the rest on submit. Modal dialogs only for errors that block progress.
-- **Progressive disclosure**: show what most people need most of the time; put the rest one click away with an obvious label; **never more than two levels** — people get lost between three.
+- **Error messages**: next to the source; colour *and* icon *and* text (never colour alone); plain language; the precise problem; a constructive next step; the entered text preserved; no blame words ("invalid", "illegal"), no humour, no codes. Validate on submit, then live as fields are fixed; live from the start only for character counts, availability checks and password rules (§5). Modal dialogs only for errors that block progress.
+- **Progressive disclosure**: show what most people need most of the time; put the rest one click away with an obvious label; **never more than two levels** — people get lost between three. In a configurator the disclosure order comes from the options' dependency graph, not from taste (`discovery.md` §3).
 
 ## 5. Forms
 
@@ -64,7 +65,7 @@ NN/g's ten, plus the research on actions:
 3. **Single column**; a row only for short related fields (city / state / zip).
 4. Logical order; common choices first.
 5. Field width hints at the answer's length (99.9% of city names fit 19 characters).
-6. Mark **optional** fields, not required ones, and keep optional fields to one or two.
+6. Mark **whichever is the minority**, in words — usually the optional fields, so "(optional)"; no asterisks. Keep optional fields to one or two.
 7. State format requirements up front; better, accept any format (Postel).
 8. No Reset/Clear button.
 9. Errors visible, specific, input preserved (§4).
@@ -72,19 +73,36 @@ NN/g's ten, plus the research on actions:
 
 Actions (LukeW's eye-tracking study): primary and secondary actions **left-aligned with the fields** on a strong vertical axis; the secondary action visually recessive (a link or a quiet button) so it cannot be hit by mistake — people care more about not losing their data than about speed. One primary action per form.
 
+Validation and errors — the design-system consensus (GOV.UK, Primer, Carbon, USWDS): **validate on submit**, not on blur or while typing; after a failed submit, re-validate live as the field is fixed ("reward early, punish late"); live from the start only for character counts, availability checks and password rules. For three or more errors, an **error summary** at the top — focused, the page title prefixed "Error:", each item linking to its field — plus the message beside each field; fewer errors, focus the first invalid field. Mark **whichever is the minority** — "(optional)" or "(required)" — in words; no asterisks. Never disable the submit button to signal an invalid form. Details: `app-ui.md` §6.
+
 ## 6. Targets, thumbs, navigation
 
-- **Target size**: WCAG 2.2 minimum **24 × 24 CSS px** (AA); Apple **44 × 44 pt**; Material **48 dp with 8 dp spacing**. Design to 44 and never below 24; keep 8 px between adjacent targets.
+- **Target size**: WCAG 2.2 minimum **24 × 24 CSS px** (AA); Apple **44 × 44 pt**; Material **48 dp with 8 dp spacing**. Every target 44 px on coarse pointers (its hit area; a touch-first control may be drawn at 36–40 px and extend it), never below 24 anywhere; keep 8 px between adjacent targets (`accessibility.md` §2).
 - **How phones are held** (Hoober, 1,333 observations): one-handed **49%**, cradled **36%**, two-handed **15%**; grips change every few seconds. Primary actions and the mobile nav go where a thumb reaches without repositioning — the lower two-thirds, never the top corners; test on a real device.
-- **Mobile navigation**: visible tabs or a bar work up to **5 items**; more than that, a menu. A hamburger is low-discoverability ("out of sight is out of mind") — label it **"Menu"** (slightly better recognised than the icon alone), keep the primary action outside it, and make the open menu large-type and finger-sized.
+- **Mobile navigation**: visible tabs or a bar work up to **5 items**; more than that, a menu. A hamburger is low-discoverability ("out of sight is out of mind") — label it **"Menu"** (slightly better recognised than the icon alone), keep the primary action outside it, and make the open menu large-type and finger-sized. How navigation transforms per product type and item count: `responsive.md` §5.
 - **Desktop nav**: ≤ 7 items, the primary action at the right end, the logo at the left linking home, the current section marked.
-- **Carousels**: auto-rotation is banner blindness on wheels — the first frame gets most of the attention and animated things are read as ads (animated ads are looked at 27% of the time). If one must exist: ≤ 5 frames, manual on mobile, visible arrows and position dots, big controls, pause on hover — and the important content also lives somewhere static.
+- **Carousels**: auto-rotation is banner blindness on wheels — the first frame gets most of the attention and animated things are read as ads (animated ads are looked at 27% of the time). If one must exist: ≤ 5 frames, manual (no auto-rotation; if it ever auto-advances, a pause control placed before it, `motion.md` §2 gate 7), visible arrows and position dots, big controls — and the important content also lives somewhere static.
 
 ## 7. Motion
 
-- Durations (NN/g): **~100 ms** for feedback on small controls (toggle, checkbox); **200–300 ms** for moderate transitions (a modal, a panel); **≤ 400 ms** for the largest moves; **≥ 500 ms** reads as a delay. Enter slower than exit (300 in / 200–250 out). *Ease-out* for entering (fast start, settle), *ease-in* for leaving; never linear.
-- Motion carries meaning or it goes: where a thing came from, what changed, what to look at next. Frequent motions are subtler and shorter than rare ones.
-- Animate transform and opacity only; never layout. `prefers-reduced-motion` switches decorative motion off entirely and keeps essential feedback.
+- Durations (NN/g): **~100 ms** for feedback on small controls (toggle, checkbox); **150–300 ms** for moderate transitions (a popover or panel ~240 ms, a modal or sheet 300 ms, the productive ceiling: `motion.md` §4); **≤ 400 ms** for the largest moves; **≥ 500 ms** reads as a delay. Exits softer and shorter than entrances.
+- **Frequency decides**: anything keyboard-triggered or done 100+ times a day does not animate; tens of times a day, ≤ 150 ms colour or opacity at most; occasional moments get standard motion; only rare moments may be expressive.
+- *Ease-out* (decelerate) for anything entering or anything the user is waiting to see — never *ease-in* there; an exit may accelerate only when it is short and nobody waits on it. Never linear for movement; never enter from `scale(0)`.
+- Motion carries meaning or it goes: where a thing came from, what changed, what to look at next.
+- Animate transform and opacity only; never layout. `prefers-reduced-motion` substitutes (a crossfade for a slide) rather than deleting, and never removes content. Tokens, techniques and library defaults: `motion.md`.
+
+## 7b. Direct manipulation on a canvas (editors, configurators, 3D)
+
+For canvases where people select, orbit, drag and edit objects. The rules hold on every canvas, a signature experience included: its fidelity and feel may be expressive, its chrome and controls are productive (`framing.md` §1).
+
+- **Never move the canvas under the pointer in response to the pointer.** Only persistent panels offset the view; contextual panels (an inspector opened by a selection) float over it. When selecting a cherry opened the inspector and re-centred the view, the cherry slid away before it could be dragged.
+- **Tell a tap from the end of an orbit by pointer travel** (about 6 px, the value the Cake Junction builder used). Without it, every orbit ends by selecting whatever was under the finger.
+- **One history entry per gesture.** Record the undo point when a drag or slider gesture starts, update without history while it moves, and commit on release, so one undo reverses the whole gesture.
+- **Drag from a library with a ghost** that shows exactly where the item will land, and hide the ghost where the item cannot go. On touch, lift the ghost above the fingertip, and start a drag from a horizontally scrolling tray only on an upward pull, so a sideways swipe still scrolls the tray.
+- **Every drag has a single-pointer alternative**: tap an item to add it, tap a spot to place it (WCAG 2.5.7, §8).
+- **Start from a beautiful, real default** (the client's signature piece), never an empty scene. That default takes the place of the first-use empty state (§4 Empty states, `app-ui.md` §8).
+
+These faults never show in a single screenshot. Find them with a scripted gesture test at a phone device: `states.mjs` tap and swipe steps run with `--each` (tap an object, then swipe from where it was), then compare the capture after the tap with the one after the swipe. On a WebGL canvas the log names only the `<canvas>`, so the captures are the evidence.
 
 ## 8. Accessibility — the WCAG 2.2 additions on top of 2.1 AA
 
@@ -96,11 +114,11 @@ Actions (LukeW's eye-tracking study): primary and secondary actions **left-align
 - **3.3.7 Redundant entry (A)**: never ask for the same information twice in one process.
 - **3.3.8 Accessible authentication (AA)**: no puzzles or transcription to sign in (paste and autofill allowed).
 
-Still from 2.1 AA and always checked: contrast (`design-theory.md` B6), keyboard operability with visible focus and a logical order, a skip link, landmarks, one `h1` and ordered headings, labels on every input, names on every icon-only control, `aria-*` states on custom widgets (tabs, menus, accordions), no information by colour alone, reduced-motion respected, no content that flashes, captions/alt where media carries meaning.
+The full procedure — design decisions, implementation rules, automated and manual tests — is in `accessibility.md`. Still from 2.1 AA and always checked: contrast (`design-theory.md` B6), keyboard operability with visible focus and a logical order, a skip link, landmarks, one `h1` and ordered headings, labels on every input, names on every icon-only control, `aria-*` states on custom widgets (tabs, menus, accordions), no information by colour alone, reduced-motion respected, no content that flashes, captions/alt where media carries meaning.
 
 ## 9. Writing
 
-Plain words in the visitor's language; the point first (inverted pyramid); the first two words of every heading and link do the work; buttons are verbs that say what happens next ("Get your Passport", not "Submit"); confirmations say what was done and what happens now; consistent terms (one name per thing across the site); a tone chosen on purpose and held. Nothing a visitor reads is an internal name, a file path, a ticket number or a provider (this repo's own hard rule).
+Plain words in the visitor's language; the point first (inverted pyramid); the first two words of every heading and link do the work; buttons are verbs that say what happens next ("Get your Passport", not "Submit"); confirmations say what was done and what happens now; consistent terms (one name per thing across the site); a tone chosen on purpose and held. Nothing a visitor reads is an internal name, a file path, a ticket number or the name of a vendor behind the feature.
 
 ## 10. Dark patterns — never
 

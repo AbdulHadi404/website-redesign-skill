@@ -1,0 +1,7 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Drag toy with its listeners on the wrapper</title>
+<!-- Mouse-only drag toy whose listeners sit on the parent div, as React Three Fiber attaches them to its
+     event source. v1 counted only listeners on the canvas and passed it. Expected: FAIL. -->
+<style>body{margin:0;padding:20px}#w{width:480px;height:360px}canvas{display:block}</style></head>
+<body><main><h1>Drag the ball</h1><div id="w"><canvas id="c" width="480" height="360" aria-hidden="true"></canvas></div></main>
+<script>const c=document.getElementById('c'),x=c.getContext('2d');let bx=240,by=180,drag=false;function d(){x.fillStyle='#eee';x.fillRect(0,0,480,360);x.fillStyle='#c33';x.beginPath();x.arc(bx,by,30,0,7);x.fill()}d();
+const w=document.getElementById('w');w.addEventListener('pointerdown',()=>drag=true);w.addEventListener('pointermove',e=>{if(drag){const r=c.getBoundingClientRect();bx=e.clientX-r.left;by=e.clientY-r.top;d()}});addEventListener('pointerup',()=>drag=false);</script></body></html>

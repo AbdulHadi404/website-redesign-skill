@@ -1,0 +1,56 @@
+a11y-audit http://localhost:4173/fixed.html
+0 FAIL, 1 WARN, 3 INFO in 34.5s — details results/audit-fixed/audit.json
+
+WARN motion       2.2.2        Content changed on its own 1× in 6.5s — auto-updating content needs a visible pause/stop control (confirm one exists)  ⟶ p#news "Scheduled reports now available"
+INFO forced       —            forced-color-adjust:none — verify this is deliberate (e.g. chart swatches)  ⟶ span.swatch
+INFO forced       —            forced-color-adjust:none — verify this is deliberate (e.g. chart swatches)  ⟶ span.swatch
+INFO motion       2.2.2        Infinite animation "sp" (small indicator) — moving content shown >5s beside other content needs pause/stop/hide  ⟶ span.spinner
+
+Tab order (role "name" ← element):
+   1. link "Skip to main content":  ←  a.skip "Skip to main content"
+   2. link "Acme Analytics":  ←  a.logo "Acme Analytics"
+   3. link "Dashboard":  ←  a "Dashboard"
+   4. link "Reports":  ←  a "Reports"
+   5. link "Settings":  ←  a "Settings"
+   6. link "Notifications (3 unread)":  ←  a.icon-link "Notifications (3 unread)"
+   7. button "Account menu"  ←  button.icon-btn "Account menu"
+   8. searchbox "Search reports"  ←  input#q
+   9. button "Search"  ←  button.btn "Search"
+  10. button "Pause updates"  ←  button#news-toggle.btn.secondary "Pause updates"
+  11. link "Overview":  ←  a "Overview"
+  12. link "Revenue":  ←  a "Revenue"
+  13. link "Churn":  ←  a "Churn"
+  14. link "Help centre":  ←  a "Help centre"
+  15. text: Show chart data as a table  ←  summary "Show chart data as a table"
+  16. region "Recent invoices, sortable by customer or amount":  ←  div.table-wrap "Recent invoices, sortable by customer or"
+  17. button "Customer ▲"  ←  button "Customer"
+  18. button "Amount"  ←  button "Amount"
+  19. button "Edit Contoso invoice"  ←  button.icon-btn "Edit Contoso invoice"
+  20. button "Delete Contoso invoice"  ←  button.icon-btn "Delete Contoso invoice"
+  21. button "Edit Fabrikam invoice"  ←  button.icon-btn "Edit Fabrikam invoice"
+  22. button "Delete Fabrikam invoice"  ←  button.icon-btn "Delete Fabrikam invoice"
+  23. button "Edit Northwind invoice"  ←  button.icon-btn "Edit Northwind invoice"
+  24. button "Delete Northwind invoice"  ←  button.icon-btn "Delete Northwind invoice"
+  25. button "Invite teammates"  ←  button#invite-open.btn "Invite teammates"
+  26. button "Export CSV"  ←  button#export.btn.secondary "Export CSV"
+  27. button "Advanced filters"  ←  button#adv-toggle.btn.secondary "Advanced filters"
+  28. link "Q3 revenue report":  ←  a "Q3 revenue report"
+  29. link "churn report":  ←  a "churn report"
+  30. link "methodology notes":  ←  a "methodology notes"
+  31. tab "Daily" [selected]  ←  button#tab-d "Daily"
+  32. tabpanel "Daily": Daily view  ←  div#panel-d "Daily view"
+  33. textbox "Full name"  ←  input#name
+  34. textbox "Email address"  ←  input#email
+  35. textbox "Phone number (optional)"  ←  input#phone
+  36. textbox "New password"  ←  input#pw
+  37. checkbox "Show password"  ←  input#pw-show "on"
+  38. combobox "Billing period":  ←  select#billing "Monthly Yearly"
+  39. radio "Email" [checked]  ←  input "email"
+  40. checkbox "Send weekly digest"  ←  input "on"
+  41. button "Save changes"  ←  button.btn "Save changes"
+  42. ?  ←  iframe
+  43. link "Help":  ←  a "Help"
+  44. link "Accessibility statement":  ←  a "Accessibility statement"
+
+Headings: h1 Dashboard · h2 Key metrics · h2 Revenue trend · h2 Recent invoices · h2 Actions · h2 Period · h2 Account settings
+Landmarks: banner · region "What's new" · complementary · main · contentinfo · navigation "Primary" · search · navigation "Dashboards" · region "Key metrics" · region "Revenue trend" · region "Recent invoices" · region "Actions" · region "Period" · region "Account settings" · region "Recent invoices, sortable by customer or amount"

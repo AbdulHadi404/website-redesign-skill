@@ -1,0 +1,67 @@
+{
+ "url": "/fixtures/mobile.html",
+ "width": 844,
+ "height": 390,
+ "insets": [
+  0,
+  21,
+  59,
+  59
+ ],
+ "env": {
+  "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content",
+  "hoverNone": true,
+  "coarse": true,
+  "cover": true,
+  "resizesContent": true
+ },
+ "summary": {
+  "FAIL": 0,
+  "WARN": 0,
+  "INFO": 0
+ },
+ "thumb": {
+  "model": "not applied in landscape",
+  "primaries": [],
+  "tabbar": []
+ },
+ "inputs": [
+  {
+   "field": "#email",
+   "purpose": "email",
+   "keyboard": "email"
+  },
+  {
+   "field": "#phone",
+   "purpose": "tel",
+   "keyboard": "tel"
+  },
+  {
+   "field": "#card",
+   "purpose": "card",
+   "keyboard": "numeric"
+  },
+  {
+   "field": "#cvc",
+   "purpose": "cvc",
+   "keyboard": "numeric"
+  },
+  {
+   "field": "#post",
+   "purpose": "postcode",
+   "keyboard": "text"
+  },
+  {
+   "field": "#otp",
+   "purpose": "otp",
+   "keyboard": "numeric"
+  },
+  {
+   "field": "#store",
+   "purpose": "search",
+   "keyboard": "search"
+  }
+ ],
+ "findings": [],
+ "ms": 535
+}

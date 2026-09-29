@@ -1,0 +1,81 @@
+{
+ "unitsTextures": "MiB of GPU memory including a full mip chain (×4/3)",
+ "textures": [
+  {
+   "size": "512²",
+   "RGBA8 (JPEG/PNG/WebP/AVIF once decoded)": 1.3,
+   "BC7 / ASTC 4×4 / ETC2 RGBA8 (KTX2 UASTC transcoded)": 0.3,
+   "BC1 / ETC1 / ETC2 RGB (KTX2 ETC1S transcoded, opaque)": 0.2
+  },
+  {
+   "size": "1024²",
+   "RGBA8 (JPEG/PNG/WebP/AVIF once decoded)": 5.3,
+   "BC7 / ASTC 4×4 / ETC2 RGBA8 (KTX2 UASTC transcoded)": 1.3,
+   "BC1 / ETC1 / ETC2 RGB (KTX2 ETC1S transcoded, opaque)": 0.7
+  },
+  {
+   "size": "2048²",
+   "RGBA8 (JPEG/PNG/WebP/AVIF once decoded)": 21.3,
+   "BC7 / ASTC 4×4 / ETC2 RGBA8 (KTX2 UASTC transcoded)": 5.3,
+   "BC1 / ETC1 / ETC2 RGB (KTX2 ETC1S transcoded, opaque)": 2.7
+  },
+  {
+   "size": "4096²",
+   "RGBA8 (JPEG/PNG/WebP/AVIF once decoded)": 85.3,
+   "BC7 / ASTC 4×4 / ETC2 RGBA8 (KTX2 UASTC transcoded)": 21.3,
+   "BC1 / ETC1 / ETC2 RGB (KTX2 ETC1S transcoded, opaque)": 10.7
+  }
+ ],
+ "unitsWaits": "KiB deliverable",
+ "waits": [
+  {
+   "network": "slow 4G (Lighthouse mobile: 1.6 Mbps, 150 ms)",
+   "1 s warm": 137,
+   "1 s cold": 78,
+   "2.5 s warm": 430,
+   "2.5 s cold": 371,
+   "5 s warm": 918,
+   "5 s cold": 859
+  },
+  {
+   "network": "p75 phone 2026 (Russell: 9 Mbps, 100 ms)",
+   "1 s warm": 879,
+   "1 s cold": 659,
+   "2.5 s warm": 2527,
+   "2.5 s cold": 2307,
+   "5 s warm": 5273,
+   "5 s cold": 5054
+  },
+  {
+   "network": "slow 3G (400 kbps, 400 ms)",
+   "1 s warm": 10,
+   "1 s cold": 0,
+   "2.5 s warm": 83,
+   "2.5 s cold": 44,
+   "5 s warm": 205,
+   "5 s cold": 166
+  }
+ ],
+ "frames": [
+  {
+   "refresh": "30 Hz",
+   "frameMs": 33.3,
+   "jsAt50pct": 16.7
+  },
+  {
+   "refresh": "60 Hz",
+   "frameMs": 16.7,
+   "jsAt50pct": 8.3
+  },
+  {
+   "refresh": "90 Hz",
+   "frameMs": 11.1,
+   "jsAt50pct": 5.6
+  },
+  {
+   "refresh": "120 Hz",
+   "frameMs": 8.3,
+   "jsAt50pct": 4.2
+  }
+ ]
+}

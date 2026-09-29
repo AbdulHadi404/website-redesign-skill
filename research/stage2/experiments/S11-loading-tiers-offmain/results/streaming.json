@@ -1,0 +1,292 @@
+{
+ "env": {
+  "date": "2026-09-29T02:17:05.214Z",
+  "node": "v22.22.2",
+  "cpus": 4,
+  "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "loadavgAtStart": [
+   14.6,
+   16.5,
+   15.8
+  ],
+  "loadavgAtEnd": [
+   14,
+   16,
+   15.7
+  ]
+ },
+ "built": {
+  "backendMs": 1200,
+  "appJs": {
+   "raw": 335729,
+   "gzip": 50934
+  },
+  "heroBytes": 52352,
+  "items": 24
+ },
+ "profile": "phone 390×844 @2x, CPU 4×, slow 4G (150 ms RTT, 1.6 Mbps), cache off; backend delay 1200 ms on the page (buffered, streamed) or on /api/items (csr, csr-all)",
+ "runs": [
+  {
+   "variant": "buffered",
+   "loadavg1": 14.6,
+   "cls": 0,
+   "fcp": 1352,
+   "lcp": 1752,
+   "lcpEl": "hero",
+   "list": 1285.1000000005588,
+   "ttfb": 1246,
+   "htmlDone": 1271.5
+  },
+  {
+   "variant": "streamed",
+   "loadavg1": 14.2,
+   "cls": 0,
+   "fcp": 292,
+   "lcp": 620,
+   "lcpEl": "hero",
+   "list": 1243.6000000005588,
+   "ttfb": 4.900000000372529,
+   "htmlDone": 1235.5
+  },
+  {
+   "variant": "csr",
+   "loadavg1": 14,
+   "cls": 0,
+   "fcp": 236,
+   "lcp": 896,
+   "lcpEl": "hero",
+   "list": 2366,
+   "ttfb": 7.2000000001862645,
+   "htmlDone": 170.70000000018626
+  },
+  {
+   "variant": "csr-all",
+   "loadavg1": 14,
+   "cls": 0,
+   "fcp": 1044,
+   "lcp": 1544,
+   "lcpEl": "hero",
+   "list": 2218.199999999255,
+   "ttfb": 6.7999999998137355,
+   "htmlDone": 168.8999999994412
+  },
+  {
+   "variant": "buffered",
+   "loadavg1": 15.3,
+   "cls": 0,
+   "fcp": 1312,
+   "lcp": 1688,
+   "lcpEl": "hero",
+   "list": 1247.5999999996275,
+   "ttfb": 1202.9000000003725,
+   "htmlDone": 1228.7999999998137
+  },
+  {
+   "variant": "streamed",
+   "loadavg1": 14.6,
+   "cls": 0,
+   "fcp": 212,
+   "lcp": 676,
+   "lcpEl": "hero",
+   "list": 1229.2000000001863,
+   "ttfb": 5.8999999994412065,
+   "htmlDone": 1226.8999999994412
+  },
+  {
+   "variant": "csr",
+   "loadavg1": 14.6,
+   "cls": 0,
+   "fcp": 396,
+   "lcp": 1160,
+   "lcpEl": "hero",
+   "list": 2342,
+   "ttfb": 4.5,
+   "htmlDone": 164.29999999981374
+  },
+  {
+   "variant": "csr-all",
+   "loadavg1": 14.9,
+   "cls": 0,
+   "fcp": 1112,
+   "lcp": 1472,
+   "lcpEl": "hero",
+   "list": 2244.2000000001863,
+   "ttfb": 7.7000000001862645,
+   "htmlDone": 179.30000000074506
+  },
+  {
+   "variant": "buffered",
+   "loadavg1": 14.7,
+   "cls": 0,
+   "fcp": 1292,
+   "lcp": 1688,
+   "lcpEl": "hero",
+   "list": 1250.2000000001863,
+   "ttfb": 1203.7000000001863,
+   "htmlDone": 1228.5
+  },
+  {
+   "variant": "streamed",
+   "loadavg1": 14.7,
+   "cls": 0,
+   "fcp": 248,
+   "lcp": 648,
+   "lcpEl": "hero",
+   "list": 1230.9000000003725,
+   "ttfb": 6.099999999627471,
+   "htmlDone": 1227.7000000001863
+  },
+  {
+   "variant": "csr",
+   "loadavg1": 14.9,
+   "cls": 0,
+   "fcp": 252,
+   "lcp": 900,
+   "lcpEl": "hero",
+   "list": 2369.4000000003725,
+   "ttfb": 24.800000000745058,
+   "htmlDone": 175.90000000037253
+  },
+  {
+   "variant": "csr-all",
+   "loadavg1": 14.8,
+   "cls": 0,
+   "fcp": 892,
+   "lcp": 1296,
+   "lcpEl": "hero",
+   "list": 2103,
+   "ttfb": 11.799999999813735,
+   "htmlDone": 183.79999999981374
+  },
+  {
+   "variant": "buffered",
+   "loadavg1": 14.8,
+   "cls": 0,
+   "fcp": 1404,
+   "lcp": 2008,
+   "lcpEl": "hero",
+   "list": 1388.0999999996275,
+   "ttfb": 1338.5999999996275,
+   "htmlDone": 1366.9000000003725
+  },
+  {
+   "variant": "streamed",
+   "loadavg1": 14.8,
+   "cls": 0,
+   "fcp": 228,
+   "lcp": 628,
+   "lcpEl": "hero",
+   "list": 1230.9000000003725,
+   "ttfb": 6.6000000005587935,
+   "htmlDone": 1226.300000000745
+  },
+  {
+   "variant": "csr",
+   "loadavg1": 14.6,
+   "cls": 0,
+   "fcp": 236,
+   "lcp": 1104,
+   "lcpEl": "hero",
+   "list": 2391,
+   "ttfb": 11.300000000745058,
+   "htmlDone": 168.80000000074506
+  },
+  {
+   "variant": "csr-all",
+   "loadavg1": 14.6,
+   "cls": 0,
+   "fcp": 928,
+   "lcp": 1336,
+   "lcpEl": "hero",
+   "list": 2120.199999999255,
+   "ttfb": 3.5,
+   "htmlDone": 163.19999999925494
+  },
+  {
+   "variant": "buffered",
+   "loadavg1": 14.4,
+   "cls": 0,
+   "fcp": 1324,
+   "lcp": 1712,
+   "lcpEl": "hero",
+   "list": 1267.2000000001863,
+   "ttfb": 1208.6000000005588,
+   "htmlDone": 1237.4000000003725
+  },
+  {
+   "variant": "streamed",
+   "loadavg1": 14.7,
+   "cls": 0,
+   "fcp": 220,
+   "lcp": 640,
+   "lcpEl": "hero",
+   "list": 1229.2000000001863,
+   "ttfb": 16.40000000037253,
+   "htmlDone": 1225.300000000745
+  },
+  {
+   "variant": "csr",
+   "loadavg1": 14.7,
+   "cls": 0,
+   "fcp": 320,
+   "lcp": 1180,
+   "lcpEl": "hero",
+   "list": 2322.199999999255,
+   "ttfb": 4.7999999998137355,
+   "htmlDone": 223.59999999962747
+  },
+  {
+   "variant": "csr-all",
+   "loadavg1": 14.5,
+   "cls": 0,
+   "fcp": 964,
+   "lcp": 1376,
+   "lcpEl": "hero",
+   "list": 2191.9000000003725,
+   "ttfb": 41.700000000186265,
+   "htmlDone": 190.1000000005588
+  }
+ ],
+ "summary": {
+  "buffered": {
+   "runs": 5,
+   "ttfb": 1209,
+   "fcp": 1324,
+   "lcp": 1712,
+   "lcpEl": "hero",
+   "listVisible": 1267,
+   "htmlDone": 1237,
+   "cls": 0
+  },
+  "streamed": {
+   "runs": 5,
+   "ttfb": 6,
+   "fcp": 228,
+   "lcp": 640,
+   "lcpEl": "hero",
+   "listVisible": 1231,
+   "htmlDone": 1227,
+   "cls": 0
+  },
+  "csr": {
+   "runs": 5,
+   "ttfb": 7,
+   "fcp": 252,
+   "lcp": 1104,
+   "lcpEl": "hero",
+   "listVisible": 2366,
+   "htmlDone": 171,
+   "cls": 0
+  },
+  "csr-all": {
+   "runs": 5,
+   "ttfb": 8,
+   "fcp": 964,
+   "lcp": 1376,
+   "lcpEl": "hero",
+   "listVisible": 2192,
+   "htmlDone": 179,
+   "cls": 0
+  }
+ }
+}

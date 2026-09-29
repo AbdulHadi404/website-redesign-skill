@@ -1,0 +1,8 @@
+<!doctype html>
+<!-- capture.mjs regress fixture (run at 390): a fixed-width page (viewport meta width=1100), which a phone shows zoomed
+     out, so the capture is drawn at about 0.35 of its CSS size. The flat-image self-check used to read the image
+     boxes at full size: it missed the covered image here (and on the Stem & Wren build reported its visible logo as
+     flat). Expect "1 image(s) painted flat (dashboard.png?covered)" and nothing about dashboard.png?open. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=1100"><title>Zoomed out</title>
+<style>body{margin:0;font-family:system-ui,sans-serif} main{padding:40px} img{display:block} .wrap{position:relative;width:600px;margin-left:420px} .wrap::after{content:"";position:absolute;inset:0;background:#ccc}</style></head>
+<body><main><h1>Fixed-width page</h1><img src="dashboard.png?open" width="600" height="350" alt="Dashboard" style="margin-left:420px"><p>The same picture under a grey panel:</p><div class="wrap"><img src="dashboard.png?covered" width="600" height="350" alt="Dashboard, covered"></div></main></body></html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>
+  // ?variant=broken → the same screen with the mobile mistakes the checker should find. Both variants carry the same
+  // viewport meta (edge-to-edge, keyboard resizes the layout); the broken CSS never pads for the insets or the keyboard.
+  // &meta=plain → the broken screen without viewport-fit=cover / interactive-widget: the browser then keeps the page
+  // inside the safe area and overlays the keyboard, so those two checks have nothing to say.
+  const q = new URLSearchParams(location.search);
+  window.BROKEN = q.get('variant') === 'broken';
+  document.write(q.get('meta') === 'plain' ? '<meta name="viewport" content="width=device-width, initial-scale=1">' : '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">');
+  document.write(`<link rel="stylesheet" href="audit-rtl-mobile${BROKEN ? '-broken' : ''}.css">`);
+</script>
+<title>Product · Mobile fixture</title>
+<!-- Copy of research/stage2/experiments/S8-rtl-mobile-haptics/fixtures/mobile.html (stage-2 S8) for tools/regress.mjs: the audit.mjs
+     phone-width block. ?variant=broken seeds the mistakes; &meta=plain drops viewport-fit=cover and interactive-widget. -->
+</head>
+<body>
+<header class="top">
+  <button class="icon-btn" aria-label="Back">←</button>
+  <h1>Cotton overshirt</h1>
+  <button class="icon-btn" aria-label="Share">⇪</button>
+  <button class="icon-btn fav" aria-label="Save to favourites">♡</button>
+  <a class="fab-top primary" href="#buy">Buy now</a>
+</header>
+<main>
+  <div class="hero">Photo</div>
+  <p class="price">SAR 249.00</p>
+  <fieldset class="sizes"><legend>Size</legend>
+    <label><input type="radio" name="s"> S</label><label><input type="radio" name="s" checked> M</label><label><input type="radio" name="s"> L</label><label><input type="radio" name="s"> XL</label>
+  </fieldset>
+  <div class="qty"><button aria-label="Fewer">−</button><span>1</span><button aria-label="More">+</button></div>
+  <h2>Saved addresses</h2>
+  <ul class="rows">
+    <li class="row"><span>Home — Al Olaya, Riyadh</span><span class="actions"><button aria-label="Edit home address">✎</button><button aria-label="Delete home address">🗑</button></span></li>
+    <li class="row"><span>Office — King Fahd Rd</span><span class="actions"><button aria-label="Edit office address">✎</button><button aria-label="Delete office address">🗑</button></span></li>
+  </ul>
+  <form class="checkout" id="buy" onsubmit="return false">
+    <h2>Checkout</h2>
+    <label>Email <input id="email" name="email"></label>
+    <label>Mobile number <input id="phone" name="phone"></label>
+    <label>Card number <input id="card" name="card"></label>
+    <label>Security code <input id="cvc" name="cvc"></label>
+    <label>Postcode <input id="post" name="postcode"></label>
+    <label>One-time code <input id="otp" name="otp"></label>
+    <label>Search stores <input id="store" name="q"></label>
+  </form>
+  <p style="height:600px">More details…</p>
+</main>
+<div class="buybar"><span class="total">SAR 249.00</span><button class="primary" type="submit" form="buy">Add to cart</button></div>
+<nav class="tabbar" aria-label="Main"><a href="#" aria-current="page">Home</a><a href="#">Search</a><a href="#">Bag</a><a href="#">Account</a></nav>
+<script>
+  // Inputs: the fixed variant gets the attributes that bring the right keyboard; the broken one gets the usual mistakes.
+  const A = BROKEN ? {
+    email: { type: 'text' }, phone: { type: 'number' }, card: { type: 'number' }, cvc: { type: 'number' }, post: { type: 'number' }, otp: { type: 'number' }, store: { type: 'text' },
+  } : {
+    email: { type: 'email', autocomplete: 'email', autocapitalize: 'off', spellcheck: 'false', enterkeyhint: 'next' },
+    phone: { type: 'tel', autocomplete: 'tel', enterkeyhint: 'next' },
+    card: { type: 'text', inputmode: 'numeric', autocomplete: 'cc-number', enterkeyhint: 'next' },
+    cvc: { type: 'text', inputmode: 'numeric', autocomplete: 'cc-csc', enterkeyhint: 'next' },
+    post: { type: 'text', autocomplete: 'postal-code', enterkeyhint: 'next' },
+    otp: { type: 'text', inputmode: 'numeric', autocomplete: 'one-time-code', enterkeyhint: 'done' },
+    store: { type: 'search', enterkeyhint: 'search' },
+  };
+  for (const [id, attrs] of Object.entries(A)) for (const [k, v] of Object.entries(attrs)) document.getElementById(id).setAttribute(k, v);
+</script>
+</body>
+</html>

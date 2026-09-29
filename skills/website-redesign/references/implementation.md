@@ -1,64 +1,71 @@
-# Phase 5 — Implementation
+# Phase 5 — Build
 
-Goal: the redesign, built in the existing stack, with functionality untouched and the visual system genuinely replaced.
+Goal: the redesign, built in the existing stack, with functionality untouched and the visual system genuinely replaced (or, for a refine, genuinely fixed).
 
 ## Ground rules
 
 - Work on a branch. Commit in focused steps with messages that explain the direction, not just the files.
-- Stay in the repository's framework, styling approach and build. Rebuild the *visual system*; do not rewrite the application.
-- Add a dependency only when a capability genuinely needs it (an image pipeline, a CMS client). Never for a visual effect CSS can do.
-- Preserve everything on the audit's preserved-list: routes, anchors, element ids and data attributes wired to scripts, form field names, API contracts, analytics hooks, third-party embeds, legal text. Restyle around them; if a widget's markup must move, keep its ids and re-verify the script that drives it.
-- Keep the facts. Improve copy for hierarchy and brevity; never change a claim, a number, a name or a price without the user.
-- Remove leaked placeholders (`[TBD]`, `[timeframe]`) from customer-visible copy by restructuring the sentence, not by inventing the value.
+- Stay in the repository's framework, styling approach, build and **component library**. Rebuild the visual system; do not rewrite the application; do not swap primitive or component libraries inside a redesign (`design-systems.md` §1).
+- Add a dependency only when a capability genuinely needs it — and only after checking its licence, size and maintenance (`resources/libraries.md`). Never for an effect CSS can do.
+- Preserve everything on the audit's preserved-list: routes, anchors, ids and data attributes wired to scripts, form field names, API contracts, analytics hooks, embeds, legal text. If a widget's markup must move, keep its ids and re-verify the script that drives it. `parity.mjs` checks this at the end.
+- Keep the facts. Improve copy for hierarchy and brevity; never change a claim, a number, a name or a price without the user. Remove leaked placeholders (`[TBD]`) by restructuring the sentence, not by inventing the value.
 
 ## Order of work
 
-1. **Tokens** — palette, type scale, spacing rhythm, radii, shadows, easing, breakpoints. Delete the old ones; do not layer new tokens over them.
-2. **Base** — reset, typography rules, surfaces (light/dark chapters), container and chapter primitives, focus styles, selection.
-3. **Motion** — the reveal system and the two or three concept-specific moves, with a complete `prefers-reduced-motion` block.
-4. **Primitives** — nav, footer, buttons, chapter wrapper, heading pattern, tags/status only if they are *data*.
-5. **Product fragments and visuals** — the components that show the product; diagrams; photo containers.
-6. **Homepage**, chapter by chapter, in the narrative order from `DESIGN.md`.
+1. **Tokens** — colour roles, type sets (expressive and/or productive), spacing, radii, elevation, motion, density, breakpoints. Delete the old ones; do not layer new tokens over them.
+2. **Base** — reset, typography rules, surfaces, container and chapter primitives, focus styles, selection and other browser surfaces. Set `code, kbd, samp, pre { font-family: inherit }` and point the framework's mono token at the UI face unless the audience reads code (commitment 5 in `SKILL.md`): the browser's default monospace counts, and a stray `font-mono` class follows the token.
+3. **Motion** — the reveal system and the concept moves, with a complete reduced-motion block: under reduced motion every delay is zero as well as the movement substituted (`transition-delay`, `animation-delay`, `--stagger`, `--delay`), so a settled state arrives at once (`motion.md` §4, §6).
+4. **Primitives** — nav, footer, buttons, inputs, chapter wrapper, heading pattern; tags and status only if they are data.
+5. **Product fragments and visuals** — the components that show the product (in its real type size and tokens), diagrams, photo containers, the drawn graphics layer.
+6. **Pages** in the narrative order from `DESIGN.md` (expressive) or top-task order (productive) — every state of every component on them.
 7. **Secondary pages** on the same system — no page may still belong to the old design.
 8. **Identity assets** — favicon, social image, theme colour, metadata.
 
-## Composition rules that keep pages from looking templated
+## Composition (expressive surfaces)
 
-- Vary the composition per chapter, and let the sequence come from the company's narrative rather than from a favourite order. A voice-product site might run photographic hero → typographic claim → product scene → diagram → photographic chapter → index → closing; a developer tool might run product hero → three product chapters of increasing depth → proof → pricing; a services firm with no UI might run editorial statement → process diagram → environment photography → people → proof → closing. The rule is the same in each: no two adjacent chapters share a structure, and every chapter earns its place.
-- Alternate surfaces (light, alternate light, dark, image) so chapters are visible from a distance.
-- Prefer rules, columns and whitespace to boxes. If content is a list, render a list; if it is a table, render a table.
+- Vary the composition per chapter; let the sequence come from the company's narrative. A voice-product site might run photographic hero → typographic claim → product scene → diagram → photographic chapter → index → closing; a developer tool: product hero → three product chapters of increasing depth → proof → pricing; a services firm without UI: editorial statement → process diagram → environment photography → people → proof → closing. No two adjacent chapters share a structure; every chapter earns its place.
+- Alternate surfaces so chapters are visible from a distance.
+- Prefer rules, columns and whitespace to boxes. A list renders as a list, a table as a table.
 - One primary action, repeated; secondary actions as text links.
-- Headlines: a real scale, deliberate wrapping (`max-width` in `ch`, `text-wrap: balance`), emphasis handled by the type (italic, colour) not by badges.
-- Body copy at a comfortable measure (45–70 characters), never centred in long runs.
-- Text on its own ground, always (see `imagery.md`).
+- Headlines on a real scale, wrapped deliberately (`max-width` in `ch`, `text-wrap: balance`), emphasis by the type, not by badges. Body at 60–70 characters and never over 75 (`design-theory.md` C1), never centred in long runs.
+- Text on its own ground, always (`imagery.md`).
+
+On **productive** surfaces the rule inverts: one layout per kind of task, applied consistently; the user's content gets the width; chrome recedes (`app-ui.md`).
 
 ## Showing the product
 
-- Faithful fragments of real screens: real column names, real states, real flows. Sample data must be obviously illustrative and never a real customer.
-- Show motion of the system where it exists: a row streaming a transcript, a pipeline filling, a progress bar, a diagram with flow.
-- If the product offers a live demo the visitor can use on the site, give it a prominent, dedicated surface with its own heading — inputs and results on a solid background, never over a photograph.
+- Faithful fragments of real screens — real column names, states and flows — rendered at the product's real type size with its real tokens, and sample data that is obviously illustrative (a "fiction palette" of names and numbers; never a real customer).
+- Show the system moving where it does: a row streaming, a pipeline filling, a number updating.
+- A fragment that shows numbers — a chart, a strip, a table of figures — is a chart at marketing scale: `dataviz.md` applies (labels, units, a period, no decorative sparklines, tabular figures).
+- Drawn product fragments that are illustrations captioned as invented get `user-select: none`, so a drag across the hero does not select fake UI; real controls (a form, an estimator) and real product UI stay selectable (`app-ui.md` §2 keeps read-only values copyable).
+- A live demo the visitor can use gets a prominent, dedicated surface with its own heading, inputs and results on a solid background.
 - Never draw a capability that does not exist.
 
-## Interaction rules
+## Interaction
 
-`ui-ux.md` governs everything a visitor touches: one primary action per view, targets ≥ 44 px (never < 24), forms single-column with labels above and the actions on the field axis, every widget's five states designed, response feedback within 100 ms / skeletons over spinners, motion 100–300 ms ease-out and off under reduced motion, icons with visible labels, nav ≤ 7 items and a labelled mobile menu, error messages next to the field in plain words with the input preserved, no dark patterns, nothing shaped like an ad.
+`ui-ux.md` and `app-ui.md` govern everything a visitor touches: one primary action per view; targets ≥ 44 px on touch (never < 24); forms single-column, labels above, validated on submit then live, an error summary at three or more errors; every component's applicable states designed; feedback within 100 ms; motion only to explain change on productive surfaces; icons with visible labels; navigation with a labelled mobile menu; nothing shaped like an ad; no dark patterns.
 
 ## Engineering discipline
 
-- Semantic HTML: landmarks, one `h1`, heading levels in order, lists as lists, buttons vs links used correctly, labels for inputs, `aria-*` on custom widgets (tabs, menus), a skip link.
-- Keyboard: focus visible, tab order sane, menus and tabs operable, Escape closes overlays.
-- Contrast: check small text on tinted surfaces; keep a darker accent variant for small text.
-- Images: explicit dimensions, responsive sources, lazy below the fold, eager hero with high fetch priority, alt text that describes the image.
-- Motion: transitions and transforms only; no layout-affecting animation; reduced-motion disables everything decorative.
-- Performance: no runtime framework for static content; fonts subset and swapped; heavy JS only on routes that need it (an embedded CMS studio, a demo).
-- Sticky/fixed traps: a `backdrop-filter`, `filter` or `transform` on an ancestor makes it the containing block for fixed children (mobile menus vanish inside headers); put the blur on a pseudo-element.
-- Responsive images inside a `<picture>`: the wrapper has no height of its own, so `height: 100%` on the image falls back to intrinsic size — size the wrapper to the container.
-- Parallax containers must overscan their section (`inset: -10% 0`) or they expose gaps.
-- Percentage-height heroes (`100svh`) balloon in tall captures and push key content below the fold; size heroes by content with a modest minimum.
+- **Semantic HTML first**: landmarks, one `h1`, ordered headings, lists as lists, `<button>` for actions and `<a>` for navigation, labels for inputs, native `<dialog>`, `<details>` and `popover` before ARIA. ARIA only where HTML has no element, and then the full pattern (`accessibility.md`).
+- **Keyboard**: visible `:focus-visible` rings (≥ 2 px, 3:1, and a transparent `outline` so forced-colours mode keeps them), sane order, Escape closes overlays, focus moved on open and restored on close.
+- **Contrast** measured on real grounds (`contrast.mjs`); a darker accent variant for small text.
+- **Images**: explicit dimensions, responsive sources, lazy below the fold, eager hero with `fetchpriority="high"`, alt text that says what the image shows (or `alt=""` if decorative).
+- **Density** as component sizes (`[data-density=compact]` swapping control and row heights), not a new spacing unit.
+- **Browser surfaces**: `::selection`, `accent-color` on native controls, `caret-color`, `text-underline-offset`, `color-scheme`, `theme-color` — the cheapest signal that a page was built rather than assembled.
+- **Fonts**: self-hosted WOFF2, subset, `font-display: swap` (or `optional`), metric-matched fallbacks computed from the actual fallback file, `font-size-adjust` where faces share a line.
+- **Performance**: no runtime framework for static content; islands for widgets; heavy libraries only on routes that need them, loaded late (`performance.md`).
+- **Sticky and fixed traps**: a `backdrop-filter`, `filter` or `transform` on an ancestor makes it the containing block for fixed children — put the blur on a pseudo-element. Input-mode media queries go *after* the base rules.
+- **Responsive images in `<picture>`**: the wrapper has no height of its own — size it to the container.
+- **Heights**: heroes sized by content with a modest minimum (`min(100svh, 56rem)`), never `height: 100vh`; parallax containers overscan their section.
+- **Single-column fallbacks are `minmax(0, 1fr)`, never `1fr`**: `1fr` is `minmax(auto, 1fr)`, so a nowrap child sets the track minimum and the column runs past the viewport on phones, hidden by the page's own `overflow: clip` from every detector reading `scrollWidth`. Grid and flex children holding nowrap text get `min-width: 0`.
+- **A drawn glyph component is `inline-block` (or `inline-flex`) with its own size**, never a bare sized `<span>`: its width is ignored in a block context and its SVG fills the column.
+- **Buttons wrap below 380 px**: a `nowrap` primary action with a long label is the usual 320 px reflow failure. Desktop labels still must not wrap (`anti-patterns.md` 'Copy').
+- **RTL-ready**: logical properties throughout, except numeric columns, which are `text-align: right` in both directions (`multilingual.md` §1, §2a).
 
 ## What not to do
 
-- Do not keep the old stylesheet and append; replace it and delete what is dead.
+- Do not keep the old stylesheet and append; replace it and delete what is dead (knip, PurgeCSS).
 - Do not leave the nav, footer or a secondary page in the old identity "for later".
 - Do not ship anything you have not rendered.
 
@@ -66,20 +73,31 @@ Goal: the redesign, built in the existing stack, with functionality untouched an
 
 "Keep the widget, restyle it through its class names" is the right instruction and the most common way to ship a broken screen, because the class names are only half the contract. **Open the file that writes the markup and read it** before writing a line of CSS for it:
 
-- Which element carries which class, and how they nest. A rule written for `.card > .title` does nothing if the script emits `.card > .row > .title`, and the defect looks like "the CSS did not load" rather than like a selector miss.
-- Whether it injects SVG, and whether those marks have intrinsic dimensions (usually not — see `visual-qa.md`).
+- Which element carries which class, and how they nest — a rule for `.card > .title` does nothing if the script emits `.card > .row > .title`, and the defect looks like "the CSS did not load".
+- Whether it injects SVG, and whether those marks have intrinsic dimensions (usually not).
 - Which classes are states (`.open`, `.active`, `.is-partial`) and which are structure.
-- Whether it sets inline styles — an `animation-delay` on a card is inert if you removed the animation, and an inline `style` will beat your rule.
+- Whether it sets inline styles — an inline `style` beats your rule.
 
-Then drive the widget through every state and look at each one. A results list, a loading state and an error state are three different renders of the same class names, and the direction has to survive all three.
+Then drive the widget through every state and look at each one.
 
 ## The reveal, written safely
 
-If the direction uses scroll reveals, write them so the page is finished without JavaScript:
+Content is finished by default. Where supported, prefer the CSS scroll-driven reveal — no JavaScript, and a range that ends at `entry 100%` so the last element can finish (`motion.md` §5):
+
+```css
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 100%; }
+  }
+}
+@keyframes reveal { from { opacity: 0; transform: translateY(16px); } }
+```
+
+The JavaScript fallback inverts the usual pattern — a root class *hides* things so they can arrive, and is only added when a visitor can see them:
 
 ```css
 .reveal { opacity: 1; }                                  /* the default */
-.motion .reveal { opacity: 0; transform: translateY(10px); transition: ...; }
+.motion .reveal { opacity: 0; transform: translateY(10px); transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out); }
 .motion .reveal.in { opacity: 1; transform: none; }
 ```
 
@@ -91,4 +109,8 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches &&
 }
 ```
 
-No JavaScript, a background tab, or a reduced-motion preference all render the finished page rather than a column of holes.
+No JavaScript, a background tab, a reduced-motion preference or a headless capture all render the finished page rather than a column of holes. Never on a photograph. `audit.mjs` fails any content that is invisible without JavaScript or under reduced motion.
+
+## Dialogs, popovers, toasts without a library
+
+`<dialog>` and the `popover` attribute with `@starting-style` and `transition-behavior: allow-discrete` animate in *and out* of `display: none` with no JavaScript (Baseline 2024; `motion.md` §5 has the CSS). They bring focus handling, light dismiss and the top layer with them.

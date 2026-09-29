@@ -1,0 +1,30 @@
+[
+ {
+  "lang": "/",
+  "typed": "١٢٥٠٫٥٠",
+  "inputValue": "١٢٥٠٫٥٠",
+  "calls": "[[\"invoice_create\",{\"amount\":1250.5}]]",
+  "msg": "فاتورة مركز نبض الطبي بإجمالي 1,438.08 ر.س، منها ضريبة القيمة المضافة 187.58 ر.س. | "
+ },
+ {
+  "lang": "/?lang=en",
+  "typed": "1,250.5",
+  "inputValue": "1,250.5",
+  "calls": "[[\"invoice_create\",{\"amount\":1250.5}]]",
+  "msg": "Invoice for Nabd Medical Center, total SAR 1,438.08 including VAT of SAR 187.58. | "
+ },
+ {
+  "lang": "/",
+  "typed": "1250.555",
+  "inputValue": "1250.555",
+  "calls": "[]",
+  "msg": " | خطأ: استخدم خانتين عشريتين على الأكثر"
+ },
+ {
+  "lang": "/",
+  "typed": "",
+  "inputValue": "",
+  "calls": "[]",
+  "msg": " | خطأ: أدخل المبلغ قبل الضريبة، مثل 1,250.00"
+ }
+]

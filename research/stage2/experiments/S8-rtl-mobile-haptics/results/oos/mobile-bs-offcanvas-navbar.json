@@ -1,0 +1,128 @@
+{
+ "url": "http://127.0.0.1:38965/ext/bootstrap-built/offcanvas-navbar.html",
+ "width": 390,
+ "height": 844,
+ "insets": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "env": {
+  "viewportMeta": "width=device-width, initial-scale=1",
+  "hoverNone": true,
+  "coarse": true,
+  "cover": false,
+  "resizesContent": false
+ },
+ "summary": {
+  "FAIL": 0,
+  "WARN": 3,
+  "INFO": 3
+ },
+ "thumb": {
+  "model": {
+   "pxPerMm": 6.1,
+   "pivotOutsideMm": 5,
+   "pivotUpMm": 15,
+   "near": 25,
+   "natural": 65,
+   "stretch": 85,
+   "edgeMm": 5
+  },
+  "primaries": [],
+  "tabbar": []
+ },
+ "inputs": [
+  {
+   "field": "",
+   "purpose": "search",
+   "keyboard": "search"
+  }
+ ],
+ "findings": [
+  {
+   "level": "INFO",
+   "check": "safe-area",
+   "message": "No viewport-fit=cover: the browser keeps the page inside the safe area (letterboxed in landscape; env() insets are 0), so bars cannot sit under the notch or home indicator. Choose cover only for an edge-to-edge design, and then pad bars with env()",
+   "examples": []
+  },
+  {
+   "level": "WARN",
+   "check": "targets",
+   "message": "Targets under 44 px on a coarse pointer (buttons, fixed-bar links)",
+   "count": 7,
+   "examples": [
+    "a.navbar-brand\"Offcanvas navbar\" 176×40",
+    "#navbarSideCollapse 30×30",
+    "a\"All updates\" 78×16",
+    "a\"Follow\" 44×18",
+    "a\"Follow\" 44×18",
+    "a\"Follow\" 44×18",
+    "a\"All suggestions\" 106×16"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "targets",
+   "message": "Small targets packed closer than 8 px (mis-taps)",
+   "count": 9,
+   "examples": [
+    "a.nav-link.active\"Dashboard\" (0px from a.nav-link\"Friends\n      27\")",
+    "a.nav-link\"Friends\n      27\" (0px from a.nav-link.active\"Dashboard\")",
+    "a.nav-link\"Explore\" (0px from a.nav-link\"Friends\n      27\")",
+    "a.nav-link\"Suggestions\" (0px from a.nav-link.active\"Dashboard\")",
+    "a.nav-link\"Link\" (0px from a.nav-link\"Friends\n      27\")",
+    "a.nav-link\"Link\" (0px from a.nav-link\"Friends\n      27\")",
+    "a.nav-link\"Link\" (0px from a.nav-link\"Explore\")",
+    "a.nav-link\"Link\" (0px from a.nav-link\"Explore\")",
+    "a.nav-link\"Link\" (0px from a.nav-link\"Suggestions\")"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "targets",
+   "message": "Small targets hugging the screen edge, where touch error is largest",
+   "count": 7,
+   "examples": [
+    "a.navbar-brand\"Offcanvas navbar\"",
+    "#navbarSideCollapse",
+    "a\"All updates\"",
+    "a\"Follow\"",
+    "a\"Follow\"",
+    "a\"Follow\"",
+    "a\"All suggestions\""
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "pressed",
+   "message": "Controls with no pressed (:active) state and the tap highlight turned off: a tap gives no feedback until the result",
+   "count": 16,
+   "examples": [
+    "a.navbar-brand\"Offcanvas navbar\"",
+    "#navbarSideCollapse",
+    "a.nav-link.active\"Dashboard\"",
+    "a.nav-link\"Friends\n      27\"",
+    "a.nav-link\"Explore\"",
+    "a.nav-link\"Suggestions\"",
+    "a.nav-link\"Link\"",
+    "a.nav-link\"Link\"",
+    "a.nav-link\"Link\"",
+    "a.nav-link\"Link\"",
+    "a.nav-link\"Link\"",
+    "a\"All updates\"",
+    "a\"Follow\"",
+    "a\"Follow\"",
+    "a\"Follow\"",
+    "a\"All suggestions\""
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "keyboard",
+   "message": "No interactive-widget=resizes-content: the keyboard overlays the page (resizes-visual, the default in Chrome Android and on iOS) and fixed bars stay behind it — check focused fields over a real keyboard on a device",
+   "examples": []
+  }
+ ]
+}

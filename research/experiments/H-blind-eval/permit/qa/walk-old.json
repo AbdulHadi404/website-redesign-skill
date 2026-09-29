@@ -1,0 +1,8 @@
+{ "path": "/", "device": "phone", "states": [
+  { "name": "t1-zone-and-price-old", "each": true, "steps": [
+    { "wait": 400 },
+    { "tap": "text=Get Started" }, { "wait": 700 },
+    { "swipe": { "at": [200, 600], "dx": 0, "dy": -500 } }, { "wait": 300 },
+    { "swipe": { "at": [300, 400], "dx": -250, "dy": 0 } }, { "wait": 300 },
+    { "select": ["select[name=zone]", "C"] }, { "select": ["select[name=permit_length]", "6"] }, { "wait": 300 }
+  ] } ] }

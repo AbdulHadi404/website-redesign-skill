@@ -66,6 +66,12 @@ Do not build a mark on: the checkmark, the shield, the globe, the swoosh, the li
 
 Show **five or six directions that differ in kind** — a lettermark, a pictorial, a negative-space, an abstract, a wordmark-led one — never six variations of one idea. For each: a one-word name; one sentence on what it says about the company; the mark black on white, blurred, at 24 px silhouette, 16 px favicon, 32, 64, app icon, reversed; the header lockup; the browser tab. State which tests each passed, name what was drawn and dropped (and why), give a recommendation with the reason, and stop. **Nothing is applied until the user picks.** Expect to iterate on the chosen direction, not to re-present all six.
 
+## 7b. What a mark is never built from
+
+- **A library icon.** Every icon in Lucide, Phosphor or Tabler is shared by thousands of sites; Remix Icon's licence (v1.0, 2026) forbids using its icons, even modified, as a logo, app icon or brand identity. Draw the mark.
+- **A third party's mark.** Other companies' logos (Simple Icons, svgl) are trademarks licensed only to *refer* to that company.
+- **A generated image.** A purely AI-generated mark cannot be owned by the client and is likely to resemble existing marks.
+
 ## 8. Before adopting
 
 Search for confusingly similar marks in the category and the app stores before a name and mark are committed to; this is a note, not legal advice — a trademark search is a lawyer's job.

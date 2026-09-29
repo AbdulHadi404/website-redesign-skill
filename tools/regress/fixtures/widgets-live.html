@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Live contracts</title>
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; margin: 0; padding: 20px; }
+  section { margin: 0 0 24px; }
+  .toast { position: fixed; right: 16px; bottom: 16px; background: #222; color: #fff; padding: 12px 16px; }
+  [role=alertdialog] { position: fixed; top: 20%; left: 20%; right: 20%; background: #fff; border: 2px solid; padding: 16px; }
+  .error-summary { border: 4px solid #b00; padding: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Live contracts</h1>
+  <p>A paragraph that is on the page before anything is activated, long enough that a wrapper holding it is mostly old text.</p>
+
+  <!-- 1. The new text is the trigger's own description; focus stays on the trigger. Not re-read: fails. -->
+  <section>
+    <label for="code">Voucher code</label>
+    <input id="code" aria-describedby="code-msg"> <span id="code-msg"></span>
+  </section>
+
+  <!-- 2. A silent box appears; focus moves to a new button outside it. Its name is longer than the message, and is
+       still only its name: fails. -->
+  <section>
+    <button id="save" type="button">Save</button>
+    <div id="save-err" hidden><h2>Could not save</h2><p>The server did not answer.</p></div>
+    <p><span>A caption that was already beside the retry control.</span> <button id="retry" type="button" hidden>Retry saving your address</button></p>
+  </section>
+
+  <!-- 2b. A short silent status; focus moves to a new link beside it: fails. -->
+  <section>
+    <button id="add" type="button">Add to basket</button>
+    <p id="added" class="message" hidden>Added.</p> <a id="go" href="#basket" hidden>Go to your basket and check out</a>
+  </section>
+
+  <!-- 2c. A silent status, and focus moves to the heading of a newly shown panel: the heading is read, the status is not. -->
+  <section>
+    <button id="publish" type="button">Publish</button>
+    <p id="published" class="message" hidden>Published</p>
+  </section>
+  <section id="next-steps" hidden><h2 id="next-h" tabindex="-1">Share your page</h2></section>
+
+  <!-- 2d. The only new text is a link that takes focus: its name is the message. Passes. -->
+  <section>
+    <button id="export-csv" type="button">Export as CSV</button>
+    <a id="download" href="#csv" hidden>Download orders-september.csv</a>
+  </section>
+
+  <!-- 3. A silent box appears; focus moves to a link inside it. Only the link's name is read: fails. -->
+  <section>
+    <button id="pay" type="button">Pay</button>
+    <div id="declined" hidden><h2>Payment declined</h2><p>Your card was declined by the bank. <a id="help" href="#help-text">Get help</a></p></div>
+  </section>
+
+  <!-- 4. A toast that takes focus (accessibility.md §7.4): fails. -->
+  <section>
+    <button id="copy" type="button">Copy link</button>
+    <div id="toast" class="toast" tabindex="-1" hidden>Link copied</div>
+  </section>
+
+  <!-- 5. A blocking error summary, no live region, focus moved to it (§7.6): passes. -->
+  <section>
+    <label for="email">Email address</label> <input id="email" type="email">
+    <span id="email-error" hidden></span>
+    <button id="send" type="button">Send</button>
+    <div id="problem" class="error-summary" tabindex="-1" hidden>
+      <h2>There is a problem</h2>
+      <ul><li><a href="#email">Enter your email address</a></li></ul>
+    </div>
+  </section>
+
+  <!-- 5b. A focused error summary whose sentence has inline markup (a <strong>, a link mid-sentence): passes. -->
+  <section>
+    <button id="pay-card" type="button">Pay now</button>
+    <div id="card-problem" class="error-summary" tabindex="-1" hidden>
+      <h2>There is a problem</h2>
+      <p>Your card <strong>ending 4242</strong> was declined by your bank, so no money has been taken. <a href="#card">Use another card</a> or call the number on the back of your card.</p>
+    </div>
+  </section>
+
+  <!-- 5c. Three errors (§6): a focused summary, and each field's own error beside it — the same words with a visible
+       "Error:" prefix, or other words. The field errors are announced when their fields take focus: passes. -->
+  <section>
+    <label for="name3">Full name</label> <input id="name3"> <span id="name3-error" hidden></span>
+    <label for="email3">Email</label> <input id="email3"> <span id="email3-error" hidden></span>
+    <label for="town3">Town</label> <input id="town3"> <span id="town3-error" hidden></span>
+    <button id="send3" type="button">Send details</button>
+    <div id="problem3" class="error-summary" tabindex="-1" hidden>
+      <h2>There is a problem</h2>
+      <ul><li><a href="#name3">Enter your full name</a></li><li><a href="#email3">Enter your email address</a></li><li><a href="#town3">Enter your town</a></li></ul>
+    </div>
+  </section>
+
+  <!-- 6. Focus moves from the trigger to a field whose new error is its description: passes. -->
+  <section>
+    <label for="phone">Phone</label> <input id="phone" type="tel"> <span id="phone-error" hidden></span>
+    <button id="check-phone" type="button">Check phone</button>
+  </section>
+
+  <!-- 6b. The same with inline markup in the error: passes. -->
+  <section>
+    <label for="visit">Date of visit</label> <input id="visit"> <span id="visit-error" hidden></span>
+    <button id="book" type="button">Book</button>
+  </section>
+
+  <!-- 6c. GOV.UK radios: the error is the fieldset's description, focus moves to the first radio: passes. -->
+  <section>
+    <fieldset id="contact"><legend>How should we contact you?</legend>
+      <span id="contact-error" hidden></span>
+      <input type="radio" id="by-email" name="by"><label for="by-email">Email</label>
+      <input type="radio" id="by-phone" name="by"><label for="by-phone">Phone</label>
+    </fieldset>
+    <button id="next" type="button">Next</button>
+  </section>
+
+  <!-- 7. An alertdialog: focus on its button, the dialog's name and description are read: passes. -->
+  <section>
+    <button id="del" type="button">Delete file</button>
+    <div role="alertdialog" id="confirm" aria-modal="true" aria-labelledby="cf-title" aria-describedby="cf-text" hidden>
+      <h2 id="cf-title">Could not delete</h2>
+      <p id="cf-text">The file is open on another device.</p>
+      <button id="cf-ok" type="button">OK</button>
+    </div>
+  </section>
+
+  <!-- 8. A radio in a server form: Enter submits it (not tested); Space chooses it and the price is announced. -->
+  <form action="widgets-done.html" method="get">
+    <fieldset><legend>How long?</legend>
+      <input type="radio" id="len6" name="len" value="6"><label for="len6">6 months</label>
+      <input type="radio" id="len12" name="len" value="12"><label for="len12">12 months</label>
+    </fieldset>
+    <p id="price" role="status"></p>
+    <button type="submit">Continue</button>
+  </form>
+
+  <!-- 9. A server-rendered subscribe form: the next page's flash message is not announced (a finding, not a test error). -->
+  <form action="widgets-done.html" method="get">
+    <label for="sub-email">Newsletter email</label> <input id="sub-email" name="em" value="a@example.com">
+    <button id="sub" type="submit">Subscribe</button>
+  </form>
+
+  <!-- 10. A status region that exists before (the control), used with a before step that fails. -->
+  <section>
+    <button id="export" type="button">Export</button>
+    <p id="export-status" role="status"></p>
+  </section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+$('code').addEventListener('keydown', (e) => { if (e.key === 'Enter') { $('code-msg').textContent = 'Voucher codes are 8 characters'; $('code').setAttribute('aria-invalid', 'true'); } });
+$('save').onclick = () => { $('save-err').hidden = false; $('retry').hidden = false; $('retry').focus(); };
+$('pay').onclick = () => { $('declined').hidden = false; $('help').focus(); };
+$('copy').onclick = () => { $('toast').hidden = false; $('toast').focus(); };
+$('send').onclick = () => {
+  $('email-error').textContent = 'Error: Enter your email address'; $('email-error').hidden = false;
+  $('email').setAttribute('aria-invalid', 'true'); $('email').setAttribute('aria-describedby', 'email-error');
+  $('problem').hidden = false; $('problem').focus();
+};
+$('check-phone').onclick = () => {
+  $('phone-error').textContent = 'Enter a phone number, like 01632 960 001'; $('phone-error').hidden = false;
+  $('phone').setAttribute('aria-invalid', 'true'); $('phone').setAttribute('aria-describedby', 'phone-error'); $('phone').focus();
+};
+$('add').onclick = () => { $('added').hidden = false; $('go').hidden = false; $('go').focus(); };
+$('publish').onclick = () => { $('published').hidden = false; $('next-steps').hidden = false; $('next-h').focus(); };
+$('export-csv').onclick = () => { $('download').hidden = false; $('download').focus(); };
+$('pay-card').onclick = () => { $('card-problem').hidden = false; $('card-problem').focus(); };
+$('send3').onclick = () => {
+  for (const [id, t] of [['name3', 'Error: Enter your full name'], ['email3', 'Error: Enter your email address'], ['town3', 'Enter the town or city you live in, like Leeds']]) {
+    $(id + '-error').textContent = t; $(id + '-error').hidden = false;
+    $(id).setAttribute('aria-invalid', 'true'); $(id).setAttribute('aria-describedby', id + '-error');
+  }
+  $('problem3').hidden = false; $('problem3').focus();
+};
+$('book').onclick = () => {
+  $('visit-error').innerHTML = 'Error: The date must be <b>in the future</b>, like 27 3 2027'; $('visit-error').hidden = false;
+  $('visit').setAttribute('aria-invalid', 'true'); $('visit').setAttribute('aria-describedby', 'visit-error'); $('visit').focus();
+};
+$('next').onclick = () => {
+  $('contact-error').textContent = 'Error: Select how we should contact you'; $('contact-error').hidden = false;
+  $('contact').setAttribute('aria-describedby', 'contact-error'); $('by-email').focus();
+};
+$('del').onclick = () => { $('confirm').hidden = false; $('cf-ok').focus(); };
+$('cf-ok').onclick = () => { $('confirm').hidden = true; $('del').focus(); };
+for (const r of document.querySelectorAll('[name=len]')) r.onchange = () => { $('price').textContent = r.value === '6' ? 'Your permit will cost £70.' : 'Your permit will cost £120.'; };
+$('export').onclick = () => { $('export-status').textContent = 'Export started. We will email the file.'; };
+</script>
+</body>
+</html>

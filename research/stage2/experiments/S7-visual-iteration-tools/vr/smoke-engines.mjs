@@ -1,0 +1,11 @@
+import { runEngines, summarise, thresholdSweep } from './engines.mjs';
+import path from 'node:path';
+import { writeFile } from 'node:fs/promises';
+const here = path.dirname(new URL(import.meta.url).pathname);
+const cap = path.resolve(here, '../captures/vr');
+const rows = await runEngines(cap, path.resolve(here, '../captures/vr-engines'));
+const sum = summarise(rows);
+const sweep = await thresholdSweep(cap);
+await writeFile(path.resolve(here, '../captures/vr-engines/summary.json'), JSON.stringify({ sum, sweep }, null, 1));
+for (const s of sum) console.log(JSON.stringify(s));
+for (const r of sweep) console.log(JSON.stringify(r));

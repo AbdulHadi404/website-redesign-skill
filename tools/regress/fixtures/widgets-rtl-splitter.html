@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Window splitters — widgets.mjs regression</title>
+<!--
+  widgets.mjs "splitter" contract (research/stage2/streams/S4-capability-catalogue.md F3, D5; APG window splitter).
+  #sep-good (in a dir="rtl" box, navigation on the right): a focusable role="separator" named after its pane, with
+  aria-valuenow/min/max and aria-orientation="vertical"; ArrowLeft moves it left and ArrowRight right whatever the
+  direction (APG), Home/End go to the limits, Enter collapses and restores (react-resizable-panels does all this).
+  #sep-bad: Ark's orientation slip (no aria-orientation, so the default horizontal, on a vertical divider), an
+  aria-valuenow that never changes, and arrows wired backwards (ArrowRight moves it left).
+  #sep-pointer: allotment's sash, a <div> that cannot take focus.
+  #sep-edge: a correct vertical resizer positioned at a sidebar's edge, between the sidebar's <nav> and <footer>:
+  its siblings sit above and below it, but its own shape (a tall bar) says it is vertical.
+-->
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; margin: 24px; }
+  .panes { display: flex; width: 600px; height: 120px; border: 1px solid #888; margin-block: 12px; }
+  .pane { overflow: hidden; background: #eef; padding: 4px; box-sizing: border-box; }
+  .main { flex: 1; background: #fff; padding: 4px; }
+  .sep { flex: none; width: 8px; background: #99a; cursor: col-resize; }
+  .sep:focus-visible { outline: 3px solid #e90; }
+  .app { display: flex; width: 600px; height: 200px; border: 1px solid #888; margin-block: 12px; }
+  .app aside { position: relative; width: 30%; display: flex; flex-direction: column; background: #eef; }
+  .app aside nav { flex: 1; padding: 4px; }
+  .app aside footer { padding: 4px; border-top: 1px solid #ccd; }
+  .app main { flex: 1; padding: 4px 12px; }
+  #sep-edge { position: absolute; top: 0; bottom: 0; right: -4px; width: 8px; background: #99a; cursor: col-resize; }
+</style>
+</head>
+<body>
+<h1>Split views</h1>
+<div class="panes" dir="rtl" lang="ar">
+  <div class="pane" id="nav-good">التنقل</div>
+  <div class="sep" id="sep-good" role="separator" tabindex="0" aria-label="التنقل" aria-controls="nav-good" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30"></div>
+  <div class="main">المحتوى</div>
+</div>
+<div class="panes">
+  <div class="pane" id="nav-bad">Filters</div>
+  <div class="sep" id="sep-bad" role="separator" tabindex="0" aria-label="Resize filters" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30"></div>
+  <div class="main">Results</div>
+</div>
+<div class="panes">
+  <div class="pane" id="nav-ptr">Folders</div>
+  <div class="sep" id="sep-pointer"></div>
+  <div class="main">Messages</div>
+</div>
+<div class="app">
+  <aside id="nav-edge">
+    <nav>Projects</nav>
+    <div id="sep-edge" role="separator" tabindex="0" aria-label="Resize projects" aria-controls="nav-edge" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30"></div>
+    <footer>Settings</footer>
+  </aside>
+  <main>Board</main>
+</div>
+<button type="button">After</button>
+<script>
+function splitter(sep, pane, { good }) {
+  let v = 30, saved = 30;
+  const set = (x, announce = true) => { v = Math.max(0, Math.min(100, x)); pane.style.width = `${v}%`; if (announce) sep.setAttribute('aria-valuenow', String(v)); };
+  set(30);
+  // The primary pane's size is v; the divider sits at its inline end, so in RTL a larger pane moves it left.
+  const rtl = getComputedStyle(sep).direction === 'rtl';
+  sep.addEventListener('keydown', (e) => {
+    let right = null;
+    if (e.key === 'ArrowRight') right = good; else if (e.key === 'ArrowLeft') right = !good;
+    if (right !== null) { e.preventDefault(); set(v + ((right !== rtl) ? 5 : -5), good); return; }
+    if (!good) return;
+    if (e.key === 'Home') { e.preventDefault(); set(0); }
+    else if (e.key === 'End') { e.preventDefault(); set(100); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (v > 0) { saved = v; set(0); } else set(saved || 30); }
+  });
+}
+splitter(document.getElementById('sep-good'), document.getElementById('nav-good'), { good: true });
+splitter(document.getElementById('sep-bad'), document.getElementById('nav-bad'), { good: false });
+splitter(document.getElementById('sep-edge'), document.getElementById('nav-edge'), { good: true });
+</script>
+</body>
+</html>

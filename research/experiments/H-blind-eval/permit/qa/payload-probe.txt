@@ -1,0 +1,8 @@
+OLD body {"full_name":"Aoife Byrne","email":"aoife@example.com","phone":"07700 900123","address_line1":"12 Castle Street","postcode":"HB1 2CS","zone":"C","vehicle_reg":"HB19 XYZ","vehicle_make":"Ford","permit_length":"12","proof_of_address":"council-tax-2026.pdf","blue_badge":true,"consent":true}
+NEW body {"full_name":"Aoife Byrne","email":"aoife@example.com","phone":"07700 900123","address_line1":"12 Castle Street","postcode":"HB1 2CS","zone":"C","vehicle_reg":"HB19 XYZ","vehicle_make":"Ford","permit_length":"12","proof_of_address":"council-tax-2026.pdf","blue_badge":true,"consent":true}
+identical: true
+OLD events [["apply_submit",{}],["apply_success",{"reference":"HPP-104233"}]]
+NEW events [["apply_submit",{}],["apply_success",{"reference":"HPP-104233"}]]
+NEW after {"title":"Application sent – Resident parking permits – Harbourside Council","active":"<h1 tabindex=\"-1\">Application sent</h1>","priceRendered":0}
+OLD empty-submit events [["apply_error",{"field":"full_name"}],["apply_error",{"field":"email"}],["apply_error",{"field":"phone"}],["apply_error",{"field":"address_line1"}],["apply_error",{"field":"postcode"}],["apply_error",{"field":"zone"}],["apply_error",{"field":"vehicle_reg"}],["apply_error",{"field":"vehicle_make"}],["apply_error",{"field":"permit_length"}]]
+NEW empty step-1 events [["apply_error",{"field":"zone"}]] focus: errors

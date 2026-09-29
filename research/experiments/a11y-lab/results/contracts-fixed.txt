@@ -1,0 +1,41 @@
+widget-contracts http://localhost:4173/fixed.html (5.7s)
+
+PASS dialog #invite-open
+   ✓ named: - dialog "Invite teammates":
+   ✓ modal (:modal or aria-modal)
+   ✓ focus moved into dialog (#invite-email )
+   ✓ Tab stays inside (background inert)
+   ✓ Escape closes
+   ✓ focus returned to trigger
+
+PASS tabs [role=tablist]
+   ✓ exactly one aria-selected=true
+   ✓ every tab aria-controls a tabpanel
+   ✓ roving tabindex: one tab in the Tab sequence
+   ✓ ArrowRight moves focus to next tab
+   ✓ selection follows focus (automatic activation)
+   ✓ End → last tab
+   ✓ Home → first tab
+   ✓ selected tab's panel is visible
+
+PASS disclosure #adv-toggle
+   ✓ is a button
+   ✓ aria-expanded="false"
+   ✓ Enter toggles the content
+   ✓ aria-expanded now "true"
+   ✓ Space toggles back
+
+PASS live #export
+   ✓ announced via live region: "Export started. We’ll email the file when it’s ready."
+   ✓ 3 live region(s) in the DOM
+
+PASS form-errors #settings
+   ✓ focus moved to an error summary with 2 link(s) to fields (GOV.UK pattern)
+   ✓ 2 field(s) aria-invalid=true
+   ✓ #name error text is in its description: "Error:
+Enter your full name"
+   ✓ #email error text is in its description: "We send invoices here. Error:
+Enter your email address"
+   ✓ title updated: "Error: Dashboard – Acme Analytics"
+   ✓ summary link moves focus to the field
+   [node scripts/widget-contracts.mjs exit=0 6.3s]

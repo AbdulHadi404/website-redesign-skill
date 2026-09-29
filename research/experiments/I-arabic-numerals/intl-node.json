@@ -1,0 +1,147 @@
+Node v22.22.2, ICU 78.2, CLDR 48.0
+[
+ {
+  "locale": "en",
+  "resolvedNumberingSystem": "latn",
+  "digits": "latn 0-9",
+  "number": "1,234,567.89",
+  "negativePercent": "-4.2%",
+  "positivePercent": "+3.1%",
+  "currency": "-SAR⟨NBSP⟩1,250.50",
+  "compact": "1.3M",
+  "unit": "22.6 L",
+  "date": "Sep 28, 2026, 5:12 AM"
+ },
+ {
+  "locale": "ar",
+  "resolvedNumberingSystem": "latn",
+  "digits": "latn 0-9",
+  "number": "1,234,567.89",
+  "negativePercent": "⟨LRM⟩-4.2⟨LRM⟩%⟨LRM⟩",
+  "positivePercent": "⟨LRM⟩+3.1⟨LRM⟩%⟨LRM⟩",
+  "currency": "⟨RLM⟩⟨LRM⟩-1,250.50⟨NBSP⟩ر.س.⟨RLM⟩",
+  "compact": "1.3⟨NBSP⟩مليون",
+  "unit": "22.6 لتر",
+  "date": "28⟨RLM⟩/09⟨RLM⟩/2026، 5:12 ص"
+ },
+ {
+  "locale": "ar-EG",
+  "resolvedNumberingSystem": "arab",
+  "digits": "arab ٠-٩",
+  "number": "١⟨AR-THOU⟩٢٣٤⟨AR-THOU⟩٥٦٧⟨AR-DEC⟩٨٩",
+  "negativePercent": "⟨ALM⟩-٤⟨AR-DEC⟩٢⟨AR-PCT⟩⟨ALM⟩",
+  "positivePercent": "⟨ALM⟩+٣⟨AR-DEC⟩١⟨AR-PCT⟩⟨ALM⟩",
+  "currency": "⟨ALM⟩-⟨RLM⟩١⟨AR-THOU⟩٢٥٠⟨AR-DEC⟩٥٠⟨NBSP⟩ج.م.⟨RLM⟩",
+  "compact": "١⟨AR-DEC⟩٣⟨NBSP⟩مليون",
+  "unit": "٢٢⟨AR-DEC⟩٦ لتر",
+  "date": "٢٨⟨RLM⟩/٠٩⟨RLM⟩/٢٠٢٦، ٥:١٢ ص"
+ },
+ {
+  "locale": "ar-SA",
+  "resolvedNumberingSystem": "arab",
+  "digits": "arab ٠-٩",
+  "number": "١⟨AR-THOU⟩٢٣٤⟨AR-THOU⟩٥٦٧⟨AR-DEC⟩٨٩",
+  "negativePercent": "⟨ALM⟩-٤⟨AR-DEC⟩٢⟨AR-PCT⟩⟨ALM⟩",
+  "positivePercent": "⟨ALM⟩+٣⟨AR-DEC⟩١⟨AR-PCT⟩⟨ALM⟩",
+  "currency": "⟨ALM⟩-⟨RLM⟩١⟨AR-THOU⟩٢٥٠⟨AR-DEC⟩٥٠⟨NBSP⟩ر.س.⟨RLM⟩",
+  "compact": "١⟨AR-DEC⟩٣⟨NBSP⟩مليون",
+  "unit": "٢٢⟨AR-DEC⟩٦ لتر",
+  "date": "٢٨⟨RLM⟩/٠٩⟨RLM⟩/٢٠٢٦، ٥:١٢ ص"
+ },
+ {
+  "locale": "ar-AE",
+  "resolvedNumberingSystem": "latn",
+  "digits": "latn 0-9",
+  "number": "1,234,567.89",
+  "negativePercent": "⟨LRM⟩-4.2⟨LRM⟩%⟨LRM⟩",
+  "positivePercent": "⟨LRM⟩+3.1⟨LRM⟩%⟨LRM⟩",
+  "currency": "⟨RLM⟩⟨LRM⟩-1,250.50⟨NBSP⟩د.إ.⟨RLM⟩",
+  "compact": "1.3⟨NBSP⟩مليون",
+  "unit": "22.6 لتر",
+  "date": "28⟨RLM⟩/09⟨RLM⟩/2026، 5:12 ص"
+ },
+ {
+  "locale": "ar-MA",
+  "resolvedNumberingSystem": "latn",
+  "digits": "latn 0-9",
+  "number": "1.234.567,89",
+  "negativePercent": "⟨LRM⟩-4,2⟨LRM⟩%⟨LRM⟩",
+  "positivePercent": "⟨LRM⟩+3,1⟨LRM⟩%⟨LRM⟩",
+  "currency": "⟨RLM⟩⟨LRM⟩-1.250,50⟨NBSP⟩ر.س.⟨RLM⟩",
+  "compact": "1,3⟨NBSP⟩مليون",
+  "unit": "22,6 لتر",
+  "date": "28⟨RLM⟩/09⟨RLM⟩/2026، 05:12"
+ },
+ {
+  "locale": "ar-DZ",
+  "resolvedNumberingSystem": "latn",
+  "digits": "latn 0-9",
+  "number": "1.234.567,89",
+  "negativePercent": "⟨LRM⟩-4,2⟨LRM⟩%⟨LRM⟩",
+  "positivePercent": "⟨LRM⟩+3,1⟨LRM⟩%⟨LRM⟩",
+  "currency": "⟨RLM⟩⟨LRM⟩-1.250,50⟨NBSP⟩ر.س.⟨RLM⟩",
+  "compact": "1,3⟨NBSP⟩مليون",
+  "unit": "22,6 لتر",
+  "date": "28⟨RLM⟩/09⟨RLM⟩/2026، 5:12 ص"
+ },
+ {
+  "locale": "ar-u-nu-latn",
+  "resolvedNumberingSystem": "latn",
+  "digits": "latn 0-9",
+  "number": "1,234,567.89",
+  "negativePercent": "⟨LRM⟩-4.2⟨LRM⟩%⟨LRM⟩",
+  "positivePercent": "⟨LRM⟩+3.1⟨LRM⟩%⟨LRM⟩",
+  "currency": "⟨RLM⟩⟨LRM⟩-1,250.50⟨NBSP⟩ر.س.⟨RLM⟩",
+  "compact": "1.3⟨NBSP⟩مليون",
+  "unit": "22.6 لتر",
+  "date": "28⟨RLM⟩/09⟨RLM⟩/2026، 5:12 ص"
+ },
+ {
+  "locale": "ar-EG-u-nu-latn",
+  "resolvedNumberingSystem": "latn",
+  "digits": "latn 0-9",
+  "number": "1,234,567.89",
+  "negativePercent": "⟨LRM⟩-4.2⟨LRM⟩%⟨LRM⟩",
+  "positivePercent": "⟨LRM⟩+3.1⟨LRM⟩%⟨LRM⟩",
+  "currency": "⟨RLM⟩⟨LRM⟩-1,250.50⟨NBSP⟩ج.م.⟨RLM⟩",
+  "compact": "1.3⟨NBSP⟩مليون",
+  "unit": "22.6 لتر",
+  "date": "28⟨RLM⟩/09⟨RLM⟩/2026، 5:12 ص"
+ },
+ {
+  "locale": "fa-IR",
+  "resolvedNumberingSystem": "arabext",
+  "digits": "arabext ۰-۹",
+  "number": "۱⟨AR-THOU⟩۲۳۴⟨AR-THOU⟩۵۶۷⟨AR-DEC⟩۸۹",
+  "negativePercent": "⟨LRM⟩⟨MINUS⟩۴⟨AR-DEC⟩۲⟨AR-PCT⟩",
+  "positivePercent": "⟨LRM⟩+۳⟨AR-DEC⟩۱⟨AR-PCT⟩",
+  "currency": "⟨LRM⟩⟨MINUS⟩⟨LRM⟩ریال⟨NBSP⟩۱⟨AR-THOU⟩۲۵۱",
+  "compact": "۱⟨AR-DEC⟩۳⟨NBSP⟩میلیون",
+  "unit": "۲۲⟨AR-DEC⟩۶L",
+  "date": "۶ مهر ۱۴۰۵، ۵:۱۲"
+ },
+ {
+  "locale": "ur-PK",
+  "resolvedNumberingSystem": "latn",
+  "digits": "latn 0-9",
+  "number": "1,234,567.89",
+  "negativePercent": "⟨LRM⟩-4.2%",
+  "positivePercent": "⟨LRM⟩+3.1%",
+  "currency": "⟨LRM⟩-Rs⟨NBSP⟩1,251",
+  "compact": "13⟨NBSP⟩لاکھ",
+  "unit": "22.6 لیٹر",
+  "date": "28 ستمبر، 2026، 5:12 AM"
+ },
+ {
+  "locale": "he-IL",
+  "resolvedNumberingSystem": "latn",
+  "digits": "latn 0-9",
+  "number": "1,234,567.89",
+  "negativePercent": "⟨LRM⟩-4.2%",
+  "positivePercent": "⟨LRM⟩+3.1%",
+  "currency": "⟨RLM⟩⟨LRM⟩-1,250.50⟨NBSP⟩⟨RLM⟩₪",
+  "compact": "1.3M⟨RLM⟩",
+  "unit": "22.6 ל׳",
+  "date": "28 בספט׳ 2026, 5:12"
+ }
+]

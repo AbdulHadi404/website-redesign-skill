@@ -1,0 +1,14 @@
+load                               (none) | visible h1: Which street do you live on? | focus: BODY
+continue from street               #permit | visible h1: Your permit | focus: H1
+browser Back                       (none) | visible h1: Which street do you live on? | focus: H1
+street kept after Back: Quay Street
+browser Forward                    #permit | visible h1: Your permit | focus: H1
+deep link to #details (skipped steps) #permit | visible h1: Your permit | focus: H1
+check page                         #check | visible h1: Check your answers before sending your application | focus: H1
+Change vehicle                     #vehicle | visible h1: Your vehicle | focus: H1
+back link href on Change step: #check
+Continue after Change              #check | visible h1: Check your answers before sending your application | focus: H1
+sent                               #done | visible h1: Application sent | focus: H1
+browser Back after sending         #done | visible h1: Application sent | focus: H1
+fresh /apply/ after sending        (none) | visible h1: Which street do you live on? | focus: BODY
+events []

@@ -1,0 +1,112 @@
+{
+ "url": "/fixtures/mobile.html",
+ "width": 390,
+ "height": 844,
+ "insets": [
+  59,
+  34,
+  0,
+  0
+ ],
+ "env": {
+  "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content",
+  "hoverNone": true,
+  "coarse": true,
+  "cover": true,
+  "resizesContent": true
+ },
+ "summary": {
+  "FAIL": 0,
+  "WARN": 0,
+  "INFO": 0
+ },
+ "thumb": {
+  "model": {
+   "pxPerMm": 6.1,
+   "pivotOutsideMm": 5,
+   "pivotUpMm": 15,
+   "near": 25,
+   "natural": 65,
+   "stretch": 85,
+   "edgeMm": 5
+  },
+  "primaries": [
+   {
+    "target": "button.primary\"Add to cart\"",
+    "band": "bottom third",
+    "right": "awkward (at the thumb base)",
+    "left": "natural",
+    "edge": false
+   }
+  ],
+  "tabbar": [
+   {
+    "target": "a\"Home\"",
+    "band": "bottom third",
+    "right": "natural",
+    "left": "awkward (at the thumb base)",
+    "edge": false
+   },
+   {
+    "target": "a\"Search\"",
+    "band": "bottom third",
+    "right": "natural",
+    "left": "natural",
+    "edge": false
+   },
+   {
+    "target": "a\"Bag\"",
+    "band": "bottom third",
+    "right": "natural",
+    "left": "natural",
+    "edge": false
+   },
+   {
+    "target": "a\"Account\"",
+    "band": "bottom third",
+    "right": "awkward (at the thumb base)",
+    "left": "natural",
+    "edge": false
+   }
+  ]
+ },
+ "inputs": [
+  {
+   "field": "#email",
+   "purpose": "email",
+   "keyboard": "email"
+  },
+  {
+   "field": "#phone",
+   "purpose": "tel",
+   "keyboard": "tel"
+  },
+  {
+   "field": "#card",
+   "purpose": "card",
+   "keyboard": "numeric"
+  },
+  {
+   "field": "#cvc",
+   "purpose": "cvc",
+   "keyboard": "numeric"
+  },
+  {
+   "field": "#post",
+   "purpose": "postcode",
+   "keyboard": "text"
+  },
+  {
+   "field": "#otp",
+   "purpose": "otp",
+   "keyboard": "numeric"
+  },
+  {
+   "field": "#store",
+   "purpose": "search",
+   "keyboard": "search"
+  }
+ ],
+ "findings": [],
+ "ms": 549
+}

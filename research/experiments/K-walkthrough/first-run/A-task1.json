@@ -1,0 +1,1 @@
+{ "path": "/app/", "device": "phone", "states": [ { "name": "s3", "steps": [ { "fill": ["role=textbox[name='Search cows...']", "1629"] }, { "click": "text=Hazel" }, { "wait": 500 } ] } ] }

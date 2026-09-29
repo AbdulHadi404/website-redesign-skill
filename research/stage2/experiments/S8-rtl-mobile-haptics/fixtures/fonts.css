@@ -1,0 +1,16 @@
+/* Generated: every lab font under a "T-" family name, served from /fonts/ (fetch.sh). */
+@font-face { font-family: "T-Noto Naskh Arabic"; src: url(/fonts/NotoNaskhArabic.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-Noto Sans Arabic"; src: url(/fonts/NotoSansArabic.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-Noto Kufi Arabic"; src: url(/fonts/NotoKufiArabic.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-IBM Plex Sans Arabic"; src: url(/fonts/IBMPlexSansArabic.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-Tajawal"; src: url(/fonts/Tajawal.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-Cairo"; src: url(/fonts/Cairo.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-Almarai"; src: url(/fonts/Almarai.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-Readex Pro"; src: url(/fonts/ReadexPro.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-Alexandria"; src: url(/fonts/Alexandria.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-Vazirmatn"; src: url(/fonts/Vazirmatn.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-Noto Nastaliq Urdu"; src: url(/fonts/NotoNastaliqUrdu.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-Inter"; src: url(/fonts/Inter.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-IBM Plex Sans"; src: url(/fonts/IBMPlexSans.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-Noto Sans"; src: url(/fonts/NotoSans.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "T-IBM Plex Sans Arabic"; src: url(/fonts/IBMPlexSansArabic-Bold.ttf) format("truetype"); font-weight: 700; font-display: block; }

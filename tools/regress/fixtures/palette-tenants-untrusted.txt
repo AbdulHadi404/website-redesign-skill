@@ -1,0 +1,9 @@
+// Tenant colours as a customer might type them. Only an opaque #RRGGBB is accepted (S12, "Untrusted input").
+#1A3CF2 #4B6281 Acme (with a dark-mode override)
+#0000FF80 translucent blue: measured as opaque it reads 8.59:1 with white, painted on white it is 3.29:1
+transparent
+rgba(255, 0, 0, 0.5)
+#F00
+red
+oklch(0.6 0.2 30)
+#00A86B #12345 bad override

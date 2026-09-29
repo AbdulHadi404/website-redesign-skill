@@ -1,0 +1,12 @@
+[
+  { "type": "tabs", "tablist": "#tabs-aware" },
+  { "type": "tabs", "tablist": "#tabs-dom" },
+  { "type": "tabs", "tablist": "#tabs-ltr" },
+  { "type": "roving", "group": "#tools-aware" },
+  { "type": "roving", "group": "#tools-dom" },
+  { "type": "roving", "group": "#radios" },
+  { "type": "slider", "slider": "#vol-aware" },
+  { "type": "slider", "slider": "#vol-dom" },
+  { "type": "slider", "slider": "#range-drawn" },
+  { "type": "slider", "slider": "#range-drawn-dom" }
+]

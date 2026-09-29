@@ -1,0 +1,31 @@
+/* Copy of research/stage2/experiments/S8-rtl-mobile-haptics/fixtures/mobile-broken.css for tools/regress.mjs. */
+/* Mobile fixture — BROKEN variant: viewport-fit=cover in the meta but fixed bars never pad with env(), hover-only row actions, 28 px icon buttons packed
+   together, the primary action in the top corner, 14 px inputs (iOS zooms on focus) */
+* { box-sizing: border-box; }
+button, a { -webkit-tap-highlight-color: transparent; }
+body { margin: 0; font: 15px/1.5 system-ui, sans-serif; color: #15171a; background: #fff; padding-bottom: 130px; }
+.top { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 2px; background: #fff; border-bottom: 1px solid #ddd; padding: 4px 8px; }
+.top h1 { flex: 1; font-size: 17px; margin: 0; }
+.icon-btn { width: 28px; height: 28px; border: 0; background: none; font-size: 16px; padding: 0; }
+.fab-top { display: inline-grid; place-items: center; margin-left: 4px; padding: 0 10px; height: 32px; border-radius: 8px; background: #0b5cad; color: #fff; text-decoration: none; font-size: 13px; }
+main { padding: 0 16px; }
+.hero { height: 300px; background: #eef0f3; display: grid; place-items: center; border-radius: 12px; margin: 12px 0; }
+.price { font-size: 22px; font-weight: 700; margin: 0; }
+.sizes { display: flex; gap: 4px; border: 0; padding: 0; margin: 12px 0; }
+.sizes label { display: grid; place-items: center; width: 36px; height: 30px; border: 1px solid #888; border-radius: 6px; font-size: 13px; }
+.sizes input { position: absolute; opacity: 0; }
+.qty { display: flex; align-items: center; gap: 4px; }
+.qty button { width: 28px; height: 28px; }
+.rows { list-style: none; padding: 0; }
+.row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #eee; }
+.actions { opacity: 0; display: flex; gap: 2px; }
+.row:hover .actions { opacity: 1; }
+.actions button { width: 26px; height: 26px; border: 0; background: none; }
+.checkout { display: grid; gap: 12px; }
+.checkout label { display: grid; gap: 4px; font-weight: 600; font-size: 14px; }
+.checkout input { font: inherit; font-size: 14px; height: 34px; padding: 0 10px; border: 1px solid #8a9099; border-radius: 6px; }
+.buybar { position: fixed; left: 0; right: 0; bottom: 52px; display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: #fff; border-top: 1px solid #ddd; }
+.primary { font: inherit; font-weight: 600; height: 40px; padding: 0 20px; border: 0; border-radius: 10px; background: #0b5cad; color: #fff; }
+.tabbar { position: fixed; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: repeat(4, 1fr); background: #fafafa; border-top: 1px solid #ddd; }
+.tabbar a { display: grid; place-items: center; height: 52px; color: #444; text-decoration: none; font-size: 12px; }
+.tabbar a[aria-current] { color: #0b5cad; font-weight: 600; }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ledgerline — The quiet ledger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root{--paper:#F4F1EA;--ink:#111111;--muted:#5b574f;--rule:#d9d3c7;--accent:#D97757}
+    *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:"Inter",system-ui,sans-serif;font-size:17px;line-height:1.6}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+    .eyebrow{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+    h1,h2{font-family:"Instrument Serif",Georgia,serif;font-weight:400;letter-spacing:-.01em;margin:0}
+    h1{font-size:88px;line-height:1.02} h2{font-size:56px;line-height:1.05} em{color:var(--accent)}
+    header{display:flex;justify-content:space-between;align-items:center;padding:24px 0;border-bottom:1px solid var(--rule)}
+    header nav a{margin-left:28px;color:var(--ink);text-decoration:none;font-size:15px}
+    .btn{display:inline-block;background:var(--ink);color:var(--paper);padding:14px 22px;text-decoration:none;font-size:15px}
+    .hero{padding:120px 0 96px;border-bottom:1px solid var(--rule)} .hero p{max-width:560px;color:var(--muted);font-size:20px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule)} .grid>div{padding:32px 24px 40px;border-right:1px solid var(--rule)}
+    .grid>div:last-child{border-right:0} .num{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--accent)}
+    .ink{background:var(--ink);color:var(--paper);padding:120px 0} .ink .eyebrow{color:#a8a399}
+    .meta{font-size:13px;color:var(--muted)}
+    footer{padding:48px 0;font-size:14px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header><strong>Ledgerline</strong><nav><a href="#">Product</a><a href="#">Customers</a><a href="#">Pricing</a><a class="btn" href="#">Book a demo →</a></nav></header>
+    <section class="hero">
+      <p class="eyebrow">Finance operations · Est. 2021 · London</p>
+      <h1>Close the books <em>without</em> the chaos.</h1>
+      <p>Ledgerline reconciles every transaction as it happens, so month-end is a formality, not a fire drill.</p>
+      <a class="btn" href="#">Start reconciling →</a>
+    </section>
+    <section style="padding:96px 0">
+      <p class="eyebrow">How it works — three steps</p>
+      <h2>A ledger that <em>keeps itself</em>.</h2>
+      <div class="grid" style="margin-top:48px">
+        <div><p class="num">01</p><h3>Connect</h3><p>Link bank feeds and your ERP in minutes.</p></div>
+        <div><p class="num">02</p><h3>Match</h3><p>Every transaction is matched as it lands.</p></div>
+        <div><p class="num">03</p><h3>Close</h3><p>Review exceptions, then close with one click.</p></div>
+      </div>
+    </section>
+  </div>
+  <section class="ink"><div class="wrap"><p class="eyebrow">Proof — the numbers</p><h2>Four days to <em>four hours</em>.</h2><p class="meta" style="color:#a8a399">Median close time · 2025 customer cohort · n=212</p></div></section>
+  <div class="wrap"><footer>© 2026 Ledgerline · Privacy · Terms</footer></div>
+</body>
+</html>

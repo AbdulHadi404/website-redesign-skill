@@ -1,0 +1,311 @@
+{
+ "browser": "141.0.7390.37",
+ "intl": [
+  {
+   "l": "ar",
+   "ns": "latn",
+   "n": "1,234.5",
+   "pct": "⟨LRM⟩-4.2⟨LRM⟩%⟨LRM⟩"
+  },
+  {
+   "l": "ar-EG",
+   "ns": "arab",
+   "n": "١٬٢٣٤٫٥",
+   "pct": "⟨ALM⟩-٤٫٢٪⟨ALM⟩"
+  },
+  {
+   "l": "ar-SA",
+   "ns": "arab",
+   "n": "١٬٢٣٤٫٥",
+   "pct": "⟨ALM⟩-٤٫٢٪⟨ALM⟩"
+  },
+  {
+   "l": "ar-AE",
+   "ns": "latn",
+   "n": "1,234.5",
+   "pct": "⟨LRM⟩-4.2⟨LRM⟩%⟨LRM⟩"
+  },
+  {
+   "l": "ar-MA",
+   "ns": "latn",
+   "n": "1.234,5",
+   "pct": "⟨LRM⟩-4,2⟨LRM⟩%⟨LRM⟩"
+  },
+  {
+   "l": "ar-u-nu-latn",
+   "ns": "latn",
+   "n": "1,234.5",
+   "pct": "⟨LRM⟩-4.2⟨LRM⟩%⟨LRM⟩"
+  },
+  {
+   "l": "ar-SA-u-nu-latn",
+   "ns": "latn",
+   "n": "1,234.5",
+   "pct": "⟨LRM⟩-4.2٪"
+  },
+  {
+   "l": "fa-IR",
+   "ns": "arabext",
+   "n": "۱٬۲۳۴٫۵",
+   "pct": "⟨LRM⟩⟨MINUS⟩۴٫۲٪"
+  },
+  {
+   "l": "he-IL",
+   "ns": "latn",
+   "n": "1,234.5",
+   "pct": "⟨LRM⟩-4.2%"
+  }
+ ],
+ "digits": {
+  "loaded": [
+   "Plex U+600-6FF, U",
+   "Plex U+0-FF, U+13",
+   "Noto U+600-6FF, U",
+   "Noto U+0-FF, U+13",
+   "Cairo U+600-6FF, U",
+   "Cairo U+0-FF, U+13",
+   "Tajawal U+600-6FF, U",
+   "Tajawal U+0-FF, U+13",
+   "Almarai U+600-6FF, U",
+   "Almarai U+0-FF, U+13"
+  ],
+  "Plex latn": {
+   "equal": true,
+   "min": 24,
+   "max": 24,
+   "fontHasGlyphs": true
+  },
+  "Plex latn tnum": {
+   "equal": true,
+   "min": 24,
+   "max": 24,
+   "fontHasGlyphs": true
+  },
+  "Plex arab": {
+   "equal": false,
+   "min": 10.52,
+   "max": 25.2,
+   "fontHasGlyphs": true
+  },
+  "Plex arab tnum": {
+   "equal": false,
+   "min": 10.52,
+   "max": 25.2,
+   "fontHasGlyphs": true
+  },
+  "Plex arabext": {
+   "equal": false,
+   "min": 10.52,
+   "max": 25.2,
+   "fontHasGlyphs": true
+  },
+  "Plex arabext tnum": {
+   "equal": false,
+   "min": 10.52,
+   "max": 25.2,
+   "fontHasGlyphs": true
+  },
+  "Noto latn": {
+   "equal": true,
+   "min": 22.88,
+   "max": 22.88,
+   "fontHasGlyphs": true
+  },
+  "Noto latn tnum": {
+   "equal": true,
+   "min": 22.88,
+   "max": 22.88,
+   "fontHasGlyphs": true
+  },
+  "Noto arab": {
+   "equal": true,
+   "min": 22.88,
+   "max": 22.88,
+   "fontHasGlyphs": true
+  },
+  "Noto arab tnum": {
+   "equal": true,
+   "min": 22.88,
+   "max": 22.88,
+   "fontHasGlyphs": true
+  },
+  "Noto arabext": {
+   "equal": true,
+   "min": 22.88,
+   "max": 22.88,
+   "fontHasGlyphs": true
+  },
+  "Noto arabext tnum": {
+   "equal": true,
+   "min": 22.88,
+   "max": 22.88,
+   "fontHasGlyphs": true
+  },
+  "Cairo latn": {
+   "equal": true,
+   "min": 22.4,
+   "max": 22.4,
+   "fontHasGlyphs": true
+  },
+  "Cairo latn tnum": {
+   "equal": true,
+   "min": 22.4,
+   "max": 22.4,
+   "fontHasGlyphs": true
+  },
+  "Cairo arab": {
+   "equal": false,
+   "min": 10,
+   "max": 27.12,
+   "fontHasGlyphs": true
+  },
+  "Cairo arab tnum": {
+   "equal": false,
+   "min": 10,
+   "max": 27.12,
+   "fontHasGlyphs": true
+  },
+  "Cairo arabext": {
+   "equal": false,
+   "min": 10,
+   "max": 27.04,
+   "fontHasGlyphs": true
+  },
+  "Cairo arabext tnum": {
+   "equal": false,
+   "min": 10,
+   "max": 27.04,
+   "fontHasGlyphs": true
+  },
+  "Tajawal latn": {
+   "equal": false,
+   "min": 15,
+   "max": 22.12,
+   "fontHasGlyphs": true
+  },
+  "Tajawal latn tnum": {
+   "equal": false,
+   "min": 15,
+   "max": 22.12,
+   "fontHasGlyphs": true
+  },
+  "Tajawal arab": {
+   "equal": false,
+   "min": 8.28,
+   "max": 22.2,
+   "fontHasGlyphs": true
+  },
+  "Tajawal arab tnum": {
+   "equal": false,
+   "min": 8.28,
+   "max": 22.2,
+   "fontHasGlyphs": true
+  },
+  "Tajawal arabext": {
+   "equal": true,
+   "min": 21.48,
+   "max": 21.48,
+   "fontHasGlyphs": true
+  },
+  "Tajawal arabext tnum": {
+   "equal": true,
+   "min": 21.48,
+   "max": 21.48,
+   "fontHasGlyphs": true
+  },
+  "Almarai latn": {
+   "equal": false,
+   "min": 14.2,
+   "max": 21.24,
+   "fontHasGlyphs": true
+  },
+  "Almarai latn tnum": {
+   "equal": false,
+   "min": 14.2,
+   "max": 21.24,
+   "fontHasGlyphs": true
+  },
+  "Almarai arab": {
+   "equal": false,
+   "min": 10.08,
+   "max": 29.92,
+   "fontHasGlyphs": true
+  },
+  "Almarai arab tnum": {
+   "equal": false,
+   "min": 10.08,
+   "max": 29.92,
+   "fontHasGlyphs": true
+  },
+  "Almarai arabext": {
+   "equal": false,
+   "min": 10.08,
+   "max": 29.92,
+   "fontHasGlyphs": true
+  },
+  "Almarai arabext tnum": {
+   "equal": false,
+   "min": 10.08,
+   "max": 29.92,
+   "fontHasGlyphs": true
+  }
+ },
+ "signSide": {
+  "raw -4.2%": {
+   "text": "-4.2%",
+   "minusVisually": "right of the digits"
+  },
+  "ar-AE Intl": {
+   "text": "⟨LRM⟩-4.2⟨LRM⟩%⟨LRM⟩",
+   "minusVisually": "left of the digits"
+  },
+  "ar-EG Intl": {
+   "text": "⟨ALM⟩-٤٫٢٪⟨ALM⟩",
+   "minusVisually": "right of the digits"
+  },
+  "raw -1,250.00 in <bdi dir=ltr>": {
+   "text": "-1,250.00",
+   "minusVisually": "left of the digits"
+  }
+ },
+ "inputs": {
+  "#n ← ١٢٣": {
+   "value": "",
+   "valueAsNumber": null,
+   "Number": 0,
+   "validity": "ok"
+  },
+  "#n ← 123": {
+   "value": "123",
+   "valueAsNumber": 123,
+   "Number": 123,
+   "validity": "ok"
+  },
+  "#n ← ١٢٫٥": {
+   "value": "",
+   "valueAsNumber": null,
+   "Number": 0,
+   "validity": "ok"
+  },
+  "#tn ← ١٢٣": {
+   "value": "١٢٣",
+   "Number": null,
+   "validity": "ok"
+  },
+  "#td ← ١٢٫٥": {
+   "value": "١٢٫٥",
+   "Number": null,
+   "validity": "ok"
+  },
+  "#tn ← ۱۲۳": {
+   "value": "۱۲۳",
+   "Number": null,
+   "validity": "ok"
+  }
+ },
+ "normalise": {
+  "١٢٬٣٤٥٫٥": 12345.5,
+  "۱۲۳": 123,
+  "Intl ar-EG output round-trip": -4321.5
+ }
+}

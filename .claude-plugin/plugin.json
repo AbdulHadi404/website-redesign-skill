@@ -1,10 +1,25 @@
 {
   "name": "website-redesign",
-  "description": "Redesign an existing marketing website into a genuinely new, brand-specific design: audit, live reference research, derived art direction, keep/replace/remove/create, implementation in the existing stack, visual QA at five widths, self-critique, iteration, technical QA.",
-  "version": "1.1.0",
-  "author": { "name": "Abdul Hadi", "url": "https://github.com/AbdulHadi404" },
+  "description": "Redesign an existing website or web product — marketing sites, SaaS apps, dashboards, ecommerce, docs, public services — so it is better for its users and genuinely its own: framing by surface type and intensity, measured audit, research by problem, a direction derived from the brand, token and component systems, implementation in the existing stack, then scripted verification of renders, accessibility (WCAG 2.2 AA), responsiveness, performance and truth-parity, critique and iteration.",
+  "version": "2.0.0",
+  "author": {
+    "name": "Abdul Hadi",
+    "url": "https://github.com/AbdulHadi404"
+  },
   "homepage": "https://github.com/AbdulHadi404/website-redesign-skill",
   "repository": "https://github.com/AbdulHadi404/website-redesign-skill",
   "license": "MIT",
-  "keywords": ["website", "redesign", "rebrand", "marketing-site", "design", "art-direction", "visual-qa"]
+  "keywords": [
+    "website",
+    "redesign",
+    "rebrand",
+    "ux",
+    "ui",
+    "design-system",
+    "dashboard",
+    "accessibility",
+    "wcag",
+    "visual-qa",
+    "art-direction"
+  ]
 }

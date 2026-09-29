@@ -1,0 +1,28 @@
+{
+  "name": "s10-shaders-generative",
+  "private": true,
+  "type": "module",
+  "description": "S10: hero-background variants (static, CSS, SVG, Canvas 2D, WebGL, three.js, fluid, post-processing) measured for payload, first frame, main-thread and CPU cost, reduced motion, no-WebGL fallback and pausing.",
+  "scripts": {
+    "fetch": "node fetch-sources.mjs",
+    "run": "node run.mjs"
+  },
+  "dependencies": {
+    "@firecms/neat": "1.1.0",
+    "@paper-design/shaders": "0.0.81",
+    "@tsparticles/engine": "4.4.0",
+    "@tsparticles/slim": "4.4.0",
+    "curtainsjs": "8.1.6",
+    "esbuild": "^0.25.0",
+    "granim": "2.0.0",
+    "ogl": "1.0.11",
+    "p5": "2.3.4",
+    "pngjs": "^7.0.0",
+    "postprocessing": "6.39.5",
+    "regl": "2.1.1",
+    "sharp": "^0.34.0",
+    "three": "0.186.1",
+    "twgl.js": "7.0.0",
+    "vanta": "0.5.24"
+  }
+}

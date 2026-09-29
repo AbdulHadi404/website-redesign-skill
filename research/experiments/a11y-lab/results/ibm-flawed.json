@@ -1,0 +1,697 @@
+{
+  "results": [
+    {
+      "ruleId": "html_lang_exists",
+      "reasonId": "Fail_3",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]",
+      "message": "Page detected as HTML, but does not have a 'lang' attribute"
+    },
+    {
+      "ruleId": "page_title_exists",
+      "reasonId": "Fail_3",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]",
+      "message": "The <title> element is empty (no innerHTML)"
+    },
+    {
+      "ruleId": "meta_viewport_zoomable",
+      "reasonId": "potential_zoomable",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/head[1]/meta[2]",
+      "message": "Confirm the 'meta[name=viewport]' with \" user-scalable=no\" can be zoomed by user"
+    },
+    {
+      "ruleId": "style_background_decorative",
+      "reasonId": "Potential_1",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/head[1]/style[1]",
+      "message": "Verify the CSS background image does not convey important information"
+    },
+    {
+      "ruleId": "style_color_misuse",
+      "reasonId": "Potential_1",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/head[1]/style[1]",
+      "message": "Verify color is not used as the only visual means of conveying information"
+    },
+    {
+      "ruleId": "style_highcontrast_visible",
+      "reasonId": "Manual_1",
+      "level": "VIOLATION_MANUAL",
+      "xpath": "/html[1]/head[1]/style[1]",
+      "message": "Confirm Windows high contrast mode is supported when using CSS to include, position or alter non-decorative content"
+    },
+    {
+      "ruleId": "aria_content_in_landmark",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/a[1]",
+      "message": "Content is not within a landmark element"
+    },
+    {
+      "ruleId": "element_tabbable_visible",
+      "reasonId": "potential_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/a[1]",
+      "message": "Confirm the element should be tabbable and if so, it becomes visible when it has keyboard focus"
+    },
+    {
+      "ruleId": "text_contrast_sufficient",
+      "reasonId": "fail_contrast",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[1]/span[1]",
+      "message": "Text contrast of 1.92 with its background is less than the WCAG AA minimum requirements for text of size 15px and weight of 700"
+    },
+    {
+      "ruleId": "aria_role_redundant",
+      "reasonId": "fail_redundant",
+      "level": "RECOMMENDATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[1]/nav[1]",
+      "message": "The explicitly-assigned ARIA role \"navigation\" is redundant with the implicit role of the element <nav>"
+    },
+    {
+      "ruleId": "aria_keyboard_handler_exists",
+      "reasonId": "potential_no_keyboard_access",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/nav[1]/ul[1]",
+      "message": "Verify the <ul> element with \"menu\" role has keyboard access"
+    },
+    {
+      "ruleId": "widget_tabbable_single",
+      "reasonId": "potential_multiple_tabbable",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[1]/nav[1]/ul[1]",
+      "message": "Component with \"menu\" role has more than one tabbable element"
+    },
+    {
+      "ruleId": "a_text_purpose",
+      "reasonId": "fail_acc_name",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[1]/a[1]",
+      "message": "Hyperlink has no link text, label or image with a text alternative"
+    },
+    {
+      "ruleId": "svg_graphics_labelled",
+      "reasonId": "fail_acc_name",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[1]/a[1]/svg[1]",
+      "message": "The SVG element has no accessible name"
+    },
+    {
+      "ruleId": "aria_content_in_landmark",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[1]/button[1]",
+      "message": "Content is not within a landmark element"
+    },
+    {
+      "ruleId": "input_label_exists",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[1]/button[1]",
+      "message": "Form control element <button> has no associated label"
+    },
+    {
+      "ruleId": "svg_graphics_labelled",
+      "reasonId": "fail_acc_name",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[1]/button[1]/svg[1]",
+      "message": "The SVG element has no accessible name"
+    },
+    {
+      "ruleId": "text_contrast_sufficient",
+      "reasonId": "fail_contrast",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[1]/button[2]",
+      "message": "Text contrast of 3.68 with its background is less than the WCAG AA minimum requirements for text of size 13.3333px and weight of 400"
+    },
+    {
+      "ruleId": "label_name_visible",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[1]/button[2]",
+      "message": "Accessible name does not match or contain the visible label text"
+    },
+    {
+      "ruleId": "list_structure_proper",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[1]/div[1]/li[1]",
+      "message": "List element is missing or improperly structured"
+    },
+    {
+      "ruleId": "aria_content_in_landmark",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[1]/div[1]/li[1]/a[1]",
+      "message": "Content is not within a landmark element"
+    },
+    {
+      "ruleId": "list_structure_proper",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[1]/div[1]/li[2]",
+      "message": "List element is missing or improperly structured"
+    },
+    {
+      "ruleId": "aria_content_in_landmark",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[1]/div[1]/li[2]/a[1]",
+      "message": "Content is not within a landmark element"
+    },
+    {
+      "ruleId": "list_structure_proper",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[1]/div[1]/li[3]",
+      "message": "List element is missing or improperly structured"
+    },
+    {
+      "ruleId": "aria_content_in_landmark",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[1]/div[1]/li[3]/a[1]",
+      "message": "Content is not within a landmark element"
+    },
+    {
+      "ruleId": "aria_content_in_landmark",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[1]/div[2]/a[1]",
+      "message": "Content is not within a landmark element"
+    },
+    {
+      "ruleId": "aria_hidden_nontabbable",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[1]/div[2]/a[1]",
+      "message": "Element \"a\" should not be focusable within the subtree of an element with an 'aria-hidden' attribute with value 'true'"
+    },
+    {
+      "ruleId": "aria_content_in_landmark",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[1]/a[1]",
+      "message": "Content is not within a landmark element"
+    },
+    {
+      "ruleId": "aria_eventhandler_role_valid",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[1]/a[1]",
+      "message": "The <a> element with 'onclick' does not have a valid ARIA role specified"
+    },
+    {
+      "ruleId": "aria_content_in_landmark",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/h1[1]",
+      "message": "Content is not within a landmark element"
+    },
+    {
+      "ruleId": "heading_content_exists",
+      "reasonId": "Fail_1",
+      "level": "RECOMMENDATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/h2[1]",
+      "message": "Heading element has no descriptive content"
+    },
+    {
+      "ruleId": "aria_accessiblename_exists",
+      "reasonId": "fail_no_accessible_name",
+      "level": "RECOMMENDATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/h2[1]",
+      "message": "Element <h2> with \"heading\" role has no accessible name"
+    },
+    {
+      "ruleId": "text_contrast_sufficient",
+      "reasonId": "fail_contrast",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[1]/div[1]/div[1]",
+      "message": "Text contrast of 2.32 with its background is less than the WCAG AA minimum requirements for text of size 15px and weight of 400"
+    },
+    {
+      "ruleId": "text_block_heading",
+      "reasonId": "potential_heading",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[1]/div[1]/div[2]",
+      "message": "Confirm this text '$48,210 ▲' is used as a heading and if so, modify to use a heading element or role"
+    },
+    {
+      "ruleId": "text_contrast_sufficient",
+      "reasonId": "fail_contrast",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[1]/div[2]/div[1]",
+      "message": "Text contrast of 2.32 with its background is less than the WCAG AA minimum requirements for text of size 15px and weight of 400"
+    },
+    {
+      "ruleId": "text_block_heading",
+      "reasonId": "potential_heading",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[1]/div[2]/div[2]",
+      "message": "Confirm this text '1,284 ▼' is used as a heading and if so, modify to use a heading element or role"
+    },
+    {
+      "ruleId": "text_contrast_sufficient",
+      "reasonId": "fail_contrast",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[1]/div[3]/div[1]",
+      "message": "Text contrast of 2.32 with its background is less than the WCAG AA minimum requirements for text of size 15px and weight of 400"
+    },
+    {
+      "ruleId": "text_block_heading",
+      "reasonId": "potential_heading",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[1]/div[3]/div[2]",
+      "message": "Confirm this text '2.1%' is used as a heading and if so, modify to use a heading element or role"
+    },
+    {
+      "ruleId": "text_block_heading",
+      "reasonId": "potential_heading",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[2]",
+      "message": "Confirm this text 'Revenue trend' is used as a heading and if so, modify to use a heading element or role"
+    },
+    {
+      "ruleId": "svg_graphics_labelled",
+      "reasonId": "fail_acc_name",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/svg[1]",
+      "message": "The SVG element has no accessible name"
+    },
+    {
+      "ruleId": "img_alt_valid",
+      "reasonId": "fail_no_alt",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/img[1]",
+      "message": "The image has neither an accessible name nor is marked as decorative or redundant"
+    },
+    {
+      "ruleId": "text_block_heading",
+      "reasonId": "potential_heading",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[3]",
+      "message": "Confirm this text 'Recent invoices' is used as a heading and if so, modify to use a heading element or role"
+    },
+    {
+      "ruleId": "table_headers_exists",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/table[1]",
+      "message": "Table has no headers identified"
+    },
+    {
+      "ruleId": "aria_attribute_value_valid",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/table[1]/tbody[1]/tr[1]/td[1]",
+      "message": "The value \"up\" specified for attribute 'aria-sort' on element <td> is not valid"
+    },
+    {
+      "ruleId": "aria_attribute_valid",
+      "reasonId": "Fail_invalid_implicit_role_attr",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/table[1]/tbody[1]/tr[1]/td[1]",
+      "message": "The ARIA attributes \"aria-sort\" are not valid for the element <td> with implicit ARIA role \"cell\""
+    },
+    {
+      "ruleId": "element_mouseevent_keyboard",
+      "reasonId": "Manual_1",
+      "level": "RECOMMENDATION_MANUAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/table[1]/tbody[1]/tr[1]/td[1]",
+      "message": "Confirm the <td> element with mouse event handler(s) 'onclick' has a corresponding keyboard handler(s)"
+    },
+    {
+      "ruleId": "script_onclick_avoid",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/table[1]/tbody[1]/tr[1]/td[1]",
+      "message": "Verify that 'onclick' events are not used in script to emulate a link"
+    },
+    {
+      "ruleId": "aria_accessiblename_exists",
+      "reasonId": "fail_no_accessible_name",
+      "level": "RECOMMENDATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/table[2]/tbody[1]/tr[1]/th[1]",
+      "message": "Element <th> with \"columnheader\" role has no accessible name"
+    },
+    {
+      "ruleId": "aria_eventhandler_role_valid",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[4]",
+      "message": "The <div> element with 'onclick' does not have a valid ARIA role specified"
+    },
+    {
+      "ruleId": "element_mouseevent_keyboard",
+      "reasonId": "Manual_1",
+      "level": "RECOMMENDATION_MANUAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[4]",
+      "message": "Confirm the <div> element with mouse event handler(s) 'onclick' has a corresponding keyboard handler(s)"
+    },
+    {
+      "ruleId": "script_onclick_avoid",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[4]",
+      "message": "Verify that 'onclick' events are not used in script to emulate a link"
+    },
+    {
+      "ruleId": "element_mouseevent_keyboard",
+      "reasonId": "Manual_1",
+      "level": "RECOMMENDATION_MANUAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[5]",
+      "message": "Confirm the <div> element with mouse event handler(s) 'onclick' has a corresponding keyboard handler(s)"
+    },
+    {
+      "ruleId": "widget_tabbable_exists",
+      "reasonId": "fail_no_tabbable",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[5]",
+      "message": "Component with \"button\" role does not have a tabbable element"
+    },
+    {
+      "ruleId": "aria_content_in_landmark",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/p[1]/a[1]",
+      "message": "Content is not within a landmark element"
+    },
+    {
+      "ruleId": "aria_attribute_valid",
+      "reasonId": "Fail_invalid_implicit_role_attr",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[6]",
+      "message": "The ARIA attributes \"aria-label\" are not valid for the element <div> with implicit ARIA role \"generic\""
+    },
+    {
+      "ruleId": "aria_content_in_landmark",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[6]/button[1]",
+      "message": "Content is not within a landmark element"
+    },
+    {
+      "ruleId": "img_alt_background",
+      "reasonId": "Manual_1",
+      "level": "RECOMMENDATION_MANUAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[6]/button[1]",
+      "message": "Verify important background image information has a text alternative in system high contrast mode"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[6]/button[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "target_spacing_sufficient",
+      "reasonId": "violation_spacing",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[6]/button[1]",
+      "message": "Undersized target \"button\" does not have sufficient spacing of 12 CSS pixels from another target \"button\""
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[6]/button[2]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "target_spacing_sufficient",
+      "reasonId": "violation_spacing",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[6]/button[2]",
+      "message": "Undersized target \"button\" does not have sufficient spacing of 12 CSS pixels from another target \"button\""
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[6]/button[3]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "target_spacing_sufficient",
+      "reasonId": "violation_spacing",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[6]/button[3]",
+      "message": "Undersized target \"button\" does not have sufficient spacing of 12 CSS pixels from another target \"button\""
+    },
+    {
+      "ruleId": "aria_keyboard_handler_exists",
+      "reasonId": "potential_no_keyboard_access",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[7]",
+      "message": "Verify the <div> element with \"tablist\" role has keyboard access"
+    },
+    {
+      "ruleId": "widget_tabbable_exists",
+      "reasonId": "fail_no_tabbable",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[7]",
+      "message": "Component with \"tablist\" role does not have a tabbable element"
+    },
+    {
+      "ruleId": "aria_child_tabbable",
+      "reasonId": "fail_missing_child",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[7]",
+      "message": "None of the descendent elements with \"tab\" role is tabbable"
+    },
+    {
+      "ruleId": "element_mouseevent_keyboard",
+      "reasonId": "Manual_1",
+      "level": "RECOMMENDATION_MANUAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[7]/span[1]",
+      "message": "Confirm the <span> element with mouse event handler(s) 'onclick' has a corresponding keyboard handler(s)"
+    },
+    {
+      "ruleId": "element_mouseevent_keyboard",
+      "reasonId": "Manual_1",
+      "level": "RECOMMENDATION_MANUAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[7]/span[2]",
+      "message": "Confirm the <span> element with mouse event handler(s) 'onclick' has a corresponding keyboard handler(s)"
+    },
+    {
+      "ruleId": "element_mouseevent_keyboard",
+      "reasonId": "Manual_1",
+      "level": "RECOMMENDATION_MANUAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[7]/span[3]",
+      "message": "Confirm the <span> element with mouse event handler(s) 'onclick' has a corresponding keyboard handler(s)"
+    },
+    {
+      "ruleId": "script_onclick_avoid",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/button[1]",
+      "message": "Verify that 'onclick' events are not used in script to emulate a link"
+    },
+    {
+      "ruleId": "text_contrast_sufficient",
+      "reasonId": "fail_contrast",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/button[1]",
+      "message": "Text contrast of 3.68 with its background is less than the WCAG AA minimum requirements for text of size 13.3333px and weight of 400"
+    },
+    {
+      "ruleId": "text_block_heading",
+      "reasonId": "potential_heading",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/div[9]",
+      "message": "Confirm this text 'Account settings' is used as a heading and if so, modify to use a heading element or role"
+    },
+    {
+      "ruleId": "input_fields_grouped",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/input[1]",
+      "message": "Use the <fieldset> element to group logically related input elements"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/input[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "input_label_visible",
+      "reasonId": "potential_placeholder_only",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/input[1]",
+      "message": "The ‘placeholder’ is the only visible label"
+    },
+    {
+      "ruleId": "input_autocomplete_valid",
+      "reasonId": "fail_incorrect",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/input[2]",
+      "message": "The 'autocomplete' attribute has an incorrect value"
+    },
+    {
+      "ruleId": "input_fields_grouped",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/input[2]",
+      "message": "Use the <fieldset> element to group logically related input elements"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/input[2]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "input_fields_grouped",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/input[3]",
+      "message": "Use the <fieldset> element to group logically related input elements"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/input[3]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "input_fields_grouped",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/input[4]",
+      "message": "Use the <fieldset> element to group logically related input elements"
+    },
+    {
+      "ruleId": "aria_id_unique",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/input[4]",
+      "message": "The 'id' \"pw-hint\" specified for the ARIA property 'aria-describedby' value is not valid"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/input[4]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "input_fields_grouped",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/select[1]",
+      "message": "Use the <fieldset> element to group logically related input elements"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/select[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "input_label_exists",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/select[1]",
+      "message": "Form control element <select> has no associated label"
+    },
+    {
+      "ruleId": "input_checkboxes_grouped",
+      "reasonId": "fail_notgroupedothernotgrouped",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/div[2]/input[1]",
+      "message": "Radio input and others with the name \"n\" are not grouped together"
+    },
+    {
+      "ruleId": "style_focus_visible",
+      "reasonId": "potential_focus_not_visible",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/div[2]/input[1]",
+      "message": "Check the keyboard focus indicator is visible when using CSS declaration for 'border' or 'outline'"
+    },
+    {
+      "ruleId": "input_checkboxes_grouped",
+      "reasonId": "fail_notgroupedothernotgrouped",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/div[2]/input[2]",
+      "message": "Radio input and others with the name \"n\" are not grouped together"
+    },
+    {
+      "ruleId": "aria_eventhandler_role_valid",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/span[1]",
+      "message": "The <span> element with 'onclick' does not have a valid ARIA role specified"
+    },
+    {
+      "ruleId": "element_mouseevent_keyboard",
+      "reasonId": "Manual_1",
+      "level": "RECOMMENDATION_MANUAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/span[1]",
+      "message": "Confirm the <span> element with mouse event handler(s) 'onclick' has a corresponding keyboard handler(s)"
+    },
+    {
+      "ruleId": "script_onclick_avoid",
+      "reasonId": "Potential_1",
+      "level": "RECOMMENDATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/span[1]",
+      "message": "Verify that 'onclick' events are not used in script to emulate a link"
+    },
+    {
+      "ruleId": "element_id_unique",
+      "reasonId": "potential_in_use",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/span[3]",
+      "message": "The <span> element has the id \"dup\" that is already in use"
+    },
+    {
+      "ruleId": "text_contrast_sufficient",
+      "reasonId": "fail_contrast",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/form[1]/button[1]",
+      "message": "Text contrast of 3.68 with its background is less than the WCAG AA minimum requirements for text of size 13.3333px and weight of 400"
+    },
+    {
+      "ruleId": "frame_src_valid",
+      "reasonId": "Potential_1",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/iframe[1]",
+      "message": "Verify <frame> content is accessible"
+    },
+    {
+      "ruleId": "frame_title_exists",
+      "reasonId": "Fail_1",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/iframe[1]",
+      "message": "Inline frame does not have a 'title' attribute"
+    },
+    {
+      "ruleId": "html_lang_exists",
+      "reasonId": "Fail_3",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/iframe[1]/html[1]",
+      "message": "Page detected as HTML, but does not have a 'lang' attribute"
+    },
+    {
+      "ruleId": "html_skipnav_exists",
+      "reasonId": "Potential_1",
+      "level": "VIOLATION_POTENTIAL",
+      "xpath": "/html[1]/body[1]/div[3]/div[2]/iframe[1]/html[1]",
+      "message": "Verify there is a way to bypass blocks of content that are repeated on multiple Web pages"
+    },
+    {
+      "ruleId": "text_contrast_sufficient",
+      "reasonId": "fail_contrast",
+      "level": "VIOLATION_FAIL",
+      "xpath": "/html[1]/body[1]/div[6]",
+      "message": "Text contrast of 2.32 with its background is less than the WCAG AA minimum requirements for text of size 15px and weight of 400"
+    }
+  ]
+}

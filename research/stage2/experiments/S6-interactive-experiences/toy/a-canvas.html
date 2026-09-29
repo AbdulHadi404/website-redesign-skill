@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top the cake – canvas only</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Top the cake</h1>
+  <p class="lede">Drag toppings from the tray onto the cake. Drag one off the cake to remove it.</p>
+  <div class="stage"><div class="wrap"><canvas id="cake"></canvas></div></div>
+</main>
+<script type="module">
+  import { createModel } from './model.js';
+  import { createCanvasView } from './canvas-view.js';
+  import { makeBench } from './bench.js';
+  const model = createModel();
+  const view = createCanvasView(model, document.getElementById('cake'), { juice: 'always' });
+  window.__toy = { variant: 'a', model, view, bench: makeBench(model, view, null), ready: true };
+</script>
+</body>
+</html>

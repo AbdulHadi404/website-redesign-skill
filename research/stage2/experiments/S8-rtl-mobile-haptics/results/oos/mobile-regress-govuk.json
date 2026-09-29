@@ -1,0 +1,88 @@
+{
+ "url": "http://127.0.0.1:38965/ext/regress/govuk.html",
+ "width": 390,
+ "height": 844,
+ "insets": [
+  59,
+  34,
+  0,
+  0
+ ],
+ "env": {
+  "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+  "hoverNone": true,
+  "coarse": true,
+  "cover": true,
+  "resizesContent": false
+ },
+ "summary": {
+  "FAIL": 0,
+  "WARN": 1,
+  "INFO": 2
+ },
+ "thumb": {
+  "model": {
+   "pxPerMm": 6.1,
+   "pivotOutsideMm": 5,
+   "pivotUpMm": 15,
+   "near": 25,
+   "natural": 65,
+   "stretch": 85,
+   "edgeMm": 5
+  },
+  "primaries": [
+   {
+    "target": "button.govuk-button\"Continue\"",
+    "band": "bottom third",
+    "right": "natural",
+    "left": "natural",
+    "edge": false
+   }
+  ],
+  "tabbar": []
+ },
+ "inputs": [
+  {
+   "field": "#full-name",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "#email",
+   "purpose": "email",
+   "keyboard": "email"
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "check": "targets",
+   "message": "Targets under 44 px on a coarse pointer (buttons, fixed-bar links)",
+   "count": 4,
+   "examples": [
+    "a.govuk-skip-link\"Skip to main content\" 1×1",
+    "a.govuk-header__homepage-link\"Service\" 100×33",
+    "a.govuk-back-link\"Back\" 50×20",
+    "button.govuk-button\"Continue\" 360×38"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "targets",
+   "message": "Small targets hugging the screen edge, where touch error is largest",
+   "count": 4,
+   "examples": [
+    "a.govuk-skip-link\"Skip to main content\"",
+    "a.govuk-header__homepage-link\"Service\"",
+    "a.govuk-back-link\"Back\"",
+    "button.govuk-button\"Continue\""
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "keyboard",
+   "message": "No interactive-widget=resizes-content: the keyboard overlays the page (resizes-visual, the default in Chrome Android and on iOS) and fixed bars stay behind it — check focused fields over a real keyboard on a device",
+   "examples": []
+  }
+ ]
+}

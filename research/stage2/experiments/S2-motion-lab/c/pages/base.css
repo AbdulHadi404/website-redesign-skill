@@ -1,0 +1,22 @@
+/* Layout only, shared by every build. No motion here. */
+* { box-sizing: border-box; }
+html { font: 16px/1.5 system-ui, sans-serif; color: #17202a; background: #f7f7f5; }
+body { margin: 0; }
+header { padding: 16px 32px; } #nav a { margin-right: 20px; color: #17202a; }
+#hero { position: relative; padding: 48px 32px; overflow: hidden; min-height: 360px; }
+#hero h1 { font-size: 44px; line-height: 1.1; max-width: 16ch; margin: 0 0 12px; position: relative; }
+.blob { position: absolute; right: 60px; top: 40px; width: 180px; height: 180px; border-radius: 50%; background: #d8e8e2; }
+.btn { font: inherit; display: inline-block; padding: 10px 20px; border-radius: 8px; border: 0; background: #0b6e4f; color: #fff; text-decoration: none; cursor: pointer; }
+.btn.secondary { background: #e3ebe8; color: #0b3d2c; }
+#plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 24px 32px; }
+.plan { position: relative; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+#stats { padding: 480px 32px 400px; font-size: 20px; } #stat { font-size: 40px; font-weight: 700; font-variant-numeric: tabular-nums; }
+#features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 24px 32px; }
+.feature { background: #fff; border-radius: 12px; padding: 20px; }
+#panel-demo { padding: 24px 32px 200px; }
+#panel { position: relative; height: 120px; border-radius: 12px; overflow: hidden; }
+.view { position: absolute; inset: 0; display: grid; place-items: center; font-size: 28px; font-weight: 700; background: #0b3d2c; color: #fff; }
+#view-b { background: #f2c14e; color: #17202a; }
+.toast { position: fixed; right: 24px; bottom: 24px; background: #17202a; color: #fff; padding: 10px 16px; border-radius: 8px; }
+#sheet { position: fixed; left: 32px; right: auto; bottom: 0; top: auto; width: 520px; margin: 0; border: 0; border-radius: 14px 14px 0 0; padding: 24px; background: #0b3d2c; color: #fff; }
+footer { padding: 32px; }

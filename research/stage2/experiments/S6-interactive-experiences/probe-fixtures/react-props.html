@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Canvas with a React-style synthetic handler</title>
+<!-- Simulates React: the pointer handler lives in the element's __reactProps$ object and the only real
+     listener is on a large root. Synthetic stand-in for a React app; not React itself. Expected: FAIL. -->
+<style>body{margin:0;padding:20px}canvas{display:block}</style></head>
+<body><div id="root"><main><h1>Tap the dot</h1><p>Some text that makes the root larger than the canvas.</p><div style="height:200px"></div><canvas id="c" width="400" height="300"></canvas></main></div>
+<script>const c=document.getElementById('c'),x=c.getContext('2d');let n=0;function d(){x.fillStyle='#f4efe6';x.fillRect(0,0,400,300);x.fillStyle='#2a7';x.beginPath();x.arc(200,150,20+n*10,0,7);x.fill()}d();
+c['__reactProps$abc123']={onPointerDown:()=>{n=(n+1)%5;d()}};
+document.getElementById('root').addEventListener('pointerdown',(e)=>{const p=e.target['__reactProps$abc123'];p&&p.onPointerDown&&p.onPointerDown(e)});</script></body></html>

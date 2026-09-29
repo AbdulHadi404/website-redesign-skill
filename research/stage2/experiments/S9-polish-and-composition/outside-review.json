@@ -1,0 +1,235 @@
+{
+ "method": "Hand verdicts on every v2 defect flag on the outside pages (outside.mjs), per page and check, from a crop of the flagged element at the flagged width and the page's CSS. TP: the condition exists as the check defines it and a designer would change it. FP: the check misread the page (wrong element, hidden text, wrong pairing, the break caused by a control). boundary: the condition exists but sits at the check's threshold, so a designer might reasonably leave it. unverified: the crop did not show the element. Made by the builder of the probe, after reading each flag's detail, so not blind.",
+ "pages": {
+  "slop": {
+   "figures": {
+    "verdict": "TP",
+    "note": "td 3, 1, 10 in a comparison table set in proportional figures; short integers, so the misalignment is small"
+   },
+   "focusRing": {
+    "verdict": "TP",
+    "note": "a:focus, button:focus { outline: none } and nothing replaces it"
+   }
+  },
+  "dashboard": {
+   "focusRing": {
+    "verdict": "TP",
+    "note": "*:focus { outline: none } and nothing replaces it"
+   }
+  },
+  "finish": {
+   "concentric": {
+    "verdict": "TP",
+    "note": "a.swollen r24 inside a card r24 at gap 8: the fixture's planted swollen nesting"
+   }
+  },
+  "house-style": {
+   "wrapping": {
+    "verdict": "TP",
+    "note": "1440: eyebrow leaves LONDON alone, h1 leaves 'chaos.' alone, step text leaves 'lands.' alone; 390: meta line leaves 'n=212' alone (all seen in crops)"
+   }
+  },
+  "a11y-fixed": {
+   "wrapping": {
+    "verdict": "TP",
+    "note": "password hint leaves 'manager.' alone"
+   },
+   "proximity": {
+    "verdict": "TP",
+    "note": "section headings 20 px below the previous section and 20 px above their own content; the chart's drawn content starts lower still, so 'Revenue trend' reads as a caption of the cards above"
+   }
+  },
+  "s7-vr": {
+   "wrapping": {
+    "verdict": "TP",
+    "note": "card text leaves 'it.' alone"
+   }
+  },
+  "s8-mobile": {
+   "proximity": {
+    "verdict": "TP",
+    "note": "'Saved addresses' 20 px below the quantity stepper and 20 px above its list; the list text starts lower, so it reads as closer to the stepper"
+   }
+  },
+  "s8-mobile-nocss": {
+   "proximity": {
+    "verdict": "TP",
+    "note": "the same page unstyled: default heading margins put both h2 as close to what precedes as to what follows"
+   }
+  },
+  "s8-bidi": {
+   "wrapping": {
+    "verdict": "unverified",
+    "note": "the crop at 390 did not show the Arabic h2"
+   }
+  },
+  "h-fixture": {
+   "wrapping": {
+    "verdict": "TP",
+    "note": "card text leaves 'range.' (1440) and 'itself.' (390) alone; 1 of the 5 elements at 390 checked"
+   },
+   "focusRing": {
+    "verdict": "TP",
+    "note": "site.css: a:focus, button:focus, input:focus { outline: none }"
+   }
+  },
+  "permit": {
+   "wrapping": {
+    "verdict": "TP",
+    "note": "1440: card text leaves 'process.' and 'safe.' alone; 390: the h1 leaves the car emoji alone"
+   },
+   "focusRing": {
+    "verdict": "TP",
+    "note": "site.css: .btn:focus { outline: none }"
+   }
+  },
+  "sanad": {
+   "concentric": {
+    "verdict": "boundary",
+    "note": "button r10 inside a card r20 at gap 20 = R: the rule asks for ~0, a designer might keep 10; the same gap = R case as the fixture's Publish button"
+   },
+   "figures": {
+    "verdict": "TP",
+    "note": "48 invoice amounts in table columns in proportional figures"
+   },
+   "focusRing": {
+    "verdict": "TP",
+    "note": "app.css: *:focus { outline: none }"
+   }
+  },
+  "stemwren": {
+   "wrapping": {
+    "verdict": "TP",
+    "note": "card text leaves 'with love.' alone"
+   }
+  },
+  "s8-bilingual": {
+   "iconAlign": {
+    "verdict": "boundary",
+    "note": "a sort icon in th.num 'Amount' 1.33 px off against a 1 px threshold; the cap-height estimate is good to about half a pixel"
+   },
+   "proximity": {
+    "verdict": "TP",
+    "note": "'Recommended' 19 px below the table's Previous link and 19 px above its cards"
+   }
+  },
+  "s10-static": {
+   "wrapping": {
+    "verdict": "TP",
+    "note": "390: 'answer.' alone"
+   }
+  }
+ },
+ "heldOutFirstRun": {
+  "note": "The seven held-out pages were run once with v2 as it stood after tuning on the first eleven. Two classes of false positive appeared and were then fixed (so the held-out set is spent: the final numbers on it are no longer an independent test).",
+  "flags": 11,
+  "tp": 7,
+  "boundary": 2,
+  "fp": 2,
+  "falsePositives": [
+   {
+    "page": "hallam",
+    "check": "proximity",
+    "what": "three card titles 15 px below the card image and 15 px above the card text: inside a card the border makes the group",
+    "fix": "skip a heading whose predecessor is in the same card or panel (a boxed ancestor narrower than the page)"
+   },
+   {
+    "page": "e-good",
+    "check": "wrapping",
+    "what": "a paragraph with an inline Add to basket button: '0 items.' wraps below the button, not a text runt",
+    "fix": "skip blocks that contain a control"
+   }
+  ],
+  "alsoFixed": "focus walk counted one control five times on a page with a single focusable element (permit): it now stops when focus wraps round"
+ },
+ "v1Errors": [
+  {
+   "page": "slop",
+   "width": 1440,
+   "check": "focusRing",
+   "what": "v1 passed a page with outline: none and no replacement",
+   "expect": "flag"
+  },
+  {
+   "page": "dashboard",
+   "width": 1440,
+   "check": "focusRing",
+   "what": "v1 passed a page with outline: none and no replacement",
+   "expect": "flag"
+  },
+  {
+   "page": "h-fixture",
+   "width": 1440,
+   "check": "focusRing",
+   "what": "v1 passed a page with outline: none and no replacement",
+   "expect": "flag"
+  },
+  {
+   "page": "slop",
+   "width": 1440,
+   "check": "accent",
+   "what": "v1 found no primary (a.btn.primary, a gradient) and counted 0",
+   "expect": "primary found",
+   "v2note": "v2 finds a.btn.primary by its gradient and counts the other gradient-painted elements"
+  },
+  {
+   "page": "s8-mobile-nocss",
+   "width": 390,
+   "check": "accent",
+   "what": "v1 counted 17 elements (inputs, fieldsets) against an ink primary",
+   "expect": "no flag"
+  },
+  {
+   "page": "govuk-question",
+   "width": 1440,
+   "check": "accent",
+   "what": "v1 counted 4 (fieldset, date inputs)",
+   "expect": "no flag"
+  },
+  {
+   "page": "s7-vr",
+   "width": 1440,
+   "check": "iconAlign",
+   "what": "v1 measured a 36 px card icon against a heading below it (+14.5 px)",
+   "expect": "no flag"
+  },
+  {
+   "page": "a11y-fixed",
+   "width": 1440,
+   "check": "iconAlign",
+   "what": "v1 measured an icon against visually hidden text (-12.5 px)",
+   "expect": "no flag"
+  },
+  {
+   "page": "house-style",
+   "width": 1440,
+   "check": "proximity",
+   "what": "v1 flagged headings under an eyebrow and under step numbers",
+   "expect": "no flag"
+  },
+  {
+   "page": "dashboard",
+   "width": 1440,
+   "check": "concentric",
+   "what": "v1 flagged input r10 in a card r18 at gap 22 (gap > R)",
+   "expect": "no flag",
+   "v2note": "listed as information (R < gap <= 1.5 R)"
+  },
+  {
+   "page": "govuk",
+   "width": 1440,
+   "check": "neutrals",
+   "what": "a mature system's pure greys raised as a fault",
+   "expect": "style question",
+   "v2note": "v2 reports it as a style question"
+  },
+  {
+   "page": "h-fixture",
+   "width": 1440,
+   "check": "alignment",
+   "what": "centred section headings over card grids raised as a fault",
+   "expect": "style question",
+   "v2note": "v2 reports it as a style question"
+  }
+ ]
+}

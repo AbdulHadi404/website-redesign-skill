@@ -1,0 +1,103 @@
+{
+ "reran": "I re-ran the stream in a scratch copy. The copy lives at /tmp/claude-0/-home-user-website-redesign-skill/c5b6846e-6a5b-5d91-847f-94b2f6f7dc15/scratchpad/repo, with skills/ symlinked back to the repo, so no repo file was touched. Host load was 6–18 on 4 shared CPUs throughout.\n\n(1) run-tiers.mjs, full run: 10 runs per cell plus 3×4 governor runs. It reproduced.\n- Quiet runs: 30/30 correct at 2 s and 30/30 with early exit. With 24 frames it was 29/30 (quiet 6× went 9/10, against the report's 10/10).\n- Busy 6×: 6/10 (report 7/10). Only 4/10 runs were throttle-faithful, as reported.\n- The fps probe scored 0/10 at 4× and 6× in both quiet and busy runs, matching the report.\n- The min-of-5 burst probe scored 5/10 at quiet 4× and 2/10 at quiet 6× (report 3/10 and 4/10).\n- WebGL probe cost 10/37/53 ms. detect-gpu cost 14/41/63 ms quiet and 274/553 ms busy.\n- governor.js stepped down 2.4–2.75 s after the throttle (report 1.5–2.4 s), with no false step-downs, and came back up 21.1–21.5 s after release in 2 of 3 runs.\n- The drei-default port stepped down in 1 of 3 continuous runs (report 2 of 3). On the on-demand scene it made 2 false step-downs in every run; governor.js made 0.\n\n(2) run-loading.mjs on eager, idle, interaction, staged and prefetch-staged: 2 journeys × 2 runs each, plus perf.mjs --runs 2. It reproduced within about 10%.\n- Quick visitor, wait from tap to usable: eager 7.9–8.5 s, idle 8.2 s, interaction 13.6–13.7 s, staged 1.8–2.0 s, prefetch-staged 0.10–0.12 s.\n- Reader, same measure: staged 1.8 s, prefetch-staged 0.12–0.15 s, interaction 13.6–13.7 s.\n- perf.mjs LCP: eager 908 ms against 636–686 ms for the rest, so the ~250–300 ms eager penalty holds. TBT: eager 176, idle 285, all others 0.\n\n(3) run-offmain.mjs with --runs 2. The ordering reproduced.\n- Columnar binary finished in 91/192 ms against 449/918 ms on the main thread (1×/4×), about 4.9×.\n- Yielding was no better: worst tap 172/696 ms, against 84/512 ms without yielding.\n- Worker worst tap 16/84 ms.\n- Worker posting parsed objects back: done at 1072/2050 ms, worst tap 456/916 ms.\n- Heavy scene, main thread: 16.3 fps, 16 taps over 100 ms, LoAF blocking 660 ms. In OffscreenCanvas: 16.4 fps, 0 taps over 100 ms, LoAF 0.\n- Structured-clone of 200k objects: 350/574 ms. The throttler burns 55–57% of a core when idle.\n- One claim did not reproduce: the light scene on the main thread (\"no tap over 100 ms\") had 5 taps over 100 ms, the worst 220 ms, at load 16.\n\n(4) The stream built no skill script; its proposed templates are lib/client/tier.js and governor.js. I ran both on 4 pages they were not developed on, at 1×, 4× and 6×: S10 dist e5-three, d-canvas2d, f-three-particles, and tools/regress/fixtures/capture-webgl.html. There were no crashes and no page errors. The templates' defects are listed under problems.\n\n(5) Every [V] claim I checked matched its source. I read:\n- WebKit NavigatorBase.cpp and AnimationFrameRate.cpp.\n- Chromium approximated_device_memory.cc, thread_cpu_throttler.cc (200 µs quantum, run×(rate−1), CHECK on thread_exists_), image_resource.cc (kFlushDelay = 1 s) and largest_contentful_paint_calculator.cc:758 (0.05).\n- drei PerformanceMonitor defaults.\n- three.js 0.186: DRACOLoader workerLimit 4, WorkerPool default 4, meshopt useWorkers, GLTFLoader Safari 17 / Firefox 98 gate, compileAsync with KHR_parallel_shader_compile, preventDefault on context loss.\n- detect-gpu 6.0.24: licence MIT, README note that data stopped in Dec 2025, 3.7 KB gzip, vendor JSON 0.2–13 KB, desktop \"Apple GPU\" hard-coded to 60 fps (tier 3), no Mali-G710 entry.\n- Package licences: comlink Apache-2.0 (2.0 KB gzip), blurhash and thumbhash MIT.\n- BCD 8.1.3: no requestIdleCallback in Safari; prefetch in Safari only behind a flag; reduced-transparency in Chrome 118; PressureObserver in Chrome 125 desktop only; OffscreenCanvas 69/105/16.4; WebGL2 in OffscreenCanvas in Safari 17; worker rAF in Firefox 99; KHR_parallel_shader_compile in Chrome 76 and Safari 14.1.",
+ "problems": [
+  {
+   "severity": "blocking",
+   "claim": "§C and decision 1.5: governor.js is 'a governor that doesn't make the mistake', and 'from then on the governor owns the tier'. It is proposed as templates/governor.js.",
+   "problem": "The governor has two blind spots on exactly the weak devices the brief targets. (a) Any interval longer than idleGapMs (250 ms) is treated as a pause: it is never judged and it resets the 45-frame window. (b) The refresh estimate is the fastest tenth of recent intervals, so it rises when a scene is slow from the first frame. On pages it was not developed on:\n- S10 e5-three (SwiftShader, 2–3 fps, median interval 383–550 ms): 0 step-downs at 1×, 4× and 6×.\n- S10 f-three-particles at 6× (median interval 67 ms, p90 183 ms): the refresh estimate rose to 33.3 ms and there were 0 step-downs.\n- A synthetic 300 ms-per-frame loop: 0 step-downs in 20 s.\nThe governor was only ever tested on fast-then-slow transitions of one Canvas2D scene. It was never tested on a scene that is slow from the start or runs below 4 fps, which is also the case of a weak GPU that the CPU probe misses.",
+   "fix": "- Let the renderer tell the governor whether it asked for a frame, e.g. frame(now, {requested:true}) or a pause()/resume() API. Treat a gap as idle only when nothing was requested, and count a requested frame over idleGapMs as the worst kind of slow frame.\n- Measure the refresh interval before the scene starts (about 0.5 s of empty rAF) and never let the estimate rise above it. Alternatively, snap it to known rates and require 30 Hz evidence from outside the scene.\n- Add cells for 'slow from the first frame' and '<4 fps' to run-tiers.mjs, and re-test before the template goes into the skill."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "§B and decision 1.4: the probe 'separated CPU 1×, 4× and 6× in 30 of 30 quiet runs', and the 0.3/0.6 × refresh bands 'reproduce the lab split'.",
+   "problem": "This is in-sample classification, and the test only probes the easy case.\n- The bands were placed at the geometric midpoints of the lab's own 1× calibration, and each tested level sits in the centre of its band. No 2×, 3× or 5× cell measures how often a device near a band edge flips tier.\n- Margins are thin. The 4× maximum was 9.6 ms (0.58 of the frame) against a 10.0 ms (0.6) edge, and the 6× minimum was 10.4–10.8 ms.\n- 'Reproduces the lab split' is circular. Both the work unit (200k particles) and the mapping 1× = strong, 4× = average, 6× = low are arbitrary. With a work unit twice as heavy, 4× would land in low.",
+   "fix": "- Add intermediate throttle cells and report the flip rate near each band edge.\n- Say that the tier labels are a labelling choice and that the 0.3/0.6 bands are an untested heuristic ([K], from RAIL), not a result.\n- Keep the rule the report already states: probe the top tier's own per-frame JS."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "lib/client/tier.js is the candidate templates/tier.js that implements the detection order.",
+   "problem": "The template contradicts the report in four places.\n- Its bands are absolute ([4, 10] ms), not the report's 0.3/0.6 × the measured refresh.\n- classify() pulls a strong device down to average when it reports ≤ 2 cores, although the report says 'never use hardwareConcurrency'.\n- The readSignals comment still says deviceMemory is 'clamped (0.25–8)', against the report's own [V] finding.\n- frameProbe checks maxMs only after warmup + minFrames frames. On the S10 e5-three page, which runs at 2–3 fps, detectTier took 6.3–8.9 s instead of ≤ 1.5 s, and at 6× it returned 'average' (4.0 ms).",
+   "fix": "- Derive the bands from the measured refresh.\n- Drop the cores pull-down and update the comments.\n- Enforce maxMs as a wall-clock limit whatever the frame count.\n- Return 'undetermined' when too few frames were seen."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "The runtime governor proposed for realtime-3d.md §6 (§C and decision 1).",
+   "problem": "S10-shaders-generative/src/lib/hero.js already ships a different governor:\n- It judges the median interval against a fixed 1000/60 target, after a 1 s warm-up.\n- It halves the render scale and only ever steps down.\n- At the floor it gives up and shows the poster.\nThat is the fixed-16.7 ms assumption S11 says misreads WebKit's 30 Hz rAF. The report doesn't mention it, so the merge would carry two contradictory governors into the skill.",
+   "fix": "Reconcile the two into one template, or state which one the skill adopts and why. The S11 report should name S10's governor as a conflict."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "Decision 2: 'Never eager … and never idle-boot' for a section on a content page.",
+   "problem": "This narrows two existing lines without saying so: performance.md §5 recommends islands with client:idle, and the §2 table says 'Ads, embeds, review widgets: load on idle'. The rule was measured for one module (597 KB gzip of JS plus 2 MB of assets) on slow 4G only. It also says nothing about when idle stays fine, i.e. for a small island.",
+   "fix": "Scope the rule to modules larger than what the target network delivers in about 1 s (the budget table). State explicitly that it amends §2 and §5 for heavy modules."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "Off-main-thread rule 4: 'A continuously animating canvas that competes with input belongs in OffscreenCanvas in a worker.'",
+   "problem": "This is technology-first. motion.md §9 says to render on demand, with nothing running at rest and no perpetual background shaders, and S10 has a settle mode. The first question should be whether the canvas needs to animate continuously at all. The evidence is also narrow: Canvas2D particles at 1× with a spare host core. WebGL in OffscreenCanvas needs Safari 17, and forwarding input and keeping accessibility add cost.",
+   "fix": "Order the advice: first stop, settle or render on demand (motion.md §9); only then move a necessary continuous visual to a worker. Note the Safari 17 floor for WebGL2."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "Off-main-thread rule 1: 'Fix the format before adding threads: columnar binary was 5× faster than the JSON pipeline.'",
+   "problem": "The speed-up reproduced (4.8–4.9×), but it mixes two changes. data.bin carries 4 of the 8 fields (lat, lon, v, cat) in 2.6 MB. The JSON carries id, t, ok and tags as well, in 23.8 MB. Some of the 5× comes from sending fewer fields, not from the format.",
+   "fix": "Add a JSON variant with only the four fields, or restate the rule as 'send only the columns the view needs, in a typed layout', and split the credit between the two."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "Several of decision 3's steps and the tier table are presented as rules.",
+   "problem": "Several of these rules rest on [K] or on nothing measured:\n- Thermal pass: last window ≤ 1.2 × the first and no step-down [K].\n- The probe bands, derived from RAIL [K].\n- 'Cap worker pools at min(4, cores − 1)', untagged.\n- The tier keep/drop table (shadows, LOD, post-processing, textures per tier): untagged and unmeasured.\n- 'A 30 Hz rAF means Low Power Mode, thermal mitigation or an untouched iframe' is WebKit-only, and a slow device that misses every other vsync also gives 33 ms intervals.",
+   "fix": "- Tag each of these [K].\n- Say 'e.g.' for the 30 Hz causes and note that 30 Hz alone cannot tell a slow scene from a throttled display.\n- Mark the thermal criterion as a proposal to validate on a device."
+  },
+  {
+   "severity": "minor",
+   "claim": "§C table: drei on the on-demand scene made '2 false step-downs in every run, at ~11.3 s'. Also 'back up … once, at 20.5 s'.",
+   "problem": "The logs show the false step-downs at about 5.9 s and about 17.3 s. The 11.3 s figure is firstDownAfterThrottleMs = t − 6000, which has no meaning on the on-demand scene because it has no throttle. The 20.5 s is measured from the release. governor.js cannot step back up within 30 s of a step-down (memoryMs), so the 40 s window structurally hides its recovery. The comparison with drei's 2.1/5.5 s recovery omits that trade-off.",
+   "fix": "Correct the times. State that recovery takes at least 30 s after a step-down by design, and that a transient hitch therefore costs at least 30 s of reduced quality."
+  },
+  {
+   "severity": "minor",
+   "claim": "§A, detect-gpu: 'iOS 14+: … among all chips that can run that iOS version, returns the slowest [V deobfuscateAppleGPU.ts, sort by lowest fps]'.",
+   "problem": "The final sort, in index.ts, orders first by how closely the benchmark's screen resolution matches, then by fps. The lab's mobile 'Apple GPU' override returned FALLBACK tier 1 because an override renderer bypasses the iOS path, so no iOS logic was exercised.",
+   "fix": "Restate as 'the slowest candidate among those with the closest-matching resolution', cite index.ts, and say the lab did not exercise the iOS path."
+  },
+  {
+   "severity": "minor",
+   "claim": "'What the skill already knew': motion.md §9 'also has the KTX2 GPU-memory argument'.",
+   "problem": "The KTX2 argument is in realtime-3d.md §5. motion.md §9 recommends WebP.",
+   "fix": "Correct the attribution."
+  },
+  {
+   "severity": "minor",
+   "claim": "§D table: staged is 1.9 s from tap to usable, against 13.7 s. Decision 2: warm assets with fetch(…, {priority:'low'}).",
+   "problem": "The table leaves out two costs of staging: full detail arrives later (14.4–14.6 s after the tap, against 13.6–13.7 s) and the page downloads 129 KB more. The warm step only pays off because the lab served assets with one-year immutable Cache-Control. An uncacheable or Vary-mismatched response is downloaded twice.",
+   "fix": "Add the full-fidelity column. State that warmed resources must be cacheable, or that the promise should be kept and handed to the module."
+  },
+  {
+   "severity": "minor",
+   "claim": "§E: 'Client fetching adds ~1.1 s to the data compared with streaming.'",
+   "problem": "The CSR fixture starts the data fetch only after the bundle has downloaded and booted, which is a waterfall. The +1.1 s describes that pattern, not CSR in general.",
+   "fix": "Scope the claim to a CSR page whose data request waits for its bundle. Mention starting the request from the HTML (preload, or an inline fetch)."
+  },
+  {
+   "severity": "minor",
+   "claim": "§D uses perf.mjs transfer numbers. Separately, the report proposes perf.mjs changes.",
+   "problem": "The stream's own perf table shows eager as 2,687 KB with 0 KB in the js column. perf.mjs kindOf() counts JS only when initiatorType is 'script', so modulepreload'd JS (initiator 'link') lands in 'other'. A JS-budget check with perf.mjs would miss it. The report doesn't flag this.",
+   "fix": "Add it to the script proposals: classify by extension and content type as well as initiator."
+  },
+  {
+   "severity": "minor",
+   "claim": "Coverage of the brief.",
+   "problem": "Some parts of the brief are missing:\n- Optimistic UI isn't addressed, and the report doesn't say that app-ui.md §10 already covers it.\n- The choice between spinner, skeleton and progress bar is left to app-ui.md §8 with no new evidence.\n- The budget method has no font or JS-heap step.\n- Progressive AVIF, WASM decode and KTX2 transcode costs are untested; the report does acknowledge these.",
+   "fix": "Point to app-ui.md §10 and §8 for those parts. List fonts and heap under the budget method, with pointers to performance.md §4."
+  },
+  {
+   "severity": "minor",
+   "claim": "§G: the light scene gave 'no tap over 100 ms either way'.",
+   "problem": "This did not reproduce at load 16. On the main thread the light scene had 5 taps over 100 ms, the worst at 220 ms, and LoAF blocking of 118 ms; the worker version had 1 tap over 100 ms. The heavy-scene contrast reproduced cleanly.",
+   "fix": "Treat the light-scene result as host-sensitive and keep the heavy-scene contrast as the evidence."
+  }
+ ],
+ "strongest": "- **The device-signal facts traced to engine source.** Every one I checked is exact:\n  - WebKit reports hardwareConcurrency as 4 or 8.\n  - Chromium's deviceMemory clamps are Android 1–8 and desktop 2–32 (crbug 454354290).\n  - WebKit halves rAF under Low Power Mode, thermal mitigation, and in an untouched cross-origin iframe.\n  - CDP throttling busy-waits run×(rate−1) on the main thread only, and one thread per process. So workers are unthrottled, and an idle throttled page burns 55–62% of a core.\n  - Blink repaints a loading image at most once per second (kFlushDelay).\n  - LCP ignores candidates below 0.05 bits per pixel.\n  - detect-gpu: MIT, data frozen since Dec 2025, Apple Silicon hard-coded to tier 3, no Mali-G710 entry.\n  - The three.js loader facts: meshopt decodes on the main thread unless useWorkers is called.\n- **The loading result.** It is network-bound and reproduced within about 10%. On slow 4G no trigger fixes a 2.7 MB module. Staging to a small core, plus warming on approach, cut the wait from 7.5–13.8 s to 0.1–0.2 s. Eager boot costs ~250–300 ms of LCP, and idle boot behaves like eager after the LCP.\n- **The off-main-thread rules.** They reproduced:\n  - JSON.parse is one long task, and yielding around it does not help.\n  - Never post object graphs back from a worker; cloning 200k objects cost more than doing the whole job on the main thread.\n  - Return summaries and transferred typed arrays instead.\n  - Keep CDP throttling away from judging workers.\n- **Two measured rejections.** An fps probe fails because vsync hides the work (0/10 at 4× and 6×). drei-style fps averaging makes 2 false step-downs per run on an on-demand renderer.",
+ "weakest": "- **governor.js as the owner of the tier.** On pages it was not developed on, it never reacts to frames slower than 250 ms, and its refresh estimate rises on scenes that are slow from the start.\n- **The \"30/30\" probe claim and the 0.3/0.6 × refresh bands.** Both are in-sample, and each test level sits in the middle of its band.\n- **tier.js as a template.** Its bands and hardwareConcurrency use contradict the report, and its probe can run 6–9 s on a slow page.\n- **The per-tier keep/drop table and the thermal pass criterion.** Neither is measured; both are [K].\n- **The 5× columnar-binary figure.** It credits the format when part of the gain comes from sending half the fields.\n- **The OffscreenCanvas rule.** It is technology-first and ignores render-on-demand.\n- **The INP proxy in the loading experiment.** The report itself calls it noise.\n- **The game-loading mapping.** It rests on [S]/[K] only.\n- **The light-scene responsiveness claim.** It did not reproduce under load."
+}

@@ -1,0 +1,87 @@
+{
+ "url": "http://127.0.0.1:38965/ext/regress/dashboard.html",
+ "mode": "flip",
+ "width": 1280,
+ "summary": {
+  "FAIL": 1,
+  "WARN": 3,
+  "INFO": 1
+ },
+ "mirror": {
+  "checked": 85,
+  "notMirrored": 3,
+  "roots": 3,
+  "keptPhysical": 10
+ },
+ "css": {
+  "rules": 32,
+  "physicalRules": 2,
+  "overrideRules": 0,
+  "logicalRules": 0
+ },
+ "keys": [],
+ "icons": [],
+ "findings": [
+  {
+   "level": "WARN",
+   "check": "mirror",
+   "message": "Boxes 3–8 px from their mirrored place in RTL (topmost only)",
+   "count": 3,
+   "examples": [
+    "button.iconbtn (6 px off) — margin-left 6px / right 0px",
+    "button.iconbtn (6 px off) — margin-left 6px / right 0px",
+    "button.iconbtn (6 px off) — margin-left 6px / right 0px"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "mirror",
+   "message": "Physical values that stay the same in RTL (computed styles, LTR vs RTL render)",
+   "count": 10,
+   "examples": [
+    "button.iconbtn: margin-left 6px / right 0px",
+    "button.iconbtn: margin-left 6px / right 0px",
+    "button.iconbtn: margin-left 6px / right 0px",
+    "th: text-align left",
+    "th: text-align left",
+    "th: text-align left",
+    "th: text-align left",
+    "th: text-align left",
+    "th: text-align left",
+    "th: text-align left"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "css",
+   "message": "Rules with physical inline-axis values (2 of 32 rules; 0 RTL overrides; 0 rules use logical properties)",
+   "count": 2,
+   "examples": [
+    ".iconbtn { margin-left:6px }",
+    "th { text-align:left }"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "1 box-shadows with an x offset: decide whether the light source mirrors (Material: elevation shadows fall straight down)",
+   "examples": []
+  },
+  {
+   "level": "FAIL",
+   "check": "align",
+   "message": "text-align: left inside RTL text",
+   "count": 7,
+   "examples": [
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th"
+   ]
+  }
+ ],
+ "ms": 428
+}

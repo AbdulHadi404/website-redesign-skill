@@ -1,0 +1,833 @@
+{
+ "bs-collapse": {
+  "hover-none|#headingOne": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#headingTwo": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#headingThree": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#headingFour": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  }
+ },
+ "bs-modal": {
+  "hover-none|#navbarResponsive a.navbar-brand": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#navbarResponsive a.nav-link.active": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  }
+ },
+ "bs-tab": {
+  "hover-none|button.nav-link.active": {
+   "matches": 2,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#nav-tab a.nav-link.nav-item": {
+   "matches": 5,
+   "confirmed": true,
+   "detail": [
+    {
+     "unmeasurable": true
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#list-home-list": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "no-active|button.nav-link.active": {
+   "matches": 2,
+   "confirmed": true,
+   "detail": [
+    {
+     "unstable": true
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": false
+    }
+   ]
+  },
+  "no-active|button.nav-link": {
+   "matches": 8,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": false
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": false
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": true
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": true
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": false
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": false
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": true
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": true
+    }
+   ]
+  },
+  "no-active|#list-home-list": {
+   "matches": 1,
+   "confirmed": null,
+   "detail": [
+    {
+     "unmeasurable": true
+    }
+   ]
+  }
+ },
+ "bs-carousel": {
+  "hover-none|#carousel-example-generic button.active": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#carousel-example-generic button": {
+   "matches": 5,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "no-active|#carousel-example-generic button.active": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": false
+    }
+   ]
+  },
+  "no-active|#carousel-example-generic button": {
+   "matches": 5,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": false
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": true
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": true
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": false
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": false
+    }
+   ]
+  },
+  "no-active|#carousel-example-generic button.carousel-control-prev": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": false
+    }
+   ]
+  },
+  "no-active|#carousel-example-generic button.carousel-control-next": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": false
+    }
+   ]
+  }
+ },
+ "bs-dropdown": {
+  "hover-none|a.navbar-brand": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#navbarResponsive a.nav-link.active": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|a.nav-link.active": {
+   "matches": 2,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "no-active|#navbarResponsive a.nav-link.dropdown-toggle": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": false
+    }
+   ]
+  },
+  "no-active|a.nav-link.dropdown-toggle": {
+   "matches": 2,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": false
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": false
+    }
+   ]
+  }
+ },
+ "animate-docs": {
+  "hover-none|a": {
+   "matches": 8,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "unmeasurable": true
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#documentation a.icon-github": {
+   "matches": 1,
+   "confirmed": null,
+   "detail": [
+    {
+     "unstable": true
+    }
+   ]
+  }
+ },
+ "hover-demo": {
+  "hover-none|a": {
+   "matches": 8,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-pulse": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-pulse-grow": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-pulse-shrink": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-push": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-pop": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-wobble-horizontal": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-wobble-vertical": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-wobble-to-bottom-right": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-wobble-to-top-right": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-wobble-top": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-wobble-bottom": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-wobble-skew": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-buzz": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-buzz-out": {
+   "matches": 1,
+   "confirmed": false,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|#effects a.hvr-icon-down": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "no-active|a.button.cta": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": true,
+     "pressChanges": false
+    }
+   ]
+  },
+  "no-active|a.twitter-share-button": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": false
+    }
+   ]
+  }
+ },
+ "g-slop-landing": {
+  "hover-none|a": {
+   "matches": 8,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|a.rounded-full.bg-gradient-to-r": {
+   "matches": 3,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  }
+ },
+ "g-primer-issues": {
+  "hover-none|a.UnderlineNav-item": {
+   "matches": 6,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|a.UnderlineNav-item.selected": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|summary.btn": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|a.subnav-item": {
+   "matches": 2,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  }
+ },
+ "g-carbon-table": {
+  "hover-none|a.cds--header__name": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|a.cds--header__menu-item": {
+   "matches": 3,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|a.cds--link": {
+   "matches": 2,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  }
+ },
+ "stemwren": {
+  "hover-none|a": {
+   "matches": 7,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    },
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|a.cta": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "hover-none|a.btn": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": null
+    }
+   ]
+  },
+  "no-active|a.cta": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": false
+    }
+   ]
+  },
+  "no-active|a.btn": {
+   "matches": 1,
+   "confirmed": true,
+   "detail": [
+    {
+     "hoverChanges": false,
+     "pressChanges": false
+    }
+   ]
+  }
+ }
+}

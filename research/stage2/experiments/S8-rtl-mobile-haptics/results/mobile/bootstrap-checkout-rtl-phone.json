@@ -1,0 +1,169 @@
+{
+ "url": "/ext/bootstrap-built/checkout-rtl.html",
+ "width": 390,
+ "height": 844,
+ "insets": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "env": {
+  "viewportMeta": "width=device-width, initial-scale=1",
+  "hoverNone": true,
+  "coarse": true,
+  "cover": false,
+  "resizesContent": false
+ },
+ "summary": {
+  "FAIL": 0,
+  "WARN": 3,
+  "INFO": 3
+ },
+ "thumb": {
+  "model": {
+   "pxPerMm": 6.1,
+   "pivotOutsideMm": 5,
+   "pivotUpMm": 15,
+   "near": 25,
+   "natural": 65,
+   "stretch": 85,
+   "edgeMm": 5
+  },
+  "primaries": [
+   {
+    "target": "button.btn.btn-secondary\"تحقق\"",
+    "band": "bottom third",
+    "right": "natural",
+    "left": "awkward (at the thumb base)",
+    "edge": false
+   }
+  ],
+  "tabbar": []
+ },
+ "inputs": [
+  {
+   "field": "",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "#firstName",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "#lastName",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "#username",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "#email",
+   "purpose": "email",
+   "keyboard": "email"
+  },
+  {
+   "field": "#address",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "#address2",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "#zip",
+   "purpose": "postcode",
+   "keyboard": "text"
+  },
+  {
+   "field": "#cc-name",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "#cc-number",
+   "purpose": "card",
+   "keyboard": "text"
+  },
+  {
+   "field": "#cc-expiration",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "#cc-cvv",
+   "purpose": "cvc",
+   "keyboard": "text"
+  }
+ ],
+ "findings": [
+  {
+   "level": "INFO",
+   "check": "safe-area",
+   "message": "No viewport-fit=cover: the browser keeps the page inside the safe area (letterboxed in landscape; env() insets are 0), so bars cannot sit under the notch or home indicator. Choose cover only for an edge-to-edge design, and then pad bars with env()",
+   "examples": []
+  },
+  {
+   "level": "WARN",
+   "check": "targets",
+   "message": "Targets under 44 px on a coarse pointer (buttons, fixed-bar links)",
+   "count": 4,
+   "examples": [
+    "button.btn.btn-secondary\"تحقق\" 62×38",
+    "a\"سياسة الخصوصية\" 119×19",
+    "a\"اتفاقية الاستخدام\" 113×19",
+    "a\"الدعم الفني\" 79×19"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "targets",
+   "message": "Small targets hugging the screen edge, where touch error is largest",
+   "count": 3,
+   "examples": [
+    "button.btn.btn-secondary\"تحقق\"",
+    "a\"سياسة الخصوصية\"",
+    "a\"الدعم الفني\""
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "pressed",
+   "message": "Controls with no pressed (:active) state and the tap highlight turned off: a tap gives no feedback until the result",
+   "count": 3,
+   "examples": [
+    "a\"سياسة الخصوصية\"",
+    "a\"اتفاقية الاستخدام\"",
+    "a\"الدعم الفني\""
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "keyboards",
+   "message": "Fields that bring the wrong keyboard or miss autofill",
+   "count": 6,
+   "examples": [
+    "#email (البريد الإلكتروني (اختياري)): autocomplete=\"email\" missing (autofill)",
+    "#zip (الرمز البريدي): autocomplete=\"postal-code\" missing (autofill)",
+    "#cc-number (رقم البطاقة): card field brings the \"text\" keyboard; expected numeric",
+    "#cc-number (رقم البطاقة): autocomplete=\"cc-number\" missing (autofill)",
+    "#cc-cvv (الرمز الثلاثي (CVV)): cvc field brings the \"text\" keyboard; expected numeric",
+    "#cc-cvv (الرمز الثلاثي (CVV)): autocomplete=\"cc-csc\" missing (autofill)"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "keyboard",
+   "message": "No interactive-widget=resizes-content: the keyboard overlays the page (resizes-visual, the default in Chrome Android and on iOS) and fixed bars stay behind it — check focused fields over a real keyboard on a device",
+   "examples": []
+  }
+ ],
+ "ms": 358
+}

@@ -1,0 +1,2345 @@
+{
+ "wedge": [
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "scanner 4 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 5,
+   "leakedIntoField": 0,
+   "gapMedian": 7,
+   "gapMax": 20,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "",
+    "gaps": [
+     10,
+     7,
+     7,
+     9,
+     6,
+     6,
+     10,
+     6,
+     6,
+     6,
+     6,
+     7,
+     9
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "scanner 15 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 5,
+   "leakedIntoField": 0,
+   "gapMedian": 18,
+   "gapMax": 39,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "",
+    "gaps": [
+     24,
+     17,
+     18,
+     17,
+     18,
+     17,
+     18,
+     17,
+     16,
+     18,
+     18,
+     17,
+     17
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "scanner 25 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 5,
+   "leakedIntoField": 0,
+   "gapMedian": 28,
+   "gapMax": 38,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "",
+    "gaps": [
+     33,
+     27,
+     27,
+     28,
+     26,
+     28,
+     30,
+     28,
+     28,
+     27,
+     27,
+     30,
+     27
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "scanner 40 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 0,
+   "detectedAsScan": 0,
+   "leakedIntoField": 5,
+   "gapMedian": 44,
+   "gapMax": 81,
+   "sample": {
+    "scans": [],
+    "value": "4006381333931",
+    "gaps": [
+     46,
+     44,
+     44,
+     43,
+     44,
+     44,
+     44,
+     42,
+     42,
+     43,
+     44,
+     45,
+     44
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "person 60 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 65,
+   "gapMax": 77,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     63,
+     64,
+     69,
+     64,
+     63,
+     77
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "person 90 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 95,
+   "gapMax": 102,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     98,
+     94,
+     97,
+     93,
+     94,
+     94
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "person 150 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 157,
+   "gapMax": 183,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     163,
+     154,
+     166,
+     161,
+     156,
+     153
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "person with one 20 ms rollover",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 130,
+   "gapMax": 170,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     124,
+     31,
+     164,
+     130,
+     164,
+     123
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 35 ms",
+   "case": "person typing a 6-digit code at 70 ms",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 77,
+   "gapMax": 93,
+   "sample": {
+    "scans": [],
+    "value": "400638",
+    "gaps": [
+     75,
+     75,
+     74,
+     88,
+     90,
+     74
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "scanner 4 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 5,
+   "leakedIntoField": 0,
+   "gapMedian": 7,
+   "gapMax": 70,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "",
+    "gaps": [
+     10,
+     7,
+     7,
+     6,
+     6,
+     6,
+     6,
+     6,
+     5,
+     9,
+     6,
+     8,
+     22
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "scanner 15 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 5,
+   "leakedIntoField": 0,
+   "gapMedian": 19,
+   "gapMax": 47,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "",
+    "gaps": [
+     22,
+     47,
+     21,
+     17,
+     17,
+     19,
+     21,
+     19,
+     17,
+     34,
+     18,
+     17,
+     17
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "scanner 25 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 5,
+   "leakedIntoField": 0,
+   "gapMedian": 28,
+   "gapMax": 58,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "",
+    "gaps": [
+     29,
+     58,
+     28,
+     29,
+     28,
+     28,
+     27,
+     28,
+     29,
+     27,
+     26,
+     29,
+     32
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "scanner 40 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 3,
+   "detectedAsScan": 3,
+   "leakedIntoField": 2,
+   "gapMedian": 44,
+   "gapMax": 104,
+   "sample": {
+    "scans": [],
+    "value": "4006381333931",
+    "gaps": [
+     56,
+     43,
+     45,
+     53,
+     47,
+     51,
+     74,
+     104,
+     55,
+     66,
+     48,
+     44,
+     43
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "person 60 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 66,
+   "gapMax": 81,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     65,
+     65,
+     64,
+     65,
+     64,
+     65
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "person 90 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 96,
+   "gapMax": 104,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     101,
+     95,
+     94,
+     102,
+     104,
+     103
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "person 150 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 155,
+   "gapMax": 164,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     155,
+     154,
+     155,
+     154,
+     155,
+     157
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "person with one 20 ms rollover",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 126,
+   "gapMax": 168,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     126,
+     25,
+     132,
+     115,
+     148,
+     125
+    ]
+   }
+  },
+  {
+   "detector": "burst-gate 50 ms",
+   "case": "person typing a 6-digit code at 70 ms",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 76,
+   "gapMax": 86,
+   "sample": {
+    "scans": [],
+    "value": "400638",
+    "gaps": [
+     73,
+     72,
+     73,
+     74,
+     73,
+     75
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "scanner 4 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 0,
+   "detectedAsScan": 5,
+   "leakedIntoField": 5,
+   "gapMedian": 8,
+   "gapMax": 32,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "4006381333931",
+    "gaps": [
+     9,
+     7,
+     7,
+     7,
+     6,
+     13,
+     6,
+     7,
+     7,
+     6,
+     8,
+     6,
+     12
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "scanner 15 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 0,
+   "detectedAsScan": 5,
+   "leakedIntoField": 5,
+   "gapMedian": 19,
+   "gapMax": 38,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "4006381333931",
+    "gaps": [
+     21,
+     18,
+     20,
+     21,
+     18,
+     22,
+     20,
+     19,
+     18,
+     23,
+     22,
+     20,
+     19
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "scanner 25 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 0,
+   "detectedAsScan": 4,
+   "leakedIntoField": 5,
+   "gapMedian": 29,
+   "gapMax": 42,
+   "sample": {
+    "scans": [
+     "4006381333931"
+    ],
+    "value": "4006381333931",
+    "gaps": [
+     32,
+     29,
+     30,
+     29,
+     29,
+     30,
+     28,
+     28,
+     28,
+     37,
+     28,
+     28,
+     28
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "scanner 40 ms/key",
+   "kind": "scan",
+   "runs": 5,
+   "correct": 0,
+   "detectedAsScan": 0,
+   "leakedIntoField": 5,
+   "gapMedian": 44,
+   "gapMax": 53,
+   "sample": {
+    "scans": [],
+    "value": "4006381333931",
+    "gaps": [
+     46,
+     44,
+     46,
+     43,
+     42,
+     50,
+     44,
+     43,
+     48,
+     43,
+     43,
+     44,
+     43
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "person 60 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 65,
+   "gapMax": 72,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     65,
+     64,
+     64,
+     65,
+     67,
+     67
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "person 90 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 96,
+   "gapMax": 115,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     96,
+     95,
+     95,
+     96,
+     95,
+     95
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "person 150 ms/key",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 156,
+   "gapMax": 187,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     163,
+     155,
+     155,
+     155,
+     154,
+     153
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "person with one 20 ms rollover",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 131,
+   "gapMax": 159,
+   "sample": {
+    "scans": [],
+    "value": "coffee",
+    "gaps": [
+     126,
+     24,
+     134,
+     115,
+     143,
+     123
+    ]
+   }
+  },
+  {
+   "detector": "onscan.js 1.5.2 defaults",
+   "case": "person typing a 6-digit code at 70 ms",
+   "kind": "human",
+   "runs": 5,
+   "correct": 5,
+   "detectedAsScan": 0,
+   "leakedIntoField": 0,
+   "gapMedian": 75,
+   "gapMax": 102,
+   "sample": {
+    "scans": [],
+    "value": "400638",
+    "gaps": [
+     77,
+     95,
+     102,
+     75,
+     74,
+     74
+    ]
+   }
+  }
+ ],
+ "rum": [
+  {
+   "version": "v2",
+   "session": "dead control clicked 4× (150 ms apart)",
+   "expect": {
+    "rage_click": 1,
+    "dead_click": "≥1"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 1
+    },
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 1
+    },
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "slow pay button clicked 3× while waiting (250 ms apart; answers after 1.5 s)",
+   "expect": {
+    "rage_click": 1,
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "double-click a word in a paragraph",
+   "expect": {
+    "rage_click": 0,
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "triple-click to select a paragraph",
+   "expect": {
+    "rage_click": 0,
+    "dead_click": 0,
+    "triple_click_select": 1
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "triple_click_select": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "working button clicked once",
+   "expect": {
+    "rage_click": 0,
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "janky handler (350 ms busy loop)",
+   "expect": {
+    "inp_over_200ms": 1,
+    "inp_target": "#jank"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 360,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 432,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 352,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 360,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 384,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "handler that throws",
+   "expect": {
+    "js_error": 1
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "js_error": 1,
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "rage: dead control clicked 3× 600 ms apart (PostHog rule: each < 1 s after the previous)",
+   "expect": {
+    "rage_click": 1
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 2
+    },
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 2
+    },
+    {
+     "inp_max": 48,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 2
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 2
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 2
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "click an email field and type",
+   "expect": {
+    "dead_click": 0,
+    "rage_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#email"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#email"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#email"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#email"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#email"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "click the label of the email field",
+   "expect": {
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "toggle a checkbox",
+   "expect": {
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#agree"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "control that answers by scrolling a list (no DOM change)",
+   "expect": {
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#more"
+    },
+    {
+     "inp_max": 32,
+     "inp_rating": "good",
+     "inp_target": "#more"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#more"
+    },
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#more"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#more"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "truly dead button clicked once",
+   "expect": {
+    "dead_click": 1
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "truly dead button, then a working button 400 ms later (known limit: the second masks the first)",
+   "expect": {
+    "dead_click": 0,
+    "note": "true answer 1; PostHog has the same limit"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    }
+   ]
+  },
+  {
+   "version": "v2",
+   "session": "truly dead button on a page with a 1.5 s DOM ticker (known limit: background mutations mask it)",
+   "expect": {
+    "dead_click": 0,
+    "note": "true answer 1; PostHog has the same limit"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "dead control clicked 4× (150 ms apart)",
+   "expect": {
+    "rage_click": 1,
+    "dead_click": "≥1"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    },
+    {
+     "inp_max": 32,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "rage_click": 1,
+     "dead_click": 4
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "slow pay button clicked 3× while waiting (250 ms apart; answers after 1.5 s)",
+   "expect": {
+    "rage_click": 1,
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#slow",
+     "rage_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "double-click a word in a paragraph",
+   "expect": {
+    "rage_click": 0,
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "triple-click to select a paragraph",
+   "expect": {
+    "rage_click": 0,
+    "dead_click": 0,
+    "triple_click_select": 1
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "triple_click_select": 1,
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 32,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    },
+    {
+     "triple_click_select": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#para"
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "working button clicked once",
+   "expect": {
+    "rage_click": 0,
+    "dead_click": 0
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    },
+    {
+     "inp_max": 112,
+     "inp_rating": "good",
+     "inp_target": "#ok"
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "janky handler (350 ms busy loop)",
+   "expect": {
+    "inp_over_200ms": 1,
+    "inp_target": "#jank"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 368,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 376,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 360,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 360,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    },
+    {
+     "inp_max": 360,
+     "inp_rating": "needs-improvement",
+     "inp_over_200ms": 1,
+     "inp_target": "#jank"
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "handler that throws",
+   "expect": {
+    "js_error": 1
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "js_error": 1,
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    },
+    {
+     "js_error": 1,
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#boom"
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "rage: dead control clicked 3× 600 ms apart (PostHog rule: each < 1 s after the previous)",
+   "expect": {
+    "rage_click": 1
+   },
+   "matched": 0,
+   "runs": [
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "dead_click": 3
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "dead_click": 3
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "dead_click": 3
+    },
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "dead_click": 3
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#dead",
+     "dead_click": 3
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "click an email field and type",
+   "expect": {
+    "dead_click": 0,
+    "rage_click": 0
+   },
+   "matched": 0,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#email",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#email",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#email",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#email",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#email",
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "click the label of the email field",
+   "expect": {
+    "dead_click": 0
+   },
+   "matched": 0,
+   "runs": [
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "html>body>p>label",
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "toggle a checkbox",
+   "expect": {
+    "dead_click": 0
+   },
+   "matched": 0,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#agree",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#agree",
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "control that answers by scrolling a list (no DOM change)",
+   "expect": {
+    "dead_click": 0
+   },
+   "matched": 0,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#more",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#more",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#more",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#more",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#more",
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "truly dead button clicked once",
+   "expect": {
+    "dead_click": 1
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 24,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    },
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn",
+     "dead_click": 1
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "truly dead button, then a working button 400 ms later (known limit: the second masks the first)",
+   "expect": {
+    "dead_click": 0,
+    "note": "true answer 1; PostHog has the same limit"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 0,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    }
+   ]
+  },
+  {
+   "version": "v1",
+   "session": "truly dead button on a page with a 1.5 s DOM ticker (known limit: background mutations mask it)",
+   "expect": {
+    "dead_click": 0,
+    "note": "true answer 1; PostHog has the same limit"
+   },
+   "matched": 5,
+   "runs": [
+    {
+     "inp_max": 16,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    },
+    {
+     "inp_max": 8,
+     "inp_rating": "good",
+     "inp_target": "#deadbtn"
+    }
+   ]
+  }
+ ],
+ "rumFixtures": {
+  "a11y-wizard-noticker.html": {
+   "candidates": [
+    "a: responds",
+    "a: responds",
+    "h1: not an affordance",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "label: responds",
+    "input[file]: responds",
+    "label: responds",
+    "input[file]: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "select: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "select: responds",
+    "label: responds",
+    "select: responds"
+   ],
+   "isolated": {
+    "v1": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "deadReportedOnDead": 0,
+     "falseDeadOnResponding": [
+      "h1",
+      "label",
+      "input[file]",
+      "label",
+      "input[file]",
+      "label",
+      "input",
+      "label",
+      "select",
+      "label",
+      "input",
+      "label",
+      "input",
+      "label",
+      "input",
+      "label",
+      "select",
+      "label",
+      "select"
+     ],
+     "missedDead": [],
+     "otherEvents": []
+    },
+    "v2": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "deadReportedOnDead": 0,
+     "falseDeadOnResponding": [],
+     "missedDead": [],
+     "otherEvents": []
+    }
+   },
+   "sequence": {
+    "v1": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "events": [
+      "dead_click #cor-country",
+      "dead_click #cor-country"
+     ]
+    },
+    "v2": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "events": [
+      "rage_click #step-check > dl > div.row > dd.act > a"
+     ]
+    }
+   }
+  },
+  "a11y-wizard.html": {
+   "candidates": [
+    "a: responds",
+    "a: responds",
+    "h1: not an affordance",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "a: responds",
+    "label: responds",
+    "input[file]: responds",
+    "label: responds",
+    "input[file]: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "select: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "input: responds",
+    "label: responds",
+    "select: responds",
+    "label: responds",
+    "select: responds"
+   ],
+   "isolated": {
+    "v1": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "deadReportedOnDead": 0,
+     "falseDeadOnResponding": [],
+     "missedDead": [],
+     "otherEvents": []
+    },
+    "v2": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "deadReportedOnDead": 0,
+     "falseDeadOnResponding": [],
+     "missedDead": [],
+     "otherEvents": []
+    }
+   },
+   "sequence": {
+    "v1": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "events": []
+    },
+    "v2": {
+     "clicked": 31,
+     "trulyDead": 0,
+     "events": [
+      "rage_click #step-check > dl > div.row > dd.act > a"
+     ]
+    }
+   }
+  },
+  "dashboard.html": {
+   "candidates": [
+    "div: dead",
+    "div: dead",
+    "div: dead",
+    "div: dead",
+    "button: dead",
+    "button: dead",
+    "button: dead",
+    "td: dead",
+    "td: dead",
+    "td: dead",
+    "input: responds"
+   ],
+   "isolated": {
+    "v1": {
+     "clicked": 11,
+     "trulyDead": 10,
+     "deadReportedOnDead": 10,
+     "falseDeadOnResponding": [
+      "input"
+     ],
+     "missedDead": [],
+     "otherEvents": []
+    },
+    "v2": {
+     "clicked": 11,
+     "trulyDead": 10,
+     "deadReportedOnDead": 10,
+     "falseDeadOnResponding": [],
+     "missedDead": [],
+     "otherEvents": []
+    }
+   },
+   "sequence": {
+    "v1": {
+     "clicked": 11,
+     "trulyDead": 10,
+     "events": [
+      "dead_click div.side > div.item",
+      "dead_click main > div.row > div.card > input"
+     ]
+    },
+    "v2": {
+     "clicked": 11,
+     "trulyDead": 10,
+     "events": [
+      "dead_click div.side > div.item",
+      "dead_click div.side > div.item",
+      "dead_click div.side > div.item",
+      "rage_click main > div.top > div > button.iconbtn",
+      "dead_click div.side > div.item",
+      "dead_click main > div.top > div > button.iconbtn",
+      "dead_click main > div.top > div > button.iconbtn",
+      "dead_click main > div.top > div > button.iconbtn",
+      "dead_click main > div.row > div.card > table > tbody > tr > td.rowact",
+      "dead_click main > div.row > div.card > table > tbody > tr > td.rowact",
+      "dead_click main > div.row > div.card > table > tbody > tr > td.rowact"
+     ]
+    }
+   }
+  },
+  "app-traps.html": {
+   "candidates": [
+    "label: responds",
+    "input: responds"
+   ],
+   "isolated": {
+    "v1": {
+     "clicked": 2,
+     "trulyDead": 0,
+     "deadReportedOnDead": 0,
+     "falseDeadOnResponding": [
+      "label",
+      "input"
+     ],
+     "missedDead": [],
+     "otherEvents": []
+    },
+    "v2": {
+     "clicked": 2,
+     "trulyDead": 0,
+     "deadReportedOnDead": 0,
+     "falseDeadOnResponding": [],
+     "missedDead": [],
+     "otherEvents": []
+    }
+   },
+   "sequence": {
+    "v1": {
+     "clicked": 2,
+     "trulyDead": 0,
+     "events": [
+      "dead_click main > label > input",
+      "dead_click main > label > input"
+     ]
+    },
+    "v2": {
+     "clicked": 2,
+     "trulyDead": 0,
+     "events": []
+    }
+   }
+  }
+ },
+ "sizes": {
+  "rumSnippetGzipBytes": 2962,
+  "rumV1SnippetGzipBytes": 1925,
+  "webVitalsAttributionGzipBytes": 5465,
+  "webVitalsVersion": "6.2.2"
+ },
+ "mde": [
+  {
+   "baselineRate": 0.02,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 60.5,
+   "mde28dRelativePct": 42.8
+  },
+  {
+   "baselineRate": 0.02,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 100.9,
+   "mde28dRelativePct": 71.3
+  },
+  {
+   "baselineRate": 0.02,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 19.1,
+   "mde28dRelativePct": 13.5
+  },
+  {
+   "baselineRate": 0.02,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 31.9,
+   "mde28dRelativePct": 22.6
+  },
+  {
+   "baselineRate": 0.02,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 6.1,
+   "mde28dRelativePct": 4.3
+  },
+  {
+   "baselineRate": 0.02,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 10.1,
+   "mde28dRelativePct": 7.1
+  },
+  {
+   "baselineRate": 0.1,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 25.9,
+   "mde28dRelativePct": 18.3
+  },
+  {
+   "baselineRate": 0.1,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 43.2,
+   "mde28dRelativePct": 30.6
+  },
+  {
+   "baselineRate": 0.1,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 8.2,
+   "mde28dRelativePct": 5.8
+  },
+  {
+   "baselineRate": 0.1,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 13.7,
+   "mde28dRelativePct": 9.7
+  },
+  {
+   "baselineRate": 0.1,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 2.6,
+   "mde28dRelativePct": 1.8
+  },
+  {
+   "baselineRate": 0.1,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 4.3,
+   "mde28dRelativePct": 3.1
+  },
+  {
+   "baselineRate": 0.5,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 8.6,
+   "mde28dRelativePct": 6.1
+  },
+  {
+   "baselineRate": 0.5,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 14.4,
+   "mde28dRelativePct": 10.2
+  },
+  {
+   "baselineRate": 0.5,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 2.7,
+   "mde28dRelativePct": 1.9
+  },
+  {
+   "baselineRate": 0.5,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 4.6,
+   "mde28dRelativePct": 3.2
+  },
+  {
+   "baselineRate": 0.5,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 0.9,
+   "mde28dRelativePct": 0.6
+  },
+  {
+   "baselineRate": 0.5,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 1.4,
+   "mde28dRelativePct": 1
+  },
+  {
+   "baselineRate": 0.8,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 4.3,
+   "mde28dRelativePct": 3.1
+  },
+  {
+   "baselineRate": 0.8,
+   "dailyVisitors": 300,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 7.2,
+   "mde28dRelativePct": 5.1
+  },
+  {
+   "baselineRate": 0.8,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 1.4,
+   "mde28dRelativePct": 1
+  },
+  {
+   "baselineRate": 0.8,
+   "dailyVisitors": 3000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 2.3,
+   "mde28dRelativePct": 1.6
+  },
+  {
+   "baselineRate": 0.8,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.5,
+   "mde14dRelativePct": 0.4,
+   "mde28dRelativePct": 0.3
+  },
+  {
+   "baselineRate": 0.8,
+   "dailyVisitors": 30000,
+   "shareOnNewDesign": 0.1,
+   "mde14dRelativePct": 0.7,
+   "mde28dRelativePct": 0.5
+  }
+ ]
+}

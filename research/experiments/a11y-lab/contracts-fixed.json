@@ -1,0 +1,7 @@
+[
+  { "type": "dialog", "trigger": "#invite-open" },
+  { "type": "tabs", "tablist": "[role=tablist]" },
+  { "type": "disclosure", "button": "#adv-toggle" },
+  { "type": "live", "trigger": "#export" },
+  { "type": "form-errors", "form": "#settings", "submit": "button[type=submit]" }
+]

@@ -1,0 +1,9 @@
+/* "gsap": the approved spec built with GSAP (rAF-driven inline styles). CSS keeps colour hovers and focus. */
+.btn { transition: background-color 100ms cubic-bezier(0.2, 0, 0, 1); }
+.btn:focus-visible, #nav a:focus-visible { outline: 3px solid #f2c14e; outline-offset: 2px; }
+#nav a { text-decoration-color: transparent; text-underline-offset: 4px; transition: text-decoration-color 150ms cubic-bezier(0.2, 0, 0, 1); }
+#nav a:hover { text-decoration-color: currentColor; }
+@media (hover: hover) and (pointer: fine) { .btn:hover { background-color: #095c42; } .btn.secondary:hover { background-color: #cfdcd7; } }
+#sheet:not([open]) { display: none; }
+.toast { opacity: 0; pointer-events: none; }
+#panel .view[hidden] { display: grid; opacity: 0; }

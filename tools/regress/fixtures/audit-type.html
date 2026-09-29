@@ -1,0 +1,47 @@
+<!doctype html>
+<!--
+  Regression fixture for audit.mjs --kind configurator (an alias of app; tools/regress.mjs, group "audit"), run at 390.
+  - "Text under 12px" lists the two-word uppercase 11px labels ("order status", "LAST SHIFT") and the 10px "NEW";
+    not the single uppercase 11px word "status" or "PAID" (11px is allowed only for one uppercase word)
+  - "Monospace text rendered" names the paragraph in DejaVu Sans Mono (glyphs of one width), and not the heading in
+    "Code Next", a proportional face whose name only looks like a code font's
+  - ✗ "Text past the viewport" names the paragraph in the 420px panel: its overflow-y: auto makes overflow-x compute
+    to auto, but it has nothing to scroll sideways, so body's clip cuts its lines at the right edge
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kit builder</title>
+<style>
+  @font-face { font-family: "Code Next"; src: local("DejaVu Sans"), local("Liberation Sans"), local("Arial"), local("Helvetica"); }
+  * { box-sizing: border-box; }
+  html, body { overflow-x: hidden; }
+  body { margin: 0; font-family: system-ui, sans-serif; font-size: 16px; line-height: 1.5; color: #1a1a1a; background: #fff; }
+  header, footer { padding: 12px 16px; }
+  main { padding: 0 16px 24px; }
+  h1 { font-family: "Code Next", sans-serif; font-size: 24px; margin: 16px 0 8px; }
+  .serial { font-family: "DejaVu Sans Mono", "Liberation Mono", monospace; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; color: #333; }
+  .panel { width: 420px; max-height: 200px; overflow-y: auto; border: 1px solid #555; padding: 8px; }
+</style>
+</head>
+<body>
+<header>Kit builder</header>
+<main>
+  <h1>Build your kit</h1>
+  <p class="serial">Serial KB-2291-X</p>
+  <div class="meta">
+    <span style="font-size: 11px; text-transform: uppercase">status</span>
+    <span style="font-size: 11px">PAID</span>
+    <span style="font-size: 11px; text-transform: uppercase">order status</span>
+    <span style="font-size: 11px">LAST SHIFT</span>
+    <span style="font-size: 10px">NEW</span>
+  </div>
+  <div class="panel">
+    <p>Choose a frame, then the wheels and the saddle. The price updates as you go, and the kit ships in five days.</p>
+  </div>
+</main>
+<footer>Kit builder</footer>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+  "name": "s1-rendering-lab",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "One interactive 'decorate the object' scene in DOM, SVG, Canvas 2D, Canvas 2D in a Worker, PixiJS, Phaser, three.js and React Three Fiber, measured the same way; plus a payload survey of other engines.",
+  "license": "MIT",
+  "scripts": {
+    "all": "node run.mjs",
+    "quick": "node run.mjs --runs 1"
+  },
+  "dependencies": {
+    "@react-three/fiber": "9.8.1",
+    "esbuild": "0.28.2",
+    "phaser": "4.2.1",
+    "pixelmatch": "7.2.0",
+    "pixi.js": "8.21.0",
+    "pngjs": "7.0.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "sharp": "0.35.5",
+    "three": "0.186.1"
+  },
+  "optionalDependencies": {
+    "@babylonjs/core": "9.28.0",
+    "@dimforge/rapier2d-compat": "0.21.0",
+    "@pixi/react": "8.0.5",
+    "@playcanvas/react": "0.11.7",
+    "@react-three/a11y": "3.0.0",
+    "@react-three/drei": "10.7.9",
+    "@rive-app/canvas": "2.43.1",
+    "excalibur": "0.32.0",
+    "fabric": "7.4.0",
+    "kaboom": "3000.1.17",
+    "kaplay": "3001.0.19",
+    "konva": "10.7.0",
+    "litecanvas": "0.302.0",
+    "littlejsengine": "1.19.3",
+    "matter-js": "0.20.0",
+    "melonjs": "20.7.0",
+    "ogl": "1.0.11",
+    "p5": "2.3.4",
+    "playcanvas": "2.22.6",
+    "react-konva": "19.3.0",
+    "two.js": "0.8.24"
+  }
+}

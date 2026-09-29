@@ -1,0 +1,289 @@
+{
+ "url": "/ext/bootstrap-built/dashboard.html",
+ "mode": "flip",
+ "width": 1280,
+ "summary": {
+  "FAIL": 1,
+  "WARN": 3,
+  "INFO": 3
+ },
+ "mirror": {
+  "checked": 167,
+  "notMirrored": 14,
+  "roots": 12,
+  "keptPhysical": 6
+ },
+ "css": {
+  "rules": 2549,
+  "physicalRules": 421,
+  "overrideRules": 0,
+  "logicalRules": 9
+ },
+ "keys": [],
+ "icons": [
+  {
+   "name": "bi #house-fill",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Dashboard",
+   "island": false
+  },
+  {
+   "name": "bi #file-earmark",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Orders",
+   "island": false
+  },
+  {
+   "name": "bi #cart",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Products",
+   "island": false
+  },
+  {
+   "name": "bi #people",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Customers",
+   "island": false
+  },
+  {
+   "name": "bi #graph-up",
+   "class": "ambiguous",
+   "family": "chart",
+   "note": "time axis: Material and Firefox run time right-to-left, Apple and Codex keep graphs",
+   "pixels": "same",
+   "context": "Reports",
+   "island": false
+  },
+  {
+   "name": "bi #puzzle",
+   "class": "directional",
+   "strength": "weak",
+   "sources": [
+    "codex"
+   ],
+   "pixels": "symmetric",
+   "context": "Integrations",
+   "island": false
+  },
+  {
+   "name": "bi #plus-circle",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Add a new report",
+   "island": false
+  },
+  {
+   "name": "bi #file-earmark-text",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Current month",
+   "island": false
+  },
+  {
+   "name": "bi #file-earmark-text",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Last quarter",
+   "island": false
+  },
+  {
+   "name": "bi #file-earmark-text",
+   "class": "unknown",
+   "pixels": "changed",
+   "context": "Social engagement",
+   "island": false
+  },
+  {
+   "name": "bi #file-earmark-text",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Year-end sale",
+   "island": false
+  },
+  {
+   "name": "bi #gear-wide-connected",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Settings",
+   "island": false
+  },
+  {
+   "name": "bi #door-closed",
+   "class": "ambiguous",
+   "family": "logInOut",
+   "note": "Codex flips LogIn/LogOut, Flutter does not",
+   "pixels": "same",
+   "context": "Sign out",
+   "island": false
+  },
+  {
+   "name": "bi #calendar3",
+   "class": "never",
+   "strength": "weak",
+   "sources": [
+    "codex"
+   ],
+   "family": "calendar",
+   "pixels": "same",
+   "context": "This week",
+   "island": false
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "check": "mirror",
+   "message": "Boxes that do not mirror when the page turns RTL (topmost only; > 8 px from the mirrored place)",
+   "count": 11,
+   "examples": [
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "mirror",
+   "message": "Boxes 3–8 px from their mirrored place in RTL (topmost only)",
+   "count": 1,
+   "examples": [
+    "div.btn-group.me-2 (8 px off) — margin-left 0px / right 8px"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "mirror",
+   "message": "Physical values that stay the same in RTL (computed styles, LTR vs RTL render)",
+   "count": 6,
+   "examples": [
+    "ul.nav.flex-column: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "ul.nav.flex-column: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "ul.nav.flex-column: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "main.col-md-9.ms-sm-auto: margin-left 0.015625px / right 0px",
+    "div.btn-group.me-2: margin-left 0px / right 8px",
+    "button.btn.btn-sm: margin-left -1px / right 0px"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "icons",
+   "message": "Icons the sources disagree on — record the decision (mirrored here: yes/no)",
+   "count": 2,
+   "examples": [
+    "bi #graph-up: same — time axis: Material and Firefox run time right-to-left, Apple and Codex keep graphs",
+    "bi #door-closed: same — Codex flips LogIn/LogOut, Flutter does not"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "css",
+   "message": "Rules with physical inline-axis values (421 of 2549 rules; 0 RTL overrides; 9 rules use logical properties)",
+   "count": 421,
+   "examples": [
+    "ol, ul { padding-left:2rem }",
+    "dd { margin-left:0px }",
+    "caption { text-align:left }",
+    "legend { float:left }",
+    ".list-unstyled { padding-left:0px }",
+    ".list-inline { padding-left:0px }",
+    ".list-inline-item:not(:last-child) { margin-right:0.5rem }",
+    ".offset-1 { margin-left:8.33333% }",
+    ".offset-2 { margin-left:16.6667% }",
+    ".offset-3 { margin-left:25% }",
+    ".offset-4 { margin-left:33.3333% }",
+    ".offset-5 { margin-left:41.6667% }",
+    ".offset-6 { margin-left:50% }",
+    ".offset-7 { margin-left:58.3333% }",
+    ".offset-8 { margin-left:66.6667% }",
+    ".offset-9 { margin-left:75% }",
+    ".offset-10 { margin-left:83.3333% }",
+    ".offset-11 { margin-left:91.6667% }",
+    ".offset-sm-0 { margin-left:0px }",
+    ".offset-sm-1 { margin-left:8.33333% }",
+    ".offset-sm-2 { margin-left:16.6667% }",
+    ".offset-sm-3 { margin-left:25% }",
+    ".offset-sm-4 { margin-left:33.3333% }",
+    ".offset-sm-5 { margin-left:41.6667% }",
+    ".offset-sm-6 { margin-left:50% }",
+    ".offset-sm-7 { margin-left:58.3333% }",
+    ".offset-sm-8 { margin-left:66.6667% }",
+    ".offset-sm-9 { margin-left:75% }",
+    ".offset-sm-10 { margin-left:83.3333% }",
+    ".offset-sm-11 { margin-left:91.6667% }",
+    ".offset-md-0 { margin-left:0px }",
+    ".offset-md-1 { margin-left:8.33333% }",
+    ".offset-md-2 { margin-left:16.6667% }",
+    ".offset-md-3 { margin-left:25% }",
+    ".offset-md-4 { margin-left:33.3333% }",
+    ".offset-md-5 { margin-left:41.6667% }",
+    ".offset-md-6 { margin-left:50% }",
+    ".offset-md-7 { margin-left:58.3333% }",
+    ".offset-md-8 { margin-left:66.6667% }",
+    ".offset-md-9 { margin-left:75% }",
+    ".offset-md-10 { margin-left:83.3333% }",
+    ".offset-md-11 { margin-left:91.6667% }",
+    ".offset-lg-0 { margin-left:0px }",
+    ".offset-lg-1 { margin-left:8.33333% }",
+    ".offset-lg-2 { margin-left:16.6667% }",
+    ".offset-lg-3 { margin-left:25% }",
+    ".offset-lg-4 { margin-left:33.3333% }",
+    ".offset-lg-5 { margin-left:41.6667% }",
+    ".offset-lg-6 { margin-left:50% }",
+    ".offset-lg-7 { margin-left:58.3333% }",
+    ".offset-lg-8 { margin-left:66.6667% }",
+    ".offset-lg-9 { margin-left:75% }",
+    ".offset-lg-10 { margin-left:83.3333% }",
+    ".offset-lg-11 { margin-left:91.6667% }",
+    ".offset-xl-0 { margin-left:0px }",
+    ".offset-xl-1 { margin-left:8.33333% }",
+    ".offset-xl-2 { margin-left:16.6667% }",
+    ".offset-xl-3 { margin-left:25% }",
+    ".offset-xl-4 { margin-left:33.3333% }",
+    ".offset-xl-5 { margin-left:41.6667% }"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "Transforms with an x translation (drawers, slides): transforms never flip with dir",
+   "count": 16,
+   "examples": [
+    ".active.carousel-item-end, .carousel-item-next:not(.carousel-item-start) { transform: translateX(100%) }",
+    ".active.carousel-item-start, .carousel-item-prev:not(.carousel-item-end) { transform: translateX(-100%) }",
+    ".offcanvas-sm.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-sm.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-md.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-md.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-lg.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-lg.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-xl.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-xl.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-xxl.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-xxl.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas.offcanvas-end { transform: translateX(100%) }",
+    ".translate-middle { transform: translate(-50%, -50%) }",
+    ".translate-middle-x { transform: translateX(-50%) }"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "1 box-shadows with an x offset: decide whether the light source mirrors (Material: elevation shadows fall straight down)",
+   "examples": []
+  }
+ ],
+ "ms": 2693
+}

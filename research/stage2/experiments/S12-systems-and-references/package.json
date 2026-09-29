@@ -1,0 +1,33 @@
+{
+  "name": "s12-systems-and-references",
+  "private": true,
+  "type": "module",
+  "description": "Stage-2 stream S12: white-label tenant contrast, token-enforcement lint fixtures, POS wedge-scanner and post-launch rage-click labs.",
+  "scripts": {
+    "all": "node run.mjs",
+    "tenant": "node tenant/run-tenant.mjs",
+    "lint": "node lint/run-lint.mjs",
+    "labs": "node labs/run-labs.mjs"
+  },
+  "dependencies": {
+    "@adobe/leonardo-contrast-colors": "1.1.0",
+    "@atlaskit/eslint-plugin-design-system": "16.13.2",
+    "@atlaskit/tokens": "20.1.0",
+    "@material/material-color-utilities": "0.4.0",
+    "@radix-ui/colors": "3.0.0",
+    "@tailwindcss/node": "4.3.3",
+    "@typescript-eslint/parser": "8.71.0",
+    "axe-core": "4.13.0",
+    "bezier-easing": "^2.1.0",
+    "colorjs-052": "npm:colorjs.io@^0.5.2",
+    "colorjs.io": "0.7.1",
+    "eslint": "10.11.0",
+    "eslint-plugin-better-tailwindcss": "4.7.0",
+    "eslint-plugin-tailwindcss": "4.4.0",
+    "onscan.js": "^1.5.2",
+    "stylelint": "17.15.0",
+    "stylelint-declaration-strict-value": "1.12.1",
+    "tailwindcss": "4.3.3",
+    "web-vitals": "6.2.2"
+  }
+}

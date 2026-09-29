@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>خطوط الصفحة</title>
+<!-- audit.mjs RTL block, check (h): glyphs drawn by a system fallback font where the page chose its own faces.
+     The faces are local() fonts found on Linux (DejaVu Sans covers Arabic; Liberation Sans does not), so no font file
+     ships with the regression set. ?face= picks the case:
+       (default) "Brand" is DejaVu Sans for everything: every glyph comes from the page's face, nothing to report
+       latin     "Brand" is Liberation Sans only: the Arabic falls back to the system (WARN, most of the text)
+       gap       "Brand" is DejaVu Sans, which lacks the Saudi riyal sign U+20C1 (WARN naming it)
+       weight    the lab's own mistake: a Latin face at font-weight 100 700 and an Arabic face at 400 in one family;
+                 the Arabic face never loads (WARN naming the face) -->
+<script>
+  const face = new URLSearchParams(location.search).get('face');
+  const css = {
+    latin: '@font-face { font-family: "Brand"; src: local("Liberation Sans"), local("Arial"); }',
+    weight: '@font-face { font-family: "Brand"; src: local("Liberation Sans"), local("Arial"); font-weight: 100 700; unicode-range: U+0000-05FF; }'
+      + ' @font-face { font-family: "Brand"; src: local("DejaVu Sans"); font-weight: 400; unicode-range: U+0600-06FF, U+FB50-FDFF, U+FE70-FEFF; }',
+  }[face] || '@font-face { font-family: "Brand"; src: local("DejaVu Sans"); }';
+  document.write(`<style>${css} body { font: 16px/1.7 "Brand", sans-serif; margin: 24px; }</style>`);
+</script>
+</head>
+<body>
+<main>
+  <h1>الأسعار</h1>
+  <p>اشتراك شهري للمتجر مع التوصيل المجاني.</p>
+  <p id="price">السعر: ٤٩ ريال<span id="riyal"></span></p>
+</main>
+<script>
+  if (face === 'gap') document.getElementById('riyal').textContent = ' ⃁';
+</script>
+</body>
+</html>

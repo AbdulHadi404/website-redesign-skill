@@ -1,0 +1,6 @@
+collection fonts: ["Alegreya italic 400 900 loaded","Alegreya normal 400 900 unloaded","Alegreya Sans normal 400 loaded","Alegreya Sans normal 500 loaded","Alegreya Sans normal 700 loaded","Alegreya Sans italic 400 unloaded","Alegreya Sans Fallback normal normal loaded","Alegreya Fallback italic normal unloaded"]
+h1 font: Alegreya, "Alegreya Fallback", Georgia, serif / italic
+check normal Alegreya: false  italic: true
+area-calc bg (closed): rgb(255, 255, 255) / rgb(31, 63, 143)
+area-calc bg (open): rgb(255, 255, 255) / rgb(31, 63, 143)
+closed: {"open":false,"rects":1,"box":[1026,811,75,17],"stack":["BUTTON#add bg=rgb(31, 63, 143)","DIV bg=rgba(0, 0, 0, 0)","DIV bg=rgba(0, 0, 0, 0)","DIV#pdp bg=rgba(0, 0, 0, 0)"]}

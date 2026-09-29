@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nested corners</title>
+<!-- audit.mjs concentric radii (stage-2 S9, finding 11): all four corners, the nearest painted rounded ancestor,
+     discs and pills skipped, a flag only where the gap is at most R.
+       reported:     .swollen  r24 in a r24 card, 8px in, top-left (≈16px)
+                     .publish  r12 in a r12 footer, 12px in at the bottom-RIGHT corner (≈0px): the corner v1 never checked
+       not reported: .concentric r16 in a r24 card, 8px in (≈16px)
+                     .play     a round play button (border-radius 50%) 8px into a r16 card: a disc is a role, not a nesting
+                     .field    r10 in a r18 card, 22px in: gap > R, information only (radiusFarIn)
+                     .inner    r12 in an unpainted r40 wrapper inside a r16 card, 4px in: the wrapper paints nothing,
+                               the card (≈12px) is the corner that counts -->
+<style>
+  body { margin: 24px; font: 16px/1.5 sans-serif; color: #16181d; }
+  main { display: grid; gap: 24px; max-width: 420px; }
+  h1 { font-size: 24px; margin: 0; }
+  .card { background: #eef0f6; border-radius: 24px; padding: 8px; }
+  .card a { display: block; background: #223; color: #fff; padding: 14px 18px; text-decoration: none; }
+  .swollen { border-radius: 24px; }
+  .concentric { border-radius: 16px; }
+  .media { display: flex; align-items: center; gap: 12px; background: #eef0f6; border-radius: 16px; padding: 8px; }
+  .play { inline-size: 48px; block-size: 48px; border-radius: 50%; border: 0; background: #223; color: #fff; font-size: 18px; flex: none; }
+  .foot { display: flex; justify-content: flex-end; align-items: end; min-block-size: 96px; background: #eef0f6; border-radius: 12px; padding: 12px; }
+  .publish { border: 0; background: #0b5cad; color: #fff; padding: 10px 18px; border-radius: 12px; font: inherit; }
+  .form { background: #eef0f6; border-radius: 18px; padding: 22px; }
+  .field { display: block; inline-size: 100%; box-sizing: border-box; border: 1px solid #8a9099; border-radius: 10px; padding: 10px; font: inherit; background: #fff; }
+  .shell { background: #eef0f6; border-radius: 16px; padding: 4px; }
+  .wrap { border-radius: 40px; }
+  .inner { background: #223; color: #fff; border-radius: 12px; padding: 14px 18px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Nested corners</h1>
+  <div class="card"><a class="swollen" href="#a">24px inside 24px, 8px in</a></div>
+  <div class="card"><a class="concentric" href="#b">16px inside 24px, 8px in</a></div>
+  <div class="media"><button class="play" aria-label="Play">▶</button><span>Episode 4: the play disc</span></div>
+  <div class="foot"><button class="publish">Publish</button></div>
+  <form class="form"><input class="field" name="n" aria-label="Name" value="Sara"></form>
+  <div class="shell"><div class="wrap"><div class="inner">12px inside an unpainted 40px wrapper, in a 16px card</div></div></div>
+</main>
+</body>
+</html>

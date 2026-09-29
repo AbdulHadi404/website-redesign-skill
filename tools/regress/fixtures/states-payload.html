@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payloads that differ late or in bytes</title>
+<!-- states.mjs payload-recording regression fixture: ?build=new sends a JSON body that differs from ?build=old only
+     after character 200,000, and a file upload that differs only in one byte that is not UTF-8. -->
+</head>
+<body>
+<main>
+  <h1>Send</h1>
+  <button id="send-json" type="button">Send a long note</button>
+  <button id="send-file" type="button">Send a file</button>
+</main>
+<script>
+  const build = new URLSearchParams(location.search).get('build') || 'old';
+  document.getElementById('send-json').onclick = () => {
+    const note = 'a'.repeat(250000).split('');
+    if (build === 'new') note[220000] = 'b';
+    fetch('api/submit', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name: 'Ann', note: note.join('') }) });
+  };
+  document.getElementById('send-file').onclick = () => {
+    const form = new FormData();
+    form.append('name', 'Ann');
+    form.append('proof', new Blob([new Uint8Array([0x89, 0x50, build === 'new' ? 0x81 : 0x80, 0xff])], { type: 'application/octet-stream' }), 'proof.bin');
+    fetch('api/upload', { method: 'POST', body: form });
+  };
+</script>
+</body></html>

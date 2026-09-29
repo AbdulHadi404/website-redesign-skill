@@ -1,0 +1,65 @@
+widget-contracts http://localhost:5811/ (18.6s)
+
+PASS dialog #new-invoice
+   ✓ named: - dialog "فاتورة جديدة":
+   ✓ modal (:modal or aria-modal)
+   ✓ focus moved into dialog (#f-client )
+   ✓ Tab stays inside (background inert)
+   ✓ Escape closes
+   ✓ focus returned to trigger
+
+PASS form-errors #invoice-form
+   ! [4.1.3] Errors were neither focused nor announced via a live region
+   ! [—] Page title not prefixed with "Error:" (GOV.UK recommends it)
+   ✓ focus moved to the first invalid field (#f-client)
+   ✓ 2 field(s) aria-invalid=true
+   ✓ #f-client error text is in its description: "خطأ:
+أدخل اسم العميل"
+   ✓ #f-amount error text is in its description: "مثال: 1,250.00 — تُقبل الأرقام العربية والإنجليزية خطأ:
+أدخل"
+
+PASS live #f-save
+   ✓ announced via live region: "فاتورة مركز نبض الطبي بإجمالي 1,438.08 ر.س، منها ضريبة القيمة المضافة 187.58 ر.س."
+   ✓ 3 live region(s) in the DOM
+
+PASS disclosure .disclosure summary
+   ✓ is a button
+   ✓ native <details>/<summary> — the browser exposes the expanded state
+   ✓ Enter toggles the content
+   ✓ Space toggles back
+
+PASS live #chips .chip[data-status=pastdue]
+   ✓ announced via live region: "يظهر 13 من 24 فاتورة"
+   ✓ 3 live region(s) in the DOM
+widget-contracts http://localhost:5811/?lang=en (18.7s)
+
+PASS dialog #new-invoice
+   ✓ named: - dialog "New invoice":
+   ✓ modal (:modal or aria-modal)
+   ✓ focus moved into dialog (#f-client )
+   ✓ Tab stays inside (background inert)
+   ✓ Escape closes
+   ✓ focus returned to trigger
+
+PASS form-errors #invoice-form
+   ! [4.1.3] Errors were neither focused nor announced via a live region
+   ! [—] Page title not prefixed with "Error:" (GOV.UK recommends it)
+   ✓ focus moved to the first invalid field (#f-client)
+   ✓ 2 field(s) aria-invalid=true
+   ✓ #f-client error text is in its description: "Error:
+Enter the client’s name"
+   ✓ #f-amount error text is in its description: "For example 1,250.00. Arabic or Western digits both work. Er"
+
+PASS live #f-save
+   ✓ announced via live region: "Invoice for مركز نبض الطبي, total SAR 1,438.08 including VAT of SAR 187.58."
+   ✓ 3 live region(s) in the DOM
+
+PASS disclosure .disclosure summary
+   ✓ is a button
+   ✓ native <details>/<summary> — the browser exposes the expanded state
+   ✓ Enter toggles the content
+   ✓ Space toggles back
+
+PASS live #chips .chip[data-status=pastdue]
+   ✓ announced via live region: "Showing 13 of 24 invoices"
+   ✓ 3 live region(s) in the DOM

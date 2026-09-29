@@ -1,0 +1,23 @@
+/* "over": everything moves, most of it the wrong way. */
+.btn, .plan, .feature, #nav a, .toast { transition: all 600ms cubic-bezier(.68, -0.55, .27, 1.55); }
+#cta { animation: pulse 1500ms ease-in-out infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 12px rgb(11 110 79 / .25); } }
+.btn:hover { padding: 14px 30px; background: #095c42; }        /* layout on hover; no :active */
+#nav a:hover { letter-spacing: 1px; color: #0b6e4f; }
+.plan:hover { top: -10px; width: 110%; box-shadow: 0 20px 40px rgb(0 0 0 / .25); }
+#sheet { height: 280px; overflow: hidden; transition: height 800ms cubic-bezier(.68, -0.55, .27, 1.55), padding 800ms; }
+#sheet:not([open]) { display: block; height: 0; padding: 0 24px; }
+.toast { opacity: 0; }
+.toast.show { opacity: 1; animation: toastin 900ms cubic-bezier(.68, -0.55, .27, 1.55); }
+@keyframes toastin { from { margin-bottom: -60px; opacity: 0; } 60% { margin-bottom: 10px; } to { margin-bottom: 0; opacity: 1; } }
+.feature { opacity: 0; }
+.feature.in { opacity: 1; animation: pop 1200ms cubic-bezier(.68, -0.55, .27, 1.55) both; animation-delay: calc(var(--i) * 200ms); }
+@keyframes pop { from { transform: scale(0) rotate(-8deg); opacity: 0; } }
+#hero-title { animation: heroin 1500ms ease-in both; }
+@keyframes heroin { from { transform: translateY(60px) scale(.8); opacity: 0; } }
+#panel { view-transition-name: panel; }
+::view-transition-group(panel) { animation-duration: 600ms; }
+::view-transition-old(panel) { animation: 600ms ease-in both slideout; }
+::view-transition-new(panel) { animation: 600ms ease-in both slidein; }
+@keyframes slideout { to { transform: translateX(-100%) rotate(-3deg); } }
+@keyframes slidein { from { transform: translateX(100%) rotate(3deg); } }

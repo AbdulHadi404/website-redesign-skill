@@ -1,0 +1,1019 @@
+{
+ "_note": "Hand labels for motion.mjs flags on the dev and held-out pages (c/pages.json). tp = the flag is right about the page; fp = it is wrong (the defect is not there); debatable = literally true but a designer could reasonably accept it (e.g. off-token on a page that has no motion tokens of its own). Each label says why, read from the page source. Held-out labels were written after the single frozen run of motion.mjs on those pages.",
+ "hblind-fixture": {
+  "transition-all|#features div.card.reveal": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "off-token|#features div.card.reveal": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|#features div.card.reveal": {
+   "label": "tp",
+   "why": "longer than motion.md hero (700 ms)"
+  },
+  "no-reduced-motion|page": {
+   "label": "tp",
+   "why": "something moves (reveal / marquee / blink / counter) and there is no reduced-motion rule or query"
+  },
+  "hover-none|a.brand": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|a": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|a.cta": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|a.btn.primary": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|a.btn.ghost": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#visit-form button": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "focus-none|a.brand": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "focus-none|a": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "focus-none|a.cta": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "focus-none|a.btn.primary": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "focus-none|a.btn.ghost": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "focus-none|#visit-form button": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "no-active|a.cta": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|a.btn.primary": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|a.btn.ghost": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#visit-form button": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  }
+ },
+ "a11y-flawed": {
+  "infinite|span": {
+   "label": "tp",
+   "why": "a non-spinner loop (marquee / blink) with no pause"
+  },
+  "no-reduced-motion|page": {
+   "label": "tp",
+   "why": "something moves (reveal / marquee / blink / counter) and there is no reduced-motion rule or query"
+  },
+  "moves-under-reduce|span": {
+   "label": "tp",
+   "why": "the loop still runs under reduce"
+  },
+  "hover-none|a": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|button.btn": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#content div.card": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#content button.iconbtn.bg": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#content button.iconbtn": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#content span.active": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#content span": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#content button.btn": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "focus-none|a.skip": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "focus-none|a": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "focus-none|#content a": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "focus-none|#content button.iconbtn.bg": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "focus-none|#content button.iconbtn": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "focus-none|#content select": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "focus-none|#n1": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "focus-none|#n2": {
+   "label": "tp",
+   "why": "the page removes outlines (outline: none) and adds no other focus style for this element"
+  },
+  "no-active|#content div.card": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#content button.iconbtn.bg": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#content button.iconbtn": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "infinite|#content span.spin": {
+   "label": "fp",
+   "why": "a small rotate-only loading spinner: motion.md §6 keeps spinners under reduce"
+  },
+  "moves-under-reduce|#content span.spin": {
+   "label": "fp",
+   "why": "a small rotate-only loading spinner: motion.md §6 keeps spinners under reduce"
+  },
+  "hover-none|#content select": {
+   "label": "fp",
+   "why": "native select/radio/checkbox with no author :hover rule: Chromium draws its hover; computed styles cannot see it"
+  },
+  "hover-none|#n1": {
+   "label": "fp",
+   "why": "native select/radio/checkbox with no author :hover rule: Chromium draws its hover; computed styles cannot see it"
+  },
+  "hover-none|#n2": {
+   "label": "fp",
+   "why": "native select/radio/checkbox with no author :hover rule: Chromium draws its hover; computed styles cannot see it"
+  }
+ },
+ "a11y-fixed": {
+  "reduce-kills-all|page": {
+   "label": "tp",
+   "why": "a universal 0.01ms rule under reduce (press and focus feedback included)"
+  },
+  "hover-none|a.logo": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|a": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|a.icon-link": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|button.icon-btn": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|button.btn": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#news-toggle": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#main summary": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#invoices button": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#invoices button.icon-btn": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#invite-open": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#export": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#adv-toggle": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#tab-d": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#tab-w": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#tab-m": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "hover-none|#settings button.btn": {
+   "label": "tp",
+   "why": "styled control; the page has no :hover rule"
+  },
+  "no-active|button.icon-btn": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|button.btn": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#news-toggle": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#invoices button": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#invoices button.icon-btn": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#invite-open": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#export": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#adv-toggle": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#tab-d": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#tab-w": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#tab-m": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "no-active|#settings button.btn": {
+   "label": "tp",
+   "why": "styled button; the page has no :active rule"
+  },
+  "infinite|#main span.spinner": {
+   "label": "fp",
+   "why": "a small rotate-only loading spinner: motion.md §6 keeps spinners under reduce"
+  },
+  "hover-none|#pw-show": {
+   "label": "fp",
+   "why": "native select/radio/checkbox with no author :hover rule: Chromium draws its hover; computed styles cannot see it"
+  },
+  "hover-none|#billing": {
+   "label": "fp",
+   "why": "native select/radio/checkbox with no author :hover rule: Chromium draws its hover; computed styles cannot see it"
+  },
+  "hover-none|#settings input": {
+   "label": "fp",
+   "why": "native select/radio/checkbox with no author :hover rule: Chromium draws its hover; computed styles cannot see it"
+  }
+ },
+ "a11y-wizard": {
+  "infinite|span.draft": {
+   "label": "tp",
+   "why": "a non-spinner loop (marquee / blink) with no pause"
+  },
+  "no-reduced-motion|page": {
+   "label": "tp",
+   "why": "something moves (reveal / marquee / blink / counter) and there is no reduced-motion rule or query"
+  },
+  "moves-under-reduce|span.draft": {
+   "label": "tp",
+   "why": "the loop still runs under reduce"
+  },
+  "infinite|#step-details span.spin": {
+   "label": "fp",
+   "why": "a small rotate-only loading spinner: motion.md §6 keeps spinners under reduce"
+  },
+  "infinite|#main span.spin": {
+   "label": "fp",
+   "why": "a small rotate-only loading spinner: motion.md §6 keeps spinners under reduce"
+  },
+  "moves-under-reduce|#main span.spin": {
+   "label": "fp",
+   "why": "a small rotate-only loading spinner: motion.md §6 keeps spinners under reduce"
+  },
+  "hover-none|#street": {
+   "label": "fp",
+   "why": "native select/radio/checkbox with no author :hover rule: Chromium draws its hover; computed styles cannot see it"
+  },
+  "hover-none|#cor-town": {
+   "label": "fp",
+   "why": "native select/radio/checkbox with no author :hover rule: Chromium draws its hover; computed styles cannot see it"
+  },
+  "hover-none|#cor-country": {
+   "label": "fp",
+   "why": "native select/radio/checkbox with no author :hover rule: Chromium draws its hover; computed styles cannot see it"
+  }
+ },
+ "lab-ticker-bug": {
+  "off-token|#ticker": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|#ticker": {
+   "label": "debatable",
+   "why": "an 800 ms number counter is a common, deliberate duration"
+  },
+  "no-reduced-motion|page": {
+   "label": "tp",
+   "why": "something moves (reveal / marquee / blink / counter) and there is no reduced-motion rule or query"
+  },
+  "hover-none|#hi": {
+   "label": "fp",
+   "why": "an unstyled native button: the browser draws its hover and pressed (inset border) states"
+  },
+  "no-active|#hi": {
+   "label": "fp",
+   "why": "an unstyled native button: the browser draws its hover and pressed (inset border) states"
+  }
+ },
+ "govuk": {
+  "no-reduced-motion|page": {
+   "label": "fp",
+   "why": "the page has no transitions or animations at all"
+  },
+  "hover-none|a.govuk-header__homepage-link": {
+   "label": "fp",
+   "why": "the hover changes text-decoration-thickness / adds a border-bottom, which the old fingerprint did not read"
+  },
+  "hover-none|a.govuk-back-link": {
+   "label": "fp",
+   "why": "the hover changes text-decoration-thickness / adds a border-bottom, which the old fingerprint did not read"
+  }
+ },
+ "bs-button": {
+  "scale-zero|@keyframes spinner-grow": {
+   "label": "fp",
+   "why": "Bootstrap spinner-grow is a loading-indicator pulse (scale 0→1, infinite), not an entrance; the scale(0) advice is about entrances"
+  }
+ },
+ "bs-collapse": {
+  "scale-zero|@keyframes spinner-grow": {
+   "label": "fp",
+   "why": "Bootstrap spinner-grow is a loading-indicator pulse (scale 0→1, infinite), not an entrance; the scale(0) advice is about entrances"
+  },
+  "hover-none|#headingOne": {
+   "label": "debatable",
+   "why": "a div role=tab wrapper; the real control is the link inside it, which has hover feedback"
+  },
+  "hover-none|#headingTwo": {
+   "label": "debatable",
+   "why": "a div role=tab wrapper; the real control is the link inside it, which has hover feedback"
+  },
+  "hover-none|#headingThree": {
+   "label": "debatable",
+   "why": "a div role=tab wrapper; the real control is the link inside it, which has hover feedback"
+  },
+  "hover-none|#headingFour": {
+   "label": "debatable",
+   "why": "a div role=tab wrapper; the real control is the link inside it, which has hover feedback"
+  }
+ },
+ "bs-modal": {
+  "off-token|#slowModal": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|#slowModal": {
+   "label": "tp",
+   "why": "longer than motion.md hero (700 ms)"
+  },
+  "off-token|#slowModal div.modal-dialog": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|#slowModal div.modal-dialog": {
+   "label": "tp",
+   "why": "longer than motion.md hero (700 ms)"
+  },
+  "scale-zero|@keyframes spinner-grow": {
+   "label": "fp",
+   "why": "Bootstrap spinner-grow is a loading-indicator pulse (scale 0→1, infinite), not an entrance; the scale(0) advice is about entrances"
+  },
+  "hover-none|#navbarResponsive a.navbar-brand": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "hover-none|#navbarResponsive a.nav-link.active": {
+   "label": "debatable",
+   "why": "the current page/tab/item: many systems give it no hover; pixels confirm no change"
+  }
+ },
+ "bs-toast": {
+  "scale-zero|@keyframes spinner-grow": {
+   "label": "fp",
+   "why": "Bootstrap spinner-grow is a loading-indicator pulse (scale 0→1, infinite), not an entrance; the scale(0) advice is about entrances"
+  }
+ },
+ "bs-tab": {
+  "scale-zero|@keyframes spinner-grow": {
+   "label": "fp",
+   "why": "Bootstrap spinner-grow is a loading-indicator pulse (scale 0→1, infinite), not an entrance; the scale(0) advice is about entrances"
+  },
+  "hover-none|button.nav-link.active": {
+   "label": "debatable",
+   "why": "the current page/tab/item: many systems give it no hover; pixels confirm no change"
+  },
+  "hover-none|#nav-tab a.nav-link.nav-item": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "hover-none|#list-home-list": {
+   "label": "fp",
+   "why": "the pixels change on hover (verify-hover)"
+  },
+  "no-active|button.nav-link.active": {
+   "label": "tp",
+   "why": "pixels confirm no change while pressed (verify-hover); no :active rule"
+  },
+  "no-active|button.nav-link": {
+   "label": "tp",
+   "why": "pixels confirm no change while pressed (verify-hover); no :active rule"
+  },
+  "no-active|#list-home-list": {
+   "label": "tp",
+   "why": "the item is .active: Bootstrap’s .list-group-item.active comes after .list-group-item-action:active with the same specificity, so pressing changes nothing (pixel check could not measure it: off-screen)"
+  }
+ },
+ "bs-carousel": {
+  "off-token|#carousel-example-generic button.active": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|#carousel-example-generic button": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|#carousel-example-generic div.carousel-item.active": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|#carousel-example-generic div.carousel-item.active": {
+   "label": "tp",
+   "why": "longer than motion.md hero (700 ms)"
+  },
+  "off-token|#carousel-example-generic div.carousel-item": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|#carousel-example-generic div.carousel-item": {
+   "label": "tp",
+   "why": "longer than motion.md hero (700 ms)"
+  },
+  "scale-zero|@keyframes spinner-grow": {
+   "label": "fp",
+   "why": "Bootstrap spinner-grow is a loading-indicator pulse (scale 0→1, infinite), not an entrance; the scale(0) advice is about entrances"
+  },
+  "hover-none|#carousel-example-generic button.active": {
+   "label": "debatable",
+   "why": "the current page/tab/item: many systems give it no hover; pixels confirm no change"
+  },
+  "hover-none|#carousel-example-generic button": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "no-active|#carousel-example-generic button.active": {
+   "label": "tp",
+   "why": "pixels confirm no change while pressed (verify-hover); no :active rule"
+  },
+  "no-active|#carousel-example-generic button": {
+   "label": "tp",
+   "why": "pixels confirm no change while pressed (verify-hover); no :active rule"
+  },
+  "no-active|#carousel-example-generic button.carousel-control-prev": {
+   "label": "tp",
+   "why": "pixels confirm no change while pressed (verify-hover); no :active rule"
+  },
+  "no-active|#carousel-example-generic button.carousel-control-next": {
+   "label": "tp",
+   "why": "pixels confirm no change while pressed (verify-hover); no :active rule"
+  }
+ },
+ "bs-alert": {
+  "off-token|div.alert.alert-warning": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|div.alert.alert-warning": {
+   "label": "tp",
+   "why": "longer than motion.md hero (700 ms)"
+  },
+  "scale-zero|@keyframes spinner-grow": {
+   "label": "fp",
+   "why": "Bootstrap spinner-grow is a loading-indicator pulse (scale 0→1, infinite), not an entrance; the scale(0) advice is about entrances"
+  }
+ },
+ "bs-dropdown": {
+  "scale-zero|@keyframes spinner-grow": {
+   "label": "fp",
+   "why": "Bootstrap spinner-grow is a loading-indicator pulse (scale 0→1, infinite), not an entrance; the scale(0) advice is about entrances"
+  },
+  "hover-none|a.navbar-brand": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "hover-none|#navbarResponsive a.nav-link.active": {
+   "label": "debatable",
+   "why": "the current page/tab/item: many systems give it no hover; pixels confirm no change"
+  },
+  "hover-none|a.nav-link.active": {
+   "label": "debatable",
+   "why": "the current page/tab/item: many systems give it no hover; pixels confirm no change"
+  },
+  "no-active|#navbarResponsive a.nav-link.dropdown-toggle": {
+   "label": "tp",
+   "why": "pixels confirm no change while pressed (verify-hover); no :active rule"
+  },
+  "no-active|a.nav-link.dropdown-toggle": {
+   "label": "tp",
+   "why": "pixels confirm no change while pressed (verify-hover); no :active rule"
+  }
+ },
+ "animate-docs": {
+  "off-token|h1.callout-title.animate__animated": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|h1.callout-title.animate__animated": {
+   "label": "tp",
+   "why": "longer than motion.md hero (700 ms)"
+  },
+  "off-token|h2.callout-subtitle.animate__animated": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|h2.callout-subtitle.animate__animated": {
+   "label": "tp",
+   "why": "longer than motion.md hero (700 ms)"
+  },
+  "off-token|p.callout-showList.animate__animated": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|p.callout-showList.animate__animated": {
+   "label": "tp",
+   "why": "longer than motion.md hero (700 ms)"
+  },
+  "off-token|section.animation-list.animate__animated": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|section.animation-list.animate__animated": {
+   "label": "tp",
+   "why": "longer than motion.md hero (700 ms)"
+  },
+  "transition-all|span.night-light-ball": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "off-token|#documentation span.hamburger": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|#documentation aside.sidebar": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "moves-under-reduce|h2.callout-subtitle.animate__animated": {
+   "label": "fp",
+   "why": "animate.css sets animation-duration: 1ms !important under reduce: the entrance is effectively instant"
+  },
+  "hover-none|a": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "hover-none|#documentation a.icon-github": {
+   "label": "tp",
+   "why": "style.css has no :hover rule for .icon-github or its svg (the pixel check could not judge it: the region changes by itself, a neighbouring animation)"
+  }
+ },
+ "hover-demo": {
+  "transition-all|#forkongithub a": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "off-token|#forkongithub a": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "transition-all|#effects a.hvr-bounce-in": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "off-token|#effects a.hvr-bounce-in": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "transition-all|#effects a.hvr-bounce-out": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "off-token|#effects a.hvr-bounce-out": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|#effects a.hvr-back-pulse": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|#effects a.hvr-bounce-to-right": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|#effects a.hvr-bounce-to-right::before": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|#effects a.hvr-bounce-to-left": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|#effects a.hvr-bounce-to-left::before": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|#effects a.hvr-bounce-to-bottom": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|#effects a.hvr-bounce-to-bottom::before": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|#effects a.hvr-bounce-to-top": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|#effects a.hvr-bounce-to-top::before": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "transition-all|#effects a.hvr-icon-back": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-forward": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "off-token|#effects i.fa.fa-refresh": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|#effects i.fa.fa-refresh": {
+   "label": "tp",
+   "why": "longer than motion.md hero (700 ms)"
+  },
+  "off-token|#effects i.fa.fa-check": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "transition-all|#effects a.hvr-icon-grow": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-shrink": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-push": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-pop": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-bounce": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-rotate": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-grow-rotate": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-float": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-sink": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-bob": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-hang": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-wobble-horizontal": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-wobble-vertical": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-buzz": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "transition-all|#effects a.hvr-icon-buzz-out": {
+   "label": "tp",
+   "why": "computed transition-property is all"
+  },
+  "layout-transition|#effects a.hvr-outline-out::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "layout-transition|#effects a.hvr-outline-in::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "layout-transition|#effects a.hvr-underline-from-left::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "layout-transition|#effects a.hvr-underline-from-center::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "layout-transition|#effects a.hvr-underline-from-right::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "layout-transition|#effects a.hvr-reveal::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "layout-transition|#effects a.hvr-overline-from-left::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "layout-transition|#effects a.hvr-overline-from-center::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "layout-transition|#effects a.hvr-overline-from-right::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "layout-transition|#effects a.hvr-curl-top-left::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "layout-transition|#effects a.hvr-curl-top-right::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "layout-transition|#effects a.hvr-curl-bottom-right::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "layout-transition|#effects a.hvr-curl-bottom-left::before": {
+   "label": "tp",
+   "why": "transitions a layout property (width/height/top/left…)"
+  },
+  "off-token|a.ild-ident": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|a.icon__twitter": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|a.icon__github": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|a": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "off-token|a.twitter-follow-button": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "layout-keyframes|@keyframes hvr-ripple-out": {
+   "label": "tp",
+   "why": "keyframes animate layout properties (top/right/bottom/left)"
+  },
+  "layout-keyframes|@keyframes hvr-ripple-in": {
+   "label": "tp",
+   "why": "keyframes animate layout properties (top/right/bottom/left)"
+  },
+  "no-reduced-motion|page": {
+   "label": "tp",
+   "why": "things move and there is no reduced-motion rule or query"
+  },
+  "hover-none|a": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "hover-none|#effects a.hvr-pulse": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-pulse-grow": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-pulse-shrink": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-push": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-pop": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-wobble-horizontal": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-wobble-vertical": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-wobble-to-bottom-right": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-wobble-to-top-right": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-wobble-top": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-wobble-bottom": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-wobble-skew": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-buzz": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-buzz-out": {
+   "label": "fp",
+   "why": "Hover.css runs a keyframe animation on hover (pulse/wobble/buzz) whose first and last frames equal the rest state; motion.mjs finishes or rewinds animations before comparing, so it sees no change; the pixels do change"
+  },
+  "hover-none|#effects a.hvr-icon-down": {
+   "label": "debatable",
+   "why": "the icon font (Font Awesome from a CDN) did not load in the lab, so the animated icon is not drawn"
+  },
+  "no-active|a.button.cta": {
+   "label": "tp",
+   "why": "pixels confirm no change while pressed (verify-hover); no :active rule"
+  },
+  "no-active|a.twitter-share-button": {
+   "label": "tp",
+   "why": "pixels confirm no change while pressed (verify-hover); no :active rule"
+  }
+ },
+ "g-slop-landing": {
+  "hover-none|a": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "hover-none|a.rounded-full.bg-gradient-to-r": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  }
+ },
+ "g-primer-issues": {
+  "hover-none|a.UnderlineNav-item": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "hover-none|a.UnderlineNav-item.selected": {
+   "label": "debatable",
+   "why": "the current page/tab/item: many systems give it no hover; pixels confirm no change"
+  },
+  "hover-none|summary.btn": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "hover-none|a.subnav-item": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  }
+ },
+ "g-carbon-table": {
+  "hover-none|a.cds--header__name": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "hover-none|a.cds--header__menu-item": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "hover-none|a.cds--link": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  }
+ },
+ "stemwren": {
+  "off-token|div.testimonial.active": {
+   "label": "debatable",
+   "why": "the page defines no motion tokens; judged against motion.md defaults"
+  },
+  "long|div.testimonial.active": {
+   "label": "tp",
+   "why": "longer than motion.md hero (700 ms)"
+  },
+  "hover-none|a": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "hover-none|a.cta": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "hover-none|a.btn": {
+   "label": "tp",
+   "why": "pixels confirm no visible change on hover (verify-hover) and no author :hover rule changes it"
+  },
+  "no-active|a.cta": {
+   "label": "tp",
+   "why": "pixels confirm no change while pressed (verify-hover); no :active rule"
+  },
+  "no-active|a.btn": {
+   "label": "tp",
+   "why": "pixels confirm no change while pressed (verify-hover); no :active rule"
+  }
+ }
+}

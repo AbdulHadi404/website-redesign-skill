@@ -1,0 +1,391 @@
+{
+ "url": "/fixtures/bilingual.html?lang=en",
+ "mode": "flip",
+ "width": 1280,
+ "summary": {
+  "FAIL": 0,
+  "WARN": 0,
+  "INFO": 1
+ },
+ "mirror": {
+  "checked": 189,
+  "notMirrored": 0,
+  "roots": 0,
+  "keptPhysical": 0
+ },
+ "css": {
+  "rules": 89,
+  "physicalRules": 0,
+  "overrideRules": 1,
+  "logicalRules": 14
+ },
+ "keys": [
+  {
+   "group": "toolbar \"Actions\"",
+   "arrowLeftMoves": "left (correct)"
+  },
+  {
+   "group": "tablist \"Order\"",
+   "arrowLeftMoves": "left (correct)"
+  }
+ ],
+ "icons": [
+  {
+   "name": "menu icon icon-menu",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Menu",
+   "island": false
+  },
+  {
+   "name": "search icon icon-search",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "codex (right-hand objects)"
+   ],
+   "family": "search",
+   "pixels": "same",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "cart icon icon-cart",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Cart",
+   "island": false
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "undo icon icon-dir icon-undo",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "codex",
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "Undo",
+   "island": false
+  },
+  {
+   "name": "redo icon icon-dir icon-redo",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "codex",
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "Redo",
+   "island": false
+  },
+  {
+   "name": "reply icon icon-dir icon-reply",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "Reply",
+   "island": false
+  },
+  {
+   "name": "send icon icon-dir icon-send",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "Send",
+   "island": false
+  },
+  {
+   "name": "external-link icon icon-dir icon-external-link",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "codex"
+   ],
+   "pixels": "mirrored",
+   "context": "Open in new tab",
+   "island": false
+  },
+  {
+   "name": "help icon icon-dir icon-help",
+   "class": "ambiguous",
+   "family": "help",
+   "note": "mirror for Arabic, Persian, Urdu (Codex, Flutter); Codex keeps it for Hebrew and Yiddish",
+   "pixels": "mirrored",
+   "context": "Help",
+   "island": false
+  },
+  {
+   "name": "logout icon icon-dir icon-logout",
+   "class": "ambiguous",
+   "family": "logInOut",
+   "note": "Codex flips LogIn/LogOut, Flutter does not",
+   "pixels": "mirrored",
+   "context": "Sign out",
+   "island": false
+  },
+  {
+   "name": "refresh icon icon-refresh",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "codex"
+   ],
+   "family": "circularTime",
+   "pixels": "same",
+   "context": "Refresh",
+   "island": false
+  },
+  {
+   "name": "clock icon icon-clock",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "codex"
+   ],
+   "family": "circularTime",
+   "pixels": "same",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "check icon icon-check",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "firefox",
+    "codex"
+   ],
+   "family": "check",
+   "pixels": "same",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "check icon icon-check",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "firefox",
+    "codex"
+   ],
+   "family": "check",
+   "pixels": "same",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "alert icon icon-alert",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "empty",
+   "context": "Save changes",
+   "island": false
+  },
+  {
+   "name": "sort-desc icon icon-sort-desc",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "",
+   "island": false
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "Open 1042",
+   "island": false
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "Open 1041",
+   "island": false
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "Open 1040",
+   "island": false
+  },
+  {
+   "name": "arrow-left icon icon-dir icon-arrow-left",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "Previous rel=prev",
+   "island": false
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "Next rel=next",
+   "island": false
+  },
+  {
+   "name": "chevron-left icon icon-dir icon-chevron-left",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "Previous",
+   "island": false
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "pixels": "mirrored",
+   "context": "Next",
+   "island": false
+  },
+  {
+   "name": "play icon icon-play",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "firefox",
+    "codex"
+   ],
+   "family": "media",
+   "pixels": "same",
+   "context": "Play",
+   "island": true
+  },
+  {
+   "name": "skip-forward icon icon-skip-forward",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "firefox",
+    "codex"
+   ],
+   "family": "media",
+   "pixels": "same",
+   "context": "Skip forward",
+   "island": true
+  },
+  {
+   "name": "check icon icon-check",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "firefox",
+    "codex"
+   ],
+   "family": "check",
+   "pixels": "empty",
+   "context": "",
+   "island": false
+  }
+ ],
+ "findings": [
+  {
+   "level": "INFO",
+   "check": "icons",
+   "message": "Icons the sources disagree on — record the decision (mirrored here: yes/no)",
+   "count": 2,
+   "examples": [
+    "help icon icon-dir icon-help: mirrored — mirror for Arabic, Persian, Urdu (Codex, Flutter); Codex keeps it for Hebrew and Yiddish",
+    "logout icon icon-dir icon-logout: mirrored — Codex flips LogIn/LogOut, Flutter does not"
+   ]
+  }
+ ],
+ "ms": 5826
+}

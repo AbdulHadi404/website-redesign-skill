@@ -1,0 +1,19 @@
+{
+  "about": "Seeded width-dependent defects in fixtures/sweep-lab/index.html. A seeded defect counts as found when sweep.mjs reports a range with this check on an element whose selector contains `sel`, at any width in `widths` (the band where the seeded CSS makes it happen; the exact edges depend on the fallback font).",
+  "seeded": [
+    { "id": "D1", "check": "nav-wrap", "sel": "#nav", "widths": [768, 1000] },
+    { "id": "D2", "check": "clipped", "sel": "#clip1", "widths": [768, 1016] },
+    { "id": "D3", "check": "overlap", "sel": "promo-title|badge", "widths": [1024, 1920] },
+    { "id": "D4", "check": "measure", "sel": "#longline", "widths": [1024, 1920] },
+    { "id": "D5", "check": "overflow", "sel": "#chips", "widths": [320, 480] },
+    { "id": "D6", "check": "label-wrap", "sel": "#cta", "widths": [320, 400] },
+    { "id": "D7", "check": "distorted", "sel": "#distorted", "widths": [320, 1920] },
+    { "id": "D7b", "check": "cropped", "sel": "#cropped", "widths": [768, 1920] },
+    { "id": "D8", "check": "dead-band", "sel": "main|spacer", "widths": [320, 1920] },
+    { "id": "D9", "check": "fold", "sel": "#cta", "widths": [320, 767] },
+    { "id": "D10", "check": "order", "sel": "#split", "widths": [1024, 1920] },
+    { "id": "D13", "check": "chrome", "sel": "header", "widths": [320, 320] },
+    { "id": "D14", "check": "small-target", "sel": "div.tools", "widths": [320, 420] },
+    { "id": "D15", "check": "truncated", "sel": "#trunc", "widths": [320, 1920] }
+  ]
+}

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Good page — same content, fixed</title>
+<!-- Preload the one font used above the fold; crossorigin is required even same-origin -->
+<link rel="preload" href="fonts/display.ttf" as="font" type="font/ttf" crossorigin>
+<!-- Preload not needed for the hero: it is in the HTML with fetchpriority=high -->
+<style>
+  @font-face { font-family: Display; src: url(fonts/display.ttf) format("truetype"); font-display: swap; }
+  /* Metric-matched fallback so the swap does not shift layout (values: fontaine/capsize style) */
+  @font-face { font-family: Display-fallback; src: local("DejaVu Serif"), local("Georgia"), local("Times New Roman");
+               size-adjust: 100%; ascent-override: 92%; descent-override: 24%; line-gap-override: 0%; }
+  :root { --gutter: clamp(1rem, 0.6rem + 2vw, 2rem); }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font: 1rem/1.5 system-ui, sans-serif; color: #1a1a1a; }
+  header { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; padding: 1rem var(--gutter); align-items: center; }
+  header nav { display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
+  header nav a { display: inline-block; padding: .75rem .25rem; min-height: 44px; }
+  /* Fluid type with a rem component so it still scales with browser zoom/text size (WCAG 1.4.4) */
+  h1 { font-family: Display, Display-fallback, serif; font-size: clamp(2rem, 1.2rem + 3.2vw, 4.5rem); line-height: 1.05; margin: 1.5rem var(--gutter); text-wrap: balance; }
+  .hero img { display: block; width: 100%; height: auto; }
+  .promo { padding: 1.5rem var(--gutter); background: #f4e6d0; } /* block elements are already full width */
+  .card { border: 1px solid #e5e5e5; border-radius: 12px; padding: 1.5rem; margin: 1.5rem var(--gutter); }
+  .btn { font: inherit; padding: .75rem 1.25rem; min-height: 44px; }
+  /* Table: its own scroll container, keyboard-focusable, sticky first column */
+  .table-wrap { overflow-x: auto; margin: 0 var(--gutter); }
+  .table-wrap:focus-visible { outline: 2px solid #1a56db; outline-offset: 2px; }
+  table { border-collapse: collapse; min-width: 44rem; }
+  td, th { padding: .5rem .75rem; border-bottom: 1px solid #ddd; text-align: left; white-space: nowrap; }
+  th:first-child, td:first-child { position: sticky; left: 0; background: #fff; }
+  /* Banner overlays at the bottom instead of pushing content; transform-only animation */
+  .banner { position: fixed; inset: auto 0 0 0; background: #222; color: #fff; padding: 1.25rem var(--gutter) calc(1.25rem + env(safe-area-inset-bottom));
+            transform: translateY(100%); transition: transform .3s ease; }
+  .banner.in { transform: none; }
+  @media (prefers-reduced-motion: reduce) { .banner { transition: none; } }
+</style>
+<script src="app-good.js" defer></script>
+</head>
+<body>
+<header>
+  <strong>Acme</strong>
+  <nav aria-label="Main"><a href="#">Product</a><a href="#">Solutions</a><a href="#">Pricing</a><a href="#">Docs</a><a href="#">Sign in</a></nav>
+</header>
+<main>
+  <h1>Groceries delivered in an hour, anywhere in town</h1>
+  <div class="hero">
+    <picture>
+      <source type="image/avif" srcset="img/hero-480.avif 480w, img/hero-800.avif 800w, img/hero-1200.avif 1200w, img/hero-1600.avif 1600w, img/hero-2400.avif 2400w" sizes="100vw">
+      <source type="image/webp" srcset="img/hero-480.webp 480w, img/hero-800.webp 800w, img/hero-1200.webp 1200w, img/hero-1600.webp 1600w, img/hero-2400.webp 2400w" sizes="100vw">
+      <img src="img/hero-1200.jpg" srcset="img/hero-480.jpg 480w, img/hero-800.jpg 800w, img/hero-1200.jpg 1200w, img/hero-1600.jpg 1600w, img/hero-2400.jpg 2400w" sizes="100vw"
+           width="2400" height="1350" alt="" fetchpriority="high" decoding="async">
+    </picture>
+  </div>
+  <div class="promo">Free delivery on your first order.</div>
+  <section class="card">
+    <p>Order in two taps. <button class="btn" id="buy">Add to basket</button> <span id="count" aria-live="polite">0</span> items.</p>
+  </section>
+  <div class="table-wrap" role="region" aria-labelledby="plans-cap" tabindex="0">
+  <table>
+    <caption id="plans-cap" style="text-align:left;padding:.5rem 0">Plans compared</caption>
+    <thead><tr><th scope="col">Plan</th><th scope="col">Price</th><th scope="col">Deliveries</th><th scope="col">Slots</th><th scope="col">Support</th><th scope="col">Returns</th><th scope="col">Contract</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Basic</th><td>£0</td><td>Pay per order</td><td>Standard</td><td>Email</td><td>7 days</td><td>None</td></tr>
+      <tr><th scope="row">Plus</th><td>£7/mo</td><td>Unlimited over £30</td><td>Priority</td><td>Chat</td><td>30 days</td><td>Monthly</td></tr>
+      <tr><th scope="row">Family</th><td>£12/mo</td><td>Unlimited</td><td>Priority + evening</td><td>Phone</td><td>30 days</td><td>Annual</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="height:1200px">Long content…</p>
+</main>
+<div class="banner" id="banner" role="dialog" aria-label="Cookie notice">We use cookies. <button class="btn" onclick="this.parentElement.remove()">OK</button></div>
+</body>
+</html>

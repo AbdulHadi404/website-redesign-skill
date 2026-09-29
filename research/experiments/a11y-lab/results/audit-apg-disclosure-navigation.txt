@@ -1,0 +1,38 @@
+a11y-audit http://localhost:4174/patterns/disclosure/examples/disclosure-navigation.html
+9 FAIL, 0 WARN, 0 INFO in 32.2s — details results/apg-disclosure-navigation/audit.json
+
+FAIL keyboard     2.4.11       Focused element fully hidden by other content (sticky/fixed UI?)  ⟶ button#id-skip-to-button.open "Skip To Content(Alt+0)"
+FAIL keyboard     2.4.11       Hidden under other content when reached with Shift+Tab (add scroll-padding-top for sticky headers)  ⟶ button#id-skip-to-button.open "Skip To Content(Alt+0)"
+FAIL reflow       1.4.10       Horizontal scrolling at 320px (400% zoom of 1280): page is 446px wide  ⟶ li "Academics" (right edge 339px) | table.data.attributes "Role Attribute Element Usage aria-contro" (right edge 446px)
+FAIL targets      2.5.8        Target 92×17px with neighbours closer than 24px  ⟶ <a href="https://github.com/orgs/w3c/projects/132" data-a11y-i="4">Related Issue
+FAIL targets      2.5.8        Target 95×17px with neighbours closer than 24px  ⟶ <a href="../disclosure-pattern.html" data-a11y-i="6">Design Pattern</a>
+FAIL targets      2.5.8        Target 380×17px with neighbours closer than 24px  ⟶ <a href="disclosure-image-description.html" data-a11y-i="35">Example Disclosure 
+FAIL targets      2.5.8        Target 389×17px with neighbours closer than 24px  ⟶ <a href="disclosure-navigation-hybrid.html" data-a11y-i="37">Example Disclosure 
+FAIL targets      2.5.8        Target 190×17px with neighbours closer than 24px  ⟶ <a href="disclosure-card.html" data-a11y-i="39">Disclosure (Show/Hide) Card</a>
+FAIL targets      2.5.8        Target 194×17px with neighbours closer than 24px  ⟶ <a href="../../menubar/examples/menubar-navigation.html" data-a11y-i="41">Naviga
+
+Tab order (role "name" ← element):
+   1. button "Skip To Content, shortcut Alt + 0": Skip To Content(Alt+0)  ←  button#id-skip-to-button.open "Skip To Content(Alt+0)"
+   2. link "Related Issues":  ←  a "Related Issues"
+   3. link "Design Pattern":  ←  a "Design Pattern"
+   4. text: The code in this example is not intended for production environments. Before using it for any purpose, read this to understand why.  ←  summary "The code in this example is not intended"
+   5. link "keyboard interactions specified by the menu and menubar pattern":  ←  a "keyboard interactions specified by the m"
+   6. link "Disclosure Pattern":  ←  a "Disclosure Pattern"
+   7. link "Example Disclosure (Show/Hide) for Answers to Frequently Asked Questions":  ←  a "Example Disclosure (Show/Hide) for Answe"
+   8. link "Example Disclosure (Show/Hide) for an Image Description":  ←  a "Example Disclosure (Show/Hide) for an Im"
+   9. link "Example Disclosure Navigation Menu with Top-Level Links":  ←  a "Example Disclosure Navigation Menu with "
+  10. link "Disclosure (Show/Hide) Card":  ←  a "Disclosure (Show/Hide) Card"
+  11. link "Navigation Menubar Example":  ←  a "Navigation Menubar Example"
+  12. checkbox "Include optional support for arrow keys, Home , and End" [checked]  ←  input#arrow-behavior-switch "on"
+  13. button "Open In CodePen"  ←  button#ex_label-codepenbutton "Open In CodePen"
+  14. button "About"  ←  button "About"
+  15. button "Admissions"  ←  button "Admissions"
+  16. button "Academics"  ←  button "Academics"
+  17. 'link "1.4.13: Content on Hover or Focus"':  ←  a "1.4.13: Content on Hover or Focus"
+  18. link "Learn how to interpret and use assistive technology support data":  ←  a "Learn how to interpret and use assistive"
+  19. link "disclosure-navigation.css":  ←  a "disclosure-navigation.css"
+  20. link "disclosureMenu.js":  ←  a "disclosureMenu.js"
+  21. button "Open In CodePen"  ←  button#sc1_description-codepenbutton "Open In CodePen"
+
+Headings: h1 Example Disclosure Navigation Menu · h2 About This Example · h3 Important · h2 Example Usage Options · h2 Example · h2 Accessibility Features · h2 Keyboard Support · h2 Role, Property, State, and Tabindex Attributes · h2 Assistive Technology Support · h2 JavaScript and CSS Source Code · h2 HTML Source Code · h3 Mythical University
+Landmarks: navigation "Related Links" · main · navigation "Mythical University" · region "Mythical University sample page content"

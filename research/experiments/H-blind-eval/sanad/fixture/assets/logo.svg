@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 64" role="img" aria-label="Sanad">
+  <!-- Brand mark supplied by the client (2024): an arch (سند = support) in deep teal #0E5E5A with a saffron keystone #E0A526. -->
+  <path d="M8 56 V30 a24 24 0 0 1 48 0 V56 h-10 V30 a14 14 0 0 0 -28 0 V56 Z" fill="#0E5E5A"/>
+  <rect x="27" y="4" width="10" height="10" rx="2" fill="#E0A526"/>
+  <text x="68" y="44" font-family="'IBM Plex Sans Arabic', sans-serif" font-weight="600" font-size="30" fill="#0E5E5A">سند · Sanad</text>
+</svg>

@@ -1,0 +1,3 @@
+{ "path": "/app/", "device": "phone", "states": [
+  { "name": "b2", "steps": [ { "fill": ["role=searchbox[name=/Find a cow/]", "1629"] }, { "wait": 400 } ] }
+] }

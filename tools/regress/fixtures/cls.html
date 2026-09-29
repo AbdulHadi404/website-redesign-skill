@@ -1,0 +1,4 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>CLS</title></head>
+<body style="font:18px system-ui;margin:0;padding:20px"><main><h1>Shifting page</h1><p id="p">Paragraph one with enough text to be the largest thing on the screen for a while, so LCP lands here.</p><p>More text.</p></main>
+<script>setTimeout(()=>{const d=document.createElement('div');d.style.height='300px';d.style.background='#ddd';document.querySelector('main').prepend(d)},700);
+setTimeout(()=>{const t=performance.now();while(performance.now()-t<400){}},900);</script></body></html>

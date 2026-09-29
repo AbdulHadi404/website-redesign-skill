@@ -1,0 +1,174 @@
+{
+ "score": 0.46,
+ "failed": [
+  {
+   "id": "aria-allowed-attr",
+   "weight": 10,
+   "items": [
+    "table > tbody > tr > td.th"
+   ]
+  },
+  {
+   "id": "aria-hidden-focus",
+   "weight": 7,
+   "items": [
+    "body > div.layout > div.side > div"
+   ]
+  },
+  {
+   "id": "aria-valid-attr-value",
+   "weight": 10,
+   "items": [
+    "table > tbody > tr > td.th"
+   ]
+  },
+  {
+   "id": "button-name",
+   "weight": 10,
+   "items": [
+    "body > div.top > button.btn"
+   ]
+  },
+  {
+   "id": "color-contrast",
+   "weight": 7,
+   "items": [
+    "body > div.top > span.logo",
+    "body > div.top > button.btn",
+    "div#content > div.kpis > div.kpi > div.muted",
+    "div#content > div.kpis > div.kpi > div.muted",
+    "div#content > div.kpis > div.kpi > div.muted",
+    "body > div.layout > div#content > button.btn",
+    "div.layout > div#content > form > button.btn",
+    "body > div.muted"
+   ]
+  },
+  {
+   "id": "document-title",
+   "weight": 7,
+   "items": [
+    "html"
+   ]
+  },
+  {
+   "id": "frame-title",
+   "weight": 7,
+   "items": [
+    "body > div.layout > div#content > iframe"
+   ]
+  },
+  {
+   "id": "heading-order",
+   "weight": 3,
+   "items": [
+    "body > div.layout > div#content > h4"
+   ]
+  },
+  {
+   "id": "html-has-lang",
+   "weight": 7,
+   "items": [
+    "html"
+   ]
+  },
+  {
+   "id": "image-alt",
+   "weight": 10,
+   "items": [
+    "body > div.layout > div#content > img"
+   ]
+  },
+  {
+   "id": "link-name",
+   "weight": 7,
+   "items": [
+    "body > div.top > a"
+   ]
+  },
+  {
+   "id": "listitem",
+   "weight": 7,
+   "items": [
+    "div.layout > div.side > div > li",
+    "div.layout > div.side > div > li",
+    "div.layout > div.side > div > li"
+   ]
+  },
+  {
+   "id": "meta-viewport",
+   "weight": 10,
+   "items": [
+    "head > meta"
+   ]
+  },
+  {
+   "id": "select-name",
+   "weight": 10,
+   "items": [
+    "div.layout > div#content > form > select"
+   ]
+  },
+  {
+   "id": "tabindex",
+   "weight": 7,
+   "items": [
+    "div.side > div > li > a"
+   ]
+  },
+  {
+   "id": "target-size",
+   "weight": 7,
+   "items": [
+    "nav > ul > li > a",
+    "nav > ul > li > a",
+    "div.side > div > li > a",
+    "div.side > div > li > a",
+    "div.side > div > li > a",
+    "div.layout > div#content > div > button.iconbtn",
+    "div.layout > div#content > div > button.iconbtn",
+    "div.layout > div#content > div > button.iconbtn"
+   ]
+  },
+  {
+   "id": "landmark-one-main",
+   "weight": 3,
+   "items": [
+    "html"
+   ]
+  },
+  {
+   "id": "autocomplete-valid",
+   "weight": 1,
+   "items": [
+    "div.layout > div#content > form > input#email"
+   ]
+  },
+  {
+   "id": "label-content-name-mismatch",
+   "weight": 0,
+   "items": [
+    "body > div.top > button.btn",
+    "div.layout > div#content > form > button.btn"
+   ]
+  },
+  {
+   "id": "td-has-header",
+   "weight": 0,
+   "items": [
+    "body > div.layout > div#content > table"
+   ]
+  }
+ ],
+ "manual": [
+  "focusable-controls",
+  "interactive-element-affordance",
+  "logical-tab-order",
+  "visual-order-follows-dom",
+  "focus-traps",
+  "managed-focus",
+  "use-landmarks",
+  "offscreen-content-hidden",
+  "custom-controls-labels",
+  "custom-controls-roles"
+ ]
+}

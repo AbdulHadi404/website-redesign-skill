@@ -1,0 +1,271 @@
+{
+  "url": "http://127.0.0.1:42399/c-form.html",
+  "date": "2026-09-29T06:16:21.840Z",
+  "findings": [
+    {
+      "level": "WARN",
+      "section": "keyboard",
+      "sc": "2.4.1",
+      "msg": "First focus stop is not a skip link (input \"strawberry\")",
+      "where": ""
+    },
+    {
+      "level": "INFO",
+      "section": "colour",
+      "sc": "1.4.1",
+      "msg": "Review /tmp/s6-a11y-X5E9JN/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
+      "where": ""
+    }
+  ],
+  "data": {
+    "page": {
+      "lang": "en",
+      "title": "Top the cake – form",
+      "viewport": "width=device-width, initial-scale=1"
+    },
+    "headings": [
+      {
+        "level": 1,
+        "name": "Top the cake"
+      },
+      {
+        "level": 2,
+        "name": "On the cake (0)"
+      }
+    ],
+    "landmarks": [
+      {
+        "role": "main",
+        "name": ""
+      }
+    ],
+    "tab-forward": [
+      {
+        "key": "58058148",
+        "where": "input \"strawberry\"",
+        "tag": "input",
+        "href": null,
+        "tabindex": null,
+        "rect": {
+          "x": 658,
+          "y": 157,
+          "w": 13,
+          "h": 13,
+          "vy": 157
+        },
+        "covered": 0,
+        "offscreen": 0,
+        "iframe": false,
+        "focusVisible": true,
+        "indicator": {
+          "changed": 240,
+          "changed3": 240,
+          "perimeterArea": 104
+        },
+        "aria": "radio \"Strawberry\" [checked]"
+      },
+      {
+        "key": "07096281",
+        "where": "input \"centre\"",
+        "tag": "input",
+        "href": null,
+        "tabindex": null,
+        "rect": {
+          "x": 820,
+          "y": 326,
+          "w": 13,
+          "h": 13,
+          "vy": 326
+        },
+        "covered": 0,
+        "offscreen": 0,
+        "iframe": false,
+        "focusVisible": true,
+        "indicator": {
+          "changed": 240,
+          "changed3": 240,
+          "perimeterArea": 104
+        },
+        "aria": "radio \"Centre\" [checked]"
+      },
+      {
+        "key": "67397834",
+        "where": "button.primary \"Add to cake\"",
+        "tag": "button",
+        "href": null,
+        "tabindex": null,
+        "rect": {
+          "x": 640,
+          "y": 408,
+          "w": 136,
+          "h": 44,
+          "vy": 408
+        },
+        "covered": 0,
+        "offscreen": 0,
+        "iframe": false,
+        "focusVisible": true,
+        "indicator": {
+          "changed": 1189,
+          "changed3": 1098,
+          "perimeterArea": 720
+        },
+        "aria": "button \"Add to cake\""
+      },
+      {
+        "body": true
+      },
+      {
+        "key": "58058148",
+        "where": "input \"strawberry\"",
+        "tag": "input",
+        "href": null,
+        "tabindex": null,
+        "rect": {
+          "x": 658,
+          "y": 157,
+          "w": 13,
+          "h": 13,
+          "vy": 157
+        },
+        "covered": 0,
+        "offscreen": 0,
+        "iframe": false,
+        "focusVisible": true,
+        "repeat": true
+      }
+    ],
+    "tabOrder": [
+      "radio \"Strawberry\" [checked]  ←  input \"strawberry\"",
+      "radio \"Centre\" [checked]  ←  input \"centre\"",
+      "button \"Add to cake\"  ←  button.primary \"Add to cake\""
+    ],
+    "reflow-320": {
+      "scrollWidth": 320,
+      "vw": 320,
+      "roots": [],
+      "cutControls": [],
+      "cutText": 0,
+      "cutTextBy": []
+    },
+    "reflow-640": {
+      "scrollWidth": 640,
+      "vw": 640,
+      "roots": [],
+      "cutControls": [],
+      "cutText": 0,
+      "cutTextBy": []
+    },
+    "tab-forced": [
+      {
+        "key": "01896619",
+        "where": "input \"strawberry\"",
+        "tag": "input",
+        "href": null,
+        "tabindex": null,
+        "rect": {
+          "x": 658,
+          "y": 157,
+          "w": 13,
+          "h": 13,
+          "vy": 157
+        },
+        "covered": 0,
+        "offscreen": 0,
+        "iframe": false,
+        "focusVisible": true,
+        "indicator": {
+          "changed": 240,
+          "changed3": 240,
+          "perimeterArea": 104
+        },
+        "aria": "radio \"Strawberry\" [checked]"
+      },
+      {
+        "key": "22022381",
+        "where": "input \"centre\"",
+        "tag": "input",
+        "href": null,
+        "tabindex": null,
+        "rect": {
+          "x": 820,
+          "y": 326,
+          "w": 13,
+          "h": 13,
+          "vy": 326
+        },
+        "covered": 0,
+        "offscreen": 0,
+        "iframe": false,
+        "focusVisible": true,
+        "indicator": {
+          "changed": 240,
+          "changed3": 240,
+          "perimeterArea": 104
+        },
+        "aria": "radio \"Centre\" [checked]"
+      },
+      {
+        "key": "87993059",
+        "where": "button.primary \"Add to cake\"",
+        "tag": "button",
+        "href": null,
+        "tabindex": null,
+        "rect": {
+          "x": 640,
+          "y": 408,
+          "w": 136,
+          "h": 44,
+          "vy": 408
+        },
+        "covered": 0,
+        "offscreen": 0,
+        "iframe": false,
+        "focusVisible": true,
+        "indicator": {
+          "changed": 1585,
+          "changed3": 1118,
+          "perimeterArea": 720
+        },
+        "aria": "button \"Add to cake\""
+      },
+      {
+        "body": true
+      },
+      {
+        "key": "01896619",
+        "where": "input \"strawberry\"",
+        "tag": "input",
+        "href": null,
+        "tabindex": null,
+        "rect": {
+          "x": 658,
+          "y": 157,
+          "w": 13,
+          "h": 13,
+          "vy": 157
+        },
+        "covered": 0,
+        "offscreen": 0,
+        "iframe": false,
+        "focusVisible": true,
+        "repeat": true
+      }
+    ],
+    "motion": {
+      "normal": {
+        "anims": [],
+        "updating": [],
+        "smooth": false,
+        "video": []
+      },
+      "reduce": {
+        "anims": [],
+        "updating": [],
+        "smooth": false,
+        "video": []
+      }
+    }
+  },
+  "seconds": 41.6
+}

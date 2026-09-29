@@ -1,0 +1,151 @@
+{
+ "url": "http://127.0.0.1:38965/ext/bootstrap-built/album-rtl.html",
+ "width": 390,
+ "height": 844,
+ "insets": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "env": {
+  "viewportMeta": "width=device-width, initial-scale=1",
+  "hoverNone": true,
+  "coarse": true,
+  "cover": false,
+  "resizesContent": false
+ },
+ "summary": {
+  "FAIL": 0,
+  "WARN": 3,
+  "INFO": 3
+ },
+ "thumb": {
+  "model": {
+   "pxPerMm": 6.1,
+   "pivotOutsideMm": 5,
+   "pivotUpMm": 15,
+   "near": 25,
+   "natural": 65,
+   "stretch": 85,
+   "edgeMm": 5
+  },
+  "primaries": [
+   {
+    "target": "a.btn.btn-primary\"الدعوة الرئيسية للعم\"",
+    "band": "middle third",
+    "right": "stretch",
+    "left": "regrip",
+    "edge": false
+   }
+  ],
+  "tabbar": []
+ },
+ "inputs": [],
+ "findings": [
+  {
+   "level": "INFO",
+   "check": "safe-area",
+   "message": "No viewport-fit=cover: the browser keeps the page inside the safe area (letterboxed in landscape; env() insets are 0), so bars cannot sit under the notch or home indicator. Choose cover only for an edge-to-edge design, and then pad bars with env()",
+   "examples": []
+  },
+  {
+   "level": "WARN",
+   "check": "targets",
+   "message": "Targets under 44 px on a coarse pointer (buttons, fixed-bar links)",
+   "count": 22,
+   "examples": [
+    "a.navbar-brand.d-flex\"الألبوم\" 93×40",
+    "button.navbar-toggler[تبديل التنقل] 56×40",
+    "a.btn.btn-primary\"الدعوة الرئيسية للعم\" 174×38",
+    "a.btn.btn-secondary\"عمل ثانوي\" 97×38",
+    "button.btn.btn-sm\"عرض\" 51×31",
+    "button.btn.btn-sm\"تعديل\" 51×31",
+    "button.btn.btn-sm\"عرض\" 51×31",
+    "button.btn.btn-sm\"تعديل\" 51×31",
+    "button.btn.btn-sm\"عرض\" 51×31",
+    "button.btn.btn-sm\"تعديل\" 51×31",
+    "button.btn.btn-sm\"عرض\" 51×31",
+    "button.btn.btn-sm\"تعديل\" 51×31",
+    "button.btn.btn-sm\"عرض\" 51×31",
+    "button.btn.btn-sm\"تعديل\" 51×31",
+    "button.btn.btn-sm\"عرض\" 51×31",
+    "button.btn.btn-sm\"تعديل\" 51×31",
+    "button.btn.btn-sm\"عرض\" 51×31",
+    "button.btn.btn-sm\"تعديل\" 51×31",
+    "button.btn.btn-sm\"عرض\" 51×31",
+    "button.btn.btn-sm\"تعديل\" 51×31",
+    "button.btn.btn-sm\"عرض\" 51×31",
+    "button.btn.btn-sm\"تعديل\" 51×31"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "targets",
+   "message": "Small targets packed closer than 8 px (mis-taps)",
+   "count": 20,
+   "examples": [
+    "a.btn.btn-primary\"الدعوة الرئيسية للعم\" (5px from a.btn.btn-secondary\"عمل ثانوي\")",
+    "a.btn.btn-secondary\"عمل ثانوي\" (5px from a.btn.btn-primary\"الدعوة الرئيسية للعم\")",
+    "button.btn.btn-sm\"عرض\" (0px from button.btn.btn-sm\"تعديل\")",
+    "button.btn.btn-sm\"تعديل\" (0px from button.btn.btn-sm\"عرض\")",
+    "button.btn.btn-sm\"عرض\" (0px from button.btn.btn-sm\"تعديل\")",
+    "button.btn.btn-sm\"تعديل\" (0px from button.btn.btn-sm\"عرض\")",
+    "button.btn.btn-sm\"عرض\" (0px from button.btn.btn-sm\"تعديل\")",
+    "button.btn.btn-sm\"تعديل\" (0px from button.btn.btn-sm\"عرض\")",
+    "button.btn.btn-sm\"عرض\" (0px from button.btn.btn-sm\"تعديل\")",
+    "button.btn.btn-sm\"تعديل\" (0px from button.btn.btn-sm\"عرض\")",
+    "button.btn.btn-sm\"عرض\" (0px from button.btn.btn-sm\"تعديل\")",
+    "button.btn.btn-sm\"تعديل\" (0px from button.btn.btn-sm\"عرض\")",
+    "button.btn.btn-sm\"عرض\" (0px from button.btn.btn-sm\"تعديل\")",
+    "button.btn.btn-sm\"تعديل\" (0px from button.btn.btn-sm\"عرض\")",
+    "button.btn.btn-sm\"عرض\" (0px from button.btn.btn-sm\"تعديل\")",
+    "button.btn.btn-sm\"تعديل\" (0px from button.btn.btn-sm\"عرض\")",
+    "button.btn.btn-sm\"عرض\" (0px from button.btn.btn-sm\"تعديل\")",
+    "button.btn.btn-sm\"تعديل\" (0px from button.btn.btn-sm\"عرض\")",
+    "button.btn.btn-sm\"عرض\" (0px from button.btn.btn-sm\"تعديل\")",
+    "button.btn.btn-sm\"تعديل\" (0px from button.btn.btn-sm\"عرض\")"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "targets",
+   "message": "Small targets hugging the screen edge, where touch error is largest",
+   "count": 13,
+   "examples": [
+    "a.navbar-brand.d-flex\"الألبوم\"",
+    "button.navbar-toggler[تبديل التنقل]",
+    "button.btn.btn-sm\"عرض\"",
+    "button.btn.btn-sm\"عرض\"",
+    "button.btn.btn-sm\"عرض\"",
+    "button.btn.btn-sm\"عرض\"",
+    "button.btn.btn-sm\"عرض\"",
+    "button.btn.btn-sm\"عرض\"",
+    "button.btn.btn-sm\"عرض\"",
+    "button.btn.btn-sm\"عرض\"",
+    "button.btn.btn-sm\"عرض\"",
+    "a\"عد إلى الأعلى\"",
+    "a\"تفضل بزيارة الصفحة ا\""
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "pressed",
+   "message": "Controls with no pressed (:active) state and the tap highlight turned off: a tap gives no feedback until the result",
+   "count": 5,
+   "examples": [
+    "a.navbar-brand.d-flex\"الألبوم\"",
+    "button.navbar-toggler[تبديل التنقل]",
+    "a\"عد إلى الأعلى\"",
+    "a\"تفضل بزيارة الصفحة ا\"",
+    "a\"دليل البدء\""
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "keyboard",
+   "message": "No interactive-widget=resizes-content: the keyboard overlays the page (resizes-visual, the default in Chrome Android and on iOS) and fixed bars stay behind it — check focused fields over a real keyboard on a device",
+   "examples": []
+  }
+ ]
+}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="side">
+  <div class="logo">🐄 Milkline</div>
+  <div class="item active" onclick="location.href='./'">Overview</div>
+  <div class="item" onclick="location.href='#herd'">Herd</div>
+  <div class="item" onclick="alert('Rota — coming soon')">Rota</div>
+  <div class="item" onclick="alert('Vet log — coming soon')">Vet log</div>
+  <div class="item" onclick="alert('Settings — coming soon')">Settings</div>
+</div>
+<main>
+  <div class="top">
+    <h1 id="greeting">Good morning 👋</h1>
+    <div><button class="iconbtn" id="sync-btn" title="Sync"></button><button class="iconbtn" title="Notifications"></button><button class="iconbtn" title="Account"></button></div>
+  </div>
+  <div class="kpis" id="kpis"></div>
+  <div class="row">
+    <div class="card" style="overflow:hidden" id="herd">
+      <div class="cardhead"><h2>Herd</h2><input id="herd-search" placeholder="Search cows..."></div>
+      <table>
+        <thead><tr><th>Tag</th><th>Name</th><th>Group</th><th>Yield (L)</th><th>Change</th><th>Cond.</th><th>Status</th><th>Milked</th><th>DIM</th><th></th></tr></thead>
+        <tbody id="herd-body"></tbody>
+      </table>
+    </div>
+    <div class="card"><h4>Alerts</h4><div class="empty" id="alerts">No data</div></div>
+  </div>
+  <div class="row"><div class="card"><h2>Notes for the relief milker</h2><input id="note" placeholder="Add a note..." data-track="note_add"></div></div>
+</main>
+<div id="cow-panel" class="panel" hidden>
+  <div class="panel-inner">
+    <span class="close" onclick="closePanel()">✕</span>
+    <div id="cow-detail"></div>
+    <div class="panel-actions"><div class="btn" id="mark-checked">Mark as checked</div></div>
+  </div>
+</div>
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

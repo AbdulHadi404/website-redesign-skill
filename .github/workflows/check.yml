@@ -1,0 +1,29 @@
+name: check
+on:
+  push:
+  pull_request:
+jobs:
+  skill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: node tools/check-skill.mjs
+  scripts:
+    # The measurement scripts against pages with known defects (tools/regress.mjs).
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: skills/website-redesign/scripts/package-lock.json
+      - run: npm ci
+        working-directory: skills/website-redesign/scripts
+      - run: npx playwright-core install --with-deps chromium
+        working-directory: skills/website-redesign/scripts
+      - run: node tools/regress.mjs

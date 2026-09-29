@@ -1,0 +1,1834 @@
+{
+  "history": {
+    "env": {
+      "node": "v22.22.2",
+      "cpus": 4,
+      "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+      "date": "2026-09-28T22:26:59.102Z",
+      "deps": {
+        "immer": "11.1.18",
+        "immutable": "5.1.9",
+        "yjs": "13.6.33"
+      },
+      "runs": 5
+    },
+    "workloads": {
+      "200x1000": {
+        "startItems": 200,
+        "finalItems": 340,
+        "counts": {
+          "drag": 376,
+          "recolour": 148,
+          "select": 32,
+          "add": 206,
+          "undo": 63,
+          "remove": 90,
+          "group": 84,
+          "redo": 1
+        },
+        "dragPointerUpdates": 7520,
+        "undoDepth": 842,
+        "redoDepth": 1
+      },
+      "200x10000": {
+        "startItems": 200,
+        "finalItems": 463,
+        "counts": {
+          "recolour": 1728,
+          "group": 762,
+          "add": 2097,
+          "remove": 825,
+          "undo": 601,
+          "drag": 3601,
+          "select": 374,
+          "redo": 12
+        },
+        "dragPointerUpdates": 72020,
+        "undoDepth": 8424,
+        "redoDepth": 0
+      },
+      "5000x1000": {
+        "startItems": 5000,
+        "finalItems": 5167,
+        "counts": {
+          "drag": 376,
+          "recolour": 148,
+          "select": 32,
+          "add": 206,
+          "undo": 63,
+          "remove": 90,
+          "group": 84,
+          "redo": 1
+        },
+        "dragPointerUpdates": 7520,
+        "undoDepth": 842,
+        "redoDepth": 1
+      }
+    },
+    "workload": "mix per user operation: add 20%, drag 35% (20 pointer updates each), recolour 17%, delete 8%, group 8%, select-only 4%, undo 6%, redo 2%; seed 11; no no-op edits",
+    "correctness": {
+      "naive": {
+        "label": "Naive full-copy snapshots",
+        "dragIsOneStep": true,
+        "undoRestoresSelection": true,
+        "redoRestoresSelectionAfterOp": "no: gives the selection current when undo was pressed ([\"i2\"] instead of [\"i1\"])",
+        "redoInvalidation": true,
+        "selectionKeepsRedo": true,
+        "cancelRestores": true,
+        "noOpEditCreatesNoStep": "no: 2 empty step(s)",
+        "finalMatchesOracle": true,
+        "finalSelectionMatchesOracle": true,
+        "undoAllMatchesInitial": true,
+        "undoSteps": 843,
+        "oracleSteps": 843,
+        "redoAllMatchesTip": true,
+        "persistence": true,
+        "historyJsonKB": 38769,
+        "M1_undoMyMove_keepsTheirColour": false,
+        "M2_sameProperty": "my original restored (their change overwritten)",
+        "M3_undoOnDeleted": "resurrected the item",
+        "M3_withSkipMissingGuard": "n/a (whole-state restore or replay: no per-record guard)"
+      },
+      "command": {
+        "label": "Command pattern",
+        "dragIsOneStep": true,
+        "undoRestoresSelection": true,
+        "redoRestoresSelectionAfterOp": true,
+        "redoInvalidation": true,
+        "selectionKeepsRedo": true,
+        "cancelRestores": true,
+        "noOpEditCreatesNoStep": "no: 1 empty step(s)",
+        "finalMatchesOracle": true,
+        "finalSelectionMatchesOracle": true,
+        "undoAllMatchesInitial": true,
+        "undoSteps": 843,
+        "oracleSteps": 843,
+        "redoAllMatchesTip": true,
+        "persistence": true,
+        "historyJsonKB": 135,
+        "M1_undoMyMove_keepsTheirColour": true,
+        "M2_sameProperty": "my original restored (their change overwritten)",
+        "M3_undoOnDeleted": "throws (TypeError)",
+        "M3_withSkipMissingGuard": "no-op (stays deleted)"
+      },
+      "snapshotSpread": {
+        "label": "Immutable snapshots (object spread)",
+        "dragIsOneStep": true,
+        "undoRestoresSelection": true,
+        "redoRestoresSelectionAfterOp": "no: gives the selection current when undo was pressed ([\"i2\"] instead of [\"i1\"])",
+        "redoInvalidation": true,
+        "selectionKeepsRedo": true,
+        "cancelRestores": true,
+        "noOpEditCreatesNoStep": "no: 2 empty step(s)",
+        "finalMatchesOracle": true,
+        "finalSelectionMatchesOracle": true,
+        "undoAllMatchesInitial": true,
+        "undoSteps": 843,
+        "oracleSteps": 843,
+        "redoAllMatchesTip": true,
+        "persistence": true,
+        "historyJsonKB": 38769,
+        "M1_undoMyMove_keepsTheirColour": false,
+        "M2_sameProperty": "my original restored (their change overwritten)",
+        "M3_undoOnDeleted": "resurrected the item",
+        "M3_withSkipMissingGuard": "n/a (whole-state restore or replay: no per-record guard)"
+      },
+      "snapshotHamt": {
+        "label": "Immutable snapshots (persistent map)",
+        "dragIsOneStep": true,
+        "undoRestoresSelection": true,
+        "redoRestoresSelectionAfterOp": "no: gives the selection current when undo was pressed ([\"i2\"] instead of [\"i1\"])",
+        "redoInvalidation": true,
+        "selectionKeepsRedo": true,
+        "cancelRestores": true,
+        "noOpEditCreatesNoStep": "no: 2 empty step(s)",
+        "finalMatchesOracle": true,
+        "finalSelectionMatchesOracle": true,
+        "undoAllMatchesInitial": true,
+        "undoSteps": 843,
+        "oracleSteps": 843,
+        "redoAllMatchesTip": true,
+        "persistence": true,
+        "historyJsonKB": 38769,
+        "M1_undoMyMove_keepsTheirColour": false,
+        "M2_sameProperty": "my original restored (their change overwritten)",
+        "M3_undoOnDeleted": "resurrected the item",
+        "M3_withSkipMissingGuard": "n/a (whole-state restore or replay: no per-record guard)"
+      },
+      "immerPatches": {
+        "label": "Patches (immer)",
+        "dragIsOneStep": true,
+        "undoRestoresSelection": true,
+        "redoRestoresSelectionAfterOp": true,
+        "redoInvalidation": true,
+        "selectionKeepsRedo": true,
+        "cancelRestores": true,
+        "noOpEditCreatesNoStep": "no: 2 empty step(s)",
+        "finalMatchesOracle": true,
+        "finalSelectionMatchesOracle": true,
+        "undoAllMatchesInitial": true,
+        "undoSteps": 843,
+        "oracleSteps": 843,
+        "redoAllMatchesTip": true,
+        "persistence": true,
+        "historyJsonKB": 318,
+        "M1_undoMyMove_keepsTheirColour": true,
+        "M2_sameProperty": "my original restored (their change overwritten)",
+        "M3_undoOnDeleted": "throws (Error)",
+        "M3_withSkipMissingGuard": "no-op (stays deleted)"
+      },
+      "recordDiff": {
+        "label": "Record diffs (tldraw-style)",
+        "dragIsOneStep": true,
+        "undoRestoresSelection": true,
+        "redoRestoresSelectionAfterOp": true,
+        "redoInvalidation": true,
+        "selectionKeepsRedo": true,
+        "cancelRestores": true,
+        "noOpEditCreatesNoStep": "no: 2 empty step(s)",
+        "finalMatchesOracle": true,
+        "finalSelectionMatchesOracle": true,
+        "undoAllMatchesInitial": true,
+        "undoSteps": 843,
+        "oracleSteps": 843,
+        "redoAllMatchesTip": true,
+        "persistence": true,
+        "historyJsonKB": 481,
+        "M1_undoMyMove_keepsTheirColour": false,
+        "M2_sameProperty": "my original restored (their change overwritten)",
+        "M3_undoOnDeleted": "resurrected the item",
+        "M3_withSkipMissingGuard": "no-op (stays deleted)"
+      },
+      "propDiff": {
+        "label": "Property deltas (excalidraw-style)",
+        "dragIsOneStep": true,
+        "undoRestoresSelection": true,
+        "redoRestoresSelectionAfterOp": true,
+        "redoInvalidation": true,
+        "selectionKeepsRedo": true,
+        "cancelRestores": true,
+        "noOpEditCreatesNoStep": true,
+        "finalMatchesOracle": true,
+        "finalSelectionMatchesOracle": true,
+        "undoAllMatchesInitial": true,
+        "undoSteps": 843,
+        "oracleSteps": 843,
+        "redoAllMatchesTip": true,
+        "persistence": true,
+        "historyJsonKB": 178,
+        "M1_undoMyMove_keepsTheirColour": true,
+        "M2_sameProperty": "my original restored (their change overwritten)",
+        "M3_undoOnDeleted": "no-op (stays deleted)",
+        "M3_withSkipMissingGuard": "guard built in (as benchmarked)"
+      },
+      "yjs": {
+        "label": "CRDT (Yjs UndoManager)",
+        "dragIsOneStep": true,
+        "undoRestoresSelection": true,
+        "redoRestoresSelectionAfterOp": true,
+        "redoInvalidation": true,
+        "selectionKeepsRedo": true,
+        "cancelRestores": true,
+        "noOpEditCreatesNoStep": "no: 2 empty step(s)",
+        "finalMatchesOracle": true,
+        "finalSelectionMatchesOracle": true,
+        "undoAllMatchesInitial": true,
+        "undoSteps": 843,
+        "oracleSteps": 843,
+        "redoAllMatchesTip": true,
+        "persistence": "n/a: document persists, UndoManager stacks do not",
+        "M1_undoMyMove_keepsTheirColour": true,
+        "M2_sameProperty": "their change kept (my undo skipped)",
+        "M3_undoOnDeleted": "no-op (stays deleted)",
+        "M3_withSkipMissingGuard": "n/a (CRDT: never overwrites remote changes)"
+      },
+      "eventSourced": {
+        "label": "Event log + checkpoints",
+        "dragIsOneStep": true,
+        "undoRestoresSelection": true,
+        "redoRestoresSelectionAfterOp": true,
+        "redoInvalidation": true,
+        "selectionKeepsRedo": true,
+        "cancelRestores": true,
+        "noOpEditCreatesNoStep": "no: 2 empty step(s)",
+        "finalMatchesOracle": true,
+        "finalSelectionMatchesOracle": true,
+        "undoAllMatchesInitial": true,
+        "undoSteps": 843,
+        "oracleSteps": 843,
+        "redoAllMatchesTip": true,
+        "persistence": true,
+        "historyJsonKB": 154,
+        "M1_undoMyMove_keepsTheirColour": false,
+        "M2_sameProperty": "my original restored (their change overwritten)",
+        "M3_undoOnDeleted": "resurrected the item",
+        "M3_withSkipMissingGuard": "n/a (whole-state restore or replay: no per-record guard)"
+      },
+      "yjsCapture": {
+        "default (captureTimeout 500, no stopCapturing)": {
+          "twoClicks50msApart_steps": 1,
+          "dragWith650msPause_steps": 2
+        },
+        "stopCapturing at boundaries, timeout 500": {
+          "twoClicks50msApart_steps": 2,
+          "dragWith650msPause_steps": 2
+        },
+        "stopCapturing at boundaries, timeout Infinity": {
+          "twoClicks50msApart_steps": 2,
+          "dragWith650msPause_steps": 1
+        }
+      }
+    },
+    "arrayPitfall": {
+      "arrayOf1000_deleteFirst": {
+        "patches": 1000,
+        "bytes": 52767
+      },
+      "keyedMapOf1000_deleteOne": {
+        "patches": 1,
+        "bytes": 39
+      }
+    },
+    "benchmark": [
+      {
+        "strategy": "naive",
+        "scene": 200,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 75.7,
+        "heapWithHistoryMB": 75.71,
+        "heapNoHistoryMB": 0.01,
+        "bytesPerEntry": 94166,
+        "playMs": 892.7,
+        "playMsNoHistory": 12.2,
+        "updateP95us": 0.7,
+        "updateP95usNoHistory": 0.7,
+        "commitP95us": 924.9,
+        "undoMeanUs": 846.5,
+        "undoP95us": 1560.1,
+        "undoMaxUs": 30856.5,
+        "redoMeanUs": 685.1,
+        "serializedKB": 38768,
+        "serializeMs": 218.4,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            746.8,
+            1311.3
+          ]
+        }
+      },
+      {
+        "strategy": "command",
+        "scene": 200,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 0.38,
+        "heapWithHistoryMB": 0.4,
+        "heapNoHistoryMB": 0.02,
+        "bytesPerEntry": 475,
+        "playMs": 16.9,
+        "playMsNoHistory": 13.3,
+        "updateP95us": 0.9,
+        "updateP95usNoHistory": 1.8,
+        "commitP95us": 4.4,
+        "undoMeanUs": 0.7,
+        "undoP95us": 2.1,
+        "undoMaxUs": 26,
+        "redoMeanUs": 2.3,
+        "serializedKB": 135,
+        "serializeMs": 1,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            13.7,
+            27.8
+          ]
+        }
+      },
+      {
+        "strategy": "snapshotSpread",
+        "scene": 200,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 4.89,
+        "heapWithHistoryMB": 4.94,
+        "heapNoHistoryMB": 0.04,
+        "bytesPerEntry": 6088,
+        "playMs": 246.5,
+        "playMsNoHistory": 272.7,
+        "updateP95us": 48.8,
+        "updateP95usNoHistory": 42.9,
+        "commitP95us": 227.9,
+        "undoMeanUs": 0.2,
+        "undoP95us": 0.2,
+        "undoMaxUs": 4.6,
+        "redoMeanUs": 0.2,
+        "serializedKB": 38768,
+        "serializeMs": 248.2,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            241.6,
+            362
+          ]
+        }
+      },
+      {
+        "strategy": "snapshotHamt",
+        "scene": 200,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 1.17,
+        "heapWithHistoryMB": 1.36,
+        "heapNoHistoryMB": 0.19,
+        "bytesPerEntry": 1451,
+        "playMs": 80,
+        "playMsNoHistory": 58.5,
+        "updateP95us": 5.4,
+        "updateP95usNoHistory": 5.6,
+        "commitP95us": 10.3,
+        "undoMeanUs": 0.2,
+        "undoP95us": 0.2,
+        "undoMaxUs": 12.9,
+        "redoMeanUs": 0.2,
+        "serializedKB": 38768,
+        "serializeMs": 277.5,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            50,
+            147.2
+          ]
+        }
+      },
+      {
+        "strategy": "immerPatches",
+        "scene": 200,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 0.95,
+        "heapWithHistoryMB": 1.26,
+        "heapNoHistoryMB": 0.32,
+        "bytesPerEntry": 1176,
+        "playMs": 971.4,
+        "playMsNoHistory": 903,
+        "updateP95us": 167.2,
+        "updateP95usNoHistory": 168.1,
+        "commitP95us": 353.5,
+        "undoMeanUs": 219.4,
+        "undoP95us": 386,
+        "undoMaxUs": 16480.6,
+        "redoMeanUs": 212.2,
+        "serializedKB": 318,
+        "serializeMs": 2.5,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            929.2,
+            1018.1
+          ]
+        }
+      },
+      {
+        "strategy": "immerPatchesNoFreeze",
+        "scene": 200,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 0.96,
+        "heapWithHistoryMB": 1.22,
+        "heapNoHistoryMB": 0.26,
+        "bytesPerEntry": 1198,
+        "playMs": 487.6,
+        "playMsNoHistory": 441,
+        "updateP95us": 68.8,
+        "updateP95usNoHistory": 62.5,
+        "commitP95us": 287.3,
+        "undoMeanUs": 239,
+        "undoP95us": 542.1,
+        "undoMaxUs": 11189.7,
+        "redoMeanUs": 163.9,
+        "serializedKB": 318,
+        "serializeMs": 1.9,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            437.7,
+            500.1
+          ]
+        }
+      },
+      {
+        "strategy": "recordDiff",
+        "scene": 200,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 0.72,
+        "heapWithHistoryMB": 0.74,
+        "heapNoHistoryMB": 0.02,
+        "bytesPerEntry": 901,
+        "playMs": 24.6,
+        "playMsNoHistory": 14.6,
+        "updateP95us": 2.8,
+        "updateP95usNoHistory": 2.3,
+        "commitP95us": 8.9,
+        "undoMeanUs": 0.9,
+        "undoP95us": 0.9,
+        "undoMaxUs": 166,
+        "redoMeanUs": 0.5,
+        "serializedKB": 481,
+        "serializeMs": 3.3,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            20.2,
+            51.1
+          ]
+        }
+      },
+      {
+        "strategy": "propDiff",
+        "scene": 200,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 0.7,
+        "heapWithHistoryMB": 0.73,
+        "heapNoHistoryMB": 0.03,
+        "bytesPerEntry": 875,
+        "playMs": 26.6,
+        "playMsNoHistory": 60.7,
+        "updateP95us": 2.4,
+        "updateP95usNoHistory": 2.4,
+        "commitP95us": 13.8,
+        "undoMeanUs": 0.8,
+        "undoP95us": 2.2,
+        "undoMaxUs": 55.2,
+        "redoMeanUs": 0.9,
+        "serializedKB": 178,
+        "serializeMs": 1.1,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            19.5,
+            133.5
+          ]
+        }
+      },
+      {
+        "strategy": "yjs",
+        "scene": 200,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 4.24,
+        "heapWithHistoryMB": 9.59,
+        "heapNoHistoryMB": 5.34,
+        "bytesPerEntry": 5277,
+        "playMs": 288.1,
+        "playMsNoHistory": 269.5,
+        "updateP95us": 28.1,
+        "updateP95usNoHistory": 18.9,
+        "commitP95us": 57.7,
+        "undoMeanUs": 80.1,
+        "undoP95us": 83.6,
+        "undoMaxUs": 9418.5,
+        "redoMeanUs": 41,
+        "serializedKB": null,
+        "serializeMs": null,
+        "docKB": 550,
+        "docKBNoHistory": 254,
+        "spread": {
+          "playMs": [
+            236.8,
+            350.3
+          ]
+        }
+      },
+      {
+        "strategy": "eventSourced",
+        "scene": 200,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 1.15,
+        "heapWithHistoryMB": 1.25,
+        "heapNoHistoryMB": 0.1,
+        "bytesPerEntry": 1431,
+        "playMs": 64.1,
+        "playMsNoHistory": 13,
+        "updateP95us": 0.6,
+        "updateP95usNoHistory": 0.5,
+        "commitP95us": 4.7,
+        "undoMeanUs": 465.7,
+        "undoP95us": 762.8,
+        "undoMaxUs": 3640.7,
+        "redoMeanUs": 0.6,
+        "serializedKB": 120,
+        "serializeMs": 0.9,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            49.6,
+            76.6
+          ]
+        }
+      },
+      {
+        "strategy": "naive",
+        "scene": 200,
+        "ops": 10000,
+        "entries": 8424,
+        "correct": true,
+        "historyMB": 1157.63,
+        "heapWithHistoryMB": 1148.97,
+        "heapNoHistoryMB": -8.66,
+        "bytesPerEntry": 144096,
+        "playMs": 13411,
+        "playMsNoHistory": 88.9,
+        "updateP95us": 0.5,
+        "updateP95usNoHistory": 0.6,
+        "commitP95us": 1735,
+        "undoMeanUs": 1562.7,
+        "undoP95us": 3626.7,
+        "undoMaxUs": 234108.7,
+        "redoMeanUs": 1587.2,
+        "serializedKB": 601204,
+        "serializeMs": 3700.5,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            11284.5,
+            17286.4
+          ]
+        }
+      },
+      {
+        "strategy": "command",
+        "scene": 200,
+        "ops": 10000,
+        "entries": 8424,
+        "correct": true,
+        "historyMB": 4.84,
+        "heapWithHistoryMB": -3.8,
+        "heapNoHistoryMB": -8.64,
+        "bytesPerEntry": 602,
+        "playMs": 233.3,
+        "playMsNoHistory": 185,
+        "updateP95us": 0.6,
+        "updateP95usNoHistory": 0.4,
+        "commitP95us": 4.3,
+        "undoMeanUs": 2.5,
+        "undoP95us": 1.5,
+        "undoMaxUs": 9204.9,
+        "redoMeanUs": 1.6,
+        "serializedKB": 1804,
+        "serializeMs": 18.4,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            153.5,
+            375.1
+          ]
+        }
+      },
+      {
+        "strategy": "snapshotSpread",
+        "scene": 200,
+        "ops": 10000,
+        "entries": 8424,
+        "correct": true,
+        "historyMB": 82.39,
+        "heapWithHistoryMB": 73.76,
+        "heapNoHistoryMB": -8.63,
+        "bytesPerEntry": 10255,
+        "playMs": 6757.6,
+        "playMsNoHistory": 7187.4,
+        "updateP95us": 149.3,
+        "updateP95usNoHistory": 153,
+        "commitP95us": 432.2,
+        "undoMeanUs": 0.5,
+        "undoP95us": 0.3,
+        "undoMaxUs": 1904.9,
+        "redoMeanUs": 0.2,
+        "serializedKB": 601204,
+        "serializeMs": 6653.7,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            5639.5,
+            10250.9
+          ]
+        }
+      },
+      {
+        "strategy": "snapshotHamt",
+        "scene": 200,
+        "ops": 10000,
+        "entries": 8424,
+        "correct": true,
+        "historyMB": 16.48,
+        "heapWithHistoryMB": 8.04,
+        "heapNoHistoryMB": -8.44,
+        "bytesPerEntry": 2052,
+        "playMs": 442.8,
+        "playMsNoHistory": 485.5,
+        "updateP95us": 3.4,
+        "updateP95usNoHistory": 3.3,
+        "commitP95us": 6.3,
+        "undoMeanUs": 0.2,
+        "undoP95us": 0.2,
+        "undoMaxUs": 825.1,
+        "redoMeanUs": 0.2,
+        "serializedKB": 601204,
+        "serializeMs": 3707.5,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            316.7,
+            504.3
+          ]
+        }
+      },
+      {
+        "strategy": "immerPatches",
+        "scene": 200,
+        "ops": 10000,
+        "entries": 8424,
+        "correct": true,
+        "historyMB": 12.1,
+        "heapWithHistoryMB": 3.76,
+        "heapNoHistoryMB": -8.34,
+        "bytesPerEntry": 1506,
+        "playMs": 24541.8,
+        "playMsNoHistory": 23412.6,
+        "updateP95us": 581.3,
+        "updateP95usNoHistory": 521.5,
+        "commitP95us": 743.7,
+        "undoMeanUs": 531.6,
+        "undoP95us": 1247.4,
+        "undoMaxUs": 75409.3,
+        "redoMeanUs": 375.1,
+        "serializedKB": 4866,
+        "serializeMs": 67.8,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            20831.9,
+            36056.5
+          ]
+        }
+      },
+      {
+        "strategy": "immerPatchesNoFreeze",
+        "scene": 200,
+        "ops": 10000,
+        "entries": 8424,
+        "correct": true,
+        "historyMB": 12.09,
+        "heapWithHistoryMB": 3.7,
+        "heapNoHistoryMB": -8.39,
+        "bytesPerEntry": 1504,
+        "playMs": 14247.1,
+        "playMsNoHistory": 15291.3,
+        "updateP95us": 222.6,
+        "updateP95usNoHistory": 204.9,
+        "commitP95us": 565,
+        "undoMeanUs": 598,
+        "undoP95us": 1098.2,
+        "undoMaxUs": 113022.9,
+        "redoMeanUs": 316.5,
+        "serializedKB": 4866,
+        "serializeMs": 38.9,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            6932.6,
+            18901.9
+          ]
+        }
+      },
+      {
+        "strategy": "recordDiff",
+        "scene": 200,
+        "ops": 10000,
+        "entries": 8424,
+        "correct": true,
+        "historyMB": 8.9,
+        "heapWithHistoryMB": 0.26,
+        "heapNoHistoryMB": -8.64,
+        "bytesPerEntry": 1108,
+        "playMs": 316.5,
+        "playMsNoHistory": 222.2,
+        "updateP95us": 2.6,
+        "updateP95usNoHistory": 2,
+        "commitP95us": 8.2,
+        "undoMeanUs": 1.5,
+        "undoP95us": 1.2,
+        "undoMaxUs": 3675.8,
+        "redoMeanUs": 0.8,
+        "serializedKB": 7071,
+        "serializeMs": 185.5,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            218.7,
+            425
+          ]
+        }
+      },
+      {
+        "strategy": "propDiff",
+        "scene": 200,
+        "ops": 10000,
+        "entries": 8424,
+        "correct": true,
+        "historyMB": 8.78,
+        "heapWithHistoryMB": 0.14,
+        "heapNoHistoryMB": -8.64,
+        "bytesPerEntry": 1092,
+        "playMs": 342.9,
+        "playMsNoHistory": 149.9,
+        "updateP95us": 2.5,
+        "updateP95usNoHistory": 2.1,
+        "commitP95us": 12.8,
+        "undoMeanUs": 2.1,
+        "undoP95us": 2.2,
+        "undoMaxUs": 3024.5,
+        "redoMeanUs": 1.3,
+        "serializedKB": 2354,
+        "serializeMs": 24.9,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            326.1,
+            705.9
+          ]
+        }
+      },
+      {
+        "strategy": "yjs",
+        "scene": 200,
+        "ops": 10000,
+        "entries": 8424,
+        "correct": true,
+        "historyMB": 100.83,
+        "heapWithHistoryMB": 139.95,
+        "heapNoHistoryMB": 39.12,
+        "bytesPerEntry": 12551,
+        "playMs": 3541.3,
+        "playMsNoHistory": 4472.2,
+        "updateP95us": 22.7,
+        "updateP95usNoHistory": 18.4,
+        "commitP95us": 72.5,
+        "undoMeanUs": 117.6,
+        "undoP95us": 106.6,
+        "undoMaxUs": 64147.9,
+        "redoMeanUs": 83.5,
+        "serializedKB": null,
+        "serializeMs": null,
+        "docKB": 9494,
+        "docKBNoHistory": 1519,
+        "spread": {
+          "playMs": [
+            3018.6,
+            4152.9
+          ]
+        }
+      },
+      {
+        "strategy": "eventSourced",
+        "scene": 200,
+        "ops": 10000,
+        "entries": 8424,
+        "correct": true,
+        "historyMB": 17.75,
+        "heapWithHistoryMB": 9.2,
+        "heapNoHistoryMB": -8.55,
+        "bytesPerEntry": 2210,
+        "playMs": 1077.3,
+        "playMsNoHistory": 118.7,
+        "updateP95us": 0.3,
+        "updateP95usNoHistory": 0.5,
+        "commitP95us": 4,
+        "undoMeanUs": 1279.7,
+        "undoP95us": 3870.2,
+        "undoMaxUs": 106067.1,
+        "redoMeanUs": 0.6,
+        "serializedKB": 1448,
+        "serializeMs": 13,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            1019.9,
+            1207.1
+          ]
+        }
+      },
+      {
+        "strategy": "naive",
+        "scene": 5000,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 1529.61,
+        "heapWithHistoryMB": 1529.55,
+        "heapNoHistoryMB": -0.06,
+        "bytesPerEntry": 1902621,
+        "playMs": 44416.9,
+        "playMsNoHistory": 39,
+        "updateP95us": 1.1,
+        "updateP95usNoHistory": 2.3,
+        "commitP95us": 106106.4,
+        "undoMeanUs": 49626.9,
+        "undoP95us": 135256.6,
+        "undoMaxUs": 402372.8,
+        "redoMeanUs": 57733.7,
+        "serializedKB": 761100,
+        "serializeMs": 14650.8,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            33441.1,
+            59434.5
+          ]
+        }
+      },
+      {
+        "strategy": "command",
+        "scene": 5000,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 0.36,
+        "heapWithHistoryMB": 0.34,
+        "heapNoHistoryMB": -0.02,
+        "bytesPerEntry": 453,
+        "playMs": 30,
+        "playMsNoHistory": 37.2,
+        "updateP95us": 2.2,
+        "updateP95usNoHistory": 2.2,
+        "commitP95us": 6.7,
+        "undoMeanUs": 1.2,
+        "undoP95us": 2.3,
+        "undoMaxUs": 66.5,
+        "redoMeanUs": 2.5,
+        "serializedKB": 128,
+        "serializeMs": 1.3,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            23.8,
+            146.2
+          ]
+        }
+      },
+      {
+        "strategy": "snapshotSpread",
+        "scene": 5000,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 158.43,
+        "heapWithHistoryMB": 158.37,
+        "heapNoHistoryMB": -0.06,
+        "bytesPerEntry": 197070,
+        "playMs": 24110.1,
+        "playMsNoHistory": 30276.3,
+        "updateP95us": 7075.8,
+        "updateP95usNoHistory": 10295.7,
+        "commitP95us": 5718.1,
+        "undoMeanUs": 0.2,
+        "undoP95us": 0.3,
+        "undoMaxUs": 7.8,
+        "redoMeanUs": 0.3,
+        "serializedKB": 761100,
+        "serializeMs": 17510.9,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            19310,
+            55375.7
+          ]
+        }
+      },
+      {
+        "strategy": "snapshotHamt",
+        "scene": 5000,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 1.4,
+        "heapWithHistoryMB": 2.11,
+        "heapNoHistoryMB": 0.71,
+        "bytesPerEntry": 1736,
+        "playMs": 414.6,
+        "playMsNoHistory": 321.5,
+        "updateP95us": 5.7,
+        "updateP95usNoHistory": 6.9,
+        "commitP95us": 21.7,
+        "undoMeanUs": 0.2,
+        "undoP95us": 0.3,
+        "undoMaxUs": 10.4,
+        "redoMeanUs": 0.2,
+        "serializedKB": 761100,
+        "serializeMs": 25071,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            103.9,
+            842
+          ]
+        }
+      },
+      {
+        "strategy": "immerPatches",
+        "scene": 5000,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 0.84,
+        "heapWithHistoryMB": 1.02,
+        "heapNoHistoryMB": 0.17,
+        "bytesPerEntry": 1048,
+        "playMs": 46419.6,
+        "playMsNoHistory": 54677.8,
+        "updateP95us": 15876.7,
+        "updateP95usNoHistory": 20254.1,
+        "commitP95us": 12976.6,
+        "undoMeanUs": 7275.8,
+        "undoP95us": 24677.8,
+        "undoMaxUs": 109830.1,
+        "redoMeanUs": 5834.3,
+        "serializedKB": 280,
+        "serializeMs": 2.4,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            35482.4,
+            84146.7
+          ]
+        }
+      },
+      {
+        "strategy": "immerPatchesNoFreeze",
+        "scene": 5000,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 0.83,
+        "heapWithHistoryMB": 0.98,
+        "heapNoHistoryMB": 0.15,
+        "bytesPerEntry": 1031,
+        "playMs": 23271.6,
+        "playMsNoHistory": 20336.3,
+        "updateP95us": 6584.3,
+        "updateP95usNoHistory": 5657.9,
+        "commitP95us": 5984.7,
+        "undoMeanUs": 2643.8,
+        "undoP95us": 6020.7,
+        "undoMaxUs": 62017,
+        "redoMeanUs": 2606,
+        "serializedKB": 280,
+        "serializeMs": 4.9,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            17808.1,
+            39368.3
+          ]
+        }
+      },
+      {
+        "strategy": "recordDiff",
+        "scene": 5000,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 0.76,
+        "heapWithHistoryMB": 0.74,
+        "heapNoHistoryMB": -0.02,
+        "bytesPerEntry": 941,
+        "playMs": 35.5,
+        "playMsNoHistory": 18.6,
+        "updateP95us": 3,
+        "updateP95usNoHistory": 2.5,
+        "commitP95us": 14,
+        "undoMeanUs": 0.8,
+        "undoP95us": 1.7,
+        "undoMaxUs": 14.9,
+        "redoMeanUs": 0.7,
+        "serializedKB": 432,
+        "serializeMs": 3.2,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            22.3,
+            40.3
+          ]
+        }
+      },
+      {
+        "strategy": "propDiff",
+        "scene": 5000,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 0.71,
+        "heapWithHistoryMB": 0.69,
+        "heapNoHistoryMB": -0.01,
+        "bytesPerEntry": 878,
+        "playMs": 36.9,
+        "playMsNoHistory": 36,
+        "updateP95us": 2.8,
+        "updateP95usNoHistory": 2.5,
+        "commitP95us": 20.6,
+        "undoMeanUs": 1.2,
+        "undoP95us": 2.7,
+        "undoMaxUs": 22.3,
+        "redoMeanUs": 1.5,
+        "serializedKB": 169,
+        "serializeMs": 1.8,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            27.6,
+            61
+          ]
+        }
+      },
+      {
+        "strategy": "yjs",
+        "scene": 5000,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 2.59,
+        "heapWithHistoryMB": 25.26,
+        "heapNoHistoryMB": 22.68,
+        "bytesPerEntry": 3218,
+        "playMs": 623.7,
+        "playMsNoHistory": 684.5,
+        "updateP95us": 21.7,
+        "updateP95usNoHistory": 17.1,
+        "commitP95us": 53.4,
+        "undoMeanUs": 129.2,
+        "undoP95us": 59.2,
+        "undoMaxUs": 28542.2,
+        "redoMeanUs": 86.4,
+        "serializedKB": null,
+        "serializeMs": null,
+        "docKB": 1756,
+        "docKBNoHistory": 1667,
+        "spread": {
+          "playMs": [
+            251.3,
+            1173.3
+          ]
+        }
+      },
+      {
+        "strategy": "eventSourced",
+        "scene": 5000,
+        "ops": 1000,
+        "entries": 843,
+        "correct": true,
+        "historyMB": 14.77,
+        "heapWithHistoryMB": 16.51,
+        "heapNoHistoryMB": 1.74,
+        "bytesPerEntry": 18376,
+        "playMs": 1500.6,
+        "playMsNoHistory": 26.5,
+        "updateP95us": 0.6,
+        "updateP95usNoHistory": 2.1,
+        "commitP95us": 12,
+        "undoMeanUs": 18705.3,
+        "undoP95us": 42130.2,
+        "undoMaxUs": 134661.7,
+        "redoMeanUs": 1.3,
+        "serializedKB": 118,
+        "serializeMs": 0.9,
+        "docKB": null,
+        "docKBNoHistory": null,
+        "spread": {
+          "playMs": [
+            1255.7,
+            1536.5
+          ]
+        }
+      }
+    ],
+    "correctnessRerunAt": "2026-09-29T03:13:29.914Z",
+    "immerFreeze": {
+      "method": "bench-one.mjs immerPatches <scene> 1000 history, IMMER_AUTOFREEZE=1 vs 0, alternating order per pair",
+      "cells": [
+        {
+          "scene": 200,
+          "ops": 1000,
+          "pairs": 9,
+          "correct": true,
+          "freezeOn": {
+            "updateP95us": 170.7,
+            "commitP95us": 369.7,
+            "undoMeanUs": 402.2,
+            "playMs": 1008.3,
+            "updateP95usRange": [
+              131.7,
+              402.9
+            ]
+          },
+          "freezeOff": {
+            "updateP95us": 60,
+            "commitP95us": 271.4,
+            "undoMeanUs": 270.2,
+            "playMs": 576,
+            "updateP95usRange": [
+              55.8,
+              91.9
+            ]
+          },
+          "ratioOnOverOff": {
+            "updateP95": 3.06,
+            "updateP95Range": [
+              1.43,
+              7.07
+            ],
+            "undoMean": 1.63,
+            "undoMeanRange": [
+              0.9,
+              3.66
+            ],
+            "playMs": 1.93
+          },
+          "loadAvg1m": {
+            "min": 13.5,
+            "max": 14.6
+          }
+        },
+        {
+          "scene": 5000,
+          "ops": 1000,
+          "pairs": 7,
+          "correct": true,
+          "freezeOn": {
+            "updateP95us": 5227.1,
+            "commitP95us": 3901.3,
+            "undoMeanUs": 3293.6,
+            "playMs": 24292.8,
+            "updateP95usRange": [
+              4229.2,
+              13614.7
+            ]
+          },
+          "freezeOff": {
+            "updateP95us": 4860,
+            "commitP95us": 3550.2,
+            "undoMeanUs": 2096.6,
+            "playMs": 18607.2,
+            "updateP95usRange": [
+              2635.3,
+              7860.1
+            ]
+          },
+          "ratioOnOverOff": {
+            "updateP95": 1.2,
+            "updateP95Range": [
+              0.54,
+              3.18
+            ],
+            "undoMean": 1.68,
+            "undoMeanRange": [
+              0.92,
+              2
+            ],
+            "playMs": 1.43
+          },
+          "loadAvg1m": {
+            "min": 11.2,
+            "max": 18.9
+          }
+        }
+      ],
+      "date": "2026-09-29T03:20:50.759Z"
+    }
+  },
+  "prototype": {
+    "fonts": "present",
+    "model": {
+      "firstRuleSetAsReviewed": {
+        "singleChangeTransitionsExcludingDecorations": 12531,
+        "transitionsWhereARepairChangedANeed": 237,
+        "ofWhichTriggeredByATasteChoice": 202,
+        "examples": [
+          {
+            "from": {
+              "people": 50,
+              "tiers": 3,
+              "message": "plaque"
+            },
+            "chose": [
+              "shape",
+              "heart"
+            ],
+            "changed": [
+              "people: 50 → 20"
+            ]
+          },
+          {
+            "from": {
+              "people": 50,
+              "tiers": 3,
+              "message": "piped"
+            },
+            "chose": [
+              "people",
+              30
+            ],
+            "changed": [
+              "message: piped → plaque"
+            ]
+          },
+          {
+            "from": {
+              "people": 50,
+              "tiers": 3,
+              "message": "piped"
+            },
+            "chose": [
+              "shape",
+              "heart"
+            ],
+            "changed": [
+              "people: 50 → 20"
+            ]
+          }
+        ],
+        "configsWhoseWordsWereInTheQuery": 299
+      },
+      "configsTested": 400,
+      "invalidConfigs": 0,
+      "singleChangeTransitions": 13669,
+      "blockedAsInactive": 878,
+      "transitionsNeedingRepair": 1290,
+      "repairShare": 0.09,
+      "repairsAnnouncedOnTheOptionBeforehand": 1290,
+      "invalidAfterRepair": 0,
+      "repairOverrodeTheChoice": 0,
+      "repairsByReason": {
+        "30 people need 2 or 3 tiers": 203,
+        "50 people need 3 tiers": 302,
+        "8 people need 1 tier": 197,
+        "12 people need 1 tier": 197,
+        "heart cakes are one tier": 37,
+        "a drip slides off fondant": 127,
+        "heart cakes are one tier, up to 20 people": 184,
+        "20 people need 1 or 2 tiers": 98,
+        "a drip needs buttercream or ganache underneath": 78,
+        "piped writing needs a top tier of 6 inches or more": 35
+      },
+      "inactiveByReason": {
+        "Heart cakes serve up to N people": 160,
+        "Up to three decorations": 660,
+        "N tiers leave a N-inch top tier, too small to pipe your message on": 42,
+        "The N-inch top tier is too small to pipe on": 16
+      },
+      "needs": {
+        "keys": [
+          "people",
+          "message",
+          "text"
+        ],
+        "transitionsWhereARepairChangedANeed": 0,
+        "ofWhichTriggeredByATasteChoice": 0,
+        "examples": []
+      },
+      "randomise": {
+        "runs": 2000,
+        "invalid": 0,
+        "keptPeopleAndMessage": 2000,
+        "distinct": 2000
+      },
+      "links": {
+        "roundTripExactExceptWords": "400/400",
+        "configsWithWords": 299,
+        "wordsFoundInQuery": 0,
+        "longestQueryChars": 138,
+        "hostileLinksOpenValidCake": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "renderNode": {
+        "medianMs": 0.76,
+        "p95Ms": 4.07,
+        "svgBytesMedian": 21750.5,
+        "svgBytesMax": 46773
+      }
+    },
+    "behaviour": {
+      "consoleErrors": [],
+      "repair": {
+        "before": {
+          "people": 20,
+          "tiers": 2
+        },
+        "afterHeart": {
+          "people": 20,
+          "tiers": 1,
+          "shape": "heart"
+        },
+        "hintOnTheOptionBeforehand": "Changes to one tier",
+        "steps": 1,
+        "liveRegionText": "Heart cakes are one tier, so we made it one tier.",
+        "buttonsInsideLiveRegions": 0,
+        "oneUndoRestores": true,
+        "announced": "Undone: Shape: Heart"
+      },
+      "needProtected": {
+        "people": [
+          30,
+          30
+        ],
+        "shape": [
+          "round",
+          "round"
+        ],
+        "steps": 0,
+        "reasonBesideOption": "Heart cakes serve up to 20 people",
+        "notice": "Heart cakes serve up to 20 people.",
+        "trackedAsUnmetDemand": true
+      },
+      "inactiveOption": {
+        "decorations": [
+          "flowers",
+          "goldleaf",
+          "sprinkles"
+        ],
+        "changed": false,
+        "notice": "Up to three decorations."
+      },
+      "noOpChoiceAddsStep": false,
+      "redo": {
+        "redoAfterUndo": 1,
+        "redoAfterNewChange": 0
+      },
+      "text": {
+        "typedChars": 15,
+        "steps": 1,
+        "textInAnalytics": false,
+        "textInAnyPageUrl": false,
+        "pageUrlsChecked": 33,
+        "previewText": "Happy 30th Maya"
+      },
+      "slider": {
+        "pointerDragSteps": 1,
+        "hueMoved": true,
+        "oneUndoRestores": true,
+        "tenArrowKeysSteps": 1,
+        "afterPauseThreeKeysSteps": 1,
+        "escapeMidDragSteps": 0,
+        "escapeRestored": true
+      },
+      "canvas": {
+        "dragSteps": 1,
+        "flowerPos": [
+          -0.45,
+          0.55
+        ],
+        "escapeMidDragSteps": 0,
+        "escapeRestored": true,
+        "wobbleTapSteps": 0,
+        "tapOpened": "true",
+        "tapFocused": "flowerPos",
+        "canvasMovedOnTap": false,
+        "viewBoxChangedByDecorationDrag": false
+      },
+      "camera": {
+        "decorationMovedCamera": false,
+        "sizeReframed": true
+      },
+      "persistence": {
+        "queryChars": 119,
+        "wordsInQuery": false,
+        "wordsInCopiedLink": false,
+        "linkOpensSameDesign": true,
+        "wordsFromSomeoneElsesLink": "",
+        "entryFromLink": "link",
+        "reloadKeepsCakeAndWords": true,
+        "bareUrlResumes": true,
+        "resumeNotice": "Welcome back. This is the cake you were designing.",
+        "historyAfterReload": 0,
+        "clipboardHasLink": true
+      },
+      "keyboard": {
+        "keyPresses": 77,
+        "navigationPresses": 43,
+        "log": [
+          [
+            "tabs",
+            true
+          ],
+          [
+            "size tab",
+            "tab-size"
+          ],
+          [
+            "people radio",
+            true
+          ],
+          [
+            "people",
+            20
+          ],
+          [
+            "after undo",
+            12
+          ],
+          [
+            "after redo",
+            20
+          ],
+          [
+            "review button",
+            true
+          ],
+          [
+            "review focus",
+            "Your cake"
+          ],
+          [
+            "submit",
+            true
+          ],
+          [
+            "empty submit",
+            {
+              "focused": "error-summary",
+              "title": "Error: Design your cake · Crumb & Co.",
+              "errors": 3
+            }
+          ],
+          [
+            "date",
+            true
+          ],
+          [
+            "date value",
+            "2026-10-19"
+          ],
+          [
+            "name",
+            true
+          ],
+          [
+            "email",
+            true
+          ],
+          [
+            "submit again",
+            true
+          ]
+        ],
+        "done": {
+          "heading": "Request sent",
+          "focused": "Request sent",
+          "title": "Design your cake · Crumb & Co."
+        }
+      },
+      "analytics": {
+        "counts": {
+          "configurator_viewed": 1,
+          "first_change": 1,
+          "option_changed": 1,
+          "undo": 1,
+          "redo": 1,
+          "review_opened": 1,
+          "validation_failed": 1,
+          "request_submitted": 1
+        },
+        "sample": [
+          {
+            "event": "first_change",
+            "key": "people",
+            "ms_to_first_change": 259,
+            "ms": 259
+          },
+          {
+            "event": "review_opened",
+            "estimate": 120,
+            "changes_before_review": 1,
+            "ms": 359
+          },
+          {
+            "event": "validation_failed",
+            "fields": "date,name,email",
+            "ms": 451
+          },
+          {
+            "event": "request_submitted",
+            "estimate": 120,
+            "lead_days": 3,
+            "changes_before_review": 1,
+            "ms": 664
+          }
+        ]
+      },
+      "renderCost": {
+        "runs": 5,
+        "cpu1x": {
+          "commitMedianMs": 2.3,
+          "commitMedianMsRange": [
+            2.2,
+            2.5
+          ],
+          "commitP95Ms": 5.1,
+          "commitP95MsRange": [
+            4,
+            5.6
+          ],
+          "dragPreviewMedianMs": 0.3,
+          "dragPreviewMedianMsRange": [
+            0.2,
+            0.3
+          ],
+          "dragPreviewP95Ms": 0.5,
+          "dragPreviewP95MsRange": [
+            0.4,
+            0.6
+          ],
+          "dragFullRenderMedianMs": 2.3,
+          "dragFullRenderMedianMsRange": [
+            2.2,
+            2.5
+          ],
+          "dragFullRenderP95Ms": 4.4,
+          "dragFullRenderP95MsRange": [
+            3.7,
+            5.5
+          ],
+          "svgNodes": 306
+        },
+        "cpu4x": {
+          "commitMedianMs": 9.1,
+          "commitMedianMsRange": [
+            8,
+            9.6
+          ],
+          "commitP95Ms": 14.6,
+          "commitP95MsRange": [
+            13.6,
+            19.1
+          ],
+          "dragPreviewMedianMs": 0.8,
+          "dragPreviewMedianMsRange": [
+            0.3,
+            2
+          ],
+          "dragPreviewP95Ms": 3.2,
+          "dragPreviewP95MsRange": [
+            1.8,
+            3.5
+          ],
+          "dragFullRenderMedianMs": 10.4,
+          "dragFullRenderMedianMsRange": [
+            8.9,
+            11.4
+          ],
+          "dragFullRenderP95Ms": 14.6,
+          "dragFullRenderP95MsRange": [
+            14.5,
+            22.3
+          ],
+          "svgNodes": 306
+        }
+      },
+      "phone": {
+        "stageHeightShare": 0.36,
+        "buybarBottom": 844,
+        "buybarVisible": true,
+        "horizontalOverflow": false,
+        "touchDragSteps": 1,
+        "flowerPos": [
+          -0.45,
+          -1
+        ],
+        "tapOpensDecorate": "true",
+        "canvasMovedOnTap": false
+      }
+    },
+    "scripts": {
+      "capture": {
+        "code": 0,
+        "seconds": 14,
+        "files": [
+          "home-1440-fold.png",
+          "home-1440.png",
+          "home-390-fold.png",
+          "home-390.png",
+          "home-768-fold.png",
+          "home-768.png"
+        ],
+        "warnings": []
+      },
+      "audit": {
+        "code": 0,
+        "seconds": 18,
+        "fails": [],
+        "warnings": 14,
+        "signals": [
+          "- ◆ 5 gradient backgrounds.",
+          "- ◆ 3 chart(s) with no text, title or axis labels — a picture of data, not data.",
+          "- ◆ 5 gradient backgrounds.",
+          "- ◆ 3 chart(s) with no text, title or axis labels — a picture of data, not data."
+        ],
+        "axe": [
+          "No violations in 2 views."
+        ]
+      },
+      "auditChartSignalProbe": {
+        "390": {
+          "flaggedByAuditPredicate": 3,
+          "flagged": [
+            {
+              "el": "svg#cake.cake",
+              "role": "img",
+              "ariaHidden": null,
+              "ariaLabelledbyText": "Sketch of a 8-inch round cake for 12 people: vanilla sponge ",
+              "size": "366×256"
+            },
+            {
+              "el": "svg.preset-svg",
+              "role": null,
+              "ariaHidden": "true",
+              "ariaLabelledbyText": null,
+              "size": "160×120"
+            },
+            {
+              "el": "svg.preset-svg",
+              "role": null,
+              "ariaHidden": "true",
+              "ariaLabelledbyText": null,
+              "size": "160×120"
+            }
+          ],
+          "flaggedAfterProposedFix": 0
+        },
+        "1440": {
+          "flaggedByAuditPredicate": 3,
+          "flagged": [
+            {
+              "el": "svg#cake.cake",
+              "role": "img",
+              "ariaHidden": null,
+              "ariaLabelledbyText": "Sketch of a 8-inch round cake for 12 people: vanilla sponge ",
+              "size": "952×743"
+            },
+            {
+              "el": "svg.preset-svg",
+              "role": null,
+              "ariaHidden": "true",
+              "ariaLabelledbyText": null,
+              "size": "181×135"
+            },
+            {
+              "el": "svg.preset-svg",
+              "role": null,
+              "ariaHidden": "true",
+              "ariaLabelledbyText": null,
+              "size": "181×135"
+            }
+          ],
+          "flaggedAfterProposedFix": 0
+        }
+      },
+      "a11y1280": {
+        "code": 0,
+        "seconds": 46,
+        "fail": 0,
+        "warn": 2,
+        "findings": [
+          "WARN spacing      1.4.12       Ellipsis truncation hides more text under WCAG text-spacing — confirm the full value is available (tooltip, detail view) (×2)  ⟶ span.tab-value \"Blush garden\" · span.tab-value \"Buttercream\""
+        ],
+        "tabStops": 11
+      },
+      "a11y390": {
+        "code": 0,
+        "seconds": 45,
+        "fail": 0,
+        "warn": 0,
+        "findings": [],
+        "tabStops": 11
+      },
+      "states": {
+        "code": 0,
+        "seconds": 72,
+        "summary": [
+          "✓ start (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/start-phone.png  axe: no violations",
+          "✓ size (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/size-phone.png  axe: no violations",
+          "✓ flavour (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/flavour-phone.png  axe: no violations",
+          "✓ outside-custom (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/outside-custom-phone.png  axe: no violations",
+          "✓ decorate (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/decorate-phone.png  axe: no violations",
+          "✓ repair-notice (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/repair-notice-phone.png  axe: no violations",
+          "✓ inactive-need (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/inactive-need-phone.png  axe: no violations",
+          "✓ review-errors (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/review-errors-phone.png  axe: no violations",
+          "✓ sent (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/sent-phone.png  axe: no violations",
+          "✓ repair-desktop (desktop)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/repair-desktop-desktop.png  axe: no violations",
+          "✓ review-desktop (desktop)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/review-desktop-desktop.png  axe: no violations",
+          "11/11 captured · axe: 11 scanned, none with a critical or serious violation · summary /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/states.md · sheet: node compare.mjs --grid /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/*.png --out /home/user/website-redesign-skill/research/stage2/exp"
+        ]
+      }
+    },
+    "shots": [
+      "prototype-1440.jpg",
+      "prototype-390.jpg",
+      "prototype-768.jpg",
+      "renderer-gallery.jpg",
+      "repair-desktop.jpg",
+      "review-desktop.jpg",
+      "states-phone-sheet.jpg"
+    ],
+    "sourceBytes": {
+      "index.html": 4065,
+      "styles.css": 17268,
+      "app.js": 38700,
+      "model.js": 18896,
+      "history.js": 3442,
+      "render.js": 20087
+    }
+  }
+}

@@ -2,6 +2,8 @@
 
 What a marketing page is made of and how it is judged. Read at the end of Phase 3 (page narrative) and through Phase 5. Companions: `design-theory.md` (the visual system), `ui-ux.md` (interaction), `implementation.md` (composition rules), `technical-qa.md` (the checklist).
 
+**Surface modes inside one site.** Classify sections, not just sites: *persuade* (home, product, pricing — this file), *operate* (the product itself, account areas, checkout — `app-ui.md`), *read* (blog, docs, changelog, legal — measure 60–70 characters and never over 75 (`design-theory.md` C1), generous leading, headings close to what follows, no hero theatre), *experience* (a portfolio or campaign — expressive by design). Product fragments rebuilt as HTML on a marketing page are *operate* surfaces: they get product copy and the product's own type size, not marketing voice.
+
 ## 1. What a homepage must do (NN/g's five principles)
 
 1. **Be reachable**: the logo links home from every page; the URL is predictable; the homepage looks different from inner pages.
@@ -33,13 +35,13 @@ Two numbers from the same research: a load delay of 1 → 3 s raises bounce by *
 
 ## 3. Chapters and rhythm
 
-A page is a sequence of chapters, each with one job, one composition and one surface:
+A page is a sequence of chapters, each with one job, one composition and one surface. The table is vocabulary, not a recipe — every row is a form this skill has already shipped somewhere (`ledger.md`); read the ledger first and pick against it. The hero-beside-a-product-panel and the drawn timeline, in particular, recur across past outputs:
 
 | Chapter kind | Composition | When |
 | --- | --- | --- |
 | Hero | split (copy / object), or one statement over a product panel | always first |
 | Product / demo | the product at full width on its own panel, with a heading that says what to try | early — the product is the proof |
-| Diagram / process | a drawn path with nodes and milestone art; vertical rail on phones | "how it works" |
+| Diagram / process | a sequence drawn in the company's own terms — a path, a schedule, an annotated product screen, a numbered register — whichever the company's world suggests; vertical on phones | "how it works" |
 | Index / register | a ruled list, a two-column table, a numbered ledger | features, FAQ, what is included |
 | Statement | one line at display size, one action | a claim, a price, the closing |
 | Split | copy beside a panel or drawn object | a secondary product feature, referrals, a comparison |
@@ -50,32 +52,36 @@ No two adjacent chapters share a composition; surfaces alternate (white → grey
 
 ## 4. Responsive strategy
 
-- `<meta name="viewport" content="width=device-width, initial-scale=1">`; relative units; fluid grids (`fr`, `minmax`, `auto-fit`); images `max-width: 100%` **with `width` and `height` attributes** so nothing shifts while they load.
+The full method — intrinsic layout primitives, container queries, fluid type within the zoom limit, navigation transformation, tables, test widths — is in `responsive.md`. The basics:
+
+- `<meta name="viewport" content="width=device-width, initial-scale=1">` (never `user-scalable=no`); relative units; fluid grids (`fr`, `minmax`, `auto-fit`); images `max-width: 100%` **with `width` and `height` attributes** so nothing shifts while they load.
 - **Breakpoints come from the content, not from devices**: design at ~360–390 first, widen until the layout has more space than it needs, add a breakpoint there. Major breakpoints change the layout; minor ones adjust margins, sizes and positions.
-- **Measure** is the usual trigger: when a text block passes ~70–80 characters, cap the column or add a column.
+- **Measure** is the usual trigger: before a text block passes 75 characters (`design-theory.md` C1), cap the column or add a column.
 - Do not hide content by screen size — information needs do not depend on the device; reorder, resize, collapse.
 - Test the mid widths (1024, 768) as carefully as the ends: two-column heroes squeeze there first.
 - Sticky header + anchors: `scroll-margin-top`. A `backdrop-filter` on a sticky header traps fixed descendants — put the blur on a pseudo-element.
 
 ## 5. Performance is design
 
+Budgets per product type, the UI-decision → metric map and the measuring procedure are in `performance.md`. The essentials:
+
 - **Core Web Vitals** at the 75th percentile, mobile and desktop separately: **LCP ≤ 2.5 s** (needs improvement to 4 s; poor beyond), **INP ≤ 200 ms** (to 500), **CLS ≤ 0.1** (to 0.25). TTFB and FCP diagnose LCP.
-- The hero image or panel is the LCP candidate: eager, `fetchpriority="high"`, sized explicitly, modern format, ~150–300 KB; everything below the fold lazy.
-- Fonts: preconnect, only the weights used, swap; no layout shift from late fonts (matching fallback metrics or `size-adjust`).
+- The hero image or panel is the LCP candidate: eager, `fetchpriority="high"`, sized explicitly, modern format, within the LCP-image budget in `performance.md` §1; everything below the fold lazy.
+- Fonts: self-hosted WOFF2 (`performance.md` §4), at most two files preloaded, only the weights used, `swap` or `optional`; no layout shift from late fonts (matching fallback metrics or `size-adjust`).
 - No runtime framework for static content; client JS only where a route needs it (a live widget, a demo).
 - Third-party embeds (chat, analytics, captcha) are the usual CLS and INP culprits; load them late and reserve their space.
 
 ## 6. Navigation, header, footer
 
-- Header: mark + wordmark left (links home), ≤ 5–7 links, the primary action right; on phones the primary action stays visible and the links go behind a labelled "Menu". The sticky header gains a rule or shadow only once the page has scrolled.
-- Footer: the map of the site (product, company, legal), the legal row, a restated brand line; on a consumer site, the categories or regions served, if real. A large wordmark in the footer is a legitimate identity moment.
+- Header: mark + wordmark left (links home), ≤ 5–7 links, the primary action right; on phones the primary action stays visible and the links go behind a labelled "Menu". While the hero's primary action is on screen, the persistent header CTA is secondary (outline or quiet), so the action colour marks one thing per view; it may take the primary style once the hero action has scrolled away, or on pages without one. A theme switch, if the site has themes, sits in the header on every page at every width, never only in the footer: a control that changes the whole site's legibility must be reachable before the visitor scrolls (the footer can keep a labelled copy). The sticky header gains a rule or shadow only once the page has scrolled.
+- Footer: the map of the site (product, company, legal), the legal row, a restated brand line; on a consumer site, the categories or regions served, if real. The lockup appears at footer size; no viewport-wide wordmark or mark in the footer or behind the hero — identity comes from the system, not scale (a user called it "massive branding" and had it removed; `anti-patterns.md` "Composition").
 - Every section that people might link to gets a real address (no `#` fragments if the project has that rule) and `scroll-margin-top` for the sticky header.
 
 ## 7. Imagery on marketing pages
 
 - Real people who work at the company, real product screens, real objects — looked at. Decorative stock — ignored (`ui-ux.md` §3).
 - One consistent treatment so a set reads as a series; copy always on its own ground (split, fade-to-surface, or panel); hero eager, the rest lazy; credits recorded. Full sourcing rules in `imagery.md`.
-- When there is no photography, the graphics layer is drawn — diagrams, milestone art, glyphs, watermarks — in one line style and the brand palette, and it is inspected element by element (`visual-qa.md`).
+- When there is no photography, the graphics layer is drawn — diagrams, milestone art, glyphs, small watermarks (never a viewport-wide mark) — in one line style and the brand palette, and it is inspected element by element (`visual-qa.md`).
 
 ## 8. Metadata and social
 
@@ -88,9 +94,10 @@ Unique `<title>` and description per page; canonical; Open Graph and Twitter tag
 - [ ] Every chapter has one job, one composition, one surface; no two adjacent alike; the accent field appears once.
 - [ ] Proof is real or absent; no stock filler; every image has a job.
 - [ ] Word count is short enough to be read (aim for headings and first sentences that carry the page alone).
-- [ ] 360/390, 768, 1024, 1280, 1440 rendered and looked at; no horizontal scroll; measure ≤ 80ch everywhere.
+- [ ] 360/390, 768, 1024, 1280, 1440 rendered and looked at; no horizontal scroll; measure 60–70ch and never over 75ch (`design-theory.md` C1).
 - [ ] LCP element eager and sized; fonts subset/swapped; CLS sources reserved.
-- [ ] Nav ≤ 7 items; mobile menu labelled and thumb-sized; primary action visible at every width.
+- [ ] Nav ≤ 7 items; mobile menu labelled and thumb-sized; primary action visible at every width, and secondary in the header while the hero's is on screen; theme switch (if any) in the header.
+- [ ] Footer lockup at footer size; no viewport-wide wordmark or mark in the footer or behind the hero.
 - [ ] Metadata, social image, favicon, robots.
 
 ## Sources read for this reference

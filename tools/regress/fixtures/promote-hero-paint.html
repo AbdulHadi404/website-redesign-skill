@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hero-effect.js paint fixture</title>
+<!-- templates/code/hero-effect.js with a fill-bound effect (its cost grows with the pixel count, so the governor's
+     halving pays off), for tools/regress.mjs. Resizing a canvas clears its buffer: a frame that ends with the buffer
+     resized after its last draw is painted blank (black for WebGL with alpha: false, the poster for 2D). The page wraps
+     every requestAnimationFrame callback and records such frames, and how many draws each callback made.
+     Query flags: ?kind=webgl|2d, ?perpx=MS (busy work per pixel per frame), ?freeze (pause right after the first
+     frame that applied a new size), ?ro (a ResizeObserver created after the hero's reads the buffer when it fires). -->
+<style>
+  body { margin: 0; }
+  .hero { position: relative; height: 100vh; background: #123; }
+  .hero-bg { position: absolute; inset: 0; }
+  .poster { position: absolute; inset: 0; width: 100%; height: 100%; background: #0a3440; }
+  .fx { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
+</style>
+</head><body>
+<section class="hero"><div class="hero-bg" aria-hidden="true"><div class="poster"></div></div><button class="bg-toggle" type="button" hidden>Pause background animation</button></section>
+<script type="module">
+const q = new URLSearchParams(location.search);
+const kind = q.get('kind') || 'webgl';
+const W = window.__w = { frames: 0, resizes: 0, blank: [], maxDraws: 0, ro: [], froze: false };
+let cv = null, ctx = null, gl = null, lastOp = null, draws = 0;
+const pixel = () => {
+  if (kind === '2d') return [...ctx.getImageData(cv.width >> 1, cv.height >> 1, 1, 1).data];
+  const b = new Uint8Array(4); gl.readPixels(cv.width >> 1, cv.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, b); return [...b];
+};
+const raf = window.requestAnimationFrame.bind(window);
+window.requestAnimationFrame = (cb) => raf((now) => {
+  lastOp = null; draws = 0;
+  const resizesBefore = W.resizes;
+  cb(now);
+  W.maxDraws = Math.max(W.maxDraws, draws);
+  if (lastOp === 'resize' && cv && cv.style.opacity === '1') W.blank.push({ t: Math.round(now), size: [cv.width, cv.height], px: pixel() });
+  if (q.has('freeze') && !W.froze && W.resizes > resizesBefore && W.resizes >= 2) { W.froze = true; window.__hero?.pause(); }
+});
+const perPx = Number(q.get('perpx') || 0.00012);
+const busy = () => { const until = performance.now() + cv.width * cv.height * perPx; while (performance.now() < until); };
+const effect = kind === '2d' ? {
+  kind: '2d',
+  init(c) { cv = c; ctx = c.getContext('2d'); return {}; },
+  resize() { lastOp = 'resize'; W.resizes++; },
+  frame(t) { lastOp = 'frame'; draws++; W.frames++; busy(); ctx.fillStyle = `hsl(${(t * 40) % 360} 60% 45%)`; ctx.fillRect(0, 0, cv.width, cv.height); },
+  dispose() {},
+} : {
+  kind: 'webgl',
+  init(c) { cv = c; gl = c.getContext('webgl2', { alpha: false, antialias: false, depth: false, stencil: false }); if (!gl) throw new Error('no WebGL2'); return { gl }; },
+  resize(w, h) { lastOp = 'resize'; W.resizes++; gl.viewport(0, 0, w, h); },
+  frame(t) { lastOp = 'frame'; draws++; W.frames++; busy(); gl.clearColor(0.2, 0.55 + 0.25 * Math.sin(t), 0.6, 1); gl.clear(gl.COLOR_BUFFER_BIT); },
+  dispose() {},
+};
+const h = await import('../../../skills/website-redesign/templates/code/hero-effect.js');
+window.__hero = await h.run(document.querySelector('.hero-bg'), effect, { onFallback: (why) => { W.fallback = why; } });
+if (q.has('ro')) {
+  let first = true;
+  new ResizeObserver(() => {                          // runs after the hero's own observer, just before paint
+    if (first) { first = false; return; }
+    W.ro.push({ size: [cv.width, cv.height], px: pixel(), opacity: cv.style.opacity, running: window.__hero.state.running });
+  }).observe(document.querySelector('.hero-bg'));
+}
+</script>
+</body></html>

@@ -1,0 +1,28 @@
+✓ idle (desktop)  captures/states-after-ar/idle-desktop-after.png
+✓ loading (desktop)  captures/states-after-ar/loading-desktop-after.png
+✓ error (desktop)  captures/states-after-ar/error-desktop-after.png
+   1 error(s): console: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+✓ offline (desktop)  captures/states-after-ar/offline-desktop-after.png
+   1 error(s): console: Failed to load resource: net::ERR_INTERNET_DISCONNECTED
+✓ stale (desktop)  captures/states-after-ar/stale-desktop-after.png
+   1 error(s): console: Failed to load resource: net::ERR_INTERNET_DISCONNECTED
+✓ empty (desktop)  captures/states-after-ar/empty-desktop-after.png
+✓ one (desktop)  captures/states-after-ar/one-desktop-after.png
+✓ many (desktop)  captures/states-after-ar/many-desktop-after.png
+✓ long (desktop)  captures/states-after-ar/long-desktop-after.png
+✓ search-none (desktop)  captures/states-after-ar/search-none-desktop-after.png
+✓ search-hit (desktop)  captures/states-after-ar/search-hit-desktop-after.png
+✓ filter-pastdue-sorted (desktop)  captures/states-after-ar/filter-pastdue-sorted-desktop-after.png
+✓ chart-hover (desktop)  captures/states-after-ar/chart-hover-desktop-after.png
+✓ chart-table (desktop)  captures/states-after-ar/chart-table-desktop-after.png
+✓ row-hover (desktop)  captures/states-after-ar/row-hover-desktop-after.png
+✓ dialog-open (desktop)  captures/states-after-ar/dialog-open-desktop-after.png
+✓ dialog-error (desktop)  captures/states-after-ar/dialog-error-desktop-after.png
+✓ dialog-preview (desktop)  captures/states-after-ar/dialog-preview-desktop-after.png
+✓ dialog-saved (desktop)  captures/states-after-ar/dialog-saved-desktop-after.png
+✓ focus (desktop)  captures/states-after-ar/focus-desktop-after.png
+✓ phone (phone)  captures/states-after-ar/phone-phone-after.png
+✓ phone-dialog-error (phone)  captures/states-after-ar/phone-dialog-error-phone-after.png
+✓ phone-empty (phone)  captures/states-after-ar/phone-empty-phone-after.png
+
+23/23 captured · summary captures/states-after-ar/states-after.md · sheet: node compare.mjs --grid captures/states-after-ar/*.png --out captures/states-after-ar/sheet.png

@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Basket</title></head>
+<body style="font:16px system-ui;padding:24px"><main><h1>Basket</h1><div id="lines"><p>Your basket is empty.</p></div></main>
+<script>
+const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+if (cart.length) document.getElementById('lines').innerHTML = '<table>' + cart.map((l) => `<tr><td>${l.name}</td><td>${l.qty}</td><td><input value="${l.qty}"></td></tr>`).join('') + '</table>';
+</script></body></html>

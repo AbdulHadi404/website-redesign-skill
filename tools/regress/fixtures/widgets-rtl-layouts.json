@@ -1,0 +1,11 @@
+[
+  { "type": "tabs", "tablist": "#tabs-wrap" },
+  { "type": "roving", "group": "#tools-wrap" },
+  { "type": "tabs", "tablist": "#tabs-stack" },
+  { "type": "tabs", "tablist": "#tabs-stack-ud" },
+  { "type": "tabs", "tablist": "#tabs-rerender" },
+  { "type": "roving", "group": "#menubar-rerender" },
+  { "type": "tabs", "tablist": "#tabs-after-frame" },
+  { "type": "tabs", "tablist": "#tabs-wrapper" },
+  { "type": "tabs", "tablist": "#tabs-wrapper-ok" }
+]

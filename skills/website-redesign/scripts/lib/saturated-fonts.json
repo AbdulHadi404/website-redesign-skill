@@ -1,0 +1,21 @@
+{
+  "checked": "2026-09-28",
+  "note": "Faces that generated sites reach for by reflex, compiled from the sources below. A signal to justify, never a ban: a face on this list is fine as a documented brand asset or for a reason no other face could satisfy — a subject association ('books want a serif', 'tech wants mono') is never that reason. Refresh this list rather than extending it; do not replace it with a list of 'good' fonts (that is how the second wave happened).",
+  "sources": {
+    "first-wave": "framework and template defaults (Tailwind/shadcn starters, v0/Lovable outputs); impeccable detector OVERUSED_FONTS (Apache-2.0, 2026-09)",
+    "cookbook-2025": "Anthropic cookbook 'Prompting for frontend aesthetics' (2025) 'impact choices' — recommended, then saturated",
+    "second-wave": "impeccable reflex-faces list and detector (2026-09); gstack design-consultation (2026-09); Anthropic frontend-design skill calibration (2026-09-03)"
+  },
+  "faces": {
+    "inter": "first-wave", "roboto": "first-wave", "open sans": "first-wave", "lato": "first-wave", "montserrat": "first-wave",
+    "poppins": "first-wave", "arial": "first-wave", "helvetica": "first-wave", "helvetica neue": "first-wave", "nunito": "first-wave",
+    "geist": "second-wave", "geist mono": "second-wave", "mona sans": "second-wave", "manrope": "second-wave", "sora": "second-wave",
+    "space grotesk": "cookbook-2025", "space mono": "second-wave", "jetbrains mono": "cookbook-2025", "fira code": "cookbook-2025",
+    "ibm plex sans": "cookbook-2025", "ibm plex serif": "cookbook-2025", "ibm plex mono": "cookbook-2025",
+    "fraunces": "cookbook-2025", "playfair display": "cookbook-2025", "newsreader": "cookbook-2025", "crimson pro": "cookbook-2025", "crimson text": "second-wave",
+    "cormorant": "second-wave", "cormorant garamond": "second-wave", "lora": "second-wave", "recoleta": "second-wave",
+    "instrument serif": "second-wave", "instrument sans": "second-wave", "dm sans": "second-wave", "dm serif display": "second-wave", "dm serif text": "second-wave", "dm mono": "second-wave",
+    "outfit": "second-wave", "plus jakarta sans": "second-wave", "syne": "second-wave",
+    "clash display": "cookbook-2025", "cabinet grotesk": "cookbook-2025", "satoshi": "cookbook-2025", "bricolage grotesque": "cookbook-2025"
+  }
+}

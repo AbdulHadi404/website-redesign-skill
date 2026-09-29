@@ -1,0 +1,326 @@
+/* S9 polish fixture. Part 1 is the baseline: a plain but competent page, the kind a careful developer ships
+   without a designer's finishing pass. Part 2 is one block per polish move, each scoped to html.m-<id>, so any
+   combination can be switched on by the class list (lib/moves.mjs documents each move). */
+
+/* Fonts: fetched by fetch-assets.mjs from Google Fonts (Google Sans Flex, OFL). "Static" is the file requested
+   with the weight axis only (what most sites load: optical size frozen at the default instance); "Optical" is the
+   same family requested with the opsz axis too. */
+@font-face { font-family: 'GSF Static'; src: url(/assets/gsf-wght.woff2) format('woff2'); font-weight: 100 1000; font-display: block; }
+@font-face { font-family: 'GSF Optical'; src: url(/assets/gsf-opsz-wght.woff2) format('woff2'); font-weight: 100 1000; font-display: block; }
+
+/* ---------------------------------------------------------------- Part 1: baseline */
+:root {
+  --font: 'GSF Static', sans-serif;
+  --page: #ffffff;
+  --surface: #f4f4f4;
+  --ink: #222222;
+  --ink-2: #444444;
+  --muted: #666666;
+  --line: #dddddd;
+  --line-row: #e4e4e4;
+  --line-ctl: #8f8f8f;
+  --line-btn: #bbbbbb;
+  --accent: #c43d1b;
+  --accent-ink: #b8391a;
+  --accent-tint: #fbe8e2;
+  --warn: #8a5a00;
+  --warn-tint: #fff3dc;
+
+  /* one radius everywhere, nested or not */
+  --rk: 1;
+  --r-panel: 12px; --r-inner: 12px; --r-control: 12px; --r-chip: 12px; --r-card: 12px; --r-toast: 12px; --r-photo: 12px; --r-phone: 28px;
+
+  /* shadows authored component by component: different blur, colour and light direction */
+  --sh-panel: 0 4px 12px rgba(0, 0, 0, .15);
+  --sh-card: 0 2px 6px rgba(0, 0, 0, .12);
+  --sh-btn: 2px 2px 4px rgba(0, 0, 0, .2);
+  --sh-toast: 0 0 16px rgba(0, 0, 0, .2);
+  --btn-highlight: 0 0 #0000;
+
+  --gutter: 24px;
+  --hero-pt: 56px; --hero-pb: 56px; --section-py: 56px;
+  --isz: 16px; --igap: 10px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { font-family: var(--font); color: var(--ink); background: var(--page); }
+body { margin: 0; font-size: 16px; line-height: 1.55; }
+img { display: block; max-width: 100%; }
+a { color: var(--accent-ink); }
+h1, h2, h3, p { margin: 0; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.container { max-width: calc(1200px + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter); }
+
+/* header: its own container, 1240 wide, so the logo sits 20 px left of the content edge at 1440 */
+.site-header { border-bottom: 1px solid var(--line); background: var(--page); }
+.header-inner { max-width: calc(1240px + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter); height: 64px; display: flex; align-items: center; gap: 32px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 700; font-size: 19px; }
+.brand-mark { width: 28px; height: 28px; }
+.brand-mark rect { fill: var(--accent); }
+.brand-mark path { stroke: #fff; stroke-width: 2.4; stroke-linecap: round; fill: none; }
+.nav { display: flex; gap: 24px; }
+.nav a { color: var(--ink-2); text-decoration: none; font-size: 15px; font-weight: 500; }
+.nav a.current { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; }
+.header-actions { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+.signin { color: var(--ink-2); text-decoration: none; font-size: 15px; font-weight: 500; }
+.header-actions .menu-btn { display: none; }
+
+/* icons: drawn in currentColor; each family authored at its own size and stroke */
+.ico { flex: none; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.ico .fillable { fill: currentColor; stroke: none; }
+.ico-a { width: 16px; height: 16px; stroke-width: 3; }
+.ico-b { width: 18px; height: 18px; stroke-width: 1.5; }
+.ico-c { width: 20px; height: 20px; stroke-width: 2; }
+.ico-d { width: 16px; height: 16px; }
+.ico-e { width: 24px; height: 24px; stroke-width: 1.25; }
+.ico-f { width: 28px; height: 28px; stroke-width: 1.5; }
+.ico-g { width: 24px; height: 24px; }
+.ico-h { width: 22px; height: 22px; stroke-width: 2.5; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 42px; padding: 0 16px; border: 1px solid transparent; border-radius: calc(var(--r-control) * var(--rk)); font: 500 16px/1 var(--font); text-decoration: none; cursor: pointer; white-space: nowrap; }
+.btn-primary { background: var(--accent); color: #fff; box-shadow: var(--btn-highlight), var(--sh-btn); }
+.btn-secondary { background: var(--page); color: var(--ink); border-color: var(--line-btn); }
+.btn-small { height: 34px; padding: 0 12px; font-size: 14px; }
+.play-disc { width: 24px; height: 24px; border-radius: 50%; background: var(--accent-tint); color: var(--accent-ink); display: grid; place-items: center; }
+.ico-play { width: 12px; height: 12px; fill: currentColor; }
+
+/* hero */
+.hero { position: relative; background: var(--surface); padding: var(--hero-pt) 0 var(--hero-pb); }
+.hero-band { display: none; }
+.hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 13fr); gap: 48px; align-items: start; }
+h1 { font-size: clamp(30px, 1.2rem + 2.2vw, 48px); font-weight: 700; line-height: 1.25; margin: 0 0 16px; }
+.lede { font-size: 18px; color: var(--ink-2); max-width: 34em; margin: 0 0 20px; }
+.ticks { list-style: none; padding: 0; margin: 0 0 24px; }
+.ticks li { display: flex; align-items: flex-start; gap: var(--igap); margin: 0 0 8px; color: var(--ink-2); }
+.ticks .ico { color: var(--accent); }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* the app panel */
+.panel { background: var(--page); border: 1px solid var(--line); border-radius: calc(var(--r-panel) * var(--rk)); box-shadow: var(--sh-panel); padding: 12px; font-size: 14px; }
+.panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 4px 4px 0; }
+.panel-title { font-size: 17px; font-weight: 600; line-height: 1.3; }
+.panel-sub { font-size: 13px; color: var(--muted); }
+.status { display: inline-block; font-size: 13px; font-weight: 500; line-height: 1; padding: 6px 10px; border-radius: calc(var(--r-chip) * var(--rk)); background: var(--warn-tint); color: var(--warn); white-space: nowrap; }
+.status .ico { vertical-align: middle; margin-right: 5px; }
+.panel-tools { display: flex; gap: 12px; margin: 12px 0; align-items: center; }
+.search { position: relative; flex: 1; min-width: 0; }
+.search .ico { position: absolute; left: 10px; top: 5px; color: var(--muted); }
+.search input { width: 100%; height: 36px; padding: 0 12px 0 36px; border: 1px solid var(--line-ctl); border-radius: calc(var(--r-control) * var(--rk)); font: 400 14px var(--font); color: var(--ink); background: var(--page); }
+.search input::placeholder { color: var(--muted); }
+.chips { display: flex; gap: 6px; }
+.chip { height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: calc(var(--r-chip) * var(--rk)); background: var(--page); font: 500 14px var(--font); color: var(--ink-2); }
+.chip-on { background: var(--accent-tint); border-color: var(--accent); color: var(--accent-ink); }
+.table-wrap { border: 1px solid var(--line); border-radius: calc(var(--r-inner) * var(--rk)); overflow: hidden; }
+.rota { width: 100%; border-collapse: collapse; }
+.rota th { font-size: 13px; font-weight: 500; color: var(--muted); text-align: left; padding: 8px 10px; background: var(--surface); }
+.rota td { padding: 8px 10px; border-top: 1px solid var(--line-row); }
+.rota .n { text-align: right; }
+.panel-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 12px; padding: 12px; background: var(--surface); border-radius: calc(var(--r-inner) * var(--rk)); }
+.totals { display: flex; gap: 24px; }
+.t-label { display: block; font-size: 12px; color: var(--muted); }
+.t-val { display: block; font-size: 16px; font-weight: 600; }
+.t-val.total { color: var(--accent-ink); }
+.btn-publish { height: 36px; padding: 0 14px; font-size: 14px; background: var(--accent); color: #fff; box-shadow: var(--btn-highlight), var(--sh-btn); }
+.toast { display: flex; align-items: center; gap: 10px; max-width: 330px; margin-top: 16px; padding: 12px 14px; background: var(--page); border: 1px solid var(--line); border-radius: calc(var(--r-toast) * var(--rk)); box-shadow: var(--sh-toast); font-size: 14px; }
+.toast .ico { color: var(--accent); }
+
+/* sections */
+.how, .statement, .phones, .pricing { padding-top: var(--section-py); padding-bottom: var(--section-py); }
+h2 { font-size: clamp(24px, 1rem + 1.2vw, 32px); font-weight: 700; line-height: 1.3; margin: 0 0 16px; }
+.how h2, .pricing h2 { text-align: center; }
+.section-lede { text-align: center; max-width: 40em; margin: 0 auto 32px; color: var(--ink-2); }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.card { border: 1px solid var(--line); border-radius: calc(var(--r-card) * var(--rk)); padding: 24px; box-shadow: var(--sh-card); background: var(--page); }
+.card .ico { color: var(--accent); }
+h3 { font-size: 18px; font-weight: 600; line-height: 1.35; margin: 12px 0 8px; }
+.card p { color: var(--ink-2); }
+.statement { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.photo-frame { margin: 0; aspect-ratio: 2 / 1; overflow: hidden; border-radius: calc(var(--r-photo) * var(--rk)); position: relative; }
+.photo { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.pull { margin: 0; }
+.pull p { font-size: 28px; line-height: 1.35; font-weight: 500; }
+.pull footer { margin-top: 12px; font-size: 14px; color: var(--muted); }
+.phones { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: center; }
+.phones-copy p { color: var(--ink-2); max-width: 32em; }
+.phone-img { width: 300px; height: auto; border-radius: calc(var(--r-phone) * var(--rk)); }
+.plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.plan h3 { margin-top: 0; }
+.price { color: var(--muted); margin: 4px 0 16px; }
+.price .num { font-size: 40px; font-weight: 700; color: var(--ink); }
+.bullets { margin: 0; padding-left: 20px; color: var(--ink-2); }
+.bullets li { margin: 0 0 6px; }
+.site-footer { border-top: 1px solid var(--line); padding: 24px 0; font-size: 14px; color: var(--muted); }
+.footer-inner { display: flex; justify-content: space-between; gap: 16px; }
+
+@media (max-width: 899px) {
+  :root { --gutter: 16px; --hero-pt: 32px; --hero-pb: 40px; --section-py: 40px; }
+  .nav, .signin, .header-cta { display: none; }
+  .header-actions .menu-btn { display: inline-flex; }
+  .header-inner { height: 56px; }
+  .hero-inner, .steps, .statement, .phones, .plans { grid-template-columns: minmax(0, 1fr); }
+  .hero-inner { gap: 32px; }
+  .phone-img { width: 260px; }
+  .panel-tools { flex-wrap: wrap; }
+  .search { flex-basis: 100%; }
+}
+@media (max-width: 599px) {
+  .col-role { display: none; }
+  .panel-foot { flex-wrap: wrap; }
+  .totals { gap: 16px; }
+  .cta-row .btn { flex: 1 1 auto; }
+  .pull p { font-size: 23px; }
+}
+
+/* ---------------------------------------------------------------- Part 2: the moves */
+
+/* COMPOSITION ------------------------------------------------------------------------------------------- */
+
+/* scale: scale contrast. The one big thing gets much bigger; everything else stays where it was. */
+.m-scale h1 { font-size: clamp(38px, 1.5rem + 2.7vw, 64px); }
+.m-scale h2 { font-size: clamp(28px, 1rem + 2.2vw, 44px); }
+
+/* rhythm: spacing from one scale, with proximity: tight inside a group, generous between groups and chapters. */
+.m-rhythm { --hero-pt: 96px; --hero-pb: 112px; --section-py: 128px; }
+.m-rhythm h1 { margin-bottom: 24px; }
+.m-rhythm .lede { margin-bottom: 32px; }
+.m-rhythm .ticks { margin-bottom: 40px; }
+.m-rhythm .ticks li { margin-bottom: 10px; }
+.m-rhythm h2 { margin-bottom: 12px; }
+.m-rhythm .section-lede { margin-bottom: 56px; }
+.m-rhythm h3 { margin: 16px 0 6px; }
+.m-rhythm .statement, .m-rhythm .phones { column-gap: 64px; }
+@media (max-width: 899px) { .m-rhythm { --hero-pt: 40px; --hero-pb: 64px; --section-py: 72px; } .m-rhythm .section-lede { margin-bottom: 32px; } }
+
+/* align: one container edge for header and content, headings on the column edge, panel top on the h1's cap line. */
+.m-align .header-inner { max-width: calc(1200px + 2 * var(--gutter)); }
+.m-align .how h2, .m-align .pricing h2, .m-align .section-lede { text-align: left; margin-left: 0; }
+.m-align h1 { text-box-trim: trim-start; text-box-edge: cap alphabetic; }
+
+/* depth: three planes. A darker stage behind the panel is the background plane, the panel sits on it, and the
+   notification overlaps the panel's corner as the nearest plane. Same content as the baseline; only the staging
+   changes, and no plane edge crosses the copy column. */
+.m-depth .hero { padding-bottom: calc(var(--hero-pb) + 40px); }
+.m-depth .hero-visual { position: relative; }
+.m-depth .hero-visual::before { content: ''; position: absolute; z-index: -1; inset: 40px -40px -40px 56px; border-radius: calc(var(--r-panel) * var(--rk) * 2); background: color-mix(in oklab, var(--surface), var(--ink) 7%); }
+.m-depth .hero-inner { isolation: isolate; }
+.m-depth .toast { position: absolute; left: -40px; bottom: -28px; margin: 0; z-index: 2; }
+@media (max-width: 899px) { .m-depth .hero-visual::before { inset: 32px -16px -32px 32px; } .m-depth .toast { left: 12px; right: 12px; max-width: none; bottom: -20px; } }
+
+/* accent: the accent colour only on the primary action (and links); icons, chips, totals and the panel's own
+   button go neutral; status keeps its semantic colour. */
+.m-accent .ticks .ico, .m-accent .card .ico, .m-accent .toast .ico { color: var(--ink-2); }
+.m-accent .nav a.current { color: var(--ink); }
+.m-accent .chip-on { background: color-mix(in oklab, var(--ink) 9%, var(--page)); border-color: var(--ink-2); color: var(--ink); }
+.m-accent .t-val.total { color: var(--ink); }
+.m-accent .btn-publish { background: var(--page); color: var(--ink); border-color: var(--line-btn); box-shadow: none; }
+.m-accent .play-disc { background: var(--surface); color: var(--ink); }
+
+/* crop: the photograph cropped for its subject (the rim and crema kept, headroom above) instead of the centre. */
+.m-crop .photo { object-position: 50% 4%; }
+
+/* SURFACE ------------------------------------------------------------------------------------------------ */
+
+/* shadow: one light from above; layered (contact + ambient) and tinted with the warm ink instead of black. */
+.m-shadow {
+  --sh-card: 0 1px 1px hsl(15 30% 18% / .05), 0 2px 4px hsl(15 30% 18% / .05);
+  --sh-btn: 0 1px 1px hsl(15 30% 18% / .10), 0 2px 4px hsl(15 30% 18% / .08);
+  --sh-panel: 0 1px 2px hsl(15 30% 18% / .06), 0 4px 8px hsl(15 30% 18% / .06), 0 16px 32px hsl(15 30% 18% / .08);
+  --sh-toast: 0 2px 4px hsl(15 30% 18% / .08), 0 8px 16px hsl(15 30% 18% / .08), 0 24px 48px hsl(15 30% 18% / .12);
+}
+
+/* border: alpha borders that hold on any surface, lighter row rules, no border where a shadow already draws the edge. */
+.m-border { --line: rgb(40 30 25 / .10); --line-row: rgb(40 30 25 / .07); }
+.m-border .card { border-color: transparent; }
+.m-border .btn-secondary { border-color: rgb(40 30 25 / .18); }
+
+/* radius: a scale by role, and concentric nesting: inner = outer minus the gap (16 - 12 = 4). */
+.m-radius { --r-panel: 16px; --r-inner: 4px; --r-control: 8px; --r-chip: 999px; --r-card: 16px; --r-toast: 12px; --r-photo: 16px; }
+
+/* squircle: continuous (superellipse) corners, radii scaled so the corner reads about as round as before. */
+.m-squircle { --rk: 1.6; }
+.m-squircle :is(.panel, .card, .btn, .chip, .toast, .table-wrap, .panel-foot, .search input, .photo-frame, .phone-img, .status) { corner-shape: squircle; }
+
+/* grain: a 5% monochrome noise over the hero ground. */
+.m-grain .hero::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .09; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* imgoutline: a 1 px 10% inner hairline on images, so a light-edged image keeps its edge on a light ground. */
+.m-imgoutline .photo-frame::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgb(0 0 0 / .1); pointer-events: none; }
+.m-imgoutline .phone-img { outline: 1px solid rgb(0 0 0 / .1); outline-offset: -1px; }
+
+/* neutrals: greys tinted with the brand's warm hue instead of pure grey. */
+.m-neutrals {
+  --page: #ffffff; --surface: oklch(0.967 0.006 50); --ink: oklch(0.25 0.018 40); --ink-2: oklch(0.38 0.018 40);
+  --muted: oklch(0.49 0.018 40); --line: oklch(0.9 0.008 50); --line-row: oklch(0.925 0.007 50); --line-ctl: oklch(0.63 0.012 40); --line-btn: oklch(0.8 0.01 50);
+}
+.m-neutrals.m-border { --line: rgb(40 30 25 / .10); --line-row: rgb(40 30 25 / .07); }
+
+/* COMPONENTS -------------------------------------------------------------------------------------------- */
+
+/* iconstroke: one icon family: every icon outlined, one rendered stroke (1.5 px), sizes tied to the text. */
+.m-iconstroke .ico { width: 1.25em; height: 1.25em; }
+.m-iconstroke .ico, .m-iconstroke .ico * { vector-effect: non-scaling-stroke; stroke-width: 1.5px; }
+.m-iconstroke .ico .fillable { fill: none; stroke: currentColor; }
+.m-iconstroke .card .ico { width: 28px; height: 28px; }
+.m-iconstroke .ticks .ico { width: 20px; height: 20px; }
+
+/* iconalign: icons centred on the first line, labels trimmed to cap height so they centre optically in their
+   boxes, the search glass centred in the field, the play triangle moved to its visual centre. */
+/* centring on the line box leaves the icon ~0.08em below the cap-height centre in this face (measured with the
+   probe's iconAlign check); the offset is a property of the font's vertical metrics, so it is a token, not a guess */
+.m-iconalign { --cap-shift: 0.08em; }
+.m-iconalign .ticks .ico { margin-top: calc((1lh - var(--ico-h, 16px)) / 2 - var(--cap-shift)); }
+.m-iconalign .toast .ico { position: relative; top: calc(-1 * var(--cap-shift)); }
+.m-iconalign.m-iconstroke .ticks .ico { --ico-h: 20px; }
+.m-iconalign .status { display: inline-flex; align-items: center; gap: 5px; }
+.m-iconalign .status .ico { margin: 0; }
+.m-iconalign .search .ico { top: 50%; transform: translateY(-50%); }
+.m-iconalign .btn > span:not(.play-disc), .m-iconalign .btn:not(:has(> span)) { text-box: trim-both cap alphabetic; }
+.m-iconalign .ico-play { transform: translateX(1.5px); }
+
+/* buttons: proportion and finish: one height per size, padding about twice the cap height, 600 weight,
+   a faint top highlight on the filled button, the secondary quieter than the primary. */
+.m-buttons .btn { height: 44px; padding: 0 20px; font-weight: 600; }
+.m-buttons .btn-small { height: 36px; padding: 0 14px; }
+.m-buttons .btn-play { padding-left: 12px; }
+.m-buttons .btn-publish { height: 36px; padding: 0 16px; }
+.m-buttons { --btn-highlight: inset 0 1px 0 rgb(255 255 255 / .18); }
+.m-buttons .btn-secondary { border-color: rgb(40 30 25 / .16); background: var(--page); }
+
+/* focusring: a designed ring (2 px, offset 3 px, the text-safe accent) instead of the browser's default. */
+.m-focusring :focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; }
+
+/* TYPE --------------------------------------------------------------------------------------------------- */
+
+/* wrap: balanced headings and pretty paragraphs (no one-word last lines). */
+.m-wrap :is(h1, h2, h3, .pull p) { text-wrap: balance; }
+.m-wrap :is(p, li) { text-wrap: pretty; }
+
+/* tracking: display sizes tightened. */
+.m-tracking h1 { letter-spacing: -0.025em; }
+.m-tracking h2 { letter-spacing: -0.015em; }
+.m-tracking .price .num, .m-tracking .pull p { letter-spacing: -0.01em; }
+
+/* leading: display line-height tightened as size rises. */
+.m-leading h1 { line-height: 1.06; }
+.m-leading h2 { line-height: 1.15; }
+.m-leading .pull p { line-height: 1.25; }
+
+/* tnum: tabular figures wherever numbers are compared. */
+.m-tnum .num { font-variant-numeric: tabular-nums; }
+
+/* opsz: the font file served with its optical-size axis, so display sizes get the display cut. */
+.m-opsz { --font: 'GSF Optical', sans-serif; }
+
+/* smoothing: the usual "crisper type" declarations. */
+.m-smoothing { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+
+/* hang: bullets and the opening quotation mark hung in the margin, so the text edge stays straight. Only where
+   the margin can take them (the hero list needs 26 px of gutter). */
+@media (min-width: 900px) { .m-hang .ticks { margin-left: calc(-1 * (var(--ico-h, 16px) + var(--igap))); } .m-hang.m-iconstroke .ticks { --ico-h: 20px; } }
+.m-hang .pull p { text-indent: -0.42em; }
+.m-hang .bullets { padding-left: 0; }
+
+/* null: no change (a control for the blind test). */
+.m-null { }

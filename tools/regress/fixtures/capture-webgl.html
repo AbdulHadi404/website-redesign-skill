@@ -1,0 +1,21 @@
+<!doctype html>
+<!-- capture.mjs regress fixture: a page that draws with WebGL. Expect one `renderer: <vendor> / <renderer>` line per
+     run (with the software-rendering note when the renderer is SwiftShader or llvmpipe); pages without a canvas print none. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WebGL</title>
+<style>body{margin:0;font:16px system-ui,sans-serif;color:#111;background:#fff}main{padding:24px}canvas{display:block;width:100%;max-width:640px;height:auto;aspect-ratio:16/9;background:#eee}</style></head>
+<body><main><h1>A drawn scene</h1><canvas id="scene" width="640" height="360">A green triangle on grey.</canvas><p>The triangle is drawn with WebGL.</p></main>
+<script>
+const c = document.getElementById('scene');
+const gl = c.getContext('webgl');
+if (gl) {
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+  const p = gl.createProgram();
+  gl.attachShader(p, sh(gl.VERTEX_SHADER, 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}'));
+  gl.attachShader(p, sh(gl.FRAGMENT_SHADER, 'precision mediump float;void main(){gl_FragColor=vec4(.1,.55,.3,1.);}'));
+  gl.linkProgram(p); gl.useProgram(p);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-.6, -.6, .6, -.6, 0, .6]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(p, 'a'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  gl.clearColor(.93, .93, .93, 1); gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLES, 0, 3);
+}
+</script></body></html>

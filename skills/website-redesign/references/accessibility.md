@@ -1,0 +1,296 @@
+# Accessibility — decided in the design, proven in the render
+
+A redesign is the moment accessibility is won or lost. About half of the WCAG 2.2 A/AA criteria are settled at art direction or in the design system — contrast, the focus token, target sizes, the 320 px layout, text that can grow, motion, colour-independent status, sticky-UI budgets, consistent help, the sign-in and timeout flows — long before anyone writes ARIA. And the defects a redesign most often *introduces* (removed focus rings, custom widgets, silent toasts, fixed-height cards, colour-only status, focus hidden under a new sticky header) are exactly the ones rule engines cannot see.
+
+This file holds the standard (§1), the decisions that go into `DESIGN.md` (§2), the implementation rules (§3–9), the automated layer (§10), the manual procedure (§11) and reporting (§12). Evidence behind every number: `research/streams/D-accessibility.md` and the lab in `research/experiments/a11y-lab/`.
+
+## Contents
+
+1. Standard and scope
+2. Design-time decisions (the Accessibility block of `DESIGN.md`)
+3. Native first — component → element map and keyboard contracts
+4. Keyboard and focus
+5. Names and content
+6. Forms and errors
+7. Status messages and live regions
+8. Visual: contrast, colour, reflow, spacing, forced colours, themes, targets
+9. Tables, charts, dashboards, commerce, enterprise
+   - 9b. Canvas, WebGL and game-like interaction
+10. Automated checks and what they cannot see
+11. The manual procedure
+12. Reporting
+13. ARIA misuse — what to grep for
+
+## 1. Standard and scope
+
+- **WCAG 2.2 AA is the floor**, on every surface. It is ISO/IEC 40500:2025; the 2026 EN 301 549 behind the European Accessibility Act uses it; meeting 2.2 AA also meets the 2.1 AA the US ADA Title II rule cites and the 2.0 AA of Section 508. Any EU-facing storefront, bank, ticketing or SaaS service is in scope of the EAA (obligations since 28 June 2025; microenterprise service providers exempt). Check current legal dates before quoting them to a client.
+- **Aim for two AAA criteria that are cheap when designed in**: 2.4.13 Focus Appearance and 2.3.3 Animation from Interactions.
+- **WCAG 3 is a Working Draft** with an undecided contrast method; nothing in it can be conformed to. **APCA** is a design aid for weight, size and dark-mode tuning (`design-theory.md`), never the gate: where WCAG 2 fails, it fails.
+- **Preserve what exists, and beat the baseline.** The audit lists the current site's accessibility features (skip link, live regions, labels, error pattern, reduced-motion code, `lang`, captions) alongside its barriers. The redesign must beat that baseline, not only match it: every recorded barrier is fixed or justified, and nothing that worked is lost. The Phase 1 run of `audit.mjs` and `a11y.mjs` is the baseline to beat.
+- **Never an overlay.** "Accessibility widget" scripts do not repair source defects and can conflict with assistive technology. Fix the source.
+
+## 2. Design-time decisions (the Accessibility block of `DESIGN.md`)
+
+Fill this at Phase 3, before any code (on the fast path, which skips Phase 3, at Phase 4: `SKILL.md` Workflow). **Gate:** no palette without its contrast table; no component without a mapped element or pattern; no motion without its reduced-motion substitute.
+
+| Decision | The rule | SC |
+| --- | --- | --- |
+| Contrast table | Every text/ground pair actually used, per theme and per chapter and, on productive surfaces, every state ground text sits on — hover rows, zebra stripes, selected fills, segmented-control tracks, secondary panels, dark mode (a token matrix: every text token × every surface token) — measured on the real ground (`contrast.mjs`): 4.5:1 text, 3:1 large text (≥ 24 px, or ≥ 18.66 px bold). Muted text that passes on the page ground usually fails on these. A darker accent-for-text token. White on a mid brand blue or orange is the classic miss (white on `#3b82f6` = 3.68:1) | 1.4.3 |
+| Non-text pairs | 3:1 against adjacent colours for input borders, checkbox and toggle outlines, switch tracks (the off-track too), focus rings, meaningful icons, chart marks and series. A light-grey input border (`#e3e3e3` on white = 1.2:1) fails, and no rule engine reports it | 1.4.11 |
+| Focus token | One ring: `outline` 2–3 px solid, 2 px offset, ≥ 3:1 against the control and every surface it lands on. The brand accent often fails 3:1 on a light ground — use its darker accent-for-text step for the ring, and give each theme its own ring colour (and a second one for dark chapters). Never box-shadow alone (forced colours removes it) | 2.4.7, 2.4.13 |
+| Sticky-UI budget | Heights of header, bottom bar, cookie banner and chat bubble, turned into `scroll-padding-top/bottom`; sticky bars become static on short viewports | 2.4.11 |
+| Targets | 24 × 24 CSS px floor everywhere (or the spacing exception), a compact density mode included; on coarse pointers (`@media (pointer: coarse)`) every target 44 × 44 px — a touch-first control may be drawn at 36–40 px with its hit area extended to 44. Dense tables on fine pointers: row actions ≥ 24 px with ≥ 8 px gaps, or one "Actions" menu button per row | 2.5.8 |
+| The 320 px state | Designed, not discovered: nav collapse, sidebars stacked, toolbars wrapping, record lists folded to a name and a meta line and comparison tables in their own scroll region (`app-ui.md` §5), dialogs `max-height: 100dvh`. Only genuinely two-dimensional content (tables, maps, diagrams, editors) may scroll both ways | 1.4.10 |
+| Text that grows | No fixed heights or `overflow: hidden` on text containers; type in `rem`; zoom never blocked | 1.4.4, 1.4.12 |
+| Colour independence | A second cue for status, trend, required, error, selected, links in text and chart series: icon + text, underline, dash or marker, direct label | 1.4.1 |
+| Motion inventory | Each move with its reduced-motion substitute (`motion.md` §6); anything moving or auto-updating > 5 s gets a pause control placed before it; nothing flashes > 3×/s | 2.2.2, 2.3.1, 2.3.3 |
+| Forced-colours plan | Controls with transparent borders, focus as outline, SVG in `currentColor`, selected/on states shown by border, underline or icon rather than fill | 1.4.11 in practice |
+| Hover content | Tooltips and popovers dismissible (Esc), hoverable and persistent; essential information never only in a hover tooltip — use a toggletip | 1.4.13 |
+| Consistency | Navigation and help (contact, chat, help links) in the same relative order on every page; one name and one icon per function across the product | 3.2.3, 3.2.4, 3.2.6 |
+| Dragging and gestures | Every drag (kanban, reorder, slider, map, drop-zone) and every multi-finger gesture has a single-pointer alternative ("Move to…", ± buttons) | 2.5.7, 2.5.1 |
+| Canvas or game interaction | Stand-ins, hit areas, keyboard verbs, narration, an equivalent form or list and tap alternatives, planned with the scene (§9b) | 2.1.1, 2.5.7, 2.5.8, 4.1.2, 4.1.3 |
+| Sign-in and time | Passkeys or email link; paste and password managers allowed; no puzzle or transcription step without an alternative. Timeouts warn ≥ 20 s ahead with a simple extend, and data survives re-authentication | 3.3.8, 2.2.1 |
+| Transactions | Checkout, payment, deletion and data submission are reversible, checked, or confirmed on a review step; never ask for the same information twice in one process | 3.3.4, 3.3.7 |
+| Media | Choosing video means budgeting captions, transcripts and audio description; no autoplay with sound | 1.2.x, 1.4.2 |
+| Component map | The inventory filtered through §3: each component → native element or APG pattern, plus the app's keyboard shortcuts | 4.1.2, 2.1.1 |
+| Forms | Error pattern (§6), optional/required convention, `autocomplete` map | 3.3.x, 1.3.5 |
+| Announcements | Which messages are `status` and which `alert`; the SPA route-change choice (§4) | 4.1.3 |
+| Data | Chart summary + table policy, non-colour encodings (§9) | 1.1.1, 1.4.1 |
+
+## 3. Native first — component → element map and keyboard contracts
+
+**Rules.** Use the native element when one exists (forced colours picks system colours from native semantics, not from ARIA roles). Do not change native semantics (`<h2 role="button">` destroys the heading; the one legitimate exception is `<ul role="list">` when `list-style: none` makes Safari drop list semantics). A role is a promise: every ARIA widget implements its full APG keyboard contract, or it is not an ARIA widget. Never hide focusable content from assistive technology. Every interactive element has a name — visible text first, `aria-label` only for icon-only controls.
+
+| Component | Use | Notes |
+| --- | --- | --- |
+| Action | `<button type="button">` | never `div`, `span`, or `<a>` without `href` |
+| Navigation | `<a href>`; `aria-current="page"` on the current item | links go places; buttons do things |
+| Toggle | `<button aria-pressed>`, or a checkbox styled as a switch; `role="switch"` + `aria-checked` for on/off settings | |
+| Show/hide, FAQ | `<details>`/`<summary>`; exclusive accordion `<details name>` | or `button[aria-expanded][aria-controls]` |
+| Site nav dropdown, mega menu | **disclosure navigation**: `nav > ul > li > button[aria-expanded] + ul` of links | never `role="menu"` — APG's own navigation example does not use it |
+| App action menu ("⋯", account) | APG menu button (`aria-haspopup="menu"`, `menu`/`menuitem`, arrows, Esc), or a `popover` list of buttons | only real command menus get `role="menu"` |
+| Modal | `<dialog>` + `showModal()`, `aria-labelledby` its heading | focus in, inert background, Esc and focus return come free (verified in Chromium) |
+| Non-modal popup, toggletip | `popover` + `<button popovertarget>` (or `command="toggle-popover"`) | popover adds no role and no trap; give it the right semantics |
+| Tabs | APG tabs: `tablist`/`tab`/`tabpanel`, roving tabindex, arrows, Home/End | tabs that change the URL are nav links with `aria-current` |
+| Select | `<select>`; `appearance: base-select` only as enhancement | keeps native semantics and keyboard |
+| Autocomplete | APG combobox (listbox popup, `aria-activedescendant`); `<datalist>` for simple suggestions | |
+| Filters, multi-select | checkboxes in a `fieldset`; `<select multiple>` or APG listbox | |
+| Data table | `<table>` + `<caption>` + `<th scope>`; sortable = `th[aria-sort]` > `button` | never `role="grid"` for read-only data |
+| Editable cells | APG grid (arrows, Home/End, Ctrl+Home/End, PageUp/Down) | only when cells are interactive |
+| Tree | APG treeview for files and folders; nested lists + disclosure for navigation trees | |
+| Toolbar (≥ 3 related controls) | `role="toolbar"`, one Tab stop, arrows between controls | editors, bulk-action bars |
+| Carousel | APG carousel: rotation control first, stops on focus and hover, slides as named groups | prefer no auto-rotation |
+| Range, progress, meter | `<input type="range">`, `<progress>`, `<meter>` | custom slider = APG slider |
+| Toast, save status, result count | `role="status"` present at load | `role="alert"` only for urgent errors |
+| Breadcrumb, pagination, stepper | `nav[aria-label] > ol`, `aria-current="page"` / `"step"` | |
+| Search | `<search>` + form + label | |
+| Card with one destination | one real link (the title) with its hit area stretched by a pseudo-element | no links or buttons nested in a clickable card |
+| Clickable list or table row | the row's main target is a real `<button>` or link; secondary actions (delete, ⋯ menu) sit beside it | never nested inside a `div role="button"`: screen readers announce one control and swallow the other |
+
+**Native primitives, September 2026.** Use now: `<dialog>`, `inert`, `:focus-visible`, `popover`, `<details name>`, `<search>`, `:user-invalid`, `field-sizing`, the `forced-colors` / `prefers-contrast` / `prefers-reduced-motion` queries, invoker commands (`command`/`commandfor`, with a script fallback for older browsers). Enhancement only: `dialog closedby` (no Safari), customisable select (no Firefox), `popover="hint"` (no Safari), `hidden="until-found"`. Not yet: interest invokers, `reading-flow`, `focusgroup` (roving tabindex still needs script).
+
+**Keyboard contracts** (APG) that app redesigns break most:
+
+- **Dialog**: focus moves inside on open; Tab cycles inside; Esc closes; focus returns to the invoker.
+- **Disclosure**: Enter and Space toggle; `aria-expanded` on the button reflects it.
+- **Tabs**: Tab enters on the active tab and the next Tab goes to the panel; Left/Right move and wrap; only the active tab has `tabindex="0"`; activation automatic or on Enter/Space.
+- **Menu button**: Enter, Space or Down opens and focuses the first item (Up the last); arrows move; Esc closes and returns focus.
+- **Combobox**: the input is the only Tab stop; Down enters the popup; Esc dismisses; Enter accepts; typing types.
+- **Listbox**: Up/Down; Home/End above 5 options; type-ahead above 7.
+- **Grid**: arrows cell to cell, stopping at edges; Home/End for the row, Ctrl+Home/End for the grid; Tab leaves.
+- **Treeview**: Right opens or goes to the first child; Left closes or goes to the parent.
+- **Toolbar**: one Tab stop; Left/Right between controls.
+- **Carousel**: auto-rotation stops when anything inside is focused; the rotation control is first; Next/Previous do not move focus.
+- **Right-to-left**: arrow keys follow the visual arrow — in a right-to-left row of tabs, toolbar buttons, radios or menubar items, ArrowLeft moves to the next item (Radix, React Aria and Chromium's native radios do this; APG is silent; DOM-order arrows run backwards).
+
+## 4. Keyboard and focus
+
+- Every pointer action has a keyboard equivalent; focus order follows reading order (`order`, grid placement and `row-reverse` must not scramble it); no positive `tabindex`.
+- Content that is off-canvas, collapsed or on a hidden slide is not focusable: `hidden`, `inert` or `display: none` — never just `opacity: 0` or a transform.
+- **Skip link** first, visible on focus, targeting `<main id tabindex="-1">`; activating it lands in `main` below the sticky header.
+
+```css
+:root { --focus: #1f5fd1; }                 /* ≥ 3:1 against every surface it lands on */
+.on-dark { --focus: #fff; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+@media (forced-colors: active) { :focus-visible { outline-color: Highlight; } }
+html { scroll-padding-top: calc(var(--header-h) + 1rem); }   /* 2.4.11 */
+```
+
+Never `outline: none` without a replacement. A box-shadow ring is decoration: it disappears in forced colours and is usually too faint for 2.4.13 (the lab's `rgba(59,130,246,.4)` ring changed zero pixels by 3:1).
+
+**Where focus goes**
+
+| Moment | Focus |
+| --- | --- |
+| Dialog opens / closes | inside (first control or `autofocus`) / back to the invoker, or a logical fallback if it is gone |
+| Command palette | record what had focus on open (a shortcut opens it with no invoker) and return it on Escape or a click outside; do not return it when a command navigates — the new page owns focus. The input is the only Tab stop, so Tab must not fall through to the page; the shortcut that opens it also closes it, through the same path |
+| Item deleted from a list | the next item's primary control, else the previous, else the list heading — never `body` |
+| Inline edit saved | back to the edit trigger |
+| Submit with errors | the error summary (three or more errors); fewer, the first invalid field (§6) |
+| "Load more" | the first new item |
+| Wizard step | the step heading |
+| SPA route change | update `document.title`, then move focus to the new `h1` (`tabindex="-1"`) *or* announce "Navigated to …" in a polite region — one choice, everywhere |
+| Filter, sort, paginate in place | focus stays on the control; the result count is announced |
+
+**Roving tabindex** for tabs, toolbars, radio-like groups, menus and grids: one item `tabindex="0"`, the rest `-1`, arrows move both `tabindex` and focus, Home/End jump (the lab's `fixed.html` has a 15-line version).
+
+**Shortcuts** (enterprise): documented in a `?` dialog; never hijacking screen-reader or browser keys; single-character shortcuts can be turned off or remapped, or work only while a component has focus (2.1.4).
+
+## 5. Names and content
+
+- **Images, decided one by one**: informative → say what matters in it; decorative → `alt=""`; functional → say what the control does; complex (chart, diagram) → a short alt plus a summary or table. Never a filename (`a11y.mjs` flags `IMG_2931.png`). Product photos describe the variant shown. Alt text for a client's own photographs describes only what is visible and never invents the occasion or the customer.
+- **Icon-only controls**: `aria-label` on the control, `aria-hidden="true" focusable="false"` on the SVG. `title` alone is not a name.
+- **Label in name** (2.5.3): the accessible name contains the visible words, in order, ideally first — a button showing "Search" is not named "Go". Repeated row actions include the row: "Edit Contoso invoice".
+- **Link text** says where it goes; no run of "Read more" to different places.
+- **Titles**: "Specific page – Product", updated on every SPA route, prefixed "Error: " after a failed submit.
+- **Headings and labels** descriptive and unique, the first two words carrying the meaning; real `h1`–`h6`, never styled `div`s. Heading order is per page, not per component, so a component must not fix its own level: a sidebar of `h3`s under an `h1` with no `h2` is a break, and axe's `heading-order` catches it.
+- **Language**: `<html lang>`; `lang` on phrases, names and language-switcher items in another language (`Deutsch` with `lang="de"`) — missed by every tool in the lab.
+- **Instructions** never rely on shape, position, colour or sound alone ("the green button on the right").
+- **Visually hidden utility**: ship both `clip: rect(0 0 0 0)` and `clip-path: inset(50%)` — the `clip-path`-only form is reported as an unlabelled field by IBM's checker.
+- **Plain language** (W3C COGA): one instruction per step, literal words, no double negatives, numbers with an alternative, fees stated up front, the most important tasks easy to find, an easy route home, human help findable.
+
+## 6. Forms and errors
+
+The GOV.UK pattern, which is the most tested error design in public:
+
+- A visible `<label for>` above every field; hints as separate text tied by `aria-describedby`; radio and checkbox groups in `<fieldset><legend>`. **Never placeholder as label** — axe passes it; `a11y.mjs` does not.
+- Mark **whichever is the minority** in words — "(optional)" or "(required)"; no asterisks — and set `required` on required fields. Never colour alone.
+- **Validate on submit**, then live as fields are fixed. Not on blur; live from the start only for character counts, availability checks and password rules (`app-ui.md` §6).
+- On error: keep every answer; prefix `<title>` with "Error: " when the form is the page; for three or more errors (on a public service, for any error: `categories.md`), put an **error summary** at the top of the form's own region — the top of `main`, above the `h1`, when the form is the page (GOV.UK); the top of the form when it is one section of a longer page — headed "There is a problem", **move focus to it**, and link each message to its field (the first field of a group, the first radio); for fewer errors, move focus to the first invalid field (`app-ui.md` §6). Beside each field: the same words, a hidden "Error:" prefix, `aria-invalid="true"` and the message id in `aria-describedby`, both set when the error appears and removed when it clears — an error id left wired in reads as a description of a valid field. Hints stay in `aria-describedby`.
+- **Wording**: what happened and how to fix it, in the label's words ("Enter how many hours you work a week"); separate messages for empty, too long and wrong format; no "invalid", "please", "sorry", "oops" or codes.
+- Accept varied formats; strip spaces and punctuation from numbers and codes.
+- `type` and `inputmode` right (`inputmode="numeric"` for codes and card numbers); `autocomplete` tokens on every personal-data field (`name`, `email`, `tel`, `street-address`, `postal-code`, `country-name`, `bday`, `organization`, `username`, `current-password`, `new-password`, `one-time-code`, `cc-*`); `spellcheck="false"` on emails and codes.
+- Paste allowed everywhere (never `onpaste="return false"`); a show-password toggle; `one-time-code` on OTP fields.
+- **Checkout**: `cc-*` and address tokens; a review step before payment; "Billing same as shipping"; price changes announced; strikethrough prices carry words ("Was $40, now $30"), because `<del>` is not announced by default.
+
+## 7. Status messages and live regions
+
+1. The region **exists, empty, before** the update; text goes in later. A region inserted together with its text is often not announced.
+2. `role="status"` for toasts, "Saved", result counts, cart updates, loading → loaded. `role="alert"` only for urgent, blocking problems. No `aria-live` on tickers, live charts or chat logs without throttling — announce summaries.
+3. Short and self-contained ("Export started. We'll email the file."). To repeat an identical message, clear the region first. On a calculator or estimator, the live region is the answer (the total line), never the whole panel.
+4. Focus never moves to a toast. A toast with an action (Undo) stays until dismissed, or the action is reachable elsewhere — and its buttons sit outside the live region, so only the message is announced.
+5. Async: "Loading…" in the status region after ~1 s, then "12 results"; `aria-busy="true"` on the region being replaced.
+6. Blocking form errors move focus to the summary, or to the first invalid field when there are fewer than three (§6) — focus does the announcing.
+7. A spinner is silent on its own: `<p role="status"><span class="spinner" aria-hidden="true"></span> Syncing…</p>`.
+
+## 8. Visual: contrast, colour, reflow, spacing, forced colours, themes, targets
+
+- **Contrast on the real render**: image chapters, tints, gradients, dark mode. `audit.mjs` measures text on the painted ground; `a11y.mjs` measures form-control boundaries (1.4.11).
+- **Non-text contrast failures** to look for: light input borders, ghost buttons, toggles whose states differ only in hue, gridlines carrying meaning, selected rows shown by a pale tint alone.
+- **Links in running text are underlined.** Status dots and trend arrows have words; `a11y.mjs` writes achromatopsia and deuteranopia renders — look at them.
+- **Reflow** at 320 × 256 and 640 × 512 CSS px: no horizontal page scroll except two-dimensional content in its own labelled, focusable scroll region (`role="region" aria-labelledby tabindex="0"`); embeds `max-width: 100%`; nothing clipped or overlapping; sticky bars do not eat the screen.
+- **Text spacing** (line-height 1.5, paragraph spacing 2em, letter 0.12em, word 0.16em): nothing clipped — `a11y.mjs` injects it and captures the result.
+- **Forced colours** (Windows contrast themes) override text, background, border, outline and SVG colours, remove `box-shadow`, `text-shadow` and non-URL background images, and put a backplate behind text. Observed: background-only buttons lose their shape, box-shadow checkboxes vanish, colour status dots flatten to one colour, hard-coded dark SVG strokes disappear on the black canvas. Recipe: `border: 1px solid transparent` on controls, focus as outline, SVG in `currentColor`, selected states with a border or icon, native checkboxes with `accent-color`, `forced-color-adjust: none` only on small labelled swatches. Tweak; never build a separate high-contrast theme.
+- **`prefers-contrast: more`**: thicker borders, no translucency or blur, muted text promoted to full text colour.
+- **Dark theme**: re-table contrast; lighter accent tints on dark grounds; elevation by surface steps and borders, not shadows; logos and transparent images checked; the theme's own focus ring (§2); `color-scheme` set so native controls and scrollbars follow. A theme switch changes the whole page's legibility, so it sits in the header on every page at every width (in a product, the header or account menu) — never only in the footer.
+- **Targets**: measured at 390 in the render, not in source. Stacked text links with a 17 px line height fail the spacing exception.
+
+## 9. Tables, charts, dashboards, commerce, enterprise
+
+**Tables**: `<caption>` (visible or hidden); `<th scope="col">` and `<th scope="row">` for the row key; complex headers split into simpler tables before reaching for `headers`/`id`; numbers right-aligned with `tabular-nums`. Sortable: `aria-sort` only on the sorted `<th>`, a `<button>` named by the column inside each sortable header, direction shown by icon *and* attribute, optionally "Sorted by Amount, descending" in a status region. Row selection: a checkbox per row named by the row, "Select all" with the mixed state. Expandable rows: a button with `aria-expanded` in the first cell. Empty and filtered states in words, announced. Narrow screens: a numeric comparison table scrolls in its own region; a record list folds into a name plus a meta line (`app-ui.md` §5), built as a list or with the table roles re-added (`responsive.md` §6) — never a bare `display: block` on a table, which strips its semantics.
+
+**Charts** (`dataviz.md`): a title that states the insight ("Revenue up 55% since March"); a one- or two-sentence summary; units and period; the data as a table (visible, or in `<details>`); static SVG as `role="img"` named by `<title>`/`<desc>` so hundreds of paths are not exposed; series distinguishable without colour (direct labels, dashes, markers) and ≥ 3:1 against the ground and each other; tooltips reachable by keyboard and touch and compliant with 1.4.13. A good static chart plus its table is the cheap accessible default; an interactive chart needs keyboard navigation between points and a described structure.
+
+**Dashboards**: `h1` = the dashboard's name; each widget a `<section aria-labelledby>` with an `h2`; landmarks for major panels only. **A KPI tile is text**: label, value, change in words ("up 4.2% vs August") with the arrow `aria-hidden`. Filters are a form with fieldsets; the time range a radio group, segmented control or `<select>`; results announce a count. Loading: `aria-busy` plus a status message after ~1 s. Errors per widget, in text. Auto-refresh: a pause control and "Last updated 10:32" — never announce every tick. Notification badges: the count in the link's name ("Notifications, 3 unread").
+
+**Commerce**: colour swatches are radio groups with text names; quantity steppers are named buttons ("Increase quantity of Blue mug") or a labelled number input; add-to-cart confirms through status and updates the cart link's name; faceted filters are checkbox groups that announce result counts; checkout per §6.
+
+**Enterprise**: drag alternatives; a shortcut help dialog; bulk-action toolbars that announce results; wizards as an `ol` with `aria-current="step"`; long forms with section headings, save-draft and data kept across timeouts; ask vendors of embedded components for an Accessibility Conformance Report (VPAT) rather than assume.
+
+## 9b. Canvas, WebGL and game-like interaction
+
+A canvas is one element to assistive technology: an operable scene needs its own DOM view (`research/stage2/streams/S6-interactive-experiences.md` G3, `S1-rendering-lab.md` G2).
+
+1. **One model, two views.** Canvas and DOM view read and change one state model through the same commands.
+2. **Stand-ins.** A real `<button>` per object and palette entry, present from load (never created on Tab or removed on mouse movement), named from the model and renamed on every change. Move them with `transform`, from the one function that moves an object, not every frame. Each object's hit area, and the stand-in box that carries its focus ring, is at least 24 × 24 CSS px (44 × 44 on coarse pointers) at the rendered size: set in CSS px, so a canvas scaled to a phone cannot shrink it. When the canvas owns dragging, stand-ins take `pointer-events: none`.
+3. **Keyboard verbs.** Enter adds or picks up; arrows move (Shift further); Enter or Space places; Delete removes, focus moving on; Esc cancels. The palette is a toolbar with roving tabindex.
+4. **Narration.** One `role="status"`, present at load (or `ariaNotify()` with it as fallback), announces outcomes, not frames: "Candle 1 added near the top left."
+5. **An equivalent.** A form or list that completes every task, in the page or one click away. A canvas that is only a picture is `role="img"`, named by the model's summary.
+6. **Tap alternatives to every drag** (2.5.7): tap to pick up, tap a spot to place. A keyboard path does not satisfy 2.5.7.
+
+**Verify** by a keyboard walk of the top tasks, the accessibility tree after a move (do names follow?) and `a11y.mjs` (its `pointer` and `canvas` lines). axe proves nothing here (0 violations on unusable builds), nor does an engine's accessibility layer (PixiJS's failed five ways in the lab).
+
+## 10. Automated checks and what they cannot see
+
+Three layers, all run at Phase 1 (baseline) and Phase 6/8 (proof):
+
+```bash
+node scripts/audit.mjs --base http://localhost:3000 --paths / /app --widths 1440,390 --themes light,dark --kind app --out audit/after
+node scripts/a11y.mjs http://localhost:3000/app --out a11y/app              # per key template
+node scripts/widgets.mjs http://localhost:3000/app a11y/app.contracts.json  # per custom widget
+```
+
+**Scan coverage.** `audit.mjs` runs in every theme the site has (`--themes light,dark`; `--theme-key` for a stored choice) at desktop and phone width: the full path × theme × width matrix, dark at phone width included. On a productive surface it runs on every route (the route list, from the router or pages directory or the sitemap; signed-in routes seeded with `--storage`). Overlays and stepped states exist only after an action, so a scan of the route never sees them: `states.mjs --axe` scans menus, dialogs, palettes and the phone drawer in their open state, and every stepped state (wizard steps, expanded rows, a form showing its errors), at any width. `states.mjs --axe` scrolls the page through and back before the scan so scroll-revealed content is scanned as seen. If something the steps opened is gone by then (a menu that closes on scroll, with or without `aria-expanded`; a toast), the result line names it and the state fails, because the scan missed it: set `"axe": "no-scroll"` on that state. Each scanned state writes `<state>-<device>[-<label>].axe.json`. `a11y.mjs` and the manual procedure (§11) stay per key template and critical flow. Leave a regression test in the project: `@axe-core/playwright` over the main pages with the same tags as `audit.mjs` (`wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`, `wcag22aa`, `best-practice`), in the same suite as the flow tests. `wcag22aa` alone runs only `target-size`, and `heading-order`, `region` and `landmark-one-main` are best-practice rules.
+
+- **`audit.mjs`** runs axe-core (WCAG 2.0–2.2 A/AA + best practice, plus the experimental `td-has-header` and `label-content-name-mismatch`) alongside its own checks: contrast on the painted ground, invisible focus, targets, fake controls, clipped text, colour-only status, no-JS and reduced-motion hidden content. Critical and serious axe violations are fails and the rest warnings, rolled up by rule; it exits 1 on any fail. Each view's JSON (`<slug>-<width>[-<theme>].json`) keeps every axe node's target and reason; the summary's last section, `## axe across pages`, lists each rule once with the views it appeared in.
+- **`a11y.mjs`** checks what rule engines miss, and writes evidence: names from Chromium's own accessibility tree (placeholder-only and title-only names, label-in-name, filename alts), the heading and landmark outline, a keyboard walk with pixel-diff focus detection (invisible and weak rings, focus hidden under sticky UI on the reverse walk, traps, unreachable controls), pointer-only controls, targets, form-control boundary contrast, `autocomplete` and paste blocking (no token is suggested for file inputs, or for a `<select>` other than a country, town or birth date; in a name such as `address[city]` or `address-postcode` the part after "address" names the field), reflow at 320 and 640, text spacing, forced colours, colour-vision renders and motion (infinite animations, no reduced-motion response, auto-updating content without pause). Output: FAIL / WARN / INFO lines with the criterion and element, `audit.json`, and PNGs to look at (`reflow-320.png`, `text-spacing.png`, `forced-colors.png`, `vision-*.png`). It audits only what is rendered: the steps of a wizard other than the current one (`hidden`), a closed drawer (`visibility: hidden`), a closed `<details>` and a `content-visibility: hidden` panel are skipped by every check, so run it once per step or state that needs auditing (the step's URL hash, `--storage`), and scan the rest with `states.mjs --axe`. Content that blinks (an animation or a script toggling its visibility) counts as rendered in every phase. The 2.4.13 focus-area estimate is taken with the focused element scrolled clear of the viewport edges, so a focus bar drawn under the box counts even when Tab leaves the element flush with the bottom of the window. A clickable canvas that takes no focus is a FAIL unless a Tab stop over it stands in for it (a key on it changes the canvas's own pixels, or it paints nothing until focused or lets the pointer through): then a WARN that names them, to check against §9b; a painted control that changes nothing drawn (a game's Sound toggle, a header's Menu button over a hero) is not a stand-in. Its `canvas` section reports, per clickable canvas, the controls over it at load, whether a key on one changes the canvas (pixels captured with everything over it made transparent) and whether the change is announced (4.1.3; stand-ins that appear only after Tab, 4.1.2); it presses Enter, arrows or Space on those controls only, never on links, with navigations and requests other than GET blocked, and proves one key path, not the tasks.
+- **`widgets.mjs`** drives each custom widget by keyboard and checks its contract: dialog (focus in, trap, Esc, return), tabs (roving tabindex, arrows, selection), disclosure (`aria-expanded` toggles), live (the message reaches a region that existed before, or focus moves to the message itself — a blocking error summary or the first invalid field, §7.6 — and what a screen reader says on that focus carries every new message; the focused control's own name is not the message, so a Retry button or a link inside or beside a silent box does not announce it; each field's own error beside it counts as that field's message, read when it takes focus; focus moved to a toast fails, §7.4), form-errors (summary focused and linked, `aria-invalid`, `aria-describedby`), menu-button, roving (a toolbar, radio group or menubar: one Tab stop, counted by pressing Tab into it; the arrow toward the neighbour moves there and the other comes back; a radio is checked as focus moves), slider (a name and a value; the thumb moves the way the arrow points, the thumb a page draws for a visually hidden native range included; Home/End), palette (a named modal dialog, focus in its search field, results and "no results" announced, Escape returning focus to the opener; results are never run), sortable (a handle named "Reorder ‹item›" with instructions; Space or Enter picks up, arrows move, Space drops, Escape puts it back; focus stays on the item; announcements name items, never internal ids) and splitter (a focusable, named `role="separator"` with `aria-valuenow` and an `aria-orientation` that matches the divider, moved the way the arrows point). Arrow keys follow the visual arrow (§3): in right-to-left ArrowLeft must reach the next item, DOM-order arrows fail as "the arrow keys run backwards", and every arrow line names the direction assumed; orientation is `aria-orientation`, else the role's ARIA default, so a tablist stacked by CSS is still horizontal. Write the contracts file from the component inventory:
+
+```json
+[
+  { "type": "dialog", "trigger": "#invite-open" },
+  { "type": "tabs", "tablist": "[role=tablist]" },
+  { "type": "disclosure", "button": "#filters-toggle" },
+  { "type": "live", "trigger": "#export" },
+  { "type": "form-errors", "form": "#settings", "submit": "button[type=submit]" },
+  { "type": "menu-button", "button": "#account" },
+  { "type": "roving", "group": "[role=toolbar]" },
+  { "type": "slider", "slider": "#price" },
+  { "type": "palette", "trigger": "#search-open", "keys": ["Control+k"] },
+  { "type": "sortable", "list": "#stages" },
+  { "type": "splitter", "separator": "[role=separator]" }
+]
+```
+
+A contract can start from a state: `"before"` steps (`fill`, `select`, `click`, `tap`, `check`, `focus`, `press`, `wait`) run first, and a step that fails fails the contract. `"keys"` sets the keys that activate the trigger (default `["Enter"]`): a radio or checkbox takes `["Space"]` and a `<select>` `["ArrowDown"]`. Browsers submit the form on Enter in a radio or checkbox, and the script reports that contract as not tested. `"keys"` also opens a palette (`["Control+k"]`) and, on a sortable, replaces the whole move sequence (a move menu); a palette takes `"query"` and `"none"` (text that matches nothing), a sortable `"handle"` and `"items"`. Without `"handle"` only a control marked or named as a drag handle is pressed, never a Delete button or a link, else the list is reported as not tested. A tabs contract may name a wrapper; the tablist inside it is driven.
+
+**Coverage, measured.** On a dashboard page seeded with 60 distinct defects, axe alone raised 35–40%; four rule engines together (axe, HTML_CodeSniffer, Lighthouse, IBM Equal Access) raised 55% as failures; adding the two scripts raised 85% (95% with warnings). Calibration on independent W3C APG example pages produced only true positives. A GOV.UK audit of 142 barriers found axe alone caught about 30%. Deque's "57%" is by issue *volume*, dominated by contrast, names and labels. So: a clean rule-engine run is roughly half the story, and a Lighthouse score is not a conformance measure (46 → 100 between two pages that differ by sixty defects, most of which it cannot see). And what a rule engine does see, the eye misses: on the CleoHR website prototypes, an axe pass found 138 contrast failures, a mobile sheet with no landmark or dialog role and a heading-order break after two full visual-QA passes had found none.
+
+**Never automated** — the residue §11 exists for: whether alt text, link text, headings and error messages are *right*; whether bold text should be a heading or a grid a table; whether focus lands somewhere sensible after each action; screen-reader verbosity and whether state changes are spoken; whether motion is vestibular-triggering; captions' accuracy; consistency across pages; gesture alternatives; sign-in and transaction flows.
+
+**Tool gotchas.** `@axe-core/playwright` needs a page from `browser.newContext()`, not `browser.newPage()`, and hoists its own newer `playwright-core` (launch with an explicit `executablePath`). pa11y's axe runner does not run the `wcag22aa` tag (no target-size) and, by default, promotes axe's needs-review items to errors — set `levelCapWhenNeedsReview: "warning"`. IBM's checker (inject `accessibility-checker-engine`'s `ace.js` with Playwright; its CLI downloads the engine at runtime) catches keyboard and widget heuristics axe lacks but is noisy: skip link "not in a landmark", `tabindex="0"` on a scroll region and `clip-path`-only hidden labels are false positives. Tools treat hidden content differently: axe skips closed dialogs (Scan coverage above), so contracts and `states.mjs --axe` must open things to test them. Settle motion before any rule engine: a scan taken mid-fade reports false contrast failures (nine on a live site at 390 px), scroll-reveal sections below the fold are scanned transparent, and `element.animate()` ignores CSS overrides — the scripts scroll through, finish `document.getAnimations()` and freeze CSS timing first (`lib/env.mjs`); a hand-run axe needs the same.
+
+## 11. The manual procedure
+
+Per key template (landing, list/table, detail, form or checkout, dashboard) and per critical flow. Fix every FAIL from §10 first; record each step's result in the report.
+
+1. **Keyboard walk.** Tab from the top: the first stop is a visible skip link that lands in `main` below the header; every pointer-usable control is reached in reading order with a visible indicator; nothing invisible takes focus; focus never sticks. Shift+Tab back: nothing focused is hidden under sticky UI. Operate each widget by its contract (§3): Enter and Space, arrows, Esc closes and focus returns, deleting a row moves focus sensibly. On productive surfaces, walk each top task end to end — create, edit, filter, act, recover from an error — without a mouse. At 390: the phone chrome sits in landmarks (the top bar is the `<header>`, not a bare `div`); the menu toggle has a name and `aria-expanded`, Esc closes it, the background is inert while it covers the page.
+2. **Names, roles, states** from the accessibility tree (`a11y.mjs` prints it; `locator.ariaSnapshot()` for regression tests): every control has a meaningful, unique name containing its visible label; states present and updating (expanded, selected, pressed, checked, current, invalid, required); the heading outline reads like a table of contents; one `main`, named `nav`s; decorative images absent.
+3. **Announcements**: every async action (save, add to cart, filter, delete, export, copy) produces a message in a pre-existing region; loading longer than a second says so.
+4. **Forms**: submit empty, then with wrong formats — §6 end to end, including paste, show-password and no validation on blur.
+5. **Zoom and reflow**: 320 × 256 and 640 × 512, and 200% zoom at 1280.
+6. **Text spacing** render: nothing clipped or overlapping.
+7. **Forced colours**, dark and light: every control has a boundary; focus, icons, selected states and charts visible; logos and transparent images still visible (a navy logo vanishes on the black canvas — give it a backplate or `forced-color-adjust: none` with its own ground).
+8. **Colour vision** renders: every status, trend, series, required marker and error still distinguishable.
+9. **Motion**: under reduced motion no parallax, auto-rotation, large movement or smooth scrolling; without it, anything moving > 5 s has a pause control before it.
+10. **Contrast on real renders**: dark mode and image or tinted chapters; non-text pairs against the `DESIGN.md` table.
+11. **Content pass**: unique titles, descriptive headings, link purpose, alt right for each image's role, `lang` on foreign phrases, error wording, plain language.
+12. **Across pages**: compare the banner, navigation and footer trees of 3–5 routes — same order, same names for the same functions, help in the same place.
+13. **Screen-reader smoke test** if NVDA, JAWS or VoiceOver is available (10 minutes per template): the headings list reads as an outline; the landmarks list is short and named; each field announces label, required, hint and error; each custom widget announces role, name and state changes; toasts are spoken once; dialogs announce their name and return focus. Otherwise list it as a recommended follow-up — an agent cannot reproduce browse mode, verbosity or VoiceOver + Safari behaviour. Minimum matrix for a product: NVDA with Chrome or Firefox, VoiceOver with Safari on macOS and iOS; add JAWS for enterprise buyers and TalkBack for Android-heavy audiences.
+
+## 12. Reporting
+
+The hand-off states: tool versions and counts before and after (axe violations, `a11y.mjs` FAIL/WARN, contracts passed); the manual steps run and their results; known issues with their criterion and severity; what still needs verification with real assistive technology. **Gates**: no `audit.mjs` fail on any route or theme, whether from its own checks (measured contrast, visible focus, targets and the others) or from a critical or serious axe violation; no critical or serious axe violation in any open or stepped state (`states.mjs --axe`); every moderate or minor axe finding, best practice included, fixed or justified in writing; the Phase 1 baseline beaten, not only matched (§1); `a11y.mjs` 0 FAIL, every WARN triaged in writing; every custom widget's contract passing; the manual procedure recorded; the screen-reader smoke test done or explicitly deferred. For EU-facing services and public-sector sites, offer a draft accessibility statement.
+
+## 13. ARIA misuse — what to grep for
+
+| Misuse | Fix |
+| --- | --- |
+| `role="button"` (or any widget role) on `div`/`span` without `tabindex="0"` and Enter/Space; clickable `div`, `span`, `img` or `td` | `<button>` or a link |
+| `<a>` without `href`, `href="#"` or `javascript:` as an action | `<button type="button">` |
+| `aria-label` on a generic `div`, `span` or `p` | visible text, a heading, or a real role with a name |
+| `aria-hidden="true"` on focusable elements or their ancestors | `inert` or `hidden` |
+| `role="menu"` / `menubar` / `menuitem` for site navigation; `aria-haspopup="true"` on disclosure buttons | `nav > ul` of links + disclosure buttons with `aria-expanded` |
+| `role="tablist"` for links to other pages; tabs without `aria-selected`/`aria-controls`, all in the Tab order, no arrows | nav links + `aria-current`; APG tabs with roving tabindex |
+| Redundant or overriding roles (`<nav role="navigation">`, `<h2 role="button">`) | remove |
+| `aria-label` contradicting the visible text | name = visible label, extra words after |
+| `aria-labelledby` / `describedby` / `controls` pointing at missing or duplicate ids | unique ids that exist |
+| Invalid values or attributes on the wrong role (`aria-sort="up"`, `aria-sort` on a `td`) | valid tokens on the right role |
+| `aria-expanded` missing, never updated, or on the panel | on the controlling button, updated |
+| `role="dialog"` without a name, focus management or inert background | `<dialog>.showModal()` + `aria-labelledby` |
+| `aria-live` added with its text, on huge containers, or `role="alert"` for routine toasts | a pre-existing `role="status"` |
+| `role="presentation"` on data tables or focusable elements; `role="grid"` on read-only tables; `role="application"` | remove |
+| Unhidden SVG icons inside named buttons; `role="img"` SVG without a name | `aria-hidden="true" focusable="false"` on the icon; name on the control |
+| `tabindex` > 0; `tabindex="0"` on static text | remove (`0` only on scroll regions and widgets) |
+| `title` or placeholder as the only name | `aria-label` or visible text; `<label>` |

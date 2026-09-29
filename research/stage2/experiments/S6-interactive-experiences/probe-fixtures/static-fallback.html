@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Static WebGL canvas with fallback content</title>
+<!-- A static WebGL drawing described by fallback content inside the canvas element (exposed to the
+     accessibility tree). Expected: PASS. -->
+<style>body{margin:0;padding:20px}canvas{display:block}</style></head>
+<body><main><h1>A drawn scene</h1><canvas id="c" width="480" height="300">A green square on grey.</canvas></main>
+<script>const gl=document.getElementById('c').getContext('webgl');gl.clearColor(.9,.9,.9,1);gl.clear(gl.COLOR_BUFFER_BIT);gl.enable(gl.SCISSOR_TEST);gl.scissor(190,100,100,100);gl.clearColor(.1,.55,.3,1);gl.clear(gl.COLOR_BUFFER_BIT);</script></body></html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larder — seeded content-fragility defects</title>
+<style>
+  /* Every defect is invisible with the short English copy and the working API this page ships with; each one
+     breaks under one content mutation. The S-numbers are listed in truth.json with the mutation that exposes it. */
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 400 16px/1.5 system-ui, sans-serif; color: #1d211b; background: #fbfaf6; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  header { background: #fff; border-bottom: 1px solid #e3e1d8; }
+  header .wrap { display: flex; align-items: center; gap: 24px; height: 64px; }
+  .logo { font-weight: 800; letter-spacing: .02em; }
+  /* S14: the nav never wraps and never shrinks: long labels push it past the viewport */
+  nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; white-space: nowrap; }
+  nav a { color: #444; text-decoration: none; }
+  @media (max-width: 700px) { nav { display: none; } }
+  .signin { margin-left: auto; }
+  .btn { display: inline-block; background: #2f5d34; color: #fff; text-decoration: none; padding: 10px 16px; border-radius: 8px; font-weight: 600; border: 0; font: inherit; font-weight: 600; }
+  /* S7: white text on a photograph, and no background colour behind it */
+  .hero { background: url(hero.svg) center / cover; color: #fff; padding: 72px 0; }
+  .hero h1 { font-size: clamp(2rem, 1.3rem + 3vw, 3.4rem); line-height: 1.1; margin: 0 0 12px; max-width: 18ch; }
+  .hero p { max-width: 40ch; margin: 0; }
+  section.block { padding: 40px 0; }
+  h2 { margin: 0 0 16px; }
+  /* S15: KPI tiles of fixed width with nowrap figures */
+  .kpis { display: flex; gap: 16px; flex-wrap: wrap; }
+  .kpi { width: 160px; background: #fff; border: 1px solid #e3e1d8; border-radius: 10px; padding: 14px; }
+  .kpi b { display: block; font-size: 30px; white-space: nowrap; }
+  /* S1, S2, S6: plan cards */
+  .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr)); gap: 16px; }
+  .plan { position: relative; background: #fff; border: 1px solid #e3e1d8; border-radius: 12px; padding: 20px; }
+  .plan h3 { margin: 0 0 8px; font-size: 20px; height: 30px; overflow: hidden; }          /* S2: one line, clipped */
+  .plan .badge { position: absolute; top: 20px; right: 16px; background: #fde9b0; border-radius: 99px; padding: 2px 10px; font-size: 13px; } /* S6 */
+  .plan .btn { width: 150px; white-space: nowrap; text-align: center; margin-top: 12px; }  /* S1 */
+  /* S3, S4: the account row */
+  .account { display: flex; gap: 14px; align-items: center; background: #fff; border: 1px solid #e3e1d8; border-radius: 12px; padding: 16px; }
+  .account img { width: 48px; height: 48px; border-radius: 50%; flex: none; }
+  .account .who { flex: 1; }                                     /* S3: no min-width: 0 */
+  .account .name { font-weight: 700; white-space: nowrap; }
+  .contact { margin-top: 12px; background: #fff; border: 1px solid #e3e1d8; border-radius: 12px; padding: 16px; max-width: 360px; } /* S4: no overflow-wrap */
+  /* S5, S11, S12: orders table from the API, in a clipping card, with a short skeleton */
+  .card { background: #fff; border: 1px solid #e3e1d8; border-radius: 12px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; }
+  td.price { white-space: nowrap; width: 90px; text-align: right; }
+  .skeleton { height: 96px; background: linear-gradient(90deg, #eee, #f6f6f6, #eee); }
+  /* S8, S13: product grid, images without dimensions, no empty state */
+  .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .product { background: #fff; border: 1px solid #e3e1d8; border-radius: 12px; overflow: hidden; }
+  .product img { width: 100%; display: block; }
+  .product .body { padding: 12px 14px; }
+  .product .price { font-weight: 700; }
+  /* S9, S10: search field with a physically placed icon, and a back link with a physically placed chevron */
+  .search { position: relative; max-width: 420px; }
+  .search svg { position: absolute; left: 12px; top: 13px; width: 18px; height: 18px; }
+  .search input { width: 100%; padding: 12px 12px 12px 40px; font: inherit; border: 1px solid #bbb; border-radius: 8px; }
+  .back { position: relative; padding-left: 22px; display: inline-block; margin-top: 16px; color: #2f5d34; }
+  .back svg { position: absolute; left: 0; top: 4px; width: 16px; height: 16px; }
+  .note { text-align: left; color: #555; max-width: 60ch; }       /* S16 */
+  footer { padding: 32px 0; border-top: 1px solid #e3e1d8; color: #666; }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <span class="logo">LARDER</span>
+  <nav aria-label="Main"><ul><li><a href="#">Boxes</a></li><li><a href="#">Bakery</a></li><li><a href="#">Pantry</a></li><li><a href="#">Recipes</a></li><li><a href="#">Help</a></li></ul></nav>
+  <a class="btn signin" href="#">Sign in</a>
+</div></header>
+<main>
+  <section class="hero"><div class="wrap"><h1 id="hero-title">Good food, delivered weekly</h1><p id="hero-lede">Seasonal veg, fresh bread and pantry staples from farms within 50 miles.</p></div></section>
+
+  <section class="block"><div class="wrap">
+    <h2>This month</h2>
+    <div class="kpis" id="kpis">
+      <div class="kpi"><small>Deliveries</small><b>1,284</b></div>
+      <div class="kpi"><small>Saved</small><b>£312</b></div>
+      <div class="kpi"><small>Waste</small><b>-4%</b></div>
+    </div>
+  </div></section>
+
+  <section class="block"><div class="wrap">
+    <h2>Plans</h2>
+    <div class="plans" id="plans">
+      <article class="plan"><h3>Small box</h3><span class="badge">Popular</span><p>Veg for two, every week.</p><div class="price">£18 / week</div><a class="btn" href="#">Choose plan</a></article>
+      <article class="plan"><h3>Family box</h3><span class="badge">Best value</span><p>Veg and fruit for four.</p><div class="price">£29 / week</div><a class="btn" href="#">Choose plan</a></article>
+      <article class="plan"><h3>Pantry add-on</h3><span class="badge">New</span><p>Oil, grains and staples.</p><div class="price">£12 / month</div><a class="btn" href="#">Choose plan</a></article>
+    </div>
+  </div></section>
+
+  <section class="block"><div class="wrap">
+    <h2>Your account</h2>
+    <div class="account" id="account"><img src="p-6b4a8a.svg" alt=""><div class="who"><div class="name" id="name">Sam Ortiz</div><div>Member since 2021</div></div><a class="btn" href="#">Edit</a></div>
+    <div class="contact" id="contact">Receipts go to <b id="email">sam@larder.example</b></div>
+    <div class="search" id="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="#555" stroke-width="2" fill="none"/><path d="M13 13l5 5" stroke="#555" stroke-width="2"/></svg><input type="search" placeholder="Search products" aria-label="Search products"></div>
+    <a class="back" href="#" id="back"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="#2f5d34" stroke-width="2" fill="none"/></svg>Back to boxes</a>
+  </div></section>
+
+  <section class="block" id="orders-block"><div class="wrap">
+    <h2>Recent orders</h2>
+    <p id="summary"></p>
+    <div class="card" id="orders"><div class="skeleton"></div></div>
+  </div></section>
+
+  <section class="block"><div class="wrap">
+    <h2>Popular this week</h2>
+    <div class="products" id="products">
+      <article class="product"><img src="p-c2703d.svg" alt="Tomatoes"><div class="body"><div>Heritage tomatoes</div><div class="price">£3.20</div></div></article>
+      <article class="product"><img src="p-3d6b4a.svg" alt="Kale"><div class="body"><div>Cavolo nero</div><div class="price">£1.80</div></div></article>
+      <article class="product"><img src="p-6b4a8a.svg" alt="Beetroot"><div class="body"><div>Beetroot, bunch</div><div class="price">£2.10</div></div></article>
+      <article class="product"><img src="p-8a5a2b.svg" alt="Sourdough"><div class="body"><div>Sourdough</div><div class="price">£4.80</div></div></article>
+    </div>
+    <p class="note" id="note">Prices include delivery on orders over twenty pounds.</p>
+  </div></section>
+</main>
+<footer><div class="wrap">© 2026 Larder Ltd</div></footer>
+<script>
+  // S11: no error handling; S12: the skeleton is 96 px, the table it becomes is taller.
+  fetch('api/orders.json?delay=700').then((r) => r.json()).then((d) => {
+    document.getElementById('summary').textContent = `${d.count} orders, ${d.currency}${d.total} in total`;
+    document.getElementById('orders').innerHTML = '<table><thead><tr><th>Order</th><th>Item</th><th>Qty</th><th class="price">Price</th></tr></thead><tbody>' +
+      (d.orders || []).map((o) => `<tr><td>${o.id}</td><td>${o.item}</td><td>${o.qty}</td><td class="price">${o.price}</td></tr>`).join('') + '</tbody></table>';
+  });
+</script>
+</body>
+</html>

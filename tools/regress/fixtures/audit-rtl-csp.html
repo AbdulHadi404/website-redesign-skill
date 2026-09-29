@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- A Content-Security-Policy without 'unsafe-inline' in style-src: page.addStyleTag is refused, so the phone block
+     switches transitions off with a constructed stylesheet, and its hover, keyboard and pressed findings all stand
+     (Refresh has no :active state; Save has one behind a 0.3s transition, read at its end state). -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'">
+<title>Orders</title><link rel="stylesheet" href="audit-rtl-csp.css"></head>
+<body><main><h1>Orders</h1>
+<div class="row">Order 1042 <span class="actions"><a href="#e">Edit</a></span></div>
+<form><label for="p">Phone</label><input id="p" name="phone" type="number" autocomplete="tel"></form>
+<p><button class="go" type="button">Refresh orders</button> <button class="save" type="button">Save orders</button></p></main></body></html>

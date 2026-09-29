@@ -1,0 +1,30 @@
+[
+ {
+  "lang": "/",
+  "typed": "١٢٥٠٫٥٠",
+  "inputValue": "",
+  "calls": "[]",
+  "msg": "Error | "
+ },
+ {
+  "lang": "/?lang=en",
+  "typed": "1,250.5",
+  "inputValue": "1250.5",
+  "calls": "[[\"invoice_create\",{\"amount\":1250.5}]]",
+  "msg": "✓ | "
+ },
+ {
+  "lang": "/",
+  "typed": "1250.555",
+  "inputValue": "1250.555",
+  "calls": "[[\"invoice_create\",{\"amount\":1250.555}]]",
+  "msg": "✓ | "
+ },
+ {
+  "lang": "/",
+  "typed": "",
+  "inputValue": "",
+  "calls": "[]",
+  "msg": "Error | "
+ }
+]

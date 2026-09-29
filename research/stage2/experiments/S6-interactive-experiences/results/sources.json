@@ -1,0 +1,408 @@
+{
+  "date": "2026-09-29T06:28:24.974Z",
+  "sources": "/tmp/s2-S6",
+  "repos": {
+    "2048": {
+      "commit": "478b6ec346e3787f589e4af751378d06ded4cbbc",
+      "signals": {
+        "files": 15,
+        "aria": 0,
+        "tabindex": 0,
+        "roleAttr": 0,
+        "reducedMotion": 0,
+        "keydown": 1,
+        "touch": 1,
+        "mute": 0,
+        "liveRegion": 0
+      },
+      "feedback": {
+        "moveTransition": "100ms",
+        "newTileAppear": "200ms ease $transition-speed",
+        "mergePop": "200ms ease $transition-speed",
+        "scoreAdditionFloat": "600ms ease-in",
+        "popKeyframes": [
+          "scale(0)",
+          "scale(1.2)",
+          "scale(1)"
+        ],
+        "keysPerDirection": [
+          "Up",
+          "Right",
+          "Down",
+          "Left",
+          "Vim up",
+          "Vim right",
+          "Vim down",
+          "Vim left",
+          "W",
+          "D",
+          "S",
+          "A"
+        ],
+        "touch": true
+      }
+    },
+    "adarkroom": {
+      "commit": "1fada4620b6c66bd07bf15a3f1eb8223df8bc1d7",
+      "signals": {
+        "files": 90,
+        "aria": 0,
+        "tabindex": 0,
+        "roleAttr": 0,
+        "reducedMotion": 0,
+        "keydown": 5,
+        "touch": 0,
+        "mute": 34,
+        "liveRegion": 0
+      },
+      "markup": {
+        "buttonElement": "div",
+        "buttonHasTabindexOrRole": false,
+        "costShownIn": "hover tooltip",
+        "soundDefault": "off until chosen (config.soundOn unset = false)",
+        "soundPrompt": [
+          "Sound Available!",
+          "ears flooded with new sensations.",
+          "perhaps silence is safer?"
+        ],
+        "soundPromptDelayMs": 3000,
+        "menuOptions": [
+          "sound on.",
+          "get the app.",
+          "lights off.",
+          "hyper."
+        ]
+      }
+    },
+    "juicy-breakout": {
+      "commit": "e8f271018b91120e1d4243e418614ff581532ed1",
+      "signals": {
+        "files": 26,
+        "aria": 0,
+        "tabindex": 0,
+        "roleAttr": 0,
+        "reducedMotion": 0,
+        "keydown": 0,
+        "touch": 0,
+        "mute": 4,
+        "liveRegion": 0
+      },
+      "juice": {
+        "booleanTogglesDefaultOff": 30,
+        "groups": [
+          {
+            "group": "Colors",
+            "toggles": [
+              "EFFECT_SCREEN_COLORS=false"
+            ]
+          },
+          {
+            "group": "Tweening",
+            "toggles": [
+              "EFFECT_TWEENIN_ENABLED=false",
+              "EFFECT_TWEENIN_PROPERTY_Y=true",
+              "EFFECT_TWEENIN_PROPERTY_ROTATION=false",
+              "EFFECT_TWEENIN_PROPERTY_SCALE=false",
+              "EFFECT_TWEENIN_DELAY=0",
+              "EFFECT_TWEENIN_DURATION=.7",
+              "EFFECT_TWEENIN_EQUATION=0"
+            ]
+          },
+          {
+            "group": "Stretch and squeeze",
+            "toggles": [
+              "EFFECT_PADDLE_STRETCH=false",
+              "EFFECT_BALL_EXTRA_SCALE=false",
+              "EFFECT_BALL_ROTATE=false",
+              "EFFECT_BALL_STRETCH=false",
+              "EFFECT_BALL_STRETCH_ANIMATED=false",
+              "EFFECT_BALL_GLOW=false",
+              "BALL_GRAVITY=0",
+              "EFFECT_BLOCK_JELLY=false",
+              "EFFECT_BOUNCY_LINES_ENABLED=false"
+            ]
+          },
+          {
+            "group": "Sounds",
+            "toggles": [
+              "SOUND_WALL=false",
+              "SOUND_BLOCK=false",
+              "SOUND_PADDLE=false",
+              "SOUND_MUSIC=false"
+            ]
+          },
+          {
+            "group": "Particles",
+            "toggles": [
+              "EFFECT_PARTICLE_BALL_COLLISION=false",
+              "EFFECT_BLOCK_DESTRUCTION_DURATION=2",
+              "EFFECT_BLOCK_SCALE=false",
+              "EFFECT_BLOCK_GRAVITY=false",
+              "EFFECT_BLOCK_PUSH=false",
+              "EFFECT_BLOCK_ROTATE=false",
+              "EFFECT_BLOCK_DARKEN=false",
+              "EFFECT_BLOCK_SHATTER=false",
+              "EFFECT_PARTICLE_BLOCK_SHATTER=false",
+              "EFFECT_PARTICLE_PADDLE_COLLISION=false",
+              "EFFECT_BALL_TRAIL=false"
+            ]
+          },
+          {
+            "group": "Screen shake",
+            "toggles": [
+              "EFFECT_SCREEN_SHAKE=false",
+              "EFFECT_SCREEN_SHAKE_POWER=.5"
+            ]
+          },
+          {
+            "group": "Freeze/Sleep",
+            "toggles": [
+              "EFFECT_FREEZE_DURATION_MS=0",
+              "EFFECT_FREEZE_SPEED_MULTIPLIER=0",
+              "EFFECT_FREEZE_FADE_IN_MS=0",
+              "EFFECT_FREEZE_FADE_OUT_MS=0"
+            ]
+          },
+          {
+            "group": "Personality",
+            "toggles": [
+              "EFFECT_PADDLE_FACE=false",
+              "EFFECT_PADDLE_LOOK_AT_BALL=false",
+              "EFFECT_PADDLE_SMILE=0",
+              "EFFECT_PADDLE_EYE_SIZE=1",
+              "EFFECT_PADDLE_EYE_SEPARATION=25"
+            ]
+          },
+          {
+            "group": "Finish him",
+            "toggles": [
+              "EFFECT_SCREEN_COLOR_GLITCH=false"
+            ]
+          },
+          {
+            "group": "Other",
+            "toggles": [
+              "NUM_BALLS=1"
+            ]
+          }
+        ]
+      }
+    },
+    "trust": {
+      "commit": "6ec45d73befdb922bd40654dd1c1c903a953562f",
+      "signals": {
+        "files": 37,
+        "aria": 0,
+        "tabindex": 0,
+        "roleAttr": 0,
+        "reducedMotion": 0,
+        "keydown": 0,
+        "touch": 2,
+        "mute": 21,
+        "liveRegion": 0
+      },
+      "chapters": [
+        "0_Slides_Intro.js",
+        "1_Slides_OneOff.js",
+        "2_Slides_Iterated.js",
+        "3_Slides_Tournament.js",
+        "4_Slides_Evolution.js",
+        "5_Slides_Distrust.js",
+        "6_Slides_Noise.js",
+        "7_Slides_Sandbox.js",
+        "8_Slides_Conclusion.js",
+        "9_Slides_Credits.js",
+        "X_Slides_Feetnotes.js"
+      ],
+      "allCopyInOneFile": {
+        "file": "words.html",
+        "paragraphs": 234,
+        "words": 3404
+      },
+      "soundDefault": "on (Howler; toggle ON/OFF)"
+    },
+    "polygons": {
+      "commit": "3ec3fd74a52ce24f74790a47f117d1a3abefbbb7",
+      "signals": {
+        "files": 42,
+        "aria": 0,
+        "tabindex": 0,
+        "roleAttr": 0,
+        "reducedMotion": 0,
+        "keydown": 0,
+        "touch": 5,
+        "mute": 0,
+        "liveRegion": 0
+      }
+    },
+    "chrome-music-lab": {
+      "commit": "e54bb414908da2b6286a6ad6431a5fcf8b68dc3f",
+      "signals": {
+        "files": 174,
+        "aria": 0,
+        "tabindex": 0,
+        "roleAttr": 0,
+        "reducedMotion": 0,
+        "keydown": 36,
+        "touch": 23,
+        "mute": 29,
+        "liveRegion": 0
+      }
+    },
+    "folio-2019": {
+      "commit": "540f13573a6da282eae942a4c67335b97cd18970",
+      "signals": {
+        "files": 51,
+        "aria": 0,
+        "tabindex": 0,
+        "roleAttr": 0,
+        "reducedMotion": 0,
+        "keydown": 9,
+        "touch": 22,
+        "mute": 70,
+        "liveRegion": 0
+      }
+    },
+    "hextris": {
+      "commit": "3f4847dc8fd7dab3d1c87e6324b9159d92fbd396",
+      "signals": {
+        "files": 20,
+        "aria": 0,
+        "tabindex": 0,
+        "roleAttr": 0,
+        "reducedMotion": 0,
+        "keydown": 23,
+        "touch": 11,
+        "mute": 6,
+        "liveRegion": 0
+      }
+    },
+    "BrowserQuest": {
+      "commit": "af32d247cac3495ca430d0effbb88dd5f3250b2c",
+      "signals": {
+        "files": 69,
+        "aria": 0,
+        "tabindex": 0,
+        "roleAttr": 0,
+        "reducedMotion": 0,
+        "keydown": 5,
+        "touch": 2,
+        "mute": 30,
+        "liveRegion": 0
+      }
+    }
+  },
+  "adarkroomPlay": {
+    "method": "greedy script, 40 simulated minutes at 2 s steps, fake clock, Math.random seeded; presses visible controls in the current place, stokes only below a roaring fire, walks to the next place every 20 s, answers events with the first safe choice (sound: disable), never embarks to the world map",
+    "controlsFirstSeen": [
+      {
+        "text": "light fire",
+        "firstSeenMin": 0
+      },
+      {
+        "text": "stoke fire",
+        "firstSeenMin": 0.5
+      },
+      {
+        "text": "gather wood",
+        "firstSeenMin": 1
+      },
+      {
+        "text": "trap",
+        "firstSeenMin": 4
+      },
+      {
+        "text": "cart",
+        "firstSeenMin": 4
+      },
+      {
+        "text": "check traps",
+        "firstSeenMin": 4.5
+      },
+      {
+        "text": "hut",
+        "firstSeenMin": 5.5
+      },
+      {
+        "text": "lodge",
+        "firstSeenMin": 13.5
+      },
+      {
+        "text": "trading post",
+        "firstSeenMin": 22.5
+      },
+      {
+        "text": "tannery",
+        "firstSeenMin": 30.5
+      },
+      {
+        "text": "smokehouse",
+        "firstSeenMin": 33.5
+      }
+    ],
+    "placesFirstSeen": {
+      "A Dark Room": 0,
+      "A Firelit Room": 0.5,
+      "A Silent Forest": 1,
+      "A Lonely Hut": 17.5,
+      "A Tiny Village": 20.5,
+      "A Modest Village": 33.5
+    },
+    "timeline": [
+      {
+        "minute": 0,
+        "controls": 1,
+        "places": 1,
+        "storeRows": 0
+      },
+      {
+        "minute": 5,
+        "controls": 5,
+        "places": 2,
+        "storeRows": 3
+      },
+      {
+        "minute": 10,
+        "controls": 6,
+        "places": 2,
+        "storeRows": 8
+      },
+      {
+        "minute": 15,
+        "controls": 7,
+        "places": 2,
+        "storeRows": 8
+      },
+      {
+        "minute": 20,
+        "controls": 7,
+        "places": 2,
+        "storeRows": 8
+      },
+      {
+        "minute": 25,
+        "controls": 8,
+        "places": 2,
+        "storeRows": 8
+      },
+      {
+        "minute": 30,
+        "controls": 8,
+        "places": 2,
+        "storeRows": 8
+      },
+      {
+        "minute": 35,
+        "controls": 10,
+        "places": 2,
+        "storeRows": 8
+      },
+      {
+        "minute": 40,
+        "controls": 10,
+        "places": 2,
+        "storeRows": 8
+      }
+    ]
+  }
+}

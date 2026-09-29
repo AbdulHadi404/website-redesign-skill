@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Command palettes — widgets.mjs regression</title>
+<!--
+  widgets.mjs "palette" contract (research/stage2/streams/S4-capability-catalogue.md F3, D5).
+  #open-good: a modal <dialog> named "Command palette"; focus goes to its combobox; typing filters the results, puts
+  the first one in aria-activedescendant and says the count in a role="status" region that exists from load; ArrowDown
+  moves the active result; no match shows and announces "No results found."; Escape closes and focus returns to the
+  opener (what Base UI's Autocomplete in a Dialog does).
+  #open-bad: the kbar/cmdk failures together: a fixed layer with no dialog role, the page behind left exposed, results
+  highlighted by class only, a visible "No results" that is not in a live region, and focus dropped to <body> on close.
+-->
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; margin: 24px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  dialog, .layer { width: 420px; padding: 12px; border: 1px solid #888; background: #fff; }
+  .layer { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); box-shadow: 0 8px 24px rgb(0 0 0 / .2); }
+  input { width: 100%; box-sizing: border-box; font: inherit; padding: 6px; }
+  ul { list-style: none; padding: 0; margin: 8px 0 0; }
+  li { padding: 4px 8px; }
+  li[aria-selected=true], li.hl { background: #06c; color: #fff; }
+</style>
+</head>
+<body>
+<h1>Command palettes</h1>
+<p><button id="open-good" type="button">Open command palette</button> <button id="open-bad" type="button">Open quick actions</button></p>
+<p>Some page content behind the palettes.</p>
+
+<dialog id="pal-good" aria-label="Command palette">
+  <input id="q-good" role="combobox" aria-label="Search commands" aria-expanded="true" aria-controls="list-good" aria-autocomplete="list" autocomplete="off" autofocus>
+  <ul id="list-good" role="listbox" aria-label="Commands"></ul>
+  <p id="empty-good" hidden>No results found.</p>
+  <div id="status-good" role="status" class="sr"></div>
+</dialog>
+
+<div id="pal-bad" class="layer" hidden>
+  <input id="q-bad" placeholder="Type a command or search…" autocomplete="off">
+  <ul id="list-bad"></ul>
+  <p id="empty-bad" hidden>No results</p>
+</div>
+
+<script>
+const COMMANDS = ['New invoice', 'New client', 'New project', 'Go to dashboard', 'Go to invoices', 'Go to settings', 'Switch theme', 'Sign out'];
+function palette({ opener, box, input, list, empty, status, modal, roles }) {
+  let active = -1, shown = [];
+  list.innerHTML = COMMANDS.map((c, i) => `<li id="${list.id}-${i}"${roles ? ' role="option" aria-selected="false"' : ' role="option"'}>${c}</li>`).join('');
+  const items = [...list.children];
+  const paint = () => {
+    items.forEach((li, i) => { const on = shown[active] === i; if (roles) li.setAttribute('aria-selected', on); li.classList.toggle('hl', on); });
+    if (roles) shown[active] != null ? input.setAttribute('aria-activedescendant', items[shown[active]].id) : input.removeAttribute('aria-activedescendant');
+  };
+  const filter = () => {
+    const q = input.value.trim().toLowerCase();
+    shown = []; items.forEach((li, i) => { const hit = li.textContent.toLowerCase().includes(q); li.hidden = !hit; if (hit) shown.push(i); });
+    active = shown.length && q ? 0 : -1;
+    empty.hidden = shown.length > 0;
+    if (status) status.textContent = shown.length ? `${shown.length} result${shown.length === 1 ? '' : 's'}` : 'No results found.';
+    paint();
+  };
+  input.addEventListener('input', filter);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' && shown.length) { e.preventDefault(); active = (active + 1) % shown.length; paint(); }
+    if (e.key === 'ArrowUp' && shown.length) { e.preventDefault(); active = (active - 1 + shown.length) % shown.length; paint(); }
+    if (e.key === 'Escape' && !modal) { box.hidden = true; }
+  });
+  opener.addEventListener('click', () => {
+    input.value = ''; filter(); if (status) status.textContent = '';
+    if (modal) { box.showModal(); input.focus(); } else { box.hidden = false; input.focus(); }
+  });
+  if (modal) box.addEventListener('close', () => opener.focus());
+}
+palette({ opener: document.getElementById('open-good'), box: document.getElementById('pal-good'), input: document.getElementById('q-good'), list: document.getElementById('list-good'),
+  empty: document.getElementById('empty-good'), status: document.getElementById('status-good'), modal: true, roles: true });
+palette({ opener: document.getElementById('open-bad'), box: document.getElementById('pal-bad'), input: document.getElementById('q-bad'), list: document.getElementById('list-bad'),
+  empty: document.getElementById('empty-bad'), status: null, modal: false, roles: false });
+</script>
+</body>
+</html>

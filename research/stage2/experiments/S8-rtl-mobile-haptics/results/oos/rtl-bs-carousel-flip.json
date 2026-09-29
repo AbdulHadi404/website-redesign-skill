@@ -1,0 +1,171 @@
+{
+ "url": "http://127.0.0.1:38965/ext/bootstrap-built/carousel.html",
+ "mode": "flip",
+ "width": 1280,
+ "summary": {
+  "FAIL": 2,
+  "WARN": 3,
+  "INFO": 1
+ },
+ "mirror": {
+  "checked": 79,
+  "notMirrored": 14,
+  "roots": 9,
+  "keptPhysical": 9
+ },
+ "css": {
+  "rules": 2552,
+  "physicalRules": 421,
+  "overrideRules": 0,
+  "logicalRules": 9
+ },
+ "keys": [],
+ "icons": [],
+ "findings": [
+  {
+   "level": "FAIL",
+   "check": "mirror",
+   "message": "Boxes that do not mirror when the page turns RTL (topmost only; > 8 px from the mirrored place)",
+   "count": 8,
+   "examples": [
+    "a.navbar-brand (16 px off) — margin-left 0px / right 16px",
+    "li.nav-item (640 px off) — parent ul.navbar-nav.me-auto: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "li.nav-item (640 px off) — parent ul.navbar-nav.me-auto: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "li.nav-item (640 px off) — parent ul.navbar-nav.me-auto: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "a.btn.btn-lg (723 px off)",
+    "button.carousel-control-prev (1088 px off) — left 0px / right 1088px",
+    "button.carousel-control-next (1088 px off) — left 1088px / right 0px",
+    "p.float-end (1025 px off) — float right"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "mirror",
+   "message": "Boxes 3–8 px from their mirrored place in RTL (topmost only)",
+   "count": 1,
+   "examples": [
+    "input.form-control.me-2 (8 px off) — margin-left 0px / right 8px"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "mirror",
+   "message": "Physical values that stay the same in RTL (computed styles, LTR vs RTL render)",
+   "count": 9,
+   "examples": [
+    "a.navbar-brand: margin-left 0px / right 16px",
+    "ul.navbar-nav.me-auto: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "input.form-control.me-2: margin-left 0px / right 8px",
+    "div.carousel-item.active: margin-left 0px / right -1280px, float left",
+    "h1: text-align left",
+    "p.opacity-75: text-align left",
+    "button.carousel-control-prev: left 0px / right 1088px",
+    "button.carousel-control-next: left 1088px / right 0px",
+    "p.float-end: float right"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "css",
+   "message": "Rules with physical inline-axis values (421 of 2552 rules; 0 RTL overrides; 9 rules use logical properties)",
+   "count": 421,
+   "examples": [
+    "ol, ul { padding-left:2rem }",
+    "dd { margin-left:0px }",
+    "caption { text-align:left }",
+    "legend { float:left }",
+    ".list-unstyled { padding-left:0px }",
+    ".list-inline { padding-left:0px }",
+    ".list-inline-item:not(:last-child) { margin-right:0.5rem }",
+    ".offset-1 { margin-left:8.33333% }",
+    ".offset-2 { margin-left:16.6667% }",
+    ".offset-3 { margin-left:25% }",
+    ".offset-4 { margin-left:33.3333% }",
+    ".offset-5 { margin-left:41.6667% }",
+    ".offset-6 { margin-left:50% }",
+    ".offset-7 { margin-left:58.3333% }",
+    ".offset-8 { margin-left:66.6667% }",
+    ".offset-9 { margin-left:75% }",
+    ".offset-10 { margin-left:83.3333% }",
+    ".offset-11 { margin-left:91.6667% }",
+    ".offset-sm-0 { margin-left:0px }",
+    ".offset-sm-1 { margin-left:8.33333% }",
+    ".offset-sm-2 { margin-left:16.6667% }",
+    ".offset-sm-3 { margin-left:25% }",
+    ".offset-sm-4 { margin-left:33.3333% }",
+    ".offset-sm-5 { margin-left:41.6667% }",
+    ".offset-sm-6 { margin-left:50% }",
+    ".offset-sm-7 { margin-left:58.3333% }",
+    ".offset-sm-8 { margin-left:66.6667% }",
+    ".offset-sm-9 { margin-left:75% }",
+    ".offset-sm-10 { margin-left:83.3333% }",
+    ".offset-sm-11 { margin-left:91.6667% }",
+    ".offset-md-0 { margin-left:0px }",
+    ".offset-md-1 { margin-left:8.33333% }",
+    ".offset-md-2 { margin-left:16.6667% }",
+    ".offset-md-3 { margin-left:25% }",
+    ".offset-md-4 { margin-left:33.3333% }",
+    ".offset-md-5 { margin-left:41.6667% }",
+    ".offset-md-6 { margin-left:50% }",
+    ".offset-md-7 { margin-left:58.3333% }",
+    ".offset-md-8 { margin-left:66.6667% }",
+    ".offset-md-9 { margin-left:75% }",
+    ".offset-md-10 { margin-left:83.3333% }",
+    ".offset-md-11 { margin-left:91.6667% }",
+    ".offset-lg-0 { margin-left:0px }",
+    ".offset-lg-1 { margin-left:8.33333% }",
+    ".offset-lg-2 { margin-left:16.6667% }",
+    ".offset-lg-3 { margin-left:25% }",
+    ".offset-lg-4 { margin-left:33.3333% }",
+    ".offset-lg-5 { margin-left:41.6667% }",
+    ".offset-lg-6 { margin-left:50% }",
+    ".offset-lg-7 { margin-left:58.3333% }",
+    ".offset-lg-8 { margin-left:66.6667% }",
+    ".offset-lg-9 { margin-left:75% }",
+    ".offset-lg-10 { margin-left:83.3333% }",
+    ".offset-lg-11 { margin-left:91.6667% }",
+    ".offset-xl-0 { margin-left:0px }",
+    ".offset-xl-1 { margin-left:8.33333% }",
+    ".offset-xl-2 { margin-left:16.6667% }",
+    ".offset-xl-3 { margin-left:25% }",
+    ".offset-xl-4 { margin-left:33.3333% }",
+    ".offset-xl-5 { margin-left:41.6667% }"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "Transforms with an x translation (drawers, slides): transforms never flip with dir",
+   "count": 16,
+   "examples": [
+    ".active.carousel-item-end, .carousel-item-next:not(.carousel-item-start) { transform: translateX(100%) }",
+    ".active.carousel-item-start, .carousel-item-prev:not(.carousel-item-end) { transform: translateX(-100%) }",
+    ".offcanvas-sm.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-sm.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-md.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-md.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-lg.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-lg.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-xl.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-xl.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-xxl.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-xxl.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas.offcanvas-end { transform: translateX(100%) }",
+    ".translate-middle { transform: translate(-50%, -50%) }",
+    ".translate-middle-x { transform: translateX(-50%) }"
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "align",
+   "message": "text-align: left inside RTL text",
+   "count": 2,
+   "examples": [
+    "h1",
+    "p.opacity-75"
+   ]
+  }
+ ],
+ "ms": 613
+}

@@ -1,0 +1,1 @@
+{ "motion": [ { "id": "ticker", "trigger": "click", "on": "#hi", "target": "#ticker", "properties": ["text"], "duration": 800, "easing": "cubic-bezier(0.2, 0, 0, 1)", "reduced": "instant" } ] }

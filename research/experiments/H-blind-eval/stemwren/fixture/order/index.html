@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Order | Stem & Wren</title>
+<meta name="viewport" content="width=1100">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="topbar">🌸 FREE CARD WITH EVERY ORDER 🌸 SAME DAY DELIVERY AVAILABLE 🌸</div>
+<header>
+  <img src="../assets/logo.svg" alt="">
+  <nav><a href="../">Home</a><a href="../#occasions">Occasions</a><a href="../#about">About</a><a href="./" class="cta">Order Now</a></nav>
+</header>
+<div class="form-wrap">
+  <h1>Build Your Bouquet</h1>
+  <p style="text-align:center">Fill in the form below and we'll make your dream bouquet! 💐</p>
+  <form id="order">
+    <fieldset><legend>1. Size</legend>
+      <div class="field"><select name="size"><option value="">-- Choose size --</option><option>Petite</option><option>Classic</option><option>Grand</option></select></div>
+    </fieldset>
+    <fieldset><legend>2. Flowers</legend>
+      <div id="flower-rows"></div>
+      <p class="small">Choose up to 3 flower types. Enter the colour you'd like.</p>
+    </fieldset>
+    <fieldset><legend>3. Wrapping</legend>
+      <div class="row2"><div class="field"><select name="wrap" id="wrap"></select></div><div class="field"><select name="ribbon" id="ribbon"></select></div></div>
+    </fieldset>
+    <fieldset><legend>4. Card</legend>
+      <div class="field"><textarea name="card_message" rows="3" placeholder="Your message"></textarea></div>
+    </fieldset>
+    <fieldset><legend>5. Delivery</legend>
+      <div class="row2"><div class="field"><input name="delivery_date" placeholder="Delivery date (DD/MM/YYYY)"></div><div class="field"><input name="delivery_postcode" placeholder="Postcode"></div></div>
+      <div class="field"><input name="recipient_name" placeholder="Recipient name"></div>
+      <div class="field"><textarea name="recipient_address" rows="2" placeholder="Recipient address"></textarea></div>
+    </fieldset>
+    <fieldset><legend>6. Your details</legend>
+      <div class="field"><input name="sender_name" placeholder="Your name"></div>
+      <div class="row2"><div class="field"><input name="sender_email" placeholder="Email"></div><div class="field"><input name="sender_phone" placeholder="Phone"></div></div>
+    </fieldset>
+    <button class="submit" type="submit">Place Order 💐</button>
+  </form>
+</div>
+<footer>© 2019 Stem &amp; Wren. All rights reserved. | <a href="#">Privacy</a> | <a href="#">Terms</a></footer>
+<script src="../assets/site.js"></script>
+<script src="../assets/order.js"></script>
+</body>
+</html>

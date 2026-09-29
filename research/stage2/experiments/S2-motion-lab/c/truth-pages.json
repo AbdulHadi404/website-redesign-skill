@@ -1,0 +1,10 @@
+{
+ "_note": "Problem categories each held-out spec row really has, written from Bootstrap's SCSS at the pinned commit (scss/_variables.scss, mixins/_transition.scss, _transitions.scss, _modal.scss, _toasts.scss, _buttons.scss) BEFORE motion.mjs ran on these pages. Facts used: $btn-transition = color/background-color/border-color/box-shadow .15s ease-in-out; $transition-fade = opacity .15s linear; $transition-collapse = height .35s ease; $modal-transition = transform .3s ease-out from translate(0,-50px); $enable-reduced-motion: every transition becomes `transition: none` under reduce. The spec's easing 'out' is cubic-bezier(0.2,0,0,1); ease / ease-out / ease-in-out / linear are 0.098 / 0.145 / 0.294 / 0.271 RMS away from it (> 0.04, motion.mjs's definition of 'a different easing'). 'keep' means the feedback still animates under reduce (motion.md §6), so Bootstrap's `transition: none` fails it. The tab panes in tab.html have no .fade class, so the switch is instant.",
+ "spec": {
+  "bs-modal": { "modal-open": ["easing"], "launch-hover": ["easing", "reduced"] },
+  "bs-collapse": { "collapse-open": ["easing"] },
+  "bs-toast": { "toast-show": ["easing"] },
+  "bs-tab": { "tab-switch": ["static"] },
+  "bs-button": { "toggle-hover": ["easing", "reduced"], "toggle-press": ["easing", "reduced"] }
+ }
+}

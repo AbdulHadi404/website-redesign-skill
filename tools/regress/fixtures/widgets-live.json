@@ -1,0 +1,21 @@
+[
+  { "type": "live", "trigger": "#code" },
+  { "type": "live", "trigger": "#save" },
+  { "type": "live", "trigger": "#add" },
+  { "type": "live", "trigger": "#publish" },
+  { "type": "live", "trigger": "#export-csv" },
+  { "type": "live", "trigger": "#pay" },
+  { "type": "live", "trigger": "#copy" },
+  { "type": "live", "trigger": "#send" },
+  { "type": "live", "trigger": "#pay-card" },
+  { "type": "live", "trigger": "#send3" },
+  { "type": "live", "trigger": "#check-phone" },
+  { "type": "live", "trigger": "#book" },
+  { "type": "live", "trigger": "#next" },
+  { "type": "live", "trigger": "#del" },
+  { "type": "live", "trigger": "#len6" },
+  { "type": "live", "trigger": "input#len6", "keys": ["Space"] },
+  { "type": "live", "trigger": "#sub" },
+  { "type": "live", "trigger": "#export", "before": [{ "click": "#no-such-panel" }] },
+  { "type": "live", "trigger": "button#export" }
+]

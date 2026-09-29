@@ -1,0 +1,399 @@
+{
+ "url": "http://127.0.0.1:38965/ext/govsa-ltr/index.html",
+ "width": 390,
+ "height": 844,
+ "insets": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "env": {
+  "viewportMeta": "width=device-width, initial-scale=1, shrink-to-fit=no",
+  "hoverNone": true,
+  "coarse": true,
+  "cover": false,
+  "resizesContent": false
+ },
+ "summary": {
+  "FAIL": 0,
+  "WARN": 4,
+  "INFO": 3
+ },
+ "thumb": {
+  "model": {
+   "pxPerMm": 6.1,
+   "pivotOutsideMm": 5,
+   "pivotUpMm": 15,
+   "near": 25,
+   "natural": 65,
+   "stretch": 85,
+   "edgeMm": 5
+  },
+  "primaries": [],
+  "tabbar": []
+ },
+ "inputs": [
+  {
+   "field": "",
+   "purpose": "search",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "search",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "search",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "search",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "search",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "search",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "search",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "search",
+   "keyboard": "text"
+  },
+  {
+   "field": "",
+   "purpose": "search",
+   "keyboard": "text"
+  },
+  {
+   "field": "file",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "file",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "file",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "file",
+   "purpose": "text",
+   "keyboard": "text"
+  }
+ ],
+ "findings": [
+  {
+   "level": "INFO",
+   "check": "safe-area",
+   "message": "No viewport-fit=cover: the browser keeps the page inside the safe area (letterboxed in landscape; env() insets are 0), so bars cannot sit under the notch or home indicator. Choose cover only for an edge-to-edge design, and then pad bars with env()",
+   "examples": []
+  },
+  {
+   "level": "WARN",
+   "check": "targets",
+   "message": "Targets under 44 px on a coarse pointer (buttons, fixed-bar links)",
+   "count": 164,
+   "examples": [
+    "a.govsa-link\"English site\" 69×16",
+    "a.govsa-link\"Contact us\" 65×16",
+    "a.govsa-link\"My Account\" 71×16",
+    "a.govsa-link\"Log out\" 45×16",
+    "a.govsa-header__navigation__dropdown\"About Kingdom\" 158×24",
+    "a.govsa-header__navigation__dropdown\"Government Agencies\" 201×24",
+    "a\"Services directory\" 121×18",
+    "a\"About Unified Nation\" 224×42",
+    "button.govsa-header__search-button 34×37",
+    "button.btn.btn-primary\"btn--1\" 99×40",
+    "button.btn.btn-primary\"btn--2\" 76×28",
+    "button.btn.btn-primary\"btn--3\" 70×25",
+    "button.btn.btn-primary\"زر--1\" 76×40",
+    "button.btn.btn-primary\"زر--2\" 60×28",
+    "button.btn.btn-primary\"زر--3\" 56×25",
+    "a.nav-link\"Active\" 234×40",
+    "a.nav-link\"item 2\" 234×40",
+    "a.nav-link\"item 3\" 234×40",
+    "a.nav-link\"item 5\" 234×40",
+    "a.nav-link\"نص\" 194×40",
+    "a.nav-link\"نص 2\" 194×40",
+    "a.nav-link\"نص 3\" 194×40",
+    "a.nav-link\"نص 5\" 194×40",
+    "label.govsa-checkbox\"Label disabled\" 204×27",
+    "label.govsa-checkbox\"Label\" 204×27",
+    "label.govsa-checkbox\"العنوان\" 204×27",
+    "label.govsa-radio\"Label disabled\" 234×27",
+    "label.govsa-radio\"عنوان\" 234×27",
+    "button.btn.govsa-btn--darkBlue\"buttons\" 100×28",
+    "button.btn.govsa-btn--darkBlue\"Default\" 100×28",
+    "button.btn.govsa-btn--green\"Default\" 100×28",
+    "button.btn.govsa-btn--green\"Default\" 100×28",
+    "button.btn.govsa-btn--blue\"Default\" 100×28",
+    "button.btn.govsa-btn--blue\"Default\" 100×28",
+    "button.btn.govsa-btn--outline--darkBlue\"Default\" 100×28",
+    "button.btn.govsa-btn--outline--darkBlue\"Default\" 100×28",
+    "button.btn.govsa-btn--outline--green\"Default\" 100×28",
+    "button.btn.govsa-btn--outline--green\"Default\" 100×28",
+    "button.btn.govsa-btn--outline--blue\"Default\" 100×28",
+    "button.btn.govsa-btn--outline--blue\"Default\" 100×28",
+    "button.btn.govsa-btn--green\"Default\" 126×28",
+    "button.btn.govsa-btn--green\"Default\" 126×28",
+    "button.btn.govsa-btn--darkBlue\"الاجراء\" 100×28",
+    "button.btn.govsa-btn--darkBlue\"الاجراء\" 100×28",
+    "button.btn.govsa-btn--green\"الاجراء\" 100×28",
+    "button.btn.govsa-btn--green\"الاجراء\" 100×28",
+    "button.btn.govsa-btn--blue\"الاجراء\" 100×28",
+    "button.btn.govsa-btn--blue\"الاجراء\" 100×28",
+    "button.btn.govsa-btn--outline--darkBlue\"الاجراء\" 100×28",
+    "button.btn.govsa-btn--outline--darkBlue\"الاجراء\" 100×28",
+    "button.btn.govsa-btn--outline--green\"الاجراء\" 100×28",
+    "button.btn.govsa-btn--outline--green\"الاجراء\" 100×28",
+    "button.btn.govsa-btn--outline--blue\"الاجراء\" 100×28",
+    "button.btn.govsa-btn--outline--blue\"الاجراء\" 100×28",
+    "button.btn.govsa-btn--green\"الاجراء\" 106×28",
+    "button.btn.govsa-btn--green\"الاجراء\" 106×28",
+    "label.govsa-checkbox\"title\" 90×24",
+    "label.govsa-checkbox\"Label\" 42×45",
+    "label.govsa-checkbox\"Label\" 42×45",
+    "label.govsa-checkbox\"Label\" 42×45"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "targets",
+   "message": "Small targets packed closer than 8 px (mis-taps)",
+   "count": 100,
+   "examples": [
+    "a.nav-link\"Active\" (5px from a.nav-link\"item 2\")",
+    "a.nav-link\"item 2\" (5px from a.nav-link\"Active\")",
+    "a.nav-link\"item 3\" (3px from button.govsa-sideNavigation__button\"Dropdown\")",
+    "button.govsa-sideNavigation__button\"Dropdown\" (3px from a.nav-link\"item 3\")",
+    "a.nav-link\"item 5\" (3px from button.govsa-sideNavigation__button\"Dropdown\")",
+    "button.govsa-sideNavigation__button\"Dropdown\" (3px from a.nav-link\"item 5\")",
+    "a.nav-link\"نص\" (5px from a.nav-link\"نص 2\")",
+    "a.nav-link\"نص 2\" (5px from a.nav-link\"نص\")",
+    "a.nav-link\"نص 3\" (3px from button.govsa-sideNavigation__button\"نص\")",
+    "button.govsa-sideNavigation__button\"نص\" (3px from a.nav-link\"نص 3\")",
+    "a.nav-link\"نص 5\" (3px from button.govsa-sideNavigation__button\"نص\")",
+    "button.govsa-sideNavigation__button\"نص\" (3px from a.nav-link\"نص 5\")",
+    "label.govsa-checkbox\"Label\" (7px from label.govsa-checkbox\"عنوان\")",
+    "label.govsa-checkbox\"Label\" (0px from label.govsa-checkbox\"عنوان\")",
+    "label.govsa-checkbox\"عنوان\" (0px from label.govsa-checkbox\"Label\")",
+    "button.dropdown-toggle\"Label\" (0px from label.govsa-checkbox\"خط المحتوى\")",
+    "a.page-link (5px from a.page-link\"1\")",
+    "a.page-link\"1\" (5px from a.page-link)",
+    "a.page-link\"2\" (5px from a.page-link\"1\")",
+    "a.page-link\"3\" (5px from a.page-link\"2\")",
+    "a.page-link\"4\" (5px from a.page-link\"3\")",
+    "a.page-link (5px from a.page-link\"4\")",
+    "a.page-link (5px from a.page-link\"1\")",
+    "a.page-link\"1\" (5px from a.page-link)",
+    "a.page-link\"2\" (5px from a.page-link\"1\")",
+    "a.page-link\"3\" (5px from a.page-link\"2\")",
+    "a.page-link\"4\" (5px from a.page-link\"3\")",
+    "a.page-link (5px from a.page-link\"4\")",
+    "a.page-link (5px from a.page-link\"1\")",
+    "a.page-link\"1\" (5px from a.page-link)",
+    "a.page-link\"...\" (5px from a.page-link\"1\")",
+    "a.page-link\"10\" (5px from a.page-link\"...\")",
+    "a.page-link\"...\" (5px from a.page-link\"10\")",
+    "a.page-link\"200\" (5px from a.page-link\"...\")",
+    "a.page-link (5px from a.page-link\"200\")",
+    "a.page-link (5px from a.page-link\"١\")",
+    "a.page-link\"١\" (5px from a.page-link)",
+    "a.page-link\"٢\" (5px from a.page-link\"١\")",
+    "a.page-link\"٣\" (5px from a.page-link\"٢\")",
+    "a.page-link\"٤\" (5px from a.page-link\"٣\")",
+    "a.page-link (5px from a.page-link\"٤\")",
+    "a.page-link (5px from a.page-link\"١\")",
+    "a.page-link\"١\" (5px from a.page-link)",
+    "a.page-link\"٢\" (5px from a.page-link\"١\")",
+    "a.page-link\"٣\" (5px from a.page-link\"٢\")",
+    "a.page-link\"٤\" (5px from a.page-link\"٣\")",
+    "a.page-link (5px from a.page-link\"٤\")",
+    "a.page-link (5px from a.page-link\"١\")",
+    "a.page-link\"١\" (5px from a.page-link)",
+    "a.page-link\"...\" (5px from a.page-link\"١\")",
+    "a.page-link\"١٠\" (5px from a.page-link\"...\")",
+    "a.page-link\"...\" (5px from a.page-link\"١٠\")",
+    "a.page-link\"٢٠٠\" (5px from a.page-link\"...\")",
+    "a.page-link (5px from a.page-link\"٢٠٠\")",
+    "#headingOne (0px from #headingTwo)",
+    "#headingTwo (0px from #headingOne)",
+    "#headingThree (0px from #headingTwo)",
+    "#headingOne (0px from #headingThree)",
+    "#headingOne (0px from #headingTwo)",
+    "#headingTwo (0px from #headingOne)"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "targets",
+   "message": "Small targets hugging the screen edge, where touch error is largest",
+   "count": 49,
+   "examples": [
+    "a.govsa-link\"English site\"",
+    "a.govsa-link\"Log out\"",
+    "a.govsa-header__navigation__dropdown\"About Kingdom\"",
+    "a.govsa-header__navigation__dropdown\"Government Agencies\"",
+    "a\"Services directory\"",
+    "a\"About Unified Nation\"",
+    "button.govsa-header__search-button",
+    "a.page-link",
+    "a.page-link",
+    "a.page-link\"٢٠٠\"",
+    "a.page-link",
+    "a.footer-link\"View more\"",
+    "a.footer-link\"GCC eGovernment Port\"",
+    "a.footer-link\"Government Procureme\"",
+    "a.footer-link\"Employment in the Ki\"",
+    "a.footer-link\"Sustainable Developm\"",
+    "a.footer-link\"Governement Open Dat\"",
+    "a.footer-link\"Services Index\"",
+    "a.footer-link\"GCC eGovernment Port\"",
+    "a.footer-link\"Government Procureme\"",
+    "a.footer-link\"Employment in the Ki\"",
+    "a.footer-link\"Sustainable Developm\"",
+    "a.footer-link\"Governement Open Dat\"",
+    "a.footer-link\"Services Index\"",
+    "a.footer-link\"GCC eGovernment Port\"",
+    "a.footer-link\"Government Procureme\"",
+    "a.footer-link\"Employment in the Ki\"",
+    "a.footer-link\"Sustainable Developm\"",
+    "a.footer-link\"Governement Open Dat\"",
+    "a.footer-link\"Services Index\"",
+    "a.footer-link\"عرض المزيد\"",
+    "a.footer-link\"البوابات الحكومية و \"",
+    "a.footer-link\"المشتريات الحكومية\"",
+    "a.footer-link\"العمالة في المملكة\"",
+    "a.footer-link\"تنمية مستدامة\"",
+    "a.footer-link\"الحكم البيانات المفت\"",
+    "a.footer-link\"مؤشر الخدمات\"",
+    "a.footer-link\"البوابات الحكومية و \"",
+    "a.footer-link\"المشتريات الحكومية\"",
+    "a.footer-link\"العمالة في المملكة\"",
+    "a.footer-link\"تنمية مستدامة\"",
+    "a.footer-link\"الحكم البيانات المفت\"",
+    "a.footer-link\"مؤشر الخدمات\"",
+    "a.footer-link\"البوابات الحكومية و \"",
+    "a.footer-link\"المشتريات الحكومية\"",
+    "a.footer-link\"العمالة في المملكة\"",
+    "a.footer-link\"تنمية مستدامة\"",
+    "a.footer-link\"الحكم البيانات المفت\"",
+    "a.footer-link\"مؤشر الخدمات\""
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "pressed",
+   "message": "Controls with no pressed (:active) state and the tap highlight turned off: a tap gives no feedback until the result",
+   "count": 24,
+   "examples": [
+    "a.govsa-header__navigation__dropdown\"About Kingdom\"",
+    "a.govsa-header__navigation__dropdown\"Government Agencies\"",
+    "a\"Services directory\"",
+    "a\"About Unified Nation\"",
+    "a.govsa-header__logo",
+    "button.govsa-header__search-button",
+    "a.nav-link\"Active\"",
+    "a.nav-link\"item 2\"",
+    "a.nav-link\"item 3\"",
+    "button.govsa-sideNavigation__button\"Dropdown\"",
+    "a.nav-link\"item 5\"",
+    "button.govsa-sideNavigation__button\"Dropdown\"",
+    "a.nav-link\"نص\"",
+    "a.nav-link\"نص 2\"",
+    "a.nav-link\"نص 3\"",
+    "button.govsa-sideNavigation__button\"نص\"",
+    "a.nav-link\"نص 5\"",
+    "button.govsa-sideNavigation__button\"نص\"",
+    "button.btn.govsa-btn--darkBlue\"Default\"",
+    "button.btn.govsa-btn--green\"Default\"",
+    "button.btn.govsa-btn--blue\"Default\"",
+    "button.btn.govsa-btn--outline--darkBlue\"Default\"",
+    "button.btn.govsa-btn--outline--green\"Default\"",
+    "button.btn.govsa-btn--outline--blue\"Default\""
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "keyboards",
+   "message": "Fields that bring the wrong keyboard or miss autofill",
+   "count": 9,
+   "examples": [
+    " (search): search field brings the \"text\" keyboard; expected search",
+    " (search): search field brings the \"text\" keyboard; expected search",
+    " (search): search field brings the \"text\" keyboard; expected search",
+    " (البحث): search field brings the \"text\" keyboard; expected search",
+    " (بحث): search field brings the \"text\" keyboard; expected search",
+    " (search): search field brings the \"text\" keyboard; expected search",
+    " (search): search field brings the \"text\" keyboard; expected search",
+    " (البحث): search field brings the \"text\" keyboard; expected search",
+    " (بحث): search field brings the \"text\" keyboard; expected search"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "keyboard",
+   "message": "No interactive-widget=resizes-content: the keyboard overlays the page (resizes-visual, the default in Chrome Android and on iOS) and fixed bars stay behind it — check focused fields over a real keyboard on a device",
+   "examples": []
+  }
+ ]
+}

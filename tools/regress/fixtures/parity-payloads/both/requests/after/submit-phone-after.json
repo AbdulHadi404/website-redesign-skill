@@ -1,0 +1,22 @@
+{
+ "state": "submit",
+ "device": "phone",
+ "label": "after",
+ "base": "http://localhost:5843",
+ "requests": [
+  {
+   "method": "POST",
+   "url": "http://localhost:5843/api/apply",
+   "contentType": "application/json",
+   "format": "json",
+   "body": {
+    "full_name": "Aoife Byrne",
+    "permit_zone": "B",
+    "blue_badge": false
+   },
+   "raw": "{\"full_name\":\"Aoife Byrne\",\"permit_zone\":\"B\",\"blue_badge\":false}",
+   "bytes": 64,
+   "sha256": "9079e4502f113447ed664ec091e22594e9126baa65c85cdd678f753f1c6a2fcd"
+  }
+ ]
+}

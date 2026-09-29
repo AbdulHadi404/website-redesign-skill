@@ -1,0 +1,157 @@
+{
+ "url": "http://127.0.0.1:38965/ext/bootstrap-built/album.html",
+ "mode": "flip",
+ "width": 1280,
+ "summary": {
+  "FAIL": 1,
+  "WARN": 2,
+  "INFO": 1
+ },
+ "mirror": {
+  "checked": 118,
+  "notMirrored": 4,
+  "roots": 2,
+  "keptPhysical": 12
+ },
+ "css": {
+  "rules": 2541,
+  "physicalRules": 421,
+  "overrideRules": 0,
+  "logicalRules": 9
+ },
+ "keys": [],
+ "icons": [
+  {
+   "name": "me-2",
+   "class": "unknown",
+   "pixels": "empty",
+   "context": "Album",
+   "island": false
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "check": "mirror",
+   "message": "Boxes that do not mirror when the page turns RTL (topmost only; > 8 px from the mirrored place)",
+   "count": 2,
+   "examples": [
+    "a.navbar-brand.d-flex (16 px off) — margin-left 0px / right 16px",
+    "p.float-end.mb-1 (1025 px off) — float right"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "mirror",
+   "message": "Physical values that stay the same in RTL (computed styles, LTR vs RTL render)",
+   "count": 12,
+   "examples": [
+    "a.navbar-brand.d-flex: margin-left 0px / right 16px",
+    "svg.me-2: margin-left 0px / right 8px",
+    "button.btn.btn-sm: margin-left -1px / right 0px",
+    "button.btn.btn-sm: margin-left -1px / right 0px",
+    "button.btn.btn-sm: margin-left -1px / right 0px",
+    "button.btn.btn-sm: margin-left -1px / right 0px",
+    "button.btn.btn-sm: margin-left -1px / right 0px",
+    "button.btn.btn-sm: margin-left -1px / right 0px",
+    "button.btn.btn-sm: margin-left -1px / right 0px",
+    "button.btn.btn-sm: margin-left -1px / right 0px",
+    "button.btn.btn-sm: margin-left -1px / right 0px",
+    "p.float-end.mb-1: float right"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "css",
+   "message": "Rules with physical inline-axis values (421 of 2541 rules; 0 RTL overrides; 9 rules use logical properties)",
+   "count": 421,
+   "examples": [
+    "ol, ul { padding-left:2rem }",
+    "dd { margin-left:0px }",
+    "caption { text-align:left }",
+    "legend { float:left }",
+    ".list-unstyled { padding-left:0px }",
+    ".list-inline { padding-left:0px }",
+    ".list-inline-item:not(:last-child) { margin-right:0.5rem }",
+    ".offset-1 { margin-left:8.33333% }",
+    ".offset-2 { margin-left:16.6667% }",
+    ".offset-3 { margin-left:25% }",
+    ".offset-4 { margin-left:33.3333% }",
+    ".offset-5 { margin-left:41.6667% }",
+    ".offset-6 { margin-left:50% }",
+    ".offset-7 { margin-left:58.3333% }",
+    ".offset-8 { margin-left:66.6667% }",
+    ".offset-9 { margin-left:75% }",
+    ".offset-10 { margin-left:83.3333% }",
+    ".offset-11 { margin-left:91.6667% }",
+    ".offset-sm-0 { margin-left:0px }",
+    ".offset-sm-1 { margin-left:8.33333% }",
+    ".offset-sm-2 { margin-left:16.6667% }",
+    ".offset-sm-3 { margin-left:25% }",
+    ".offset-sm-4 { margin-left:33.3333% }",
+    ".offset-sm-5 { margin-left:41.6667% }",
+    ".offset-sm-6 { margin-left:50% }",
+    ".offset-sm-7 { margin-left:58.3333% }",
+    ".offset-sm-8 { margin-left:66.6667% }",
+    ".offset-sm-9 { margin-left:75% }",
+    ".offset-sm-10 { margin-left:83.3333% }",
+    ".offset-sm-11 { margin-left:91.6667% }",
+    ".offset-md-0 { margin-left:0px }",
+    ".offset-md-1 { margin-left:8.33333% }",
+    ".offset-md-2 { margin-left:16.6667% }",
+    ".offset-md-3 { margin-left:25% }",
+    ".offset-md-4 { margin-left:33.3333% }",
+    ".offset-md-5 { margin-left:41.6667% }",
+    ".offset-md-6 { margin-left:50% }",
+    ".offset-md-7 { margin-left:58.3333% }",
+    ".offset-md-8 { margin-left:66.6667% }",
+    ".offset-md-9 { margin-left:75% }",
+    ".offset-md-10 { margin-left:83.3333% }",
+    ".offset-md-11 { margin-left:91.6667% }",
+    ".offset-lg-0 { margin-left:0px }",
+    ".offset-lg-1 { margin-left:8.33333% }",
+    ".offset-lg-2 { margin-left:16.6667% }",
+    ".offset-lg-3 { margin-left:25% }",
+    ".offset-lg-4 { margin-left:33.3333% }",
+    ".offset-lg-5 { margin-left:41.6667% }",
+    ".offset-lg-6 { margin-left:50% }",
+    ".offset-lg-7 { margin-left:58.3333% }",
+    ".offset-lg-8 { margin-left:66.6667% }",
+    ".offset-lg-9 { margin-left:75% }",
+    ".offset-lg-10 { margin-left:83.3333% }",
+    ".offset-lg-11 { margin-left:91.6667% }",
+    ".offset-xl-0 { margin-left:0px }",
+    ".offset-xl-1 { margin-left:8.33333% }",
+    ".offset-xl-2 { margin-left:16.6667% }",
+    ".offset-xl-3 { margin-left:25% }",
+    ".offset-xl-4 { margin-left:33.3333% }",
+    ".offset-xl-5 { margin-left:41.6667% }"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "Transforms with an x translation (drawers, slides): transforms never flip with dir",
+   "count": 16,
+   "examples": [
+    ".active.carousel-item-end, .carousel-item-next:not(.carousel-item-start) { transform: translateX(100%) }",
+    ".active.carousel-item-start, .carousel-item-prev:not(.carousel-item-end) { transform: translateX(-100%) }",
+    ".offcanvas-sm.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-sm.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-md.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-md.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-lg.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-lg.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-xl.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-xl.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-xxl.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-xxl.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas.offcanvas-end { transform: translateX(100%) }",
+    ".translate-middle { transform: translate(-50%, -50%) }",
+    ".translate-middle-x { transform: translateX(-50%) }"
+   ]
+  }
+ ],
+ "ms": 703
+}

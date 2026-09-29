@@ -1,0 +1,28 @@
+{
+ "note": "Judgements of the FAIL examples the fixed checkers raise on the out-of-sample pages (run.mjs part oos). A label applies when page and check match and the example contains `match`. Written by the S8 stream after inspecting each case (screenshots, computed styles, bidi rules); they are judgements, not measurements. Flip-mode mirror FAILs answer 'can this LTR build serve RTL by flipping dir?', so a box that stays on the LTR side is a TP for that question.",
+ "labels": [
+  { "page": "bs-blog-rtl", "check": "icons", "match": "chevron-right in \"أكمل القراءة\"", "verdict": "TP", "reason": "'continue reading' is a forward action; in RTL its chevron must point left; Bootstrap's RTL build leaves it pointing right" },
+  { "page": "bs-blog-rtl", "check": "arabic", "match": "(italic)", "verdict": "TP", "reason": "fst-italic / italic headings on Arabic text: synthesised oblique" },
+  { "page": "bs-carousel-rtl", "check": "bidi", "match": "© 2017–2026", "verdict": "TP", "reason": "the year range renders 2026–2017 in the RTL footer" },
+  { "page": "bs-carousel-flip", "check": "align", "match": "", "verdict": "TP", "reason": "caption .text-start compiles to text-align:left in the LTR sheet; stays left in RTL" },
+  { "page": "govsa-rtl", "check": "bidi", "match": "60% of vistors", "verdict": "TP", "reason": "an English phrase starting with a number, no dir: the bidi algorithm moves '60%' to the far end of the line, so it reads 'of vistors said yes … 60%' (a number displaced, not only end punctuation)" },
+  { "page": "regress-parity-old", "check": "bidi", "match": "+12.4%", "verdict": "TP", "reason": "signed percentage shows as 12.4%+" },
+  { "page": "regress-govuk-flip", "check": "align", "match": "", "verdict": "TP", "reason": "govuk-frontend sets text-align:left on table captions and headers" },
+  { "page": "regress-dashboard-flip", "check": "align", "match": "th", "verdict": "TP", "reason": "th { text-align:left } in the page CSS" },
+  { "page": "aegov-tabs", "check": "keys", "match": "tablist", "verdict": "TP", "reason": "aegov custom.js maps ArrowRight to the next tab in DOM order, which is to the LEFT in RTL; the rule the check applies is Firefox's guideline and the Radix / React Aria / native-control behaviour (aegov disagrees, see the report)" },
+  { "page": "bidi-wrap", "check": "bidi", "match": "#f-", "verdict": "TP", "reason": "seeded: phone, time range and signed percentage without isolation" },
+  { "page": "bidi-wrap", "check": "bidi", "match": "#n-", "verdict": "FP", "reason": "seeded negative: wrapped LTR text read as scrambled" },
+  { "page": "bidi-wrap", "check": "bidi", "match": "#w-", "verdict": "FP", "reason": "seeded: only end punctuation moves, which is a WARN" },
+  { "page": "bs-album-flip", "check": "mirror", "match": "—", "verdict": "TP", "reason": "the example names the physical value that stays (margin/float) in Bootstrap's LTR sheet" },
+  { "page": "bs-carousel-flip", "check": "mirror", "match": "—", "verdict": "TP", "reason": "physical value named (margin, left/right, float, or the list padding leak)" },
+  { "page": "bs-carousel-flip", "check": "mirror", "match": "a.btn.btn-lg", "verdict": "TP", "reason": "inside a .text-start caption (text-align:left in the LTR sheet): the button stays left" },
+  { "page": "bs-sidebars-flip", "check": "mirror", "match": "—", "verdict": "TP", "reason": "physical margin named (me-2 / ms-* compile to margin-right / margin-left in the LTR sheet)" },
+  { "page": "bs-sidebars-flip", "check": "mirror", "match": "svg.bi.pe-none", "verdict": "TP", "reason": "icon's own margin-right:8px (me-2) and its parent's physical margins; 32 px off" },
+  { "page": "bs-sidebars-flip", "check": "mirror", "match": "button.btn.btn-toggle", "verdict": "TP", "reason": "the collapsible list column keeps the LTR offset of an ancestor with physical margin; 40 px off" },
+  { "page": "govsa-flip", "check": "mirror", "match": "—", "verdict": "TP", "reason": "physical value named (float left on card tags, the pagination/tab list padding leak, breadcrumb padding-left, carousel margin-left, icon float right)" },
+  { "page": "govsa-flip", "check": "mirror", "match": "checkmark", "verdict": "TP", "reason": "GOV-SA's own override pair: .govsa-checkbox__checkmark { left: 0 } plus [dir=rtl] … { right: 0 } without resetting left (same for the radio); the flip measures it far from its mirrored place" },
+  { "page": "regress-govuk-flip", "check": "mirror", "match": "—", "verdict": "TP", "reason": "govuk grid columns float:left" },
+  { "page": "regress-govuk-flip", "check": "mirror", "match": "span.govuk-header__logotype", "verdict": "TP", "reason": "10 px off: .govuk-header__logotype { margin-right: .4375rem } (physical) in govuk-frontend" },
+  { "page": "mobile:regress-dashboard", "check": "targets", "match": "button.iconbtn", "verdict": "TP", "reason": "at 390 px the three 18 px buttons wrap; the third sits 3 px under the first (centre distance 21 px < 24), so the 2.5.8 spacing exception fails" }
+ ]
+}

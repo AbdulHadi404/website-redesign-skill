@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حقول ثنائية الاتجاه</title>
+<link rel="stylesheet" href="/fixtures/fonts.css">
+<style>
+  @font-face { font-family: "Brand"; src: url(/fonts/IBMPlexSans.ttf); unicode-range: U+0000-05FF, U+2000-20BF, U+2100-214F; }
+  @font-face { font-family: "Brand"; src: url(/fonts/IBMPlexSansArabic.ttf); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF; }
+  /* The riyal sign from a one-glyph face, confined by unicode-range so its A–D glyphs never leak */
+  @font-face { font-family: "Brand"; src: url(/ext/riyalpkg/package/fonts/regular/saudi_riyal.woff2); unicode-range: U+20C1; }
+  body { font: 16px/1.6 "Brand", system-ui, sans-serif; margin: 16px; color: #111; background: #fff; }
+  table { border-collapse: collapse; font-size: 14px; }
+  td, th { border: 1px solid #ccc; padding: 4px 8px; white-space: nowrap; text-align: start; }
+  th { background: #f3f3f3; font-weight: 600; }
+  input { font: inherit; font-size: 14px; inline-size: 15rem; padding: 2px 6px; }
+  .mp { text-align: -webkit-match-parent; text-align: match-parent; } /* Chromium supports only the prefixed keyword (BCD) */
+  .left { text-align: left; }
+  .trunc { inline-size: 11rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border: 1px dashed #999; padding: 2px 4px; }
+  .just p { inline-size: 15rem; text-align: justify; border: 1px dashed #bbb; margin: 4px 0; }
+  .riyal td { font-size: 22px; }
+  h2 { font-size: 15px; margin: 18px 0 6px; }
+</style>
+</head>
+<body>
+<h2>١ — القيم في سياق من اليمين إلى اليسار (نص عادي، bdi، dir=ltr)</h2>
+<table id="values"><thead><tr><th>الحقل</th><th>نص عادي</th><th>&lt;bdi&gt;</th><th>dir="ltr"</th></tr></thead><tbody></tbody></table>
+
+<h2>٢ — الحقول: افتراضي (يرث rtl)، dir="ltr"، dir="ltr" + match-parent، dir="auto"</h2>
+<table id="inputs"><thead><tr><th>الحقل</th><th>افتراضي</th><th>dir=ltr</th><th>ltr + match-parent</th><th>dir=auto</th></tr></thead><tbody></tbody></table>
+
+<h2>٣ — القطع بعلامة الحذف</h2>
+<div id="trunc">
+  <div class="trunc" id="t1">عبد الرحمن بن محمد العبدالله الشمري</div>
+  <div dir="ltr" style="margin-top:6px"><div class="trunc" id="t2">عبد الرحمن بن محمد العبدالله الشمري</div></div>
+  <div dir="ltr" style="margin-top:6px"><div class="trunc" id="t3" dir="auto">عبد الرحمن بن محمد العبدالله الشمري</div></div>
+  <div dir="ltr" style="margin-top:6px"><div class="trunc" id="t4" style="unicode-bidi: plaintext">عبد الرحمن بن محمد العبدالله الشمري</div></div>
+</div>
+
+<h2>٤ — المحاذاة المضبوطة (justify)</h2>
+<div class="just">
+  <p id="j0" style="text-align:start">تتيح لك الخدمات الإلكترونية تجديد الرخصة ودفع المخالفات وحجز المواعيد من أي مكان وفي أي وقت دون الحاجة إلى زيارة المركز.</p>
+  <p id="j1">تتيح لك الخدمات الإلكترونية تجديد الرخصة ودفع المخالفات وحجز المواعيد من أي مكان وفي أي وقت دون الحاجة إلى زيارة المركز.</p>
+</div>
+
+<h2>٥ — رمز الريال السعودي U+20C1</h2>
+<table class="riyal"><tbody>
+  <tr><td>Brand (IBM Plex + وجه الرمز عبر unicode-range)</td><td id="r1" style="font-family: Brand">١٢٥ &#x20C1;</td></tr>
+  <tr><td>IBM Plex Sans Arabic وحدها</td><td id="r2" style="font-family: 'T-IBM Plex Sans Arabic'">١٢٥ &#x20C1;</td></tr>
+  <tr><td>Noto Naskh Arabic</td><td id="r3" style="font-family: 'T-Noto Naskh Arabic'">١٢٥ &#x20C1;</td></tr>
+  <tr><td>Intl ar-SA (SAR)</td><td id="r4"></td></tr>
+</tbody></table>
+
+<script>
+const VALUES = [
+  ['البريد', 'sara.ahmed@example.com', 'email'],
+  ['بريد يبدأ بأرقام', '2024.sara@example.sa', 'email'],
+  ['جوال دولي', '+966 50 123 4567', 'tel'],
+  ['جوال محلي', '050 123 4567', 'tel'],
+  ['آيبان', 'SA03 8000 0000 6080 1016 7519', 'text'],
+  ['بطاقة', '4111 1111 1111 1111', 'text'],
+  ['رابط', 'https://example.com/ar/orders?id=42', 'url'],
+  ['رقم فاتورة', 'INV-2026-0042', 'text'],
+  ['تاريخ', '2026-09-28', 'text'],
+  ['ساعات العمل', '09:00 - 17:00', 'text'],
+  ['رقم سالب', '-4.2%', 'text'],
+];
+window.VALUES = VALUES;
+const vb = document.querySelector('#values tbody'), ib = document.querySelector('#inputs tbody');
+VALUES.forEach(([label, v, type], i) => {
+  vb.insertAdjacentHTML('beforeend', `<tr><th>${label}</th><td><span class="v" data-i="${i}" data-mode="plain">${v}</span></td><td><bdi class="v" data-i="${i}" data-mode="bdi">${v}</bdi></td><td><span class="v" dir="ltr" data-i="${i}" data-mode="ltr">${v}</span></td></tr>`);
+  ib.insertAdjacentHTML('beforeend', `<tr><th>${label}</th><td><input type="${type}" data-i="${i}" data-mode="inherit" value="${v}"></td><td><input class="left" type="${type}" dir="ltr" data-i="${i}" data-mode="ltr" value="${v}"></td><td><input class="mp" type="${type}" dir="ltr" data-i="${i}" data-mode="ltr-mp" value="${v}"></td><td><input class="mp" type="${type}" dir="auto" data-i="${i}" data-mode="auto" value="${v}"></td></tr>`);
+});
+document.getElementById('r4').textContent = new Intl.NumberFormat('ar-SA', { style: 'currency', currency: 'SAR' }).format(125);
+</script>
+</body>
+</html>

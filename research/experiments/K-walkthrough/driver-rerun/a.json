@@ -1,0 +1,33 @@
+{
+ "path": "/app/",
+ "device": "phone",
+ "states": [
+  {
+   "name": "old-task2",
+   "steps": [
+    {
+     "tap": "text=Alerts >> nth=0"
+    },
+    {
+     "swipe": {
+      "at": "role=cell[name='Bella']",
+      "dx": -250,
+      "dy": 0
+     }
+    },
+    {
+     "swipe": {
+      "dx": 0,
+      "dy": -2500
+     }
+    },
+    {
+     "tap": [
+      370,
+      30
+     ]
+    }
+   ]
+  }
+ ]
+}

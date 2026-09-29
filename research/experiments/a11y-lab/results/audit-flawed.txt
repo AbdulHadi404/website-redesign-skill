@@ -1,0 +1,165 @@
+a11y-audit http://localhost:4173/flawed.html
+92 FAIL, 35 WARN, 4 INFO in 29.7s — details results/audit-flawed/audit.json
+
+FAIL forced       1.1.1/1.4.11 Icon drawn with background-image only; forced colors may hide it and it has no text  ⟶ button.iconbtn.bg
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ a "Churn"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ a "Dashboard"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ a "Reports"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ a "Settings"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ a
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ button.btn
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ button.btn "Search"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ a "Overview"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ a "Revenue"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ a "Help centre"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ a "Click here"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ a "Click here"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ a "methodology notes"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ button.iconbtn.bg
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ button.iconbtn
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ button.iconbtn
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ button.btn "Advanced filters"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ input#n1 "on"
+FAIL forced       2.4.7        No visible focus in forced-colors mode (box-shadow focus rings are removed — use outline)  ⟶ button.btn "Save changes"
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ a "Churn"
+FAIL keyboard     2.4.3        Positive tabindex=3 reorders focus  ⟶ a "Churn"
+FAIL keyboard     2.4.7        Focused element is invisible/off-screen  ⟶ a.skip "Skip to content"
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ a "Dashboard"
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ a "Reports"
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ a "Settings"
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ a
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ a "Overview"
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ a "Revenue"
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ a "Help centre"
+FAIL keyboard     4.1.2        Focusable but hidden from assistive technology (aria-hidden ancestor?) — screen readers land on nothing  ⟶ a "Help centre"
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ a "Click here"
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ a "Click here"
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ a "methodology notes"
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ button.iconbtn.bg
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ button.iconbtn
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ button.iconbtn
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ input#name
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ input#email
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ input#phone
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ input#pw
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ select "Monthly Yearly"
+FAIL keyboard     2.4.7        No visible focus indicator (focused and unfocused pixels identical)  ⟶ input#n1 "on"
+FAIL keyboard     2.4.11       Hidden under other content when reached with Shift+Tab (add scroll-padding-top for sticky headers)  ⟶ button.iconbtn
+FAIL keyboard     2.4.11       Hidden under other content when reached with Shift+Tab (add scroll-padding-top for sticky headers)  ⟶ button.iconbtn
+FAIL keyboard     2.4.11       Hidden under other content when reached with Shift+Tab (add scroll-padding-top for sticky headers)  ⟶ button.iconbtn.bg
+FAIL keyboard     2.1.1        Has a widget role but is not in the Tab sequence (and no roving-tabindex sibling is)  ⟶ div.card "Export CSV"
+FAIL keyboard     2.1.1        Has a widget role but is not in the Tab sequence (and no roving-tabindex sibling is)  ⟶ span.active "Daily"
+FAIL keyboard     2.1.1        Has a widget role but is not in the Tab sequence (and no roving-tabindex sibling is)  ⟶ span "Weekly"
+FAIL keyboard     2.1.1        Has a widget role but is not in the Tab sequence (and no roving-tabindex sibling is)  ⟶ span "Monthly"
+FAIL motion       2.3.3/2.2.2  Animation "scroll" keeps running with prefers-reduced-motion: reduce (infinite)  ⟶ span "New: export to CSV • Scheduled reports n"
+FAIL motion       2.3.3/2.2.2  Animation "sp" keeps running with prefers-reduced-motion: reduce (infinite)  ⟶ span.spin
+FAIL names        4.1.2        link has no accessible name  ⟶ a
+FAIL names        4.1.2        button has no accessible name  ⟶ button.btn
+FAIL names        2.5.3        Visible label "Search" is not part of accessible name "Go"  ⟶ button.btn "Search"
+FAIL names        1.1.1        Image alt looks like a filename or placeholder: "IMG_2931.png"  ⟶ img
+FAIL names        3.3.2        textbox "Full name" is named only by its placeholder (disappears on input)  ⟶ input#name
+FAIL names        4.1.2        combobox has no accessible name  ⟶ select "Monthly Yearly"
+FAIL names        2.5.3        Visible label "Save changes" is not part of accessible name "Save"  ⟶ button.btn "Save changes"
+FAIL nontext      1.4.11       Field boundary contrast too low (border 1.28:1, fill 1.00:1; need 3:1)  ⟶ <input type="text" placeholder="Full name" id="name" data-flaw="F07" d
+FAIL nontext      1.4.11       Field boundary contrast too low (border 1.28:1, fill 1.00:1; need 3:1)  ⟶ <input type="text" id="email" autocomplete="e-mail" data-flaw="F24" da
+FAIL nontext      1.4.11       Field boundary contrast too low (border 1.28:1, fill 1.00:1; need 3:1)  ⟶ <input type="text" id="phone" data-flaw="F24b" data-a11y-i="127">
+FAIL nontext      1.4.11       Field boundary contrast too low (border 1.28:1, fill 1.00:1; need 3:1)  ⟶ <input type="password" id="pw" aria-describedby="pw-hint" onpaste="ret
+FAIL nontext      1.4.11       Field boundary contrast too low (border 1.12:1, fill 1.15:1; need 3:1)  ⟶ <select data-flaw="F25" data-a11y-i="134"><option data-a11y-i="135">Mo
+FAIL outline      1.3.1/2.4.1  No main landmark
+FAIL outline      1.3.1/2.4.6  Empty h2
+FAIL page         3.1.1        No lang attribute on <html>
+FAIL page         2.4.2        Empty or missing <title>
+FAIL page         1.4.4        Viewport blocks zoom: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+FAIL pointer      2.1.1        Clickable (onclick) but not keyboard focusable  ⟶ a.card "Filters"
+FAIL pointer      2.1.1        Clickable (onclick) but not keyboard focusable  ⟶ td.th "Customer ▲"
+FAIL pointer      2.1.1        Clickable (onclick) but not keyboard focusable  ⟶ div.card "Invite teammates →"
+FAIL pointer      2.1.1        Clickable (onclick) but not keyboard focusable (role=button)  ⟶ div.card "Export CSV"
+FAIL pointer      2.1.1        Clickable (onclick) but not keyboard focusable (role=tab)  ⟶ span.active "Daily"
+FAIL pointer      2.1.1        Clickable (onclick) but not keyboard focusable (role=tab)  ⟶ span "Weekly"
+FAIL pointer      2.1.1        Clickable (onclick) but not keyboard focusable (role=tab)  ⟶ span "Monthly"
+FAIL pointer      2.1.1        Clickable (onclick) but not keyboard focusable  ⟶ span.fakecheck
+FAIL reflow       1.4.10       Horizontal scrolling at 320px (400% zoom of 1280): page is 1100px wide  ⟶ button.btn (right edge 351px) | button.btn "Search" (right edge 445px) | span "New: export to CSV • Scheduled reports n" (right edge 1336px) | div.layout "Overview Revenue Churn Help centre Filte" (right edge 1100px)
+FAIL reflow       1.4.4        Horizontal scrolling at 640px (200% zoom of 1280): page is 1100px wide  ⟶ span "New: export to CSV • Scheduled reports n" (right edge 1336px) | div.layout "Overview Revenue Churn Help centre Filte" (right edge 1100px)
+FAIL spacing      1.4.12       Text clipped when WCAG text-spacing is applied (fixed height + overflow hidden?)  ⟶ div.kpi "Active users 1,284 ▼"
+FAIL spacing      1.4.12       Text clipped when WCAG text-spacing is applied (fixed height + overflow hidden?)  ⟶ div.kpi "Churn 2.1%"
+FAIL structure    1.3.1        Table (5×4) has no header cells — use <th scope>  ⟶ table "Customer ▲ Plan Amount Status Northwind "
+FAIL structure    2.1.1/4.1.2  role=menu has 3 items in the Tab sequence — APG menus use one tab stop and arrow keys  ⟶ ul "Dashboard Reports Settings"
+FAIL structure    3.3.8        Paste is blocked on a password/code field  ⟶ input#pw
+FAIL targets      2.5.8        Target 58×18px with neighbours closer than 24px  ⟶ <a role="menuitem" href="#" data-a11y-i="8">Reports</a>
+FAIL targets      2.5.8        Target 62×18px with neighbours closer than 24px  ⟶ <a role="menuitem" href="#" data-a11y-i="10">Settings</a>
+FAIL targets      2.5.8        Target 71×18px with neighbours closer than 24px  ⟶ <a href="#" data-a11y-i="24">Overview</a>
+FAIL targets      2.5.8        Target 65×18px with neighbours closer than 24px  ⟶ <a href="#" data-a11y-i="26">Revenue</a>
+FAIL targets      2.5.8        Target 45×18px with neighbours closer than 24px  ⟶ <a href="#" tabindex="3" data-flaw="F21" data-a11y-i="28">Churn</a>
+FAIL targets      2.5.8        Target 16×16px with neighbours closer than 24px  ⟶ <button class="iconbtn bg" title="Edit" data-flaw="F34 F40a" data-a11y-i="106"><
+FAIL targets      2.5.8        Target 16×16px with neighbours closer than 24px  ⟶ <button class="iconbtn" title="Delete" data-a11y-i="107"></button>
+FAIL targets      2.5.8        Target 16×16px with neighbours closer than 24px  ⟶ <button class="iconbtn" title="Share" data-a11y-i="108"></button>
+WARN autocomplete 1.3.5        Field "name" collects personal data but has no autocomplete (suggest autocomplete="name")
+WARN autocomplete 1.3.5        Field "phone  Phone" collects personal data but has no autocomplete (suggest autocomplete="tel")
+WARN autocomplete 1.3.5        Field "pw  Password" collects personal data but has no autocomplete (suggest autocomplete="current-password / new-password")
+WARN autocomplete 1.3.5        Field "name@company.com" collects personal data but has no autocomplete (suggest autocomplete="email")
+WARN forced       1.4.11       Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)  ⟶ button.btn (icon-only, no border)
+WARN forced       1.4.11       Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)  ⟶ button.btn "Search"
+WARN forced       1.4.11       Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)  ⟶ button.iconbtn.bg (icon-only, no border)
+WARN forced       1.4.11       Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)  ⟶ button.iconbtn (icon-only, no border)
+WARN forced       1.4.11       Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)  ⟶ button.iconbtn (icon-only, no border)
+WARN forced       1.4.11       Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)  ⟶ button.btn "Advanced filters"
+WARN forced       1.4.11       Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)  ⟶ button.btn "Save changes"
+WARN keyboard     2.4.1        First focus stop is not a skip link (a "Churn")
+WARN keyboard     2.4.13       Focus indicator weak: 0px changed by ≥3:1, a 2px perimeter is 316px  ⟶ button.btn
+WARN keyboard     2.4.13       Focus indicator weak: 0px changed by ≥3:1, a 2px perimeter is 404px  ⟶ button.btn "Search"
+WARN keyboard     2.4.12       Focused element partly covered (2/5 sample points)  ⟶ a "Help centre"
+WARN keyboard     2.4.13       Focus indicator weak: 0px changed by ≥3:1, a 2px perimeter is 616px  ⟶ button.btn "Advanced filters"
+WARN keyboard     2.4.13       Focus indicator weak: 0px changed by ≥3:1, a 2px perimeter is 572px  ⟶ button.btn "Save changes"
+WARN motion       2.2.2        Infinite animation "scroll" — moving content shown >5s beside other content needs pause/stop/hide  ⟶ span "New: export to CSV • Scheduled reports n"
+WARN motion       2.2.2        Infinite animation "sp" (small indicator) — moving content shown >5s beside other content needs pause/stop/hide  ⟶ span.spin
+WARN names        1.1.1        Image alt "decorative divider swoosh" suggests a decorative image: use alt=""  ⟶ img
+WARN names        4.1.2        button "Edit" is named only by a title tooltip (not visible on touch/keyboard)  ⟶ button.iconbtn.bg
+WARN names        4.1.2        button "Delete" is named only by a title tooltip (not visible on touch/keyboard)  ⟶ button.iconbtn
+WARN names        4.1.2        button "Share" is named only by a title tooltip (not visible on touch/keyboard)  ⟶ button.iconbtn
+WARN names        2.4.4        Generic link text "click here" (2 destination(s)) — make it describe the destination
+WARN outline      1.3.1        Heading level jumps h1 → h4 ("Key metrics")
+WARN outline      1.3.1        Looks like a heading but is not marked up as one: "Revenue trend"
+WARN outline      1.3.1        Looks like a heading but is not marked up as one: "Recent invoices"
+WARN outline      1.3.1        Looks like a heading but is not marked up as one: "Account settings"
+WARN outline      1.3.1        Looks like a heading but is not marked up as one: "Invite teammates"
+WARN structure    1.3.1        Radio group "n" is not in a fieldset with a legend (group question is not announced)  ⟶ input#n1 "on"
+WARN structure    1.1.1        SVG graphic (480×160, 2 shapes) has no text alternative — role="img" + name, or a data table / text summary for charts  ⟶ div#content.main "Dashboard Key metrics Monthly recurring " > svg
+WARN structure    3.3.2/1.3.1  Label "Email *" marks the field required with * only — add required and say "(required)" or explain * once  ⟶ input#email
+WARN structure    4.1.2        role=menu wraps 3 ordinary links — site navigation should be <nav><ul> of links; menu roles are for app command menus  ⟶ ul "Dashboard Reports Settings"
+WARN structure    1.4.12       Text already clipped by overflow:hidden at default spacing  ⟶ div.kpi "Monthly recurring revenue (all regions, "
+WARN structure    3.3.8        Password field has a paste listener — confirm it does not block pasting  ⟶ input[type=password] #0
+INFO autocomplete —            Field "email  Email *" should be type="email" for the right mobile keyboard
+INFO autocomplete —            Field "phone  Phone" should be type="tel" for the right mobile keyboard
+INFO colour       1.4.1        Review results/audit-flawed/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable
+INFO structure    1.3.1        Data table has no caption/accessible name  ⟶ table "Q1 Q2 EU 10 12"
+
+Tab order (role "name" ← element):
+   1. link "Churn":  ←  a "Churn"
+   2. link "Skip to content":  ←  a.skip "Skip to content"
+   3. menuitem "Dashboard"  ←  a "Dashboard"
+   4. menuitem "Reports"  ←  a "Reports"
+   5. menuitem "Settings"  ←  a "Settings"
+   6. link:  ←  a
+   7. button:  ←  button.btn
+   8. button "Go": Search  ←  button.btn "Search"
+   9. link "Overview":  ←  a "Overview"
+  10. link "Revenue":  ←  a "Revenue"
+  11.   ←  a "Help centre"
+  12. link "Click here":  ←  a "Click here"
+  13. link "Click here":  ←  a "Click here"
+  14. link "methodology notes":  ←  a "methodology notes"
+  15. button "Edit"  ←  button.iconbtn.bg
+  16. button "Delete"  ←  button.iconbtn
+  17. button "Share"  ←  button.iconbtn
+  18. button "Advanced filters"  ←  button.btn "Advanced filters"
+  19. textbox "Full name"  ←  input#name
+  20. textbox "Email *"  ←  input#email
+  21. textbox "Phone"  ←  input#phone
+  22. textbox "Password"  ←  input#pw
+  23. combobox:  ←  select "Monthly Yearly"
+  24. radio "Email"  ←  input#n1 "on"
+  25. button "Save": Save changes  ←  button.btn "Save changes"
+  26. ?  ←  iframe
+
+Headings: h1 Dashboard · h4 Key metrics · h2 (empty)
+Landmarks: navigation

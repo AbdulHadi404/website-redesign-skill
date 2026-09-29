@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>لوحة الطلبات</title>
+<!-- The false alarms the RTL block's first version raised out of sample (Bootstrap's RTL examples), each beside the
+     true finding it must still make, plus icons turned by the rotate property, media seek icons and a back-to-top arrow.
+     Not reported: the offcanvas at the inline end (parked off the left, opened from the left), a drawer whose class says
+     end, the "list" hamburger on the menu toggle, a brand link painted bg-primary in the sticky bar, an email field
+     Bootstrap forces to LTR, chevrons whose label says they already point the reading way, arrows turned with
+     rotate: 180deg, a disclosure chevron turned to point down, forward_10 and replay_10, back-to-top.
+     Reported: the filters drawer parked off the left and opened from the right (FAIL), a "more" chevron pointing right
+     (FAIL), a reply arrow with no flip (WARN), a flipped forward_30 (WARN), the IBAN field laid out RTL (WARN), the
+     filled subscribe button in the sticky top bar at phone width (WARN). -->
+<style>
+  body { margin: 0; font: 16px/1.6 sans-serif; color: #16181d; background: #fff; }
+  .navbar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #212529; color: #fff; }
+  .navbar-brand { display: block; width: 180px; padding: 12px 16px; color: #fff; text-decoration: none; font-weight: 700; }
+  .bg-primary { background: #0d6efd; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border: 1px solid #6c757d; border-radius: 6px; background: #fff; color: #16181d; font: inherit; text-decoration: none; }
+  .btn-primary { width: 120px; justify-content: center; background: #0d6efd; border-color: #0d6efd; color: #fff; }
+  .navbar-toggler { min-width: 44px; min-height: 44px; background: none; border: 0; color: #fff; }
+  svg.bi, svg.lucide { width: 18px; height: 18px; flex: none; }
+  /* Bootstrap RTL: .offcanvas-end sits at the inline end, which is the left */
+  .offcanvas, .drawer { position: fixed; top: 0; bottom: 0; width: 280px; z-index: 20; background: #fff; visibility: hidden; transition: transform .3s; }
+  .offcanvas-end { left: 0; transform: translateX(-100%); }
+  .drawer-end { left: 0; transform: translateX(-100%); }
+  /* the filters drawer, opened from the right (the inline start in RTL), is parked off the left: it slides in from the wrong side */
+  .filters { left: 0; transform: translateX(-100%); }
+  main { padding: 16px; max-width: 760px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 16px; }
+  .pager { display: flex; gap: 8px; }
+  /* Bootstrap RTL's reboot keeps LTR data fields left to right */
+  input[type="email"] { direction: ltr; }
+  label { display: block; margin-top: 12px; }
+  input { font: inherit; font-size: 16px; padding: 8px; border: 1px solid #889; border-radius: 6px; width: 100%; max-width: 320px; box-sizing: border-box; }
+  /* Tailwind v4's rtl:rotate-180 is the individual rotate property */
+  [dir="rtl"] .rtl-rotate-180 { rotate: 180deg; }
+  [dir="rtl"] .rtl-transform-rotate { transform: rotate(180deg); }
+  .open > svg { rotate: -90deg; }
+  .player { display: flex; gap: 8px; align-items: center; padding: 12px; background: #eef0f6; border-radius: 12px; }
+  .player button { width: 44px; height: 44px; border: 0; border-radius: 8px; background: #fff; }
+  .material-symbols-outlined { display: inline-block; width: 20px; height: 20px; background: currentColor; overflow: hidden; color: transparent; font-size: 1px; vertical-align: middle; }
+  .flip { transform: scaleX(-1); }
+  .top-link { position: fixed; bottom: 16px; left: 16px; width: 44px; height: 44px; display: grid; place-items: center; background: #223; color: #fff; border-radius: 50%; }
+  svg.icon { width: 20px; height: 20px; fill: currentColor; }
+</style></head>
+<body id="top">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="back-to-top" viewBox="0 0 20 20"><path d="M10 3 L17 11 H12 V17 H8 V11 H3 Z"/></symbol>
+  <symbol id="chev-right" viewBox="0 0 16 16"><path d="M6 3l5 5-5 5" stroke="currentColor" fill="none" stroke-width="2"/></symbol>
+  <symbol id="chev-left" viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" stroke="currentColor" fill="none" stroke-width="2"/></symbol>
+</svg>
+<header class="navbar">
+  <a class="navbar-brand bg-primary" href="#">متجر الورد</a>
+  <a class="btn btn-primary" href="#subscribe">اشترك</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-label="تبديل التنقل">
+    <svg class="bi bi-list" viewBox="0 0 16 16" fill="currentColor"><path d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/></svg>
+  </button>
+</header>
+<nav class="offcanvas offcanvas-end" id="sidebarMenu" aria-label="القائمة الرئيسية"><ul><li><a href="#orders">الطلبات</a></li><li><a href="#customers">العملاء</a></li></ul></nav>
+<aside class="drawer drawer-end" id="cart" aria-label="السلة"><p>سلتك فارغة.</p></aside>
+<aside class="drawer filters" id="filters" aria-label="تصفية"><p>تصفية الطلبات حسب الحالة.</p></aside>
+<main>
+  <h1>الطلبات</h1>
+  <p>راجع الطلبات الجديدة ثم انتقل إلى الصفحة التالية.</p>
+  <div class="toolbar">
+    <button class="btn" type="button" aria-controls="filters" aria-expanded="false">تصفية</button>
+    <button class="btn" type="button" aria-label="رد"><svg class="bi bi-reply" viewBox="0 0 16 16" fill="currentColor"><path d="M6.6 5.1 1.8 8.5l4.8 3.4V9.6c3.2 0 5.6 1 7.4 3.4-.7-3.4-2.8-6.3-7.4-6.9z"/></svg></button>
+    <a class="btn" href="#more">المزيد <svg class="bi bi-chevron-right"><use href="#chev-right"/></svg></a>
+    <button class="btn open" type="button" aria-expanded="true">التفاصيل <svg class="bi bi-chevron-left"><use href="#chev-left"/></svg></button>
+  </div>
+  <div class="pager">
+    <a class="btn" href="#p1" rel="prev">السابق <svg class="bi bi-chevron-right"><use href="#chev-right"/></svg></a>
+    <a class="btn" href="#p3" rel="next">التالي <svg class="bi bi-chevron-left"><use href="#chev-left"/></svg></a>
+  </div>
+  <div class="pager">
+    <a class="btn" href="#step3" id="rotate-prop">متابعة <svg class="lucide lucide-arrow-right rtl-rotate-180" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" fill="none" stroke-width="2"/></svg></a>
+    <a class="btn" href="#step3b" id="rotate-transform">متابعة <svg class="lucide lucide-arrow-right rtl-transform-rotate" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" fill="none" stroke-width="2"/></svg></a>
+  </div>
+  <h2>الحلقة ١٢</h2>
+  <div class="player">
+    <button aria-label="Replay 10 seconds"><span class="material-symbols-outlined">replay_10</span></button>
+    <button aria-label="Play"><span class="material-symbols-outlined">play_arrow</span></button>
+    <button aria-label="Forward 10 seconds"><span class="material-symbols-outlined">forward_10</span></button>
+    <button aria-label="Forward 30 seconds"><span class="material-symbols-outlined flip">forward_30</span></button>
+  </div>
+  <form>
+    <label for="email">البريد الإلكتروني</label><input type="email" id="email" name="email" autocomplete="email">
+    <label for="iban">رقم الآيبان</label><input type="text" id="iban" name="iban">
+  </form>
+</main>
+<a class="top-link" href="#top" aria-label="العودة إلى الأعلى"><svg class="icon"><use href="#back-to-top"/></svg></a>
+</body></html>

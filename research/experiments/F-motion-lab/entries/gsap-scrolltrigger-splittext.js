@@ -1,0 +1,1 @@
+import { gsap } from "gsap"; import { ScrollTrigger } from "gsap/ScrollTrigger"; import { SplitText } from "gsap/SplitText"; gsap.registerPlugin(ScrollTrigger,SplitText); const s=SplitText.create("h1"); gsap.from(s.words,{y:20,stagger:.05,scrollTrigger:"h1"});

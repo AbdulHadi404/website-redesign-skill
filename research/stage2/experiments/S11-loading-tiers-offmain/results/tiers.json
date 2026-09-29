@@ -1,0 +1,8380 @@
+{
+ "env": {
+  "date": "2026-09-29T05:23:20.068Z",
+  "node": "v22.22.2",
+  "cpus": 4,
+  "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "loadavgAtStart": [
+   9.5,
+   8.3,
+   8.7
+  ],
+  "loadavgAtEnd": [
+   3.9,
+   5.2,
+   6.8
+  ]
+ },
+ "method": "Fresh context per run (phone viewport 390×844 @2x). CDP Emulation.setCPUThrottlingRate throttles the renderer main thread only (Chromium thread_cpu_throttler.cc: 200 µs quanta, busy-wait). Probe starts 300 ms after load. measureRefresh() first (20 empty rAF frames, 25th percentile). Frame probe: tier.js makeWork() defaults (200k particles integrated + 1,000 rects on a 128² 2D canvas) once per rAF for 2 s, no early exit, so any shorter probe is evaluated on prefixes of the same runs. cond=busy: twelve ~60 ms (at 1x) CPU tasks every 90 ms during the probe (a page still booting). Classification (the template rule): work median as a fraction of the measured refresh, bands 0.3 / 0.6 (a RAIL-derived heuristic fixed before the runs, not fitted). Labels 1x = strong, 4x = average, 6x = low are a labelling choice; 2x/3x/5x have no label and are reported as the spread of tiers across runs (flip rate). Secondary, in-sample: bands at the geometric midpoints between the throttle levels (2.0× and 4.9× the calibrated 1x median, 5 calibration runs). Throttle fidelity per run: a fixed loop timed before and after the probe (and, in cond=busy, each boot task) against its 1x calibration = the slowdown the throttler actually delivered; a run is \"throttle-faithful\" when that is within ±30% of nominal before and after the probe.",
+ "calib": [
+  {
+   "workMedian": 1.8,
+   "gapMedian": 16.7,
+   "refreshMs": 16.600000000000023,
+   "burst": 1.699999999254942,
+   "spinBefore": 3.099999999627471,
+   "spinAfter": 7.299999998882413,
+   "loadavg1": 9.5
+  },
+  {
+   "workMedian": 2.1,
+   "gapMedian": 16.7,
+   "refreshMs": 16.600000000000023,
+   "burst": 1.900000000372529,
+   "spinBefore": 3,
+   "spinAfter": 3,
+   "loadavg1": 10.1
+  },
+  {
+   "workMedian": 2.1,
+   "gapMedian": 16.7,
+   "refreshMs": 16.600000000000023,
+   "burst": 1.900000000372529,
+   "spinBefore": 3.099999999627471,
+   "spinAfter": 3.300000000745058,
+   "loadavg1": 10
+  },
+  {
+   "workMedian": 1.8,
+   "gapMedian": 16.7,
+   "refreshMs": 16.600000000000023,
+   "burst": 1.700000001117587,
+   "spinBefore": 3.200000001117587,
+   "spinAfter": 3,
+   "loadavg1": 10
+  },
+  {
+   "workMedian": 1.7,
+   "gapMedian": 16.7,
+   "refreshMs": 16.600000000000023,
+   "burst": 2.099999999627471,
+   "spinBefore": 2.900000000372529,
+   "spinAfter": 3.5,
+   "loadavg1": 9.7
+  }
+ ],
+ "runs": [
+  {
+   "cpu": 1,
+   "cond": "quiet",
+   "loadavg1": 9.7,
+   "bootMs": [],
+   "spinBefore": 3.700000001117587,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 312.59999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.19999999925494194,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 62,
+   "spinAfter": 3.5,
+   "frame": {
+    "frames": 117,
+    "ms": 2009,
+    "works": [
+     5,
+     3,
+     2.7,
+     2.5,
+     2.7,
+     2.2,
+     2.4,
+     2,
+     2,
+     1.7,
+     1.6,
+     1.6,
+     1.7,
+     1.6,
+     1.7,
+     1.4,
+     1.6,
+     1.7,
+     1.6,
+     1.6,
+     3.1,
+     1.5,
+     1.7,
+     2,
+     1.8,
+     2.2,
+     1.8,
+     2.2,
+     1.7,
+     3.9,
+     1.8,
+     1.7,
+     2.2,
+     1.6,
+     1.8,
+     1.7,
+     1.8,
+     1.5,
+     1.6,
+     1.6,
+     1.8,
+     1.6,
+     3.6,
+     1.8,
+     1.8,
+     1.5,
+     1.6,
+     1.6,
+     1.6,
+     1.6,
+     1.7,
+     1.6,
+     11.5,
+     1.6,
+     1.7,
+     1.6,
+     1.6,
+     1.7,
+     2,
+     1.7,
+     2.1,
+     2.1,
+     1.8,
+     2.2,
+     1.6,
+     2,
+     3.5,
+     1.6,
+     1.9,
+     1.8,
+     1.7,
+     1.8,
+     1.8,
+     1.7,
+     1.8,
+     1.7,
+     1.7,
+     3.7,
+     1.7,
+     1.7,
+     1.8,
+     1.9,
+     2.2,
+     1.9,
+     2.1,
+     2,
+     2,
+     2,
+     2,
+     2.2,
+     1.8,
+     2,
+     4.4,
+     2.1,
+     2,
+     1.8,
+     1.7,
+     1.8,
+     1.9,
+     1.7,
+     1.9,
+     1.8,
+     1.7,
+     1.7,
+     1.7,
+     1.8,
+     2,
+     2,
+     2,
+     1.8,
+     1.8,
+     1.8,
+     1.9,
+     1.9,
+     1.9,
+     1.9,
+     1.8
+    ],
+    "gaps": [
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.7,
+     33.3,
+     16.7,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     33.3,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     33.4,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.5,
+     33.5,
+     33.3,
+     16.6,
+     16.7,
+     16.7
+    ]
+   },
+   "frameWall": 2027.7000000011176,
+   "burst": {
+    "workBest": 2,
+    "ms": 17.199999999254942
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 18
+  },
+  {
+   "cpu": 1,
+   "cond": "quiet",
+   "loadavg1": 10.4,
+   "bootMs": [],
+   "spinBefore": 3,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 303.19999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 46.90000000037253,
+   "spinAfter": 3,
+   "frame": {
+    "frames": 122,
+    "ms": 2011,
+    "workMedian": 2.1,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2028.5999999996275,
+   "burst": {
+    "workBest": 1.799999998882413,
+    "ms": 9.699999999254942
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 13.400000000372529
+  },
+  {
+   "cpu": 1,
+   "cond": "quiet",
+   "loadavg1": 10.2,
+   "bootMs": [],
+   "spinBefore": 3,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 331.6000000014901,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.7999999988824129,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 9.700000001117587,
+   "spinAfter": 3.300000000745058,
+   "frame": {
+    "frames": 121,
+    "ms": 2013,
+    "workMedian": 2.1,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2030.4000000003725,
+   "burst": {
+    "workBest": 1.799999998882413,
+    "ms": 11.399999998509884
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 24.399999998509884
+  },
+  {
+   "cpu": 1,
+   "cond": "quiet",
+   "loadavg1": 10.2,
+   "bootMs": [],
+   "spinBefore": 3.299999998882413,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 313,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 9,
+   "spinAfter": 2.900000000372529,
+   "frame": {
+    "frames": 122,
+    "ms": 2016,
+    "workMedian": 1.7,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2030.699999999255,
+   "burst": {
+    "workBest": 1.700000001117587,
+    "ms": 9
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 24.40000000037253
+  },
+  {
+   "cpu": 1,
+   "cond": "quiet",
+   "loadavg1": 10.9,
+   "bootMs": [],
+   "spinBefore": 3,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 387.80000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.2999999988824129,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 15.5,
+   "spinAfter": 2.900000000372529,
+   "frame": {
+    "frames": 118,
+    "ms": 2010,
+    "workMedian": 1.7,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2024.9000000003725,
+   "burst": {
+    "workBest": 1.799999998882413,
+    "ms": 10.800000000745058
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 9.299999998882413
+  },
+  {
+   "cpu": 1,
+   "cond": "quiet",
+   "loadavg1": 10.9,
+   "bootMs": [],
+   "spinBefore": 3.099999999627471,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 306.30000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.2999999988824129,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 7.800000000745058,
+   "spinAfter": 3.100000001490116,
+   "frame": {
+    "frames": 121,
+    "ms": 2005,
+    "workMedian": 2,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2024.8999999985099,
+   "burst": {
+    "workBest": 1.700000001117587,
+    "ms": 14.400000000372529
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 60.90000000037253
+  },
+  {
+   "cpu": 1,
+   "cond": "quiet",
+   "loadavg1": 10.2,
+   "bootMs": [],
+   "spinBefore": 3.099999999627471,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 302.2000000011176,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.40000000037252903,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 13.099999999627471,
+   "spinAfter": 3,
+   "frame": {
+    "frames": 122,
+    "ms": 2016,
+    "workMedian": 2,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2031.5999999996275,
+   "burst": {
+    "workBest": 1.799999998882413,
+    "ms": 9.400000000372529
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 36
+  },
+  {
+   "cpu": 1,
+   "cond": "quiet",
+   "loadavg1": 11.5,
+   "bootMs": [],
+   "spinBefore": 2.900000000372529,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 315,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 11.799999998882413,
+   "spinAfter": 3,
+   "frame": {
+    "frames": 117,
+    "ms": 2008,
+    "workMedian": 2.1,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2032,
+   "burst": {
+    "workBest": 1.799999998882413,
+    "ms": 9.599999999627471
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 14.099999999627471
+  },
+  {
+   "cpu": 1,
+   "cond": "quiet",
+   "loadavg1": 11.5,
+   "bootMs": [],
+   "spinBefore": 4.5,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 301.19999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.5,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 11.200000001117587,
+   "spinAfter": 3.400000000372529,
+   "frame": {
+    "frames": 111,
+    "ms": 2012,
+    "workMedian": 2.4,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2029.0999999996275,
+   "burst": {
+    "workBest": 1.900000000372529,
+    "ms": 18.300000000745058
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 22.699999999254942
+  },
+  {
+   "cpu": 1,
+   "cond": "quiet",
+   "loadavg1": 12,
+   "bootMs": [],
+   "spinBefore": 3.099999999627471,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 311.5,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 8.799999998882413,
+   "spinAfter": 3.299999998882413,
+   "frame": {
+    "frames": 120,
+    "ms": 2002,
+    "workMedian": 2,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2019.5999999996275,
+   "burst": {
+    "workBest": 1.900000000372529,
+    "ms": 9.800000000745058
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 12
+  },
+  {
+   "cpu": 2,
+   "cond": "quiet",
+   "loadavg1": 12,
+   "bootMs": [],
+   "spinBefore": 3.200000001117587,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 309.80000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.599999999627471,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 19.5,
+   "spinAfter": 4.599999999627471,
+   "frame": {
+    "frames": 119,
+    "ms": 2007,
+    "works": [
+     6.5,
+     3.8,
+     4.2,
+     7.6,
+     4.7,
+     5.3,
+     3.9,
+     6.2,
+     4.7,
+     3,
+     3.8,
+     17.3,
+     9.3,
+     4.4,
+     3.8,
+     4.7,
+     4.2,
+     4.3,
+     4.4,
+     3.7,
+     3.7,
+     3.6,
+     5.1,
+     2.4,
+     4.6,
+     5.3,
+     4,
+     3.7,
+     4.6,
+     5.7,
+     3.1,
+     5.6,
+     7.8,
+     9.4,
+     4.6,
+     3.6,
+     4.4,
+     9.2,
+     11.5,
+     5.7,
+     2.8,
+     2.3,
+     5.5,
+     5,
+     4.9,
+     4.5,
+     2.2,
+     3.7,
+     4.7,
+     6,
+     3.4,
+     2.6,
+     2.3,
+     5,
+     2,
+     2.2,
+     2.4,
+     2.5,
+     5.1,
+     2.2,
+     7.8,
+     5.3,
+     2.5,
+     7.6,
+     5.6,
+     2.1,
+     4.9,
+     5.1,
+     5.6,
+     3.7,
+     4.4,
+     6.2,
+     3.7,
+     8.4,
+     10.7,
+     8.9,
+     5.1,
+     6.2,
+     3.7,
+     5.5,
+     5.3,
+     4.8,
+     2.1,
+     5.1,
+     5.9,
+     6.6,
+     4.9,
+     6.3,
+     5.2,
+     4.3,
+     4.3,
+     4.5,
+     4.6,
+     6.7,
+     3.2,
+     5.4,
+     4.4,
+     4.9,
+     5.1,
+     5.5,
+     3.8,
+     5.5,
+     5.2,
+     5,
+     5.3,
+     5.9,
+     5.5,
+     10.3,
+     5.1,
+     3.9,
+     2.3,
+     2.2,
+     1.9,
+     8.6,
+     4.6,
+     4.2,
+     4.4,
+     3.9,
+     4
+    ],
+    "gaps": [
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.5,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     33.4,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     33.3,
+     16.8,
+     16.6,
+     16.6,
+     16.7,
+     33.3,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6
+    ]
+   },
+   "frameWall": 2033.800000000745,
+   "burst": {
+    "workBest": 3.899999998509884,
+    "ms": 22.399999998509884
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 25.300000000745058
+  },
+  {
+   "cpu": 2,
+   "cond": "quiet",
+   "loadavg1": 11.5,
+   "bootMs": [],
+   "spinBefore": 5.800000000745058,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 314,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 13.400000000372529,
+   "spinAfter": 7.400000000372529,
+   "frame": {
+    "frames": 122,
+    "ms": 2015,
+    "workMedian": 4.5,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2055.10000000149,
+   "burst": {
+    "workBest": 1.800000000745058,
+    "ms": 18.5
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 28.699999999254942
+  },
+  {
+   "cpu": 2,
+   "cond": "quiet",
+   "loadavg1": 11.5,
+   "bootMs": [],
+   "spinBefore": 6.900000000372529,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 318.5,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.2999999988824129,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 22.700000001117587,
+   "spinAfter": 5.300000000745058,
+   "frame": {
+    "frames": 120,
+    "ms": 2015,
+    "workMedian": 3.8,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2038.4000000003725,
+   "burst": {
+    "workBest": 3.599999999627471,
+    "ms": 19.399999998509884
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 39
+  },
+  {
+   "cpu": 2,
+   "cond": "quiet",
+   "loadavg1": 12.1,
+   "bootMs": [],
+   "spinBefore": 6.800000000745058,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 302.5,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.199999999254942,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 35,
+   "spinAfter": 6.199999999254942,
+   "frame": {
+    "frames": 122,
+    "ms": 2016,
+    "workMedian": 4.4,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2047.7000000011176,
+   "burst": {
+    "workBest": 1.800000000745058,
+    "ms": 16.800000000745058
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 22.299999998882413
+  },
+  {
+   "cpu": 2,
+   "cond": "quiet",
+   "loadavg1": 11.6,
+   "bootMs": [],
+   "spinBefore": 7,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 305,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.2999999988824129,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 16.300000000745058,
+   "spinAfter": 10.400000000372529,
+   "frame": {
+    "frames": 121,
+    "ms": 2005,
+    "workMedian": 4.3,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2248,
+   "burst": {
+    "workBest": 4.099999999627471,
+    "ms": 61.09999999962747
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 49.70000000111759
+  },
+  {
+   "cpu": 2,
+   "cond": "quiet",
+   "loadavg1": 11.6,
+   "bootMs": [],
+   "spinBefore": 6.299999998882413,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 308.19999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.5,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 19.40000000037253,
+   "spinAfter": 6.899999998509884,
+   "frame": {
+    "frames": 122,
+    "ms": 2009,
+    "workMedian": 4.3,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2046.5999999996275,
+   "burst": {
+    "workBest": 4.200000001117587,
+    "ms": 22
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 34
+  },
+  {
+   "cpu": 2,
+   "cond": "quiet",
+   "loadavg1": 12.2,
+   "bootMs": [],
+   "spinBefore": 6.400000000372529,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 311.5,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.299999998882413,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 26.5,
+   "spinAfter": 12.699999999254942,
+   "frame": {
+    "frames": 122,
+    "ms": 2013,
+    "workMedian": 4.6,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2076.800000000745,
+   "burst": {
+    "workBest": 2,
+    "ms": 27.40000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 25.09999999962747
+  },
+  {
+   "cpu": 2,
+   "cond": "quiet",
+   "loadavg1": 12.2,
+   "bootMs": [],
+   "spinBefore": 6.5,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 318,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 32.19999999925494,
+   "spinAfter": 7.199999999254942,
+   "frame": {
+    "frames": 122,
+    "ms": 2007,
+    "workMedian": 4.1,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2043.9000000003725,
+   "burst": {
+    "workBest": 4.199999999254942,
+    "ms": 23.799999998882413
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 20
+  },
+  {
+   "cpu": 2,
+   "cond": "quiet",
+   "loadavg1": 13.2,
+   "bootMs": [],
+   "spinBefore": 8.099999999627471,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 307.40000000037253,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.6999999992549419,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 15.900000000372529,
+   "spinAfter": 7.599999999627471,
+   "frame": {
+    "frames": 120,
+    "ms": 2011,
+    "workMedian": 4.2,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2051.800000000745,
+   "burst": {
+    "workBest": 3.700000001117587,
+    "ms": 26.799999998882413
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 27.600000001490116
+  },
+  {
+   "cpu": 2,
+   "cond": "quiet",
+   "loadavg1": 12.9,
+   "bootMs": [],
+   "spinBefore": 6.700000001117587,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 325.40000000037253,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.599999999627471,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 34.100000001490116,
+   "spinAfter": 6.400000000372529,
+   "frame": {
+    "frames": 122,
+    "ms": 2012,
+    "workMedian": 4.4,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2045.4000000003725,
+   "burst": {
+    "workBest": 3.799999998882413,
+    "ms": 21.299999998882413
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 18
+  },
+  {
+   "cpu": 3,
+   "cond": "quiet",
+   "loadavg1": 12.9,
+   "bootMs": [],
+   "spinBefore": 11.299999998882413,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 360.09999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 4.099999999627471,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 171.7000000011176,
+   "spinAfter": 8.200000001117587,
+   "frame": {
+    "frames": 119,
+    "ms": 2001,
+    "works": [
+     11.1,
+     6.4,
+     7,
+     7.5,
+     8.1,
+     5.2,
+     2.1,
+     1.8,
+     11.7,
+     9.9,
+     7.2,
+     6.8,
+     13.9,
+     6.6,
+     1.7,
+     7.9,
+     9.2,
+     9.2,
+     7,
+     6.5,
+     6.3,
+     3,
+     3.6,
+     7,
+     10.7,
+     3,
+     5.9,
+     6.4,
+     1.8,
+     22.4,
+     4.8,
+     3.8,
+     1.8,
+     7.1,
+     10,
+     6.3,
+     2,
+     6.1,
+     3.2,
+     7.1,
+     8.6,
+     8.6,
+     6.2,
+     5.7,
+     12,
+     6,
+     6.2,
+     6.2,
+     6.3,
+     6.2,
+     6.8,
+     6,
+     6.5,
+     8.6,
+     7.7,
+     7.2,
+     8.7,
+     6.3,
+     2.3,
+     12.9,
+     6.3,
+     3.8,
+     12.9,
+     6.9,
+     5.1,
+     6.3,
+     6.4,
+     6.2,
+     6.8,
+     6.5,
+     10.2,
+     6.2,
+     12.4,
+     6.7,
+     6.5,
+     6.9,
+     6.2,
+     6.3,
+     6.4,
+     6.7,
+     7.2,
+     7.5,
+     10.4,
+     7.4,
+     6.8,
+     20.2,
+     8.3,
+     7.1,
+     9.1,
+     3.2,
+     11.4,
+     7.5,
+     6.5,
+     7,
+     6.5,
+     2.4,
+     6.8,
+     7.5,
+     6.9,
+     6.2,
+     6.5,
+     7.6,
+     6.8,
+     7.1,
+     6.9,
+     7.4,
+     7.3,
+     7.2,
+     9,
+     5.5,
+     5.8,
+     5.3,
+     6.4,
+     6.2,
+     5.5,
+     6,
+     8.4,
+     4.6,
+     5.6
+    ],
+    "gaps": [
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     50,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7
+    ]
+   },
+   "frameWall": 2043.8999999985099,
+   "burst": {
+    "workBest": 4.300000000745058,
+    "ms": 29.90000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 27.300000000745058
+  },
+  {
+   "cpu": 3,
+   "cond": "quiet",
+   "loadavg1": 12.3,
+   "bootMs": [],
+   "spinBefore": 6.299999998882413,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 313.80000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.40000000037252903,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 18.399999998509884,
+   "spinAfter": 8.899999998509884,
+   "frame": {
+    "frames": 116,
+    "ms": 2017,
+    "workMedian": 6.5,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2064.10000000149,
+   "burst": {
+    "workBest": 5.699999999254942,
+    "ms": 30.59999999962747
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 33.69999999925494
+  },
+  {
+   "cpu": 3,
+   "cond": "quiet",
+   "loadavg1": 11.7,
+   "bootMs": [],
+   "spinBefore": 5.099999999627471,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 314.19999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 38.59999999962747,
+   "spinAfter": 8.799999998882413,
+   "frame": {
+    "frames": 120,
+    "ms": 2021,
+    "workMedian": 6.4,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2067.5,
+   "burst": {
+    "workBest": 2,
+    "ms": 27.199999999254942
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 17.5
+  },
+  {
+   "cpu": 3,
+   "cond": "quiet",
+   "loadavg1": 11.7,
+   "bootMs": [],
+   "spinBefore": 12,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 320,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.6999999992549419,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 42.20000000111759,
+   "spinAfter": 13,
+   "frame": {
+    "frames": 117,
+    "ms": 2015,
+    "workMedian": 6.6,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2097,
+   "burst": {
+    "workBest": 1.900000000372529,
+    "ms": 23.600000001490116
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 19.09999999962747
+  },
+  {
+   "cpu": 3,
+   "cond": "quiet",
+   "loadavg1": 13.9,
+   "bootMs": [],
+   "spinBefore": 9.200000001117587,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 315.7999999988824,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.099999999627471,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 39.70000000111759,
+   "spinAfter": 9.700000001117587,
+   "frame": {
+    "frames": 121,
+    "ms": 2014,
+    "workMedian": 6.15,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2062.800000000745,
+   "burst": {
+    "workBest": 1.800000000745058,
+    "ms": 16.5
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 28
+  },
+  {
+   "cpu": 3,
+   "cond": "quiet",
+   "loadavg1": 13.9,
+   "bootMs": [],
+   "spinBefore": 10.099999999627471,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 307.19999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 24,
+   "spinAfter": 11.400000000372529,
+   "frame": {
+    "frames": 118,
+    "ms": 2007,
+    "workMedian": 6.4,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2062.7999999988824,
+   "burst": {
+    "workBest": 2.300000000745058,
+    "ms": 25.09999999962747
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 21.5
+  },
+  {
+   "cpu": 3,
+   "cond": "quiet",
+   "loadavg1": 13.5,
+   "bootMs": [],
+   "spinBefore": 9.400000000372529,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 305.69999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.200000001117587,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 30.799999998882413,
+   "spinAfter": 10.5,
+   "frame": {
+    "frames": 122,
+    "ms": 2009,
+    "workMedian": 6.5,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2057.4000000003725,
+   "burst": {
+    "workBest": 4.199999999254942,
+    "ms": 28.799999998882413
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 26.300000000745058
+  },
+  {
+   "cpu": 3,
+   "cond": "quiet",
+   "loadavg1": 12.8,
+   "bootMs": [],
+   "spinBefore": 9.899999998509884,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 317.2000000011176,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.2999999988824129,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 23.59999999962747,
+   "spinAfter": 10.700000001117587,
+   "frame": {
+    "frames": 120,
+    "ms": 2005,
+    "workMedian": 6.6,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2060.4000000003725,
+   "burst": {
+    "workBest": 2.599999999627471,
+    "ms": 28.899999998509884
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 24.300000000745058
+  },
+  {
+   "cpu": 3,
+   "cond": "quiet",
+   "loadavg1": 12.8,
+   "bootMs": [],
+   "spinBefore": 11.599999999627471,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 308.19999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.599999999627471,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 39.100000001490116,
+   "spinAfter": 10.299999998882413,
+   "frame": {
+    "frames": 119,
+    "ms": 2004,
+    "workMedian": 7.05,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2057.699999999255,
+   "burst": {
+    "workBest": 3.099999999627471,
+    "ms": 28.800000000745058
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 21.40000000037253
+  },
+  {
+   "cpu": 3,
+   "cond": "quiet",
+   "loadavg1": 12.4,
+   "bootMs": [],
+   "spinBefore": 6.400000000372529,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 316.90000000037253,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.900000000372529,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 30.799999998882413,
+   "spinAfter": 11.199999999254942,
+   "frame": {
+    "frames": 118,
+    "ms": 2008,
+    "workMedian": 7.1,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2061.9000000003725,
+   "burst": {
+    "workBest": 6.100000001490116,
+    "ms": 32.5
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 23.799999998882413
+  },
+  {
+   "cpu": 4,
+   "cond": "quiet",
+   "loadavg1": 12.4,
+   "bootMs": [],
+   "spinBefore": 13.100000001490116,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 318.2999999988824,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 2,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 29.700000001117587,
+   "spinAfter": 10.799999998882413,
+   "frame": {
+    "frames": 121,
+    "ms": 2003,
+    "works": [
+     10.5,
+     8,
+     7.1,
+     7.7,
+     7.3,
+     7.1,
+     6.9,
+     7.6,
+     7.5,
+     7.3,
+     7.2,
+     7,
+     7.6,
+     14.1,
+     7.2,
+     7.7,
+     7.3,
+     8.2,
+     7.5,
+     7.8,
+     7.8,
+     8.8,
+     9.7,
+     14.3,
+     13.2,
+     10.7,
+     8.8,
+     13.1,
+     13.5,
+     8.3,
+     7.6,
+     1.8,
+     7.4,
+     8.6,
+     7.7,
+     9.7,
+     5.8,
+     10.7,
+     5.9,
+     2.2,
+     8.9,
+     6.3,
+     13.1,
+     15.6,
+     9.6,
+     8.9,
+     5.4,
+     2.3,
+     9.4,
+     8,
+     10.7,
+     2.2,
+     6.8,
+     8.5,
+     2.1,
+     9.2,
+     2.8,
+     9.2,
+     9.4,
+     8.8,
+     9.7,
+     2.1,
+     14.8,
+     4.7,
+     5.4,
+     2,
+     10.8,
+     5.3,
+     5.6,
+     8.6,
+     8.5,
+     11.2,
+     8.6,
+     6,
+     10,
+     10.2,
+     2.1,
+     8.8,
+     2.2,
+     10.2,
+     9.5,
+     2.8,
+     2,
+     7.5,
+     2.1,
+     6,
+     11,
+     2,
+     15.6,
+     2.2,
+     9.2,
+     8.7,
+     2.1,
+     2.2,
+     2.1,
+     2.2,
+     8.9,
+     9.4,
+     2,
+     8.6,
+     3.5,
+     2.2,
+     2.1,
+     7.6,
+     2.3,
+     10.6,
+     8.3,
+     9.4,
+     5.4,
+     6.2,
+     9.3,
+     7.3,
+     4.8,
+     7.7,
+     7.9,
+     7.5,
+     7.8,
+     8.7,
+     7.7,
+     1.8,
+     7.4
+    ],
+    "gaps": [
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.8,
+     16.5,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.7,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.8,
+     16.7,
+     16.6
+    ]
+   },
+   "frameWall": 2053.60000000149,
+   "burst": {
+    "workBest": 1.799999998882413,
+    "ms": 29
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 31.399999998509884
+  },
+  {
+   "cpu": 4,
+   "cond": "quiet",
+   "loadavg1": 11.8,
+   "bootMs": [],
+   "spinBefore": 3.200000001117587,
+   "refreshMs": 16.599999999999966,
+   "refreshCostMs": 335.59999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.1000000014901161,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 23.799999998882413,
+   "spinAfter": 13.5,
+   "frame": {
+    "frames": 120,
+    "ms": 2015,
+    "workMedian": 9,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2092.4000000003725,
+   "burst": {
+    "workBest": 1.900000000372529,
+    "ms": 21.199999999254942
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 47.80000000074506
+  },
+  {
+   "cpu": 4,
+   "cond": "quiet",
+   "loadavg1": 11.2,
+   "bootMs": [],
+   "spinBefore": 11.5,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 311.8999999985099,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.800000000745058,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 33.80000000074506,
+   "spinAfter": 15.200000001117587,
+   "frame": {
+    "frames": 118,
+    "ms": 2006,
+    "workMedian": 8.7,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2081.5,
+   "burst": {
+    "workBest": 5.400000000372529,
+    "ms": 41.90000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 31.90000000037253
+  },
+  {
+   "cpu": 4,
+   "cond": "quiet",
+   "loadavg1": 11.2,
+   "bootMs": [],
+   "spinBefore": 10.800000000745058,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 303.80000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.7999999988824129,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 29.5,
+   "spinAfter": 13.599999999627471,
+   "frame": {
+    "frames": 122,
+    "ms": 2016,
+    "workMedian": 8.4,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2096.5,
+   "burst": {
+    "workBest": 5.099999999627471,
+    "ms": 44.59999999962747
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 40.80000000074506
+  },
+  {
+   "cpu": 4,
+   "cond": "quiet",
+   "loadavg1": 10.8,
+   "bootMs": [],
+   "spinBefore": 12.5,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 335.80000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.5,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 24.799999998882413,
+   "spinAfter": 3,
+   "frame": {
+    "frames": 121,
+    "ms": 2015,
+    "workMedian": 8.3,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2045.5,
+   "burst": {
+    "workBest": 1.799999998882413,
+    "ms": 36.5
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 40.29999999888241
+  },
+  {
+   "cpu": 4,
+   "cond": "quiet",
+   "loadavg1": 10.4,
+   "bootMs": [],
+   "spinBefore": 12.800000000745058,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 315.80000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.900000000372529,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 32.59999999962747,
+   "spinAfter": 13.5,
+   "frame": {
+    "frames": 121,
+    "ms": 2002,
+    "workMedian": 8.850000000000001,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2065.699999999255,
+   "burst": {
+    "workBest": 1.800000000745058,
+    "ms": 28.699999999254942
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 40.5
+  },
+  {
+   "cpu": 4,
+   "cond": "quiet",
+   "loadavg1": 10.4,
+   "bootMs": [],
+   "spinBefore": 13.5,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 308.30000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.900000000372529,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 30.199999999254942,
+   "spinAfter": 15.700000001117587,
+   "frame": {
+    "frames": 121,
+    "ms": 2012,
+    "workMedian": 8.4,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2088.5999999996275,
+   "burst": {
+    "workBest": 1.800000000745058,
+    "ms": 32.399999998509884
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 68.80000000074506
+  },
+  {
+   "cpu": 4,
+   "cond": "quiet",
+   "loadavg1": 10.1,
+   "bootMs": [],
+   "spinBefore": 3,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 316,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.5,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 67.40000000037253,
+   "spinAfter": 12.5,
+   "frame": {
+    "frames": 116,
+    "ms": 2001,
+    "workMedian": 9.3,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2063.5,
+   "burst": {
+    "workBest": 1.8999999985098839,
+    "ms": 35.5
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 73.89999999850988
+  },
+  {
+   "cpu": 4,
+   "cond": "quiet",
+   "loadavg1": 10.7,
+   "bootMs": [],
+   "spinBefore": 14.300000000745058,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 311.69999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.40000000037252903,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 30.5,
+   "spinAfter": 14.5,
+   "frame": {
+    "frames": 120,
+    "ms": 2007,
+    "workMedian": 8.3,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2077.4000000003725,
+   "burst": {
+    "workBest": 2.5,
+    "ms": 41.90000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 52.90000000037253
+  },
+  {
+   "cpu": 4,
+   "cond": "quiet",
+   "loadavg1": 10.7,
+   "bootMs": [],
+   "spinBefore": 15.199999999254942,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 321.80000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 3.099999999627471,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 45.40000000037253,
+   "spinAfter": 12.700000001117587,
+   "frame": {
+    "frames": 121,
+    "ms": 2026,
+    "workMedian": 8.9,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2090.800000000745,
+   "burst": {
+    "workBest": 2,
+    "ms": 25.399999998509884
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 25.800000000745058
+  },
+  {
+   "cpu": 5,
+   "cond": "quiet",
+   "loadavg1": 10.5,
+   "bootMs": [],
+   "spinBefore": 13.299999998882413,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 316.69999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 3,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 44.90000000037253,
+   "spinAfter": 13,
+   "frame": {
+    "frames": 101,
+    "ms": 2009,
+    "works": [
+     22.7,
+     9.8,
+     9.7,
+     8.8,
+     16.2,
+     12.1,
+     28.2,
+     1.8,
+     5.7,
+     49.2,
+     18.6,
+     9.2,
+     9.6,
+     11.8,
+     14.5,
+     9.4,
+     6.4,
+     12.8,
+     15.2,
+     14.6,
+     12.1,
+     21.2,
+     9.9,
+     18,
+     8.9,
+     18.2,
+     13.8,
+     16.8,
+     7.2,
+     17.1,
+     21.3,
+     21,
+     60.2,
+     12.6,
+     5.3,
+     5.7,
+     12,
+     35.8,
+     10.7,
+     9.6,
+     15.2,
+     29.2,
+     2.5,
+     13,
+     11.7,
+     2.6,
+     6.8,
+     10.3,
+     16.4,
+     11.4,
+     11.2,
+     14.6,
+     38.4,
+     11.9,
+     15.4,
+     2.6,
+     29.4,
+     11.5,
+     16.6,
+     13.4,
+     13.3,
+     13.5,
+     2,
+     16,
+     16.7,
+     2,
+     6.1,
+     12.4,
+     10.9,
+     9.9,
+     11.3,
+     2.1,
+     18.2,
+     11.2,
+     21.5,
+     5.8,
+     13.2,
+     2,
+     11.6,
+     12.5,
+     12.6,
+     12.6,
+     12.2,
+     2.3,
+     12.1,
+     8.9,
+     13.6,
+     13.2,
+     20.7,
+     8.7,
+     12,
+     11.4,
+     14.6,
+     2.2,
+     3.6,
+     10.3,
+     12.9,
+     11.1,
+     3.3,
+     11.8,
+     11.4
+    ],
+    "gaps": [
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     33.3,
+     16.7,
+     16.6,
+     50.1,
+     16.7,
+     16.6,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.7,
+     16.8,
+     33.2,
+     33.3,
+     116.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     33.3,
+     16.7,
+     16.7,
+     49.9,
+     16.8,
+     49.9,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.7,
+     16.8,
+     16.6,
+     16.6,
+     33.3,
+     50.1,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     33.3,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6
+    ]
+   },
+   "frameWall": 2086.2999999988824,
+   "burst": {
+    "workBest": 2.199999999254942,
+    "ms": 38.80000000074506
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 27
+  },
+  {
+   "cpu": 5,
+   "cond": "quiet",
+   "loadavg1": 10.5,
+   "bootMs": [],
+   "spinBefore": 17.40000000037253,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 304.80000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.400000000372529,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 36.399999998509884,
+   "spinAfter": 15.800000000745058,
+   "frame": {
+    "frames": 117,
+    "ms": 2010,
+    "workMedian": 10.25,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2094.4000000003725,
+   "burst": {
+    "workBest": 1.800000000745058,
+    "ms": 35.09999999962747
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 82.20000000111759
+  },
+  {
+   "cpu": 5,
+   "cond": "quiet",
+   "loadavg1": 11.3,
+   "bootMs": [],
+   "spinBefore": 17.199999999254942,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 315.30000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.099999999627471,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 43.59999999962747,
+   "spinAfter": 13.200000001117587,
+   "frame": {
+    "frames": 114,
+    "ms": 2009,
+    "workMedian": 11.1,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2077.199999999255,
+   "burst": {
+    "workBest": 9.400000000372529,
+    "ms": 61.40000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 74.5
+  },
+  {
+   "cpu": 5,
+   "cond": "quiet",
+   "loadavg1": 11,
+   "bootMs": [],
+   "spinBefore": 14.5,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 303.09999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.400000000372529,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 58.29999999888241,
+   "spinAfter": 16.100000001490116,
+   "frame": {
+    "frames": 98,
+    "ms": 2015,
+    "workMedian": 11.7,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2102.5999999996275,
+   "burst": {
+    "workBest": 9.799999998882413,
+    "ms": 64
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 45.399999998509884
+  },
+  {
+   "cpu": 5,
+   "cond": "quiet",
+   "loadavg1": 11,
+   "bootMs": [],
+   "spinBefore": 19.199999999254942,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 307.59999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 2.199999999254942,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 28.300000000745058,
+   "spinAfter": 16.299999998882413,
+   "frame": {
+    "frames": 121,
+    "ms": 2002,
+    "workMedian": 10.5,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2092.300000000745,
+   "burst": {
+    "workBest": 9,
+    "ms": 50.90000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 39.19999999925494
+  },
+  {
+   "cpu": 5,
+   "cond": "quiet",
+   "loadavg1": 11,
+   "bootMs": [],
+   "spinBefore": 18.699999999254942,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 312.7000000011176,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.900000000372529,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 32.79999999888241,
+   "spinAfter": 16.799999998882413,
+   "frame": {
+    "frames": 121,
+    "ms": 2002,
+    "workMedian": 10.5,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2077.4000000003725,
+   "burst": {
+    "workBest": 2.099999999627471,
+    "ms": 40.40000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 48
+  },
+  {
+   "cpu": 5,
+   "cond": "quiet",
+   "loadavg1": 11.5,
+   "bootMs": [],
+   "spinBefore": 12.800000000745058,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 313.7999999988824,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.5,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 30.40000000037253,
+   "spinAfter": 7.800000000745058,
+   "frame": {
+    "frames": 121,
+    "ms": 2010,
+    "workMedian": 8.850000000000001,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2072.0999999996275,
+   "burst": {
+    "workBest": 2,
+    "ms": 48.100000001490116
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 37.899999998509884
+  },
+  {
+   "cpu": 5,
+   "cond": "quiet",
+   "loadavg1": 11.5,
+   "bootMs": [],
+   "spinBefore": 19.09999999962747,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 312.40000000037253,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.2999999988824129,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 39.30000000074506,
+   "spinAfter": 17.800000000745058,
+   "frame": {
+    "frames": 120,
+    "ms": 2015,
+    "workMedian": 11.9,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2104.199999999255,
+   "burst": {
+    "workBest": 6.099999999627471,
+    "ms": 45.19999999925494
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 40.59999999962747
+  },
+  {
+   "cpu": 5,
+   "cond": "quiet",
+   "loadavg1": 11.3,
+   "bootMs": [],
+   "spinBefore": 14.5,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 321.5,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.900000000372529,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 37.399999998509884,
+   "spinAfter": 16.299999998882413,
+   "frame": {
+    "frames": 120,
+    "ms": 2010,
+    "workMedian": 11.7,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2099.5,
+   "burst": {
+    "workBest": 9.600000001490116,
+    "ms": 53.90000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 41.80000000074506
+  },
+  {
+   "cpu": 5,
+   "cond": "quiet",
+   "loadavg1": 10.9,
+   "bootMs": [],
+   "spinBefore": 13.299999998882413,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 315.59999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.6000000014901161,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 34.5,
+   "spinAfter": 15.800000000745058,
+   "frame": {
+    "frames": 120,
+    "ms": 2005,
+    "workMedian": 10.9,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2091.7999999988824,
+   "burst": {
+    "workBest": 1.699999999254942,
+    "ms": 9.400000000372529
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 41.19999999925494
+  },
+  {
+   "cpu": 6,
+   "cond": "quiet",
+   "loadavg1": 10.9,
+   "bootMs": [],
+   "spinBefore": 23.899999998509884,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 316.09999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 2.199999999254942,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 54.09999999962747,
+   "spinAfter": 18.5,
+   "frame": {
+    "frames": 117,
+    "ms": 2010,
+    "works": [
+     21.9,
+     12.1,
+     14.5,
+     12.6,
+     13.5,
+     12.6,
+     13.7,
+     13,
+     11.4,
+     10.9,
+     12.9,
+     11.8,
+     11.4,
+     11.8,
+     12.6,
+     12.6,
+     10.9,
+     13.6,
+     14.1,
+     14.8,
+     14.1,
+     13.1,
+     9,
+     13,
+     17.5,
+     19.3,
+     16.9,
+     19.8,
+     20.1,
+     5.6,
+     18.9,
+     16.5,
+     17,
+     13.1,
+     3.1,
+     3,
+     3,
+     21.5,
+     14.5,
+     20.9,
+     15.9,
+     23,
+     16.7,
+     18.9,
+     10.2,
+     13.5,
+     16,
+     17.8,
+     16.8,
+     13.4,
+     13.7,
+     15.4,
+     19.1,
+     15.6,
+     20.8,
+     5.5,
+     15.6,
+     17.3,
+     11.3,
+     6.6,
+     15.2,
+     15.6,
+     14.3,
+     11.5,
+     13.8,
+     13.8,
+     13.2,
+     15.4,
+     13.6,
+     13.3,
+     9.6,
+     14.1,
+     12.2,
+     13.3,
+     13.8,
+     16,
+     12.8,
+     13.8,
+     14,
+     13.6,
+     13.1,
+     10.3,
+     15.7,
+     15.9,
+     15.4,
+     11.5,
+     14.8,
+     14.7,
+     14.4,
+     5.8,
+     14,
+     12.7,
+     13.2,
+     16.8,
+     16.1,
+     2.3,
+     17.4,
+     16.4,
+     18,
+     16.8,
+     17.5,
+     2.3,
+     17,
+     16,
+     7.4,
+     16.7,
+     15.8,
+     2.3,
+     7.6,
+     12.4,
+     9.5,
+     10.7,
+     10.6,
+     12.3,
+     10.9,
+     10.5,
+     11
+    ],
+    "gaps": [
+     16.7,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.8,
+     16.5,
+     16.7,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     33.3,
+     33.3,
+     16.7,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     33.4,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     33.3,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7
+    ]
+   },
+   "frameWall": 2103.5999999996275,
+   "burst": {
+    "workBest": 11,
+    "ms": 59.70000000111759
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 53.90000000037253
+  },
+  {
+   "cpu": 6,
+   "cond": "quiet",
+   "loadavg1": 10.8,
+   "bootMs": [],
+   "spinBefore": 19.299999998882413,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 313.59999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 11,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 42.70000000111759,
+   "spinAfter": 16.40000000037253,
+   "frame": {
+    "frames": 119,
+    "ms": 2000,
+    "workMedian": 12.9,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2092.5999999996275,
+   "burst": {
+    "workBest": 5.700000001117587,
+    "ms": 52.69999999925494
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 73.90000000037253
+  },
+  {
+   "cpu": 6,
+   "cond": "quiet",
+   "loadavg1": 10.2,
+   "bootMs": [],
+   "spinBefore": 21.59999999962747,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 321.80000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 3.099999999627471,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 50.5,
+   "spinAfter": 21.90000000037253,
+   "frame": {
+    "frames": 117,
+    "ms": 2011,
+    "workMedian": 13.8,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2119,
+   "burst": {
+    "workBest": 10.399999998509884,
+    "ms": 67.59999999962747
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 72.69999999925494
+  },
+  {
+   "cpu": 6,
+   "cond": "quiet",
+   "loadavg1": 10.2,
+   "bootMs": [],
+   "spinBefore": 19.09999999962747,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 303.5,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 3,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 41.5,
+   "spinAfter": 22.699999999254942,
+   "frame": {
+    "frames": 120,
+    "ms": 2020,
+    "workMedian": 13.6,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2138.800000000745,
+   "burst": {
+    "workBest": 16.699999999254942,
+    "ms": 90
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 40.399999998509884
+  },
+  {
+   "cpu": 6,
+   "cond": "quiet",
+   "loadavg1": 9.6,
+   "bootMs": [],
+   "spinBefore": 23.40000000037253,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 308.19999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 3.199999999254942,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 47.20000000111759,
+   "spinAfter": 20.799999998882413,
+   "frame": {
+    "frames": 115,
+    "ms": 2011,
+    "workMedian": 15,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2115.0999999996275,
+   "burst": {
+    "workBest": 13.099999999627471,
+    "ms": 68.09999999962747
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 42.80000000074506
+  },
+  {
+   "cpu": 6,
+   "cond": "quiet",
+   "loadavg1": 9.1,
+   "bootMs": [],
+   "spinBefore": 20.800000000745058,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 318,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 3.400000000372529,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 37.399999998509884,
+   "spinAfter": 10.099999999627471,
+   "frame": {
+    "frames": 118,
+    "ms": 2002,
+    "workMedian": 14.6,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2059.4000000003725,
+   "burst": {
+    "workBest": 8.299999998882413,
+    "ms": 70.5
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 77.80000000074506
+  },
+  {
+   "cpu": 6,
+   "cond": "quiet",
+   "loadavg1": 9.1,
+   "bootMs": [],
+   "spinBefore": 12.599999999627471,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 311.7999999988824,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 4.700000001117587,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 46,
+   "spinAfter": 22,
+   "frame": {
+    "frames": 120,
+    "ms": 2019,
+    "workMedian": 13.5,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2130.39999999851,
+   "burst": {
+    "workBest": 2.5,
+    "ms": 19.699999999254942
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 42.90000000037253
+  },
+  {
+   "cpu": 6,
+   "cond": "quiet",
+   "loadavg1": 8.6,
+   "bootMs": [],
+   "spinBefore": 22.699999999254942,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 315.5,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.2999999988824129,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 54.09999999962747,
+   "spinAfter": 22.199999999254942,
+   "frame": {
+    "frames": 107,
+    "ms": 2005,
+    "workMedian": 15.149999999999999,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2108,
+   "burst": {
+    "workBest": 2.099999999627471,
+    "ms": 17.40000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 77.30000000074506
+  },
+  {
+   "cpu": 6,
+   "cond": "quiet",
+   "loadavg1": 8.3,
+   "bootMs": [],
+   "spinBefore": 21.800000000745058,
+   "refreshMs": 16.699999999999932,
+   "refreshCostMs": 325.19999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.400000000372529,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 55.30000000074506,
+   "spinAfter": 17,
+   "frame": {
+    "frames": 118,
+    "ms": 2017,
+    "workMedian": 13.6,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2110.699999999255,
+   "burst": {
+    "workBest": 12,
+    "ms": 75.90000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 52.20000000111759
+  },
+  {
+   "cpu": 6,
+   "cond": "quiet",
+   "loadavg1": 8.3,
+   "bootMs": [],
+   "spinBefore": 3.899999998509884,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 311.5,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 3.299999998882413,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 86.30000000074506,
+   "spinAfter": 23.59999999962747,
+   "frame": {
+    "frames": 113,
+    "ms": 2003,
+    "workMedian": 13.8,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2117.7999999988824,
+   "burst": {
+    "workBest": 13.099999999627471,
+    "ms": 71.09999999962747
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 43
+  },
+  {
+   "cpu": 1,
+   "cond": "busy",
+   "loadavg1": 8.6,
+   "bootMs": [
+    59.5,
+    58.09999999962747,
+    53.5,
+    55.90000000037253,
+    60.59999999962747,
+    58.59999999962747,
+    62.19999999925494,
+    62.30000000074506,
+    49.5,
+    53.09999999962747,
+    65.40000000037253,
+    53.5
+   ],
+   "spinBefore": 3.200000001117587,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 311.09999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.19999999925494194,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 8.800000000745058,
+   "spinAfter": 3.099999999627471,
+   "frame": {
+    "frames": 103,
+    "ms": 2017,
+    "works": [
+     5.9,
+     1.8,
+     1.9,
+     1.9,
+     1.7,
+     2,
+     2.1,
+     2,
+     2,
+     1.9,
+     2,
+     2,
+     2,
+     2.4,
+     2.1,
+     2.1,
+     2,
+     2.1,
+     2.1,
+     2.1,
+     2.2,
+     2.1,
+     2.3,
+     2.2,
+     2.1,
+     2.5,
+     2.2,
+     2.1,
+     2.1,
+     2.3,
+     2.1,
+     2,
+     2.1,
+     2,
+     2.1,
+     2.1,
+     2.2,
+     2.2,
+     2.1,
+     2.1,
+     2.1,
+     2.2,
+     2.7,
+     2.5,
+     2.2,
+     2.1,
+     2.4,
+     4.8,
+     2.2,
+     2.3,
+     2.2,
+     2.1,
+     2.4,
+     2.4,
+     2.3,
+     2.4,
+     2.5,
+     2.3,
+     2.1,
+     2.4,
+     2.6,
+     2.4,
+     2.4,
+     2.1,
+     2.5,
+     2.2,
+     2.4,
+     6.1,
+     2.1,
+     2.2,
+     2.1,
+     3,
+     2.2,
+     2.2,
+     2.2,
+     2.2,
+     2.3,
+     2.1,
+     2.3,
+     3.4,
+     6.1,
+     3.8,
+     2.4,
+     2.1,
+     2.2,
+     2.2,
+     2.2,
+     2.4,
+     2.2,
+     2.3,
+     2.3,
+     2.1,
+     2,
+     2.1,
+     2.1,
+     2.1,
+     2.2,
+     2.5,
+     2.2,
+     2.5,
+     2.6,
+     2.5,
+     3.6
+    ],
+    "gaps": [
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     50.1,
+     16.6,
+     16.7,
+     16.6,
+     33.4,
+     16.7,
+     16.6,
+     16.7,
+     33.3,
+     16.7,
+     16.7,
+     16.6,
+     50,
+     16.7,
+     16.6,
+     16.7,
+     50,
+     16.7,
+     16.6,
+     50,
+     16.7,
+     16.7,
+     16.6,
+     50.1,
+     16.6,
+     16.7,
+     50,
+     16.7,
+     16.6,
+     33.3,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     33.3,
+     16.7,
+     16.6,
+     16.7,
+     50,
+     16.7,
+     16.7,
+     16.6,
+     33.3,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.5,
+     16.8,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.6,
+     16.8,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.7,
+     16.7,
+     16.6,
+     16.6,
+     16.8,
+     16.6,
+     16.7,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     16.7
+    ]
+   },
+   "frameWall": 2034.2999999988824,
+   "burst": {
+    "workBest": 1.799999998882413,
+    "ms": 23
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 14.900000000372529
+  },
+  {
+   "cpu": 1,
+   "cond": "busy",
+   "loadavg1": 8.9,
+   "bootMs": [
+    47.600000001490116,
+    56.40000000037253,
+    47.80000000074506,
+    46.30000000074506,
+    47.899999998509884,
+    50.20000000111759,
+    53.5,
+    48.20000000111759,
+    51.19999999925494,
+    47.09999999962747,
+    45.40000000037253,
+    45.30000000074506
+   ],
+   "spinBefore": 3.299999998882413,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 317.8999999985099,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 8.800000000745058,
+   "spinAfter": 3.400000000372529,
+   "frame": {
+    "frames": 109,
+    "ms": 2017,
+    "workMedian": 2.1500000000000004,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2039.5,
+   "burst": {
+    "workBest": 1.800000000745058,
+    "ms": 9.5
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 29.299999998882413
+  },
+  {
+   "cpu": 1,
+   "cond": "busy",
+   "loadavg1": 8.9,
+   "bootMs": [
+    50.80000000074506,
+    50.80000000074506,
+    54.40000000037253,
+    50.899999998509884,
+    50.5,
+    50.29999999888241,
+    74.5,
+    47.40000000037253,
+    73.20000000111759,
+    46.30000000074506,
+    48,
+    61.80000000074506
+   ],
+   "spinBefore": 3.099999999627471,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 317.90000000037253,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.5,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 10.599999999627471,
+   "spinAfter": 2.900000000372529,
+   "frame": {
+    "frames": 105,
+    "ms": 2012,
+    "workMedian": 1.8,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2027.300000000745,
+   "burst": {
+    "workBest": 1.6000000014901161,
+    "ms": 8.600000001490116
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 13.799999998882413
+  },
+  {
+   "cpu": 1,
+   "cond": "busy",
+   "loadavg1": 9.4,
+   "bootMs": [
+    45.69999999925494,
+    47.80000000074506,
+    47,
+    50.899999998509884,
+    52.399999998509884,
+    48.19999999925494,
+    57.29999999888241,
+    48.5,
+    50.09999999962747,
+    50.899999998509884,
+    53.09999999962747,
+    55
+   ],
+   "spinBefore": 3,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 320.1000000014901,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.2999999988824129,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 10.599999999627471,
+   "spinAfter": 3.5,
+   "frame": {
+    "frames": 105,
+    "ms": 2014,
+    "workMedian": 2.2,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2032.2000000011176,
+   "burst": {
+    "workBest": 2,
+    "ms": 13.400000000372529
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 13
+  },
+  {
+   "cpu": 1,
+   "cond": "busy",
+   "loadavg1": 9.4,
+   "bootMs": [
+    63.29999999888241,
+    51,
+    53.5,
+    50.399999998509884,
+    60.5,
+    61.19999999925494,
+    62.90000000037253,
+    50,
+    52.19999999925494,
+    55.09999999962747,
+    47.19999999925494,
+    47.59999999962747
+   ],
+   "spinBefore": 3.299999998882413,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 309.59999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.40000000037252903,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 7.5,
+   "spinAfter": 3,
+   "frame": {
+    "frames": 104,
+    "ms": 2014,
+    "workMedian": 2.2,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2032.2000000011176,
+   "burst": {
+    "workBest": 2.100000001490116,
+    "ms": 10.800000000745058
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 13.099999999627471
+  },
+  {
+   "cpu": 1,
+   "cond": "busy",
+   "loadavg1": 10.4,
+   "bootMs": [
+    51.399999998509884,
+    50.600000001490116,
+    52.30000000074506,
+    54.79999999888241,
+    53.70000000111759,
+    56.30000000074506,
+    51.70000000111759,
+    52.90000000037253,
+    56.09999999962747,
+    54.5,
+    54.899999998509884,
+    52.600000001490116
+   ],
+   "spinBefore": 3.200000001117587,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 320.90000000037253,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.40000000037252903,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 8.900000000372529,
+   "spinAfter": 3.599999999627471,
+   "frame": {
+    "frames": 105,
+    "ms": 2011,
+    "workMedian": 2.3,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2029.7000000011176,
+   "burst": {
+    "workBest": 2.599999999627471,
+    "ms": 23.90000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 38.5
+  },
+  {
+   "cpu": 1,
+   "cond": "busy",
+   "loadavg1": 10.4,
+   "bootMs": [
+    75.79999999888241,
+    51.59999999962747,
+    51.59999999962747,
+    47.899999998509884,
+    56.69999999925494,
+    46.79999999888241,
+    47.899999998509884,
+    48.59999999962747,
+    46.29999999888241,
+    55.79999999888241,
+    66.39999999850988,
+    48.5
+   ],
+   "spinBefore": 3.5,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 339.2999999988824,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 11.799999998882413,
+   "spinAfter": 2.900000000372529,
+   "frame": {
+    "frames": 105,
+    "ms": 2002,
+    "workMedian": 2.1,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2016.9000000003725,
+   "burst": {
+    "workBest": 2.400000000372529,
+    "ms": 14.300000000745058
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 14.400000000372529
+  },
+  {
+   "cpu": 1,
+   "cond": "busy",
+   "loadavg1": 10.8,
+   "bootMs": [
+    53.5,
+    52.5,
+    52.90000000037253,
+    51.40000000037253,
+    50.5,
+    61.29999999888241,
+    51.59999999962747,
+    60.79999999888241,
+    56.19999999925494,
+    53.90000000037253,
+    58.09999999962747,
+    62.899999998509884
+   ],
+   "spinBefore": 3.400000000372529,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 317.7000000011176,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.40000000037252903,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 10.299999998882413,
+   "spinAfter": 3.299999998882413,
+   "frame": {
+    "frames": 103,
+    "ms": 2014,
+    "workMedian": 1.9,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2030.2999999988824,
+   "burst": {
+    "workBest": 1.900000000372529,
+    "ms": 9.800000000745058
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 12.099999999627471
+  },
+  {
+   "cpu": 1,
+   "cond": "busy",
+   "loadavg1": 10.6,
+   "bootMs": [
+    57.399999998509884,
+    52.29999999888241,
+    51.100000001490116,
+    50.69999999925494,
+    55.5,
+    56,
+    48.30000000074506,
+    49.90000000037253,
+    47.09999999962747,
+    52.59999999962747,
+    46.100000001490116,
+    50.899999998509884
+   ],
+   "spinBefore": 3.199999999254942,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 307.09999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 9.400000000372529,
+   "spinAfter": 3.5,
+   "frame": {
+    "frames": 105,
+    "ms": 2001,
+    "workMedian": 2.1,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2018.9000000003725,
+   "burst": {
+    "workBest": 2,
+    "ms": 11.400000000372529
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 11.400000000372529
+  },
+  {
+   "cpu": 1,
+   "cond": "busy",
+   "loadavg1": 10.6,
+   "bootMs": [
+    53.40000000037253,
+    52.59999999962747,
+    53.09999999962747,
+    53,
+    52.40000000037253,
+    52.09999999962747,
+    52.69999999925494,
+    49.5,
+    51.30000000074506,
+    46,
+    52.09999999962747,
+    50.40000000037253
+   ],
+   "spinBefore": 3.199999999254942,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 315.6000000014901,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.3999999985098839,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 10.600000001490116,
+   "spinAfter": 3.400000000372529,
+   "frame": {
+    "frames": 105,
+    "ms": 2014,
+    "workMedian": 2.3,
+    "gapMedian": 16.7
+   },
+   "frameWall": 2031.7999999988824,
+   "burst": {
+    "workBest": 2,
+    "ms": 11.5
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 13
+  },
+  {
+   "cpu": 4,
+   "cond": "busy",
+   "loadavg1": 10.2,
+   "bootMs": [
+    216.7000000011176,
+    224.39999999850988,
+    226,
+    206.80000000074506,
+    213.19999999925494,
+    213,
+    201.89999999850988,
+    195.7000000011176,
+    204.5,
+    182.90000000037253,
+    139.80000000074506,
+    204.59999999962747
+   ],
+   "spinBefore": 12.900000000372529,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 311.69999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 2.099999999627471,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 27.600000001490116,
+   "spinAfter": 13,
+   "frame": {
+    "frames": 15,
+    "ms": 2086,
+    "works": [
+     13.7,
+     8.4,
+     7.9,
+     7.8,
+     8.5,
+     7.2,
+     9.1,
+     6.7,
+     9.4,
+     9.1,
+     8.6,
+     8.6,
+     9.5,
+     9.6,
+     8.9
+    ],
+    "gaps": [
+     16.8,
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     216.7,
+     233.4,
+     233.3,
+     216.6,
+     233.3,
+     216.7,
+     216.6,
+     200.1
+    ]
+   },
+   "frameWall": 2152.39999999851,
+   "burst": {
+    "workBest": 6.900000000372529,
+    "ms": 41.40000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 353.5
+  },
+  {
+   "cpu": 4,
+   "cond": "busy",
+   "loadavg1": 10.2,
+   "bootMs": [
+    213.40000000037253,
+    214.10000000149012,
+    218.40000000037253,
+    207.5,
+    203.2999999988824,
+    213.59999999962747,
+    213.69999999925494,
+    201,
+    201.5,
+    199.30000000074506,
+    214.60000000149012,
+    211
+   ],
+   "spinBefore": 13.899999998509884,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 319.2000000011176,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.3999999985098839,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 30.300000000745058,
+   "spinAfter": 14,
+   "frame": {
+    "frames": 16,
+    "ms": 2082,
+    "workMedian": 8.8,
+    "gapMedian": 208.3
+   },
+   "frameWall": 2151.0999999996275,
+   "burst": {
+    "workBest": 7.199999999254942,
+    "ms": 38.09999999962747
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 439.90000000037253
+  },
+  {
+   "cpu": 4,
+   "cond": "busy",
+   "loadavg1": 10.3,
+   "bootMs": [
+    207.69999999925494,
+    227,
+    214.30000000074506,
+    214.7000000011176,
+    218.40000000037253,
+    214.90000000037253,
+    220.90000000037253,
+    216.7999999988824,
+    204,
+    220.59999999962747,
+    225.59999999962747,
+    219.09999999962747
+   ],
+   "spinBefore": 14.5,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 315.59999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.199999999254942,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 45.100000001490116,
+   "spinAfter": 13.599999999627471,
+   "frame": {
+    "frames": 16,
+    "ms": 2140,
+    "workMedian": 9.4,
+    "gapMedian": 216.64999999999998
+   },
+   "frameWall": 2208,
+   "burst": {
+    "workBest": 8.5,
+    "ms": 43.70000000111759
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 479.59999999962747
+  },
+  {
+   "cpu": 4,
+   "cond": "busy",
+   "loadavg1": 9.6,
+   "bootMs": [
+    213.90000000037253,
+    206.40000000037253,
+    195.40000000037253,
+    196.7999999988824,
+    220.40000000037253,
+    223.90000000037253,
+    229.60000000149012,
+    218.69999999925494,
+    222.09999999962747,
+    208.19999999925494,
+    215.90000000037253,
+    211.89999999850988
+   ],
+   "spinBefore": 14.200000001117587,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 310.09999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.400000000372529,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 42.29999999888241,
+   "spinAfter": 14.100000001490116,
+   "frame": {
+    "frames": 15,
+    "ms": 2121,
+    "workMedian": 10.350000000000001,
+    "gapMedian": 216.7
+   },
+   "frameWall": 2192.300000000745,
+   "burst": {
+    "workBest": 7.600000001490116,
+    "ms": 43
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 454.09999999962747
+  },
+  {
+   "cpu": 4,
+   "cond": "busy",
+   "loadavg1": 9,
+   "bootMs": [
+    219.59999999962747,
+    219.7999999988824,
+    221.19999999925494,
+    224.60000000149012,
+    220.59999999962747,
+    224.60000000149012,
+    204.2000000011176,
+    216.90000000037253,
+    201.10000000149012,
+    228.90000000037253,
+    227.30000000074506,
+    228.19999999925494
+   ],
+   "spinBefore": 14,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 311.30000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 2,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 31.699999999254942,
+   "spinAfter": 14.200000001117587,
+   "frame": {
+    "frames": 15,
+    "ms": 2133,
+    "workMedian": 8.95,
+    "gapMedian": 216.7
+   },
+   "frameWall": 2208.4000000003725,
+   "burst": {
+    "workBest": 8.099999999627471,
+    "ms": 43.19999999925494
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 491.1000000014901
+  },
+  {
+   "cpu": 4,
+   "cond": "busy",
+   "loadavg1": 8.6,
+   "bootMs": [
+    217.59999999962747,
+    215.80000000074506,
+    221.2000000011176,
+    226.09999999962747,
+    222.7000000011176,
+    223.69999999925494,
+    211.19999999925494,
+    213.59999999962747,
+    218.5,
+    202.69999999925494,
+    220.90000000037253,
+    227.69999999925494
+   ],
+   "spinBefore": 13.5,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 312.2999999988824,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 2,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 31.800000000745058,
+   "spinAfter": 14.099999999627471,
+   "frame": {
+    "frames": 16,
+    "ms": 2159,
+    "workMedian": 9.1,
+    "gapMedian": 216.7
+   },
+   "frameWall": 2223.2999999988824,
+   "burst": {
+    "workBest": 3.400000000372529,
+    "ms": 36.90000000037253
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 461.40000000037253
+  },
+  {
+   "cpu": 4,
+   "cond": "busy",
+   "loadavg1": 8.6,
+   "bootMs": [
+    217.2999999988824,
+    213.7999999988824,
+    215,
+    223.59999999962747,
+    228,
+    211.90000000037253,
+    204.2999999988824,
+    200.40000000037253,
+    203.69999999925494,
+    201.59999999962747,
+    199.7999999988824,
+    205.09999999962747
+   ],
+   "spinBefore": 14.399999998509884,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 313.6000000014901,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.5,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 29.09999999962747,
+   "spinAfter": 14.5,
+   "frame": {
+    "frames": 15,
+    "ms": 2107,
+    "workMedian": 8.7,
+    "gapMedian": 216.6
+   },
+   "frameWall": 2181.300000000745,
+   "burst": {
+    "workBest": 8.399999998509884,
+    "ms": 43.59999999962747
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 432.90000000037253
+  },
+  {
+   "cpu": 4,
+   "cond": "busy",
+   "loadavg1": 8,
+   "bootMs": [
+    214.30000000074506,
+    184.5,
+    187.90000000037253,
+    196.09999999962747,
+    188.2999999988824,
+    217.09999999962747,
+    206,
+    202.5,
+    202.7000000011176,
+    196,
+    208.09999999962747,
+    213.09999999962747
+   ],
+   "spinBefore": 14.099999999627471,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 317.2999999988824,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.400000000372529,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 36.59999999962747,
+   "spinAfter": 13.599999999627471,
+   "frame": {
+    "frames": 16,
+    "ms": 2184,
+    "workMedian": 7.8,
+    "gapMedian": 208.3
+   },
+   "frameWall": 2252.5,
+   "burst": {
+    "workBest": 8,
+    "ms": 43.79999999888241
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 455.30000000074506
+  },
+  {
+   "cpu": 4,
+   "cond": "busy",
+   "loadavg1": 7.7,
+   "bootMs": [
+    198.10000000149012,
+    204.60000000149012,
+    198,
+    180.40000000037253,
+    203.40000000037253,
+    194,
+    191,
+    195,
+    160.59999999962747,
+    191.40000000037253,
+    193,
+    190.7000000011176
+   ],
+   "spinBefore": 12.600000001490116,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 303.3999999985099,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.700000001117587,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 27,
+   "spinAfter": 12.400000000372529,
+   "frame": {
+    "frames": 16,
+    "ms": 2107,
+    "workMedian": 8.3,
+    "gapMedian": 200
+   },
+   "frameWall": 2169.800000000745,
+   "burst": {
+    "workBest": 7.300000000745058,
+    "ms": 38.5
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 412.09999999962747
+  },
+  {
+   "cpu": 4,
+   "cond": "busy",
+   "loadavg1": 7.2,
+   "bootMs": [
+    230.90000000037253,
+    204.2000000011176,
+    206.69999999925494,
+    198.5,
+    206.40000000037253,
+    206.7999999988824,
+    207.7000000011176,
+    205.60000000149012,
+    202.69999999925494,
+    189.5,
+    187.30000000074506,
+    199.59999999962747
+   ],
+   "spinBefore": 12.5,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 306.40000000037253,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.5,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 32.80000000074506,
+   "spinAfter": 13.100000001490116,
+   "frame": {
+    "frames": 16,
+    "ms": 2069,
+    "workMedian": 9.5,
+    "gapMedian": 216.64999999999998
+   },
+   "frameWall": 2137.9000000003725,
+   "burst": {
+    "workBest": 7.199999999254942,
+    "ms": 40.29999999888241
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 403.40000000037253
+  },
+  {
+   "cpu": 6,
+   "cond": "busy",
+   "loadavg1": 7.2,
+   "bootMs": [
+    315.2000000011176,
+    300.2999999988824,
+    289.5,
+    326.69999999925494,
+    314.6000000014901,
+    311.2000000011176,
+    312,
+    292.7000000011176,
+    293.40000000037253,
+    298.1000000014901
+   ],
+   "spinBefore": 12.800000000745058,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 318.59999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 38.40000000037253,
+   "spinAfter": 20.09999999962747,
+   "frame": {
+    "frames": 12,
+    "ms": 2050,
+    "works": [
+     19.1,
+     12.6,
+     12.9,
+     10.3,
+     10.3,
+     10.1,
+     12.2,
+     18.2,
+     13,
+     13.8,
+     13.9,
+     14
+    ],
+    "gaps": [
+     16.6,
+     16.6,
+     16.7,
+     16.7,
+     16.6,
+     16.7,
+     316.7,
+     316.6,
+     300,
+     350,
+     333.4
+    ]
+   },
+   "frameWall": 2153.699999999255,
+   "burst": {
+    "workBest": 10.300000000745058,
+    "ms": 58.09999999962747
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 648.8000000007451
+  },
+  {
+   "cpu": 6,
+   "cond": "busy",
+   "loadavg1": 7.3,
+   "bootMs": [
+    298.8999999985099,
+    300.09999999962747,
+    295.3999999985099,
+    283.7999999988824,
+    295.59999999962747,
+    295.30000000074506,
+    269.2999999988824,
+    256.69999999925494,
+    218.90000000037253,
+    182.90000000037253,
+    241.5
+   ],
+   "spinBefore": 20.299999998882413,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 321,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 0.30000000074505806,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 46.59999999962747,
+   "spinAfter": 13,
+   "frame": {
+    "frames": 12,
+    "ms": 2251,
+    "workMedian": 12.4,
+    "gapMedian": 308.3
+   },
+   "frameWall": 2313.800000000745,
+   "burst": {
+    "workBest": 1.699999999254942,
+    "ms": 51.5
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 528.1999999992549
+  },
+  {
+   "cpu": 6,
+   "cond": "busy",
+   "loadavg1": 6.8,
+   "bootMs": [
+    181.39999999850988,
+    322,
+    151.2000000011176,
+    288.69999999925494,
+    301,
+    310.7999999988824,
+    283.7999999988824,
+    283.5,
+    242.40000000037253,
+    258.09999999962747,
+    262.19999999925494
+   ],
+   "spinBefore": 19.300000000745058,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 315.40000000037253,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 3.200000001117587,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 45.19999999925494,
+   "spinAfter": 8.300000000745058,
+   "frame": {
+    "frames": 13,
+    "ms": 2037,
+    "workMedian": 12.25,
+    "gapMedian": 166.7
+   },
+   "frameWall": 2085.699999999255,
+   "burst": {
+    "workBest": 11.100000001490116,
+    "ms": 60.70000000111759
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 565.7999999988824
+  },
+  {
+   "cpu": 6,
+   "cond": "busy",
+   "loadavg1": 6.7,
+   "bootMs": [
+    263.7000000011176,
+    111.79999999888241,
+    165.69999999925494,
+    240.59999999962747,
+    194.2000000011176,
+    289.59999999962747,
+    250.80000000074506,
+    265.80000000074506,
+    139,
+    186,
+    250.2000000011176,
+    287.7999999988824
+   ],
+   "spinBefore": 19.800000000745058,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 312.5,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 3.699999999254942,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 38.69999999925494,
+   "spinAfter": 15.900000000372529,
+   "frame": {
+    "frames": 15,
+    "ms": 2105,
+    "workMedian": 11.149999999999999,
+    "gapMedian": 216.7
+   },
+   "frameWall": 2185.800000000745,
+   "burst": {
+    "workBest": 2.800000000745058,
+    "ms": 44.69999999925494
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 487.90000000037253
+  },
+  {
+   "cpu": 6,
+   "cond": "busy",
+   "loadavg1": 7.3,
+   "bootMs": [
+    283.09999999962747,
+    299.30000000074506,
+    140.7999999988824,
+    304.40000000037253,
+    287.90000000037253,
+    278.7000000011176,
+    229.80000000074506,
+    95.5,
+    176.90000000037253,
+    171.10000000149012,
+    270.7999999988824,
+    264.5
+   ],
+   "spinBefore": 20.800000000745058,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 320.09999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 3.700000001117587,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 31.699999999254942,
+   "spinAfter": 9.300000000745058,
+   "frame": {
+    "frames": 14,
+    "ms": 2098,
+    "workMedian": 13.4,
+    "gapMedian": 258.3
+   },
+   "frameWall": 2140.9000000003725,
+   "burst": {
+    "workBest": 1.799999998882413,
+    "ms": 35.69999999925494
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 389.40000000037253
+  },
+  {
+   "cpu": 6,
+   "cond": "busy",
+   "loadavg1": 7.1,
+   "bootMs": [
+    308.40000000037253,
+    286.2000000011176,
+    295.2999999988824,
+    234.89999999850988,
+    251.2000000011176,
+    212.80000000074506,
+    206.69999999925494,
+    261.40000000037253,
+    250,
+    263.90000000037253,
+    329.7000000011176,
+    276.3999999985099
+   ],
+   "spinBefore": 18.700000001117587,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 319.80000000074506,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.400000000372529,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 53.59999999962747,
+   "spinAfter": 30.199999999254942,
+   "frame": {
+    "frames": 14,
+    "ms": 2271,
+    "workMedian": 11.8,
+    "gapMedian": 241.65
+   },
+   "frameWall": 2426.4000000003725,
+   "burst": {
+    "workBest": 2,
+    "ms": 14.899999998509884
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 588
+  },
+  {
+   "cpu": 6,
+   "cond": "busy",
+   "loadavg1": 7.2,
+   "bootMs": [
+    242.90000000037253,
+    252.80000000074506,
+    264.40000000037253,
+    270.09999999962747,
+    201.59999999962747,
+    185.40000000037253,
+    131.80000000074506,
+    205.19999999925494,
+    154.80000000074506,
+    94.59999999962747,
+    167.39999999850988,
+    156.7000000011176
+   ],
+   "spinBefore": 19.90000000037253,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 329.69999999925494,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 2.5,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 75.59999999962747,
+   "spinAfter": 3.300000000745058,
+   "frame": {
+    "frames": 15,
+    "ms": 2093,
+    "workMedian": 6.65,
+    "gapMedian": 200
+   },
+   "frameWall": 2128.300000000745,
+   "burst": {
+    "workBest": 1.699999999254942,
+    "ms": 24.800000000745058
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 301.5
+  },
+  {
+   "cpu": 6,
+   "cond": "busy",
+   "loadavg1": 7.2,
+   "bootMs": [
+    302.2999999988824,
+    287.1000000014901,
+    194.90000000037253,
+    246.7000000011176,
+    222.60000000149012,
+    250.2000000011176,
+    259,
+    181.59999999962747,
+    283.7999999988824,
+    271,
+    283.40000000037253,
+    284
+   ],
+   "spinBefore": 17.5,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 316.2000000011176,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 1.599999999627471,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 39.79999999888241,
+   "spinAfter": 19.200000001117587,
+   "frame": {
+    "frames": 14,
+    "ms": 2121,
+    "workMedian": 8.5,
+    "gapMedian": 241.65
+   },
+   "frameWall": 2234.5,
+   "burst": {
+    "workBest": 10.700000001117587,
+    "ms": 64.30000000074506
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 621.9000000003725
+  },
+  {
+   "cpu": 6,
+   "cond": "busy",
+   "loadavg1": 7.1,
+   "bootMs": [
+    218.30000000074506,
+    265.90000000037253,
+    266.40000000037253,
+    293.1000000014901,
+    306.19999999925494,
+    295.19999999925494,
+    310.19999999925494,
+    271.3999999985099,
+    242.69999999925494,
+    243,
+    254
+   ],
+   "spinBefore": 8.599999999627471,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 303.1000000014901,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 2.5,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 54.5,
+   "spinAfter": 18.899999998509884,
+   "frame": {
+    "frames": 12,
+    "ms": 2150,
+    "workMedian": 12.3,
+    "gapMedian": 275
+   },
+   "frameWall": 2246,
+   "burst": {
+    "workBest": 1.700000001117587,
+    "ms": 43.80000000074506
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 555.4000000003725
+  },
+  {
+   "cpu": 6,
+   "cond": "busy",
+   "loadavg1": 7.4,
+   "bootMs": [
+    333.59999999962747,
+    278,
+    288,
+    313.59999999962747,
+    289.5,
+    283.40000000037253,
+    290.7999999988824,
+    256.5,
+    234.59999999962747,
+    278.5,
+    259.2999999988824
+   ],
+   "spinBefore": 23,
+   "refreshMs": 16.600000000000023,
+   "refreshCostMs": 310.09999999962747,
+   "signals": {
+    "cores": 4,
+    "memoryGB": 8,
+    "saveData": false,
+    "effectiveType": "4g",
+    "reducedMotion": false,
+    "reducedTransparency": false,
+    "reducedData": false,
+    "coarsePointer": true,
+    "dpr": 2
+   },
+   "signalsMs": 8.300000000745058,
+   "gl": {
+    "webgl": 2,
+    "caveat": false,
+    "software": true,
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "maxTexture": 8192
+   },
+   "glMs": 57.40000000037253,
+   "spinAfter": 19.800000000745058,
+   "frame": {
+    "frames": 12,
+    "ms": 2290,
+    "workMedian": 13.3,
+    "gapMedian": 299.95
+   },
+   "frameWall": 2394.0999999996275,
+   "burst": {
+    "workBest": 11.799999998882413,
+    "ms": 76.09999999962747
+   },
+   "detectGpu": {
+    "gpu": "swiftshader",
+    "isMobile": false,
+    "tier": 0,
+    "type": "BLOCKLISTED"
+   },
+   "detectGpuMs": 536.5
+  }
+ ],
+ "detectGpu": [
+  {
+   "renderer": "Adreno (TM) 610",
+   "isMobile": true,
+   "device": "motorola moto g30",
+   "fps": 32,
+   "gpu": "qualcomm adreno 610",
+   "tier": 2,
+   "type": "BENCHMARK",
+   "ms": 4.7
+  },
+  {
+   "renderer": "Adreno (TM) 619",
+   "isMobile": true,
+   "device": "oppo reno7 z 5g",
+   "fps": 41,
+   "gpu": "qualcomm adreno 619",
+   "tier": 2,
+   "type": "BENCHMARK",
+   "ms": 4.3
+  },
+  {
+   "renderer": "Adreno (TM) 650",
+   "isMobile": true,
+   "device": "samsung galaxy s20 fe 5g (sm-g781u)",
+   "fps": 88,
+   "gpu": "qualcomm adreno 650",
+   "tier": 3,
+   "type": "BENCHMARK",
+   "ms": 18.7
+  },
+  {
+   "renderer": "Adreno (TM) 740",
+   "isMobile": true,
+   "device": "samsung galaxy s23+",
+   "fps": 120,
+   "gpu": "qualcomm adreno 740",
+   "tier": 3,
+   "type": "BENCHMARK",
+   "ms": 5.3
+  },
+  {
+   "renderer": "Adreno (TM) 830",
+   "isMobile": true,
+   "device": "oppo find x8 ultra",
+   "fps": 60,
+   "gpu": "qualcomm adreno 830",
+   "tier": 3,
+   "type": "BENCHMARK",
+   "ms": 2.3
+  },
+  {
+   "renderer": "Mali-G52 MC2",
+   "isMobile": true,
+   "device": "ulefone power armor 14 pro",
+   "fps": 42,
+   "gpu": "arm mali-g52 mc2",
+   "tier": 2,
+   "type": "BENCHMARK",
+   "ms": 6.2
+  },
+  {
+   "renderer": "Mali-G57 MC2",
+   "isMobile": true,
+   "device": "samsung galaxy a15",
+   "fps": 36,
+   "gpu": "arm mali-g57 mc2",
+   "tier": 2,
+   "type": "BENCHMARK",
+   "ms": 2.2
+  },
+  {
+   "renderer": "Mali-G68 MC4",
+   "isMobile": true,
+   "device": "samsung galaxy a34",
+   "fps": 62,
+   "gpu": "arm mali-g68 mc4",
+   "tier": 3,
+   "type": "BENCHMARK",
+   "ms": 1.9
+  },
+  {
+   "renderer": "Mali-G710 MC10",
+   "isMobile": true,
+   "gpu": "mali-g710 mc10 ()",
+   "tier": 1,
+   "type": "FALLBACK",
+   "ms": 2.3
+  },
+  {
+   "renderer": "Mali-G925-Immortalis MC12",
+   "isMobile": true,
+   "device": "oppo find x8 pro",
+   "fps": 90,
+   "gpu": "arm mali-g925-immortalis mc12",
+   "tier": 3,
+   "type": "BENCHMARK",
+   "ms": 2.1
+  },
+  {
+   "renderer": "PowerVR Rogue GE8320",
+   "isMobile": true,
+   "device": "samsung galaxy a12",
+   "fps": 21,
+   "gpu": "powervr rogue ge8320",
+   "tier": 1,
+   "type": "BENCHMARK",
+   "ms": 2.7
+  },
+  {
+   "renderer": "Apple GPU",
+   "isMobile": true,
+   "gpu": "apple gpu ()",
+   "tier": 1,
+   "type": "FALLBACK",
+   "ms": 8.4
+  },
+  {
+   "renderer": "Samsung Xclipse 940",
+   "isMobile": true,
+   "device": "samsung s24 (xclipse)",
+   "fps": 90,
+   "gpu": "samsung xclipse 940",
+   "tier": 3,
+   "type": "BENCHMARK",
+   "ms": 2.9
+  },
+  {
+   "renderer": "ANGLE (Intel, Intel(R) UHD Graphics 620 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+   "isMobile": false,
+   "fps": 14,
+   "gpu": "intel uhd graphics 620",
+   "tier": 0,
+   "type": "BENCHMARK",
+   "ms": 4.4
+  },
+  {
+   "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+   "isMobile": false,
+   "fps": 60,
+   "gpu": "nvidia geforce rtx 3060",
+   "tier": 3,
+   "type": "BENCHMARK",
+   "ms": 6.2
+  },
+  {
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "isMobile": false,
+   "gpu": "swiftshader",
+   "tier": 0,
+   "type": "BLOCKLISTED",
+   "ms": 0
+  },
+  {
+   "renderer": "Apple GPU",
+   "isMobile": false,
+   "fps": 60,
+   "gpu": "apple m-series",
+   "tier": 3,
+   "type": "BENCHMARK",
+   "ms": 0
+  }
+ ],
+ "analysis": {
+  "rule": "work median / measured refresh: < 0.3 strong, < 0.6 average, else low",
+  "base": 1.8,
+  "inSampleBands": [
+   3.6,
+   8.8
+  ],
+  "baseGap": 16.7,
+  "refreshMeasured": {
+   "median": 16.6,
+   "range": [
+    16.6,
+    16.7
+   ]
+  },
+  "byCell": {
+   "quiet|1x": {
+    "cond": "quiet",
+    "cpu": 1,
+    "label": "strong",
+    "runs": 10,
+    "loadavg1": 10.7,
+    "workMedian": 2,
+    "workRange": [
+     1.7,
+     2.4
+    ],
+    "fraction": {
+     "median": 0.12,
+     "min": 0.1,
+     "max": 0.14
+    },
+    "workCV": 10.1,
+    "rule2s": {
+     "dist": {
+      "strong": 10
+     },
+     "correct": 10,
+     "flipRate": 0
+    },
+    "rule2sDoubleWork": {
+     "strong": 10
+    },
+    "prefix": {
+     "6": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": 10,
+      "ms": 133
+     },
+     "12": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": 10,
+      "ms": 233
+     },
+     "24": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": 10,
+      "ms": 433
+     },
+     "48": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": 10,
+      "ms": 833
+     },
+     "90": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": 10,
+      "ms": 1550
+     }
+    },
+    "earlyExit": [
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 450,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 450,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 583,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "strong"
+     }
+    ],
+    "earlyExitDist": {
+     "strong": 10
+    },
+    "earlyExitCorrect": 10,
+    "earlyExitMs": 433,
+    "earlyExitMsRange": [
+     433,
+     583
+    ],
+    "inSample2s": {
+     "dist": {
+      "strong": 10
+     },
+     "correct": 10
+    },
+    "gapMedian": 16.7,
+    "gapRange": [
+     16.7,
+     16.7
+    ],
+    "gapDist": {
+     "strong": 10
+    },
+    "gapCorrect": 10,
+    "burstMedian": 1.8,
+    "burstRange": [
+     1.7,
+     2
+    ],
+    "burstMs": 10.3,
+    "burstCorrect": 10,
+    "throttleDelivered": {
+     "before": 1,
+     "after": 1,
+     "boot": null,
+     "bootRange": null
+    },
+    "faithfulRuns": 9,
+    "rule2sFaithful": {
+     "dist": {
+      "strong": 9
+     },
+     "of": 9
+    },
+    "signals": {
+     "cores": 4,
+     "memoryGB": 8,
+     "saveData": false,
+     "effectiveType": "4g",
+     "reducedMotion": false,
+     "reducedTransparency": false,
+     "reducedData": false,
+     "coarsePointer": true,
+     "dpr": 2
+    },
+    "gl": {
+     "webgl": 2,
+     "caveat": false,
+     "software": true,
+     "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+     "maxTexture": 8192
+    },
+    "detectGpu": {
+     "gpu": "swiftshader",
+     "isMobile": false,
+     "tier": 0,
+     "type": "BLOCKLISTED"
+    },
+    "detectGpuMs": 20.3,
+    "glMs": 11.5,
+    "refreshCostMs": 312
+   },
+   "quiet|2x": {
+    "cond": "quiet",
+    "cpu": 2,
+    "label": null,
+    "runs": 10,
+    "loadavg1": 12.1,
+    "workMedian": 4.4,
+    "workRange": [
+     3.8,
+     4.7
+    ],
+    "fraction": {
+     "median": 0.26,
+     "min": 0.23,
+     "max": 0.28
+    },
+    "workCV": 5.7,
+    "rule2s": {
+     "dist": {
+      "strong": 10
+     },
+     "correct": null,
+     "flipRate": 0
+    },
+    "rule2sDoubleWork": {
+     "average": 10
+    },
+    "prefix": {
+     "6": {
+      "dist": {
+       "average": 2,
+       "strong": 8
+      },
+      "correct": null,
+      "ms": 133
+     },
+     "12": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": null,
+      "ms": 233
+     },
+     "24": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": null,
+      "ms": 433
+     },
+     "48": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": null,
+      "ms": 833
+     },
+     "90": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": null,
+      "ms": 1533
+     }
+    },
+    "earlyExit": [
+     {
+      "frames": 89,
+      "ms": 1517,
+      "tier": "strong",
+      "timeout": true
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "strong"
+     },
+     {
+      "frames": 92,
+      "ms": 1517,
+      "tier": "strong",
+      "timeout": true
+     },
+     {
+      "frames": 28,
+      "ms": 450,
+      "tier": "strong"
+     },
+     {
+      "frames": 92,
+      "ms": 1517,
+      "tier": "strong",
+      "timeout": true
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "strong"
+     },
+     {
+      "frames": 91,
+      "ms": 1500,
+      "tier": "strong",
+      "timeout": true
+     }
+    ],
+    "earlyExitDist": {
+     "strong": 10
+    },
+    "earlyExitCorrect": null,
+    "earlyExitMs": 442,
+    "earlyExitMsRange": [
+     433,
+     1517
+    ],
+    "inSample2s": {
+     "dist": {
+      "average": 10
+     },
+     "correct": null
+    },
+    "gapMedian": 16.7,
+    "gapRange": [
+     16.7,
+     16.7
+    ],
+    "gapDist": {
+     "strong": 10
+    },
+    "gapCorrect": null,
+    "burstMedian": 3.8,
+    "burstRange": [
+     1.8,
+     4.2
+    ],
+    "burstMs": 22.2,
+    "burstCorrect": null,
+    "throttleDelivered": {
+     "before": 2.1,
+     "after": 2.3,
+     "boot": null,
+     "bootRange": null
+    },
+    "faithfulRuns": 6,
+    "rule2sFaithful": {
+     "dist": {
+      "strong": 6
+     },
+     "of": 6
+    },
+    "signals": {
+     "cores": 4,
+     "memoryGB": 8,
+     "saveData": false,
+     "effectiveType": "4g",
+     "reducedMotion": false,
+     "reducedTransparency": false,
+     "reducedData": false,
+     "coarsePointer": true,
+     "dpr": 2
+    },
+    "gl": {
+     "webgl": 2,
+     "caveat": false,
+     "software": true,
+     "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+     "maxTexture": 8192
+    },
+    "detectGpu": {
+     "gpu": "swiftshader",
+     "isMobile": false,
+     "tier": 0,
+     "type": "BLOCKLISTED"
+    },
+    "detectGpuMs": 26.5,
+    "glMs": 21.1,
+    "refreshCostMs": 311
+   },
+   "quiet|3x": {
+    "cond": "quiet",
+    "cpu": 3,
+    "label": null,
+    "runs": 10,
+    "loadavg1": 12.8,
+    "workMedian": 6.6,
+    "workRange": [
+     6.2,
+     7.1
+    ],
+    "fraction": {
+     "median": 0.39,
+     "min": 0.37,
+     "max": 0.43
+    },
+    "workCV": 4.3,
+    "rule2s": {
+     "dist": {
+      "average": 10
+     },
+     "correct": null,
+     "flipRate": 0
+    },
+    "rule2sDoubleWork": {
+     "low": 10
+    },
+    "prefix": {
+     "6": {
+      "dist": {
+       "average": 9,
+       "strong": 1
+      },
+      "correct": null,
+      "ms": 133
+     },
+     "12": {
+      "dist": {
+       "average": 10
+      },
+      "correct": null,
+      "ms": 233
+     },
+     "24": {
+      "dist": {
+       "average": 10
+      },
+      "correct": null,
+      "ms": 433
+     },
+     "48": {
+      "dist": {
+       "average": 10
+      },
+      "correct": null,
+      "ms": 850
+     },
+     "90": {
+      "dist": {
+       "average": 10
+      },
+      "correct": null,
+      "ms": 1567
+     }
+    },
+    "earlyExit": [
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "average"
+     },
+     {
+      "frames": 38,
+      "ms": 617,
+      "tier": "average"
+     },
+     {
+      "frames": 35,
+      "ms": 583,
+      "tier": "average"
+     },
+     {
+      "frames": 58,
+      "ms": 1000,
+      "tier": "average"
+     },
+     {
+      "frames": 91,
+      "ms": 1517,
+      "tier": "average",
+      "timeout": true
+     },
+     {
+      "frames": 89,
+      "ms": 1517,
+      "tier": "average",
+      "timeout": true
+     },
+     {
+      "frames": 61,
+      "ms": 1000,
+      "tier": "average"
+     },
+     {
+      "frames": 68,
+      "ms": 1117,
+      "tier": "average"
+     },
+     {
+      "frames": 37,
+      "ms": 633,
+      "tier": "average"
+     },
+     {
+      "frames": 40,
+      "ms": 650,
+      "tier": "average"
+     }
+    ],
+    "earlyExitDist": {
+     "average": 10
+    },
+    "earlyExitCorrect": null,
+    "earlyExitMs": 825,
+    "earlyExitMsRange": [
+     433,
+     1517
+    ],
+    "inSample2s": {
+     "dist": {
+      "average": 10
+     },
+     "correct": null
+    },
+    "gapMedian": 16.7,
+    "gapRange": [
+     16.7,
+     16.7
+    ],
+    "gapDist": {
+     "strong": 10
+    },
+    "gapCorrect": null,
+    "burstMedian": 2.8,
+    "burstRange": [
+     1.8,
+     6.1
+    ],
+    "burstMs": 28.8,
+    "burstCorrect": null,
+    "throttleDelivered": {
+     "before": 3.1,
+     "after": 3.4,
+     "boot": null,
+     "bootRange": null
+    },
+    "faithfulRuns": 6,
+    "rule2sFaithful": {
+     "dist": {
+      "average": 6
+     },
+     "of": 6
+    },
+    "signals": {
+     "cores": 4,
+     "memoryGB": 8,
+     "saveData": false,
+     "effectiveType": "4g",
+     "reducedMotion": false,
+     "reducedTransparency": false,
+     "reducedData": false,
+     "coarsePointer": true,
+     "dpr": 2
+    },
+    "gl": {
+     "webgl": 2,
+     "caveat": false,
+     "software": true,
+     "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+     "maxTexture": 8192
+    },
+    "detectGpu": {
+     "gpu": "swiftshader",
+     "isMobile": false,
+     "tier": 0,
+     "type": "BLOCKLISTED"
+    },
+    "detectGpuMs": 24,
+    "glMs": 34.7,
+    "refreshCostMs": 315
+   },
+   "quiet|4x": {
+    "cond": "quiet",
+    "cpu": 4,
+    "label": "average",
+    "runs": 10,
+    "loadavg1": 10.8,
+    "workMedian": 8.6,
+    "workRange": [
+     7.7,
+     9.3
+    ],
+    "fraction": {
+     "median": 0.52,
+     "min": 0.46,
+     "max": 0.56
+    },
+    "workCV": 5.1,
+    "rule2s": {
+     "dist": {
+      "average": 10
+     },
+     "correct": 10,
+     "flipRate": 0
+    },
+    "rule2sDoubleWork": {
+     "low": 10
+    },
+    "prefix": {
+     "6": {
+      "dist": {
+       "average": 9,
+       "low": 1
+      },
+      "correct": 9,
+      "ms": 133
+     },
+     "12": {
+      "dist": {
+       "average": 9,
+       "low": 1
+      },
+      "correct": 9,
+      "ms": 233
+     },
+     "24": {
+      "dist": {
+       "average": 9,
+       "low": 1
+      },
+      "correct": 9,
+      "ms": 433
+     },
+     "48": {
+      "dist": {
+       "average": 10
+      },
+      "correct": 10,
+      "ms": 833
+     },
+     "90": {
+      "dist": {
+       "average": 10
+      },
+      "correct": 10,
+      "ms": 1550
+     }
+    },
+    "earlyExit": [
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "average"
+     },
+     {
+      "frames": 91,
+      "ms": 1517,
+      "tier": "average",
+      "timeout": true
+     },
+     {
+      "frames": 28,
+      "ms": 483,
+      "tier": "average"
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "average"
+     },
+     {
+      "frames": 91,
+      "ms": 1517,
+      "tier": "average",
+      "timeout": true
+     },
+     {
+      "frames": 34,
+      "ms": 550,
+      "tier": "average"
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "average"
+     },
+     {
+      "frames": 87,
+      "ms": 1517,
+      "tier": "average",
+      "timeout": true
+     },
+     {
+      "frames": 27,
+      "ms": 450,
+      "tier": "average"
+     },
+     {
+      "frames": 91,
+      "ms": 1517,
+      "tier": "average",
+      "timeout": true
+     }
+    ],
+    "earlyExitDist": {
+     "average": 10
+    },
+    "earlyExitCorrect": 10,
+    "earlyExitMs": 517,
+    "earlyExitMsRange": [
+     433,
+     1517
+    ],
+    "inSample2s": {
+     "dist": {
+      "average": 6,
+      "low": 4
+     },
+     "correct": 6
+    },
+    "gapMedian": 16.7,
+    "gapRange": [
+     16.7,
+     16.7
+    ],
+    "gapDist": {
+     "strong": 10
+    },
+    "gapCorrect": 0,
+    "burstMedian": 1.9,
+    "burstRange": [
+     1.8,
+     5.4
+    ],
+    "burstMs": 33.9,
+    "burstCorrect": 2,
+    "throttleDelivered": {
+     "before": 4.1,
+     "after": 4.4,
+     "boot": null,
+     "bootRange": null
+    },
+    "faithfulRuns": 7,
+    "rule2sFaithful": {
+     "dist": {
+      "average": 7
+     },
+     "of": 7
+    },
+    "signals": {
+     "cores": 4,
+     "memoryGB": 8,
+     "saveData": false,
+     "effectiveType": "4g",
+     "reducedMotion": false,
+     "reducedTransparency": false,
+     "reducedData": false,
+     "coarsePointer": true,
+     "dpr": 2
+    },
+    "gl": {
+     "webgl": 2,
+     "caveat": false,
+     "software": true,
+     "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+     "maxTexture": 8192
+    },
+    "detectGpu": {
+     "gpu": "swiftshader",
+     "isMobile": false,
+     "tier": 0,
+     "type": "BLOCKLISTED"
+    },
+    "detectGpuMs": 40.7,
+    "glMs": 30.3,
+    "refreshCostMs": 316
+   },
+   "quiet|5x": {
+    "cond": "quiet",
+    "cpu": 5,
+    "label": null,
+    "runs": 10,
+    "loadavg1": 11,
+    "workMedian": 11,
+    "workRange": [
+     8.9,
+     12.1
+    ],
+    "fraction": {
+     "median": 0.66,
+     "min": 0.53,
+     "max": 0.73
+    },
+    "workCV": 8.4,
+    "rule2s": {
+     "dist": {
+      "low": 9,
+      "average": 1
+     },
+     "correct": null,
+     "flipRate": 0.1
+    },
+    "rule2sDoubleWork": {
+     "low": 10
+    },
+    "prefix": {
+     "6": {
+      "dist": {
+       "low": 5,
+       "average": 5
+      },
+      "correct": null,
+      "ms": 133
+     },
+     "12": {
+      "dist": {
+       "low": 6,
+       "average": 4
+      },
+      "correct": null,
+      "ms": 233
+     },
+     "24": {
+      "dist": {
+       "low": 5,
+       "average": 5
+      },
+      "correct": null,
+      "ms": 442
+     },
+     "48": {
+      "dist": {
+       "low": 6,
+       "average": 4
+      },
+      "correct": null,
+      "ms": 842
+     },
+     "90": {
+      "dist": {
+       "low": 9,
+       "average": 1
+      },
+      "correct": null,
+      "ms": 1550
+     }
+    },
+    "earlyExit": [
+     {
+      "frames": 41,
+      "ms": 867,
+      "tier": "low"
+     },
+     {
+      "frames": 90,
+      "ms": 1500,
+      "tier": "low",
+      "timeout": true
+     },
+     {
+      "frames": 86,
+      "ms": 1517,
+      "tier": "low",
+      "timeout": true
+     },
+     {
+      "frames": 68,
+      "ms": 1500,
+      "tier": "low",
+      "timeout": true
+     },
+     {
+      "frames": 92,
+      "ms": 1517,
+      "tier": "low",
+      "timeout": true
+     },
+     {
+      "frames": 92,
+      "ms": 1517,
+      "tier": "low",
+      "timeout": true
+     },
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "average"
+     },
+     {
+      "frames": 90,
+      "ms": 1500,
+      "tier": "low",
+      "timeout": true
+     },
+     {
+      "frames": 90,
+      "ms": 1500,
+      "tier": "low",
+      "timeout": true
+     },
+     {
+      "frames": 91,
+      "ms": 1517,
+      "tier": "low",
+      "timeout": true
+     }
+    ],
+    "earlyExitDist": {
+     "low": 9,
+     "average": 1
+    },
+    "earlyExitCorrect": null,
+    "earlyExitMs": 1500,
+    "earlyExitMsRange": [
+     433,
+     1517
+    ],
+    "inSample2s": {
+     "dist": {
+      "low": 10
+     },
+     "correct": null
+    },
+    "gapMedian": 16.7,
+    "gapRange": [
+     16.7,
+     16.7
+    ],
+    "gapDist": {
+     "strong": 10
+    },
+    "gapCorrect": null,
+    "burstMedian": 4.1,
+    "burstRange": [
+     1.7,
+     9.8
+    ],
+    "burstMs": 46.7,
+    "burstCorrect": null,
+    "throttleDelivered": {
+     "before": 5.1,
+     "after": 5.1,
+     "boot": null,
+     "bootRange": null
+    },
+    "faithfulRuns": 9,
+    "rule2sFaithful": {
+     "dist": {
+      "low": 9
+     },
+     "of": 9
+    },
+    "signals": {
+     "cores": 4,
+     "memoryGB": 8,
+     "saveData": false,
+     "effectiveType": "4g",
+     "reducedMotion": false,
+     "reducedTransparency": false,
+     "reducedData": false,
+     "coarsePointer": true,
+     "dpr": 2
+    },
+    "gl": {
+     "webgl": 2,
+     "caveat": false,
+     "software": true,
+     "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+     "maxTexture": 8192
+    },
+    "detectGpu": {
+     "gpu": "swiftshader",
+     "isMobile": false,
+     "tier": 0,
+     "type": "BLOCKLISTED"
+    },
+    "detectGpuMs": 41.5,
+    "glMs": 36.9,
+    "refreshCostMs": 313
+   },
+   "quiet|6x": {
+    "cond": "quiet",
+    "cpu": 6,
+    "label": "low",
+    "runs": 10,
+    "loadavg1": 9.4,
+    "workMedian": 13.8,
+    "workRange": [
+     12.9,
+     15.2
+    ],
+    "fraction": {
+     "median": 0.83,
+     "min": 0.78,
+     "max": 0.91
+    },
+    "workCV": 5.2,
+    "rule2s": {
+     "dist": {
+      "low": 10
+     },
+     "correct": 10,
+     "flipRate": 0
+    },
+    "rule2sDoubleWork": {
+     "low": 10
+    },
+    "prefix": {
+     "6": {
+      "dist": {
+       "low": 8,
+       "average": 2
+      },
+      "correct": 8,
+      "ms": 142
+     },
+     "12": {
+      "dist": {
+       "low": 10
+      },
+      "correct": 10,
+      "ms": 242
+     },
+     "24": {
+      "dist": {
+       "low": 9,
+       "average": 1
+      },
+      "correct": 9,
+      "ms": 442
+     },
+     "48": {
+      "dist": {
+       "low": 10
+      },
+      "correct": 10,
+      "ms": 858
+     },
+     "90": {
+      "dist": {
+       "low": 10
+      },
+      "correct": 10,
+      "ms": 1567
+     }
+    },
+    "earlyExit": [
+     {
+      "frames": 27,
+      "ms": 433,
+      "tier": "low"
+     },
+     {
+      "frames": 76,
+      "ms": 1267,
+      "tier": "low"
+     },
+     {
+      "frames": 28,
+      "ms": 467,
+      "tier": "low"
+     },
+     {
+      "frames": 43,
+      "ms": 700,
+      "tier": "low"
+     },
+     {
+      "frames": 46,
+      "ms": 817,
+      "tier": "low"
+     },
+     {
+      "frames": 62,
+      "ms": 1033,
+      "tier": "low"
+     },
+     {
+      "frames": 27,
+      "ms": 450,
+      "tier": "low"
+     },
+     {
+      "frames": 27,
+      "ms": 517,
+      "tier": "low"
+     },
+     {
+      "frames": 76,
+      "ms": 1300,
+      "tier": "low"
+     },
+     {
+      "frames": 41,
+      "ms": 750,
+      "tier": "low"
+     }
+    ],
+    "earlyExitDist": {
+     "low": 10
+    },
+    "earlyExitCorrect": 10,
+    "earlyExitMs": 725,
+    "earlyExitMsRange": [
+     433,
+     1300
+    ],
+    "inSample2s": {
+     "dist": {
+      "low": 10
+     },
+     "correct": 10
+    },
+    "gapMedian": 16.7,
+    "gapRange": [
+     16.7,
+     16.7
+    ],
+    "gapDist": {
+     "strong": 10
+    },
+    "gapCorrect": 0,
+    "burstMedian": 10.7,
+    "burstRange": [
+     2.1,
+     16.7
+    ],
+    "burstMs": 67.8,
+    "burstCorrect": 6,
+    "throttleDelivered": {
+     "before": 6.8,
+     "after": 6.9,
+     "boot": null,
+     "bootRange": null
+    },
+    "faithfulRuns": 7,
+    "rule2sFaithful": {
+     "dist": {
+      "low": 7
+     },
+     "of": 7
+    },
+    "signals": {
+     "cores": 4,
+     "memoryGB": 8,
+     "saveData": false,
+     "effectiveType": "4g",
+     "reducedMotion": false,
+     "reducedTransparency": false,
+     "reducedData": false,
+     "coarsePointer": true,
+     "dpr": 2
+    },
+    "gl": {
+     "webgl": 2,
+     "caveat": false,
+     "software": true,
+     "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+     "maxTexture": 8192
+    },
+    "detectGpu": {
+     "gpu": "swiftshader",
+     "isMobile": false,
+     "tier": 0,
+     "type": "BLOCKLISTED"
+    },
+    "detectGpuMs": 53.1,
+    "glMs": 48.9,
+    "refreshCostMs": 315
+   },
+   "busy|1x": {
+    "cond": "busy",
+    "cpu": 1,
+    "label": "strong",
+    "runs": 10,
+    "loadavg1": 9.9,
+    "workMedian": 2.2,
+    "workRange": [
+     1.8,
+     2.3
+    ],
+    "fraction": {
+     "median": 0.13,
+     "min": 0.11,
+     "max": 0.14
+    },
+    "workCV": 7.4,
+    "rule2s": {
+     "dist": {
+      "strong": 10
+     },
+     "correct": 10,
+     "flipRate": 0
+    },
+    "rule2sDoubleWork": {
+     "strong": 10
+    },
+    "prefix": {
+     "6": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": 10,
+      "ms": 167
+     },
+     "12": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": 10,
+      "ms": 283
+     },
+     "24": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": 10,
+      "ms": 550
+     },
+     "48": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": 10,
+      "ms": 1092
+     },
+     "90": {
+      "dist": {
+       "strong": 10
+      },
+      "correct": 10,
+      "ms": 1817
+     }
+    },
+    "earlyExit": [
+     {
+      "frames": 27,
+      "ms": 600,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 517,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 533,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 533,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 600,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 550,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 583,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 550,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 550,
+      "tier": "strong"
+     },
+     {
+      "frames": 27,
+      "ms": 550,
+      "tier": "strong"
+     }
+    ],
+    "earlyExitDist": {
+     "strong": 10
+    },
+    "earlyExitCorrect": 10,
+    "earlyExitMs": 550,
+    "earlyExitMsRange": [
+     517,
+     600
+    ],
+    "inSample2s": {
+     "dist": {
+      "strong": 10
+     },
+     "correct": 10
+    },
+    "gapMedian": 16.7,
+    "gapRange": [
+     16.7,
+     16.7
+    ],
+    "gapDist": {
+     "strong": 10
+    },
+    "gapCorrect": 10,
+    "burstMedian": 2,
+    "burstRange": [
+     1.6,
+     2.6
+    ],
+    "burstMs": 11.5,
+    "burstCorrect": 10,
+    "throttleDelivered": {
+     "before": 1,
+     "after": 1.1,
+     "boot": 1.1,
+     "bootRange": [
+      1,
+      1.2
+     ]
+    },
+    "faithfulRuns": 10,
+    "rule2sFaithful": {
+     "dist": {
+      "strong": 10
+     },
+     "of": 10
+    },
+    "signals": {
+     "cores": 4,
+     "memoryGB": 8,
+     "saveData": false,
+     "effectiveType": "4g",
+     "reducedMotion": false,
+     "reducedTransparency": false,
+     "reducedData": false,
+     "coarsePointer": true,
+     "dpr": 2
+    },
+    "gl": {
+     "webgl": 2,
+     "caveat": false,
+     "software": true,
+     "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+     "maxTexture": 8192
+    },
+    "detectGpu": {
+     "gpu": "swiftshader",
+     "isMobile": false,
+     "tier": 0,
+     "type": "BLOCKLISTED"
+    },
+    "detectGpuMs": 13.4,
+    "glMs": 9.8,
+    "refreshCostMs": 318
+   },
+   "busy|4x": {
+    "cond": "busy",
+    "cpu": 4,
+    "label": "average",
+    "runs": 10,
+    "loadavg1": 8.8,
+    "workMedian": 8.9,
+    "workRange": [
+     7.8,
+     10.4
+    ],
+    "fraction": {
+     "median": 0.53,
+     "min": 0.47,
+     "max": 0.62
+    },
+    "workCV": 7.5,
+    "rule2s": {
+     "dist": {
+      "average": 9,
+      "low": 1
+     },
+     "correct": 9,
+     "flipRate": 0.1
+    },
+    "rule2sDoubleWork": {
+     "low": 10
+    },
+    "prefix": {
+     "6": {
+      "dist": {
+       "average": 10
+      },
+      "correct": 10,
+      "ms": 517
+     },
+     "12": {
+      "dist": {
+       "average": 9,
+       "low": 1
+      },
+      "correct": 9,
+      "ms": 1750
+     },
+     "24": {
+      "dist": {
+       "average": 9,
+       "low": 1
+      },
+      "correct": 9,
+      "ms": 1900
+     },
+     "48": {
+      "dist": {
+       "average": 9,
+       "low": 1
+      },
+      "correct": 9,
+      "ms": 1900
+     },
+     "90": {
+      "dist": {
+       "average": 9,
+       "low": 1
+      },
+      "correct": 9,
+      "ms": 1900
+     }
+    },
+    "earlyExit": [
+     {
+      "frames": 14,
+      "ms": 1667,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 15,
+      "ms": 1667,
+      "tier": "average",
+      "timeout": true
+     },
+     {
+      "frames": 15,
+      "ms": 1700,
+      "tier": "average",
+      "timeout": true
+     },
+     {
+      "frames": 14,
+      "ms": 1650,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 14,
+      "ms": 1700,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 14,
+      "ms": 1500,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 14,
+      "ms": 1683,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 14,
+      "ms": 1550,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 14,
+      "ms": 1533,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 15,
+      "ms": 1650,
+      "tier": "average",
+      "timeout": true
+     }
+    ],
+    "earlyExitDist": {
+     "undetermined": 7,
+     "average": 3
+    },
+    "earlyExitCorrect": 3,
+    "earlyExitMs": 1659,
+    "earlyExitMsRange": [
+     1500,
+     1700
+    ],
+    "inSample2s": {
+     "dist": {
+      "average": 5,
+      "low": 5
+     },
+     "correct": 5
+    },
+    "gapMedian": 216.6,
+    "gapRange": [
+     200,
+     216.7
+    ],
+    "gapDist": {
+     "low": 10
+    },
+    "gapCorrect": 0,
+    "burstMedian": 7.5,
+    "burstRange": [
+     3.4,
+     8.5
+    ],
+    "burstMs": 42.2,
+    "burstCorrect": 9,
+    "throttleDelivered": {
+     "before": 4.5,
+     "after": 4.5,
+     "boot": 4.3,
+     "bootRange": [
+      4,
+      4.6
+     ]
+    },
+    "faithfulRuns": 10,
+    "rule2sFaithful": {
+     "dist": {
+      "average": 9,
+      "low": 1
+     },
+     "of": 10
+    },
+    "signals": {
+     "cores": 4,
+     "memoryGB": 8,
+     "saveData": false,
+     "effectiveType": "4g",
+     "reducedMotion": false,
+     "reducedTransparency": false,
+     "reducedData": false,
+     "coarsePointer": true,
+     "dpr": 2
+    },
+    "gl": {
+     "webgl": 2,
+     "caveat": false,
+     "software": true,
+     "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+     "maxTexture": 8192
+    },
+    "detectGpu": {
+     "gpu": "swiftshader",
+     "isMobile": false,
+     "tier": 0,
+     "type": "BLOCKLISTED"
+    },
+    "detectGpuMs": 447,
+    "glMs": 31.8,
+    "refreshCostMs": 312
+   },
+   "busy|6x": {
+    "cond": "busy",
+    "cpu": 6,
+    "label": "low",
+    "runs": 10,
+    "loadavg1": 7.2,
+    "workMedian": 12.3,
+    "workRange": [
+     6.7,
+     13.4
+    ],
+    "fraction": {
+     "median": 0.74,
+     "min": 0.4,
+     "max": 0.81
+    },
+    "workCV": 18.3,
+    "rule2s": {
+     "dist": {
+      "low": 8,
+      "average": 2
+     },
+     "correct": 8,
+     "flipRate": 0.2
+    },
+    "rule2sDoubleWork": {
+     "low": 10
+    },
+    "prefix": {
+     "6": {
+      "dist": {
+       "low": 8,
+       "average": 2
+      },
+      "correct": 8,
+      "ms": 708
+     },
+     "12": {
+      "dist": {
+       "low": 8,
+       "average": 2
+      },
+      "correct": 8,
+      "ms": 1958
+     },
+     "24": {
+      "dist": {
+       "low": 8,
+       "average": 2
+      },
+      "correct": 8,
+      "ms": 1958
+     },
+     "48": {
+      "dist": {
+       "low": 8,
+       "average": 2
+      },
+      "correct": 8,
+      "ms": 1958
+     },
+     "90": {
+      "dist": {
+       "low": 8,
+       "average": 2
+      },
+      "correct": 8,
+      "ms": 1958
+     }
+    },
+    "earlyExit": [
+     {
+      "frames": 12,
+      "ms": 1717,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 11,
+      "ms": 1650,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 13,
+      "ms": 1733,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 14,
+      "ms": 1683,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 13,
+      "ms": 1767,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 12,
+      "ms": 1550,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 13,
+      "ms": 1583,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 13,
+      "ms": 1650,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 11,
+      "ms": 1517,
+      "tier": "undetermined",
+      "timeout": true
+     },
+     {
+      "frames": 11,
+      "ms": 1667,
+      "tier": "undetermined",
+      "timeout": true
+     }
+    ],
+    "earlyExitDist": {
+     "undetermined": 10
+    },
+    "earlyExitCorrect": 0,
+    "earlyExitMs": 1659,
+    "earlyExitMsRange": [
+     1517,
+     1767
+    ],
+    "inSample2s": {
+     "dist": {
+      "low": 8,
+      "average": 2
+     },
+     "correct": 8
+    },
+    "gapMedian": 250,
+    "gapRange": [
+     166.7,
+     308.3
+    ],
+    "gapDist": {
+     "low": 10
+    },
+    "gapCorrect": 10,
+    "burstMedian": 2.4,
+    "burstRange": [
+     1.7,
+     11.8
+    ],
+    "burstMs": 48.1,
+    "burstCorrect": 4,
+    "throttleDelivered": {
+     "before": 6.3,
+     "after": 5.6,
+     "boot": 5.5,
+     "bootRange": [
+      4,
+      6.3
+     ]
+    },
+    "faithfulRuns": 3,
+    "rule2sFaithful": {
+     "dist": {
+      "low": 2,
+      "average": 1
+     },
+     "of": 3
+    },
+    "signals": {
+     "cores": 4,
+     "memoryGB": 8,
+     "saveData": false,
+     "effectiveType": "4g",
+     "reducedMotion": false,
+     "reducedTransparency": false,
+     "reducedData": false,
+     "coarsePointer": true,
+     "dpr": 2
+    },
+    "gl": {
+     "webgl": 2,
+     "caveat": false,
+     "software": true,
+     "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+     "maxTexture": 8192
+    },
+    "detectGpu": {
+     "gpu": "swiftshader",
+     "isMobile": false,
+     "tier": 0,
+     "type": "BLOCKLISTED"
+    },
+    "detectGpuMs": 546,
+    "glMs": 45.9,
+    "refreshCostMs": 317
+   }
+  }
+ }
+}

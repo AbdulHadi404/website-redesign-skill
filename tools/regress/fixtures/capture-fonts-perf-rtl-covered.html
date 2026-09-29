@@ -1,0 +1,12 @@
+<!doctype html>
+<!-- capture.mjs regress fixture (run at 1024 and 390, in grow and fullpage mode, with --variant and --element): a
+     right-to-left page that overflows sideways (to the left), with one image left open and one covered by a grey box,
+     and a band that is red under (pointer: coarse) and blue otherwise. Right-to-left pages like this one are shot
+     through CDP; a CDP shot from a session without the capture's device metrics reset the page to DPR 1, a desktop
+     layout and no touch for every later shot. Expect "1 image(s) painted flat (dashboard.png?covered)" in both modes
+     at both widths; at 390 the band red in the fold, the grow-mode shot, the variant and every element shot. -->
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>صور مغطاة</title>
+<style>body{margin:0;font-family:system-ui,"Noto Sans Arabic",sans-serif} main{padding:24px} .wide{width:1500px;height:10px;background:#eee}
+img{display:block;margin:16px 0} .wrap{position:relative;width:300px} .wrap::after{content:"";position:absolute;inset:0;background:#ccc}
+.band{width:300px;height:60px;background:#00f} @media (pointer: coarse){.band{background:#f00}}</style></head>
+<body><main><h1>صور</h1><div class="wide"></div><div class="band"></div><img src="dashboard.png?open" width="300" height="175" alt="مفتوحة"><p>نص</p><div class="wrap"><img src="dashboard.png?covered" width="300" height="175" alt="مغطاة"></div><p>نص</p></main></body></html>

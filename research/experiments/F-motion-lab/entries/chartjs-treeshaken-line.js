@@ -1,0 +1,1 @@
+import { Chart, LineController, LineElement, PointElement, LinearScale, CategoryScale, Tooltip } from "chart.js"; Chart.register(LineController,LineElement,PointElement,LinearScale,CategoryScale,Tooltip); new Chart(document.querySelector("canvas"),{type:"line",data:{labels:[1],datasets:[{data:[1]}]}});

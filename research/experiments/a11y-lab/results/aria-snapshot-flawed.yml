@@ -1,0 +1,116 @@
+- link "Skip to content":
+  - /url: "#content"
+- text: Acme Analytics
+- navigation:
+  - menu:
+    - menuitem "Dashboard"
+    - menuitem "Reports"
+    - menuitem "Settings"
+- link:
+  - /url: /notifications
+  - img
+- button:
+  - img
+- button "Go": Search
+- text: "New: export to CSV • Scheduled reports now available • Dark mode beta • Q3 release notes"
+- listitem:
+  - link "Overview":
+    - /url: "#"
+- listitem:
+  - link "Revenue":
+    - /url: "#"
+- listitem:
+  - link "Churn":
+    - /url: "#"
+- text: Filters
+- heading "Dashboard" [level=1]
+- heading "Key metrics" [level=4]
+- heading [level=2]
+- text: Monthly recurring revenue (all regions, net of refunds) $48,210 ▲ Active users 1,284 ▼ Churn 2.1% Revenue trend
+- img
+- img
+- img "IMG_2931.png"
+- img "decorative divider swoosh"
+- text: Recent invoices
+- table:
+  - rowgroup:
+    - row "Customer ▲ Plan Amount Status":
+      - cell "Customer ▲"
+      - cell "Plan"
+      - cell "Amount"
+      - cell "Status"
+    - row "Northwind Pro $1,200 ●":
+      - cell "Northwind"
+      - cell "Pro"
+      - cell "$1,200"
+      - cell "●"
+    - row "Contoso Team $640 ●":
+      - cell "Contoso"
+      - cell "Team"
+      - cell "$640"
+      - cell "●"
+    - row "Fabrikam Pro $1,200 ●":
+      - cell "Fabrikam"
+      - cell "Pro"
+      - cell "$1,200"
+      - cell "●"
+    - row "Tailspin Starter $90 ●":
+      - cell "Tailspin"
+      - cell "Starter"
+      - cell "$90"
+      - cell "●"
+- table:
+  - rowgroup:
+    - row "Q1 Q2":
+      - cell
+      - cell "Q1"
+      - cell "Q2"
+    - row "EU 10 12":
+      - cell "EU"
+      - cell "10"
+      - cell "12"
+- text: Invite teammates →
+- button "Export CSV"
+- paragraph:
+  - text: Revenue grew 12% this quarter.
+  - link "Click here":
+    - /url: /r/q3
+  - text: . Churn fell.
+  - link "Click here":
+    - /url: /r/churn
+  - text: . Read the
+  - link "methodology notes":
+    - /url: /docs
+  - text: for details.
+- paragraph:
+  - text: "Our motto:"
+  - emphasis: Qualität über alles, toujours
+  - text: .
+- button "Edit"
+- button "Delete"
+- button "Share"
+- tablist:
+  - tab "Daily"
+  - tab "Weekly"
+  - tab "Monthly"
+- button "Advanced filters"
+- text: Account settings
+- textbox "Full name"
+- text: Email *
+- textbox "Email *"
+- text: Phone
+- textbox "Phone"
+- text: Password
+- textbox "Password"
+- combobox:
+  - option "Monthly" [selected]
+  - option "Yearly"
+- text: "Notify me by:"
+- radio "Email"
+- text: Email
+- radio "SMS"
+- text: SMS Send weekly digest Savechanges
+- button "Save": Save changes
+- iframe
+- paragraph: Syncing
+- text: © 2026 Acme

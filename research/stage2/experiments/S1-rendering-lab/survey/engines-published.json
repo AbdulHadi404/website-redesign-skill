@@ -1,0 +1,65 @@
+[
+  {
+    "engine": "Godot 4 (web export)",
+    "payload": "6.33 MB compressed for a small 3D+physics test project on 4.6.2 (5.34 MB on 4.3); the 4.3 wasm alone is ~40 MB raw / ~5 MB brotli; custom size-optimised export templates cut it much further [V repo README / S blog]",
+    "licence": "MIT [V LICENSE.txt]",
+    "react": "none: an iframe or a <canvas> the engine owns; talk through JavaScriptBridge / postMessage",
+    "latest": "4.6.x (demo builds 2026) [V repo]",
+    "mobile": "runs in mobile browsers with caveats; WebGL 2 Compatibility renderer only (no Forward+/Mobile); C# projects cannot export to the web in Godot 4; since 4.3 a single-threaded export avoids the COOP/COEP (SharedArrayBuffer) requirement [V godot-docs exporting_for_web.rst]; screen-reader support (AccessKit, 4.5) is documented for desktop, not for the web [S]",
+    "sources": "github.com/JohannesDeml/Godot-Web-LoadingTest README (cloned 2026-09-28); godotengine/godot-docs tutorials/export/exporting_for_web.rst; godotengine.org/article/progress-report-web-export-in-4-3; godotengine.org/releases/4.5"
+  },
+  {
+    "engine": "Unity 6 (Web platform)",
+    "payload": "3.76 MB brotli for a small test scene on 6000.6 built-in pipeline, WebGL2 (3.29 MB 'min size' settings); URP adds ~2.5 MB (5.6–8.8 MB) [V repo README]",
+    "licence": "proprietary; Unity Personal free under US$200k revenue/funding, Runtime Fee cancelled (2024-09), splash screen optional in Unity 6 [S]",
+    "react": "none official: an iframe or a <canvas> the Unity loader owns; community react-unity-webgl wraps the loader; messaging via SendMessage / jslib",
+    "latest": "6000.6 (demo builds 2026-09) [V repo]",
+    "mobile": "Unity 6 supports mobile browsers (WebGL2); performance well below native; brotli needs correct Content-Encoding on the host; screen-reader API covers Android, iOS, Windows, macOS — the Web is not listed [S]",
+    "sources": "github.com/JohannesDeml/UnityWebGL-LoadingTest README (cloned 2026-09-28); unity.com/blog/unity-is-canceling-the-runtime-fee; docs.unity3d.com Accessibility module"
+  },
+  {
+    "engine": "Defold",
+    "payload": "1.02 MB for a complete empty HTML5 bundle (zip of wasm engine + loader + game archive) on 1.13.1; 1.22 MB on 1.13.2-beta [V defold/build-size bundle_report.csv]",
+    "licence": "Defold License 1.0 (Apache-2.0 plus a clause against selling the engine itself; games are free to sell; not OSI) [V LICENSE.txt, S defold.com/license]",
+    "react": "none: an iframe or a canvas the engine owns; JS bridge via extensions",
+    "latest": "1.13.x (build-size data updated 2026-09-28) [V]",
+    "mobile": "designed for mobile first; smallest of the full engines on the web [V size]",
+    "sources": "github.com/defold/build-size (cloned 2026-09-28); raw.githubusercontent.com/defold/defold/dev/LICENSE.txt"
+  },
+  {
+    "engine": "PlayCanvas (engine + hosted editor)",
+    "payload": "measured here: see the playcanvas row (engine hello world, full engine; does not tree-shake to a small core)",
+    "licence": "engine MIT [V package]; the editor is a hosted service with paid plans for private projects [K]",
+    "react": "@playcanvas/react (0.x) [V registry]",
+    "latest": "see survey rows [V registry]",
+    "mobile": "engine built for mobile web; WebGPU and WebGL2 back ends [K]",
+    "sources": "npm registry; node_modules/playcanvas/package.json"
+  },
+  {
+    "engine": "Needle Engine (three.js + Unity/Blender export)",
+    "payload": "not measured: npm package @needle-tools/engine 6.0.0-alpha.3 unpacks to 92 MB and depends on three, three.quarks, peerjs, n8ao, flatbuffers [V registry]; ships a three.js runtime plus components, so expect more than three.js's 130 KB gzip",
+    "licence": "no licence field in package.json [V registry]; commercial use needs a paid Pro licence (from EUR 49 per user per month), Hobby is free for personal use [S needle.tools/pricing, engine.needle.tools FAQ]",
+    "react": "none official; it is a web component / three.js scene you can drive from any framework [S engine.needle.tools/docs/three]",
+    "latest": "6.0.0-alpha.3 (2026-08-13) on the latest tag [V registry]",
+    "mobile": "web-first, WebXR [S]",
+    "sources": "registry.npmjs.org/@needle-tools/engine; needle.tools/pricing; engine.needle.tools/docs/reference/faq.html"
+  },
+  {
+    "engine": "Cocos Creator (web-mobile build)",
+    "payload": "~1.8 MB for an empty project (2021 forum report, Creator 3.x) [S forum.cocosengine.org/t/cocos-creator-3-build-size/53154]; not re-measured",
+    "licence": "engine MIT [V cocos/cocos-engine LICENSE.md, HEAD 2026-09-21]; the Cocos Creator editor is a separate free download [K]",
+    "react": "none: an engine-owned canvas",
+    "latest": "engine repo active (last commit 2026-09-21) [V git clone]; Creator 3.8.x docs [S]",
+    "mobile": "built for mobile web and mini-games [K]",
+    "sources": "forum.cocosengine.org; docs.cocos.com/creator/3.8/manual/en/editor/publish/publish-web.html; github.com/cocos/cocos-engine (cloned 2026-09-29)"
+  },
+  {
+    "engine": "Rive (as a scene engine)",
+    "payload": "@rive-app/canvas JS 56 KB gzip [L survey] + WASM 787 KB gzip (stream F); one artboard with state machines, data binding and, since 2026-01, Luau scripting for game-like logic [S rive.app/blog/scripting-is-live-in-rive]",
+    "licence": "runtime MIT [V package]; the editor is a paid plan for export [S, stream F]",
+    "react": "@rive-app/react-canvas",
+    "latest": "2.43.1 (2026-09-23) [V registry]",
+    "mobile": "native runtimes too; designer-authored, not N dynamic data-driven objects",
+    "sources": "npm registry; rive.app blog"
+  }
+]

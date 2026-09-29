@@ -1,0 +1,53 @@
+# Screen 390×844, scrolled to y=0. ⟨…⟩ marks nodes that are in the tree but not readable on this screen.
+# Named but not readable here: 2× screen-reader only; 4× covered by button.name-btn.
+# Judge from the capture; use this for selectors. A marked node is something the user cannot see yet.
+- link "Skip to Find a cow" ⟨above⟩:
+  - /url: "#find"
+- banner:
+  - img "Milkline"
+  - heading "Hegarty Farm, Mallow" [level=1]
+  - paragraph: Morning milking · Mon, 28 Sept
+  - status:
+    - generic: Updated 17:25
+  - button "Refresh"
+- main:
+  - search "Find a cow":
+    - text: Find a cow
+    - generic: Tag number or name
+    - searchbox "Find a cow Tag number or name" [active]: "1629"
+    - button "123 keypad":
+      - text: "123"
+      - generic: keypad ⟨screen-reader only⟩
+    - status: 1 cow matches.
+  - region:
+    - heading "Herd" [level=2]
+    - paragraph: 1 of 40
+    - table:
+      - caption: Herd, 40 cows, morning milking, 1 matching “1629” ⟨screen-reader only⟩
+      - rowgroup:
+        - row:
+          - columnheader "Tag"
+          - columnheader "Cow"
+          - columnheader "Yield (L)"
+          - columnheader "Cond. (mS/cm)":
+            - text: Cond.
+            - generic: (mS/cm)
+      - rowgroup:
+        - row:
+          - cell "IE1629" ⟨covered by button.name-btn⟩
+          - cell:
+            - button "Hazel Alert":
+              - generic: Hazel
+              - generic: Alert
+          - cell "28.3 −8.8" ⟨covered by button.name-btn⟩:
+            - text: "28.3"
+            - generic: −8.8
+          - cell "6.42" ⟨covered by button.name-btn⟩
+  - region:
+    - heading "Notes for the relief milker" [level=2]
+    - generic: Note
+    - paragraph: Kept on this phone. Sharing notes with other phones isn’t connected yet.
+    - textbox "Note"
+    - button "Save note"
+    - status
+    - list

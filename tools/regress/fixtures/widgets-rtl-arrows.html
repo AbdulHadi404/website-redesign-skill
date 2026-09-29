@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مفاتيح الأسهم — widgets.mjs regression</title>
+<!--
+  widgets.mjs arrow-key contracts in right-to-left (research/stage2/streams/S8-rtl-mobile-haptics.md F1/F2): the arrow key
+  follows the visual arrow, so in RTL ArrowLeft moves to the next item, which sits on the left.
+  data-aware="1": the widget reads its direction and follows the arrow (Radix, React Aria, native radios and ranges).
+  data-aware="0": ArrowRight always means "next in DOM order", as when a script is copied from a left-to-right build
+  (aegov's tab handler does this); in RTL its arrows run backwards.
+  #tabs-ltr sits in a dir="ltr" box: there ArrowRight is next.
+  Sliders: the track is mirrored in RTL (minimum on the right); #vol-aware raises the value on ArrowLeft and its thumb
+  moves left; #vol-dom raises it on ArrowRight, so its thumb moves left when ArrowRight is pressed.
+  #range-drawn and #range-drawn-dom are visually hidden native ranges (MUI, React Aria) that drive a thumb the page
+  draws: Chromium lowers an RTL range on ArrowRight; #range-drawn places its thumb from the right (the thumb follows the
+  arrow), #range-drawn-dom with a physical left: value% (ArrowRight moves the thumb left).
+-->
+<style>
+  body { font: 16px/1.6 system-ui, sans-serif; margin: 24px; }
+  section { margin-block: 12px; }
+  [role=tablist], [role=toolbar] { display: flex; gap: 4px; }
+  [role=tab], [role=toolbar] button { padding: 6px 12px; border: 1px solid #888; background: #fff; font: inherit; color: #111; }
+  [role=tab][aria-selected=true] { background: #222; color: #fff; }
+  fieldset { display: flex; gap: 12px; border: 1px solid #ccc; }
+  .track { position: relative; width: 240px; height: 20px; margin: 8px 0; background: linear-gradient(#ccc, #ccc) center / 100% 4px no-repeat; }
+  .thumb { position: absolute; top: 2px; width: 16px; height: 16px; margin-right: -8px; border-radius: 50%; background: #06c; }
+  .thumb:focus-visible, [role=tab]:focus-visible, button:focus-visible { outline: 3px solid #e90; outline-offset: 2px; }
+  .drawn { display: block; }
+  .drawn .thumb { pointer-events: none; }
+  .drawn .thumb.phys { margin-right: 0; margin-left: -8px; }
+  .drawn:focus-within .thumb { outline: 3px solid #e90; outline-offset: 2px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+<h1>مفاتيح الأسهم</h1>
+
+<section>
+  <h2 id="h-aware">تبويبات تتبع السهم</h2>
+  <div id="tabs-aware" role="tablist" aria-labelledby="h-aware" data-aware="1">
+    <button role="tab" id="a1" aria-selected="true" aria-controls="pa1">الطلبات</button>
+    <button role="tab" id="a2" aria-selected="false" aria-controls="pa2" tabindex="-1">الفواتير</button>
+    <button role="tab" id="a3" aria-selected="false" aria-controls="pa3" tabindex="-1">الإعدادات</button>
+  </div>
+  <div role="tabpanel" id="pa1" aria-labelledby="a1">١</div><div role="tabpanel" id="pa2" aria-labelledby="a2" hidden>٢</div><div role="tabpanel" id="pa3" aria-labelledby="a3" hidden>٣</div>
+</section>
+
+<section>
+  <h2 id="h-dom">تبويبات بترتيب المستند</h2>
+  <div id="tabs-dom" role="tablist" aria-labelledby="h-dom" data-aware="0">
+    <button role="tab" id="d1" aria-selected="true" aria-controls="pd1">الطلبات</button>
+    <button role="tab" id="d2" aria-selected="false" aria-controls="pd2" tabindex="-1">الفواتير</button>
+    <button role="tab" id="d3" aria-selected="false" aria-controls="pd3" tabindex="-1">الإعدادات</button>
+  </div>
+  <div role="tabpanel" id="pd1" aria-labelledby="d1">١</div><div role="tabpanel" id="pd2" aria-labelledby="d2" hidden>٢</div><div role="tabpanel" id="pd3" aria-labelledby="d3" hidden>٣</div>
+</section>
+
+<section dir="ltr" lang="en">
+  <h2 id="h-ltr">Tabs, left to right</h2>
+  <div id="tabs-ltr" role="tablist" aria-labelledby="h-ltr" data-aware="1">
+    <button role="tab" id="l1" aria-selected="true" aria-controls="pl1">Orders</button>
+    <button role="tab" id="l2" aria-selected="false" aria-controls="pl2" tabindex="-1">Invoices</button>
+    <button role="tab" id="l3" aria-selected="false" aria-controls="pl3" tabindex="-1">Settings</button>
+  </div>
+  <div role="tabpanel" id="pl1" aria-labelledby="l1">1</div><div role="tabpanel" id="pl2" aria-labelledby="l2" hidden>2</div><div role="tabpanel" id="pl3" aria-labelledby="l3" hidden>3</div>
+</section>
+
+<section>
+  <h2>أشرطة الأدوات</h2>
+  <div id="tools-aware" role="toolbar" aria-label="تنسيق" data-aware="1">
+    <button type="button">عريض</button><button type="button" tabindex="-1">مائل</button><button type="button" tabindex="-1">تسطير</button><button type="button" tabindex="-1">رابط</button>
+  </div>
+  <div id="tools-dom" role="toolbar" aria-label="محاذاة" data-aware="0">
+    <button type="button">يمين</button><button type="button" tabindex="-1">وسط</button><button type="button" tabindex="-1">يسار</button><button type="button" tabindex="-1">ضبط</button>
+  </div>
+</section>
+
+<fieldset id="radios"><legend>التوصيل</legend>
+  <label><input type="radio" name="d" value="1" checked> عادي</label>
+  <label><input type="radio" name="d" value="2"> سريع</label>
+  <label><input type="radio" name="d" value="3"> استلام</label>
+</fieldset>
+
+<section>
+  <h2>أشرطة التمرير</h2>
+  <div class="track"><div class="thumb" id="vol-aware" role="slider" tabindex="0" aria-label="الصوت" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" data-aware="1"></div></div>
+  <div class="track"><div class="thumb" id="vol-dom" role="slider" tabindex="0" aria-label="السطوع" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" data-aware="0"></div></div>
+  <label class="track drawn"><span class="sr-only"><input type="range" id="range-drawn" min="0" max="100" value="40" aria-label="التباين"></span><span class="thumb" data-side="right"></span></label>
+  <label class="track drawn"><span class="sr-only"><input type="range" id="range-drawn-dom" min="0" max="100" value="40" aria-label="الحدة"></span><span class="thumb phys" data-side="left"></span></label>
+</section>
+<button type="button">بعد</button>
+
+<script>
+// Tabs and toolbars: roving tabindex. "next" is ArrowLeft when the widget reads right-to-left and follows the arrow.
+for (const g of document.querySelectorAll('[role=tablist],[role=toolbar]')) {
+  const items = [...g.querySelectorAll(g.matches('[role=tablist]') ? '[role=tab]' : 'button')];
+  const aware = g.dataset.aware === '1';
+  const go = (t) => {
+    for (const x of items) {
+      const on = x === t;
+      x.tabIndex = on ? 0 : -1;
+      if (x.getAttribute('role') === 'tab') { x.setAttribute('aria-selected', on); document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }
+    }
+    t.focus();
+  };
+  g.addEventListener('keydown', (e) => {
+    const i = items.indexOf(document.activeElement); if (i < 0) return;
+    const rtl = aware && getComputedStyle(g).direction === 'rtl';
+    const next = rtl ? 'ArrowLeft' : 'ArrowRight', prev = rtl ? 'ArrowRight' : 'ArrowLeft';
+    let j = null;
+    if (e.key === next) j = (i + 1) % items.length; else if (e.key === prev) j = (i - 1 + items.length) % items.length;
+    else if (e.key === 'Home') j = 0; else if (e.key === 'End') j = items.length - 1;
+    if (j !== null) { e.preventDefault(); go(items[j]); }
+  });
+  for (const t of items) t.addEventListener('click', () => go(t));
+}
+// Sliders on a mirrored track: the minimum is on the right, the thumb's right offset is the value.
+for (const s of document.querySelectorAll('[role=slider]')) {
+  const aware = s.dataset.aware === '1';
+  const set = (v) => { v = Math.max(0, Math.min(100, v)); s.setAttribute('aria-valuenow', v); s.style.right = `${v}%`; };
+  set(+s.getAttribute('aria-valuenow'));
+  s.addEventListener('keydown', (e) => {
+    const v = +s.getAttribute('aria-valuenow');
+    const up = aware ? ['ArrowLeft', 'ArrowUp'] : ['ArrowRight', 'ArrowUp'];
+    const down = aware ? ['ArrowRight', 'ArrowDown'] : ['ArrowLeft', 'ArrowDown'];
+    if (up.includes(e.key)) set(v + 1); else if (down.includes(e.key)) set(v - 1);
+    else if (e.key === 'Home') set(0); else if (e.key === 'End') set(100); else return;
+    e.preventDefault();
+  });
+}
+// Visually hidden native ranges drawing their own thumb: from the right (mirrored) or from a physical left.
+for (const i of document.querySelectorAll('.drawn input[type=range]')) {
+  const t = i.closest('.drawn').querySelector('.thumb');
+  const draw = () => { t.style[t.dataset.side] = `${i.value}%`; };
+  i.addEventListener('input', draw); draw();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "name": "s3-assets-and-3d-pipeline",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "S3: sprite pipelines (atlas vs CSS sprite vs files; Canvas 2D vs PixiJS; 9-slice, parallax, tilemap; skeletal vs frame runtimes) and a glTF optimisation pipeline (gltf-transform: Draco vs meshopt, WebP/AVIF/KTX2, simplify, instancing) measured in headless Chromium with three.js.",
+  "license": "MIT",
+  "scripts": {
+    "fetch": "node fetch-assets.mjs",
+    "all": "node run.mjs"
+  },
+  "dependencies": {
+    "@gltf-transform/cli": "4.5.1",
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
+    "draco3dgltf": "1.5.7",
+    "esbuild": "0.28.2",
+    "free-tex-packer-core": "0.3.9",
+    "meshoptimizer": "1.3.0",
+    "pixelmatch": "7.2.0",
+    "pixi.js": "8.21.0",
+    "pngjs": "7.0.0",
+    "sharp": "0.35.5",
+    "three": "0.186.1"
+  },
+  "optionalDependencies": {
+    "@esotericsoftware/spine-pixi-v8": "4.3.13",
+    "@lottiefiles/dotlottie-web": "0.80.0",
+    "@rive-app/canvas": "2.43.1",
+    "@rive-app/canvas-lite": "2.43.1",
+    "@rive-app/webgl2": "2.43.1",
+    "ktx2-encoder": "0.6.0",
+    "lottie-web": "5.13.0",
+    "pixi-dragonbones-runtime": "8.0.3"
+  }
+}

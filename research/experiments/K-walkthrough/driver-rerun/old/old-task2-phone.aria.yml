@@ -1,0 +1,489 @@
+# Screen 390×844, scrolled to y=1712. ⟨…⟩ marks nodes that are in the tree but not readable on this screen.
+# Named but not readable here: 287× cut off by #herd; 40× covered by #cow-panel.
+# Judge from the capture; use this for selectors. A marked node is something the user cannot see yet.
+- generic [active]:
+  - main ⟨covered by #cow-panel⟩:
+    - generic ⟨above⟩:
+      - heading "Good morning, Tom 👋" [level=1]
+      - button "Sync"
+      - button "Notifications"
+      - button "Account"
+    - generic ⟨above⟩:
+      - generic: Cows milked
+      - generic: "40"
+      - generic: ↑ 2
+      - generic: Litres this milking
+      - generic: "959"
+      - generic: ↑ 3.1%
+      - generic: Average per cow
+      - generic: "24"
+      - generic: ↓ 0.4
+      - generic: Alerts
+      - generic: "5"
+      - generic: ↑ 2
+    - generic ⟨on screen⟩:
+      - generic ⟨above⟩:
+        - heading "Herd" [level=2]
+        - textbox "Search cows..."
+      - table:
+        - rowgroup ⟨above⟩:
+          - row:
+            - columnheader "Tag"
+            - columnheader "Name"
+            - columnheader "Group"
+            - columnheader "Yield (L)" ⟨cut off by #herd⟩
+            - columnheader "Change" ⟨cut off by #herd⟩
+            - columnheader "Cond." ⟨cut off by #herd⟩
+            - columnheader "Status" ⟨cut off by #herd⟩
+            - columnheader "Milked" ⟨cut off by #herd⟩
+            - columnheader "DIM" ⟨cut off by #herd⟩
+            - columnheader ⟨cut off by #herd⟩
+        - rowgroup:
+          - row ⟨above⟩:
+            - cell "IE1000"
+            - cell "Bella"
+            - cell "High yielders"
+            - cell "21.8" ⟨cut off by #herd⟩
+            - cell "-2.2" ⟨cut off by #herd⟩
+            - cell "5.25" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:40" ⟨cut off by #herd⟩
+            - cell "56" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1037"
+            - cell "Daisy"
+            - cell "High yielders"
+            - cell "22.6" ⟨cut off by #herd⟩
+            - cell "-2.7" ⟨cut off by #herd⟩
+            - cell "5.11" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:12" ⟨cut off by #herd⟩
+            - cell "230" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1074"
+            - cell "Molly"
+            - cell "High yielders"
+            - cell "23.5" ⟨cut off by #herd⟩
+            - cell "-1.8" ⟨cut off by #herd⟩
+            - cell "5.15" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:40" ⟨cut off by #herd⟩
+            - cell "71" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1111"
+            - cell "Rosie"
+            - cell "High yielders"
+            - cell "33.1" ⟨cut off by #herd⟩
+            - cell "-8.8" ⟨cut off by #herd⟩
+            - cell "6.77" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:18" ⟨cut off by #herd⟩
+            - cell "31" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1148"
+            - cell "Buttercup"
+            - cell "High yielders"
+            - cell "26" ⟨cut off by #herd⟩
+            - cell "-2.3" ⟨cut off by #herd⟩
+            - cell "5.02" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:40" ⟨cut off by #herd⟩
+            - cell "165" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1185"
+            - cell "Clover"
+            - cell "Fresh calvers"
+            - cell "26.1" ⟨cut off by #herd⟩
+            - cell "+0.4" ⟨cut off by #herd⟩
+            - cell "4.7" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:25" ⟨cut off by #herd⟩
+            - cell "57" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1222"
+            - cell "Poppy"
+            - cell "Fresh calvers"
+            - cell "25.9" ⟨cut off by #herd⟩
+            - cell "-2.7" ⟨cut off by #herd⟩
+            - cell "4.66" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "280" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1259"
+            - cell "Maisie"
+            - cell "Late lactation"
+            - cell "23.7" ⟨cut off by #herd⟩
+            - cell "-1.4" ⟨cut off by #herd⟩
+            - cell "5.19" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:25" ⟨cut off by #herd⟩
+            - cell "161" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1296"
+            - cell "Holly"
+            - cell "Late lactation"
+            - cell "20.5" ⟨cut off by #herd⟩
+            - cell "-4.9" ⟨cut off by #herd⟩
+            - cell "5.92" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:25" ⟨cut off by #herd⟩
+            - cell "237" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1333"
+            - cell "Tilly"
+            - cell "Late lactation"
+            - cell "21.2" ⟨cut off by #herd⟩
+            - cell "+1.9" ⟨cut off by #herd⟩
+            - cell "4.72" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:18" ⟨cut off by #herd⟩
+            - cell "183" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1370"
+            - cell "Lulu"
+            - cell "High yielders"
+            - cell "18.7" ⟨cut off by #herd⟩
+            - cell "-0.6" ⟨cut off by #herd⟩
+            - cell "4.64" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:40" ⟨cut off by #herd⟩
+            - cell "168" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1407"
+            - cell "Nell"
+            - cell "Late lactation"
+            - cell "22.1" ⟨cut off by #herd⟩
+            - cell "-1.2" ⟨cut off by #herd⟩
+            - cell "5.1" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:12" ⟨cut off by #herd⟩
+            - cell "55" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1444"
+            - cell "Bramble"
+            - cell "High yielders"
+            - cell "33" ⟨cut off by #herd⟩
+            - cell "-0.6" ⟨cut off by #herd⟩
+            - cell "5.26" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:25" ⟨cut off by #herd⟩
+            - cell "236" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1481"
+            - cell "Heather"
+            - cell "High yielders"
+            - cell "21.1" ⟨cut off by #herd⟩
+            - cell "-1.1" ⟨cut off by #herd⟩
+            - cell "5.27" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "189" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1518"
+            - cell "Primrose"
+            - cell "Main herd"
+            - cell "19" ⟨cut off by #herd⟩
+            - cell "-2.4" ⟨cut off by #herd⟩
+            - cell "4.66" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:18" ⟨cut off by #herd⟩
+            - cell "134" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1555"
+            - cell "Fern"
+            - cell "Fresh calvers"
+            - cell "23.2" ⟨cut off by #herd⟩
+            - cell "+1.6" ⟨cut off by #herd⟩
+            - cell "5.1" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "213" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1592"
+            - cell "Willow"
+            - cell "Main herd"
+            - cell "25.9" ⟨cut off by #herd⟩
+            - cell "+1.4" ⟨cut off by #herd⟩
+            - cell "5.42" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "191" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1629"
+            - cell "Hazel"
+            - cell "Fresh calvers"
+            - cell "28.3" ⟨cut off by #herd⟩
+            - cell "-8.8" ⟨cut off by #herd⟩
+            - cell "6.42" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:12" ⟨cut off by #herd⟩
+            - cell "256" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1666"
+            - cell "Maple"
+            - cell "Fresh calvers"
+            - cell "31" ⟨cut off by #herd⟩
+            - cell "-2.1" ⟨cut off by #herd⟩
+            - cell "4.88" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "281" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1703"
+            - cell "Honey"
+            - cell "High yielders"
+            - cell "22.6" ⟨cut off by #herd⟩
+            - cell "-0.2" ⟨cut off by #herd⟩
+            - cell "5.55" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "208" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1740"
+            - cell "Pansy"
+            - cell "Late lactation"
+            - cell "23.2" ⟨cut off by #herd⟩
+            - cell "-1" ⟨cut off by #herd⟩
+            - cell "5.08" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:12" ⟨cut off by #herd⟩
+            - cell "105" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1777"
+            - cell "Ivy"
+            - cell "Main herd"
+            - cell "17.2" ⟨cut off by #herd⟩
+            - cell "-2" ⟨cut off by #herd⟩
+            - cell "4.76" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:40" ⟨cut off by #herd⟩
+            - cell "34" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1814"
+            - cell "Dot"
+            - cell "High yielders"
+            - cell "17.8" ⟨cut off by #herd⟩
+            - cell "-3.6" ⟨cut off by #herd⟩
+            - cell "6.05" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:18" ⟨cut off by #herd⟩
+            - cell "200" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1851"
+            - cell "Meg"
+            - cell "Main herd"
+            - cell "18.7" ⟨cut off by #herd⟩
+            - cell "-1.7" ⟨cut off by #herd⟩
+            - cell "4.95" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "70" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1888"
+            - cell "Ruby"
+            - cell "Late lactation"
+            - cell "18.1" ⟨cut off by #herd⟩
+            - cell "-0.6" ⟨cut off by #herd⟩
+            - cell "5.58" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "167" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1925"
+            - cell "Lily"
+            - cell "Main herd"
+            - cell "17.5" ⟨cut off by #herd⟩
+            - cell "-2.5" ⟨cut off by #herd⟩
+            - cell "4.94" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "90" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1962"
+            - cell "Flossie"
+            - cell "Main herd"
+            - cell "25.3" ⟨cut off by #herd⟩
+            - cell "-2" ⟨cut off by #herd⟩
+            - cell "5.55" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:18" ⟨cut off by #herd⟩
+            - cell "286" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row ⟨above⟩:
+            - cell "IE1999"
+            - cell "Peggy"
+            - cell "High yielders"
+            - cell "32.5" ⟨cut off by #herd⟩
+            - cell "+0.8" ⟨cut off by #herd⟩
+            - cell "4.9" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:25" ⟨cut off by #herd⟩
+            - cell "273" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row:
+            - cell "IE2036" ⟨covered by #cow-panel⟩
+            - cell "Bonnie" ⟨covered by #cow-panel⟩
+            - cell "Main herd" ⟨covered by #cow-panel⟩
+            - cell "22.6" ⟨cut off by #herd⟩
+            - cell "-2.2" ⟨cut off by #herd⟩
+            - cell "5.37" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:18" ⟨cut off by #herd⟩
+            - cell "107" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row:
+            - cell "IE2073" ⟨covered by #cow-panel⟩
+            - cell "Queenie" ⟨covered by #cow-panel⟩
+            - cell "Fresh calvers" ⟨covered by #cow-panel⟩
+            - cell "30.5" ⟨cut off by #herd⟩
+            - cell "+1.1" ⟨cut off by #herd⟩
+            - cell "5.34" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:18" ⟨cut off by #herd⟩
+            - cell "273" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row:
+            - cell "IE2110" ⟨covered by #cow-panel⟩
+            - cell "Star" ⟨covered by #cow-panel⟩
+            - cell "Main herd" ⟨covered by #cow-panel⟩
+            - cell "24.9" ⟨cut off by #herd⟩
+            - cell "+0.7" ⟨cut off by #herd⟩
+            - cell "5.59" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "140" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row:
+            - cell "IE2147" ⟨covered by #cow-panel⟩
+            - cell "Blossom" ⟨covered by #cow-panel⟩
+            - cell "Main herd" ⟨covered by #cow-panel⟩
+            - cell "19.5" ⟨cut off by #herd⟩
+            - cell "-3.8" ⟨cut off by #herd⟩
+            - cell "6.09" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:25" ⟨cut off by #herd⟩
+            - cell "49" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row:
+            - cell "IE2184" ⟨covered by #cow-panel⟩
+            - cell "Snowdrop" ⟨covered by #cow-panel⟩
+            - cell "Fresh calvers" ⟨covered by #cow-panel⟩
+            - cell "20" ⟨cut off by #herd⟩
+            - cell "-1.9" ⟨cut off by #herd⟩
+            - cell "4.8" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "8" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row:
+            - cell "IE2221" ⟨covered by #cow-panel⟩
+            - cell "Mabel" ⟨covered by #cow-panel⟩
+            - cell "High yielders" ⟨covered by #cow-panel⟩
+            - cell "24.6" ⟨cut off by #herd⟩
+            - cell "+0.3" ⟨cut off by #herd⟩
+            - cell "5.4" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:12" ⟨cut off by #herd⟩
+            - cell "206" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row:
+            - cell "IE2258" ⟨covered by #cow-panel⟩
+            - cell "Cora" ⟨covered by #cow-panel⟩
+            - cell "Fresh calvers" ⟨covered by #cow-panel⟩
+            - cell "30.1" ⟨cut off by #herd⟩
+            - cell "+0.8" ⟨cut off by #herd⟩
+            - cell "5.08" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "178" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row:
+            - cell "IE2295" ⟨covered by #cow-panel⟩
+            - cell "Elsie" ⟨covered by #cow-panel⟩
+            - cell "Late lactation" ⟨covered by #cow-panel⟩
+            - cell "17.6" ⟨cut off by #herd⟩
+            - cell "+1.7" ⟨cut off by #herd⟩
+            - cell "5.32" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:31" ⟨cut off by #herd⟩
+            - cell "51" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row:
+            - cell "IE2332" ⟨covered by #cow-panel⟩
+            - cell "Ada" ⟨covered by #cow-panel⟩
+            - cell "Fresh calvers" ⟨covered by #cow-panel⟩
+            - cell "29" ⟨cut off by #herd⟩
+            - cell "-2.1" ⟨cut off by #herd⟩
+            - cell "4.73" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:40" ⟨cut off by #herd⟩
+            - cell "246" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row:
+            - cell "IE2369" ⟨covered by #cow-panel⟩
+            - cell "Nora" ⟨covered by #cow-panel⟩
+            - cell "Late lactation" ⟨covered by #cow-panel⟩
+            - cell "30.5" ⟨cut off by #herd⟩
+            - cell "-2.3" ⟨cut off by #herd⟩
+            - cell "5.43" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:25" ⟨cut off by #herd⟩
+            - cell "87" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row:
+            - cell "IE2406" ⟨covered by #cow-panel⟩
+            - cell "Juno" ⟨covered by #cow-panel⟩
+            - cell "High yielders" ⟨covered by #cow-panel⟩
+            - cell "25.9" ⟨cut off by #herd⟩
+            - cell "-2.3" ⟨cut off by #herd⟩
+            - cell "4.61" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:40" ⟨cut off by #herd⟩
+            - cell "79" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+          - row:
+            - cell "IE2443" ⟨covered by #cow-panel⟩
+            - cell "Sorrel" ⟨covered by #cow-panel⟩
+            - cell "Fresh calvers" ⟨covered by #cow-panel⟩
+            - cell "23.8" ⟨cut off by #herd⟩
+            - cell "+1.4" ⟨cut off by #herd⟩
+            - cell "5.43" ⟨cut off by #herd⟩
+            - cell ⟨cut off by #herd⟩
+            - cell "05:12" ⟨cut off by #herd⟩
+            - cell "136" ⟨cut off by #herd⟩
+            - cell "⋯" ⟨cut off by #herd⟩
+    - heading "Alerts" [level=4]
+    - generic: No data
+    - heading "Notes for the relief milker" [level=2]
+    - textbox "Add a note..."
+  - generic: ✕ ⟨below⟩
+  - heading "Bonnie IE2036" [level=3]
+  - paragraph: "Group: Main herdYield: 22.6 L (-2.2)Conductivity: 5.37 mS/cmDays in milk: 107"
+  - generic: Mark as checked

@@ -1,0 +1,16 @@
+✓ idle (desktop)  captures/states-before-ar/idle-desktop-before.png
+✓ loading (desktop)  captures/states-before-ar/loading-desktop-before.png
+✓ error (desktop)  captures/states-before-ar/error-desktop-before.png
+✓ offline (desktop)  captures/states-before-ar/offline-desktop-before.png
+✓ empty (desktop)  captures/states-before-ar/empty-desktop-before.png
+✓ many (desktop)  captures/states-before-ar/many-desktop-before.png
+✓ long (desktop)  captures/states-before-ar/long-desktop-before.png
+✓ search-none (desktop)  captures/states-before-ar/search-none-desktop-before.png
+✓ search-hit (desktop)  captures/states-before-ar/search-hit-desktop-before.png
+✓ dialog-open (desktop)  captures/states-before-ar/dialog-open-desktop-before.png
+✓ dialog-error (desktop)  captures/states-before-ar/dialog-error-desktop-before.png
+✓ dialog-saved (desktop)  captures/states-before-ar/dialog-saved-desktop-before.png
+✓ focus (desktop)  captures/states-before-ar/focus-desktop-before.png
+✓ phone (phone)  captures/states-before-ar/phone-phone-before.png
+
+14/14 captured · summary captures/states-before-ar/states-before.md · sheet: node compare.mjs --grid captures/states-before-ar/*.png --out captures/states-before-ar/sheet.png

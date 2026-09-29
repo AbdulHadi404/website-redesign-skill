@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@theme {
+  --color-fg: var(--color-text);
+  --color-surface: var(--color-surface);
+  --color-accent: var(--accent);
+  --spacing-sm: var(--space-2);
+}

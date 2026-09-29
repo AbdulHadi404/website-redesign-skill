@@ -1,0 +1,142 @@
+{
+ "url": "http://127.0.0.1:38965/ext/regress/govuk.html",
+ "mode": "flip",
+ "width": 1280,
+ "summary": {
+  "FAIL": 2,
+  "WARN": 3,
+  "INFO": 0
+ },
+ "mirror": {
+  "checked": 45,
+  "notMirrored": 29,
+  "roots": 2,
+  "keptPhysical": 8
+ },
+ "css": {
+  "rules": 1441,
+  "physicalRules": 222,
+  "overrideRules": 0,
+  "logicalRules": 0
+ },
+ "keys": [],
+ "icons": [],
+ "findings": [
+  {
+   "level": "FAIL",
+   "check": "mirror",
+   "message": "Boxes that do not mirror when the page turns RTL (topmost only; > 8 px from the mirrored place)",
+   "count": 2,
+   "examples": [
+    "span.govuk-header__logotype (10 px off)",
+    "div.govuk-grid-column-two-thirds (330 px off) — float left"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "mirror",
+   "message": "Physical values that stay the same in RTL (computed styles, LTR vs RTL render)",
+   "count": 8,
+   "examples": [
+    "a.govuk-back-link: padding-left 14px / right 0px",
+    "div.govuk-grid-column-two-thirds: float left",
+    "ul.govuk-list.govuk-error-summary__list: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "div.govuk-form-group.govuk-form-group--error: padding-left 15px / right 0px, border-left 5px / right 0px",
+    "caption.govuk-table__caption.govuk-table__caption--m: text-align left",
+    "th.govuk-table__header: padding-left 0px / right 20px, text-align left",
+    "th.govuk-table__header: padding-left 0px / right 20px, text-align left",
+    "th.govuk-table__header: padding-left 0px / right 20px, text-align left"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "css",
+   "message": "Rules with physical inline-axis values (222 of 1441 rules; 0 RTL overrides; 0 rules use logical properties)",
+   "count": 222,
+   "examples": [
+    ".govuk-list { padding-left:0px }",
+    ".govuk-list--bullet { padding-left:20px }",
+    ".govuk-list--number { padding-left:20px }",
+    ".govuk-button-group { margin-right:-15px }",
+    ".govuk-button-group .govuk-button, .govuk-button-group .govuk-link { margin-right:15px }",
+    ".govuk-button-group .govuk-link { text-align:left }",
+    ".govuk-form-group--error { padding-left:15px; border-left-width:5px }",
+    ".govuk-grid-column-one-quarter { float:left }",
+    ".govuk-grid-column-one-third { float:left }",
+    ".govuk-grid-column-one-half { float:left }",
+    ".govuk-grid-column-two-thirds { float:left }",
+    ".govuk-grid-column-three-quarters { float:left }",
+    ".govuk-grid-column-full { float:left }",
+    ".govuk-grid-column-one-quarter-from-desktop { float:left }",
+    ".govuk-grid-column-one-third-from-desktop { float:left }",
+    ".govuk-grid-column-one-half-from-desktop { float:left }",
+    ".govuk-grid-column-two-thirds-from-desktop { float:left }",
+    ".govuk-grid-column-three-quarters-from-desktop { float:left }",
+    ".govuk-grid-column-full-from-desktop { float:left }",
+    ".govuk-width-container { margin-left:max(15px,calc(15px + env(safe-area-inset-left)))/margin-right:max(15px,calc(15px + env(safe-area-inset-right))) }",
+    ".govuk-width-container { margin-left:max(30px,calc(15px + env(safe-area-inset-left)))/margin-right:max(30px,calc(15px + env(safe-area-inset-right))) }",
+    ".govuk-frontend-supported .govuk-accordion__show-all { padding-left:0px/padding-right:2px }",
+    ".govuk-frontend-supported .govuk-accordion-nav__chevron::after { border-right-width:0.125rem; left:0.375rem }",
+    ".govuk-frontend-supported .govuk-accordion__section-button { text-align:left }",
+    ".govuk-frontend-supported .govuk-accordion__section-toggle-text, .govuk-frontend { margin-left:5px }",
+    ".govuk-back-link { padding-left:0.875em }",
+    ".govuk-back-link::before { border-left-width:0px/border-right-width:1px; left:0.1875em }",
+    ".govuk-back-link::before { border-left-width:0px/border-right-width:max(1px, 0.0625em) }",
+    ".govuk-breadcrumbs__list-item { margin-left:0.625em; padding-left:0.978437em; float:left }",
+    ".govuk-breadcrumbs__list-item::before { border-left-width:0px/border-right-width:1px; left:-0.206875em }",
+    ".govuk-breadcrumbs__list-item::before { border-left-width:0px/border-right-width:max(1px, 0.0625em) }",
+    ".govuk-breadcrumbs__list-item:first-child { margin-left:0px; padding-left:0px }",
+    ".govuk-button__start-icon { margin-left:5px }",
+    ".govuk-button__start-icon { margin-left:10px }",
+    ".govuk-checkboxes__label::before { left:2px }",
+    ".govuk-checkboxes__label::after { border-left-width:5px/border-right-width:0px; left:10px }",
+    ".govuk-checkboxes__hint { padding-left:59px/padding-right:15px }",
+    ".govuk-checkboxes__conditional { margin-left:20px; padding-left:35px; border-left-width:4px }",
+    ".govuk-checkboxes--small .govuk-checkboxes__input { margin-left:-10px }",
+    ".govuk-checkboxes--small .govuk-checkboxes__label { padding-left:1px }",
+    ".govuk-checkboxes--small .govuk-checkboxes__label::before { left:0px }",
+    ".govuk-checkboxes--small .govuk-checkboxes__label::after { border-left-width:3px/border-right-width:0px; left:6px }",
+    ".govuk-checkboxes--small .govuk-checkboxes__hint { padding-left:34px }",
+    ".govuk-checkboxes--small .govuk-checkboxes__conditional { margin-left:10px; padding-left:20px }",
+    ".govuk-input__prefix { border-right-width:0px }",
+    ".govuk-input__suffix { border-left-width:0px }",
+    ".govuk-date-input__item { margin-right:20px }",
+    ".govuk-details__text { padding-left:20px }",
+    ".govuk-details { border-left-width:10px }",
+    ".govuk-details__summary-text { padding-left:20px }",
+    ".govuk-details__summary { padding-left:25px }",
+    ".govuk-details__summary::before { border-left-width:12.124px/border-right-width:0px; left:0px }",
+    ".govuk-details__text { border-left-width:5px }",
+    ".govuk-exit-this-page { left:0px }",
+    ".govuk-exit-this-page { left:auto/right:0px; float:right }",
+    ".govuk-file-upload { margin-left:-5px }",
+    ".govuk-file-upload-button__pseudo-button { margin-right:10px }",
+    ".govuk-file-upload-button__instruction { text-align:left }",
+    ".govuk-file-upload-button__status { text-align:left }",
+    ".govuk-footer__licence-logo { margin-right:10px }"
+   ]
+  },
+  {
+   "level": "FAIL",
+   "check": "align",
+   "message": "text-align: left inside RTL text",
+   "count": 4,
+   "examples": [
+    "caption.govuk-table__caption.govuk-table__caption--m",
+    "th.govuk-table__header",
+    "th.govuk-table__header",
+    "th.govuk-table__header"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "bidi",
+   "message": "Email/phone/URL/IBAN fields that inherit RTL: values starting with digits or ending in punctuation will scramble",
+   "count": 1,
+   "examples": [
+    "#email [email]"
+   ]
+  }
+ ],
+ "ms": 475
+}

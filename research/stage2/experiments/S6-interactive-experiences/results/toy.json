@@ -1,0 +1,1829 @@
+{
+  "date": "2026-09-29T06:13:58.157Z",
+  "chromium": "141.0.7390.37",
+  "runs": 5,
+  "variants": {
+    "a": {
+      "label": "canvas only",
+      "cost": {
+        "files": [
+          "a-canvas.html",
+          "model.js",
+          "canvas-view.js"
+        ],
+        "bytes": 14901,
+        "gzipBytes": 5372,
+        "nonBlankLines": 277
+      },
+      "axAtLoad": {
+        "interactive": 0,
+        "namedInteractive": 0,
+        "liveRegions": 0,
+        "canvasNode": {
+          "role": "Canvas",
+          "name": ""
+        }
+      },
+      "axLifecycle": {
+        "atLoad": 0,
+        "afterMouseMove": 0,
+        "afterThenTab": 0,
+        "genericNames": 0
+      },
+      "idleRafPerSecond": 0,
+      "audioContextsAtLoad": 0,
+      "keyboard": {
+        "none": {
+          "tasks": [
+            {
+              "name": "T1 add a strawberry to the centre",
+              "ok": false,
+              "keys": 10,
+              "announcements": [],
+              "err": "nothing focusable"
+            },
+            {
+              "name": "T2 add a candle at the top left",
+              "ok": false,
+              "keys": 0,
+              "announcements": []
+            },
+            {
+              "name": "T3 remove the strawberry",
+              "ok": false,
+              "keys": 0,
+              "announcements": []
+            }
+          ],
+          "totalKeys": 10,
+          "invisibleFocusStops": 0,
+          "completed": 0,
+          "stateFromTree": {
+            "items": 0,
+            "perceivable": 0
+          }
+        }
+      },
+      "audioContextsAfterTasks": 0,
+      "pointer": {
+        "drag": [
+          {
+            "name": "T1 drag strawberry to centre",
+            "ok": true,
+            "actions": 1
+          },
+          {
+            "name": "T2 drag candle to top left",
+            "ok": true,
+            "actions": 1
+          },
+          {
+            "name": "T3 drag strawberry off the cake",
+            "ok": true,
+            "actions": 1
+          }
+        ],
+        "tap": [
+          {
+            "name": "T1 tap strawberry, tap centre",
+            "ok": false,
+            "actions": 2
+          },
+          {
+            "name": "T2 tap candle, tap top left",
+            "ok": false,
+            "actions": 2
+          },
+          {
+            "name": "T3 tap strawberry, tap Remove",
+            "ok": false,
+            "actions": 0
+          }
+        ]
+      },
+      "motion": {
+        "noPreference": {
+          "distinctFrames60to540ms": 9,
+          "framesRendered": 25
+        },
+        "reduce": {
+          "distinctFrames60to540ms": 9,
+          "framesRendered": 25
+        }
+      },
+      "seededStateFromTree": {
+        "items": 3,
+        "perceivable": 0
+      },
+      "alignment": null,
+      "namesTrackState": {
+        "strawberryNames": [],
+        "current": false,
+        "stale": false
+      },
+      "phone": {
+        "horizontalOverflow": false,
+        "axInteractiveAtLoad": 0,
+        "axNames": [
+          "Top the cake – canvas only",
+          "Top the cake",
+          "Top the cake",
+          "Drag toppings from the tray onto the cake. Drag one off the cake to remove it.",
+          "Top the cake",
+          "Drag toppings from the tray onto the cake. ",
+          "Drag one off the cake to remove it."
+        ],
+        "alignment": null,
+        "touchTapPlace": false,
+        "touchDragPlace": true
+      },
+      "axe": {
+        "violations": [],
+        "passes": 16,
+        "incomplete": []
+      },
+      "probe": [
+        {
+          "index": 0,
+          "verdict": "FAIL",
+          "findings": [
+            {
+              "level": "FAIL",
+              "msg": "pointer-operated canvas with no keyboard path (2.1.1): no focusable control over or beside it changed it. If the pointer effect is decorative only, record that and hide the canvas from assistive technology"
+            }
+          ],
+          "listeners": {
+            "canvas": [
+              "pointerdown",
+              "pointermove",
+              "pointerup",
+              "pointercancel"
+            ],
+            "wrapper": [],
+            "documentLevel": [],
+            "react": []
+          },
+          "operable": true,
+          "documentLevelOnly": false,
+          "hoverReactive": true,
+          "exposure": {
+            "ignored": false,
+            "role": "Canvas",
+            "name": "",
+            "fallbackText": ""
+          },
+          "selfAnimating": false,
+          "baseline": {
+            "distinct": 1,
+            "captures": 16,
+            "ms": 727
+          },
+          "rafPerSecondAtRest": 0,
+          "walk": {
+            "tabs": 3,
+            "uniqueStops": 0,
+            "cycled": false
+          },
+          "stops": {
+            "overCanvas": 0,
+            "standIns": 0,
+            "linksOverCanvas": 0,
+            "canvasFocusable": false,
+            "widgetsBeside": 0
+          },
+          "standIns": null,
+          "keyboardPath": null,
+          "tried": [],
+          "reduce": true,
+          "navigatedAway": false
+        }
+      ],
+      "skillA11y": {
+        "FAIL": 2,
+        "WARN": 0,
+        "fails": [
+          "pointer 2.1.1: Clickable (pointerdown listener) but not keyboard focusable",
+          "keyboard 2.1.1: Nothing on the page receives keyboard focus"
+        ],
+        "warns": []
+      }
+    },
+    "b": {
+      "label": "canvas + focusable proxies",
+      "cost": {
+        "files": [
+          "b-proxies.html",
+          "model.js",
+          "canvas-view.js",
+          "proxy-layer.js",
+          "announce.js",
+          "sound.js",
+          "tap-helpers.js"
+        ],
+        "bytes": 25630,
+        "gzipBytes": 8753,
+        "nonBlankLines": 469
+      },
+      "axAtLoad": {
+        "interactive": 5,
+        "namedInteractive": 5,
+        "liveRegions": 1,
+        "canvasNode": null
+      },
+      "axLifecycle": {
+        "atLoad": 5,
+        "afterMouseMove": 5,
+        "afterThenTab": 5,
+        "genericNames": 0
+      },
+      "idleRafPerSecond": 0,
+      "audioContextsAtLoad": 0,
+      "keyboard": {
+        "proxies": {
+          "tasks": [
+            {
+              "name": "T1 add a strawberry to the centre",
+              "ok": true,
+              "keys": 2,
+              "announcements": [
+                "Strawberry 1 added near the centre. 1 topping on the cake."
+              ]
+            },
+            {
+              "name": "T2 add a candle at the top left",
+              "ok": true,
+              "keys": 7,
+              "announcements": [
+                "Candle 1 added near the centre. 2 toppings on the cake.",
+                "Candle 1, near the top",
+                "Candle 1, near the top left"
+              ]
+            },
+            {
+              "name": "T3 remove the strawberry",
+              "ok": true,
+              "keys": 2,
+              "announcements": [
+                "Strawberry 1 removed. 1 topping on the cake."
+              ]
+            }
+          ],
+          "totalKeys": 11,
+          "invisibleFocusStops": 0,
+          "completed": 3,
+          "stateFromTree": {
+            "items": 1,
+            "perceivable": 1
+          }
+        }
+      },
+      "audioContextsAfterTasks": 0,
+      "sound": {
+        "contextsAfterToggle": 1,
+        "ariaPressed": "true"
+      },
+      "pointer": {
+        "drag": [
+          {
+            "name": "T1 drag strawberry to centre",
+            "ok": true,
+            "actions": 1
+          },
+          {
+            "name": "T2 drag candle to top left",
+            "ok": true,
+            "actions": 1
+          },
+          {
+            "name": "T3 drag strawberry off the cake",
+            "ok": true,
+            "actions": 1
+          }
+        ],
+        "tap": [
+          {
+            "name": "T1 tap strawberry, tap centre",
+            "ok": true,
+            "actions": 2
+          },
+          {
+            "name": "T2 tap candle, tap top left",
+            "ok": true,
+            "actions": 2
+          },
+          {
+            "name": "T3 tap strawberry, tap Remove",
+            "ok": true,
+            "actions": 2
+          }
+        ]
+      },
+      "motion": {
+        "noPreference": {
+          "distinctFrames60to540ms": 9,
+          "framesRendered": 25
+        },
+        "reduce": {
+          "distinctFrames60to540ms": 1,
+          "framesRendered": 1
+        }
+      },
+      "seededStateFromTree": {
+        "items": 3,
+        "perceivable": 3
+      },
+      "alignment": {
+        "stand_ins": 7,
+        "maxErrorPx": 10,
+        "itemStandInMinCssPx": 56,
+        "itemStandInPointerEvents": [
+          "none"
+        ]
+      },
+      "namesTrackState": {
+        "strawberryNames": [
+          "Strawberry 1, near the top left.",
+          "Strawberry 1, near the top left"
+        ],
+        "current": true,
+        "stale": false
+      },
+      "phone": {
+        "horizontalOverflow": false,
+        "axInteractiveAtLoad": 5,
+        "axNames": [
+          "Top the cake – canvas with focusable proxies",
+          "Top the cake",
+          "Top the cake",
+          "Drag toppings from the tray onto the cake. Drag one off the cake to remove it.",
+          "Or tap a topping, then tap the cake. With a keyboard: Tab to the tray and press Enter to add a topping; arrow keys move it (Shift moves further); Delete removes it.",
+          "Sound ",
+          "Top the cake",
+          "Drag toppings from the tray onto the cake. ",
+          "Drag one off the cake to remove it.",
+          "Add a topping",
+          "Toppings on the cake",
+          "Or tap a topping, then tap the cake. With a "
+        ],
+        "alignment": {
+          "stand_ins": 6,
+          "maxErrorPx": 7.5,
+          "itemStandInMinCssPx": 44,
+          "itemStandInPointerEvents": [
+            "none"
+          ]
+        },
+        "touchTapPlace": true,
+        "touchDragPlace": true
+      },
+      "axe": {
+        "violations": [],
+        "passes": 33,
+        "incomplete": [
+          "color-contrast"
+        ]
+      },
+      "probe": [
+        {
+          "index": 0,
+          "verdict": "PASS",
+          "findings": [
+            {
+              "level": "PASS",
+              "msg": "keyboard path over the canvas (Enter on button \"Strawberry\") changes it and is narrated"
+            }
+          ],
+          "listeners": {
+            "canvas": [
+              "pointerdown",
+              "pointermove",
+              "pointerup",
+              "pointercancel"
+            ],
+            "wrapper": [],
+            "documentLevel": [],
+            "react": []
+          },
+          "operable": true,
+          "documentLevelOnly": false,
+          "hoverReactive": true,
+          "exposure": {
+            "ignored": true,
+            "role": "none",
+            "name": "",
+            "fallbackText": ""
+          },
+          "selfAnimating": false,
+          "baseline": {
+            "distinct": 1,
+            "captures": 20,
+            "ms": 706
+          },
+          "rafPerSecondAtRest": 0,
+          "walk": {
+            "tabs": 4,
+            "uniqueStops": 2,
+            "cycled": true
+          },
+          "stops": {
+            "overCanvas": 1,
+            "standIns": 1,
+            "linksOverCanvas": 0,
+            "canvasFocusable": false,
+            "widgetsBeside": 1
+          },
+          "standIns": {
+            "minSizePx": 80,
+            "receivePointer": 0,
+            "minPointerTargetPx": null
+          },
+          "keyboardPath": {
+            "where": "over",
+            "kind": "button",
+            "name": "Strawberry",
+            "key": "Enter",
+            "pixelsChanged": true,
+            "narrated": true,
+            "liveOrNotify": true,
+            "stateChanged": false,
+            "nameChanged": false,
+            "distinctFramesAfterChange": 1
+          },
+          "tried": [
+            {
+              "where": "over",
+              "kind": "button",
+              "name": "Strawberry",
+              "key": "Enter",
+              "pixels": true,
+              "spoken": true,
+              "stateChanged": false,
+              "nameChanged": false,
+              "focusMoved": true
+            }
+          ],
+          "reduce": true,
+          "navigatedAway": false
+        }
+      ],
+      "skillA11y": {
+        "FAIL": 3,
+        "WARN": 5,
+        "fails": [
+          "pointer 2.1.1: Clickable (pointerdown listener) but not keyboard focusable",
+          "keyboard 2.4.11: Focused element fully hidden by other content (sticky/fixed UI?)",
+          "keyboard 2.4.11: Hidden under other content when reached with Shift+Tab (add scroll-padding-top for sticky headers)"
+        ],
+        "warns": [
+          "keyboard 2.4.1: First focus stop is not a skip link (button.proxy.palette \"Strawberry\")",
+          "forced 1.4.11: Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)",
+          "forced 1.4.11: Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)",
+          "forced 1.4.11: Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)",
+          "forced 1.4.11: Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)"
+        ]
+      }
+    },
+    "c": {
+      "label": "form alternative only",
+      "cost": {
+        "files": [
+          "c-form.html",
+          "model.js",
+          "canvas-view.js",
+          "form-view.js",
+          "announce.js"
+        ],
+        "bytes": 19572,
+        "gzipBytes": 6887,
+        "nonBlankLines": 355
+      },
+      "axAtLoad": {
+        "interactive": 14,
+        "namedInteractive": 14,
+        "liveRegions": 1,
+        "canvasNode": null
+      },
+      "axLifecycle": {
+        "atLoad": 14,
+        "afterMouseMove": 14,
+        "afterThenTab": 14,
+        "genericNames": 0
+      },
+      "idleRafPerSecond": 0,
+      "audioContextsAtLoad": 0,
+      "keyboard": {
+        "form": {
+          "tasks": [
+            {
+              "name": "T1 add a strawberry to the centre",
+              "ok": true,
+              "keys": 4,
+              "announcements": [
+                "Strawberry 1 added near the centre. 1 topping on the cake."
+              ]
+            },
+            {
+              "name": "T2 add a candle at the top left",
+              "ok": true,
+              "keys": 10,
+              "announcements": [
+                "Candle 1 added near the top left. 2 toppings on the cake."
+              ]
+            },
+            {
+              "name": "T3 remove the strawberry",
+              "ok": true,
+              "keys": 3,
+              "announcements": [
+                "Strawberry 1 removed. 1 topping on the cake."
+              ]
+            }
+          ],
+          "totalKeys": 17,
+          "invisibleFocusStops": 0,
+          "completed": 3,
+          "stateFromTree": {
+            "items": 1,
+            "perceivable": 1
+          }
+        }
+      },
+      "audioContextsAfterTasks": 0,
+      "pointer": {
+        "form": [
+          {
+            "name": "T1 click Add to cake (defaults)",
+            "ok": true,
+            "actions": 1
+          },
+          {
+            "name": "T2 click Candle, Top left, Add",
+            "ok": true,
+            "actions": 3
+          },
+          {
+            "name": "T3 click Remove Strawberry 1",
+            "ok": true,
+            "actions": 1
+          }
+        ]
+      },
+      "motion": {
+        "noPreference": {
+          "distinctFrames60to540ms": 9,
+          "framesRendered": 25
+        },
+        "reduce": {
+          "distinctFrames60to540ms": 1,
+          "framesRendered": 1
+        }
+      },
+      "seededStateFromTree": {
+        "items": 3,
+        "perceivable": 3
+      },
+      "alignment": null,
+      "namesTrackState": {
+        "strawberryNames": [
+          "Cake with 3 toppings: Strawberry 1, near the top left; Candle 1, near the top left; Star 1, near the bottom right",
+          "Strawberry 1",
+          "Remove Strawberry 1",
+          "of Strawberry 1",
+          "Position of Strawberry 1"
+        ],
+        "current": true,
+        "stale": false
+      },
+      "phone": {
+        "horizontalOverflow": false,
+        "axInteractiveAtLoad": 14,
+        "axNames": [
+          "Top the cake – form",
+          "Top the cake",
+          "Top the cake",
+          "Choose a topping and where it goes. The picture updates as you go.",
+          "An empty cake",
+          "On the cake (0)",
+          "Top the cake",
+          "Choose a topping and where it goes. The ",
+          "picture updates as you go.",
+          "Topping",
+          "Where on the cake",
+          "Add to cake"
+        ],
+        "touchTapPlace": true
+      },
+      "axe": {
+        "violations": [],
+        "passes": 37,
+        "incomplete": []
+      },
+      "probe": [
+        {
+          "index": 0,
+          "verdict": "PASS",
+          "findings": [
+            {
+              "level": "PASS",
+              "msg": "static canvas with a name or fallback content"
+            }
+          ],
+          "listeners": {
+            "canvas": [],
+            "wrapper": [],
+            "documentLevel": [],
+            "react": []
+          },
+          "operable": false,
+          "documentLevelOnly": false,
+          "hoverReactive": false,
+          "exposure": {
+            "ignored": false,
+            "role": "image",
+            "name": "An empty cake",
+            "fallbackText": ""
+          },
+          "selfAnimating": false,
+          "baseline": {
+            "distinct": 1,
+            "captures": 13,
+            "ms": 703
+          },
+          "rafPerSecondAtRest": 0,
+          "walk": {
+            "tabs": 5,
+            "uniqueStops": 3,
+            "cycled": true
+          },
+          "stops": {
+            "overCanvas": 0,
+            "standIns": 0,
+            "linksOverCanvas": 0,
+            "canvasFocusable": false,
+            "widgetsBeside": 3
+          },
+          "standIns": null,
+          "keyboardPath": null,
+          "tried": [],
+          "reduce": true,
+          "navigatedAway": false
+        }
+      ],
+      "skillA11y": {
+        "FAIL": 0,
+        "WARN": 1,
+        "fails": [],
+        "warns": [
+          "keyboard 2.4.1: First focus stop is not a skip link (input \"strawberry\")"
+        ]
+      }
+    },
+    "d": {
+      "label": "canvas + proxies + list",
+      "cost": {
+        "files": [
+          "d-hybrid.html",
+          "model.js",
+          "canvas-view.js",
+          "proxy-layer.js",
+          "form-view.js",
+          "announce.js",
+          "sound.js",
+          "tap-helpers.js"
+        ],
+        "bytes": 29702,
+        "gzipBytes": 9817,
+        "nonBlankLines": 533
+      },
+      "axAtLoad": {
+        "interactive": 19,
+        "namedInteractive": 19,
+        "liveRegions": 1,
+        "canvasNode": null
+      },
+      "axLifecycle": {
+        "atLoad": 19,
+        "afterMouseMove": 19,
+        "afterThenTab": 19,
+        "genericNames": 0
+      },
+      "idleRafPerSecond": 0,
+      "audioContextsAtLoad": 0,
+      "keyboard": {
+        "proxies": {
+          "tasks": [
+            {
+              "name": "T1 add a strawberry to the centre",
+              "ok": true,
+              "keys": 2,
+              "announcements": [
+                "Strawberry 1 added near the centre. 1 topping on the cake."
+              ]
+            },
+            {
+              "name": "T2 add a candle at the top left",
+              "ok": true,
+              "keys": 7,
+              "announcements": [
+                "Candle 1 added near the centre. 2 toppings on the cake.",
+                "Candle 1, near the top",
+                "Candle 1, near the top left"
+              ]
+            },
+            {
+              "name": "T3 remove the strawberry",
+              "ok": true,
+              "keys": 2,
+              "announcements": [
+                "Strawberry 1 removed. 1 topping on the cake."
+              ]
+            }
+          ],
+          "totalKeys": 11,
+          "invisibleFocusStops": 0,
+          "completed": 3,
+          "stateFromTree": {
+            "items": 1,
+            "perceivable": 1
+          }
+        },
+        "form": {
+          "tasks": [
+            {
+              "name": "T1 add a strawberry to the centre",
+              "ok": true,
+              "keys": 6,
+              "announcements": [
+                "Strawberry 1 added near the centre. 1 topping on the cake."
+              ]
+            },
+            {
+              "name": "T2 add a candle at the top left",
+              "ok": true,
+              "keys": 10,
+              "announcements": [
+                "Candle 1 added near the top left. 2 toppings on the cake."
+              ]
+            },
+            {
+              "name": "T3 remove the strawberry",
+              "ok": true,
+              "keys": 3,
+              "announcements": [
+                "Strawberry 1 removed. 1 topping on the cake."
+              ]
+            }
+          ],
+          "totalKeys": 19,
+          "invisibleFocusStops": 0,
+          "completed": 3,
+          "stateFromTree": {
+            "items": 1,
+            "perceivable": 1
+          }
+        }
+      },
+      "audioContextsAfterTasks": 0,
+      "sound": {
+        "contextsAfterToggle": 1,
+        "ariaPressed": "true"
+      },
+      "pointer": {
+        "drag": [
+          {
+            "name": "T1 drag strawberry to centre",
+            "ok": true,
+            "actions": 1
+          },
+          {
+            "name": "T2 drag candle to top left",
+            "ok": true,
+            "actions": 1
+          },
+          {
+            "name": "T3 drag strawberry off the cake",
+            "ok": true,
+            "actions": 1
+          }
+        ],
+        "tap": [
+          {
+            "name": "T1 tap strawberry, tap centre",
+            "ok": true,
+            "actions": 2
+          },
+          {
+            "name": "T2 tap candle, tap top left",
+            "ok": true,
+            "actions": 2
+          },
+          {
+            "name": "T3 tap strawberry, tap Remove",
+            "ok": true,
+            "actions": 2
+          }
+        ]
+      },
+      "motion": {
+        "noPreference": {
+          "distinctFrames60to540ms": 9,
+          "framesRendered": 25
+        },
+        "reduce": {
+          "distinctFrames60to540ms": 1,
+          "framesRendered": 1
+        }
+      },
+      "seededStateFromTree": {
+        "items": 3,
+        "perceivable": 3
+      },
+      "alignment": {
+        "stand_ins": 7,
+        "maxErrorPx": 10,
+        "itemStandInMinCssPx": 56,
+        "itemStandInPointerEvents": [
+          "none"
+        ]
+      },
+      "namesTrackState": {
+        "strawberryNames": [
+          "Strawberry 1, near the top left.",
+          "Strawberry 1",
+          "Remove Strawberry 1",
+          "Strawberry 1, near the top left",
+          "of Strawberry 1",
+          "Position of Strawberry 1"
+        ],
+        "current": true,
+        "stale": false
+      },
+      "phone": {
+        "horizontalOverflow": false,
+        "axInteractiveAtLoad": 19,
+        "axNames": [
+          "Top the cake – canvas, proxies and a list",
+          "Top the cake",
+          "Arrange with a list",
+          "Top the cake",
+          "Drag toppings from the tray onto the cake, or use the list beside it.",
+          "Or tap a topping, then tap the cake. With a keyboard: Tab to the tray and press Enter to add a topping; arrow keys move it (Shift moves further); Delete removes it.",
+          "Sound ",
+          "Arrange with a list",
+          "Top the cake",
+          "Drag toppings from the tray onto the cake, ",
+          "or use the list beside it.",
+          "Add a topping"
+        ],
+        "alignment": {
+          "stand_ins": 6,
+          "maxErrorPx": 7.5,
+          "itemStandInMinCssPx": 44,
+          "itemStandInPointerEvents": [
+            "none"
+          ]
+        },
+        "touchTapPlace": true,
+        "touchDragPlace": true
+      },
+      "axe": {
+        "violations": [],
+        "passes": 38,
+        "incomplete": [
+          "color-contrast"
+        ]
+      },
+      "probe": [
+        {
+          "index": 0,
+          "verdict": "PASS",
+          "findings": [
+            {
+              "level": "PASS",
+              "msg": "keyboard path over the canvas (Enter on button \"Strawberry\") changes it and is narrated"
+            }
+          ],
+          "listeners": {
+            "canvas": [
+              "pointerdown",
+              "pointermove",
+              "pointerup",
+              "pointercancel"
+            ],
+            "wrapper": [],
+            "documentLevel": [],
+            "react": []
+          },
+          "operable": true,
+          "documentLevelOnly": false,
+          "hoverReactive": true,
+          "exposure": {
+            "ignored": true,
+            "role": "none",
+            "name": "",
+            "fallbackText": ""
+          },
+          "selfAnimating": false,
+          "baseline": {
+            "distinct": 1,
+            "captures": 13,
+            "ms": 703
+          },
+          "rafPerSecondAtRest": 0,
+          "walk": {
+            "tabs": 7,
+            "uniqueStops": 5,
+            "cycled": true
+          },
+          "stops": {
+            "overCanvas": 1,
+            "standIns": 1,
+            "linksOverCanvas": 0,
+            "canvasFocusable": false,
+            "widgetsBeside": 4
+          },
+          "standIns": {
+            "minSizePx": 80,
+            "receivePointer": 0,
+            "minPointerTargetPx": null
+          },
+          "keyboardPath": {
+            "where": "over",
+            "kind": "button",
+            "name": "Strawberry",
+            "key": "Enter",
+            "pixelsChanged": true,
+            "narrated": true,
+            "liveOrNotify": true,
+            "stateChanged": false,
+            "nameChanged": false,
+            "distinctFramesAfterChange": 1
+          },
+          "tried": [
+            {
+              "where": "over",
+              "kind": "button",
+              "name": "Strawberry",
+              "key": "Enter",
+              "pixels": true,
+              "spoken": true,
+              "stateChanged": false,
+              "nameChanged": false,
+              "focusMoved": true
+            }
+          ],
+          "reduce": true,
+          "navigatedAway": false
+        }
+      ],
+      "skillA11y": {
+        "FAIL": 3,
+        "WARN": 5,
+        "fails": [
+          "pointer 2.1.1: Clickable (pointerdown listener) but not keyboard focusable",
+          "keyboard 2.4.11: Focused element fully hidden by other content (sticky/fixed UI?)",
+          "keyboard 2.4.11: Hidden under other content when reached with Shift+Tab (add scroll-padding-top for sticky headers)"
+        ],
+        "warns": [
+          "keyboard 2.4.1: First focus stop is not a skip link (button.proxy.palette \"Strawberry\")",
+          "forced 1.4.11: Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)",
+          "forced 1.4.11: Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)",
+          "forced 1.4.11: Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)",
+          "forced 1.4.11: Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)"
+        ]
+      }
+    },
+    "e": {
+      "label": "PixiJS 8 AccessibilitySystem defaults",
+      "cost": {
+        "files": [
+          "e-pixi.html",
+          "model.js",
+          "pixi-view.js"
+        ],
+        "bytes": 10907,
+        "gzipBytes": 4344,
+        "nonBlankLines": 205,
+        "engine": {
+          "file": "pixi.js@8.21.0 dist/pixi.min.mjs",
+          "bytes": 828971,
+          "gzipBytes": 234176
+        }
+      },
+      "axAtLoad": {
+        "interactive": 0,
+        "namedInteractive": 0,
+        "liveRegions": 0,
+        "canvasNode": null
+      },
+      "axLifecycle": {
+        "atLoad": 0,
+        "afterMouseMove": 0,
+        "afterThenTab": 0,
+        "genericNames": 0
+      },
+      "idleRafPerSecond": 46,
+      "audioContextsAtLoad": 0,
+      "keyboard": {
+        "engine": {
+          "tasks": [
+            {
+              "name": "T1 add a strawberry to the centre",
+              "ok": false,
+              "keys": 40,
+              "announcements": [],
+              "err": "palette not reached"
+            },
+            {
+              "name": "T2 add a candle at the top left",
+              "ok": false,
+              "keys": 24,
+              "announcements": [],
+              "err": "candle not reached"
+            },
+            {
+              "name": "T3 remove the strawberry",
+              "ok": false,
+              "keys": 24,
+              "announcements": [],
+              "err": "strawberry not reached"
+            }
+          ],
+          "totalKeys": 88,
+          "invisibleFocusStops": 0,
+          "completed": 0,
+          "stateFromTree": {
+            "items": 0,
+            "perceivable": 0
+          }
+        }
+      },
+      "audioContextsAfterTasks": 0,
+      "pointer": {
+        "drag": [
+          {
+            "name": "T1 drag strawberry to centre",
+            "ok": true,
+            "actions": 1
+          },
+          {
+            "name": "T2 drag candle to top left",
+            "ok": true,
+            "actions": 1
+          },
+          {
+            "name": "T3 drag strawberry off the cake",
+            "ok": true,
+            "actions": 1
+          }
+        ],
+        "tap": [
+          {
+            "name": "T1 tap strawberry, tap centre",
+            "ok": true,
+            "actions": 2
+          },
+          {
+            "name": "T2 tap candle, tap top left",
+            "ok": false,
+            "actions": 2
+          },
+          {
+            "name": "T3 tap strawberry, tap Remove",
+            "ok": false,
+            "actions": 1
+          }
+        ]
+      },
+      "motion": {
+        "noPreference": {
+          "distinctFrames60to540ms": 1,
+          "framesRendered": 25
+        },
+        "reduce": {
+          "distinctFrames60to540ms": 1,
+          "framesRendered": 23
+        }
+      },
+      "seededStateFromTree": {
+        "items": 3,
+        "perceivable": 0
+      },
+      "alignment": null,
+      "namesTrackState": {
+        "strawberryNames": [],
+        "current": false,
+        "stale": false
+      },
+      "phone": {
+        "horizontalOverflow": false,
+        "axInteractiveAtLoad": 1,
+        "axNames": [
+          "Top the cake – PixiJS with its accessibility defaults",
+          "select to enable accessibility for this content",
+          "Top the cake",
+          "Top the cake",
+          "Drag toppings from the tray onto the cake. Drag one off the cake to remove it.",
+          "Top the cake",
+          "Drag toppings from the tray onto the cake. ",
+          "Drag one off the cake to remove it."
+        ],
+        "alignment": null,
+        "touchTapPlace": true,
+        "touchDragPlace": true
+      },
+      "axe": {
+        "violations": [],
+        "passes": 16,
+        "incomplete": []
+      },
+      "probe": [
+        {
+          "index": 0,
+          "verdict": "FAIL",
+          "findings": [
+            {
+              "level": "FAIL",
+              "msg": "pointer-operated canvas with no keyboard path (2.1.1): no focusable control over or beside it changed it. If the pointer effect is decorative only, record that and hide the canvas from assistive technology"
+            },
+            {
+              "level": "INFO",
+              "msg": "requestAnimationFrame runs at rest (28/s): render on demand"
+            }
+          ],
+          "listeners": {
+            "canvas": [
+              "pointerdown",
+              "pointerleave",
+              "pointerover",
+              "wheel",
+              "webglcontextlost",
+              "webglcontextrestored"
+            ],
+            "wrapper": [],
+            "documentLevel": [
+              "pointermove",
+              "pointerup"
+            ],
+            "react": []
+          },
+          "operable": true,
+          "documentLevelOnly": false,
+          "hoverReactive": true,
+          "exposure": {
+            "ignored": true,
+            "role": "none",
+            "name": "",
+            "fallbackText": ""
+          },
+          "selfAnimating": false,
+          "baseline": {
+            "distinct": 1,
+            "captures": 5,
+            "ms": 1440
+          },
+          "rafPerSecondAtRest": 28,
+          "walk": {
+            "tabs": 3,
+            "uniqueStops": 0,
+            "cycled": false
+          },
+          "stops": {
+            "overCanvas": 0,
+            "standIns": 0,
+            "linksOverCanvas": 0,
+            "canvasFocusable": false,
+            "widgetsBeside": 0
+          },
+          "standIns": null,
+          "keyboardPath": null,
+          "tried": [],
+          "reduce": true,
+          "navigatedAway": false
+        }
+      ],
+      "skillA11y": {
+        "FAIL": 2,
+        "WARN": 0,
+        "fails": [
+          "pointer 2.1.1: Clickable (pointerdown listener) but not keyboard focusable",
+          "keyboard 2.1.1: Nothing on the page receives keyboard focus"
+        ],
+        "warns": []
+      }
+    },
+    "f": {
+      "label": "PixiJS 8 AccessibilitySystem, enabledByDefault: true",
+      "cost": {
+        "files": [
+          "f-pixi-enabled.html",
+          "model.js",
+          "pixi-view.js"
+        ],
+        "bytes": 11058,
+        "gzipBytes": 4419,
+        "nonBlankLines": 205,
+        "engine": {
+          "file": "pixi.js@8.21.0 dist/pixi.min.mjs",
+          "bytes": 828971,
+          "gzipBytes": 234176
+        }
+      },
+      "axAtLoad": {
+        "interactive": 4,
+        "namedInteractive": 4,
+        "liveRegions": 0,
+        "canvasNode": null
+      },
+      "axLifecycle": {
+        "atLoad": 4,
+        "afterMouseMove": 0,
+        "afterThenTab": 4,
+        "genericNames": 0
+      },
+      "idleRafPerSecond": 44,
+      "audioContextsAtLoad": 0,
+      "keyboard": {
+        "engine": {
+          "tasks": [
+            {
+              "name": "T1 add a strawberry to the centre",
+              "ok": true,
+              "keys": 2,
+              "announcements": []
+            },
+            {
+              "name": "T2 add a candle at the top left",
+              "ok": false,
+              "keys": 14,
+              "announcements": []
+            },
+            {
+              "name": "T3 remove the strawberry",
+              "ok": false,
+              "keys": 3,
+              "announcements": []
+            }
+          ],
+          "totalKeys": 19,
+          "invisibleFocusStops": 0,
+          "completed": 1,
+          "stateFromTree": {
+            "items": 2,
+            "perceivable": 2
+          }
+        }
+      },
+      "audioContextsAfterTasks": 0,
+      "pointer": {
+        "drag": [
+          {
+            "name": "T1 drag strawberry to centre",
+            "ok": true,
+            "actions": 1
+          },
+          {
+            "name": "T2 drag candle to top left",
+            "ok": true,
+            "actions": 1
+          },
+          {
+            "name": "T3 drag strawberry off the cake",
+            "ok": true,
+            "actions": 1
+          }
+        ],
+        "tap": [
+          {
+            "name": "T1 tap strawberry, tap centre",
+            "ok": true,
+            "actions": 2
+          },
+          {
+            "name": "T2 tap candle, tap top left",
+            "ok": false,
+            "actions": 2
+          },
+          {
+            "name": "T3 tap strawberry, tap Remove",
+            "ok": false,
+            "actions": 1
+          }
+        ]
+      },
+      "motion": {
+        "noPreference": {
+          "distinctFrames60to540ms": 1,
+          "framesRendered": 27
+        },
+        "reduce": {
+          "distinctFrames60to540ms": 1,
+          "framesRendered": 24
+        }
+      },
+      "seededStateFromTree": {
+        "items": 3,
+        "perceivable": 3
+      },
+      "alignment": {
+        "stand_ins": 7,
+        "maxErrorPx": 129.9,
+        "itemStandInMinCssPx": 12,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      },
+      "namesTrackState": {
+        "strawberryNames": [
+          "Strawberry 1, near the centre"
+        ],
+        "current": false,
+        "stale": true
+      },
+      "phone": {
+        "horizontalOverflow": false,
+        "axInteractiveAtLoad": 5,
+        "axNames": [
+          "Top the cake – PixiJS, accessibility enabled by default",
+          "select to enable accessibility for this content",
+          "Top the cake",
+          "Top the cake",
+          "Drag toppings from the tray onto the cake. Drag one off the cake to remove it.",
+          "Top the cake",
+          "Drag toppings from the tray onto the cake. ",
+          "Drag one off the cake to remove it.",
+          "Strawberry",
+          "Candle",
+          "Flower",
+          "Star"
+        ],
+        "alignment": {
+          "stand_ins": 6,
+          "maxErrorPx": 143.5,
+          "itemStandInMinCssPx": 9,
+          "itemStandInPointerEvents": [
+            "auto"
+          ]
+        },
+        "touchTapPlace": true,
+        "touchDragPlace": true
+      },
+      "axe": {
+        "violations": [],
+        "passes": 25,
+        "incomplete": []
+      },
+      "probe": [
+        {
+          "index": 0,
+          "verdict": "WARN",
+          "findings": [
+            {
+              "level": "WARN",
+              "msg": "the keyboard changes the canvas but nothing is narrated (4.1.3): no live region, ariaNotify or state change on the focused control"
+            },
+            {
+              "level": "WARN",
+              "msg": "no stand-ins over the canvas: the keyboard path is controls beside it; confirm every pointer verb on the canvas (drag, orbit, pick) has an equivalent"
+            },
+            {
+              "level": "INFO",
+              "msg": "requestAnimationFrame runs at rest (32/s): render on demand"
+            }
+          ],
+          "listeners": {
+            "canvas": [
+              "pointerdown",
+              "pointerleave",
+              "pointerover",
+              "wheel",
+              "webglcontextlost",
+              "webglcontextrestored"
+            ],
+            "wrapper": [],
+            "documentLevel": [
+              "mousemove",
+              "pointermove",
+              "pointerup"
+            ],
+            "react": []
+          },
+          "operable": true,
+          "documentLevelOnly": false,
+          "hoverReactive": true,
+          "exposure": {
+            "ignored": true,
+            "role": "none",
+            "name": "",
+            "fallbackText": ""
+          },
+          "selfAnimating": false,
+          "baseline": {
+            "distinct": 1,
+            "captures": 5,
+            "ms": 1503
+          },
+          "rafPerSecondAtRest": 32,
+          "walk": {
+            "tabs": 6,
+            "uniqueStops": 4,
+            "cycled": true
+          },
+          "stops": {
+            "overCanvas": 0,
+            "standIns": 0,
+            "linksOverCanvas": 0,
+            "canvasFocusable": false,
+            "widgetsBeside": 4
+          },
+          "standIns": null,
+          "keyboardPath": {
+            "where": "beside",
+            "kind": "button",
+            "name": "Strawberry",
+            "key": "Enter",
+            "pixelsChanged": true,
+            "narrated": false,
+            "liveOrNotify": false,
+            "stateChanged": false,
+            "nameChanged": false,
+            "distinctFramesAfterChange": 1
+          },
+          "tried": [
+            {
+              "where": "beside",
+              "kind": "button",
+              "name": "Strawberry",
+              "key": "Enter",
+              "pixels": true,
+              "spoken": false,
+              "stateChanged": false,
+              "nameChanged": false,
+              "focusMoved": false
+            }
+          ],
+          "reduce": true,
+          "navigatedAway": false
+        }
+      ],
+      "skillA11y": {
+        "FAIL": 1,
+        "WARN": 9,
+        "fails": [
+          "pointer 2.1.1: Clickable (pointerdown listener) but not keyboard focusable"
+        ],
+        "warns": [
+          "names 4.1.2: button \"Strawberry\" is named only by a title tooltip (not visible on touch/keyboard)",
+          "names 4.1.2: button \"Candle\" is named only by a title tooltip (not visible on touch/keyboard)",
+          "names 4.1.2: button \"Flower\" is named only by a title tooltip (not visible on touch/keyboard)",
+          "names 4.1.2: button \"Star\" is named only by a title tooltip (not visible on touch/keyboard)",
+          "keyboard 2.4.1: First focus stop is not a skip link (button)",
+          "forced 1.4.11: Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)",
+          "forced 1.4.11: Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)",
+          "forced 1.4.11: Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)",
+          "forced 1.4.11: Control has no border in forced-colors mode — its shape disappears (use a transparent border, not only a background)"
+        ]
+      }
+    }
+  },
+  "hitTargets": {
+    "b": {
+      "desktop": {
+        "pointerCoarse": false,
+        "strawberry": {
+          "right": 27,
+          "left": 27,
+          "down": 27,
+          "up": 27,
+          "widthCssPx": 54,
+          "heightCssPx": 54,
+          "smallestCssPx": 54,
+          "resolutionPx": 1
+        },
+        "candle": {
+          "right": 27,
+          "left": 27,
+          "down": 27,
+          "up": 27,
+          "widthCssPx": 54,
+          "heightCssPx": 54,
+          "smallestCssPx": 54,
+          "resolutionPx": 1
+        },
+        "standIns": [
+          {
+            "name": "Strawberry 1",
+            "w": 56,
+            "h": 56,
+            "pointerEvents": "none"
+          },
+          {
+            "name": "Candle 1",
+            "w": 56,
+            "h": 56,
+            "pointerEvents": "none"
+          }
+        ],
+        "canvasCssWidth": 480
+      },
+      "phone390": {
+        "pointerCoarse": true,
+        "strawberry": {
+          "right": 22,
+          "left": 21,
+          "down": 21,
+          "up": 22,
+          "widthCssPx": 43,
+          "heightCssPx": 43,
+          "smallestCssPx": 43,
+          "resolutionPx": 1
+        },
+        "candle": {
+          "right": 22,
+          "left": 22,
+          "down": 21,
+          "up": 22,
+          "widthCssPx": 44,
+          "heightCssPx": 43,
+          "smallestCssPx": 43,
+          "resolutionPx": 1
+        },
+        "standIns": [
+          {
+            "name": "Strawberry 1",
+            "w": 44,
+            "h": 44,
+            "pointerEvents": "none"
+          },
+          {
+            "name": "Candle 1",
+            "w": 44,
+            "h": 44,
+            "pointerEvents": "none"
+          }
+        ],
+        "canvasCssWidth": 358
+      }
+    },
+    "b-legacy (first version: fixed hit radius, 44-unit stand-ins)": {
+      "desktop": {
+        "pointerCoarse": false,
+        "strawberry": {
+          "right": 27,
+          "left": 27,
+          "down": 27,
+          "up": 27,
+          "widthCssPx": 54,
+          "heightCssPx": 54,
+          "smallestCssPx": 54,
+          "resolutionPx": 1
+        },
+        "candle": {
+          "right": 27,
+          "left": 27,
+          "down": 27,
+          "up": 27,
+          "widthCssPx": 54,
+          "heightCssPx": 54,
+          "smallestCssPx": 54,
+          "resolutionPx": 1
+        },
+        "standIns": [
+          {
+            "name": "Strawberry 1",
+            "w": 44,
+            "h": 44,
+            "pointerEvents": "none"
+          },
+          {
+            "name": "Candle 1",
+            "w": 44,
+            "h": 44,
+            "pointerEvents": "none"
+          }
+        ],
+        "canvasCssWidth": 480
+      },
+      "phone390": {
+        "pointerCoarse": true,
+        "strawberry": {
+          "right": 20,
+          "left": 20,
+          "down": 20,
+          "up": 20,
+          "widthCssPx": 40,
+          "heightCssPx": 40,
+          "smallestCssPx": 40,
+          "resolutionPx": 1
+        },
+        "candle": {
+          "right": 20,
+          "left": 20,
+          "down": 20,
+          "up": 20,
+          "widthCssPx": 40,
+          "heightCssPx": 40,
+          "smallestCssPx": 40,
+          "resolutionPx": 1
+        },
+        "standIns": [
+          {
+            "name": "Strawberry 1",
+            "w": 32.8,
+            "h": 32.8,
+            "pointerEvents": "none"
+          },
+          {
+            "name": "Candle 1",
+            "w": 32.8,
+            "h": 32.8,
+            "pointerEvents": "none"
+          }
+        ],
+        "canvasCssWidth": 358
+      }
+    },
+    "e": {
+      "desktop": {
+        "pointerCoarse": false,
+        "strawberry": {
+          "right": 13,
+          "left": 13,
+          "down": 15,
+          "up": 19,
+          "widthCssPx": 26,
+          "heightCssPx": 34,
+          "smallestCssPx": 26,
+          "resolutionPx": 1
+        },
+        "candle": {
+          "right": 5,
+          "left": 6,
+          "down": 15,
+          "up": 24,
+          "widthCssPx": 11,
+          "heightCssPx": 39,
+          "smallestCssPx": 11,
+          "resolutionPx": 1
+        },
+        "standIns": [],
+        "canvasCssWidth": 480
+      },
+      "phone390": {
+        "pointerCoarse": true,
+        "strawberry": {
+          "right": 9,
+          "left": 9,
+          "down": 11,
+          "up": 14,
+          "widthCssPx": 18,
+          "heightCssPx": 25,
+          "smallestCssPx": 18,
+          "resolutionPx": 1
+        },
+        "candle": {
+          "right": 4,
+          "left": 4,
+          "down": 11,
+          "up": 17,
+          "widthCssPx": 8,
+          "heightCssPx": 28,
+          "smallestCssPx": 8,
+          "resolutionPx": 1
+        },
+        "standIns": [],
+        "canvasCssWidth": 358
+      }
+    }
+  },
+  "pixiOverlayOffset": {
+    "positioned parent": {
+      "desktop": {
+        "stand_ins": 6,
+        "maxErrorPx": 129.9,
+        "itemStandInMinCssPx": 12,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      },
+      "phone390": {
+        "stand_ins": 6,
+        "maxErrorPx": 143.5,
+        "itemStandInMinCssPx": 9,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      }
+    },
+    "positioned parent, scrolled": {
+      "desktop": {
+        "stand_ins": 6,
+        "maxErrorPx": 1022.5,
+        "itemStandInMinCssPx": 12,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      },
+      "phone390": {
+        "stand_ins": 6,
+        "maxErrorPx": 1042.7,
+        "itemStandInMinCssPx": 9,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      }
+    },
+    "static parent": {
+      "desktop": {
+        "stand_ins": 6,
+        "maxErrorPx": 11.5,
+        "itemStandInMinCssPx": 12,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      },
+      "phone390": {
+        "stand_ins": 6,
+        "maxErrorPx": 8.6,
+        "itemStandInMinCssPx": 9,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      }
+    },
+    "static parent, scrolled": {
+      "desktop": {
+        "stand_ins": 6,
+        "maxErrorPx": 11.5,
+        "itemStandInMinCssPx": 12,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      },
+      "phone390": {
+        "stand_ins": 6,
+        "maxErrorPx": 8.6,
+        "itemStandInMinCssPx": 9,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      }
+    }
+  },
+  "proxyBench": [
+    {
+      "n": 10,
+      "proxies": false,
+      "jsPerFrameMs": 0.1,
+      "styleRecalcPerFrameMs": 0.003,
+      "layoutPerFrameMs": 0.003,
+      "frameGapMs": 16.7,
+      "runs": 5
+    },
+    {
+      "n": 10,
+      "proxies": true,
+      "jsPerFrameMs": 0.2,
+      "styleRecalcPerFrameMs": 0.138,
+      "layoutPerFrameMs": 0.002,
+      "frameGapMs": 16.7,
+      "runs": 5
+    },
+    {
+      "n": 50,
+      "proxies": false,
+      "jsPerFrameMs": 0.3,
+      "styleRecalcPerFrameMs": 0.004,
+      "layoutPerFrameMs": 0.006,
+      "frameGapMs": 16.7,
+      "runs": 5
+    },
+    {
+      "n": 50,
+      "proxies": true,
+      "jsPerFrameMs": 0.4,
+      "styleRecalcPerFrameMs": 0.398,
+      "layoutPerFrameMs": 0.004,
+      "frameGapMs": 16.7,
+      "runs": 5
+    },
+    {
+      "n": 200,
+      "proxies": false,
+      "jsPerFrameMs": 0.8,
+      "styleRecalcPerFrameMs": 0.007,
+      "layoutPerFrameMs": 0.011,
+      "frameGapMs": 16.7,
+      "runs": 5
+    },
+    {
+      "n": 200,
+      "proxies": true,
+      "jsPerFrameMs": 1,
+      "styleRecalcPerFrameMs": 1.342,
+      "layoutPerFrameMs": 0.012,
+      "frameGapMs": 16.7,
+      "runs": 5
+    }
+  ]
+}

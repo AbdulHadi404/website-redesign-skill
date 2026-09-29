@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Outfitters</title>
+<!-- Hover-only reveals at phone width, judged where the rule applies and on what it hides.
+     Not reported: a desktop menu whose submenus open on hover inside @media (min-width: 1024px) while phones get an
+     off-canvas panel with disclosure buttons; the same in a stylesheet linked with media="(min-width: 1024px)"; a
+     colour logo over its grey twin (alt=""); an empty overlay faded in, and an empty shine shown with display; a reveal inside @media (hover: hover).
+     Reported (FAIL): row actions (links) revealed on hover with no media query, and a tip revealed on hover inside a
+     media query that matches phones. -->
+<link rel="stylesheet" href="audit-rtl-hover-desktop.css" media="(min-width: 1024px)">
+<style>
+  body { margin: 0; font: 16px/1.5 sans-serif; color: #16181d; }
+  header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #eef0f6; }
+  .menu, .menu ul { list-style: none; margin: 0; padding: 0; }
+  .menu ul { display: none; }
+  .menu li.open > ul { display: block; }
+  .toggle, .sub { min-width: 44px; min-height: 44px; }
+  @media (max-width: 1023px) {
+    .panel { position: fixed; inset-block: 0; inset-inline-end: 0; width: 280px; background: #fff; transform: translateX(100%); transition: transform .3s; padding: 16px; }
+    body.nav-open .panel { transform: none; }
+  }
+  @media (min-width: 1024px) {
+    .toggle { display: none; }
+    .menu { display: flex; gap: 24px; }
+    .menu > li { position: relative; }
+    .menu > li:hover > ul { display: block; position: absolute; top: 100%; background: #fff; }
+  }
+  main { padding: 16px; }
+  .logos { display: flex; gap: 16px; }
+  .logo { position: relative; width: 120px; height: 48px; }
+  .logo img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .logo .colour { opacity: 0; transition: opacity .2s; }
+  .logo:hover .colour { opacity: 1; }
+  .card { position: relative; display: block; width: 240px; height: 120px; background: #dde; }
+  .card .overlay { position: absolute; inset: 0; background: linear-gradient(transparent, rgba(0,0,0,.4)); opacity: 0; }
+  .card:hover .overlay { opacity: 1; }
+  .card .shine { display: none; position: absolute; inset: 0 60% 0 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.5)); }
+  .card:hover .shine { display: block; }
+  @media (hover: hover) { .card:hover .zoom-note { opacity: 1; } }
+  .zoom-note { opacity: 0; }
+  .row { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid #ddd; }
+  .row .actions { opacity: 0; }
+  .row:hover .actions { opacity: 1; }
+  .tip { visibility: hidden; }
+  @media (max-width: 767px) { .tip-host:hover .tip { visibility: visible; } }
+</style></head>
+<body>
+<header><a href="/">Outfitters</a><button class="toggle" aria-expanded="false" aria-controls="panel" onclick="document.body.classList.toggle('nav-open')">Menu</button>
+<nav class="panel" id="panel" aria-label="Main"><ul class="menu">
+  <li><a href="#">New in</a></li>
+  <li class="has-sub"><a href="#">Clothing</a> <button class="sub" onclick="this.parentElement.classList.toggle('open')">+</button><ul><li><a href="#">Jackets</a></li><li><a href="#">Boots</a></li></ul></li>
+  <li class="mega"><a href="#">Stores</a><div class="mega-panel"><a href="#">Find a store</a></div></li>
+</ul></nav></header>
+<main><h1>Autumn jackets</h1>
+<div class="logos">
+  <a class="logo" href="#a"><img class="grey" alt="Acme" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='48'%3E%3Crect width='120' height='48' fill='%23999'/%3E%3C/svg%3E" width="120" height="48"><img class="colour" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='48'%3E%3Crect width='120' height='48' fill='%23c00'/%3E%3C/svg%3E" width="120" height="48"></a>
+</div>
+<a class="card" href="#j1"><span class="overlay"></span><span class="shine"></span><span class="zoom-note">Zoom in</span></a>
+<div class="row">Order 1042 <span class="actions"><a href="#e">Edit</a> <a href="#d">Delete</a></span></div>
+<p class="tip-host">Delivery <span class="tip">Free over £50</span></p>
+</main>
+</body></html>

@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>New build: hero</title>
+<!-- perf.mjs regression. Slower than the old page: 130 KB of render-blocking CSS (uncompressed) before the first paint. -->
+<link rel="stylesheet" href="../govuk/govuk-frontend.min.css">
+<style>body{margin:0;padding:20px;font:18px/1.5 system-ui,sans-serif}</style>
+</head>
+<body><main><h1>New build</h1><p>A paragraph long enough to be the largest thing in the first viewport of a phone, so the largest contentful paint lands on text and not on the pictures below it.</p></main></body></html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Design your cake · Crumb &amp; Co.</title>
+<meta name="description" content="Design a celebration cake: size, flavour, finish and decorations, with a live sketch and an estimate. Evidence prototype.">
+<meta name="theme-color" content="#f7f1ea">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#panel">Skip to cake options</a>
+<div class="app">
+  <header class="bar">
+    <a class="brand" href="./" aria-label="Crumb &amp; Co. home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" width="28" height="28"><path d="M5 14h22v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z" fill="#8c2f39"/><path d="M5 14c0-3 3-5 11-5s11 2 11 5c0 2-2 2-3.5 1s-3 1-4.5 1-3-2-4.5-1-3 1-4.5-.5S5 17 5 14z" fill="#f1c3be"/><circle cx="16" cy="6" r="2.6" fill="#8c2f39"/><path d="M5 21h22" stroke="#f7f1ea" stroke-width="1.6"/></svg>
+      <span class="brand-name">Crumb &amp; Co.</span>
+    </a>
+    <h1>Design your cake</h1>
+    <div class="bar-actions">
+      <button type="button" class="tool" id="undo" aria-keyshortcuts="Control+Z Meta+Z" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7 4 12l5 5M4 12h11a5 5 0 0 1 0 10h-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="tool-label">Undo</span></button>
+      <button type="button" class="tool" id="redo" aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 7 5 5-5 5M20 12H9a5 5 0 0 0 0 10h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="tool-label">Redo</span></button>
+      <button type="button" class="tool" id="share">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3.6-3.6a4 4 0 0 0-5.7-5.7L12 6.3M14 10a4 4 0 0 0-5.7 0l-3.6 3.6a4 4 0 0 0 5.7 5.7l1.6-1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="tool-label" id="share-label">Copy link</span></button>
+      <span class="saved" id="saved"></span>
+    </div>
+  </header>
+
+  <main class="main" id="main">
+    <figure class="stage">
+      <svg id="cake" class="cake" viewBox="0 0 640 540" role="img" aria-labelledby="cake-desc"></svg>
+      <figcaption class="stage-caption">
+        <span id="cake-desc" class="visually-hidden"></span>
+        <span class="dims" id="dims"></span>
+        <span class="honest">A sketch of your choices. Every cake is decorated by hand.</span>
+      </figcaption>
+      <div class="slice slice-stage" aria-hidden="true"><svg viewBox="0 0 122 96" class="slice-svg"></svg><span class="slice-label"></span></div>
+    </figure>
+
+    <section class="panel" id="panel" tabindex="-1" aria-label="Cake options">
+      <div class="notice" id="notice"><p class="notice-text" id="notice-text" role="status"></p><span class="notice-actions" id="notice-actions"></span></div>
+      <div class="editor" id="editor">
+        <div class="tabs" role="tablist" aria-label="Cake options"></div>
+        <div class="panes"></div>
+      </div>
+      <div class="review" id="review" hidden></div>
+      <footer class="buybar" id="buybar">
+        <p class="estimate"><span class="estimate-label">Estimate</span> <span class="estimate-total" id="price"></span> <span class="estimate-per" id="per"></span></p>
+        <button type="button" class="primary" id="review-btn">Review and request</button>
+      </footer>
+    </section>
+  </main>
+</div>
+<div class="visually-hidden" id="announcer" aria-live="polite"></div>
+<noscript><p class="noscript">The cake designer needs JavaScript. Tell us what you would like instead: hello@example.com or 01234 567890.</p></noscript>
+</body>
+</html>

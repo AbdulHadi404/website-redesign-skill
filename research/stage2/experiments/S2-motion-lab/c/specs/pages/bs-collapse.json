@@ -1,0 +1,4 @@
+{ "_note": "Held-out spec (designer's intent), written before motion.mjs ran on this page.",
+  "motion": [
+  { "id": "collapse-open", "trigger": "click", "on": "a[href=\"#collapseTwo\"]", "target": "#collapseTwo", "properties": ["height"], "duration": "large", "easing": "out", "reduced": "instant" }
+] }

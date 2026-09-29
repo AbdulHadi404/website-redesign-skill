@@ -1,0 +1,385 @@
+{
+ "url": "/fixtures/bilingual.html?lang=ar",
+ "mode": "as-served",
+ "width": 1280,
+ "summary": {
+  "FAIL": 0,
+  "WARN": 0,
+  "INFO": 1
+ },
+ "mirror": null,
+ "css": {
+  "rules": 89,
+  "physicalRules": 0,
+  "overrideRules": 1,
+  "logicalRules": 14
+ },
+ "keys": [
+  {
+   "group": "toolbar \"Actions\"",
+   "arrowLeftMoves": "left (correct)"
+  },
+  {
+   "group": "tablist \"Order\"",
+   "arrowLeftMoves": "left (correct)"
+  }
+ ],
+ "icons": [
+  {
+   "name": "menu icon icon-menu",
+   "class": "unknown",
+   "flipped": false,
+   "context": "القائمة"
+  },
+  {
+   "name": "search icon icon-search",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "codex (right-hand objects)"
+   ],
+   "family": "search",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "cart icon icon-cart",
+   "class": "unknown",
+   "flipped": false,
+   "context": "Cart"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "الطلبات"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "الفواتير"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "العملاء"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": ""
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": ""
+  },
+  {
+   "name": "undo icon icon-dir icon-undo",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "codex",
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "تراجع"
+  },
+  {
+   "name": "redo icon icon-dir icon-redo",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "codex",
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "إعادة"
+  },
+  {
+   "name": "reply icon icon-dir icon-reply",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "رد"
+  },
+  {
+   "name": "send icon icon-dir icon-send",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "إرسال"
+  },
+  {
+   "name": "external-link icon icon-dir icon-external-link",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "codex"
+   ],
+   "flipped": true,
+   "context": "فتح في علامة تبويب جديدة"
+  },
+  {
+   "name": "help icon icon-dir icon-help",
+   "class": "ambiguous",
+   "family": "help",
+   "note": "mirror for Arabic, Persian, Urdu (Codex, Flutter); Codex keeps it for Hebrew and Yiddish",
+   "flipped": true,
+   "context": "مساعدة"
+  },
+  {
+   "name": "logout icon icon-dir icon-logout",
+   "class": "ambiguous",
+   "family": "logInOut",
+   "note": "Codex flips LogIn/LogOut, Flutter does not",
+   "flipped": true,
+   "context": "تسجيل الخروج"
+  },
+  {
+   "name": "refresh icon icon-refresh",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "codex"
+   ],
+   "family": "circularTime",
+   "flipped": false,
+   "context": "تحديث"
+  },
+  {
+   "name": "clock icon icon-clock",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "codex"
+   ],
+   "family": "circularTime",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "check icon icon-check",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "firefox",
+    "codex"
+   ],
+   "family": "check",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": ""
+  },
+  {
+   "name": "check icon icon-check",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "firefox",
+    "codex"
+   ],
+   "family": "check",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": ""
+  },
+  {
+   "name": "alert icon icon-alert",
+   "class": "unknown",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "حفظ التغييرات"
+  },
+  {
+   "name": "sort-desc icon icon-sort-desc",
+   "class": "unknown",
+   "flipped": false,
+   "context": ""
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "فتح 1042"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "فتح 1041"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "فتح 1040"
+  },
+  {
+   "name": "arrow-left icon icon-dir icon-arrow-left",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "السابق rel=prev"
+  },
+  {
+   "name": "arrow-right icon icon-dir icon-arrow-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "التالي rel=next"
+  },
+  {
+   "name": "chevron-left icon icon-dir icon-chevron-left",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "السابق"
+  },
+  {
+   "name": "chevron-right icon icon-dir icon-chevron-right",
+   "class": "directional",
+   "strength": "strong",
+   "sources": [
+    "flutter"
+   ],
+   "flipped": true,
+   "context": "التالي"
+  },
+  {
+   "name": "play icon icon-play",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "firefox",
+    "codex"
+   ],
+   "family": "media",
+   "flipped": false,
+   "context": "تشغيل"
+  },
+  {
+   "name": "skip-forward icon icon-skip-forward",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "firefox",
+    "codex"
+   ],
+   "family": "media",
+   "flipped": false,
+   "context": "تقديم"
+  },
+  {
+   "name": "check icon icon-check",
+   "class": "never",
+   "strength": "strong",
+   "sources": [
+    "material",
+    "firefox",
+    "codex"
+   ],
+   "family": "check",
+   "flipped": false,
+   "context": ""
+  }
+ ],
+ "findings": [
+  {
+   "level": "INFO",
+   "check": "icons",
+   "message": "Icons the sources disagree on — record the decision",
+   "count": 2,
+   "examples": [
+    "help icon icon-dir icon-help: flipped — mirror for Arabic, Persian, Urdu (Codex, Flutter); Codex keeps it for Hebrew and Yiddish",
+    "logout icon icon-dir icon-logout: flipped — Codex flips LogIn/LogOut, Flutter does not"
+   ]
+  }
+ ],
+ "ms": 471
+}

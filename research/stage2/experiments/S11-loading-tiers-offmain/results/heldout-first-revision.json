@@ -1,0 +1,1007 @@
+{
+ "note": "Superseded: run-heldout.mjs with the FIRST revision of the templates (04:56–05:10 UTC). Differences from the current code: governor.js called onFloor() on any failing window at the lowest level (now only when the median is below ~27 fps), and tier.js measureRefresh() returned the 25th percentile without the consistency/plausibility check (now null when p75 > 1.15 × p25 or p25 > 34 ms). Kept as the evidence for those two changes; not reproducible with the current code.",
+ "env": {
+  "date": "2026-09-29T04:56:53.620Z",
+  "node": "v22.22.2",
+  "cpus": 4,
+  "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "loadavgAtStart": [
+   11.8,
+   11.9,
+   11.5
+  ],
+  "loadavgAtEnd": [
+   8.5,
+   7.7,
+   9.6
+  ]
+ },
+ "summary": {
+  "/s10/e5-three/?nopause|1x|governor.js": {
+   "intervalP50": 266.6,
+   "intervalP90": 400,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2800,
+    2500
+   ],
+   "floorMs": [
+    9899,
+    10000
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "undetermined",
+    "strong"
+   ],
+   "tierMs": [
+    3529,
+    2254
+   ],
+   "tierWork": [
+    null,
+    2
+   ],
+   "errors": 0
+  },
+  "/s10/e5-three/?nopause|1x|governor-v1.js": {
+   "intervalP50": 250,
+   "intervalP90": 408.3,
+   "stepDowns": [
+    0,
+    1
+   ],
+   "firstDownMs": [
+    null,
+    12167
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    100
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/e5-three/?nopause|4x|governor.js": {
+   "intervalP50": 316.7,
+   "intervalP90": 441.6,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2467,
+    2600
+   ],
+   "floorMs": [
+    9334,
+    10233
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "undetermined",
+    "undetermined"
+   ],
+   "tierMs": [
+    2705,
+    2322
+   ],
+   "tierWork": [
+    11.3,
+    7.5
+   ],
+   "errors": 0
+  },
+  "/s10/e5-three/?nopause|4x|governor-v1.js": {
+   "intervalP50": 333.3,
+   "intervalP90": 466.6,
+   "stepDowns": [
+    0,
+    1
+   ],
+   "firstDownMs": [
+    null,
+    13700
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    116.6
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/e5-three/?nopause|6x|governor.js": {
+   "intervalP50": 341.6,
+   "intervalP90": 483.3,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2300,
+    2633
+   ],
+   "floorMs": [
+    10200,
+    10167
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "undetermined",
+    "low"
+   ],
+   "tierMs": [
+    2924,
+    2454
+   ],
+   "tierWork": [
+    null,
+    12.7
+   ],
+   "errors": 0
+  },
+  "/s10/e5-three/?nopause|6x|governor-v1.js": {
+   "intervalP50": 399.9,
+   "intervalP90": 641.6,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    133.3
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/d-canvas2d/?nopause|1x|governor.js": {
+   "intervalP50": 16.7,
+   "intervalP90": 16.7,
+   "stepDowns": [
+    1,
+    0
+   ],
+   "firstDownMs": [
+    9983,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    16.6
+   ],
+   "tier": [
+    "strong",
+    "strong"
+   ],
+   "tierMs": [
+    809,
+    797
+   ],
+   "tierWork": [
+    1.8,
+    1.8
+   ],
+   "errors": 0
+  },
+  "/s10/d-canvas2d/?nopause|1x|governor-v1.js": {
+   "intervalP50": 16.7,
+   "intervalP90": 16.7,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    16.6
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/d-canvas2d/?nopause|4x|governor.js": {
+   "intervalP50": 16.7,
+   "intervalP90": 25,
+   "stepDowns": [
+    3,
+    1
+   ],
+   "firstDownMs": [
+    4217,
+    9650
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    16.6
+   ],
+   "tier": [
+    "average",
+    "average"
+   ],
+   "tierMs": [
+    1219,
+    1880
+   ],
+   "tierWork": [
+    7.8,
+    8.6
+   ],
+   "errors": 0
+  },
+  "/s10/d-canvas2d/?nopause|4x|governor-v1.js": {
+   "intervalP50": 16.7,
+   "intervalP90": 25,
+   "stepDowns": [
+    3,
+    0
+   ],
+   "firstDownMs": [
+    6867,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    16.6
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/d-canvas2d/?nopause|6x|governor.js": {
+   "intervalP50": 33.3,
+   "intervalP90": 41.7,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2534,
+    3483
+   ],
+   "floorMs": [
+    10017,
+    14016
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "average",
+    "average"
+   ],
+   "tierMs": [
+    2268,
+    2317
+   ],
+   "tierWork": [
+    12,
+    12.3
+   ],
+   "errors": 0
+  },
+  "/s10/d-canvas2d/?nopause|6x|governor-v1.js": {
+   "intervalP50": 33.3,
+   "intervalP90": 41.8,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    4866,
+    4016
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/f-three-particles/?nopause|1x|governor.js": {
+   "intervalP50": 25,
+   "intervalP90": 33.4,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2500,
+    3350
+   ],
+   "floorMs": [
+    11016,
+    13516
+   ],
+   "refreshEnd": [
+    16.6,
+    16.6
+   ],
+   "tier": [
+    "strong",
+    "strong"
+   ],
+   "tierMs": [
+    1318,
+    1097
+   ],
+   "tierWork": [
+    2,
+    2.1
+   ],
+   "errors": 0
+  },
+  "/s10/f-three-particles/?nopause|1x|governor-v1.js": {
+   "intervalP50": 25,
+   "intervalP90": 33.4,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    4083,
+    3583
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    16.6
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/f-three-particles/?nopause|4x|governor.js": {
+   "intervalP50": 41.7,
+   "intervalP90": 50,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2550,
+    2533
+   ],
+   "floorMs": [
+    10033,
+    12033
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "strong",
+    "strong"
+   ],
+   "tierMs": [
+    2287,
+    2144
+   ],
+   "tierWork": [
+    8.3,
+    8.2
+   ],
+   "errors": 0
+  },
+  "/s10/f-three-particles/?nopause|4x|governor-v1.js": {
+   "intervalP50": 33.4,
+   "intervalP90": 58.4,
+   "stepDowns": [
+    2,
+    3
+   ],
+   "firstDownMs": [
+    5317,
+    4133
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    33.3,
+    16.7
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/f-three-particles/?nopause|6x|governor.js": {
+   "intervalP50": 50,
+   "intervalP90": 66.7,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2483,
+    2500
+   ],
+   "floorMs": [
+    9900,
+    9950
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "average",
+    "average"
+   ],
+   "tierMs": [
+    2428,
+    2307
+   ],
+   "tierWork": [
+    11.9,
+    12.5
+   ],
+   "errors": 0
+  },
+  "/s10/f-three-particles/?nopause|6x|governor-v1.js": {
+   "intervalP50": 50,
+   "intervalP90": 91.6,
+   "stepDowns": [
+    1,
+    2
+   ],
+   "firstDownMs": [
+    7083,
+    5650
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    33.3,
+    33.3
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/fx/capture-webgl.html|1x|governor.js": {
+   "intervalP50": null,
+   "intervalP90": null,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "strong",
+    "strong"
+   ],
+   "tierMs": [
+    773,
+    774
+   ],
+   "tierWork": [
+    1.7,
+    1.4
+   ],
+   "errors": 0
+  },
+  "/fx/capture-webgl.html|1x|governor-v1.js": {
+   "intervalP50": null,
+   "intervalP90": null,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/fx/capture-webgl.html|4x|governor.js": {
+   "intervalP50": null,
+   "intervalP90": null,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "average",
+    "average"
+   ],
+   "tierMs": [
+    834,
+    831
+   ],
+   "tierWork": [
+    7.6,
+    7.5
+   ],
+   "errors": 0
+  },
+  "/fx/capture-webgl.html|4x|governor-v1.js": {
+   "intervalP50": null,
+   "intervalP90": null,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/fx/capture-webgl.html|6x|governor.js": {
+   "intervalP50": null,
+   "intervalP90": null,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "low",
+    "low"
+   ],
+   "tierMs": [
+    1921,
+    1895
+   ],
+   "tierWork": [
+    12.3,
+    12.1
+   ],
+   "errors": 0
+  },
+  "/fx/capture-webgl.html|6x|governor-v1.js": {
+   "intervalP50": null,
+   "intervalP90": null,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  }
+ },
+ "detectTier": [
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 1,
+   "refreshMs": 16.666666666666668,
+   "cap": "undetermined",
+   "ms": 3529,
+   "why": "only 0 frames in 2418 ms (frames ~0 ms apart, work ? ms)"
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 4,
+   "refreshMs": 16.666666666666668,
+   "cap": "undetermined",
+   "ms": 2705,
+   "why": "only 1 frames in 1857 ms (frames ~0 ms apart, work 11.3 ms)"
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 6,
+   "refreshMs": 16.666666666666668,
+   "cap": "undetermined",
+   "ms": 2924,
+   "why": "only 0 frames in 1923 ms (frames ~0 ms apart, work ? ms)"
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 1,
+   "refreshMs": 16.600000000000364,
+   "cap": "strong",
+   "ms": 809,
+   "why": "probe work 1.8 ms = 0.11 × the 16.6 ms refresh"
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 4,
+   "refreshMs": 16.600000000000364,
+   "cap": "average",
+   "ms": 1219,
+   "why": "probe work 7.8 ms = 0.47 × the 16.6 ms refresh"
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 6,
+   "refreshMs": 33.29999999999927,
+   "cap": "average",
+   "ms": 2268,
+   "why": "probe work 12.0 ms = 0.36 × the 33.3 ms refresh"
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 1,
+   "refreshMs": 16.700000000000728,
+   "cap": "strong",
+   "ms": 1318,
+   "why": "probe work 2.0 ms = 0.12 × the 16.7 ms refresh"
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 4,
+   "refreshMs": 33.30000000000109,
+   "cap": "strong",
+   "ms": 2287,
+   "why": "probe work 8.3 ms = 0.25 × the 33.3 ms refresh"
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 6,
+   "refreshMs": 33.399999999999636,
+   "cap": "average",
+   "ms": 2428,
+   "why": "probe work 11.9 ms = 0.36 × the 33.4 ms refresh"
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 1,
+   "refreshMs": 16.600000000000364,
+   "cap": "strong",
+   "ms": 773,
+   "why": "probe work 1.7 ms = 0.10 × the 16.6 ms refresh"
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 4,
+   "refreshMs": 16.600000000000364,
+   "cap": "average",
+   "ms": 834,
+   "why": "probe work 7.6 ms = 0.46 × the 16.6 ms refresh"
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 6,
+   "refreshMs": 16.600000000000364,
+   "cap": "low",
+   "ms": 1921,
+   "why": "probe work 12.3 ms = 0.74 × the 16.6 ms refresh"
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 1,
+   "refreshMs": 99.89999999999964,
+   "cap": "strong",
+   "ms": 2254,
+   "why": "probe work 2.0 ms = 0.02 × the 99.9 ms refresh"
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 4,
+   "refreshMs": 133.3000000000011,
+   "cap": "undetermined",
+   "ms": 2322,
+   "why": "only 5 frames in 1557 ms (frames ~183 ms apart, work 7.5 ms)"
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 6,
+   "refreshMs": 16.666666666666668,
+   "cap": "low",
+   "ms": 2454,
+   "why": "only 7 frames in 1608 ms, every one's work ≥ 0.6 × 16.7 ms"
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 1,
+   "refreshMs": 16.600000000000364,
+   "cap": "strong",
+   "ms": 797,
+   "why": "probe work 1.8 ms = 0.11 × the 16.6 ms refresh"
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 4,
+   "refreshMs": 16.600000000000364,
+   "cap": "average",
+   "ms": 1880,
+   "why": "probe work 8.6 ms = 0.52 × the 16.6 ms refresh"
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 6,
+   "refreshMs": 33.29999999999927,
+   "cap": "average",
+   "ms": 2317,
+   "why": "probe work 12.3 ms = 0.37 × the 33.3 ms refresh"
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 1,
+   "refreshMs": 16.600000000000364,
+   "cap": "strong",
+   "ms": 1097,
+   "why": "probe work 2.1 ms = 0.13 × the 16.6 ms refresh"
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 4,
+   "refreshMs": 33.19999999999891,
+   "cap": "strong",
+   "ms": 2144,
+   "why": "probe work 8.2 ms = 0.25 × the 33.2 ms refresh"
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 6,
+   "refreshMs": 33.399999999999636,
+   "cap": "average",
+   "ms": 2307,
+   "why": "probe work 12.5 ms = 0.37 × the 33.4 ms refresh"
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 1,
+   "refreshMs": 16.600000000000364,
+   "cap": "strong",
+   "ms": 774,
+   "why": "probe work 1.4 ms = 0.08 × the 16.6 ms refresh"
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 4,
+   "refreshMs": 16.600000000000364,
+   "cap": "average",
+   "ms": 831,
+   "why": "probe work 7.5 ms = 0.45 × the 16.6 ms refresh"
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 6,
+   "refreshMs": 16.600000000000364,
+   "cap": "low",
+   "ms": 1895,
+   "why": "probe work 12.1 ms = 0.73 × the 16.6 ms refresh"
+  }
+ ]
+}

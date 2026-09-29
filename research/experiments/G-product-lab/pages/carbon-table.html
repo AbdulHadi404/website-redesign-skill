@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Virtual servers — Cloud console</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/carbon.css">
+  <style>body{margin:0} main{padding:64px 32px 32px}</style>
+</head>
+<body class="cds--white">
+  <header class="cds--header" aria-label="Cloud console">
+    <a class="cds--header__name" href="#"><span class="cds--header__name--prefix">Cloud</span>&nbsp;[Console]</a>
+    <nav class="cds--header__nav" aria-label="Main"><ul class="cds--header__menu-bar"><li><a class="cds--header__menu-item" href="#" aria-current="page"><span class="cds--text-truncate--end">Resources</span></a></li><li><a class="cds--header__menu-item" href="#"><span class="cds--text-truncate--end">Billing</span></a></li><li><a class="cds--header__menu-item" href="#"><span class="cds--text-truncate--end">Access (IAM)</span></a></li></ul></nav>
+  </header>
+  <main>
+    <nav class="cds--breadcrumb" aria-label="breadcrumb"><ol class="cds--breadcrumb"><li class="cds--breadcrumb-item"><a class="cds--link" href="#">Resources</a></li><li class="cds--breadcrumb-item"><a class="cds--link" href="#">Compute</a></li></ol></nav>
+    <h1 style="font-size:1.75rem;line-height:2.25rem;font-weight:400;margin:8px 0 24px">Virtual server instances</h1>
+    <div class="cds--data-table-container">
+      <div class="cds--data-table-header"><h2 class="cds--data-table-header__title">Instances</h2><p class="cds--data-table-header__description">42 instances in us-south</p></div>
+      <section class="cds--table-toolbar" aria-label="data table toolbar">
+        <div class="cds--toolbar-content">
+          <div class="cds--search cds--search--sm" role="search"><label class="cds--label" for="s">Search</label><input class="cds--search-input" id="s" type="text" placeholder="Filter by name, IP or tag"></div>
+          <button class="cds--btn cds--btn--ghost cds--btn--md" type="button">Refresh</button>
+          <button class="cds--btn cds--btn--primary cds--btn--md" type="button">Create instance</button>
+        </div>
+      </section>
+      <table class="cds--data-table cds--data-table--sm cds--data-table--zebra">
+        <thead><tr><th class="cds--table-column-checkbox"><input type="checkbox" aria-label="Select all"></th><th><div class="cds--table-header-label">Name</div></th><th><div class="cds--table-header-label">Status</div></th><th><div class="cds--table-header-label">Profile</div></th><th><div class="cds--table-header-label">Zone</div></th><th><div class="cds--table-header-label">Floating IP</div></th><th><div class="cds--table-header-label">vCPU</div></th><th><div class="cds--table-header-label">Created</div></th></tr></thead>
+        <tbody>
+          <tr><td class="cds--table-column-checkbox"><input type="checkbox" aria-label="Select row"></td><td>api-gateway-01</td><td>Running</td><td>bx2-4x16</td><td>us-south-1</td><td>169.48.12.4</td><td>4</td><td>2026-08-02</td></tr>
+          <tr><td class="cds--table-column-checkbox"><input type="checkbox" aria-label="Select row"></td><td>api-gateway-02</td><td>Running</td><td>bx2-4x16</td><td>us-south-2</td><td>169.48.12.9</td><td>4</td><td>2026-08-02</td></tr>
+          <tr><td class="cds--table-column-checkbox"><input type="checkbox" aria-label="Select row"></td><td>batch-worker-a</td><td>Stopped</td><td>cx2-8x16</td><td>us-south-1</td><td>—</td><td>8</td><td>2026-07-19</td></tr>
+          <tr><td class="cds--table-column-checkbox"><input type="checkbox" aria-label="Select row"></td><td>batch-worker-b</td><td>Running</td><td>cx2-8x16</td><td>us-south-3</td><td>—</td><td>8</td><td>2026-07-19</td></tr>
+          <tr><td class="cds--table-column-checkbox"><input type="checkbox" aria-label="Select row"></td><td>db-replica-east</td><td>Starting</td><td>mx2-16x128</td><td>us-south-2</td><td>169.48.40.2</td><td>16</td><td>2026-06-30</td></tr>
+          <tr><td class="cds--table-column-checkbox"><input type="checkbox" aria-label="Select row"></td><td>ingest-edge-07</td><td>Running</td><td>bx2-2x8</td><td>us-south-1</td><td>169.48.51.7</td><td>2</td><td>2026-06-11</td></tr>
+          <tr><td class="cds--table-column-checkbox"><input type="checkbox" aria-label="Select row"></td><td>ingest-edge-08</td><td>Failed</td><td>bx2-2x8</td><td>us-south-3</td><td>169.48.51.8</td><td>2</td><td>2026-06-11</td></tr>
+          <tr><td class="cds--table-column-checkbox"><input type="checkbox" aria-label="Select row"></td><td>monitoring-01</td><td>Running</td><td>bx2-2x8</td><td>us-south-1</td><td>169.48.60.1</td><td>2</td><td>2026-05-03</td></tr>
+          <tr><td class="cds--table-column-checkbox"><input type="checkbox" aria-label="Select row"></td><td>search-node-1</td><td>Running</td><td>mx2-8x64</td><td>us-south-2</td><td>—</td><td>8</td><td>2026-04-21</td></tr>
+          <tr><td class="cds--table-column-checkbox"><input type="checkbox" aria-label="Select row"></td><td>search-node-2</td><td>Running</td><td>mx2-8x64</td><td>us-south-3</td><td>—</td><td>8</td><td>2026-04-21</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>

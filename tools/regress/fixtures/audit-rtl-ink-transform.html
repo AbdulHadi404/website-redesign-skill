@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ink as drawn</title>
+<!-- Clipping by ink measures the letters as drawn, not as written, at the size they are drawn:
+     text-transform and small caps change the letters (an uppercased "shipping" has no descenders), and a preview
+     scaled with transform or zoom inside an overflow:hidden frame scales its ink with it. -->
+<style>
+  body { margin: 24px; font: 16px/1.5 sans-serif; color: #16181d; }
+  main { display: grid; gap: 20px; max-width: 900px; justify-items: start; }
+  .chip { display: inline-block; vertical-align: top; font-size: 22px; line-height: 1; height: 22px; overflow: hidden; white-space: nowrap; background: #eef0f6; padding-inline: 8px; }
+  .up { text-transform: uppercase; }
+  .sc { font-variant: small-caps; }
+  .low { text-transform: lowercase; }
+  .frame { width: 320px; height: 200px; overflow: hidden; border: 1px solid #ccd; background: #fff; }
+  .page { width: 1280px; transform: scale(.25); transform-origin: 0 0; padding: 16px; box-sizing: border-box; }
+  .zpage { zoom: .25; width: 1280px; padding: 16px; box-sizing: border-box; }
+  .page h2, .zpage h2 { font-size: 64px; line-height: 1.2; margin: 0 0 16px; }
+  .page p, .zpage p { font-size: 32px; margin: 0; }
+  .half { width: 1280px; transform: scale(.5); transform-origin: 0 0; padding: 16px; box-sizing: border-box; }
+  .half .tag { display: inline-block; vertical-align: top; font-size: 40px; line-height: 1; height: 40px; overflow: hidden; white-space: nowrap; background: #eef0f6; }
+</style></head>
+<body><main>
+  <h1>Ink as drawn</h1>
+  <!-- not cut: the letters drawn have no descenders -->
+  <div><span class="chip up" id="upper">shipping policy</span></div>
+  <div><span class="chip sc" id="smallcaps">shipping policy</span></div>
+  <div><span class="chip" id="control">SHIPPING POLICY</span></div>
+  <!-- cut: written in capitals, drawn in lower case, whose descenders the 22px box cuts -->
+  <div><span class="chip low" id="lowered">SHIPPING POLICY</span></div>
+  <!-- not cut: a page preview scaled to a quarter, by transform and by zoom -->
+  <div class="frame"><div class="page"><h2 id="scaled-h">Quarterly report</h2><p>Revenue grew in every region this quarter.</p></div></div>
+  <div class="frame"><div class="zpage"><h2 id="zoomed-h">Quarterly report</h2><p>Revenue grew in every region this quarter.</p></div></div>
+  <!-- cut, at half size: a tag inside a scaled preview whose line-height 1 box cuts the accents on the capitals -->
+  <div class="frame"><div class="half"><span class="tag" id="scaled-tag">ÉTÉ ÀÔÜ gyp</span></div></div>
+</main></body></html>

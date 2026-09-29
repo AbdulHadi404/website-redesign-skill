@@ -1,0 +1,338 @@
+{
+ "url": "http://127.0.0.1:38965/ext/bootstrap-built/sidebars.html",
+ "mode": "flip",
+ "width": 1280,
+ "summary": {
+  "FAIL": 1,
+  "WARN": 3,
+  "INFO": 1
+ },
+ "mirror": {
+  "checked": 157,
+  "notMirrored": 32,
+  "roots": 28,
+  "keptPhysical": 26
+ },
+ "css": {
+  "rules": 2554,
+  "physicalRules": 422,
+  "overrideRules": 0,
+  "logicalRules": 9
+ },
+ "keys": [],
+ "icons": [
+  {
+   "name": "bi pe-none me-2 #bootstrap",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Sidebar",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #home",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Home",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #speedometer2",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Dashboard",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #table",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Orders",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #grid",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Products",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #people-circle",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Customers",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #bootstrap",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Sidebar",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #home",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Home",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #speedometer2",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Dashboard",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #table",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Orders",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #grid",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Products",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #people-circle",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Customers",
+   "island": false
+  },
+  {
+   "name": "bi pe-none #bootstrap",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Icon-only",
+   "island": false
+  },
+  {
+   "name": "bi pe-none #home",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Home",
+   "island": false
+  },
+  {
+   "name": "bi pe-none #speedometer2",
+   "class": "unknown",
+   "pixels": "same",
+   "context": "Dashboard",
+   "island": false
+  },
+  {
+   "name": "bi pe-none #table",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Orders",
+   "island": false
+  },
+  {
+   "name": "bi pe-none #grid",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Products",
+   "island": false
+  },
+  {
+   "name": "bi pe-none #people-circle",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Customers",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #bootstrap",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "Collapsible",
+   "island": false
+  },
+  {
+   "name": "bi pe-none me-2 #bootstrap",
+   "class": "unknown",
+   "pixels": "symmetric",
+   "context": "List group",
+   "island": false
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "check": "mirror",
+   "message": "Boxes that do not mirror when the page turns RTL (topmost only; > 8 px from the mirrored place)",
+   "count": 24,
+   "examples": [
+    "a.d-flex.align-items-center (108 px off) — margin-left 0px / right 108.281px",
+    "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+    "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+    "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+    "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+    "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+    "a.d-flex.align-items-center (108 px off) — margin-left 0px / right 108.281px",
+    "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+    "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+    "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+    "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+    "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
+    "svg.bi.pe-none (32 px off)",
+    "svg.bi.pe-none (32 px off)",
+    "svg.bi.pe-none (32 px off)",
+    "svg.bi.pe-none (32 px off)",
+    "svg.bi.pe-none (32 px off)",
+    "button.btn.btn-toggle (40 px off)",
+    "a.link-body-emphasis.d-inline-flex (60 px off) — margin-left 20px / right 0px",
+    "a.link-body-emphasis.d-inline-flex (60 px off) — margin-left 20px / right 0px",
+    "a.link-body-emphasis.d-inline-flex (60 px off) — margin-left 20px / right 0px",
+    "button.btn.btn-toggle (40 px off)",
+    "button.btn.btn-toggle (40 px off)",
+    "button.btn.btn-toggle (40 px off)"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "mirror",
+   "message": "Boxes 3–8 px from their mirrored place in RTL (topmost only)",
+   "count": 4,
+   "examples": [
+    "img.rounded-circle.me-2 (8 px off) — margin-left 0px / right 8px",
+    "img.rounded-circle.me-2 (8 px off) — margin-left 0px / right 8px",
+    "svg.bi.pe-none (8 px off) — margin-left 0px / right 8px",
+    "svg.bi.pe-none (8 px off) — margin-left 0px / right 8px"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "mirror",
+   "message": "Physical values that stay the same in RTL (computed styles, LTR vs RTL render)",
+   "count": 26,
+   "examples": [
+    "a.d-flex.align-items-center: margin-left 0px / right 108.281px",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "ul.nav.nav-pills: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "img.rounded-circle.me-2: margin-left 0px / right 8px",
+    "a.d-flex.align-items-center: margin-left 0px / right 108.281px",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "ul.nav.nav-pills: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "img.rounded-circle.me-2: margin-left 0px / right 8px",
+    "ul.nav.nav-pills: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "svg.bi.pe-none: margin-left 0px / right 8px",
+    "ul.list-unstyled.ps-0: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "ul.btn-toggle-nav.list-unstyled: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
+    "a.link-body-emphasis.d-inline-flex: margin-left 20px / right 0px",
+    "a.link-body-emphasis.d-inline-flex: margin-left 20px / right 0px",
+    "a.link-body-emphasis.d-inline-flex: margin-left 20px / right 0px",
+    "svg.bi.pe-none: margin-left 0px / right 8px"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "css",
+   "message": "Rules with physical inline-axis values (422 of 2554 rules; 0 RTL overrides; 9 rules use logical properties)",
+   "count": 422,
+   "examples": [
+    "ol, ul { padding-left:2rem }",
+    "dd { margin-left:0px }",
+    "caption { text-align:left }",
+    "legend { float:left }",
+    ".list-unstyled { padding-left:0px }",
+    ".list-inline { padding-left:0px }",
+    ".list-inline-item:not(:last-child) { margin-right:0.5rem }",
+    ".offset-1 { margin-left:8.33333% }",
+    ".offset-2 { margin-left:16.6667% }",
+    ".offset-3 { margin-left:25% }",
+    ".offset-4 { margin-left:33.3333% }",
+    ".offset-5 { margin-left:41.6667% }",
+    ".offset-6 { margin-left:50% }",
+    ".offset-7 { margin-left:58.3333% }",
+    ".offset-8 { margin-left:66.6667% }",
+    ".offset-9 { margin-left:75% }",
+    ".offset-10 { margin-left:83.3333% }",
+    ".offset-11 { margin-left:91.6667% }",
+    ".offset-sm-0 { margin-left:0px }",
+    ".offset-sm-1 { margin-left:8.33333% }",
+    ".offset-sm-2 { margin-left:16.6667% }",
+    ".offset-sm-3 { margin-left:25% }",
+    ".offset-sm-4 { margin-left:33.3333% }",
+    ".offset-sm-5 { margin-left:41.6667% }",
+    ".offset-sm-6 { margin-left:50% }",
+    ".offset-sm-7 { margin-left:58.3333% }",
+    ".offset-sm-8 { margin-left:66.6667% }",
+    ".offset-sm-9 { margin-left:75% }",
+    ".offset-sm-10 { margin-left:83.3333% }",
+    ".offset-sm-11 { margin-left:91.6667% }",
+    ".offset-md-0 { margin-left:0px }",
+    ".offset-md-1 { margin-left:8.33333% }",
+    ".offset-md-2 { margin-left:16.6667% }",
+    ".offset-md-3 { margin-left:25% }",
+    ".offset-md-4 { margin-left:33.3333% }",
+    ".offset-md-5 { margin-left:41.6667% }",
+    ".offset-md-6 { margin-left:50% }",
+    ".offset-md-7 { margin-left:58.3333% }",
+    ".offset-md-8 { margin-left:66.6667% }",
+    ".offset-md-9 { margin-left:75% }",
+    ".offset-md-10 { margin-left:83.3333% }",
+    ".offset-md-11 { margin-left:91.6667% }",
+    ".offset-lg-0 { margin-left:0px }",
+    ".offset-lg-1 { margin-left:8.33333% }",
+    ".offset-lg-2 { margin-left:16.6667% }",
+    ".offset-lg-3 { margin-left:25% }",
+    ".offset-lg-4 { margin-left:33.3333% }",
+    ".offset-lg-5 { margin-left:41.6667% }",
+    ".offset-lg-6 { margin-left:50% }",
+    ".offset-lg-7 { margin-left:58.3333% }",
+    ".offset-lg-8 { margin-left:66.6667% }",
+    ".offset-lg-9 { margin-left:75% }",
+    ".offset-lg-10 { margin-left:83.3333% }",
+    ".offset-lg-11 { margin-left:91.6667% }",
+    ".offset-xl-0 { margin-left:0px }",
+    ".offset-xl-1 { margin-left:8.33333% }",
+    ".offset-xl-2 { margin-left:16.6667% }",
+    ".offset-xl-3 { margin-left:25% }",
+    ".offset-xl-4 { margin-left:33.3333% }",
+    ".offset-xl-5 { margin-left:41.6667% }"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "css",
+   "message": "Transforms with an x translation (drawers, slides): transforms never flip with dir",
+   "count": 16,
+   "examples": [
+    ".active.carousel-item-end, .carousel-item-next:not(.carousel-item-start) { transform: translateX(100%) }",
+    ".active.carousel-item-start, .carousel-item-prev:not(.carousel-item-end) { transform: translateX(-100%) }",
+    ".offcanvas-sm.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-sm.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-md.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-md.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-lg.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-lg.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-xl.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-xl.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas-xxl.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas-xxl.offcanvas-end { transform: translateX(100%) }",
+    ".offcanvas.offcanvas-start { transform: translateX(-100%) }",
+    ".offcanvas.offcanvas-end { transform: translateX(100%) }",
+    ".translate-middle { transform: translate(-50%, -50%) }",
+    ".translate-middle-x { transform: translateX(-50%) }"
+   ]
+  }
+ ],
+ "ms": 3603
+}

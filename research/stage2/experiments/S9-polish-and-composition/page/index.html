@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en-GB" class="__MOVES__">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rotabell: rota planning for small kitchens (S9 polish fixture)</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<!-- Fixture for research/stage2/experiments/S9-polish-and-composition. Fictional product, fictional people,
+     illustrative numbers. Every polish move is a class on <html> (m-<id>); see lib/moves.mjs. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+</svg>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Rotabell home">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="3" width="26" height="26" rx="7"/><path d="M10 12h12M10 17h12M10 22h7"/></svg>
+      <span>Rotabell</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#how" class="current">Product</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#groups">For groups</a>
+      <a href="#help">Help</a>
+    </nav>
+    <div class="header-actions">
+      <a class="signin" href="#signin">Sign in</a>
+      <a class="btn btn-secondary btn-small header-cta" href="#trial">Try it free</a>
+      <button class="btn btn-secondary btn-small menu-btn" type="button">Menu</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-band" aria-hidden="true"></div>
+  <div class="hero-inner container">
+    <div class="hero-copy">
+      <h1>Plan the week’s rota and see the wage bill as you go</h1>
+      <p class="lede">Rotabell is a rota planner for independent kitchens and cafés. Drag shifts onto the week, and hours and costs add up before anyone is told.</p>
+      <ul class="ticks">
+        <li><svg class="ico ico-a" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Shifts checked against contracted hours</span></li>
+        <li><svg class="ico ico-a" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Costs shown against your weekly budget</span></li>
+        <li><svg class="ico ico-a" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Staff get the rota on their phone, not a photo of the wall</span></li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#trial" data-autofocus>Try it free for 30 days</a>
+        <a class="btn btn-secondary btn-play" href="#tour"><span class="play-disc"><svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5v15l12-7.5z"/></svg></span><span>Watch the 2-minute tour</span></a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="panel" role="region" aria-label="Example rota (illustrative data)">
+        <div class="panel-head">
+          <div>
+            <p class="panel-title">Kitchen rota, week 41</p>
+            <p class="panel-sub">6–12 October, illustrative data</p>
+          </div>
+          <span class="status status-draft"><svg class="ico ico-b" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4.5l3 2"/></svg>Draft</span>
+        </div>
+        <div class="panel-tools">
+          <label class="search"><svg class="ico ico-c" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><span class="sr">Find a person</span><input type="search" placeholder="Find a person"></label>
+          <div class="chips" role="group" aria-label="Filter">
+            <button class="chip chip-on" type="button">All <span class="num">6</span></button>
+            <button class="chip" type="button">Chefs <span class="num">4</span></button>
+            <button class="chip" type="button">Porters <span class="num">2</span></button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="rota">
+            <thead><tr><th scope="col">Name</th><th scope="col" class="col-role">Role</th><th scope="col" class="n">Shifts</th><th scope="col" class="n">Hours</th><th scope="col" class="n">Cost</th></tr></thead>
+            <tbody>
+              <tr><td>Ana Duarte</td><td class="col-role">Head chef</td><td class="n num">5</td><td class="n num">41.5</td><td class="n num">£622.50</td></tr>
+              <tr><td>Tom Price</td><td class="col-role">Sous chef</td><td class="n num">5</td><td class="n num">40.0</td><td class="n num">£520.00</td></tr>
+              <tr><td>Mei Lin</td><td class="col-role">Chef de partie</td><td class="n num">4</td><td class="n num">32.5</td><td class="n num">£390.00</td></tr>
+              <tr><td>Sam Okafor</td><td class="col-role">Commis chef</td><td class="n num">4</td><td class="n num">28.0</td><td class="n num">£302.40</td></tr>
+              <tr><td>Priya Nair</td><td class="col-role">Kitchen porter</td><td class="n num">3</td><td class="n num">21.0</td><td class="n num">£231.00</td></tr>
+              <tr><td>Jonas Berg</td><td class="col-role">Kitchen porter</td><td class="n num">2</td><td class="n num">11.5</td><td class="n num">£124.20</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel-foot">
+          <div class="totals">
+            <div><span class="t-label">Hours</span><span class="t-val num">174.5</span></div>
+            <div><span class="t-label">Wage bill</span><span class="t-val num total">£2,190.10</span></div>
+            <div><span class="t-label">Budget</span><span class="t-val num">£2,400.00</span></div>
+          </div>
+          <button class="btn btn-publish" type="button"><svg class="ico ico-d" viewBox="0 0 24 24" aria-hidden="true"><path class="fillable" d="M4 12l16-8-6 16-2.5-6.5z"/></svg><span>Publish rota</span></button>
+        </div>
+      </div>
+      <div class="toast" role="status">
+        <svg class="ico ico-e" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 17.5h2"/></svg>
+        <p><strong>Mei Lin</strong> accepted Thursday’s late shift</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how container" id="how">
+  <h2>How a week gets planned</h2>
+  <p class="section-lede">Three steps, usually done on a Friday afternoon, instead of a Sunday night with a spreadsheet.</p>
+  <div class="steps">
+    <article class="card">
+      <svg class="ico ico-f" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+      <h3>Copy last week</h3>
+      <p>Start from the rota that worked, then move the shifts that change. Holidays and days off are already blocked out.</p>
+    </article>
+    <article class="card">
+      <svg class="ico ico-g" viewBox="0 0 24 24" aria-hidden="true"><path class="fillable" d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>
+      <h3>Watch the numbers</h3>
+      <p>Each shift you place updates hours per person and the week’s wage bill, so the budget is checked while you plan.</p>
+    </article>
+    <article class="card">
+      <svg class="ico ico-h" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-2.5-6.5z"/></svg>
+      <h3>Publish to phones</h3>
+      <p>Staff get a notification with their own shifts. Swaps come back to you to approve, and the rota updates for everyone.</p>
+    </article>
+  </div>
+</section>
+
+<section class="statement container">
+  <figure class="photo-frame"><img class="photo" src="/img/coffee.jpg" width="600" height="400" alt="An espresso in a red cup on a wooden counter"></figure>
+  <blockquote class="pull">
+    <p>“A rota is a budget you can read. We built Rotabell so the person writing it can see what it costs.”</p>
+    <footer>From the Rotabell team</footer>
+  </blockquote>
+</section>
+
+<section class="phones container" id="groups">
+  <div class="phones-copy">
+    <h2>What your staff see</h2>
+    <p>Their own shifts for the next two weeks, with the address and who else is on. Nothing to install: a link opens it in the phone’s browser.</p>
+  </div>
+  <img class="phone-img" src="/img/phone.png" width="300" height="560" alt="The staff view of a rota on a phone: three upcoming shifts">
+</section>
+
+<section class="pricing container" id="pricing">
+  <h2>Pricing</h2>
+  <div class="plans">
+    <div class="plan card">
+      <h3>One kitchen</h3>
+      <p class="price"><span class="num">£3</span> per person per month</p>
+      <ul class="bullets">
+        <li>Up to 25 staff</li>
+        <li>Rota, hours and wage bill</li>
+        <li>Staff view on phones</li>
+      </ul>
+    </div>
+    <div class="plan card">
+      <h3>Several sites</h3>
+      <p class="price"><span class="num">£4</span> per person per month</p>
+      <ul class="bullets">
+        <li>Staff shared between sites</li>
+        <li>A budget per site and in total</li>
+        <li>Payroll export</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>Rotabell is a fictional product made for a design experiment.</span>
+    <a href="#help">Help</a>
+  </div>
+</footer>
+<script>
+  // The focus-ring move needs a focused control in every capture: focus the primary action on load (all variants),
+  // except with m-nofocus on <html> (run.mjs --stage nofocus: how much the forced focus state added to each measure).
+  if (!document.documentElement.classList.contains('m-nofocus')) document.querySelector('[data-autofocus]')?.focus({ preventScroll: true });
+</script>
+</body>
+</html>

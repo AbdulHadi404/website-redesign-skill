@@ -1,0 +1,298 @@
+{
+ "business_ar": "مؤسسة سند للخدمات",
+ "business_en": "Sanad Services Est.",
+ "vat_number": "310123456700003",
+ "currency": "SAR",
+ "invoices": [
+  {
+   "id": "INV-2026-1040",
+   "client_ar": "مركز نبض الطبي",
+   "client_en": "Nabd Medical Center",
+   "issued": "2026-09-15",
+   "due": "2026-09-28",
+   "net": 1928.24,
+   "vat": 289.24,
+   "total": 2217.48,
+   "status": "draft"
+  },
+  {
+   "id": "INV-2026-1041",
+   "client_ar": "صيدليات الشفاء",
+   "client_en": "Al Shifa Pharmacies",
+   "issued": "2026-07-04",
+   "due": "2026-07-18",
+   "net": 2921.33,
+   "vat": 438.2,
+   "total": 3359.53,
+   "status": "sent"
+  },
+  {
+   "id": "INV-2026-1042",
+   "client_ar": "مركز نبض الطبي",
+   "client_en": "Nabd Medical Center",
+   "issued": "2026-06-20",
+   "due": "2026-06-28",
+   "net": 8917.95,
+   "vat": 1337.69,
+   "total": 10255.64,
+   "status": "sent"
+  },
+  {
+   "id": "INV-2026-1043",
+   "client_ar": "شركة مسار اللوجستية",
+   "client_en": "Masar Logistics Co.",
+   "issued": "2026-07-20",
+   "due": "2026-07-28",
+   "net": 11085.65,
+   "vat": 1662.85,
+   "total": 12748.5,
+   "status": "sent"
+  },
+  {
+   "id": "INV-2026-1044",
+   "client_ar": "مؤسسة الريان للتجارة",
+   "client_en": "Al Rayyan Trading Est.",
+   "issued": "2026-07-08",
+   "due": "2026-07-22",
+   "net": 975.8,
+   "vat": 146.37,
+   "total": 1122.17,
+   "status": "paid"
+  },
+  {
+   "id": "INV-2026-1045",
+   "client_ar": "مؤسسة الريان للتجارة",
+   "client_en": "Al Rayyan Trading Est.",
+   "issued": "2026-07-17",
+   "due": "2026-07-28",
+   "net": 8498.63,
+   "vat": 1274.79,
+   "total": 9773.42,
+   "status": "sent"
+  },
+  {
+   "id": "INV-2026-1046",
+   "client_ar": "صيدليات الشفاء",
+   "client_en": "Al Shifa Pharmacies",
+   "issued": "2026-06-15",
+   "due": "2026-06-28",
+   "net": 12497.73,
+   "vat": 1874.66,
+   "total": 14372.39,
+   "status": "overdue"
+  },
+  {
+   "id": "INV-2026-1047",
+   "client_ar": "مكتب أفق للمحاماة",
+   "client_en": "Ofuq Law Office",
+   "issued": "2026-06-23",
+   "due": "2026-06-28",
+   "net": 43341.87,
+   "vat": 6501.28,
+   "total": 49843.15,
+   "status": "draft"
+  },
+  {
+   "id": "INV-2026-1048",
+   "client_ar": "مكتب أفق للمحاماة",
+   "client_en": "Ofuq Law Office",
+   "issued": "2026-08-01",
+   "due": "2026-08-15",
+   "net": 814.92,
+   "vat": 122.24,
+   "total": 937.16,
+   "status": "sent"
+  },
+  {
+   "id": "INV-2026-1049",
+   "client_ar": "شركة نخبة البناء",
+   "client_en": "Nukhbat Construction Co.",
+   "issued": "2026-06-28",
+   "due": "2026-06-28",
+   "net": 266.87,
+   "vat": 40.03,
+   "total": 306.9,
+   "status": "sent"
+  },
+  {
+   "id": "INV-2026-1050",
+   "client_ar": "مكتب أفق للمحاماة",
+   "client_en": "Ofuq Law Office",
+   "issued": "2026-06-07",
+   "due": "2026-06-21",
+   "net": 20257.3,
+   "vat": 3038.59,
+   "total": 23295.89,
+   "status": "paid"
+  },
+  {
+   "id": "INV-2026-1051",
+   "client_ar": "صيدليات الشفاء",
+   "client_en": "Al Shifa Pharmacies",
+   "issued": "2026-09-14",
+   "due": "2026-09-28",
+   "net": 829.59,
+   "vat": 124.44,
+   "total": 954.03,
+   "status": "overdue"
+  },
+  {
+   "id": "INV-2026-1052",
+   "client_ar": "شركة نخبة البناء",
+   "client_en": "Nukhbat Construction Co.",
+   "issued": "2026-08-11",
+   "due": "2026-08-25",
+   "net": 242.78,
+   "vat": 36.42,
+   "total": 279.2,
+   "status": "draft"
+  },
+  {
+   "id": "INV-2026-1053",
+   "client_ar": "شركة نخبة البناء",
+   "client_en": "Nukhbat Construction Co.",
+   "issued": "2026-06-05",
+   "due": "2026-06-19",
+   "net": 10825.86,
+   "vat": 1623.88,
+   "total": 12449.74,
+   "status": "sent"
+  },
+  {
+   "id": "INV-2026-1054",
+   "client_ar": "صيدليات الشفاء",
+   "client_en": "Al Shifa Pharmacies",
+   "issued": "2026-09-06",
+   "due": "2026-09-20",
+   "net": 730.52,
+   "vat": 109.58,
+   "total": 840.1,
+   "status": "sent"
+  },
+  {
+   "id": "INV-2026-1055",
+   "client_ar": "صيدليات الشفاء",
+   "client_en": "Al Shifa Pharmacies",
+   "issued": "2026-07-14",
+   "due": "2026-07-28",
+   "net": 9940.25,
+   "vat": 1491.04,
+   "total": 11431.29,
+   "status": "overdue"
+  },
+  {
+   "id": "INV-2026-1056",
+   "client_ar": "شركة مسار اللوجستية",
+   "client_en": "Masar Logistics Co.",
+   "issued": "2026-06-09",
+   "due": "2026-06-23",
+   "net": 1099.06,
+   "vat": 164.86,
+   "total": 1263.92,
+   "status": "paid"
+  },
+  {
+   "id": "INV-2026-1057",
+   "client_ar": "مكتب أفق للمحاماة",
+   "client_en": "Ofuq Law Office",
+   "issued": "2026-06-02",
+   "due": "2026-06-16",
+   "net": 653.28,
+   "vat": 97.99,
+   "total": 751.27,
+   "status": "sent"
+  },
+  {
+   "id": "INV-2026-1058",
+   "client_ar": "مطاعم ورق العنب",
+   "client_en": "Waraq Al Enab Restaurants",
+   "issued": "2026-08-27",
+   "due": "2026-08-28",
+   "net": 4575.52,
+   "vat": 686.33,
+   "total": 5261.85,
+   "status": "paid"
+  },
+  {
+   "id": "INV-2026-1059",
+   "client_ar": "مكتب أفق للمحاماة",
+   "client_en": "Ofuq Law Office",
+   "issued": "2026-07-19",
+   "due": "2026-07-28",
+   "net": 20420.28,
+   "vat": 3063.04,
+   "total": 23483.32,
+   "status": "paid"
+  },
+  {
+   "id": "INV-2026-1060",
+   "client_ar": "صيدليات الشفاء",
+   "client_en": "Al Shifa Pharmacies",
+   "issued": "2026-09-05",
+   "due": "2026-09-19",
+   "net": 918.87,
+   "vat": 137.83,
+   "total": 1056.7,
+   "status": "paid"
+  },
+  {
+   "id": "INV-2026-1061",
+   "client_ar": "مركز نبض الطبي",
+   "client_en": "Nabd Medical Center",
+   "issued": "2026-07-21",
+   "due": "2026-07-28",
+   "net": 155.89,
+   "vat": 23.38,
+   "total": 179.27,
+   "status": "sent"
+  },
+  {
+   "id": "INV-2026-1062",
+   "client_ar": "مطاعم ورق العنب",
+   "client_en": "Waraq Al Enab Restaurants",
+   "issued": "2026-07-24",
+   "due": "2026-07-28",
+   "net": 16584.24,
+   "vat": 2487.64,
+   "total": 19071.88,
+   "status": "draft"
+  },
+  {
+   "id": "INV-2026-1063",
+   "client_ar": "صيدليات الشفاء",
+   "client_en": "Al Shifa Pharmacies",
+   "issued": "2026-07-22",
+   "due": "2026-07-28",
+   "net": 2800.12,
+   "vat": 420.02,
+   "total": 3220.14,
+   "status": "sent"
+  }
+ ],
+ "revenue_by_month": [
+  {
+   "m": "2026-04",
+   "total": 48250.0
+  },
+  {
+   "m": "2026-05",
+   "total": 61900.5
+  },
+  {
+   "m": "2026-06",
+   "total": 55310.0
+  },
+  {
+   "m": "2026-07",
+   "total": 72480.75
+  },
+  {
+   "m": "2026-08",
+   "total": 69015.0
+  },
+  {
+   "m": "2026-09",
+   "total": 81240.25
+  }
+ ]
+}

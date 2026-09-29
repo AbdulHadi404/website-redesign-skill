@@ -1,0 +1,73 @@
+{
+ "url": "http://127.0.0.1:38965/ext/regress/parity/new.html",
+ "width": 390,
+ "height": 844,
+ "insets": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "env": {
+  "viewportMeta": null,
+  "hoverNone": true,
+  "coarse": true,
+  "cover": false,
+  "resizesContent": false
+ },
+ "summary": {
+  "FAIL": 0,
+  "WARN": 1,
+  "INFO": 2
+ },
+ "thumb": {
+  "model": {
+   "pxPerMm": 6.1,
+   "pivotOutsideMm": 5,
+   "pivotUpMm": 15,
+   "near": 25,
+   "natural": 65,
+   "stretch": 85,
+   "edgeMm": 5
+  },
+  "primaries": [],
+  "tabbar": []
+ },
+ "inputs": [
+  {
+   "field": "client",
+   "purpose": "text",
+   "keyboard": "text"
+  },
+  {
+   "field": "amount",
+   "purpose": "amount",
+   "keyboard": "text"
+  }
+ ],
+ "findings": [
+  {
+   "level": "INFO",
+   "check": "safe-area",
+   "message": "No viewport-fit=cover: the browser keeps the page inside the safe area (letterboxed in landscape; env() insets are 0), so bars cannot sit under the notch or home indicator. Choose cover only for an edge-to-edge design, and then pad bars with env()",
+   "examples": []
+  },
+  {
+   "level": "WARN",
+   "check": "keyboards",
+   "message": "Fields that bring the wrong keyboard or miss autofill",
+   "count": 3,
+   "examples": [
+    "client (client): font-size 13.3333px: iOS Safari zooms the page on focus",
+    "amount (amount): amount field brings the \"text\" keyboard; expected decimal",
+    "amount (amount): font-size 13.3333px: iOS Safari zooms the page on focus"
+   ]
+  },
+  {
+   "level": "INFO",
+   "check": "keyboard",
+   "message": "No interactive-widget=resizes-content: the keyboard overlays the page (resizes-visual, the default in Chrome Android and on iOS) and fixed bars stay behind it — check focused fields over a real keyboard on a device",
+   "examples": []
+  }
+ ]
+}

@@ -1,0 +1,12 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Hero with a link over an animated canvas</title>
+<!-- An animated hero whose canvas changes hue on pointerdown, with a CTA link over it. v1 of the probe pressed
+     Enter on the link and crashed. Expected: FAIL for the pointer-only effect (the probe cannot know it is
+     decorative), a reduced-motion WARN, no navigation. -->
+<style>body{margin:0;font:16px system-ui}.hero{position:relative;height:500px}canvas{position:absolute;inset:0;width:100%;height:100%}
+.copy{position:absolute;left:40px;top:160px}.copy a{display:inline-block;padding:12px 20px;background:#222;color:#fff}</style></head>
+<body><div class="hero"><canvas id="c"></canvas><div class="copy"><h1>We make things</h1><a href="other.html">See our work</a></div></div>
+<script>
+const c=document.getElementById('c');c.width=c.clientWidth;c.height=c.clientHeight;const x=c.getContext('2d');let hue=0,t=0;
+c.addEventListener('pointerdown',()=>{hue=(hue+90)%360});
+(function f(){t+=0.02;x.fillStyle=`hsl(${hue},60%,85%)`;x.fillRect(0,0,c.width,c.height);x.fillStyle=`hsl(${hue},60%,50%)`;x.beginPath();x.arc(c.width/2+Math.sin(t)*200,250,60,0,7);x.fill();requestAnimationFrame(f)})();
+</script></body></html>

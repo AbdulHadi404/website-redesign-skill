@@ -1,0 +1,386 @@
+[
+ {
+  "topic": "Interactive experiences beating conventional sections (the Cake Studio lesson)",
+  "level": "shallow",
+  "where": "SKILL.md Phase 0 \"Signature experience or supporting feature?\"; references/discovery.md §5b, §5c; references/anti-patterns.md \"Product flows and configurators\"; references/categories.md \"Signature experiences\"; references/lessons.md Cake Junction rows (2026-09-26 to 2026-09-28); references/ledger.md Cake Junction row",
+  "quote": "It is never shrunk to fit a website section.",
+  "gap": "The skill holds the first half of the lesson well: don't turn a builder into form chapters. It has a classification gate, a written quality bar, a vertical slice, a full-screen route and an anti-pattern. It does not hold the second half. The 3D Studio, even after a fidelity pass, lost to a \"game-like experiment (illustrated art, immediate feedback, a coherent little world)\". The skill turned that into a process for promoting a winning prototype (§5c) and recorded neither why it won nor how it was built. There is no rule to try competing media (illustrated 2D or sprites vs 3D) as direction candidates before committing, and no principle that character and a coherent world beat rendering fidelity. For ordinary marketing pages it offers only \"a live demo usable in the first viewport\" and \"a template that reacts on the page\" as options, with no test for when a static chapter should become an interactive one.",
+  "risk": "The next configurator brief goes straight to three.js/R3F, because realtime-3d.md is the only build guide. It spends a fidelity pass on lighting and materials and repeats \"looks like The Sims 2\". The cheaper and more characterful game-like route is found only if the user again asks for a parallel experiment."
+ },
+ {
+  "topic": "Kinds of interactive web experiences and their value vs gimmick",
+  "level": "shallow",
+  "where": "references/motion.md §1 (jobs), §9 (3D earns its place / is decoration); references/art-direction.md §4 (hero options, signature moments); references/web-design.md chapter kinds (\"Product / demo\"); references/discovery.md §5, §5b.6",
+  "quote": "3D earns its place when the user needs to see an object from more than one angle or change it",
+  "gap": "There is no taxonomy of interactive formats: calculators and estimators, finders and quizzes, configurators, playgrounds and sandboxes, explorable explanations, interactive data stories, before/after, maps, simulations, AR try-on, mini-games, generative toys, cursor toys. Nothing says what each is good for, what it costs, or what business output it should produce (a spec, a lead, a share, a decision). The value-vs-gimmick test exists only for 3D, plus the generic \"spectacle that doesn't improve understanding, confidence, sharing or ordering doesn't belong\". There are no per-kind criteria and no success measures (completion, share or screen-record rate, conversion lift, repeat-visit decay).",
+  "risk": "The agent either falls back to scroll reveals and static chapters, or adds a particle hero or cursor toy because a gallery had one. It cannot argue for an estimator or finder that would outperform a feature grid, or spot that a proposed interactive is a gimmick."
+ },
+ {
+  "topic": "Game UI/UX principles transferable to the web (HUD, inventories, radial menus, feedback, onboarding, progression, rewards, input parity)",
+  "level": "skipped",
+  "where": "references/realtime-3d.md §1 names the role only; partial overlap in references/ui-ux.md §7b",
+  "quote": "graphics engineer, technical artist, 3D artist, game-UI designer, performance engineer.",
+  "gap": "None of the game-UI canon is present: diegetic vs non-diegetic HUD and keeping chrome off the play area; inventory and tray design (slots, categories, counts, tap-to-equip vs drag); radial or pie menus for touch and context actions (Fitts benefits, about 8 items at most); game-feel feedback on every action within 100 ms (anticipation, squash, settle, particles, sound); onboarding by doing (first action in seconds, contextual hints, no tutorial wall); progression and unlocks; rewards and celebration, and when they become manipulative; input parity, meaning the same verbs on mouse, touch, keyboard and gamepad, with remapping and hold vs toggle. The only transferable pieces are four rules in §7b that came from one bug: the tray with a drag ghost, the 6 px tap threshold, one undo per gesture, and starting from a real default.",
+  "risk": "The game-like builder that won at Cake Junction cannot be reproduced on purpose. A new builder gets form-panel chrome over a canvas, no placement feedback, no first-minute onboarding and pointer-only verbs. Keyboard or gamepad parity is never considered."
+ },
+ {
+  "topic": "Choosing rendering technology (DOM/CSS, SVG, Canvas, PixiJS, Phaser, Three/R3F, full engines)",
+  "level": "shallow",
+  "where": "references/motion.md §8–§9 (3D tool table); references/realtime-3d.md §8; references/dataviz.md #8 (canvas for dense series); references/resources/libraries.md \"3D\"",
+  "quote": "Don't turn a site into one canvas to prove it can be done; choose the tool per effect (§8 and below).",
+  "gap": "The skill has a 3D menu with measured sizes (model-viewer, three.js, R3F, OGL, Babylon, Spline) and one charts-only threshold (\"many small SVG charts of ≤ 1–2k points are fine\"). It has no decision between DOM/CSS, SVG, Canvas 2D, Canvas in a Worker (OffscreenCanvas), PixiJS, Phaser, three/R3F or a full engine (PlayCanvas, Godot or Unity web export). The factors a senior would weigh are missing: object count, hit testing, text rendering, the accessibility tree DOM gives for free and canvas does not, boot time and bundle size. research/stage2/experiments/S1-rendering-lab measured this exact comparison: one \"decorate the object\" scene built in DOM, SVG, Canvas 2D, a Worker, PixiJS, Phaser, three and R3F. None of it has reached the skill.",
+  "risk": "A 2D illustrated experience gets built in three.js, because that is the only engine the skill describes, or as hundreds of DOM or SVG nodes. The team finds the performance, accessibility and boot-time consequences after the vertical slice, when switching is expensive."
+ },
+ {
+  "topic": "Asset sources and licensing (Kenney, OpenGameArt, itch.io, Poly Haven, Sketchfab, CC0)",
+  "level": "shallow",
+  "where": "references/motion.md §9 \"Licences\" checkbox; references/resources/README.md (licence classes A–D, how to check); references/resources/assets.md; references/resources/libraries.md \"3D\"",
+  "quote": "Poly Haven and Kenney are CC0; Sketchfab is per model (BY needs credit, NC and Editorial forbid commercial use)",
+  "gap": "The licence method is solid: classes A–D, trust the shipped LICENSE over the package field, keep a CREDITS.md. The 3D line is correct. Game-asset sources are missing: OpenGameArt (per-asset GPL, CC BY-SA or OGA-BY, attribution text required), itch.io packs (custom terms per creator, often paid, no redistribution, no AI), Quaternius, ambientCG (CC0 PBR textures), Mixamo (Adobe terms), Freesound (CC0, BY or BY-NC per sound) and Fab/Epic. Nothing covers whether a licence allows shipping downloadable source files in a public web build. Nothing covers style coherence when mixing packs: stock Kenney art reads as an asset-flip, not a brand.",
+  "risk": "For a game-like experience the agent grabs an itch.io or OpenGameArt pack or a Freesound clip and ships CC BY-SA, NC or unattributed assets on a client's commercial site. Or it ships a recognisable asset-pack look as the brand's signature."
+ },
+ {
+  "topic": "Sprite-based design (sheets, atlases, frame animation, parallax, tile maps, particles, skeletal)",
+  "level": "skipped",
+  "where": "nowhere. \"Sprite\" appears only as an SVG icon sprite (references/performance.md §2); parallax and particles appear only as anti-patterns and reduced-motion rows (references/anti-patterns.md \"Motion\", references/motion.md §6)",
+  "quote": "named imports or a sprite",
+  "gap": "Nothing on sprite sheets and texture atlases (TexturePacker or free-tex-packer, padding and extrusion against bleeding, power-of-two sizes), frame animation (CSS steps(), canvas drawImage, Pixi AnimatedSprite, timing independent of frame rate), layered parallax with depth rules, tile maps (Tiled, LDtk), particle emitters with pooling and budgets, or skeletal animation (Spine, DragonBones, Rive bones). Also missing: @2x/@3x asset scales against devicePixelRatio, and pixel-art scaling (image-rendering: pixelated, integer scales).",
+  "risk": "An illustrated or game-like experience is assembled from dozens of loose PNGs or SVG nodes. On retina screens it scales blurrily, atlas edges bleed, frame animation stutters because it is tied to the rAF rate, and there is no pipeline from the illustrator's frames into the build."
+ },
+ {
+  "topic": "3D pipelines (Blender, glTF/GLB, Draco/meshopt, KTX2, LOD, instancing, baked lighting)",
+  "level": "shallow",
+  "where": "references/realtime-3d.md §3–§6; references/motion.md §9 \"Assets\" checkbox; references/visual-qa.md \"3D and WebGL experiences\"; references/resources/tools.md \"Assets\"",
+  "quote": "use KTX2 (Basis Universal), which stays compressed on the GPU, where a WebP or JPEG is decoded to full RGBA (16 MB for one 2048² texture, before mipmaps)",
+  "gap": "Principles and some measured numbers are good: 3.7 MB to 532 KB mostly by resizing textures, a 7 KB Meshopt decoder vs 73 KB for Draco, a GLB of about 1.5 MB or less, texture caps, a benchmark harness, baked AO and accumulating frames while the camera rests. The practical steps are missing:\n- no gltf-transform commands (optimize, resize, KTX2 texture compression, dedup, prune, instance);\n- no KTX2 guidance on UASTC vs ETC1S (normal maps vs albedo) or on colour space per map;\n- a headless Blender bake is recommended but never shown, and there are no export settings;\n- no instancing (InstancedMesh or EXT_mesh_gpu_instancing) and no draw-call target (draw calls are only \"recorded\");\n- no lightmap or UV2 baking, and no LOD switch thresholds;\n- the \"build script that fails\" when an asset is over budget is described but not shipped.\nKTX2 and Blender baking have no lesson row or measured result; WebP is the only path that was actually tried.",
+  "risk": "A run following the prose puts WebP textures into a real-time scene and runs out of GPU memory on phones. Each repeated decoration becomes its own mesh and draw call instead of an instance. Asset budgets are never enforced, so scenes grow until a phone drops frames."
+ },
+ {
+  "topic": "Animation libraries and tool choice (GSAP, Motion, anime.js, WAAPI, CSS, Lottie, Rive, Theatre.js, React Spring, AutoAnimate)",
+  "level": "known-well",
+  "where": "references/motion.md §4 (Motion spring parameters), §6 (library reduced-motion defaults read from source), §7 (parse and evaluate cost at 4× throttle), §8 (need → library table with sizes and licences); references/resources/libraries.md \"Motion\"",
+  "quote": "Motion for React defaults to `reducedMotion: \"never\"` — wrap the app in `<MotionConfig reducedMotion=\"user\">`",
+  "gap": "The need-to-library table, gzip sizes, parse cost, licence traps (GSAP's non-OSI terms, Theatre's AGPL, paid Rive export) and reduced-motion defaults are what a senior would check. Gaps:\n- React Spring is absent; it exists only in the unfolded S2 lab.\n- Theatre.js is dismissed without naming a replacement for authored 3D or scroll timelines (GSAP timelines, drei ScrollControls).\n- Libraries are chosen by weight, not by feel: interruptibility, velocity hand-off, gesture binding, layout animation.\n- GSAP plugins that are now free (Flip, SplitText, MorphSVG) are not discussed.\n- The S2 lab's comparison of seven fixed interactions across libraries is not in the skill.",
+  "risk": "Mostly minor. Choices will be right on weight and reduced motion, but idiom can be wrong (Motion for a long scroll-scrubbed marketing timeline, GSAP for React exit or layout animation). A React Spring codebase gets no advice."
+ },
+ {
+  "topic": "How designers decide motion (what, how much, duration, easing, sequencing, interruption)",
+  "level": "known-well",
+  "where": "references/motion.md §1 (jobs), §2 (gates incl. frequency), §3 (productive/expressive), §4 (tokens, easing rules, springs); references/ui-ux.md §7; references/art-direction.md §4 \"Motion language\"; references/categories.md motion dial",
+  "quote": "never enter from `scale(0)` — start at 0.9–0.97 with opacity 0; popovers scale from their trigger, modals from the centre",
+  "gap": "The motion judgement is senior-grade:\n- one named job per animation;\n- a frequency gate with numbers (100+ a day or keyboard-triggered means none);\n- duration and easing tokens, and springs with stiffness and damping;\n- interruption rules (transitions retarget, keyframes restart, springs keep velocity);\n- stagger capped at 30–80 ms with a 300 ms total.\nMissing:\n- durations scaled by distance, size and device (shorter on phones, longer for large travel);\n- a choreography vocabulary beyond stagger (lead and follow, shared axis, container transform, fade through);\n- classical principles for expressive moments (anticipation, follow-through, overlapping action);\n- a motion-study step (a quick prototype or filmstrip reviewed before building) instead of deciding in prose.",
+  "risk": "Productive motion will be right. Expressive signature moments get correct tokens but flat choreography, with every element on one curve and one duration. They are designed in words and first seen in the build, when changing them costs most."
+ },
+ {
+  "topic": "Motion surviving implementation (plans that mention animation but ship static)",
+  "level": "principle-without-implementation",
+  "where": "references/motion.md §2 (one line per animation), §7 (filmstrips); references/art-direction.md §4; templates/DESIGN.md \"Motion\"; references/lessons.md digest and the Cake Junction website row; scripts/motion.mjs (orphaned)",
+  "quote": "Plans say \"subtle animations\"; builds ship static, or animate the wrong thing, or delete everything under prefers-reduced-motion.",
+  "gap": "scripts/motion.mjs is the right tool. It reads a spec, triggers each entry, samples every frame normally and under reduced motion, writes filmstrips and exits 1 on failure. The skill never uses it:\n- It is absent from SKILL.md's Scripts table, Phase 6, the Phase 8 gate, resources/tools.md and technical-qa.md.\n- Its header cites \"motion.md §2, 'The motion spec'\", which does not exist.\n- DESIGN.md's Motion section asks for prose, and motion.md's one-line format (`trigger · job · properties · …`) has no id, on or target selectors, so motion.mjs cannot parse what the skill tells you to write.\n- The spec fixtures folder (research/stage2/experiments/S2-motion-lab/c/specs) is empty, so the spec path is unvalidated.\n- By its own note, canvas, WebGL, Lottie and Rive frames are invisible to it.\n- audit.mjs checks only that reduced motion does not hide content, not that the planned motion exists.",
+  "risk": "This is exactly the failure the script was written for. DESIGN.md promises signature moments, the build ships a generic heading rise or nothing, and Phase 6 passes because no gated step measures motion. That repeats the Cake Junction website lesson."
+ },
+ {
+  "topic": "Rive and interactive vector graphics",
+  "level": "shallow",
+  "where": "references/motion.md §6 (paused first frame), §8 (table and footnote), §9 (self-host WASM); references/resources/libraries.md \"Motion\"",
+  "quote": "A 485–787 KB runtime for one decorative loop is never worth it.",
+  "gap": "The skill knows Rive's weight (56 KB JS plus 787 KB WASM), the MIT runtime licence, the paid editor export, and that loops pause under reduced motion. It does not know:\n- when Rive is worth it: state machines driven by inputs (interactive characters, stateful toggles, onboarding mascots, data-bound UI), with one runtime shared across many assets;\n- the lighter builds (@rive-app/canvas-lite) or WebGL2 vs canvas renderers;\n- a poster or first-frame strategy while the WASM loads;\n- how to expose Rive inputs to keyboard and screen readers, since it is a canvas;\n- the designer-to-developer contract (artboard and state-machine input names).\nInteractive SVG as the cheaper alternative (SVG with CSS or WAAPI states, GSAP MorphSVG) is absent. The S2 lab's Rive vs Lottie vs SVG/CSS toggle comparison is not folded in.",
+  "risk": "Rive is either dismissed on weight where a stateful illustrated character would carry the brand, or shipped with no accessible DOM control and a blank canvas until the WASM arrives from unpkg."
+ },
+ {
+  "topic": "Shaders and generative visuals (GLSL, particles, noise, post-processing)",
+  "level": "shallow",
+  "where": "references/motion.md §9 (decoration list, OGL row, Shadertoy licence); references/realtime-3d.md §3 (experiment flags), §4 (jittered accumulation); references/anti-patterns.md (particles, glow, noise purpose-gated); references/resources/assets.md (SVG feTurbulence)",
+  "quote": "Shadertoy code is CC BY-NC-SA by default — never paste it into a commercial site.",
+  "gap": "The skill gates shaders well (the decoration list, OGL for \"one shader plane\", the licence trap). It also has one strong performance method: four flag combinations isolated the MSAA and AO cost. It has nothing on making shaders:\n- GLSL, TSL or WGSL basics;\n- noise families (value, simplex, curl, FBM) and which reads as which material;\n- GPU particles (points, instancing, compute);\n- post-processing stacks (pmndrs postprocessing, tone mapping, colour management, bloom thresholds);\n- shader compile hitches and pre-warming (renderer.compile);\n- mobile precision;\n- static and reduced-motion fallbacks for generative backgrounds;\n- seeded, deterministic output so the server poster matches the client.",
+  "risk": "A brand that genuinely needs a generative identity or a material shader either gets a flat \"decoration\" verdict or a pasted demo shader. That shader can carry an NC licence, hitch on first interaction while it compiles, and show banding from colour-space errors."
+ },
+ {
+  "topic": "Creative-development communities and demo vs production technique",
+  "level": "generic",
+  "where": "references/resources/inspiration.md (Godly, Awwwards row); references/motion.md §9 (Spline \"prototypes only\", Shadertoy licence)",
+  "quote": "ambitious, animated sites | beware importing spectacle into products",
+  "gap": "There is no map of where creative developers learn and publish (Codrops, the three.js forum and Journey, pmndrs examples, Shadertoy, CodePen, OpenProcessing, Awwwards case studies, GDC game-feel talks). There is no procedure for turning a demo into production:\n- check the licence (Codrops demo terms, CodePen's MIT default, Shadertoy's NC);\n- strip the demo's assumptions (desktop GPU, fixed size, no resize, no reduced motion, no accessibility, no loading or error states, global singletons);\n- budget it and test it on a mid-range phone.\nThe only demo-vs-production judgement in the skill is Spline, \"prototypes only\" at 1,062 KB.",
+  "risk": "The agent lifts a Codrops or CodePen effect wholesale into a client site. Its licence is unclear, it janks on a mid-range phone, it has no reduced-motion or keyboard path, and it looks like the demo every other studio copied."
+ },
+ {
+  "topic": "Sound and haptics as UX",
+  "level": "skipped",
+  "where": "only references/accessibility.md §2 Media row and §5 (instructions not by sound alone); references/categories.md content ads note",
+  "quote": "no autoplay with sound",
+  "gap": "Nothing on sound as feedback or brand:\n- earcons on placement and success, volume and mixing;\n- off by default with a visible, persistent toggle, and system mute respected;\n- Web Audio unlocked on a user gesture, with one shared AudioContext;\n- synthesis vs files and library cost (Howler about 8 KB, zzfx about 1 KB, Tone about 60 KB or more);\n- a visual equivalent for any meaning carried by sound.\nNothing on haptics either: navigator.vibrate is unsupported on iOS Safari, patterns must stay short, and vibration is never the only feedback. The repo's S6 lab measured the library payloads and vibrate support (research/stage2/experiments/S6-interactive-experiences/results/audio.json), but none of it reaches the skill.",
+  "risk": "A game-like builder ships silent, missing half its feedback, or with sound that autoplays or cannot be muted and a new AudioContext per click. Vibration silently does nothing for iPhone users."
+ },
+ {
+  "topic": "Accessibility of interactive experiences (canvas/WebGL alternatives, game accessibility)",
+  "level": "shallow",
+  "where": "references/motion.md §9 checklist (Accessibility, Reduced motion, Don't trap scrolling, Failure path); references/ui-ux.md §7b; references/accessibility.md §2 (drag alternatives, WCAG 2.5.7); scripts/states.mjs tap/swipe steps; scripts/lib/inventory.mjs (unlabelled canvas signal)",
+  "quote": "`role=\"img\"` + `aria-label` on a canvas; rotate and zoom buttons (WCAG 2.5.7) and keyboard support",
+  "gap": "The skill covers viewers (a name, rotate and zoom buttons, reduced motion, touch-action: pan-y, a poster fallback) and single-pointer alternatives to drags. It does not cover a canvas people build on:\n- role=\"img\" is the wrong pattern for a builder, because it hides every object and action;\n- no DOM proxy layer (a focusable element per scene object, kept in sync with its screen box);\n- no keyboard verbs for select, move, rotate and delete;\n- no live-region narration of scene changes;\n- no equivalent non-canvas path (a form that produces the same spec);\n- no game-accessibility practice (Game Accessibility Guidelines, Xbox XAGs: remapping, hold vs toggle, timing, colour-blind modes).\nThe tools cannot see inside the canvas. a11y.mjs and widgets.mjs treat it as one element, motion.mjs says canvas frames are invisible, and audit.mjs's unlabelled-canvas signal pushes toward role=\"img\". In the unused S6 lab, the canvas-only variant completed 0 of 3 keyboard tasks.",
+  "risk": "The signature builder ships pointer-only. axe and the scripts pass once the canvas has an aria-label. Keyboard and screen-reader customers cannot place an order on the very route the business wants to be remembered for, and that brings EAA and ADA exposure."
+ },
+ {
+  "topic": "Delight vs novelty vs friction; branding through interaction",
+  "level": "shallow",
+  "where": "references/categories.md (novelty and motion dials); references/framing.md §2 (novelty \"spent in one place\"); references/motion.md §1–§2; references/art-direction.md §4 (signature moments), §6 (brand moments); references/app-ui.md §12; references/discovery.md §5b.6; references/ui-ux.md §2 (peak–end)",
+  "quote": "A budget of two or three brand moments: sign-in, first-run and empty states, success after a long task.",
+  "gap": "The budgets are specific: novelty per category, two or three brand moments, the frequency gate, \"one stage per page\", and a rule that spectacle must improve understanding, confidence, sharing or ordering. Missing are the craft of the moment itself and a way to fail it:\n- delight decays with repetition, so return visits need a shorter or skippable version;\n- the point where a moment becomes friction (it delays input, blocks the next action, or costs INP);\n- easter eggs and discoverable depth;\n- an interaction signature as brand: a characteristic spring, cursor, sound or feedback voice (Linear, Stripe, Duolingo);\n- measures such as share or screen-record rate, return rate, and task time unchanged.\nThe critique template has no row that tests delight or its cost.",
+  "risk": "Brand moments are chosen correctly but designed generically (a confetti burst, a heading rise). Or a charming moment replays on every visit and slows repeat customers. Nothing in the critique catches either."
+ },
+ {
+  "topic": "Visual composition from other disciplines (balance, rhythm, framing, depth, focal points, lighting, materiality)",
+  "level": "shallow",
+  "where": "references/design-theory.md Part A (A2 Gestalt, A3 hierarchy, A4 space/grid/rhythm/balance), which the file itself calls 'background' and not a gate; art-direction.md §1.3 (material as a source of form); anti-patterns.md 'Purpose-gated techniques' (texture); realtime-3d.md §4 (lighting, 3D only)",
+  "quote": "Asymmetry needs a counterweight — a large quiet area balancing a small loud one — or it reads as unfinished.",
+  "gap": "The skill teaches composition only through Swiss grid, Gestalt and Refactoring UI rules: ≤3 sizes, one focal element, one grid break, rhythm as 'variation on a beat'. Nothing comes from photography, cinema, painting or architecture. It never covers framing and cropping (thirds, headroom, leading lines, where a crop may cut a subject), depth cues in 2D UI (overlap, scale, value recession, layered planes), planning the eye path through value and notan studies, or a consistent light source for shadows and highlights in 2D. Materiality is reduced to 'texture traceable to the business's material'. Lighting knowledge exists only for 3D (key, bounce card, rim). No check covers value structure in greyscale, shadow-direction consistency or crop quality beyond 'subject not decapitated'.",
+  "risk": "Pages pass every Gestalt and grid check but still look flat and 'placed': shadows fall in different directions, the hero has no depth plane (the 'hero object with no ground' lesson recurred), and photographs are cropped awkwardly. With no vocabulary for composing an image-led chapter, the agent falls back to its own prior."
+ },
+ {
+  "topic": "Visual fidelity and polish (what reads cheap vs premium; a deliberate polish pass)",
+  "level": "shallow",
+  "where": "framing.md §3 ('Polished' row); visual-qa.md 'What to check, per width' and the design QA matrix; audit.mjs 'finish' checks; implementation.md 'Browser surfaces'; anti-patterns.md 'Colour and surface'; technical-qa.md typography; resources/inspiration.md 'Writing on craft'; realtime-3d.md §2 (a fidelity pass for 3D only)",
+  "quote": "Polished | the invisible details are right: alignment, radii, timing, states, copy | the design QA matrix in `visual-qa.md`",
+  "gap": "A dedicated fidelity pass exists only for real-time 3D. For 2D UI there is no polish step in the phases. 'Cheap' is described only as generated tells (ghost card, glow, gradient text), never as a positive craft list a senior would run. Missing items: optical alignment of icons and glyphs; icon stroke and size matched to the text; one icon family; layered, tinted shadows with one light direction; border alpha that holds on every surface; image sharpness, retina and compression artefacts; focus-ring offset; press and hover timing; optical sizes and numeric kerning; hairline pixel snapping. The craft sources (Rauno Freiberg, Emil Kowalski, Jakub Krehel) are listed but never turned into checks. audit.mjs measures only widows, concentric radii, 1–4 px edge drift and dead bands.",
+  "risk": "A 'make it premium' job, which the skill is written to trigger on, ends with every critique check answered 'yes' and a page that is correct but reads mid-market: icon weights that don't match, flat single-layer shadows, soft images and glyphs a few pixels off."
+ },
+ {
+  "topic": "UI libraries for hard problems (command palettes, dnd, node editors, rich text, canvas editors, timelines, image editing, upload, virtualization, whiteboards)",
+  "level": "skipped",
+  "where": "resources/libraries.md 'Tables, forms, feedback, pickers' (command palette row; React Aria 'DnD' named in passing); performance.md §2 and responsive.md §6 name virtualisation as a technique with no library. Nothing for drag and drop, node editors, rich text, canvas editors, timelines, image editing or cropping, upload, or whiteboards.",
+  "quote": "Command palette | cmdk works but is dormant (1 commit in a year); Base UI or React Aria Autocomplete for new palettes",
+  "gap": "A senior design engineer would know the options and their traps: dnd-kit, Pragmatic drag and drop or React Aria DnD; xyflow (React Flow) for node editors; ProseMirror/Tiptap or Lexical for rich text; Konva, Fabric or PixiJS for canvas editors; tldraw (under its own licence terms) or Excalidraw for whiteboards; TanStack Virtual for long lists; Uppy or FilePond for resumable upload; plus cropper, timeline and calendar libraries. Each comes with licence, maintenance and accessibility status. The repo's own research/stage2/experiments/S4-capability-catalogue already measures 24 such categories (licence, activity, size, a11y demos), but none of it has reached the skill. Even the palette advice has no measured size or accessibility evidence, unlike the primitives table.",
+  "risk": "When a redesign needs a kanban, a builder, a rich-text field or a list of 5k rows, the agent either builds it by hand or picks a library from memory. Built by hand: broken keyboard and touch, no single-pointer drag alternative, no virtualisation, and INP failures. From memory: an unchecked licence or a dead package, which is exactly what resources/ exists to prevent."
+ },
+ {
+  "topic": "Capability discovery before building complex UI",
+  "level": "shallow",
+  "where": "SKILL.md Phase 5; implementation.md 'Ground rules'; resources/README.md 'How to check a resource you find'; design-systems.md §1; discovery.md §5b step 2 and §6; scripts/fonts.mjs (capability discovery, for fonts only)",
+  "quote": "add a dependency only when a capability genuinely needs it and its licence, size and maintenance are checked (`resources/`)",
+  "gap": "The check procedure (npm view, npm pack plus the shipped LICENSE, git log activity) covers licence and maintenance, not capability. No step, before a complex widget is built, lists what it must do and tests two or three candidates in a throwaway spike. The capabilities in question: touch, keyboard and screen reader; controlled state; undo integration; virtualisation; RTL; SSR; collaborative edits; mobile gestures. The skill does exactly this for typefaces with fonts.mjs ('what a font can do before you choose it') and never for widgets. §5b's 'research it as a product' is about interaction feel, not technical capability.",
+  "risk": "The agent finds out mid-build that its approach cannot drag on touch, reorder by keyboard or handle 10k items. It then rebuilds late or ships the gap, or hand-builds something a mature library already solves with better accessibility."
+ },
+ {
+  "topic": "Design-engineering architecture (component and rendering boundaries, animation orchestration, tokens, state)",
+  "level": "shallow",
+  "where": "design-systems.md §2 (tokens: strong); implementation.md 'Order of work', 'Engineering discipline'; web-design.md §5 and performance.md §2 (islands, lazy heavy libraries); motion.md §4–5; app-ui.md §4 (state in the URL); scripts/motion.mjs (present but documented nowhere)",
+  "quote": "Every mature system uses three tiers under different names — primitive → semantic → component",
+  "gap": "Tokens are specific: three tiers, one naming grammar, named state tokens, DTCG, density through data-density. Everything else is thin:\n- Component boundaries stop at 'appears in two or more places'.\n- Rendering boundaries stop at 'islands for widgets'. Nothing on server/client splits, where a canvas or WebGL layer sits relative to the React tree, or hydration cost per boundary.\n- State is 'state in the URL' plus local storage for configurations. Nothing on server state vs client state, stores outside React for per-frame updates, derived state, or reconciling optimistic updates.\n- Animation orchestration has tokens and per-animation lines but no sequencing model: who owns a multi-step sequence, and how it is cancelled and interrupted.\nscripts/motion.mjs, an 814-line checker of a 'motion spec', appears in neither the SKILL.md nor the tools.md script table. Its header cites a 'motion.md §2, \"The motion spec\"' section that does not exist.",
+  "risk": "Ambitious builds end up with state duplicated across URL, component state and a canvas scene, animations that fight when interrupted, and INP or hydration costs from wrongly placed boundaries. The one tool that could verify motion against a spec is never run, because nothing points to it."
+ },
+ {
+  "topic": "Configurators (vehicles, shoes, furniture, food, avatars): options, constraints, live price, persistence, mobile",
+  "level": "shallow",
+  "where": "discovery.md §3 (configuration variables), §5 (Configurators), §5b, §5c; templates/PRODUCT.md 'The configurable thing'; anti-patterns.md 'Product flows and configurators'; categories.md Ecommerce and Signature playbooks; ui-ux.md §7b; realtime-3d.md",
+  "quote": "Keep it in the URL and in local storage, and audit mid-configuration states by seeding them with `--storage`.",
+  "gap": "There is real substance for made-to-order goods, all from one bakery project: the dependency graph sets the disclosure order, the customer's words beat trade terms, options are shown as pictures of that option, the preview is pinned on phones, prices come only from the owner's numbers, and choices survive in the URL and local storage. Car, shoe, furniture, food and avatar configurators also need:\n- Constraint UX for incompatible options: hide, disable with a reason, or auto-resolve with a visible notice and undo.\n- A rules and variant model: option → SKU mapping, and a versioned configuration schema so saved and shared links survive catalogue changes.\n- A preview asset strategy: layered 2D compositing vs pre-rendered permutations vs real-time 3D, with the combinatorics and budget of each.\n- Live-price mechanics: breakdown, delta per option, tax and currency.\n- Save, share and compare.\n- Swatches built as radio groups with names, not colour alone.\n- Drop-off measured per chapter.",
+  "risk": "A furniture or car configurator ships with options that silently invalidate earlier picks and share links that break after a catalogue change. Its image permutations blow the asset budget, and its swatches are unusable by screen-reader and colour-blind users."
+ },
+ {
+  "topic": "Consumer editor UX (canvas vs inspector, toolbars, layers, selection, snapping, shortcuts, autosave)",
+  "level": "shallow",
+  "where": "ui-ux.md §7b 'Direct manipulation on a canvas'; app-ui.md §6 (the only save rule) and §8 (a real default); accessibility.md §2 (drag alternatives) and shortcuts rules; lessons.md 2026-09-26 Cake Junction rows",
+  "quote": "Tell a tap from the end of an orbit by pointer travel (about 6 px, the value the Cake Junction builder used).",
+  "gap": "Six rules backed by evidence, plus a scripted gesture test: don't move the canvas under the pointer; a tap-vs-orbit threshold; one history entry per gesture; a ghost for dragging; a single-pointer alternative; a beautiful default. Absent:\n- a layout model for canvas, inspector and toolbar (persistent vs contextual toolbars; where tools live on a phone vs a desktop);\n- a layers panel and z-order; multi-select by shift-click and marquee; transform handles;\n- snapping and smart guides with thresholds; arrow-key nudge (1 px / 10 px);\n- the standard shortcut map (undo/redo, Delete, duplicate, copy/paste, space-drag pan, pinch or ⌘-scroll zoom, zoom to fit);\n- keyboard access to canvas objects;\n- autosave with a visible status, version history, and conflicts across two tabs.\nThe only save rule, 'never mix auto-save and explicit save in one form', is written for forms.",
+  "risk": "Editors built with the skill feel like demos: no snapping, no multi-select, unfamiliar shortcuts, and work lost when a tab closes. Users compare them with Canva or Figma and read them as amateur."
+ },
+ {
+  "topic": "Undo/redo architecture (command pattern, snapshots, patches, event sourcing)",
+  "level": "principle-without-implementation",
+  "where": "ui-ux.md §7b ('One history entry per gesture'); realtime-3d.md §7 (a template replacement goes through the same undo history); app-ui.md §7b and §10 (optimistic updates with undo; offline actions undoable). No architecture anywhere.",
+  "quote": "Record the undo point when a drag or slider gesture starts, update without history while it moves, and commit on release, so one undo reverses the whole gesture.",
+  "gap": "The skill requires undo in several places but never says how to build a history.\n- It offers no choice between command objects (do/undo pairs), full snapshots, structural sharing, Immer patches with inverse patches, or event sourcing, nor their memory and correctness trade-offs.\n- It has no rules for what enters history: selection-only changes neither add a step nor clear redo; undo restores selection and viewport; when the redo stack is cleared; history limits; transactions that group actions; remote or collaborative changes kept out of the local stack; history kept across reloads.\nThe repo's research/stage2/experiments/S5-configurators-editors already benchmarks naive snapshots, Immer patches, Immutable and Yjs strategies behind one interface, with excalidraw and tldraw selection rules. None of it is in the skill.",
+  "risk": "Undo that reverts only the selection, loses redo on a click, breaks after a template swap, grows memory without bound on big scenes, or corrupts state when a remote change interleaves. None of these shows in a screenshot or in the critique."
+ },
+ {
+  "topic": "Maintainability of ambitious front ends (scene architecture, asset pipelines, state)",
+  "level": "shallow",
+  "where": "realtime-3d.md §3 (benchmark harness, failed-experiment log, flags), §5 (offline pipeline), §6; motion.md §9 (gltf-transform, budgets); discovery.md §5c (a version field on the saved document), §7 (project memory)",
+  "quote": "A repeatable pipeline before the second asset (source → bake → LODs → validate → compress → budgets → hashed files → manifest → loader), never one-off exports.",
+  "gap": "The asset pipeline and benchmark discipline are specific. Scene architecture is absent: how to structure a three.js or R3F scene; keeping the document model apart from the render layer; keeping per-frame updates out of React re-renders; disposing geometries, textures and materials, and detecting leaks; loading and unloading by route; testing a scene deterministically with fixed seeds and golden captures at fixed camera angles. The 'build script that fails when an asset is over budget' is described but no such script ships in scripts/. State gets one sentence, the version field.",
+  "risk": "The signature experience works on day one and becomes unmaintainable by the third iteration. Memory leaks appear on route changes, scene code tangles with UI state, and budgets creep because the check is prose, so a later session cannot change it safely."
+ },
+ {
+  "topic": "Ambition calibration (from clean functional to game-like/immersive)",
+  "level": "shallow",
+  "where": "SKILL.md Phase 0 'Signature experience or supporting feature?'; framing.md §1–2 (posture, intensity); categories.md dials ('Novelty' row) and the Signature playbook; discovery.md §5b (quality bar), §5c; lessons.md 2026-09-26/27/28 Cake Junction rows",
+  "quote": "The signals are that the user calls it a defining reason for the site, compares it to software people love, or describes a \"wow, what is this?\" reaction.",
+  "gap": "Calibration is a binary (supporting vs signature) plus three intensities. There is no ladder between clean-functional and game-like: static → micro-interaction → interactive 2D → illustrated or game-like 2D → 3D viewer → real-time 3D world. There is also no step to show the user two or three levels, with references and cost, risk and time, before committing. Nothing says when illustrated, game-like 2D beats 3D, although the lesson log records exactly that result: a game-like illustrated experiment beat the 3D Studio and became the product. The only rendering path documented for signature experiences is realtime-3d.md.",
+  "risk": "The agent either under-builds (shrinks the feature to a form, as happened once) or over-builds (jumps to real-time 3D because that is the only playbook). It finds the right level only after the user rejects a full build, which the lesson log shows happening twice."
+ },
+ {
+  "topic": "Avoiding technology-driven design (requirement first)",
+  "level": "known-well",
+  "where": "motion.md §1–2 (every animation names its job; gates), §9 ('3D earns its place' and gates); anti-patterns.md 'Purpose-gated techniques'; implementation.md ground rules; discovery.md §5b.6 and §6 (requirements table before scaffolding); realtime-3d.md §8",
+  "quote": "If a photograph, a short video or an image sequence answers the question, use that.",
+  "gap": "The gates are decision-grade for effects on pages: a job per animation, a written reason per purpose-gated technique, 3D only with a real asset and every fact also in text, never a dependency for what CSS can do, a requirements table before scaffolding. What is missing is a requirement-first choice of rendering technology for interactive products (DOM, SVG, Canvas 2D, WebGL, illustrated sprites), driven by object count, fidelity, input, device and who maintains it. SKILL.md's knowledge-base table routes any 'configurator, builder or 3D viewer' to realtime-3d.md, which presumes 3D.",
+  "risk": "A configurator that needed layered 2D images gets a three.js scene, with its weight, phone thermals and maintenance cost, because the only signature playbook is 3D."
+ },
+ {
+  "topic": "Moodboards and reference collection (vocabulary, inspiration vs imitation)",
+  "level": "shallow",
+  "where": "research.md (choose by problem; per-reference notes; take/leave; stop rule); art-direction.md §2 (style tiles, element collages), §3 (direction families as vocabulary); resources/inspiration.md 'Using references without becoming derivative'; templates/DESIGN.md References table",
+  "quote": "The output is a short take/leave table, not a mood board to copy.",
+  "gap": "Reference collection is strong: 4–8 references chosen by problem, a mix that includes one contrary reference, measured with dembrandt and audit.mjs, recorded as taken vs deliberately not taken, a stop rule, and no brand-clone files. Moodboarding is rejected rather than taught. There is no cross-discipline visual research (photography, film stills, architecture, packaging, signage, material samples) for building a visual vocabulary. Style tiles and element collages are named but have no template, size, tool or render step; compare.mjs --grid could build them but is never pointed at references. Boards have no annotation discipline saying what each image is for (light, crop, texture, colour proportion).",
+  "risk": "Directions come from words and web pages only, so they stay inside web idioms and the model's prior. The style-tile step gets skipped or improvised, so the Phase 3 blur against the ledger has no real tile to blur."
+ },
+ {
+  "topic": "Curated inspiration sources per area",
+  "level": "shallow",
+  "where": "resources/inspiration.md (galleries, design systems, open-source products, craft writing); research.md reference mix; categories.md cites Baymard",
+  "quote": "Mobbin | free tier very limited; Pro paid | real app flows (onboarding, settings, empty states), web and mobile | the best source for app *patterns*",
+  "gap": "Good for app patterns (Component Gallery, Mobbin, Refero, Page Flows), marketing (Siteinspire, Land-book, Godly/Awwwards) and design systems and open-source products. There are no curated sources for the areas the skill claims to handle ambitiously: 3D/WebGL and configurators, editors and creative tools, game UI (e.g. Game UI Database), motion, typography in use, illustration, mobile consumer, and dataviz beyond FT and Datawrapper. research.md tells the agent to study 'ring and sofa configurators, invitation personalisation, tradespeople's quote flows' but names no source.",
+  "risk": "For signature or niche work the agent searches ad hoc or from memory, lands on glamour galleries and imports spectacle, which inspiration.md itself warns against ('beware importing spectacle into products')."
+ },
+ {
+  "topic": "Critique methodology",
+  "level": "known-well",
+  "where": "visual-qa.md 'Critique (Phase 7)' and 'Task walkthroughs'; templates/critique.md; SKILL.md Phase 7; audit.md §6 (heuristic passes, severity 0–4, cognitive walkthrough); lessons.md fresh-review row (research experiment L)",
+  "quote": "A \"yes\" names a capture file and what in it shows the answer — and is then hunted",
+  "gap": "The method is strong: a first impression written before reading the direction; objective → element → effect → why; removal, swap and blur variants from capture.mjs and compare.mjs; evidence per answer; a required fresh-context reviewer; at most three rounds with re-scoring; walkthroughs with dead-tap counts. Gaps:\n- Critique findings carry no severity (only the audit rates 0–4), so a cosmetic 'no' and a task-blocking 'no' weigh the same.\n- The template has no row judging a signature route against its own experiential quality bar, and interaction feel is not checked from filmstrips.\n- There is a single reviewer and no way to handle disagreement.\n- There is no step with real users; the walkthrough is correctly labelled 'not a usability test'.",
+  "risk": "Signature experiences pass critique without ever being judged against the bar they were built for, and rounds get spent on cosmetic 'no's while a serious one waits."
+ },
+ {
+  "topic": "Visual-quality evaluation without fake scores",
+  "level": "known-well",
+  "where": "SKILL.md commitment 4 and the Scripts section; visual-qa.md; templates/critique.md checks 12–14 and 22; compare.mjs --blur and --grid; capture.mjs --variant",
+  "quote": "Scripts report facts, not taste. A clean audit is not a good design, and a signal is a question to answer, not a rule to obey.",
+  "gap": "There are no numeric aesthetic scores. Judgements are yes/no/partial tied to named captures, plus squint (blur) sheets, removal variants and blurred comparison with past outputs from the ledger. What is thin is check 22 ('hold up beside the Phase 2 references in finish, restraint and hierarchy?'), which has no protocol: no same-width sheet beside the references, no pairwise comparison of candidate directions. Five-second tests and 'two people outside and two inside the market' are recommended, but the agent cannot run them and is not told to report them as not done.",
+  "risk": "The one judgement about finish, beside the references, turns into opinion, and candidate directions are chosen by narrative rather than by a structured side-by-side comparison."
+ },
+ {
+  "topic": "Failure cases (redesigns that got worse, beautiful but unusable, over-minimalism, hidden navigation, 3D hurting conversion)",
+  "level": "shallow",
+  "where": "lessons.md (the skill's own failures); anti-patterns.md (refresh, prior, 'a site made only of type, rules and data fragments'); framing.md §3; design-theory.md A1 (aesthetic–usability caveat); responsive.md §5 and ui-ux.md §6 (hidden navigation, hamburger); motion.md §9 ('3D is decoration'); performance.md intro",
+  "quote": "hidden navigation is used far less than visible navigation — show the top 3–5 destinations when you can and hide only the long tail",
+  "gap": "The skill's own failures are logged thoroughly (30+ lesson rows), and several failure modes have rules: attractive-but-inappropriate, attractiveness masking real problems, hidden navigation, 3D as decoration, the over-minimal type-only site. Missing is the external canon a senior cites: documented redesigns that lost users or revenue and why (learned locations removed, signifiers lost in flat UI, ghost buttons, low-contrast minimalism, mystery-meat icons, hero carousels), and evidence on when 3D or AR helps or hurts conversion against its load cost. The operational defences are missing too: staged rollout, opt-in beta, A/B or holdout, post-launch metrics, rollback criteria. framing.md only asks 'can it be A/B tested'; Phase 8 plans no measurement after launch.",
+  "risk": "The skill guards against its own past mistakes but can still ship a textbook redesign failure it has never met, and it hands off with no plan to detect a drop in conversion or task success after launch."
+ },
+ {
+  "topic": "AI frontend workflows (skills, rules, design-review agents, screenshot-to-code, browser automation)",
+  "level": "shallow",
+  "where": "SKILL.md Phase 7; visual-qa.md \"Critique (Phase 7)\" step 1; art-direction.md §2 (subagent directions); discovery.md §7 (CLAUDE.md, progress.md, todo.md); realtime-3d.md §9 (parallel agents); resources/tools.md \"Detectors and review skills\", \"Browser tools for agents\"; all Playwright scripts",
+  "quote": "When a subagent tool exists, a fresh-context reviewer is required — a subagent given only the brief, the direction from `DESIGN.md` and the capture paths, state captures included.",
+  "gap": "Two parts are strong and backed by evidence: the design-review agent protocol (experiment L) and browser automation, which runs through every script. The rest is missing. There is no screenshot-to-code or reference-to-code loop: nothing on giving the model a reference frame or Figma node and converging on it with an overlay or diff. There is no design-tool bridge: nothing on Figma or Dev Mode MCP, Code Connect, or pulling variables and components from the file; DTCG gets one line. There are no project rules that keep an agent on the system across sessions, such as stylelint or eslint rules against raw hex and px, or hooks that run audit.mjs on each edit. Nothing covers the limits of model vision: tall captures get downscaled, so small text should be read from 1:1 crops. impeccable, gstack /design-review, Playwright MCP and DevTools MCP get one line each, with no sign any was run.",
+  "risk": "In a Figma-led project the agent rebuilds from screenshots it eyeballed instead of the file's variables and components, and the build drifts from the design. In later sessions new code brings back raw values that no lint catches. A \"looks fine\" verdict on a downscaled 390×12000 capture misses the 1–4 px and 12 px defects the skill says it checks."
+ },
+ {
+  "topic": "Screenshot-driven iteration loop across devices",
+  "level": "known-well",
+  "where": "SKILL.md Phases 6–7; visual-qa.md \"Capturing reliably\", \"Verify the verifier\", \"Flows\", \"Task walkthroughs\", \"Critique\" (bounded rounds); scripts/capture.mjs (grow/decode/fold/element 3×/variants), compare.mjs (sheets, blur), states.mjs (--each, tap rings, dead-tap detection)",
+  "quote": "Fix and re-capture; do not close a loop on the assumption that a change did what you intended.",
+  "gap": "Everything runs in Chromium with mobile emulation. lib/env.mjs launches only chromium, and responsive.md admits that WebKit descriptors are reused on Chromium. So the loop never sees iOS Safari (URL-bar and keyboard viewport changes, safe-area insets, which are 0 in emulation, WebKit rendering) or Firefox. There is no real-device step except for GPU work. Nothing says how to feed captures to a vision model, such as tiling tall full-page shots or judging 1:1 crops; \"may need splitting\" appears only for the report to the user.",
+  "risk": "A layout signed off at 390 in Chromium breaks on an iPhone: a sticky CTA hidden under the toolbar or keyboard, or the notch overlapping the header. Tall phone captures are judged after downscaling, which hides the small misalignments the loop is meant to catch."
+ },
+ {
+  "topic": "Visual regression tooling (Playwright screenshots, pixelmatch, BackstopJS, Loki, Storybook)",
+  "level": "shallow",
+  "where": "resources/tools.md \"Visual regression and comparison\"; scripts/compare.mjs --diff; states.mjs (pixelmatch only for dead-step detection); visual-qa.md \"Flows\" (keep the walk as a Playwright e2e test)",
+  "quote": "Playwright's `toHaveScreenshot` (in projects already on Playwright Test); pixelmatch + pngjs (in `compare.mjs`); odiff, reg-cli (MIT, Wasm-backed); BackstopJS and Lost Pixel (MIT; quiet since 2024).",
+  "gap": "compare.mjs --diff is a one-off pixel count: threshold 0.1, no pass/fail exit code, no masks for dynamic regions, and when image sizes differ it silently compares only the overlap. Storybook, Loki and Chromatic are absent, and so is any component-state story approach. There is no determinism recipe: fonts awaited, animations frozen, clock and data fixed, one OS and engine in Docker, a baseline per theme and width. At hand-off the skill leaves an axe test and a flow test in the project, but no snapshot suite that locks in the new look.",
+  "risk": "The redesign's look regresses silently in the next sprint. A diff between captures of different heights shows only the overlap, so content pushed down never appears. Any suite the user adds later flakes on fonts and animation and gets switched off."
+ },
+ {
+  "topic": "Responsive testing across continuous width ranges (not only 375/768/1440)",
+  "level": "principle-without-implementation",
+  "where": "responsive.md §1 (intrinsic layout, container queries), §7 (which widths), §8 (the pass); web-design.md §4; capture.mjs/audit.mjs --widths lists",
+  "quote": "Breakpoints go where the content breaks; for app shells align with window classes: compact < 600 · medium 600–839 · expanded 840–1199 · large ≥ 1200.",
+  "gap": "The intrinsic-layout principle is right (Every Layout primitives, container queries, breakpoints from content). Verification, though, is at named widths only: 320/360/390/412/768/820/1024/1280/1366/1440/1536/1920. There is no sweep (for example 320→1920 in 10–20 px steps, running the overflow, clipping and nowrap probes at each step and capturing only where a probe changed). There is no resize-drag check, and no sweep of a component across the slot widths its container queries serve. The repo's research has responsive-sweep.mjs, but it is still 16 discrete classes and does not ship with the skill.",
+  "risk": "Breakage lands at widths nobody captured: 900–1000 px tablets and split screens, 1100 px laptops with a sidebar open, 600–700 px foldables. That is where a two-column hero squeezes or a nav overlaps just before it collapses, and a container-query card breaks in a slot width no page exercises."
+ },
+ {
+  "topic": "Real-content stress (long/short strings, missing images, huge/negative numbers, localisation, 0/1/many, errors, slow network)",
+  "level": "shallow",
+  "where": "app-ui.md §2 (content extremes); visual-qa.md \"The design QA matrix\"; framing.md §5 \"Reality\"; audit.md §5; multilingual.md §1; states.mjs (route fixtures, delay, abort, status 500, offline); perf.mjs (throttling)",
+  "quote": "Also render the **content extremes**: 0, 1, typical and 100+ items; 1-character and 70-character names; long words and URLs; missing images; large numbers and currencies; non-Latin text; RTL if supported.",
+  "gap": "The list is right, and states.mjs can mock data states, but nothing generates the extremes. Missing: a pseudo-localisation or DOM text-injection pass (+30–40% expansion, accents, brackets); fixture recipes for null, NaN, negative, 12-digit, emoji and combining-mark values; a documented way to break images (aborting image globs works but is never shown); and global CPU or network throttling in states.mjs, which has only a per-route delay. states.mjs runs axe on each state but not audit.mjs's clipped-text and overflow probes, so a stress state is only as good as the eye that inspects it. CSS rules for surviving long content (overflow-wrap: anywhere, line-clamp with the full text reachable) are only partly there.",
+  "risk": "A German label, a 70-character customer name or a negative balance clips inside a fixed-height pill in a state capture nobody inspects closely. The run still passes, because the clip probes never ran on that state."
+ },
+ {
+  "topic": "RTL and Arabic at component level (icons, breadcrumbs, forms, tables, charts, navigation, bidi, mirroring)",
+  "level": "shallow",
+  "where": "multilingual.md §1, §2, §2a, §4; implementation.md \"RTL-ready\"; audit.mjs + lib/inventory.mjs (digit mixing, numeric column alignment, type=number on RTL, untranslated strings); a11y.mjs (language of parts)",
+  "quote": "Implement with `:dir(rtl) .icon-dir { transform: scaleX(-1) }` or the set's own prop (Phosphor's `mirrored`).",
+  "gap": "Numbers, bidi marks, digit systems, calendars, numeric-column alignment and the icon-mirroring list are measured and excellent. Component behaviour beyond them is not covered: breadcrumb separators and prev/next pagination; APG arrow-key semantics in RTL (Left means next for tabs, sliders and carousels); translateX slide and drawer animations and box-shadow offsets, which logical properties do not flip; LTR data fields inside RTL forms (email, URL, IBAN, phone) and dir=\"auto\" on user text; the direction of range sliders and progress; chart legend and axis placement beyond the time axis; carousel swipe direction. No script flags physical properties or unmirrored directional icons. The checklist asks for a capture \"with `dir` toggled\", but capture.mjs has no such flag.",
+  "risk": "An Arabic build passes every script while chevrons, drawer entrances and tab arrow keys run backwards, and email or IBAN fields render as scrambled bidi text."
+ },
+ {
+  "topic": "Mobile product design (thumb zones, bottom nav, sheets, gestures, keyboard, safe areas, offline, iOS/Android conventions)",
+  "level": "shallow",
+  "where": "responsive.md §3–§6; categories.md \"Mobile-first consumer\", \"Field and frontline tools\"; app-ui.md §7b; ui-ux.md §6, §7b; technical-qa.md implementation checks; states.mjs tap/swipe",
+  "quote": "Virtual keyboard: by default a fixed bottom submit bar stays *under* the keyboard. For forms with sticky actions, `interactive-widget=resizes-content` (Chromium/Firefox Android) plus the VisualViewport API on iOS.",
+  "gap": "The web-mobile rules are solid: Hoober evidence rather than thumb-zone folklore, at most five tabs, 44 pt / 48 dp targets, safe-area CSS, inputmode and enterkeyhint, offline and freshness honesty. Missing: a bottom-sheet behaviour spec (detents, drag-to-dismiss velocity, nested scroll, iOS scroll lock); system back and gesture handling (a history entry so Android back or an iOS edge-swipe closes the overlay rather than leaving the page, and edge-swipe conflicts); PWA and standalone display-mode, and status-bar theming; a pull-to-refresh policy; haptics; where iOS HIG and Material patterns diverge. Every rule is verified only in Chromium emulation, where env() insets are 0 and no virtual keyboard appears.",
+  "risk": "On Android, pressing back on an open sheet leaves the whole flow. Sticky CTAs sit under the iOS keyboard or home indicator, and the notch overlaps headers. All of this ships because the only test environment cannot reproduce it."
+ },
+ {
+  "topic": "Progressive enhancement and degradation tiers (strong, average, low-power, reduced motion, no WebGL)",
+  "level": "principle-without-implementation",
+  "where": "realtime-3d.md §6; discovery.md §5b step 5; motion.md §6 and §9 (\"Failure path\"); implementation.md \"The reveal, written safely\"; audit.mjs no-JS and reduced-motion renders; motion.mjs",
+  "quote": "Tiers change **resolution, effects and tessellation, never the look**: the same lights, materials and composition on every tier, so the lowest tier still looks intentional.",
+  "gap": "Reduced motion and no-JS are implemented and checked (motion.mjs, audit.mjs); tiers are not. Missing: device-classification code (deviceMemory, hardwareConcurrency, the GPU renderer string, failIfMajorPerformanceCaveat); step-down thresholds (for example, p95 frame time over N continuous frames, with hysteresis); webglcontextlost and restore handling; Save-Data, prefers-reduced-data or Low Power Mode heuristics; a tier matrix for rich effects outside 3D (video backgrounds, backdrop blur, Lottie); a URL flag that forces a tier so each tier can be captured. \"Start from a device guess (touch, memory)\" is the whole of the detection guidance, and \"if WebGL fails, keep the poster\" gives no way to detect the failure.",
+  "risk": "In practice a signature experience ships with one tier. Low-end Androids and phones in Low Power Mode get the high tier, stutter, heat up, and lose the GL context to a black canvas. No capture ever shows what the low tier looks like."
+ },
+ {
+  "topic": "Performance budgets for rich experiences (bundle, textures, memory, CPU/GPU, thermals)",
+  "level": "shallow",
+  "where": "performance.md §1 (signature column; pages around a signature product), §2; motion.md §9 (asset budgets); realtime-3d.md §3–§5; visual-qa.md \"3D and WebGL experiences\"",
+  "quote": "Budget: ≤ ~1.5 MB GLB for a product model, textures ≤ 2048² (1024² on mobile).",
+  "gap": "Bundle, image, font and texture budgets have numbers, and the KTX2-vs-WebP reasoning (16 MB decoded for one 2048² texture) is sound. Per-frame and device budgets do not exist. Missing: a split of the 16.7 / 8.3 ms frame between JS and GPU with headroom; caps on draw calls, triangles and materials per tier; a GPU-memory or JS-heap ceiling (iOS Safari reloads tabs under memory pressure); a sustained-load thermal test (a 10-minute run watching frame-time drift). Nothing measures these: the benchmark harness and \"a build script that fails\" are described but not shipped, and performance.md admits that requestAnimationFrame at rest and layer counts are checked by hand in DevTools.",
+  "risk": "A configurator meets its transfer budget, then crashes or throttles on a mid-range phone after a few minutes of use. Draw-call and texture-memory regressions between iterations go unnoticed."
+ },
+ {
+  "topic": "Loading experiences (skeletons, progressive assets, staged scenes, how games hide loading)",
+  "level": "shallow",
+  "where": "app-ui.md §8; ui-ux.md §4; motion.md §5 \"Loading\", §6, §9 \"Poster first\"; realtime-3d.md §7 (poster → live hand-over); art-direction.md §4; performance.md §2–§3",
+  "quote": "under 1 s show nothing — but *lay out* the skeleton from first paint (in the server or static HTML, `visibility: hidden` until 1 s), so the space is reserved",
+  "gap": "Conventional loading is specific: time thresholds, skeletons shaped like the final layout, spinner delay and minimum display time, the poster as the LCP, warming on intent, no engine boot during a morph. Missing: progressive asset delivery (LQIP, blur-up or dominant-colour image placeholders; low-res textures or LODs streamed and then swapped); a staged scene boot (interactive shell → geometry → materials → post-processing, each reported); shader and pipeline pre-compilation (three.js compileAsync) to avoid hitches on first interaction; the game patterns for hiding load (give the player something to do while content streams, load behind a menu or camera move, progress weighted by bytes).",
+  "risk": "The poster hands over to a canvas that hitches for a second or more on the first orbit while shaders compile. Mid-range phones sit through a long blank or spinner stage, and image-heavy pages flash empty boxes."
+ },
+ {
+  "topic": "Off-main-thread work (Workers, OffscreenCanvas, WASM)",
+  "level": "recommended-untested",
+  "where": "performance.md §2 (the filters row) and §5; motion.md §7; realtime-3d.md §7",
+  "quote": "Yielding once does not free the thread for the *next* input; chunk long work or move it to a Worker.",
+  "gap": "scheduler.yield is measured (INP 376 → 24 ms), but Workers are only named. Nothing covers: when a Worker pays off (structured-clone cost against transferables); RPC helpers such as Comlink; SharedArrayBuffer and its COOP/COEP requirement; OffscreenCanvas via transferControlToOffscreen for 2D and WebGL rendering, and where it is unsupported; WASM for heavy compute (image processing, geometry, parsing); moving procedural geometry and asset decoding off the main thread. WASM appears only as a runtime size cost. The repo has a stage-2 lab, research/stage2/experiments/S1-rendering-lab (with a canvas2d-worker variant), that measured OffscreenCanvas in a worker, but none of it is cited in or distilled into the skill.",
+  "risk": "Procedural generation, large filters and decoding block input; the morph that stretched from 0.56 s to 3.8 s is exactly this. INP fails, and the agent guesses at Worker plumbing without knowing what it costs."
+ },
+ {
+  "topic": "Product types coverage: SaaS, dashboards, ecommerce, mobile apps, white-label, POS, marketing, configurators",
+  "level": "shallow",
+  "where": "framing.md §1; categories.md (the dials and twelve playbooks); app-ui.md; discovery.md §5–§5c; realtime-3d.md",
+  "quote": "Farm, warehouse, clinical, site, retail-floor and delivery tools: a phone or rugged tablet used many times a shift, one-handed or gloved, in glare, noise or cold, with patchy signal and constant interruption.",
+  "gap": "Marketing, SaaS, dashboards, ecommerce, enterprise, docs, fintech, mobile-first web, field tools, content, public services and configurators each have dials and numbers. Three types are absent. White-label and multi-tenant products: per-tenant brand tokens with contrast guaranteed whatever colour a tenant uploads, logo slots, and what tenants may and may not theme. POS and kiosks: fixed landscape touchscreens, speed of service, cashier versus customer-facing displays, receipts, offline card fallback, attract loops, reach ranges for standing users. Native mobile apps: the skill is web-only, with one line on Konsta, Ionic and Capacitor.",
+  "risk": "A white-label redesign hard-codes one brand's palette and fails contrast the day a tenant sets yellow. A POS screen gets either desk density or the field profile, and neither was built for a cashier with a queue."
+ },
+ {
+  "topic": "Typography including Arabic and numeric content",
+  "level": "known-well",
+  "where": "design-theory.md Part C and Part D (Typography); multilingual.md §2–§2a; resources/type-and-colour.md; performance.md §4; scripts/fonts.mjs (tabular figures per digit system, --fallback metrics); audit.mjs number checks; lib/saturated-fonts.json",
+  "quote": "Write `ar-SA-u-nu-latn` or `ar-SA-u-nu-arab` — never rely on the region.",
+  "gap": "Arabic vertical metrics are missing: harakat and tall ascenders get clipped by a line-height ≤ 1.2 or fixed-height pills, and fonts.mjs reports x-height and cap-height but not ascent and descent against the line box. Also missing: mixed-script baseline and line-height when Arabic and Latin share a line; Nastaliq for Urdu, whose vertical extent is very large; kashida versus justification; currency glyph coverage, such as the new Saudi riyal sign (Unicode 17), which needs a font that has it or an explicit fallback. No check detects clipped diacritics.",
+  "risk": "Arabic labels lose their dots and marks inside buttons, chips and table rows, and the riyal sign renders as tofu on an invoicing screen. The scripts pass, because none of them measures glyph extents."
+ },
+ {
+  "topic": "Colour and design systems",
+  "level": "known-well",
+  "where": "design-theory.md Part B and Part D (Palette); design-systems.md §2–§7; scripts/palette.mjs, contrast.mjs; templates/SYSTEM.md; dataviz.md §5; resources/type-and-colour.md \"Colour tools\", \"Data palettes\"",
+  "quote": "Steps 11 and 12 are *solved*, not guessed: the darkest lightness that reaches APCA Lc 60 and WCAG 4.5:1 (step 11) / Lc 90 and 7:1 (step 12) against step 2",
+  "gap": "Nothing enforces that components use only semantic tokens, such as stylelint rules against raw colours and px values; the only check is audit.mjs's count of distinct values. Also missing: a multi-brand or multi-theme architecture (swapping the semantic layer per sub-brand or tenant, with contrast validated per theme in CI); build-pipeline guidance beyond naming Style Dictionary and Terrazzo; color-mix() and relative colour syntax for state tokens, and contrast of translucent overlays; documentation and visual tests for the component layer, as Storybook provides.",
+  "risk": "After hand-off, raw hex values creep back and a second theme or dark mode breaks on unmapped values. Nothing in CI catches it."
+ },
+ {
+  "topic": "Accessibility baseline (WCAG 2.2) for conventional UI",
+  "level": "known-well",
+  "where": "accessibility.md (all sections); ui-ux.md §8; technical-qa.md \"Accessibility\"; scripts/a11y.mjs (WCAG SCs per section), widgets.mjs, audit.mjs (axe), states.mjs --axe",
+  "quote": "axe alone raised 35–40%; four rule engines together (axe, HTML_CodeSniffer, Lighthouse, IBM Equal Access) raised 55% as failures; adding the two scripts raised 85%",
+  "gap": "What remains is real assistive technology. Every check runs in desktop Chromium, so VoiceOver with Safari (iOS and macOS), TalkBack gesture navigation, voice control, switch access and 400% zoom on a real phone are deferred to \"a recommended follow-up\". Cognitive criteria (3.3.7, 3.3.8, timeouts) are manual only. widgets.mjs covers six contracts (dialog, tabs, disclosure, live, form-errors, menu-button) but not combobox, listbox, grid, tree or slider, which are the widgets custom builds most often get wrong.",
+  "risk": "A custom combobox or data grid ships with no scripted contract check, and breakage specific to Safari or iOS (list semantics, display: contents, live regions) reaches users because no agent run can observe it."
+ },
+ {
+  "topic": "Generic-AI-aesthetic avoidance",
+  "level": "known-well",
+  "where": "SKILL.md commitments 3 and 5; anti-patterns.md (the model's prior, hard bans, purpose-gated table, app-UI tells); art-direction.md §2 and §5; ledger.md + references/ledger/*.jpg; scripts/lib/saturated-fonts.json; audit.mjs generic-look signals; compare.mjs --grid --blur; templates/critique.md",
+  "quote": "**Similar-brief test:** write one line describing what this plan would look like for a *different* company in the same category. If it is the same plan, it is the prior.",
+  "gap": "Convergence is judged by eye, from a blurred grid against a handful of the skill's own past outputs in the ledger, and by surface signals (gradient text, card counts, saturated fonts, cliché copy). Nothing measures perceptual distance against a corpus of current generated sites or category competitors. The shortlists in type-and-colour.md could become the next default: the file warns about this, but nothing tracks how often runs pick from them.",
+  "risk": "A third-generation house style forms across runs (for example, shortlist grotesks + OKLCH-tinted neutrals + a drawn glyph layer). It passes every signal, because the detectors encode only the earlier generations."
+ }
+]

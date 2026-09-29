@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top the cake – form</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Top the cake</h1>
+  <p class="lede">Choose a topping and where it goes. The picture updates as you go.</p>
+  <div class="stage">
+    <div class="wrap"><canvas id="cake" role="img" aria-label="An empty cake"></canvas></div>
+    <div class="panel" id="panel"></div>
+  </div>
+</main>
+<script type="module">
+  import { createModel } from './model.js';
+  import { createCanvasView } from './canvas-view.js';
+  import { createFormView } from './form-view.js';
+  import { createAnnouncer } from './announce.js';
+  const model = createModel();
+  const announce = createAnnouncer(document.querySelector('main'));
+  const canvas = document.getElementById('cake');
+  const view = createCanvasView(model, canvas, { juice: 'respect-reduced-motion', interactive: false });
+  createFormView(model, document.getElementById('panel'), announce);
+  model.on(() => canvas.setAttribute('aria-label', model.summary()));
+  window.__toy = { variant: 'c', model, view, ready: true };
+</script>
+</body>
+</html>
