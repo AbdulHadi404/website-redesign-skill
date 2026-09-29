@@ -8,9 +8,9 @@ Branch `claude/festive-planck-435hmn`, 2026-09-28 to 2026-09-29. Two stages: the
 - **Derive, not pick.** Direction comes from the company's own mark, words and material. Convergence toward the model's prior (and toward the skill's own past outputs) is checked by the swap test, the ledger of past outputs with captures, and a blurred side-by-side.
 - **First sites and signature experiences** (from `greenfield-discovery`): discovery when the context is thin (a social profile, a domain to learn), a product definition before the design brief, the rule that a signature experience is never shrunk to fit a website section, and what to do when an experimental prototype overtakes the original.
 - **Applications are used, not visited** (from `product-ui-mode`): density defaults, brand moments and sign-in, traps that only show while building, the seam test between the marketing site and the product, and commitment 5 (no code fonts unless the audience reads code), now enforced by `audit.mjs`.
-- **Measure what can be measured, judge the rest from renders.** Fifteen scripts, all Playwright-based and regression-tested (40 cases in CI):
+- **Measure what can be measured, judge the rest from renders.** Sixteen scripts, regression-tested in CI (N_CASES cases):
   - `capture`, `audit`, `a11y`, `widgets`, `states`, `parity`, `perf`, `contrast`, `palette`, `fonts`, `compare`;
-  - new in stage 2: `motion` (does approved motion exist and survive reduced motion), `sweep` (every width from 320 to 1920 plus zoom), `stress` (real content and real networks), `model` (what a glTF costs before it ships);
+  - new in stage 2: `motion` (does approved motion exist and survive reduced motion), `sweep` (every width from 320 to 1920 plus zoom), `stress` (real content and real networks), `model` (what a glTF costs before it ships), `libcheck` (licence, activity and size of a code library);
   - plus the stage-2 additions listed below.
 - **A fresh-context reviewer and task walkthroughs.** The builder's self-review is not evidence (experiment L: 22/22 "yes" against the reviewer's two "no" and five partials). Walkthroughs attempt the user's tasks on both builds from captures and a marked accessibility tree.
 - **Learning loop.** Corrections become lesson rows, finished outputs become ledger rows with a 720 px capture, and mechanical lessons become script checks with regression cases.
@@ -90,9 +90,18 @@ These are the findings that change a decision; the evidence is in the reports ci
     - `visual-qa.md`, `technical-qa.md`, `accessibility.md`, `motion.md`, `performance.md`.
   - Templates: `DESIGN.md`, `SYSTEM.md`, `critique.md`.
   - The ledger and lessons.
-  - The scripts and their 40 regression cases.
+  - The scripts and their regression cases.
 - **Round 4's findings**: one error-summary rule across files; focus-or-live-region in `widgets.mjs`; `a11y.mjs` audits only rendered content; request recording in `states.mjs` and `parity.mjs --payloads`/`--removed`; broken baselines named by `perf.mjs`; routes classified by their job; the accessibility statement in Phase 8.
-- **Stage 2 scripts** (landed): `motion.mjs`, `sweep.mjs`, `stress.mjs`, `model.mjs`. <!-- SCRIPTS-STAGE2 -->
+- **Stage 2 scripts (landed, each verified by a skeptic and regression-tested):**
+  - new scripts: `motion.mjs`, `sweep.mjs`, `stress.mjs`, `model.mjs`, `libcheck.mjs`;
+  - `templates/code/`: `tier.js` and `governor.js` for device tiers, `hero-effect.js` for a poster-first shader background;
+  - `audit.mjs` RTL and phone checks: a seeded bilingual page went from 0 to 22 of 24 defects found, and out of sample every fail was real. Also glyph clipping measured by ink for all scripts, concentric radii on four corners, and chart labels;
+  - `widgets.mjs`: arrow keys follow the visual arrow in RTL, plus contracts for command palettes, sortable lists, splitters, roving toolbars and sliders;
+  - `a11y.mjs`: no false failures on accessible canvas stand-ins;
+  - `capture.mjs --dir rtl` and safe-area insets;
+  - `fonts.mjs`: vertical metrics, clip floors and Arabic coverage;
+  - `palette.mjs`: the fill's label chosen by WCAG, and `--tenant`;
+  - `perf.mjs`: the load average of the machine.
 - **Stage 2 documents: not yet.** The findings are archived with an integration plan that names 31 destination files and four new references (`interactive.md`, `configurators.md`, `generative-visuals.md`, `resources/hard-ui.md`), the decisions that change existing rules, and a word budget per file. Integrating them is the next session's first task.
 
 ## Resource intelligence
@@ -170,7 +179,7 @@ Full lists are in each report.
 | Hard-UI libraries, capability discovery, design-engineering architecture | S4; libcheck landed |
 | Configurators, editors, undo/redo | S5; specified |
 | Screenshot iteration, visual regression, width sweeps, content stress | S7; `sweep.mjs` and `stress.mjs` landed |
-| RTL components, Arabic metrics, mobile, haptics | S8; script checks <!-- RTL-STATUS --> |
+| RTL components, Arabic metrics, mobile, haptics | S8; the script checks landed (`audit.mjs`, `widgets.mjs`, `capture.mjs`, `fonts.mjs`); the document rules are specified |
 | Composition and polish | S9; specified |
 | Shaders and generative visuals | S10; specified |
 | Loading, device tiers, off-main-thread | S11; specified |
