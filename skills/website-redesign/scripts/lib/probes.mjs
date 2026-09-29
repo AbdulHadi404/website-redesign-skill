@@ -142,9 +142,9 @@ export function overflowCulprits() {
  * An absolutely positioned box is clipped only by its containing block and what contains that; a fixed one by
  * nothing (transformed ancestors aside). Inline boxes and table rows ignore overflow. Body and html never count:
  * their overflow goes to the viewport, which scrolls.
- * The letters are measured as drawn: text-transform applied, small caps through the canvas's fontVariantCaps, at the
- * zoomed size under CSS zoom; under a transform that scales (a thumbnail, a slide preview) the ink scales with the
- * fragment, and text that is rotated or skewed is not judged.
+ * The letters are measured as drawn: text-transform applied (in the text's language), small caps through the
+ * canvas's fontVariantCaps; under CSS zoom or a transform that scales (a thumbnail, a slide preview) the ink scales
+ * with the fragment, and text that is rotated or skewed is not judged.
  * Each text node costs one Range: the whole string's ink is placed on every line first, and only a node that this
  * conservative estimate flags is measured again line by line (a Range per character, up to 400).
  * opts: { scripts: 'all' | 'arabic' (default 'all'), minPx: 1 (flag a cut of at least this), limit: 600 (clipped
@@ -223,9 +223,8 @@ export function glyphClipProbe(opts = {}) {
     const scroller = /auto|scroll/.test(ccs.overflowY) && clipper.scrollHeight > clipper.clientHeight + 1;
     if (scroller) { clip.top -= clipper.scrollTop; clip.bottom = clip.top + clipper.scrollHeight; }
     const c = cs(el);
-    // The font as drawn: CSS zoom scales the used size (the computed one is unzoomed), and small caps change the ink
-    const zoom = el.currentCSSZoom || 1;
-    ctx.font = `${c.fontStyle} ${c.fontWeight} ${parseFloat(c.fontSize) * zoom}px ${c.fontFamily}`;
+    // The font as drawn: small caps change the ink (a scale, from CSS zoom or a transform, is read off the fragments)
+    ctx.font = `${c.fontStyle} ${c.fontWeight} ${c.fontSize} ${c.fontFamily}`;
     if (CAPS.has(c.fontVariantCaps) && 'fontVariantCaps' in ctx) ctx.fontVariantCaps = c.fontVariantCaps;
     const drawn = drawnAs(c, el);
     // Lines: the node's fragments grouped by their bottom edge (a bidi line splits into several fragments).
@@ -234,8 +233,9 @@ export function glyphClipProbe(opts = {}) {
     if (!frags.length) continue;
     const whole = ctx.measureText(drawn(text.trim()));
     // A text fragment is exactly as tall as the font's ascent + descent (equal to the pixel on 1,100 nodes of
-    // fixtures, Bootstrap, GOV-SA and the blind-eval builds), so a fragment of another height is under a transform:
-    // scale (a thumbnail, a slide preview) scales the ink with it; rotation or skew leaves no block axis to judge.
+    // fixtures, Bootstrap, GOV-SA and the blind-eval builds), so a fragment of another height is scaled: CSS zoom or a
+    // transform (a thumbnail, a slide preview) scales the ink with it. The element's box must scale alike on both
+    // axes; rotated or skewed text leaves no block axis to judge and is skipped.
     const fh = whole.fontBoundingBoxAscent + whole.fontBoundingBoxDescent;
     let s = 1;
     if (fh > 0 && Math.abs(frags[0].height - fh) > 0.5) {
