@@ -1,0 +1,345 @@
+{
+ "sprites": {
+  "runs": 5,
+  "env": {
+   "chromium": "141.0.7390.37",
+   "note": "headless Chromium, WebGL through SwiftShader (CPU): GPU-bound numbers are pessimistic and only comparable among themselves"
+  },
+  "meta": {
+   "frames": 60,
+   "cell": 128,
+   "grid": {
+    "width": 1280,
+    "height": 768,
+    "cols": 10,
+    "rows": 6
+   },
+   "atlas": {
+    "width": 694,
+    "height": 654,
+    "json": 11605,
+    "frames": 60
+   },
+   "packMs": 593,
+   "sets": {
+    "files": {
+     "png": {
+      "bytes": 335872,
+      "requests": 60
+     },
+     "png8": {
+      "bytes": 125119,
+      "requests": 60
+     },
+     "webpLossless": {
+      "bytes": 250316,
+      "requests": 60
+     },
+     "webp": {
+      "bytes": 111734,
+      "requests": 60
+     },
+     "avif": {
+      "bytes": 104799,
+      "requests": 60
+     }
+    },
+    "grid": {
+     "png": {
+      "bytes": 274637,
+      "requests": 1
+     },
+     "png8": {
+      "bytes": 88809,
+      "requests": 1
+     },
+     "webpLossless": {
+      "bytes": 155368,
+      "requests": 1
+     },
+     "webp": {
+      "bytes": 93636,
+      "requests": 1
+     },
+     "avif": {
+      "bytes": 71402,
+      "requests": 1
+     }
+    },
+    "atlas": {
+     "png": {
+      "bytes": 253512,
+      "requests": 1
+     },
+     "png8": {
+      "bytes": 84640,
+      "requests": 1
+     },
+     "webpLossless": {
+      "bytes": 196166,
+      "requests": 1
+     },
+     "webp": {
+      "bytes": 85598,
+      "requests": 1
+     },
+     "avif": {
+      "bytes": 62129,
+      "requests": 1
+     }
+    }
+   },
+   "decodedRGBA": {
+    "files": 3932160,
+    "grid": 3932160,
+    "atlas": 1815504
+   },
+   "extras": {
+    "tilesetBytes": 1394,
+    "panelBytes": 2629,
+    "layerBytes": [
+     3639,
+     3795,
+     3731,
+     3584
+    ]
+   }
+  },
+  "quality": {
+   "png": {
+    "psnr": null
+   },
+   "png8": {
+    "psnr": 45.6
+   },
+   "webp": {
+    "psnr": 36.2
+   },
+   "avif": {
+    "psnr": 41.1
+   }
+  },
+  "measuredAt": "2026-09-29T00:49:02.727Z",
+  "host": {
+   "cpus": 4,
+   "node": "v22.22.2"
+  }
+ },
+ "licences": {
+  "sources": {
+   "spine-runtimes LICENSE (4.3)": {
+    "url": "https://raw.githubusercontent.com/EsotericSoftware/spine-runtimes/7ce5d0daac13268fa3ed68eb174c2822ef2692c9/LICENSE",
+    "status": 200,
+    "sha256": "b9d50158f6c23a704d123fd0200cc00633a693ccf9b0aacb15e5d5b9cf6c0d58",
+    "bytes": 1469,
+    "lines": [
+     "Integration of the Spine Runtimes into software or otherwise creating",
+     "\"Products\"), provided that each user of the Products must obtain their own"
+    ]
+   },
+   "spine-runtimes examples/readme.txt (no licence stated for the example art)": {
+    "url": "https://raw.githubusercontent.com/EsotericSoftware/spine-runtimes/7ce5d0daac13268fa3ed68eb174c2822ef2692c9/examples/readme.txt",
+    "status": 200,
+    "sha256": "ec77eb36ab6ac761cbea4051d2ac01177ba801a02ff5c3e94b948a301d1ba76e",
+    "bytes": 1104,
+    "lines": []
+   },
+   "DragonBonesJS LICENSE": {
+    "url": "https://raw.githubusercontent.com/DragonBones/DragonBonesJS/64b6c69ae35777c2404be68c9192e2c56906079e/LICENSE",
+    "status": 200,
+    "sha256": "7d8c274718b6017272dbe5b2027712bcfbf0734e4febea83fade4e6b60e9254b",
+    "bytes": 1116,
+    "lines": [
+     "The MIT License (MIT)",
+     "Permission is hereby granted, free of charge, to any person obtaining a copy of"
+    ]
+   },
+   "rive-wasm LICENSE (runtime)": {
+    "url": "https://raw.githubusercontent.com/rive-app/rive-wasm/eafb1efd0b57eee0c580052989fccef15cf883fa/LICENSE",
+    "status": 200,
+    "sha256": "8a1efa755d19446b51a18e1c15f6308728da0b36283c4d38050698ad6954b69a",
+    "bytes": 1066,
+    "lines": [
+     "MIT License"
+    ]
+   },
+   "lottie-web LICENSE.md": {
+    "url": "https://raw.githubusercontent.com/airbnb/lottie-web/bede03d25d232826e0c9dca1733d542d8a7754fb/LICENSE.md",
+    "status": 200,
+    "sha256": "9d8d4d8b4bb99572ee8b51025a30b8493d949798cac465c6c15b1b29420bcb06",
+    "bytes": 1075,
+    "lines": [
+     "The MIT License (MIT)",
+     "Permission is hereby granted, free of charge, to any person obtaining a copy",
+     "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,"
+    ]
+   },
+   "pixijs LICENSE": {
+    "url": "https://raw.githubusercontent.com/pixijs/pixijs/ef0c0a79b4e147d2ba8cf3b26b5efcb13f3ca307/LICENSE",
+    "status": 200,
+    "sha256": "5ce7447bc57f7349ffc48338782fbcabe613696e00712b20d66bc58e780f9473",
+    "bytes": 1092,
+    "lines": [
+     "The MIT License",
+     "Permission is hereby granted, free of charge, to any person obtaining a copy",
+     "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,"
+    ]
+   },
+   "glTF-Transform LICENSE.md": {
+    "url": "https://raw.githubusercontent.com/donmccurdy/glTF-Transform/41156dfa2324ac6c44ddf0a40ec0da194c4731d6/LICENSE.md",
+    "status": 200,
+    "sha256": "2c4f111d00dbf22b10d31a14813c5f5de6a828640f7311f26b9dda89b3fce165",
+    "bytes": 1078,
+    "lines": [
+     "The MIT License (MIT)",
+     "Permission is hereby granted, free of charge, to any person obtaining a copy",
+     "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,"
+    ]
+   },
+   "meshoptimizer LICENSE.md": {
+    "url": "https://raw.githubusercontent.com/zeux/meshoptimizer/4c203430ca565cb59a468a91922c76c208169536/LICENSE.md",
+    "status": 200,
+    "sha256": "f03037ca7bad1e3eb7f4a63fa6084a8baabd5ba30d3c239a9a7f35705d873e26",
+    "bytes": 1079,
+    "lines": [
+     "MIT License",
+     "Permission is hereby granted, free of charge, to any person obtaining a copy",
+     "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,"
+    ]
+   },
+   "Kenney Starter-Kit-City-Builder LICENSE.md (a code+asset starter kit: MIT, not the CC0 of the asset packs)": {
+    "url": "https://raw.githubusercontent.com/KenneyNL/Starter-Kit-City-Builder/4535092b740b378b700efd9df9e27a631815b84a/LICENSE.md",
+    "status": 200,
+    "sha256": "8e99e4045f71bb96d77a1765c815511c63c9f9185bfada2b8917e041ced00754",
+    "bytes": 1062,
+    "lines": [
+     "MIT License"
+    ]
+   },
+   "Poly Haven site: public/locales/en/license.json (the asset licence page text)": {
+    "url": "https://raw.githubusercontent.com/Poly-Haven/polyhaven.com/b1a6aa13afc03ae00860f6ac5fe6d5daf8e95356/public/locales/en/license.json",
+    "status": 200,
+    "sha256": "a9d88b758d1751dd41713381115ed309ea659e219c1654157b709dce7757e779",
+    "bytes": 2216,
+    "lines": [
+     "\"description\": \"CC0 means absolute freedom.\",",
+     "\"p2\": \"Our assets are all licensed as <lnk1>CC0</lnk1>, which is effectively <lnk2>Public Domain</lnk2> even in jurisdictions that do not support the Public Domain.\",",
+     "\"p3\": \"Here's an excerpt from the <lnk>CC0 FAQ page</lnk> to clarify:\",",
+     "\"p5l1\": \"<b>You can use our assets for any purpose</b>, including commercial work.\",",
+     "\"p5l2\": \"<b>You do not need to give credit</b> or attribution when using them (although it is appreciated).\",",
+     "\"p5l3\": \"<b>You can redistribute them</b>, share them around, include them when sharing your own work, or even in a product you sell.\","
+    ]
+   },
+   "Poly Haven site code LICENSE (the website code, not the assets)": {
+    "url": "https://raw.githubusercontent.com/Poly-Haven/polyhaven.com/b1a6aa13afc03ae00860f6ac5fe6d5daf8e95356/LICENSE",
+    "status": 200,
+    "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+    "bytes": 34523,
+    "lines": [
+     "GNU AFFERO GENERAL PUBLIC LICENSE"
+    ]
+   },
+   "Freesound sounds/fixtures/licenses.json": {
+    "url": "https://raw.githubusercontent.com/MTG/freesound/327cefdcbf5d543c561537550662e919a176130e/sounds/fixtures/licenses.json",
+    "status": 200,
+    "sha256": "f2e47f403c3a87b9222c834b4ea2e6968fa8b95e63286cbfc71b9901eec2502c",
+    "bytes": 4267,
+    "lines": [
+     "\"name\": \"Sampling+\",",
+     "\"name\": \"Creative Commons 0\",",
+     "\"name\": \"Attribution\",",
+     "\"name\": \"Attribution NonCommercial\","
+    ]
+   },
+   "NASA-3D-Resources README.md": {
+    "url": "https://raw.githubusercontent.com/nasa/NASA-3D-Resources/master/README.md",
+    "status": 200,
+    "sha256": "2e86b56d48a27803fa32f6fe66d252746c92a875865af162b3a0941435199a12",
+    "bytes": 2396,
+    "lines": [
+     "Welcome to the 3D Resources github site. This is a growing collection of 3D models, textures, and images from inside NASA. Our goal is to provide a comprehensive repository for 3D models, images, textures, and visualizat",
+     "Please read the [usage guidelines][usage]. NASA [intranet interface][webinterface] for these resources."
+    ]
+   },
+   "Smithsonian OpenAccess README.md": {
+    "url": "https://raw.githubusercontent.com/Smithsonian/OpenAccess/master/README.md",
+    "status": 200,
+    "sha256": "005707b61d6747b008a87e52aac85c3fd72df873500052e89c37ba90328bb87e",
+    "bytes": 2494,
+    "lines": [
+     "## Smithsonian Open Access Metadata Repository (GitHub)",
+     "More information about Open Access at the Smithsonian as well as documentation"
+    ]
+   },
+   "glTF-Blender-IO docs: glTF Material Output / occlusion, GPU instances": {
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Blender-IO/093ad93ce4750dd496266806309ba75d5f755752/docs/blender_docs/scene_gltf2.rst",
+    "status": 200,
+    "sha256": "270ce297b72025898536061dd94af1a07d36341cd5feb0ff1ec8fb59ba00c565",
+    "bytes": 48954,
+    "lines": [
+     "When the option is enabled in Exporter, instances are exported using the ``EXT_mesh_gpu_instancing`` extension.",
+     "- Instances must be meshes, and don't have any children themselves",
+     "- Instances must all be children of the same object.",
+     "However, if the exporter finds a custom node group by the name of ``glTF Material Output``, and",
+     "Add > Output > glTF Material Output",
+     "directly to the ``glTF Material Output`` node."
+    ]
+   }
+  },
+  "khronosSampleAssets": {
+   "commit": "f36bfdabd1031c3cf6689a50570b8cdf3678b49c",
+   "models": 150,
+   "census": {
+    "CC-BY-4.0": 57,
+    "CC0-1.0": 80,
+    "LicenseRef-Poser-EULA": 1,
+    "CC-BY-4.0 + CC-BY-NC-4.0": 1,
+    "CC-BY-4.0 + CC0-1.0": 4,
+    "CC0-1.0 + LicenseRef-Stanford-Graphics": 2,
+    "SCEA": 1,
+    "LicenseRef-Adobe-Stock": 1,
+    "CC-BY-NC-SA-4.0": 1,
+    "LicenseRef-CRYENGINE-Agreement": 1,
+    "LicenseRef-3DRT-Testing": 1
+   },
+   "restricted": {
+    "BrainStem": [
+     "LicenseRef-Poser-EULA"
+    ],
+    "DamagedHelmet": [
+     "CC-BY-4.0",
+     "CC-BY-NC-4.0"
+    ],
+    "DragonAttenuation": [
+     "CC0-1.0",
+     "LicenseRef-Stanford-Graphics"
+    ],
+    "DragonDispersion": [
+     "CC0-1.0",
+     "LicenseRef-Stanford-Graphics"
+    ],
+    "Duck": [
+     "SCEA"
+    ],
+    "EnvironmentTest": [
+     "LicenseRef-Adobe-Stock"
+    ],
+    "PlaysetLightTest": [
+     "CC-BY-NC-SA-4.0"
+    ],
+    "Sponza": [
+     "LicenseRef-CRYENGINE-Agreement"
+    ],
+    "VirtualCity": [
+     "LicenseRef-3DRT-Testing"
+    ]
+   },
+   "trademarkNotices": 30
+  },
+  "measuredAt": "2026-09-29T00:53:08.758Z",
+  "host": {
+   "cpus": 4,
+   "node": "v22.22.2"
+  }
+ }
+}

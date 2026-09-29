@@ -27,6 +27,7 @@ ${m.raf ? 'const f = () => requestAnimationFrame(f); f();' : ''}
 export async function domProbe(browser, { runs = 3, ns = [200, 2000] } = {}) {
   const server = http.createServer((req, res) => {
     const u = new URL(req.url, 'http://x');
+    if (!MODES[u.searchParams.get('m')]) { res.writeHead(404).end(); return; }   // e.g. /favicon.ico
     res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
     res.end(page(MODES[u.searchParams.get('m')], Number(u.searchParams.get('n'))));
   });

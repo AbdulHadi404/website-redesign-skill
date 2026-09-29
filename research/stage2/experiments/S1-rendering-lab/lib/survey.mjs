@@ -133,7 +133,7 @@ export async function runSurvey({ runs = 5, throttle = 4 } = {}) {
         await pg.waitForFunction(() => window.__ready != null, null, { timeout: 30000, polling: 50 });
         const r = await pg.evaluate(() => ({ t: window.__ready, what: window.__what, res: performance.getEntriesByType('resource').map((x) => x.name.split('/').pop()) }));
         times.push(r.t); what = r.what;
-        if (i === 0) row.fetched = { files: r.res.filter((f) => /\.(js|wasm)$/.test(f)), gzip: r.res.reduce((a, f) => a + (row.size.files[f] || 0), 0) };
+        if (i === 0) { const files = r.res.filter((f) => /\.(js|wasm)$/.test(f)); const uniq = [...new Set(files)]; row.fetched = { files: uniq, requests: files.length, gzip: uniq.reduce((a, f) => a + (row.size.files[f] || 0), 0) }; }
       } catch (er) { errors.push(`no first frame: ${er.message.split('\n')[0].slice(0, 120)}`); await ctx.close(); break; }
       await ctx.close();
     }

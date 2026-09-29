@@ -42,6 +42,10 @@ const FEATURES = {
   'content-visibility': 'css.properties.content-visibility',
   'img decoding': 'html.elements.img.decoding',
   'HTMLImageElement.decode()': 'api.HTMLImageElement.decode',
+  'measureUserAgentSpecificMemory': 'api.Performance.measureUserAgentSpecificMemory',
+  'WebGPU GPUAdapter.info': 'api.GPUAdapter.info',
+  'KHR_parallel_shader_compile': 'api.KHR_parallel_shader_compile',
+  'WEBGL_lose_context': 'api.WEBGL_lose_context',
 };
 const BROWSERS = ['chrome', 'chrome_android', 'firefox', 'safari', 'safari_ios'];
 const get = (p) => p.split('.').reduce((o, k) => o?.[k], bcd);

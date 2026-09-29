@@ -315,6 +315,42 @@
    "safari": "11.1",
    "safari_ios": "11.3",
    "status": "standard"
+  },
+  "measureUserAgentSpecificMemory": {
+   "path": "api.Performance.measureUserAgentSpecificMemory",
+   "chrome": "89",
+   "chrome_android": "89",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "experimental"
+  },
+  "WebGPU GPUAdapter.info": {
+   "path": "api.GPUAdapter.info",
+   "chrome": "144",
+   "chrome_android": "144",
+   "firefox": "141 (partial)",
+   "safari": "26",
+   "safari_ios": "26",
+   "status": "standard"
+  },
+  "KHR_parallel_shader_compile": {
+   "path": "api.KHR_parallel_shader_compile",
+   "chrome": "76",
+   "chrome_android": "76",
+   "firefox": "no",
+   "safari": "14.1",
+   "safari_ios": "14.5",
+   "status": "standard"
+  },
+  "WEBGL_lose_context": {
+   "path": "api.WEBGL_lose_context",
+   "chrome": "26",
+   "chrome_android": "26",
+   "firefox": "22",
+   "safari": "8",
+   "safari_ios": "8",
+   "status": "standard"
   }
  }
 }

@@ -1,0 +1,663 @@
+{
+ "env": {
+  "date": "2026-09-29",
+  "node": "v22.22.2",
+  "cpus": 4,
+  "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "runs": 1,
+  "chromium": "141.0.7390.37"
+ },
+ "sources": {
+  "fluid": {
+   "repo": "https://github.com/PavelDoGreat/WebGL-Fluid-Simulation.git",
+   "commit": "a2d292931f19d9b3b9f564e23e6c32729d2121c3",
+   "dir": "/tmp/s2-S10/fluid",
+   "licence": "MIT (LICENSE: \"Copyright (c) 2017 Pavel Dobryakov\")",
+   "head": "a2d292931f19d9b3b9f564e23e6c32729d2121c3"
+  }
+ },
+ "build": {
+  "a-static": {
+   "id": "a-static",
+   "label": "a · static poster (AVIF)",
+   "kind": "static",
+   "poster": "shader",
+   "html": {
+    "raw": 5117,
+    "gzip": 2199,
+    "brotli": 1731
+   }
+  },
+  "b1-css-blobs": {
+   "id": "b1-css-blobs",
+   "label": "b1 · CSS gradient blobs, transform-animated",
+   "kind": "css",
+   "poster": null,
+   "html": {
+    "raw": 7475,
+    "gzip": 2948,
+    "brotli": 2363
+   }
+  },
+  "b2-css-property": {
+   "id": "b2-css-property",
+   "label": "b2 · CSS mesh gradient, @property-animated",
+   "kind": "css",
+   "poster": null,
+   "html": {
+    "raw": 6870,
+    "gzip": 2843,
+    "brotli": 2273
+   }
+  },
+  "c1-svg-turbulence": {
+   "id": "c1-svg-turbulence",
+   "label": "c1 · SVG feTurbulence, SMIL-animated",
+   "kind": "css",
+   "poster": null,
+   "html": {
+    "raw": 7048,
+    "gzip": 2937,
+    "brotli": 2371
+   }
+  },
+  "c2-css-grain": {
+   "id": "c2-css-grain",
+   "label": "c2 · static poster + CSS grain overlay",
+   "kind": "css",
+   "poster": "shader",
+   "html": {
+    "raw": 7276,
+    "gzip": 3025,
+    "brotli": 2439
+   }
+  },
+  "d-canvas2d": {
+   "id": "d-canvas2d",
+   "label": "d · Canvas 2D flow particles",
+   "kind": "script",
+   "poster": "canvas2d",
+   "effect": {
+    "raw": 3815,
+    "gzip": 1927,
+    "brotli": 1694
+   },
+   "inputs": {
+    "lib": 2663,
+    "variants": 1130
+   },
+   "html": {
+    "raw": 6358,
+    "gzip": 2769,
+    "brotli": 2177
+   }
+  },
+  "e1-webgl-vanilla": {
+   "id": "e1-webgl-vanilla",
+   "label": "e1 · fragment shader, raw WebGL",
+   "kind": "script",
+   "poster": "shader",
+   "effect": {
+    "raw": 7353,
+    "gzip": 3446,
+    "brotli": 3034
+   },
+   "inputs": {
+    "lib": 6223,
+    "variants": 1108
+   },
+   "html": {
+    "raw": 6351,
+    "gzip": 2769,
+    "brotli": 2186
+   }
+  },
+  "e2-ogl": {
+   "id": "e2-ogl",
+   "label": "e2 · fragment shader, OGL",
+   "kind": "script",
+   "poster": "shader",
+   "effect": {
+    "raw": 51132,
+    "gzip": 15886,
+    "brotli": 13512
+   },
+   "inputs": {
+    "ogl": 44301,
+    "lib": 6147,
+    "variants": 661
+   },
+   "html": {
+    "raw": 6345,
+    "gzip": 2765,
+    "brotli": 2190
+   }
+  },
+  "e3-regl": {
+   "id": "e3-regl",
+   "label": "e3 · fragment shader, regl",
+   "kind": "script",
+   "poster": "shader",
+   "effect": {
+    "raw": 130107,
+    "gzip": 44655,
+    "brotli": 39062
+   },
+   "inputs": {
+    "regl": 122521,
+    "variants": 501,
+    "lib": 6482
+   },
+   "html": {
+    "raw": 6346,
+    "gzip": 2763,
+    "brotli": 2186
+   }
+  },
+  "e4-twgl": {
+   "id": "e4-twgl",
+   "label": "e4 · fragment shader, twgl.js",
+   "kind": "script",
+   "poster": "shader",
+   "effect": {
+    "raw": 37836,
+    "gzip": 13675,
+    "brotli": 11987
+   },
+   "inputs": {
+    "twgl.js": 31085,
+    "lib": 6241,
+    "variants": 487
+   },
+   "html": {
+    "raw": 6349,
+    "gzip": 2766,
+    "brotli": 2185
+   }
+  },
+  "e5-three": {
+   "id": "e5-three",
+   "label": "e5 · fragment shader, three.js",
+   "kind": "script",
+   "poster": "shader",
+   "effect": {
+    "raw": 535713,
+    "gzip": 135604,
+    "brotli": 111819
+   },
+   "inputs": {
+    "three": 528876,
+    "lib": 6275,
+    "variants": 539
+   },
+   "html": {
+    "raw": 6350,
+    "gzip": 2766,
+    "brotli": 2182
+   }
+  },
+  "e6-paper": {
+   "id": "e6-paper",
+   "label": "e6 · Paper Shaders MeshGradient (library)",
+   "kind": "script",
+   "poster": "paper",
+   "effect": {
+    "raw": 23304,
+    "gzip": 7382,
+    "brotli": 6596
+   },
+   "inputs": {
+    "@paper-design/shaders": 21798,
+    "variants": 1320
+   },
+   "html": {
+    "raw": 6356,
+    "gzip": 2774,
+    "brotli": 2193
+   }
+  },
+  "f-three-particles": {
+   "id": "f-three-particles",
+   "label": "f · three.js 40k GPU particles",
+   "kind": "script",
+   "poster": "particles",
+   "effect": {
+    "raw": 539720,
+    "gzip": 136696,
+    "brotli": 112833
+   },
+   "inputs": {
+    "three": 531026,
+    "lib": 6187,
+    "variants": 2451
+   },
+   "html": {
+    "raw": 6365,
+    "gzip": 2771,
+    "brotli": 2186
+   }
+  },
+  "h-post": {
+   "id": "h-post",
+   "label": "h · f + postprocessing (?fx=)",
+   "kind": "script",
+   "poster": "post",
+   "effect": {
+    "raw": 696727,
+    "gzip": 209330,
+    "brotli": 180122
+   },
+   "inputs": {
+    "three": 531147,
+    "postprocessing": 156280,
+    "lib": 6187,
+    "variants": 3090
+   },
+   "html": {
+    "raw": 6339,
+    "gzip": 2764,
+    "brotli": 2178
+   }
+  },
+  "g-fluid-demo": {
+   "id": "g-fluid-demo",
+   "label": "g · fluid sim, demo as published",
+   "kind": "fluid-demo",
+   "poster": null,
+   "effect": {
+    "raw": 101998,
+    "gzip": 25776,
+    "brotli": 22333
+   },
+   "html": {
+    "raw": 5265,
+    "gzip": 2267,
+    "brotli": 1775
+   }
+  },
+  "g-fluid-wrapped": {
+   "id": "g-fluid-wrapped",
+   "label": "g · fluid sim, production-wrapped",
+   "kind": "script",
+   "poster": "fluid",
+   "effect": {
+    "raw": 34451,
+    "gzip": 9877,
+    "brotli": 8784
+   },
+   "inputs": {
+    "dist": 31019,
+    "lib": 2929,
+    "variants": 480
+   },
+   "html": {
+    "raw": 6348,
+    "gzip": 2767,
+    "brotli": 2179
+   }
+  }
+ },
+ "posters": {
+  "shader": {
+   "800": {
+    "avif": 1753,
+    "webp": 3388
+   },
+   "1600": {
+    "avif": 3084,
+    "webp": 8482
+   },
+   "from": "e1-webgl-vanilla",
+   "query": "still&t0=0",
+   "bppAt1280x720": {
+    "avif1600": 0.0268
+   }
+  },
+  "canvas2d": {
+   "800": {
+    "avif": 8718,
+    "webp": 12334
+   },
+   "1600": {
+    "avif": 28536,
+    "webp": 39232
+   },
+   "from": "d-canvas2d",
+   "query": "",
+   "bppAt1280x720": {
+    "avif1600": 0.24769999999999998
+   }
+  },
+  "paper": {
+   "800": {
+    "avif": 997,
+    "webp": 2718
+   },
+   "1600": {
+    "avif": 1630,
+    "webp": 7244
+   },
+   "from": "e6-paper",
+   "query": "still&t0=0",
+   "bppAt1280x720": {
+    "avif1600": 0.0141
+   }
+  },
+  "particles": {
+   "800": {
+    "avif": 745,
+    "webp": 1894
+   },
+   "1600": {
+    "avif": 13489,
+    "webp": 20068
+   },
+   "from": "f-three-particles",
+   "query": "still&t0=3",
+   "bppAt1280x720": {
+    "avif1600": 0.1171
+   }
+  },
+  "post": {
+   "800": {
+    "avif": 2080,
+    "webp": 4694
+   },
+   "1600": {
+    "avif": 21269,
+    "webp": 43288
+   },
+   "from": "h-post",
+   "query": "still&t0=3&fx=all",
+   "bppAt1280x720": {
+    "avif1600": 0.1846
+   }
+  },
+  "fluid": {
+   "800": {
+    "avif": 5897,
+    "webp": 9958
+   },
+   "1600": {
+    "avif": 12834,
+    "webp": 47758
+   },
+   "from": "g-fluid-wrapped",
+   "query": "",
+   "bppAt1280x720": {
+    "avif1600": 0.1114
+   }
+  }
+ },
+ "bundles": {
+  "ogl (Renderer, Program, Mesh, Triangle)": {
+   "package": "ogl",
+   "version": "1.0.11",
+   "licence": "Unlicense",
+   "lastPublish": null,
+   "raw": 44332,
+   "gzip": 12839,
+   "brotli": 10794
+  },
+  "twgl.js (5 named functions)": {
+   "package": "twgl.js",
+   "version": "7.0.0",
+   "licence": "MIT",
+   "lastPublish": null,
+   "raw": 31198,
+   "gzip": 10687,
+   "brotli": 9377
+  },
+  "regl": {
+   "package": "regl",
+   "version": "2.1.1",
+   "licence": "MIT",
+   "lastPublish": null,
+   "raw": 123140,
+   "gzip": 41436,
+   "brotli": 36275
+  },
+  "three (fullscreen shader plane)": {
+   "package": "three",
+   "version": "0.186.1",
+   "licence": "MIT",
+   "lastPublish": null,
+   "raw": 528993,
+   "gzip": 132577,
+   "brotli": 109407
+  },
+  "three + postprocessing (composer, bloom, noise, CA, vignette)": {
+   "package": "postprocessing",
+   "version": "6.39.5",
+   "licence": "Zlib",
+   "lastPublish": null,
+   "raw": 597284,
+   "gzip": 148235,
+   "brotli": 122488
+  },
+  "@paper-design/shaders (ShaderMount + mesh gradient)": {
+   "package": "@paper-design/shaders",
+   "version": "0.0.81",
+   "licence": "Apache-2.0",
+   "lastPublish": null,
+   "raw": 22011,
+   "gzip": 6783,
+   "brotli": 6082
+  },
+  "@firecms/neat (NeatGradient)": {
+   "package": "@firecms/neat",
+   "version": "1.1.0",
+   "licence": "SEE LICENSE IN LICENSE",
+   "lastPublish": null,
+   "raw": 96097,
+   "gzip": 27889,
+   "brotli": 23464
+  },
+  "vanta FOG + three (all of three: Vanta reads THREE.*)": {
+   "package": "vanta",
+   "version": "0.5.24",
+   "licence": "MIT",
+   "lastPublish": null,
+   "raw": 754576,
+   "gzip": 194157,
+   "brotli": 158317
+  },
+  "@tsparticles/engine + slim preset": {
+   "package": "@tsparticles/slim",
+   "version": "4.4.0",
+   "licence": "MIT",
+   "lastPublish": null,
+   "raw": 169175,
+   "gzip": 49425,
+   "brotli": 42621
+  },
+  "granim (canvas gradient animation)": {
+   "package": "granim",
+   "version": "2.0.0",
+   "licence": "MIT",
+   "lastPublish": null,
+   "raw": 19401,
+   "gzip": 5441,
+   "brotli": 4837
+  },
+  "curtainsjs (Curtains, Plane)": {
+   "package": "curtainsjs",
+   "version": "8.1.6",
+   "licence": "MIT",
+   "lastPublish": null,
+   "raw": 96028,
+   "gzip": 21312,
+   "brotli": 18307
+  },
+  "p5 (whole library)": {
+   "package": "p5",
+   "version": "2.3.4",
+   "licence": "LGPL-2.1",
+   "lastPublish": null,
+   "raw": 1608279,
+   "gzip": 424209,
+   "brotli": 344702
+  }
+ },
+ "main": {
+  "a-static@1x": {
+   "id": "a-static",
+   "throttle": 1,
+   "runs": 1,
+   "ttff": null,
+   "fcp": 108,
+   "lcp": 108,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 57.6,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 3.1,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 0.5,
+   "scriptPct": 0.1,
+   "jsMs": null,
+   "cpuRenderer": 1,
+   "cpuGpu": 0.2,
+   "cpuBrowser": 0.6,
+   "cpuTotal": 2,
+   "payload": {
+    "html": 2199,
+    "poster": 3084,
+    "js": 0,
+    "other": 0,
+    "total": 5283
+   },
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ],
+   "raw": [
+    {
+     "ttff": null,
+     "fps": 57.6,
+     "cpu": {
+      "browser": 0.6,
+      "renderer": 1,
+      "GPU": 0.2,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 2
+     },
+     "busyPct": 0.5,
+     "effectFps": null
+    }
+   ]
+  },
+  "a-static@4x": {
+   "id": "a-static",
+   "throttle": 4,
+   "runs": 1,
+   "ttff": null,
+   "fcp": 168,
+   "lcp": 168,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 57.4,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 2.4,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 3.3,
+   "scriptPct": 1,
+   "jsMs": null,
+   "cpuRenderer": 49.9,
+   "cpuGpu": 0.4,
+   "cpuBrowser": 0,
+   "cpuTotal": 50.5,
+   "payload": {
+    "html": 2199,
+    "poster": 3084,
+    "js": 0,
+    "other": 0,
+    "total": 5283
+   },
+   "errors": [],
+   "raw": [
+    {
+     "ttff": null,
+     "fps": 57.4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 49.9,
+      "GPU": 0.4,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 50.5
+     },
+     "busyPct": 3.3,
+     "effectFps": null
+    }
+   ]
+  },
+  "b1-css-blobs@1x": {
+   "id": "b1-css-blobs",
+   "throttle": 1,
+   "runs": 1,
+   "ttff": null,
+   "fcp": 116,
+   "lcp": 116,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 54.2,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 3.3,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 1.8,
+   "scriptPct": 0.2,
+   "jsMs": null,
+   "cpuRenderer": 3.2,
+   "cpuGpu": 38.6,
+   "cpuBrowser": 0.2,
+   "cpuTotal": 42.4,
+   "payload": {
+    "html": 2948,
+    "poster": 0,
+    "js": 0,
+    "other": 0,
+    "total": 2948
+   },
+   "errors": [],
+   "raw": [
+    {
+     "ttff": null,
+     "fps": 54.2,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 3.2,
+      "GPU": 38.6,
+      "network.mojom.NetworkService": 0.4,
+      "storage.mojom.StorageService": 0,
+      "total": 42.4
+     },
+     "busyPct": 1.8,
+     "effectFps": null
+    }
+   ]
+  },
+  "b1-css-blobs@4x": {
+   "id": "b1-css-blobs",
+   "throttle": 4,
+   "failed": "page.waitForTimeout: Target page, context or browser has been closed",
+   "raw": [
+    {
+     "failed": "page.waitForTimeout: Target page, context or browser has been closed"
+    }
+   ]
+  }
+ }
+}

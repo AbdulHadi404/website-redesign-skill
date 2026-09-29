@@ -1,6 +1,6 @@
 {
  "env": {
-  "date": "2026-09-28T23:59:56.950Z",
+  "date": "2026-09-29T00:12:24.810Z",
   "node": "v22.22.2",
   "cpus": 4,
   "platform": "linux",
@@ -3183,7 +3183,7 @@
   "pages": {
    "static": {
     "exit": 1,
-    "seconds": 79,
+    "seconds": 81,
     "specPass": "0/9",
     "spec": {
      "tp": 11,
@@ -3242,7 +3242,7 @@
    },
    "good": {
     "exit": 0,
-    "seconds": 89,
+    "seconds": 88,
     "specPass": "9/9",
     "spec": {
      "tp": 0,
@@ -3281,7 +3281,7 @@
    },
    "over": {
     "exit": 1,
-    "seconds": 94,
+    "seconds": 89,
     "specPass": "0/9",
     "spec": {
      "tp": 31,
@@ -3289,9 +3289,9 @@
      "fn": []
     },
     "flags": {
-     "predicted": 47,
-     "truth": 47,
-     "tp": 47,
+     "predicted": 48,
+     "truth": 48,
+     "tp": 48,
      "fp": [],
      "fn": []
     },
@@ -3333,8 +3333,8 @@
       "reduced motion: still moves — spec says static"
      ],
      "stat-count": [
-      "duration ~2485–2506ms (sampled: last visible change – fitted) outside 800ms",
-      "sampled curve fits linear better than out (rms 0.072 vs 0.005)",
+      "duration ~2494–2515ms (sampled: last visible change – fitted) outside 800ms",
+      "sampled curve fits linear better than out (rms 0.072 vs 0.002)",
       "reduced motion: still animates (text or custom property) — spec says instant"
      ],
      "hero-in": [
@@ -3363,7 +3363,7 @@
    },
    "gsap": {
     "exit": 0,
-    "seconds": 90,
+    "seconds": 88,
     "specPass": "9/9",
     "spec": {
      "tp": 0,
@@ -3371,9 +3371,9 @@
      "fn": []
     },
     "flags": {
-     "predicted": 0,
-     "truth": 0,
-     "tp": 0,
+     "predicted": 1,
+     "truth": 1,
+     "tp": 1,
      "fp": [],
      "fn": []
     },
@@ -3412,7 +3412,7 @@
    "flags": {
     "precision": 1,
     "recall": 1,
-    "tp": 74,
+    "tp": 76,
     "fp": [],
     "fn": []
    },

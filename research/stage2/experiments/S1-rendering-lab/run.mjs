@@ -214,6 +214,11 @@ async function nowebgl(base) {
     await save();
   }
   await contactSheet(entries, path.join(here, 'shots', 'no-webgl.jpg'));
+  // The engines' own Canvas 2D fallbacks, measured like the main matrix: a CPU-only comparison of engine
+  // overhead against vanilla Canvas 2D that SwiftShader cannot distort.
+  const cells = [];
+  for (const n of [200, 2000]) for (const variant of pick(['canvas2d', 'pixi', 'phaser'])) cells.push({ variant, n, throttle: 1, runs: Math.min(RUNS, 3) });
+  await matrix(browser, base, 'nowebglPerf', cells);
   await browser.close();
 }
 

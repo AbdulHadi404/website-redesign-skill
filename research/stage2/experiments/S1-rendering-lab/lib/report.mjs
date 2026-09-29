@@ -119,6 +119,16 @@ export async function writeReport(R, out) {
     L.push('');
   }
 
+  if (R.nowebglPerf) {
+    L.push('### Engines on their Canvas 2D fallback vs vanilla Canvas 2D (WebGL disabled, 1× CPU)', '');
+    L.push(head(['variant', 'N', 'renderer', 'fps', 'frame p95', 'JS ms/frame p50/p95', 'renderer ms/frame', 'busy %', 'drag move→frame p50/p95', 'heap MB', 'runs']));
+    for (const v of Object.values(R.nowebglPerf)) {
+      const s = v.summary;
+      L.push(row([v.cell.variant, v.cell.n, s.renderer, f(s.fps), f(s.frameP95), `${f(s.jsMs, 2)} / ${f(s.jsP95, 2)}`, f(s.rendererMsPerFrame), f(s.busyPct, 0), `${f(s.moveToFrame)} / ${f(s.moveToFrameP95)}`, f(s.heapMB), s.runs]));
+    }
+    L.push('');
+  }
+
   if (R.shots) {
     L.push('## Visual parity', '', R.shots.note, '');
     L.push(head(['variant', 'N=200 % px differ', 'N=2000 % px differ']));

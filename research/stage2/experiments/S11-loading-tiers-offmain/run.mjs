@@ -1,7 +1,7 @@
 // S11 — loading experiences, device tiers, off-main-thread work. One runner: fetches the test photos, rebuilds every
 // fixture, re-measures everything (one benchmark browser at a time), and merges results/*.json into results.json.
 //   node run.mjs                 everything (≈ 60–80 min on a shared 4-CPU machine)
-//   node run.mjs tiers|loading|placeholders|offmain|support   one part, then re-merge
+//   node run.mjs tiers|loading|placeholders|offmain|support|budget   one part, then re-merge
 //   node run.mjs merge           only re-merge results/*.json
 import { spawnSync } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
@@ -11,6 +11,7 @@ import { fetchAssets } from './fetch-assets.mjs';
 
 const PARTS = {
   support: ['lib/support.mjs'],
+  budget: ['lib/budget.mjs'],
   tiers: ['run-tiers.mjs', '--runs', '10'],
   placeholders: ['run-placeholders.mjs', '--runs', '5'],
   offmain: ['run-offmain.mjs', '--runs', '5'],
@@ -27,7 +28,7 @@ for (const p of parts) {
 }
 
 // Merge: keep summaries and analysis; the raw per-run arrays stay in results/<part>.json.
-const [support, tiers, placeholders, offmain, loading] = await Promise.all(['support', 'tiers', 'placeholders', 'offmain', 'loading'].map(readResult));
+const [support, budget, tiers, placeholders, offmain, loading] = await Promise.all(['support', 'budget', 'tiers', 'placeholders', 'offmain', 'loading'].map(readResult));
 const merged = {
   stream: 'S11 — loading experiences, device tiers and progressive degradation, off-main-thread work',
   generated: new Date().toISOString(),
@@ -39,6 +40,7 @@ const merged = {
     'Network throttling is Chromium request-level emulation over HTTP/1.1 localhost, not packet shaping.',
   ],
   support: support?.features,
+  budget,
   tiers: tiers && { env: tiers.env, method: tiers.method, analysis: tiers.analysis, detectGpu: tiers.detectGpu, calib: tiers.calib },
   placeholders: placeholders && { env: placeholders.env, items: placeholders.built.items, decoders: placeholders.built.decoders, progressiveBytes: placeholders.built.progressive, decode: placeholders.decodeSummary, film: placeholders.filmSummary },
   offmain: offmain && { env: offmain.env, dataset: offmain.built, summary: offmain.summary, spin: offmain.spinSummary, payload: offmain.payloadSummary },

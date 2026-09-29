@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crewplan — schedules your crew can actually work</title>
+<script>
+  // Regression variants for the visual-regression experiment: ?v=<name> adds a class to <html>.
+  // control and aa are NOT regressions (a re-render, and glyph anti-aliasing noise); the rest are.
+  const v = new URLSearchParams(location.search).get('v') || 'base';
+  document.documentElement.classList.add('v-' + v);
+</script>
+<style>
+  @font-face { font-family: "Fraunces"; font-weight: 600; font-display: block; src: url(/fonts/fraunces/files/fraunces-latin-600-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 400; font-display: block; src: url(/fonts/inter/files/inter-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 600; font-display: block; src: url(/fonts/inter/files/inter-latin-600-normal.woff2) format("woff2"); }
+  /* font: the heading face fails to load (a wrong path after a refactor) and the fallback renders */
+  @font-face { font-family: "FrauncesMissing"; font-weight: 600; font-display: swap; src: url(/fonts/fraunces/files/missing.woff2) format("woff2"); }
+  :root { --ink: #16181d; --muted: #555b66; --line: #dfe2e7; --ground: #fbfaf7; --brand: #1d4ed8; --brand-ink: #fff; --accent: #e8590c; }
+  .v-colour { --brand: #2563eb; }          /* a token changed: blue-700 -> blue-600 */
+  .v-colour-subtle { --brand: #1e50dc; }   /* a near-invisible token drift (dE00 ~ 1) */
+  * { box-sizing: border-box; }
+  html { background: var(--ground); color: var(--ink); font: 400 17px/1.55 "Inter", system-ui, sans-serif; }
+  body { margin: 0; }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; line-height: 1.12; margin: 0 0 .5em; }
+  .v-font h1, .v-font h2, .v-font h3 { font-family: "FrauncesMissing", Georgia, serif; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  header { border-bottom: 1px solid var(--line); background: #fff; }
+  header .wrap { display: flex; align-items: center; gap: 28px; height: 68px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 600; text-decoration: none; color: var(--ink); }
+  nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
+  nav a { color: var(--muted); text-decoration: none; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+  .btn-primary { background: var(--brand); color: var(--brand-ink); }
+  .btn-ghost { border: 1px solid var(--line); color: var(--ink); background: #fff; }
+  header .btn { margin-left: auto; }
+  .hero { padding: 72px 0 56px; }
+  .hero .wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+  .hero h1 { font-size: clamp(2.2rem, 1.4rem + 2.6vw, 3.6rem); letter-spacing: -0.01em; }
+  .lead { font-size: 1.15rem; color: var(--muted); max-width: 34em; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 28px 0 18px; }
+  .v-shift1 .hero-actions { transform: translateY(1px); }   /* one component 1 px lower */
+  .live { font-size: .85rem; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .spinner { width: 12px; height: 12px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hero img { width: 100%; height: auto; display: block; border-radius: 14px; border: 1px solid var(--line); }
+  .features { padding: 56px 0; background: #fff; border-block: 1px solid var(--line); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); gap: 24px; }
+  .card { position: relative; border: 1px solid var(--line); border-radius: 12px; padding: 24px; background: var(--ground); }
+  .card h3 { font-size: 1.3rem; }
+  .card p { margin: 0; color: var(--muted); }
+  .badge { position: absolute; top: 16px; right: 16px; background: #fff1e6; color: #9a3412; font-size: .75rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+  .v-removed .badge { display: none; }
+  .icon { width: 36px; height: 36px; margin-bottom: 14px; }
+  .pricing { padding: 56px 0; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--line); }
+  td.num, th.num { text-align: right; }
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); }
+  .v-aa h1, .v-aa h2, .v-aa h3, .v-aa p, .v-aa td, .v-aa th, .v-aa nav a { transform: translateX(0.3px); }  /* glyph AA noise only */
+  @media (max-width: 760px) {
+    nav { display: none; }
+    .hero { padding-top: 40px; }
+    .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="/"><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="#16181d"/><path d="M7 15l5 5 9-12" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>Crewplan</a>
+    <nav aria-label="Main"><ul><li><a href="#">Product</a></li><li><a href="#">Pricing</a></li><li><a href="#">Customers</a></li><li><a href="#">Help</a></li></ul></nav>
+    <a class="btn btn-primary" href="#">Start free trial</a>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Schedules your crew can actually work</h1>
+        <p class="lead" id="lead">Build a week of shifts in minutes, swap cover from a phone, and see overtime before it happens.</p>
+        <div class="hero-actions"><a class="btn btn-primary" href="#">Start free trial</a><a class="btn btn-ghost" href="#">See a sample week</a></div>
+        <p class="live" data-dynamic><span class="spinner" aria-hidden="true"></span><span>Synced <time id="now"></time> · <span id="viewers"></span> planners online</span></p>
+      </div>
+      <img src="hero.svg" width="560" height="380" alt="A week of shifts laid out on a grid">
+    </div>
+  </section>
+  <section class="features">
+    <div class="wrap">
+      <h2>What changes on Monday</h2>
+      <div class="grid">
+        <article class="card"><svg class="icon" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16" fill="#e0e7ff"/><path d="M11 18h14M18 11v14" stroke="#1d4ed8" stroke-width="3"/></svg><h3>Cover in two taps</h3><p>Post an open shift and the first qualified person who accepts gets it.</p></article>
+        <article class="card"><span class="badge">New</span><svg class="icon" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16" fill="#ffedd5"/><path d="M12 24l6-12 6 12" stroke="#e8590c" stroke-width="3" fill="none"/></svg><h3>Overtime warnings</h3><p>See who will cross 40 hours before you publish the rota, not after payroll.</p></article>
+        <article class="card"><svg class="icon" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16" fill="#dcfce7"/><path d="M11 19l5 5 9-12" stroke="#15803d" stroke-width="3" fill="none"/></svg><h3>Payroll-ready exports</h3><p>Hours, breaks and premiums in the format your payroll provider imports.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="pricing">
+    <div class="wrap">
+      <h2>Pricing</h2>
+      <table>
+        <thead><tr><th>Plan</th><th class="num">Staff</th><th class="num">Per month</th></tr></thead>
+        <tbody>
+          <tr><td>Small team</td><td class="num">up to 15</td><td class="num">£39</td></tr>
+          <tr><td>Site</td><td class="num">up to 60</td><td class="num">£129</td></tr>
+          <tr><td>Multi-site</td><td class="num">unlimited</td><td class="num">£349</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap">© 2026 Crewplan Ltd · <a href="#">Privacy</a> · <a href="#">Terms</a></div></footer>
+<script>
+  // Dynamic content: differs on every load (the false-positive source a regression setup must mask).
+  document.getElementById('now').textContent = new Date().toISOString().slice(11, 23);
+  document.getElementById('viewers').textContent = 10 + Math.floor(Math.random() * 90);
+  if (v === 'reflow') document.getElementById('lead').textContent += ' Works with the rota spreadsheets you already keep.';
+</script>
+</body>
+</html>

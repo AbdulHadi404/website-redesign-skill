@@ -301,6 +301,17 @@ try {
       lab.softShadow = { changedPx: Math.round(sh.any / 100 * 200 * 100), pixelmatchPct: sh.pm, de00Over1Pct: sh.jnd1, de00Over2_3Pct: sh.jnd };
       await ctx.close();
     }
+    // 3. The skill's audit.mjs concentric-radii check against the probe's, on the baseline and the radius move.
+    {
+      const out = path.join(CAP, 'audit');
+      await run('node', [path.join(SCRIPTS, 'audit.mjs'), '--base', server.base, '--paths', '/v/base/', '/v/radius/', '--widths', '1440', '--no-axe', '--out', out]).catch(() => null); // exits 1 when a page has a fail
+      lab.auditConcentric = {};
+      for (const v of ['base', 'radius']) {
+        const j = JSON.parse(await readFile(path.join(out, `v-${v}-1440.json`), 'utf8').catch(() => 'null'));
+        const find = (x) => { if (!x || typeof x !== 'object') return undefined; if (Array.isArray(x.radiusMismatch)) return x.radiusMismatch; for (const y of Object.values(x)) { const r = find(y); if (r) return r; } return undefined; };
+        lab.auditConcentric[v] = { audit: find(j) ?? null, probe: results.singles?.probe?.[v]?.[1440]?.concentric?.value ?? null };
+      }
+    }
     results.labChecks = lab;
     log(`checks: ${JSON.stringify(lab)}`);
   }

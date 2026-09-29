@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sweep lab — seeded width-dependent defects</title>
+<style>
+  /* Each defect is seeded at a width range a five-width capture run (1440/1280/1024/768/390) does not sample.
+     The ids name the defect; truth.json lists the expected check and range. */
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 400 17px/1.55 system-ui, sans-serif; color: #1b1d22; background: #fff; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  header { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #ddd; z-index: 5; }
+  header .wrap { display: flex; align-items: center; gap: 20px; min-height: 64px; }
+  .logo { font-weight: 700; }
+  /* D1 nav-wrap: six links wrap onto two rows between 768 and ~900 (the menu button only takes over below 768) */
+  #nav ul { display: flex; flex-wrap: wrap; gap: 6px 22px; list-style: none; margin: 0; padding: 0; }
+  #nav a { color: #444; text-decoration: none; white-space: nowrap; }
+  #menu { display: none; }
+  @media (max-width: 767px) { #nav { display: none; } #menu { display: inline-flex; margin-left: auto; } }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 16px; border-radius: 8px; background: #0b57d0; color: #fff; text-decoration: none; font-weight: 600; border: 0; }
+  header .btn { margin-left: auto; }
+  /* D13 chrome: a second sticky bar; at 400% zoom (320×180) header + bar cover most of the screen */
+  .subbar { position: sticky; top: 64px; background: #f3f5f9; border-bottom: 1px solid #ddd; z-index: 4; padding: 12px 0; font-size: 15px; }
+  /* D9 fold: on phones the hero image comes first and pushes the CTA below the fold at narrow widths */
+  .hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; padding-block: 48px; align-items: center; }
+  .hero-img { width: 100%; height: auto; display: block; }
+  @media (max-width: 767px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } .hero-media { order: -1; } }
+  .hero h1 { font-size: clamp(2rem, 1.2rem + 3vw, 3.4rem); line-height: 1.1; margin: 0 0 16px; }
+  /* D6 label-wrap: the primary button label wraps below ~380 */
+  .actions { display: flex; gap: 12px; }
+  .actions .btn { flex: 1 1 0; min-width: 0; text-align: center; }
+  /* D7 distorted: fixed height without object-fit */
+  #distorted { width: 100%; height: 260px; display: block; }
+  /* D7b cropped: object-fit cover in a very wide, short frame at desktop widths */
+  #cropped { width: 100%; height: 140px; object-fit: cover; display: block; }
+  /* D2 clipped: fixed-height cards with overflow hidden; the text wraps more between 768 and ~1000 */
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  @media (max-width: 767px) { .cards { grid-template-columns: minmax(0, 1fr); } }
+  .card { border: 1px solid #ddd; border-radius: 10px; padding: 16px; height: 190px; overflow: hidden; }
+  .card h3 { margin: 0 0 8px; font-size: 20px; }
+  .card p { margin: 0; }
+  /* D3 overlap: from 1024 the heading is kept on one line and the badge is pinned to the right edge; until the
+     container is wide enough (~1170) the badge sits on the end of the heading */
+  .promo { position: relative; padding: 24px 0; }
+  .promo h2 { font-size: 30px; margin: 0; }
+  .promo .badge { display: inline-block; margin-top: 8px; background: #ffe7b3; padding: 4px 10px; border-radius: 6px; font-weight: 600; }
+  @media (min-width: 1024px) { .promo h2 { white-space: nowrap; font-size: 34px; } .promo .badge { position: absolute; top: 30px; right: 20px; margin: 0; } }
+  /* D15 truncated: a card heading cut with an ellipsis where the three columns are narrow */
+  .card h3.trunc { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* D4 measure: a paragraph with no max-width, too long above ~1400 */
+  #longline { font-size: 16px; }
+  /* D5 overflow: a nowrap chip row that needs 372 px */
+  .chips { display: flex; gap: 8px; white-space: nowrap; }
+  .chips span { border: 1px solid #bbb; border-radius: 99px; padding: 4px 12px; }
+  /* D10 order: row-reverse at 1024 and up puts the form before the text visually */
+  .split { display: flex; gap: 32px; padding: 32px 0; }
+  @media (min-width: 1024px) { .split { flex-direction: row-reverse; } }
+  @media (max-width: 1023px) { .split { flex-direction: column; } }
+  .split > * { flex: 1 1 0; }
+  /* D14 small-target: icon buttons that shrink with the row below ~420 */
+  .tools { display: flex; gap: 4px; align-items: center; }
+  .tools button { flex: 1 1 32px; min-width: 0; height: 32px; max-width: 40px; border: 1px solid #bbb; background: #fff; border-radius: 6px; padding: 0; }
+  .tools .label { flex: 0 0 auto; white-space: nowrap; }
+  /* D8 dead-band: a spacer section of 60vh with nothing in it */
+  .spacer { height: 60vh; background: #fafafa; }
+  footer { padding: 32px 0; border-top: 1px solid #ddd; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="logo">Northwind</span>
+    <nav id="nav" aria-label="Main"><ul><li><a href="#">Product tour</a></li><li><a href="#">Pricing plans</a></li><li><a href="#">Customer stories</a></li><li><a href="#">Integrations</a></li><li><a href="#">Documentation</a></li><li><a href="#">Contact sales</a></li></ul></nav>
+    <button id="menu" class="btn" type="button">Menu</button>
+  </div>
+</header>
+<div class="subbar"><div class="wrap">Service notice: planned maintenance on Sunday 02:00–04:00 UTC.</div></div>
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1 id="title">Stock counts that match the shelf</h1>
+        <p>Scan, reconcile and reorder from one screen, in the aisle or at the desk.</p>
+        <div class="actions"><a id="cta" class="btn" href="#">Start counting today</a><a class="btn" href="#" style="background:#fff;color:#0b57d0;border:1px solid #0b57d0">Book a demo</a></div>
+      </div>
+      <div class="hero-media"><img class="hero-img" src="photo.svg" width="600" height="600" alt="A warehouse aisle"></div>
+    </div>
+  </section>
+  <section class="wrap">
+    <div class="chips" id="chips"><span>Barcode</span><span>RFID tags</span><span>Cycle counts</span><span>Reorder</span></div>
+  </section>
+  <section class="wrap" style="padding-top:24px">
+    <div class="tools"><span class="label">Row tools for the selected aisle:</span><button aria-label="Add">+</button><button aria-label="Remove">−</button><button aria-label="Move">↕</button><button aria-label="Split">⎇</button><button aria-label="Flag">⚑</button><button aria-label="Note">✎</button></div>
+  </section>
+  <section class="wrap promo"><h2 id="promo-title">Spring stocktake offer for teams moving off spreadsheets</h2><span class="badge" id="badge">Save 20%</span></section>
+  <section class="wrap" style="padding:24px 20px">
+    <div class="cards">
+      <article class="card"><h3>Count in the aisle</h3><p id="clip1">Scan shelf labels with any phone camera; counts sync when you are back in signal, and conflicts are shown side by side before anything is overwritten.</p></article>
+      <article class="card"><h3 class="trunc" id="trunc">Reconcile variances by location</h3><p>See variances by location and value.</p></article>
+      <article class="card"><h3>Reorder</h3><p>Suggested orders from real usage.</p></article>
+    </div>
+  </section>
+  <section class="wrap"><p id="longline">Northwind keeps a running count for every location, compares it with what your point-of-sale system believes is on the shelf, and shows the difference in money as well as units, so the team knows which variance deserves a recount first and which one can wait until the weekly cycle.</p></section>
+  <section class="wrap"><img id="distorted" src="photo.svg" width="600" height="600" alt="Shelf detail"></section>
+  <section class="wrap" style="padding-top:16px"><img id="cropped" src="photo.svg" width="600" height="600" alt="Aisle overview"></section>
+  <section class="wrap split" id="split"><div><h2>Talk to us</h2><p>We answer within one working day.</p></div><form><label>Email <input type="email" style="display:block;width:100%;min-height:44px"></label><button class="btn" type="submit" style="margin-top:12px">Send</button></form></section>
+  <section class="spacer" id="spacer" aria-hidden="true"></section>
+</main>
+<footer><div class="wrap">© 2026 Northwind Inventory</div></footer>
+</body>
+</html>

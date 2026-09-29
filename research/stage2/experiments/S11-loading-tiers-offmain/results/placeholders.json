@@ -1,18 +1,18 @@
 {
  "env": {
-  "date": "2026-09-29T00:13:49.036Z",
+  "date": "2026-09-29T00:20:58.129Z",
   "node": "v22.22.2",
   "cpus": 4,
   "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
   "loadavgAtStart": [
-   5.1,
-   8.1,
-   10.5
+   13,
+   9.8,
+   10.2
   ],
   "loadavgAtEnd": [
-   7.7,
-   8.5,
-   10.6
+   13.1,
+   10.7,
+   10.5
   ]
  },
  "built": {
@@ -29,8 +29,8 @@
     "avifBytes": 302,
     "dominant": "#080808",
     "encodeMs": {
-     "blurhash": 22.4,
-     "thumbhash": 27.9
+     "blurhash": 23.7,
+     "thumbhash": 34.2
     },
     "webpUriChars": 119,
     "avifUriChars": 427
@@ -47,8 +47,8 @@
     "avifBytes": 330,
     "dominant": "#282828",
     "encodeMs": {
-     "blurhash": 25.4,
-     "thumbhash": 22.4
+     "blurhash": 28.1,
+     "thumbhash": 22.8
     },
     "webpUriChars": 167,
     "avifUriChars": 463
@@ -65,8 +65,8 @@
     "avifBytes": 314,
     "dominant": "#8898a8",
     "encodeMs": {
-     "blurhash": 22.3,
-     "thumbhash": 9.7
+     "blurhash": 15,
+     "thumbhash": 9.5
     },
     "webpUriChars": 159,
     "avifUriChars": 443
@@ -83,8 +83,8 @@
     "avifBytes": 341,
     "dominant": "#2888d8",
     "encodeMs": {
-     "blurhash": 20.2,
-     "thumbhash": 12.5
+     "blurhash": 16.6,
+     "thumbhash": 13
     },
     "webpUriChars": 199,
     "avifUriChars": 479
@@ -101,8 +101,8 @@
     "avifBytes": 312,
     "dominant": "#d8d8d8",
     "encodeMs": {
-     "blurhash": 10.5,
-     "thumbhash": 4.7
+     "blurhash": 11.9,
+     "thumbhash": 9.6
     },
     "webpUriChars": 123,
     "avifUriChars": 439
@@ -119,8 +119,8 @@
     "avifBytes": 320,
     "dominant": "#e8b8a8",
     "encodeMs": {
-     "blurhash": 12,
-     "thumbhash": 4.2
+     "blurhash": 15.2,
+     "thumbhash": 4.7
     },
     "webpUriChars": 199,
     "avifUriChars": 451
@@ -137,8 +137,8 @@
     "avifBytes": 323,
     "dominant": "#e8e8e8",
     "encodeMs": {
-     "blurhash": 11.2,
-     "thumbhash": 3.8
+     "blurhash": 11.4,
+     "thumbhash": 4
     },
     "webpUriChars": 127,
     "avifUriChars": 455
@@ -155,8 +155,8 @@
     "avifBytes": 294,
     "dominant": "#181818",
     "encodeMs": {
-     "blurhash": 18.8,
-     "thumbhash": 9.3
+     "blurhash": 19.5,
+     "thumbhash": 10.2
     },
     "webpUriChars": 135,
     "avifUriChars": 415
@@ -203,114 +203,562 @@
   {
    "cpu": 1,
    "kind": "color",
-   "sync": 0.599999999627471,
-   "decoded": 0.599999999627471,
-   "painted": 26.09999999962747
+   "sync": 0.5,
+   "decoded": 0.5,
+   "painted": 25.5
+  },
+  {
+   "cpu": 1,
+   "kind": "color",
+   "sync": 0.40000000037252903,
+   "decoded": 0.40000000037252903,
+   "painted": 18.800000000745058
+  },
+  {
+   "cpu": 1,
+   "kind": "color",
+   "sync": 0.2999999988824129,
+   "decoded": 0.2999999988824129,
+   "painted": 29.799999998882413
+  },
+  {
+   "cpu": 1,
+   "kind": "color",
+   "sync": 0.30000000074505806,
+   "decoded": 0.30000000074505806,
+   "painted": 23.200000001117587
+  },
+  {
+   "cpu": 1,
+   "kind": "color",
+   "sync": 0.5,
+   "decoded": 0.5,
+   "painted": 18.199999999254942
   },
   {
    "cpu": 1,
    "kind": "blurhash",
-   "sync": 25.100000001490116,
-   "decoded": 25.100000001490116,
-   "painted": 32.600000001490116
+   "sync": 23.300000000745058,
+   "decoded": 23.300000000745058,
+   "painted": 34.09999999962747
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash",
+   "sync": 28,
+   "decoded": 28,
+   "painted": 46.29999999888241
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash",
+   "sync": 55.5,
+   "decoded": 55.5,
+   "painted": 67
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash",
+   "sync": 30,
+   "decoded": 30,
+   "painted": 36.399999998509884
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash",
+   "sync": 24.5,
+   "decoded": 24.5,
+   "painted": 33.70000000111759
   },
   {
    "cpu": 1,
    "kind": "blurhash-6x4",
-   "sync": 30.5,
-   "decoded": 30.5,
-   "painted": 55.80000000074506
+   "sync": 31.600000001490116,
+   "decoded": 31.600000001490116,
+   "painted": 46.100000001490116
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash-6x4",
+   "sync": 40.79999999888241,
+   "decoded": 40.79999999888241,
+   "painted": 58.79999999888241
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash-6x4",
+   "sync": 35.30000000074506,
+   "decoded": 35.30000000074506,
+   "painted": 48
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash-6x4",
+   "sync": 36.600000001490116,
+   "decoded": 36.600000001490116,
+   "painted": 52
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash-6x4",
+   "sync": 26.800000000745058,
+   "decoded": 26.800000000745058,
+   "painted": 38.5
   },
   {
    "cpu": 1,
    "kind": "blurhash-dataurl",
-   "sync": 33.40000000037253,
-   "decoded": 44.5,
-   "painted": 77.09999999962747
+   "sync": 25.800000000745058,
+   "decoded": 32.20000000111759,
+   "painted": 44.20000000111759
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash-dataurl",
+   "sync": 55.5,
+   "decoded": 77.29999999888241,
+   "painted": 95.5
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash-dataurl",
+   "sync": 20.09999999962747,
+   "decoded": 31.699999999254942,
+   "painted": 62.5
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash-dataurl",
+   "sync": 34.40000000037253,
+   "decoded": 49.90000000037253,
+   "painted": 79.59999999962747
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash-dataurl",
+   "sync": 40.59999999962747,
+   "decoded": 60,
+   "painted": 86.5
   },
   {
    "cpu": 1,
    "kind": "thumbhash",
-   "sync": 39.29999999888241,
-   "decoded": 62.59999999962747,
-   "painted": 82
+   "sync": 25.90000000037253,
+   "decoded": 33.5,
+   "painted": 40
+  },
+  {
+   "cpu": 1,
+   "kind": "thumbhash",
+   "sync": 24.09999999962747,
+   "decoded": 36.69999999925494,
+   "painted": 59.69999999925494
+  },
+  {
+   "cpu": 1,
+   "kind": "thumbhash",
+   "sync": 29,
+   "decoded": 49.5,
+   "painted": 79.80000000074506
+  },
+  {
+   "cpu": 1,
+   "kind": "thumbhash",
+   "sync": 20.800000000745058,
+   "decoded": 27.90000000037253,
+   "painted": 44.40000000037253
+  },
+  {
+   "cpu": 1,
+   "kind": "thumbhash",
+   "sync": 25.199999999254942,
+   "decoded": 43.59999999962747,
+   "painted": 67.79999999888241
   },
   {
    "cpu": 1,
    "kind": "thumbhash-canvas",
-   "sync": 0.599999999627471,
-   "decoded": 22.59999999962747,
-   "painted": 54
+   "sync": 21.40000000037253,
+   "decoded": 21.40000000037253,
+   "painted": 36.20000000111759
+  },
+  {
+   "cpu": 1,
+   "kind": "thumbhash-canvas",
+   "sync": 24.200000001117587,
+   "decoded": 24.200000001117587,
+   "painted": 44.09999999962747
+  },
+  {
+   "cpu": 1,
+   "kind": "thumbhash-canvas",
+   "sync": 24.5,
+   "decoded": 24.5,
+   "painted": 49.90000000037253
+  },
+  {
+   "cpu": 1,
+   "kind": "thumbhash-canvas",
+   "sync": 20,
+   "decoded": 20,
+   "painted": 34.5
+  },
+  {
+   "cpu": 1,
+   "kind": "thumbhash-canvas",
+   "sync": 25.300000000745058,
+   "decoded": 25.40000000037253,
+   "painted": 42.40000000037253
   },
   {
    "cpu": 1,
    "kind": "webp",
-   "sync": 0.8000000007450581,
-   "decoded": 10.800000000745058,
-   "painted": 38.600000001490116
+   "sync": 0.6999999992549419,
+   "decoded": 6.799999998882413,
+   "painted": 30.299999998882413
+  },
+  {
+   "cpu": 1,
+   "kind": "webp",
+   "sync": 1.199999999254942,
+   "decoded": 15.599999999627471,
+   "painted": 34
+  },
+  {
+   "cpu": 1,
+   "kind": "webp",
+   "sync": 0.599999999627471,
+   "decoded": 5.5,
+   "painted": 29.5
+  },
+  {
+   "cpu": 1,
+   "kind": "webp",
+   "sync": 0.7000000011175871,
+   "decoded": 6.900000000372529,
+   "painted": 35.90000000037253
+  },
+  {
+   "cpu": 1,
+   "kind": "webp",
+   "sync": 1.299999998882413,
+   "decoded": 15.099999999627471,
+   "painted": 33.79999999888241
   },
   {
    "cpu": 1,
    "kind": "avif",
-   "sync": 0.6999999992549419,
-   "decoded": 14.900000000372529,
-   "painted": 38.40000000037253
+   "sync": 0.8000000007450581,
+   "decoded": 99.20000000111759,
+   "painted": 126.70000000111759
+  },
+  {
+   "cpu": 1,
+   "kind": "avif",
+   "sync": 0.599999999627471,
+   "decoded": 17.40000000037253,
+   "painted": 36.5
+  },
+  {
+   "cpu": 1,
+   "kind": "avif",
+   "sync": 1,
+   "decoded": 17.59999999962747,
+   "painted": 50.59999999962747
+  },
+  {
+   "cpu": 1,
+   "kind": "avif",
+   "sync": 0.599999999627471,
+   "decoded": 17.5,
+   "painted": 46.69999999925494
+  },
+  {
+   "cpu": 1,
+   "kind": "avif",
+   "sync": 0.900000000372529,
+   "decoded": 29.200000001117587,
+   "painted": 50.90000000037253
   },
   {
    "cpu": 4,
    "kind": "color",
-   "sync": 1.199999999254942,
-   "decoded": 1.199999999254942,
-   "painted": 30.899999998509884
+   "sync": 3.699999999254942,
+   "decoded": 3.699999999254942,
+   "painted": 25.800000000745058
+  },
+  {
+   "cpu": 4,
+   "kind": "color",
+   "sync": 1.400000000372529,
+   "decoded": 1.400000000372529,
+   "painted": 26.199999999254942
+  },
+  {
+   "cpu": 4,
+   "kind": "color",
+   "sync": 1.300000000745058,
+   "decoded": 1.300000000745058,
+   "painted": 33.5
+  },
+  {
+   "cpu": 4,
+   "kind": "color",
+   "sync": 1.5,
+   "decoded": 1.5,
+   "painted": 30.800000000745058
+  },
+  {
+   "cpu": 4,
+   "kind": "color",
+   "sync": 2.700000001117587,
+   "decoded": 2.700000001117587,
+   "painted": 17.90000000037253
   },
   {
    "cpu": 4,
    "kind": "blurhash",
-   "sync": 70.40000000037253,
-   "decoded": 70.40000000037253,
-   "painted": 95.5
+   "sync": 73.79999999888241,
+   "decoded": 73.79999999888241,
+   "painted": 109.59999999962747
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash",
+   "sync": 71.5,
+   "decoded": 71.5,
+   "painted": 114.90000000037253
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash",
+   "sync": 73.20000000111759,
+   "decoded": 73.20000000111759,
+   "painted": 113.90000000037253
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash",
+   "sync": 123.90000000037253,
+   "decoded": 123.90000000037253,
+   "painted": 198.09999999962747
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash",
+   "sync": 38.5,
+   "decoded": 38.5,
+   "painted": 83
   },
   {
    "cpu": 4,
    "kind": "blurhash-6x4",
-   "sync": 79.90000000037253,
+   "sync": 79.59999999962747,
+   "decoded": 79.59999999962747,
+   "painted": 140.09999999962747
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash-6x4",
+   "sync": 100.19999999925494,
+   "decoded": 100.19999999925494,
+   "painted": 151.59999999962747
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash-6x4",
+   "sync": 80,
    "decoded": 80,
-   "painted": 129
+   "painted": 131.30000000074506
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash-6x4",
+   "sync": 112.69999999925494,
+   "decoded": 112.69999999925494,
+   "painted": 174.09999999962747
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash-6x4",
+   "sync": 101.40000000037253,
+   "decoded": 101.40000000037253,
+   "painted": 127.30000000074506
   },
   {
    "cpu": 4,
    "kind": "blurhash-dataurl",
-   "sync": 102,
-   "decoded": 118.80000000074506,
-   "painted": 133.40000000037253
+   "sync": 115.90000000037253,
+   "decoded": 142.5,
+   "painted": 151.40000000037253
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash-dataurl",
+   "sync": 88.09999999962747,
+   "decoded": 108.69999999925494,
+   "painted": 114.5
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash-dataurl",
+   "sync": 84.79999999888241,
+   "decoded": 116.59999999962747,
+   "painted": 123.59999999962747
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash-dataurl",
+   "sync": 97.10000000149012,
+   "decoded": 116.10000000149012,
+   "painted": 137.40000000037253
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash-dataurl",
+   "sync": 102.19999999925494,
+   "decoded": 133.59999999962747,
+   "painted": 143.89999999850988
   },
   {
    "cpu": 4,
    "kind": "thumbhash",
-   "sync": 65.59999999962747,
-   "decoded": 87.39999999850988,
-   "painted": 95
+   "sync": 57.59999999962747,
+   "decoded": 74,
+   "painted": 83.19999999925494
+  },
+  {
+   "cpu": 4,
+   "kind": "thumbhash",
+   "sync": 85.40000000037253,
+   "decoded": 107.79999999888241,
+   "painted": 117.19999999925494
+  },
+  {
+   "cpu": 4,
+   "kind": "thumbhash",
+   "sync": 60.69999999925494,
+   "decoded": 88.59999999962747,
+   "painted": 98.09999999962747
+  },
+  {
+   "cpu": 4,
+   "kind": "thumbhash",
+   "sync": 141,
+   "decoded": 183,
+   "painted": 188.90000000037253
+  },
+  {
+   "cpu": 4,
+   "kind": "thumbhash",
+   "sync": 99,
+   "decoded": 120.90000000037253,
+   "painted": 125.10000000149012
   },
   {
    "cpu": 4,
    "kind": "thumbhash-canvas",
-   "sync": 2.599999999627471,
-   "decoded": 41.20000000111759,
-   "painted": 67.30000000074506
+   "sync": 48.30000000074506,
+   "decoded": 48.30000000074506,
+   "painted": 101.60000000149012
+  },
+  {
+   "cpu": 4,
+   "kind": "thumbhash-canvas",
+   "sync": 57.90000000037253,
+   "decoded": 57.90000000037253,
+   "painted": 90.59999999962747
+  },
+  {
+   "cpu": 4,
+   "kind": "thumbhash-canvas",
+   "sync": 90.80000000074506,
+   "decoded": 90.80000000074506,
+   "painted": 144.30000000074506
+  },
+  {
+   "cpu": 4,
+   "kind": "thumbhash-canvas",
+   "sync": 70,
+   "decoded": 70,
+   "painted": 106.59999999962747
+  },
+  {
+   "cpu": 4,
+   "kind": "thumbhash-canvas",
+   "sync": 75.79999999888241,
+   "decoded": 75.79999999888241,
+   "painted": 118.69999999925494
   },
   {
    "cpu": 4,
    "kind": "webp",
-   "sync": 2.199999999254942,
-   "decoded": 11.900000000372529,
-   "painted": 28.59999999962747
+   "sync": 0.5,
+   "decoded": 24.90000000037253,
+   "painted": 42.40000000037253
+  },
+  {
+   "cpu": 4,
+   "kind": "webp",
+   "sync": 2.5,
+   "decoded": 28,
+   "painted": 42.899999998509884
+  },
+  {
+   "cpu": 4,
+   "kind": "webp",
+   "sync": 2.5,
+   "decoded": 34,
+   "painted": 47.80000000074506
+  },
+  {
+   "cpu": 4,
+   "kind": "webp",
+   "sync": 2.5,
+   "decoded": 33.30000000074506,
+   "painted": 45
+  },
+  {
+   "cpu": 4,
+   "kind": "webp",
+   "sync": 8.099999999627471,
+   "decoded": 25.300000000745058,
+   "painted": 36.40000000037253
   },
   {
    "cpu": 4,
    "kind": "avif",
-   "sync": 3.199999999254942,
-   "decoded": 21.90000000037253,
-   "painted": 53
+   "sync": 2.800000000745058,
+   "decoded": 32.90000000037253,
+   "painted": 44.59999999962747
+  },
+  {
+   "cpu": 4,
+   "kind": "avif",
+   "sync": 3.699999999254942,
+   "decoded": 46.5,
+   "painted": 64.79999999888241
+  },
+  {
+   "cpu": 4,
+   "kind": "avif",
+   "sync": 2.200000001117587,
+   "decoded": 37.5,
+   "painted": 69.70000000111759
+  },
+  {
+   "cpu": 4,
+   "kind": "avif",
+   "sync": 3.099999999627471,
+   "decoded": 30.59999999962747,
+   "painted": 48.40000000037253
+  },
+  {
+   "cpu": 4,
+   "kind": "avif",
+   "sync": 2.399999998509884,
+   "decoded": 47.59999999962747,
+   "painted": 65.89999999850988
   }
  ],
  "film": [
@@ -319,156 +767,316 @@
    "bytes": 257701,
    "frames": 21,
    "visibleSteps": 2,
-   "firstMs": 1397,
-   "ninetyMs": 1652,
-   "completeMs": 1652,
+   "firstMs": 1441,
+   "ninetyMs": 1658,
+   "completeMs": 1658,
+   "lcp": 1592
+  },
+  {
+   "k": "jpeg-baseline",
+   "bytes": 257701,
+   "frames": 21,
+   "visibleSteps": 2,
+   "firstMs": 1478,
+   "ninetyMs": 1730,
+   "completeMs": 1730,
    "lcp": 1620
+  },
+  {
+   "k": "jpeg-baseline",
+   "bytes": 257701,
+   "frames": 21,
+   "visibleSteps": 2,
+   "firstMs": 1433,
+   "ninetyMs": 1701,
+   "completeMs": 1701,
+   "lcp": 1612
+  },
+  {
+   "k": "jpeg-baseline",
+   "bytes": 257701,
+   "frames": 20,
+   "visibleSteps": 2,
+   "firstMs": 1406,
+   "ninetyMs": 1657,
+   "completeMs": 1657,
+   "lcp": 1636
+  },
+  {
+   "k": "jpeg-baseline",
+   "bytes": 257701,
+   "frames": 21,
+   "visibleSteps": 2,
+   "firstMs": 1447,
+   "ninetyMs": 1657,
+   "completeMs": 1657,
+   "lcp": 1592
+  },
+  {
+   "k": "jpeg-progressive",
+   "bytes": 196310,
+   "frames": 17,
+   "visibleSteps": 1,
+   "firstMs": 1363,
+   "ninetyMs": 1363,
+   "completeMs": 1363,
+   "lcp": 1360
   },
   {
    "k": "jpeg-progressive",
    "bytes": 196310,
    "frames": 18,
-   "visibleSteps": 2,
-   "firstMs": 453,
-   "ninetyMs": 1401,
-   "completeMs": 1401,
-   "lcp": 1392
+   "visibleSteps": 1,
+   "firstMs": 1468,
+   "ninetyMs": 1468,
+   "completeMs": 1468,
+   "lcp": 1424
+  },
+  {
+   "k": "jpeg-progressive",
+   "bytes": 196310,
+   "frames": 18,
+   "visibleSteps": 1,
+   "firstMs": 1451,
+   "ninetyMs": 1451,
+   "completeMs": 1451,
+   "lcp": 1412
+  },
+  {
+   "k": "jpeg-progressive",
+   "bytes": 196310,
+   "frames": 18,
+   "visibleSteps": 1,
+   "firstMs": 1553,
+   "ninetyMs": 1553,
+   "completeMs": 1553,
+   "lcp": 1516
+  },
+  {
+   "k": "jpeg-progressive",
+   "bytes": 196310,
+   "frames": 19,
+   "visibleSteps": 1,
+   "firstMs": 1576,
+   "ninetyMs": 1576,
+   "completeMs": 1576,
+   "lcp": 1504
   },
   {
    "k": "webp",
    "bytes": 124698,
    "frames": 15,
    "visibleSteps": 1,
-   "firstMs": 989,
-   "ninetyMs": 989,
-   "completeMs": 989,
-   "lcp": 988
+   "firstMs": 1058,
+   "ninetyMs": 1058,
+   "completeMs": 1058,
+   "lcp": 1048
+  },
+  {
+   "k": "webp",
+   "bytes": 124698,
+   "frames": 14,
+   "visibleSteps": 1,
+   "firstMs": 1032,
+   "ninetyMs": 1032,
+   "completeMs": 1032,
+   "lcp": 1008
+  },
+  {
+   "k": "webp",
+   "bytes": 124698,
+   "frames": 15,
+   "visibleSteps": 1,
+   "firstMs": 1205,
+   "ninetyMs": 1205,
+   "completeMs": 1205,
+   "lcp": 1156
+  },
+  {
+   "k": "webp",
+   "bytes": 124698,
+   "frames": 14,
+   "visibleSteps": 1,
+   "firstMs": 1014.9999999999999,
+   "ninetyMs": 1014.9999999999999,
+   "completeMs": 1014.9999999999999,
+   "lcp": 992
+  },
+  {
+   "k": "webp",
+   "bytes": 124698,
+   "frames": 15,
+   "visibleSteps": 1,
+   "firstMs": 1033,
+   "ninetyMs": 1033,
+   "completeMs": 1033,
+   "lcp": 992
   },
   {
    "k": "avif",
    "bytes": 113943,
    "frames": 14,
    "visibleSteps": 1,
-   "firstMs": 958,
-   "ninetyMs": 958,
-   "completeMs": 958,
-   "lcp": 932
+   "firstMs": 1040,
+   "ninetyMs": 1040,
+   "completeMs": 1040,
+   "lcp": 1004
+  },
+  {
+   "k": "avif",
+   "bytes": 113943,
+   "frames": 13,
+   "visibleSteps": 1,
+   "firstMs": 1172,
+   "ninetyMs": 1172,
+   "completeMs": 1172,
+   "lcp": 1128
+  },
+  {
+   "k": "avif",
+   "bytes": 113943,
+   "frames": 15,
+   "visibleSteps": 1,
+   "firstMs": 982,
+   "ninetyMs": 982,
+   "completeMs": 982,
+   "lcp": 956
+  },
+  {
+   "k": "avif",
+   "bytes": 113943,
+   "frames": 15,
+   "visibleSteps": 1,
+   "firstMs": 995,
+   "ninetyMs": 995,
+   "completeMs": 995,
+   "lcp": 924
+  },
+  {
+   "k": "avif",
+   "bytes": 113943,
+   "frames": 15,
+   "visibleSteps": 1,
+   "firstMs": 1151,
+   "ninetyMs": 1151,
+   "completeMs": 1151,
+   "lcp": 1116
   }
  ],
  "decodeSummary": {
   "1x|color": {
-   "syncMs": 0.6,
-   "decodedMs": 0.6,
-   "paintedMs": 26.1
+   "syncMs": 0.4,
+   "decodedMs": 0.4,
+   "paintedMs": 23.2
   },
   "1x|blurhash": {
-   "syncMs": 25.1,
-   "decodedMs": 25.1,
-   "paintedMs": 32.6
+   "syncMs": 28,
+   "decodedMs": 28,
+   "paintedMs": 36.4
   },
   "1x|blurhash-6x4": {
-   "syncMs": 30.5,
-   "decodedMs": 30.5,
-   "paintedMs": 55.8
+   "syncMs": 35.3,
+   "decodedMs": 35.3,
+   "paintedMs": 48
   },
   "1x|blurhash-dataurl": {
-   "syncMs": 33.4,
-   "decodedMs": 44.5,
-   "paintedMs": 77.1
+   "syncMs": 34.4,
+   "decodedMs": 49.9,
+   "paintedMs": 79.6
   },
   "1x|thumbhash": {
-   "syncMs": 39.3,
-   "decodedMs": 62.6,
-   "paintedMs": 82
+   "syncMs": 25.2,
+   "decodedMs": 36.7,
+   "paintedMs": 59.7
   },
   "1x|thumbhash-canvas": {
-   "syncMs": 0.6,
-   "decodedMs": 22.6,
-   "paintedMs": 54
+   "syncMs": 24.2,
+   "decodedMs": 24.2,
+   "paintedMs": 42.4
   },
   "1x|webp": {
-   "syncMs": 0.8,
-   "decodedMs": 10.8,
-   "paintedMs": 38.6
+   "syncMs": 0.7,
+   "decodedMs": 6.9,
+   "paintedMs": 33.8
   },
   "1x|avif": {
-   "syncMs": 0.7,
-   "decodedMs": 14.9,
-   "paintedMs": 38.4
+   "syncMs": 0.8,
+   "decodedMs": 17.6,
+   "paintedMs": 50.6
   },
   "4x|color": {
-   "syncMs": 1.2,
-   "decodedMs": 1.2,
-   "paintedMs": 30.9
+   "syncMs": 1.5,
+   "decodedMs": 1.5,
+   "paintedMs": 26.2
   },
   "4x|blurhash": {
-   "syncMs": 70.4,
-   "decodedMs": 70.4,
-   "paintedMs": 95.5
+   "syncMs": 73.2,
+   "decodedMs": 73.2,
+   "paintedMs": 113.9
   },
   "4x|blurhash-6x4": {
-   "syncMs": 79.9,
-   "decodedMs": 80,
-   "paintedMs": 129
+   "syncMs": 100.2,
+   "decodedMs": 100.2,
+   "paintedMs": 140.1
   },
   "4x|blurhash-dataurl": {
-   "syncMs": 102,
-   "decodedMs": 118.8,
-   "paintedMs": 133.4
+   "syncMs": 97.1,
+   "decodedMs": 116.6,
+   "paintedMs": 137.4
   },
   "4x|thumbhash": {
-   "syncMs": 65.6,
-   "decodedMs": 87.4,
-   "paintedMs": 95
+   "syncMs": 85.4,
+   "decodedMs": 107.8,
+   "paintedMs": 117.2
   },
   "4x|thumbhash-canvas": {
-   "syncMs": 2.6,
-   "decodedMs": 41.2,
-   "paintedMs": 67.3
+   "syncMs": 70,
+   "decodedMs": 70,
+   "paintedMs": 106.6
   },
   "4x|webp": {
-   "syncMs": 2.2,
-   "decodedMs": 11.9,
-   "paintedMs": 28.6
+   "syncMs": 2.5,
+   "decodedMs": 28,
+   "paintedMs": 42.9
   },
   "4x|avif": {
-   "syncMs": 3.2,
-   "decodedMs": 21.9,
-   "paintedMs": 53
+   "syncMs": 2.8,
+   "decodedMs": 37.5,
+   "paintedMs": 64.8
   }
  },
  "filmSummary": {
   "jpeg-baseline": {
    "kb": 252,
    "visibleSteps": 2,
-   "firstMs": 1397,
-   "ninetyMs": 1652,
-   "completeMs": 1652,
-   "lcp": 1620
+   "firstMs": 1441,
+   "ninetyMs": 1658,
+   "completeMs": 1658,
+   "lcp": 1612
   },
   "jpeg-progressive": {
    "kb": 192,
-   "visibleSteps": 2,
-   "firstMs": 453,
-   "ninetyMs": 1401,
-   "completeMs": 1401,
-   "lcp": 1392
+   "visibleSteps": 1,
+   "firstMs": 1468,
+   "ninetyMs": 1468,
+   "completeMs": 1468,
+   "lcp": 1424
   },
   "webp": {
    "kb": 122,
    "visibleSteps": 1,
-   "firstMs": 989,
-   "ninetyMs": 989,
-   "completeMs": 989,
-   "lcp": 988
+   "firstMs": 1033,
+   "ninetyMs": 1033,
+   "completeMs": 1033,
+   "lcp": 1008
   },
   "avif": {
    "kb": 111,
    "visibleSteps": 1,
-   "firstMs": 958,
-   "ninetyMs": 958,
-   "completeMs": 958,
-   "lcp": 932
+   "firstMs": 1040,
+   "ninetyMs": 1040,
+   "completeMs": 1040,
+   "lcp": 1004
   }
  }
 }

@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-29T00:13:02.561Z",
+ "generated": "2026-09-29T00:32:28.560Z",
  "environment": {
   "node": "v22.22.2",
   "platform": "linux x64",
@@ -14010,6 +14010,18 @@
    "pixelmatchPct": 0,
    "de00Over1Pct": 4.22,
    "de00Over2_3Pct": 0.74
+  },
+  "auditConcentric": {
+   "base": {
+    "audit": [
+     "`a.btn > span.play-disc` 50px inside `div.cta-row > a.btn.btn-secondary` 12px, 9px in (≈3px)"
+    ],
+    "probe": "3 nested corners not concentric"
+   },
+   "radius": {
+    "audit": [],
+    "probe": "0 nested corners not concentric"
+   }
   }
  }
 }

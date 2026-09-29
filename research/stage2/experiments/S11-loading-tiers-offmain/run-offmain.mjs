@@ -10,7 +10,7 @@ import { buildOffmain } from './lib/build-offmain.mjs';
 
 const args = process.argv.slice(2);
 const RUNS = Number(args[args.indexOf('--runs') + 1]) || 5;
-const JOBS = ['main', 'main-yield', 'worker', 'worker-clone', 'worker-stream', 'binary-main'];
+const JOBS = ['main', 'main-yield', 'main-stream', 'worker', 'worker-clone', 'worker-stream', 'binary-main'];
 const built = await buildOffmain();
 const srv = await serve(siteRoot);
 const { browser } = await launch();

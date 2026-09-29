@@ -133,12 +133,13 @@ h1{font-size:30px;line-height:1.15;margin:20px 0 8px}
 #start{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:600 17px system-ui;padding:12px 22px;border-radius:999px;border:0;background:#fff;color:#111;min-width:180px}
 #status{position:absolute;left:12px;bottom:10px;margin:0;color:#fff;font-size:13px}
 </style></head><body>
-<header><strong>Northwind</strong><button id=menu aria-expanded=false aria-controls=menu-panel>Menu</button></header>
+<header><strong id=brand>Northwind</strong><button id=menu aria-expanded=false aria-controls=menu-panel>Menu</button></header>
 <nav id=menu-panel hidden><a href="#">Products</a> · <a href="#">Pricing</a> · <a href="#">About</a></nav>
 <main>
 <section class=hero><h1>Design your own in minutes</h1><p>${para}</p>
 <img src="hero.avif" width=780 height=520 fetchpriority=high alt="A product photograph"></section>
 <section><h2>Why it works</h2><p>${para}</p><div class=cards>${[1, 2, 3].map((i) => `<div class=card><strong>Point ${i}</strong><p>${para.slice(0, 120)}</p></div>`).join('')}</div><p>${para}</p><p>${para}</p></section>
+<section><h2>How people use it</h2><p>${para}</p><p>${para}</p><div class=cards>${[4, 5, 6].map((i) => `<div class=card><strong>Story ${i}</strong><p>${para}</p></div>`).join('')}</div></section>
 <section id=module aria-label="Interactive configurator"><img id=poster src="poster.avif" width=716 height=537 loading=lazy decoding=async alt="The configurator, showing a finished design"><canvas id=cv hidden></canvas>
 <button id=start>Try it live</button><p id=status aria-live=polite></p></section>
 <section><h2>Details</h2><p>${para}</p><p>${para}</p><p>${para}</p></section>

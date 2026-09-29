@@ -101,7 +101,8 @@ self.onmessage = async (e) => {
 <style>body{margin:0;font:16px system-ui;padding:16px}#tap{font:inherit;padding:10px 16px}#spin{width:40px;height:40px;background:#e8b04a;animation:r 1s linear infinite}@keyframes r{to{transform:rotate(360deg)}}</style>
 <button id=tap>Tap me <span id=count>0</span></button><div id=spin></div><p id=status>idle</p><pre id=out></pre>
 <script type=module>
-import { makeAcc, addRecords, addBinary, summary } from './job.js';
+import { makeAcc, addRecords, addBinary, addOne, summary, CATS } from './job.js';
+const ci = Object.fromEntries(CATS.map((c, i) => [c, i]));
 const $ = (s) => document.querySelector(s);
 let taps = 0;
 $('#tap').addEventListener('click', () => { $('#count').textContent = ++taps; });
@@ -120,6 +121,12 @@ const JOBS = {
   async 'worker-clone'() { const w = new Worker('worker-clone.js'); const recs = await new Promise((res) => { w.onmessage = (e) => { const t = performance.now(); const d = e.data; W.deser = performance.now() - t; res(d); }; w.postMessage(new URL('data.json', location.href).href); });
     const A = makeAcc(recs.length); addRecords(A, recs); show(summary(A)); },
   async 'worker-stream'() { const w = new Worker('worker-stream.js', { type: 'module' }); await new Promise((res) => { w.onmessage = (e) => { if (e.data.final) { W.ptsBytes = e.data.pts.byteLength; show(e.data.summary); res(); } else show(e.data.summary, true); }; w.postMessage({ url: new URL('data.ndjson', location.href).href, n: 200000 }); }); },
+  async 'main-stream'() { const res = await fetch('data.ndjson'); const A = makeAcc(200000); const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
+    let buf = '', next = 20000, t = performance.now();
+    for (;;) { const { value, done } = await reader.read(); if (value) buf += value; let nl;
+      while ((nl = buf.indexOf('\\n')) >= 0) { const line = buf.slice(0, nl); buf = buf.slice(nl + 1); if (!line) continue; const r = JSON.parse(line); addOne(A, r.lat, r.lon, r.v, ci[r.cat]);
+        if (performance.now() - t > 8) { await yieldNow(); t = performance.now(); } }
+      if (A.n >= next || done) { next += 20000; show(summary(A), !done); } if (done) break; } },
   async 'binary-main'() { const buf = await (await fetch('data.bin')).arrayBuffer(); const A = makeAcc(new Uint32Array(buf, 0, 1)[0]); addBinary(A, buf); show(summary(A)); },
 };
 window.__run = async (name) => { W.first = 0; $('#status').textContent = 'working'; const t = performance.now(); W.t0 = t; await JOBS[name](); W.t1 = performance.now(); return { ms: W.t1 - t, first: W.first - t }; };
