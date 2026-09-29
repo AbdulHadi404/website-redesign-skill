@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrow keys and layout — widgets.mjs regression</title>
+<!--
+  widgets.mjs arrow-key contracts on layouts that do not change which key is right (all left to right, APG keys):
+  #tabs-wrap and #tools-wrap wrap onto a second line (a long first item in a narrow box, as on a phone): ArrowRight
+    still moves to the next item, which now sits at the start of the next line.
+  #tabs-stack has no aria-orientation, so it is horizontal to assistive technology however CSS stacks its tabs: it
+    answers ArrowRight/ArrowLeft (correct). #tabs-stack-ud is the same but answers only ArrowDown/ArrowUp: it needs
+    aria-orientation="vertical".
+  #tabs-rerender and #menubar-rerender rewrite their items' markup on every move (templating): the n-th item is new
+    each time.
+  #tabs-after-frame follows an iframe with four links of its own: Tab from the control before the tablist goes into
+    the frame first.
+  #tabs-wrapper and #tabs-wrapper-ok are contracts that name a wrapper around the tablist: the first has no arrow
+    handling at all, the second is correct.
+-->
+<style>
+  body { font: 16px/1.6 system-ui, sans-serif; margin: 24px; color: #111; background: #fff; }
+  section { margin-block: 16px; }
+  [role=tablist], [role=toolbar], [role=menubar] { display: flex; gap: 4px; }
+  .wrap { flex-wrap: wrap; width: 260px; }
+  .stack { display: block; width: 200px; }
+  .stack > [role=tab] { display: block; width: 100%; text-align: start; }
+  [role=tab], [role=toolbar] button, [role=menuitem] { padding: 6px 12px; border: 1px solid #888; background: #fff; font: inherit; color: #111; }
+  [role=tab][aria-selected=true] { background: #222; color: #fff; }
+  [role=tabpanel] { padding: 4px 0; }
+  :focus-visible { outline: 3px solid #e90; outline-offset: 2px; }
+  iframe { width: 320px; height: 48px; border: 1px solid #ccc; }
+</style>
+</head>
+<body>
+<h1>Arrow keys and layout</h1>
+
+<section>
+  <h2 id="h-wrap">Wrapped tabs</h2>
+  <div id="tabs-wrap" class="wrap" role="tablist" aria-labelledby="h-wrap" data-keys="h">
+    <button role="tab" id="w1" aria-selected="true" aria-controls="pw1">Orders awaiting payment approval</button>
+    <button role="tab" id="w2" aria-selected="false" aria-controls="pw2" tabindex="-1">Invoices</button>
+    <button role="tab" id="w3" aria-selected="false" aria-controls="pw3" tabindex="-1">Settings</button>
+  </div>
+  <div role="tabpanel" id="pw1" aria-labelledby="w1">1</div><div role="tabpanel" id="pw2" aria-labelledby="w2" hidden>2</div><div role="tabpanel" id="pw3" aria-labelledby="w3" hidden>3</div>
+</section>
+
+<section>
+  <div id="tools-wrap" class="wrap" role="toolbar" aria-label="Formatting" data-keys="h">
+    <button type="button">Paragraph style: body text</button><button type="button" tabindex="-1">Bold</button><button type="button" tabindex="-1">Italic</button>
+  </div>
+</section>
+
+<section>
+  <h2 id="h-stack">Stacked tabs</h2>
+  <div id="tabs-stack" class="stack" role="tablist" aria-labelledby="h-stack" data-keys="h">
+    <button role="tab" id="s1" aria-selected="true" aria-controls="ps1">Orders</button>
+    <button role="tab" id="s2" aria-selected="false" aria-controls="ps2" tabindex="-1">Invoices</button>
+    <button role="tab" id="s3" aria-selected="false" aria-controls="ps3" tabindex="-1">Settings</button>
+  </div>
+  <div role="tabpanel" id="ps1" aria-labelledby="s1">1</div><div role="tabpanel" id="ps2" aria-labelledby="s2" hidden>2</div><div role="tabpanel" id="ps3" aria-labelledby="s3" hidden>3</div>
+</section>
+
+<section>
+  <h2 id="h-stack-ud">Stacked tabs, Up and Down only</h2>
+  <div id="tabs-stack-ud" class="stack" role="tablist" aria-labelledby="h-stack-ud" data-keys="v">
+    <button role="tab" id="u1" aria-selected="true" aria-controls="pu1">Orders</button>
+    <button role="tab" id="u2" aria-selected="false" aria-controls="pu2" tabindex="-1">Invoices</button>
+    <button role="tab" id="u3" aria-selected="false" aria-controls="pu3" tabindex="-1">Settings</button>
+  </div>
+  <div role="tabpanel" id="pu1" aria-labelledby="u1">1</div><div role="tabpanel" id="pu2" aria-labelledby="u2" hidden>2</div><div role="tabpanel" id="pu3" aria-labelledby="u3" hidden>3</div>
+</section>
+
+<section>
+  <h2 id="h-rerender">Re-rendered tabs</h2>
+  <div id="tabs-rerender" role="tablist" aria-labelledby="h-rerender"></div>
+  <div id="rerender-panels"></div>
+  <div id="menubar-rerender" role="menubar" aria-label="Main"></div>
+</section>
+
+<section>
+  <h2 id="h-frame">Tabs after an embed</h2>
+  <iframe title="Opening hours" srcdoc="<a href='#mon'>Mon</a> <a href='#tue'>Tue</a> <a href='#wed'>Wed</a> <a href='#thu'>Thu</a>"></iframe>
+  <div id="tabs-after-frame" role="tablist" aria-labelledby="h-frame" data-keys="h">
+    <button role="tab" id="f1" aria-selected="true" aria-controls="pf1">Orders</button>
+    <button role="tab" id="f2" aria-selected="false" aria-controls="pf2" tabindex="-1">Invoices</button>
+    <button role="tab" id="f3" aria-selected="false" aria-controls="pf3" tabindex="-1">Settings</button>
+  </div>
+  <div role="tabpanel" id="pf1" aria-labelledby="f1">1</div><div role="tabpanel" id="pf2" aria-labelledby="f2" hidden>2</div><div role="tabpanel" id="pf3" aria-labelledby="f3" hidden>3</div>
+</section>
+
+<section id="tabs-wrapper">
+  <h2 id="h-nokeys">Tabs without arrow keys, in a wrapper</h2>
+  <div role="tablist" aria-labelledby="h-nokeys">
+    <button role="tab" id="n1" aria-selected="true" aria-controls="pn1">Orders</button>
+    <button role="tab" id="n2" aria-selected="false" aria-controls="pn2" tabindex="-1">Invoices</button>
+    <button role="tab" id="n3" aria-selected="false" aria-controls="pn3" tabindex="-1">Settings</button>
+  </div>
+  <div role="tabpanel" id="pn1" aria-labelledby="n1">1</div><div role="tabpanel" id="pn2" aria-labelledby="n2" hidden>2</div><div role="tabpanel" id="pn3" aria-labelledby="n3" hidden>3</div>
+</section>
+
+<section id="tabs-wrapper-ok">
+  <h2 id="h-ok">Tabs in a wrapper</h2>
+  <div role="tablist" aria-labelledby="h-ok" data-keys="h">
+    <button role="tab" id="k1" aria-selected="true" aria-controls="pk1">Orders</button>
+    <button role="tab" id="k2" aria-selected="false" aria-controls="pk2" tabindex="-1">Invoices</button>
+    <button role="tab" id="k3" aria-selected="false" aria-controls="pk3" tabindex="-1">Settings</button>
+  </div>
+  <div role="tabpanel" id="pk1" aria-labelledby="k1">1</div><div role="tabpanel" id="pk2" aria-labelledby="k2" hidden>2</div><div role="tabpanel" id="pk3" aria-labelledby="k3" hidden>3</div>
+</section>
+<button type="button">After</button>
+
+<script>
+// Roving tabindex. data-keys="h": ArrowRight next, ArrowLeft previous (APG, horizontal); "v": ArrowDown/ArrowUp.
+for (const g of document.querySelectorAll('[data-keys]')) {
+  const items = [...g.querySelectorAll(g.matches('[role=tablist]') ? '[role=tab]' : 'button')];
+  const [next, prev] = g.dataset.keys === 'v' ? ['ArrowDown', 'ArrowUp'] : ['ArrowRight', 'ArrowLeft'];
+  const go = (t) => {
+    for (const x of items) {
+      const on = x === t;
+      x.tabIndex = on ? 0 : -1;
+      if (x.getAttribute('role') === 'tab') { x.setAttribute('aria-selected', on); document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }
+    }
+    t.focus();
+  };
+  g.addEventListener('keydown', (e) => {
+    const i = items.indexOf(document.activeElement); if (i < 0) return;
+    let j = null;
+    if (e.key === next) j = (i + 1) % items.length; else if (e.key === prev) j = (i - 1 + items.length) % items.length;
+    else if (e.key === 'Home') j = 0; else if (e.key === 'End') j = items.length - 1;
+    if (j !== null) { e.preventDefault(); go(items[j]); }
+  });
+}
+// Templated tabs: every selection rewrites the tablist's and the panels' markup.
+(() => {
+  const list = document.getElementById('tabs-rerender'), panels = document.getElementById('rerender-panels');
+  const names = ['Orders', 'Invoices', 'Settings'];
+  const render = (sel) => {
+    list.innerHTML = names.map((n, i) => `<button role="tab" id="r${i}" aria-selected="${i === sel}" tabindex="${i === sel ? 0 : -1}" aria-controls="pr${i}">${n}</button>`).join('');
+    panels.innerHTML = names.map((n, i) => `<div role="tabpanel" id="pr${i}" aria-labelledby="r${i}"${i === sel ? '' : ' hidden'}>${i + 1}</div>`).join('');
+  };
+  render(0);
+  list.addEventListener('keydown', (e) => {
+    const tabs = [...list.querySelectorAll('[role=tab]')]; const i = tabs.indexOf(document.activeElement); if (i < 0) return;
+    let j = null;
+    if (e.key === 'ArrowRight') j = (i + 1) % tabs.length; else if (e.key === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
+    else if (e.key === 'Home') j = 0; else if (e.key === 'End') j = tabs.length - 1;
+    if (j === null) return;
+    e.preventDefault(); render(j); list.querySelectorAll('[role=tab]')[j].focus();
+  });
+})();
+// Templated menubar: the current item is re-rendered on every move.
+(() => {
+  const bar = document.getElementById('menubar-rerender'); const names = ['File', 'Edit', 'View', 'Help'];
+  const render = (cur) => { bar.innerHTML = names.map((n, i) => `<span role="menuitem" tabindex="${i === cur ? 0 : -1}">${n}</span>`).join(''); };
+  render(0);
+  bar.addEventListener('keydown', (e) => {
+    const items = [...bar.querySelectorAll('[role=menuitem]')]; const i = items.indexOf(document.activeElement); if (i < 0) return;
+    let j = null;
+    if (e.key === 'ArrowRight') j = (i + 1) % items.length; else if (e.key === 'ArrowLeft') j = (i - 1 + items.length) % items.length;
+    if (j === null) return;
+    e.preventDefault(); render(j); bar.querySelectorAll('[role=menuitem]')[j].focus();
+  });
+})();
+</script>
+</body>
+</html>

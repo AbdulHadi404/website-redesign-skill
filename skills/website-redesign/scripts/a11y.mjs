@@ -22,9 +22,13 @@
  *             [2.1.1 2.1.2 2.4.3 2.4.7 2.4.11 2.4.13 2.4.1]
  *   pointer   clickable things that keyboard users cannot reach (listeners / cursor:pointer)  [2.1.1 4.1.2]
  *             A clickable canvas that is not focusable is a WARN, not a FAIL, when the Tab walk stops on controls
- *             over it (stand-ins): they may be its keyboard path, so check them against the canvas contract.
- *   canvas    per clickable canvas: controls over it at load, whether a key on one changes the canvas's pixels,
- *             and whether anything is announced (live region, ariaNotify, focus on a new control)  [2.1.1 4.1.3]
+ *             over it that stand in for it: a key on one changes the canvas's own pixels, or they are built as
+ *             stand-ins (paint nothing until focused, let the pointer through). Check them against the canvas
+ *             contract. A painted control that takes the pointer and changes nothing drawn (a Sound toggle, a
+ *             header's Menu button over a hero) does not: the FAIL stays.
+ *   canvas    per clickable canvas: controls over it at load, whether a key on one changes the canvas's own
+ *             pixels (captured with everything over it made transparent), and whether anything is announced
+ *             (live region, ariaNotify, focus on a new control)  [2.1.1 4.1.2 4.1.3]
  *   targets   targets < 24x24 without the spacing exception                  [2.5.8]
  *   nontext   form-control boundaries < 3:1 against their background         [1.4.11]
  *   autocomplete  personal-data fields without autocomplete tokens          [1.3.5]
@@ -618,13 +622,13 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
   if (walkCut) add('INFO', 'keyboard', '—', `Stopped after ${maxTabs} Tab presses without cycling (raise --tabs)`);
   report.data.tabOrder = real.map(s => `${s.aria}  ←  ${s.where}`);
   // A clickable canvas that is not focusable (section 5): Tab stops on controls over it may be its stand-ins, the
-  // keyboard path of an accessible canvas (they often take pointer-events: none so the canvas keeps its drag).
-  // Whether they do what the pointer does is not something a walk can tell: WARN, and check them by hand.
+  // keyboard path of an accessible canvas. With none it FAILs here; with some, section 5b decides, because a control
+  // over a canvas is not always a stand-in for it (a game's Sound toggle, a header's Menu button over a full-screen
+  // hero).
   for (const k of clickableCanvases) {
     if (k.focusable) continue;
     k.standIns = real.filter(s => s.standIn && s.overCanvas.includes(k.ci));
-    if (k.standIns.length) add('WARN', 'pointer', '2.1.1', `Clickable canvas (${k.signal}) is not focusable; ${k.standIns.length} Tab stop(s) over it may be its stand-ins (${k.standIns.slice(0, 3).map(s => s.aria).join(', ')}${k.standIns.length > 3 ? ', …' : ''}) — check them against the canvas contract (accessibility.md, "Canvas, WebGL and game-like interaction"): present from load, named, a key for every pointer action, outcomes announced`, k.where);
-    else add('FAIL', 'pointer', '2.1.1', `Clickable (${k.signal}) but not keyboard focusable${k.role ? ` (role=${k.role})` : ''}${walkCut ? ` — and no Tab stop over it in the first ${maxTabs} (raise --tabs)` : ''}`, k.where);
+    if (!k.standIns.length) add('FAIL', 'pointer', '2.1.1', `Clickable (${k.signal}) but not keyboard focusable${k.role ? ` (role=${k.role})` : ''}${walkCut ? ` — and no Tab stop over it in the first ${maxTabs} (raise --tabs)` : ''}`, k.where);
   }
   // reverse walk: sticky headers typically obscure focus when moving backwards
   let rev = 0;
@@ -667,12 +671,17 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
 // ---------- 5b. clickable canvases: stand-ins at load, a key that changes the canvas, narration ----------
 // Reduced from the S6 lab's canvas probe (research/stage2/experiments/S6-interactive-experiences/lib/probe-canvas.mjs)
 // to what can be judged without false alarms. On a fresh page, before any input: the controls over each clickable
-// canvas (stand-ins must exist from load: screen-reader browse mode and voice control never press Tab first). Then,
-// on up to four of them (or the canvas itself when it takes focus), one key at a time until something responds: did
-// the canvas's pixels change (a compositor capture, so WebGL counts), and was the change announced (live-region
-// text, ariaNotify, a pressed/checked/value change, or focus on a new named control)? Keys go only to widgets, never
-// to links; navigations and requests other than reads are aborted, so nothing is sent. A canvas that changes by
-// itself is not judged by its pixels. Proof that one key works, not that every task does: walk the tasks by hand.
+// canvas (stand-ins must exist from load: screen-reader browse mode and voice control never press Tab first), and
+// whether each is built as a stand-in (it paints nothing until focused, or lets the pointer through). Then, on up to
+// four of them (or the canvas itself when it takes focus), one key at a time: did the canvas's own pixels change, and
+// was the change announced (live-region text, ariaNotify, a pressed/checked/value change, or focus on a new named
+// control)? Keys go only to widgets, never to links; navigations and requests other than GET, HEAD and OPTIONS are
+// aborted, so nothing is posted (a GET that has side effects is not stopped). A canvas that changes by itself is not
+// judged by its pixels. Proof that one key works, not that every task does: walk the tasks by hand.
+// It also settles the pointer finding for a canvas that takes no focus but has Tab stops over it (section 4): they
+// may be its stand-ins (WARN, to check against the canvas contract) when a key on one changes the canvas or they are
+// built as stand-ins. A painted control that takes the pointer and changes nothing drawn (a game's Sound toggle, a
+// header's Menu button over a hero) is the page's, not the canvas's: the FAIL stays.
 if (clickableCanvases.length) {
   const spy = () => {
     window.__a11yNotify = [];
@@ -683,15 +692,26 @@ if (clickableCanvases.length) {
   };
   const page = await newPage({}, spy);
   page.on('dialog', (d) => d.dismiss().catch(() => {}));
-  const shot = async (ci) => {
-    const clip = await page.evaluate((i) => {
-      const r = document.querySelectorAll('canvas')[i]?.getBoundingClientRect(); if (!r) return null;
+  // One element's own pixels: for the capture, everything else is made transparent except its ancestors (their boxes
+  // lie behind it). A compositor capture, so WebGL counts; and a menu that opens over the canvas, a toggle's new icon
+  // or a focus ring is not read as the canvas changing. `own: false` hides the element too: what is there without it.
+  const ISOLATE = 'body *:not(:has([data-a11y-leaf])):not([data-a11y-leaf]):not([data-a11y-leaf] *):not(#a11y-x#a11y-x), :has([data-a11y-leaf])::before, :has([data-a11y-leaf])::after, ::backdrop, [data-a11y-leaf=off] { opacity: 0 !important; transition: none !important; }';
+  const isolated = async (sel, own = true) => {
+    const clip = await page.evaluate(([sel, own, css]) => {
+      const el = document.querySelector(sel); if (!el) return null;
+      const r = el.getBoundingClientRect();
       const x = Math.max(0, r.left), y = Math.max(0, r.top), width = Math.min(r.right, innerWidth) - x, height = Math.min(r.bottom, innerHeight) - y;
-      return width >= 2 && height >= 2 ? { x, y, width, height } : null;
-    }, ci).catch(() => null);
-    const png = clip && await page.screenshot({ clip, animations: 'disabled', caret: 'hide' }).catch(() => null);
+      if (width < 2 || height < 2) return null;
+      el.setAttribute('data-a11y-leaf', own ? '' : 'off');
+      const s = document.createElement('style'); s.id = 'a11y-isolate'; s.textContent = css; (document.head || document.documentElement).append(s);
+      return { x, y, width, height };
+    }, [sel, own, ISOLATE]).catch(() => null);
+    if (!clip) return null;
+    const png = await page.screenshot({ clip, animations: 'disabled', caret: 'hide' }).catch(() => null);
+    await page.evaluate(() => { document.getElementById('a11y-isolate')?.remove(); for (const n of document.querySelectorAll('[data-a11y-leaf]')) n.removeAttribute('data-a11y-leaf'); }).catch(() => {});
     return png ? createHash('sha1').update(png).digest('hex') : null;
   };
+  const shot = (ci) => isolated(`[data-a11y-canvas="${ci}"]`);
   // In the page: the live-region text, the ariaNotify count, the scroll position, and the focused element against
   // the one a key was pressed on (window.__a11yTarget) and the elements that existed before (window.__a11yOld).
   const state = (before) => {
@@ -704,16 +724,30 @@ if (clickableCanvases.length) {
     return out;
   };
   const KEYS = { button: ['Enter', 'ArrowRight'], checkbox: ['Space'], radio: ['ArrowDown'], slider: ['ArrowRight'], combobox: ['ArrowDown'], canvas: ['ArrowRight', 'Enter', 'Space'] };
+  const contract = 'check them against the canvas contract (accessibility.md, "Canvas, WebGL and game-like interaction"): present from load, named, a key for every pointer action, outcomes announced';
+  // The pointer finding for a canvas that takes no focus but has Tab stops over it. ev: { acts: a key on a Tab stop
+  // over it changed the canvas, built: why the Tab stops over it look like stand-ins, painted: they were found to
+  // paint, keys: the keys tried (none: not tested), animated: the canvas changes by itself }.
+  const pointerVerdict = (k, ev) => {
+    const names = `${k.standIns.slice(0, 3).map((s) => s.aria).join(', ')}${k.standIns.length > 3 ? ', …' : ''}`, n = k.standIns.length;
+    const built = [...new Set([...(k.standIns.some((s) => s.passThrough) ? ['let the pointer through'] : []), ...ev.built])];
+    const keys = ev.keys?.length ? ev.keys.join(', ') : '';
+    if (ev.acts) add('WARN', 'pointer', '2.1.1', `Clickable canvas (${k.signal}) is not focusable; ${n} Tab stop(s) over it may be its stand-ins (${names}): ${ev.acts} changes the canvas — ${contract}`, k.where);
+    else if (built.length) add('WARN', 'pointer', '2.1.1', `Clickable canvas (${k.signal}) is not focusable; ${n} Tab stop(s) over it may be its stand-ins (${names}): built as stand-ins (${built.join(', ')})${ev.animated ? '; the canvas changes by itself, so no key could be shown to change it' : keys ? `, though no key tried on them (${keys}) changed the canvas` : ''} — ${contract}`, k.where);
+    else add('FAIL', 'pointer', '2.1.1', `Clickable (${k.signal}) but not keyboard focusable${k.role ? ` (role=${k.role})` : ''} — the ${n} Tab stop(s) over it (${names}) show no sign of standing in for it: they ${ev.painted ? 'are painted and ' : ''}take the pointer${ev.animated ? ', and the canvas changes by itself, so no key could be shown to change it' : keys ? `, and no key tried on them (${keys}) changed the canvas` : '; no key could be tried on them on a fresh page'}`, k.where);
+    k.decided = true;
+  };
   report.data.canvas = [];
   try {
-    // Keys press real buttons: nothing may leave the page. Navigations of the page and every request that is not a
-    // read (a POST from "Add to basket" over a product viewer) are aborted while they are tested.
+    // Keys press real buttons. Navigations of the page and every request that is not a GET, HEAD or OPTIONS (a POST
+    // from "Add to basket" over a product viewer) are aborted while they are tested.
     await page.route('**/*', (route) => { const q = route.request(); return (q.isNavigationRequest() && q.frame() === page.mainFrame()) || !/^(GET|HEAD|OPTIONS)$/.test(q.method()) ? route.abort('aborted') : route.continue(); });
     for (const k of clickableCanvases) {
       // The controls over the canvas now, before any key; tagged so the key test can focus them.
       const load = await page.evaluate(([ci, shownSrc]) => {
         const shown = eval(shownSrc);
         const c = document.querySelectorAll('canvas')[ci]; if (!c) return null;
+        c.setAttribute('data-a11y-canvas', ci);
         c.scrollIntoView({ block: c.getBoundingClientRect().height > innerHeight ? 'start' : 'center', behavior: 'instant' });
         const b = c.getBoundingClientRect();
         const widgets = 'button, input:not([type=hidden]), select, summary, [role=button], [role=checkbox], [role=radio], [role=switch], [role=slider], [role=spinbutton], [role=option], [role=gridcell], [role=treeitem], [role=menuitem], [role=menuitemcheckbox], [role=menuitemradio], [role=tab]';
@@ -729,7 +763,8 @@ if (clickableCanvases.length) {
           const r = e.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
           if (!fallback && (!shown(e) || x < b.left || x > b.right || y < b.top || y > b.bottom)) continue;
           e.setAttribute('data-a11y-standin', `${ci}-${out.length}`);
-          out.push({ id: `${ci}-${out.length}`, kind: kind(e), name: (e.getAttribute('aria-label') || e.textContent || e.value || '').trim().replace(/\s+/g, ' ').slice(0, 60), tabbable: e.tabIndex >= 0 });
+          out.push({ id: `${ci}-${out.length}`, kind: kind(e), name: (e.getAttribute('aria-label') || e.textContent || e.value || '').trim().replace(/\s+/g, ' ').slice(0, 60), tabbable: e.tabIndex >= 0,
+            fallback, passThrough: getComputedStyle(e).pointerEvents === 'none' });
         }
         // The canvas (or its same-size wrapper) when it takes focus itself.
         let self = null;
@@ -743,12 +778,33 @@ if (clickableCanvases.length) {
       }, [k.ci, shownSrc]).catch(() => null);
       if (!load) continue;
       const r = { where: k.where, atLoad: load.standIns.length, tabbableAtLoad: load.standIns.filter((s) => s.tabbable).length, walked: (k.standIns || []).length, tried: [], path: null };
-      const candidates = [...load.standIns.filter((s) => s.tabbable), ...load.standIns.filter((s) => !s.tabbable)].slice(0, 4).map((s) => ({ ...s, label: `${s.kind} "${s.name}"` }));
-      if (load.self) candidates.push({ id: `${k.ci}-self`, kind: 'canvas', label: 'the canvas itself' });
+      // Built as a stand-in, judged before anything has focus: it paints nothing (its own pixels, alone, equal the
+      // page's without it: transparent text, background and border over a box of its own), or it lets the pointer
+      // through, or it is the canvas's fallback content. A Sound toggle or a Menu button is painted and takes the
+      // pointer. A header that a script fades in after load is not transparent: while a control's opacity is below 1,
+      // wait (up to 2.5 s). CSS animations and transitions are finished by the capture itself.
+      const judged = load.standIns.filter((s) => s.tabbable).slice(0, 8);
+      const opacities = () => page.evaluate((ids) => ids.map((id) => { let o = 1; for (let e = document.querySelector(`[data-a11y-standin="${id}"]`); e; e = e.parentElement) o *= +getComputedStyle(e).opacity; return Math.round(o * 100); }), judged.map((s) => s.id)).catch(() => []);
+      for (let i = 0; i < 5 && (await opacities()).some((v) => v < 99); i++) await page.waitForTimeout(500);
+      for (const s of judged) {
+        const sel = `[data-a11y-standin="${s.id}"]`;
+        await page.evaluate((sel) => document.querySelector(sel)?.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' }), sel).catch(() => {});
+        const a = await isolated(sel), b = a && await isolated(sel, false);
+        s.paintsNothing = a ? a === b : null; // null: no box of its own on screen to capture
+        s.built = s.fallback ? 'fallback content' : s.paintsNothing ? 'paint nothing until focused' : s.passThrough ? 'let the pointer through' : '';
+      }
+      await page.evaluate((ci) => { const c = document.querySelector(`[data-a11y-canvas="${ci}"]`); c?.scrollIntoView({ block: c.getBoundingClientRect().height > innerHeight ? 'start' : 'center', behavior: 'instant' }); }, k.ci).catch(() => {});
+      const label = (s) => `${s.kind} "${s.name}"`;
+      const tabbable = load.standIns.filter((s) => s.tabbable);
+      const candidates = [...tabbable.filter((s) => s.built), ...tabbable.filter((s) => !s.built), ...load.standIns.filter((s) => !s.tabbable)].slice(0, 4).map((s) => ({ ...s, label: label(s) }));
+      if (load.self) candidates.push({ id: `${k.ci}-self`, kind: 'canvas', label: 'the canvas itself', tabbable: true });
       // A canvas that changes with no input (an animated scene) cannot use its pixels as evidence.
       const base = new Set();
       if (candidates.length) for (let i = 0; i < 4; i++) { base.add(await shot(k.ci)); await page.waitForTimeout(120); }
       r.selfAnimating = base.size > 1;
+      // One key at a time until one changes the canvas; a key that only toggles or renames its own control (a Sound
+      // toggle) is noted, and the next control is tried.
+      let first = null;
       for (const s of candidates) {
         for (const key of KEYS[s.kind]) {
           const focused = await page.evaluate((id) => {
@@ -773,14 +829,17 @@ if (clickableCanvases.length) {
           const pixels = h0 && h1 ? h0 !== h1 : null;
           const newFocus = after.isNew && !after.same, stateChanged = after.same && after.state !== before.state, nameChanged = after.same && after.name !== before.name;
           // A pixel change counts when focus stayed, or moved to a control the key created; focus moving along a
-          // toolbar changes pixels too (its ring), and is navigation, not a response.
-          const response = !!said || stateChanged || nameChanged || (pixels && (after.same || newFocus));
+          // toolbar can redraw the canvas too (its highlight), and is navigation, not a response.
+          const acts = !!pixels && (after.same || newFocus);
           const narrated = !!said || stateChanged || (newFocus && !!after.name);
-          r.tried.push({ control: s.label, key, pixels, said, stateChanged, nameChanged, newFocus: newFocus ? after.name : false });
-          if (response) { r.path = { control: s.label, key, pixels, said, stateChanged, nameChanged, newFocus: newFocus ? after.name : '', narrated }; break; }
+          const t = { control: s.label, key, pixels, said, stateChanged, nameChanged, newFocus: newFocus ? after.name : '' };
+          r.tried.push(t);
+          if (acts) { r.path = { ...t, narrated, acts, tabbable: !!s.tabbable }; break; }
+          if (said || stateChanged || nameChanged) { first ||= { ...t, narrated }; break; }
         }
         if (r.path) break;
       }
+      r.path ||= first;
       report.data.canvas.push(r);
       const p = r.path;
       const loadTxt = `${r.atLoad} control(s) over it at load${r.atLoad ? ` (${r.tabbableAtLoad} in the Tab order)` : ''}${load.self ? ', and it takes focus itself' : ''}`;
@@ -789,8 +848,18 @@ if (clickableCanvases.length) {
       add('INFO', 'canvas', '—', `Clickable canvas: ${loadTxt}; ${how}`, k.where);
       if (p && !p.narrated) add('WARN', 'canvas', '4.1.3', `${p.key} on ${p.control} ${p.pixels ? 'changes the canvas' : 'renames the control'} but nothing is announced (no live-region text, ariaNotify, state change or focus on a new control) — say the outcome in a role="status" region that exists from load`, k.where);
       if (!r.atLoad && !load.self && r.walked) add('WARN', 'canvas', '4.1.2', `No controls over the canvas at load, but the Tab walk found ${r.walked}: stand-ins must exist from load (screen-reader browse mode and voice control never press Tab first)`, k.where);
+      if (!k.focusable && k.standIns?.length) {
+        const tabbableTried = new Set(candidates.filter((s) => s.tabbable).map((s) => s.label));
+        r.pointer = { acts: p?.acts && p.tabbable ? `${p.key} on ${p.control}` : '', built: [...new Set(tabbable.map((s) => s.built).filter(Boolean))],
+          painted: tabbable.some((s) => s.paintsNothing === false), keys: [...new Set(r.tried.filter((t) => tabbableTried.has(t.control)).map((t) => t.key))], animated: r.selfAnimating };
+        pointerVerdict(k, r.pointer);
+      }
     }
+  } catch (e) {
+    add('INFO', 'canvas', '—', `Canvas test stopped: ${String(e.message || e).split('\n')[0].slice(0, 120)}`);
   } finally {
+    // Not tested (the canvas was not there on a fresh page, or the test broke): judged on what the walk saw.
+    for (const k of clickableCanvases) if (!k.focusable && k.standIns?.length && !k.decided) pointerVerdict(k, { acts: '', built: [], painted: false, keys: [], animated: false });
     await page.unroute('**/*').catch(() => {});
     await page.context().close();
   }

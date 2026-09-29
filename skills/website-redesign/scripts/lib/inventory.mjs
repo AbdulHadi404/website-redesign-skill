@@ -324,16 +324,15 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       const box = el.getBoundingClientRect();
       if (box.width < 1 || box.height < 1) continue;
       const rad = CORNERS.map(([k]) => radius(c[`border${k}Radius`], box));
-      // a disc or a pill: its round ends are its shape, not a nested corner
-      if (Math.max(...rad) >= Math.min(box.width, box.height) / 2 - 1) continue;
-      rounded.set(el, { box, rad });
+      // a disc or a pill: its round ends are its shape, not a nested corner (kept, so it still counts as the nearest)
+      rounded.set(el, { box, rad, disc: Math.max(...rad) >= Math.min(box.width, box.height) / 2 - 1 });
     }
-    for (const [ch, { box: cr, rad: rc }] of rounded) {
+    for (const [ch, { box: cr, rad: rc, disc }] of rounded) {
       if (radiusMismatch.length >= 8) break;
-      if (cr.width < 24 || cr.height < 16) continue;
+      if (disc || cr.width < 24 || cr.height < 16) continue;
       let p = ch.parentElement;
       while (p && p !== document.body && !rounded.has(p)) p = p.parentElement;
-      if (!p || p === document.body) continue;
+      if (!p || p === document.body || rounded.get(p).disc) continue;
       const { box: pr, rad: rp } = rounded.get(p);
       if (pr.width < 60 || pr.height < 40 || cr.width >= pr.width - 1 || !visible(ch)) continue;
       const gaps = [[cr.left - pr.left, cr.top - pr.top], [pr.right - cr.right, cr.top - pr.top], [cr.left - pr.left, pr.bottom - cr.bottom], [pr.right - cr.right, pr.bottom - cr.bottom]];

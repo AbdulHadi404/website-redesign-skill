@@ -31,8 +31,11 @@
  * rule above (moved in lightness only when it vanishes into the page, or when
  * no label passes); accent-strong = the tenant hue with its OKLCH lightness
  * solved for WCAG 4.5:1 on every ground *and* APCA Lc 75 where reachable, for
- * links, selected text and checked indicators. Every text pair is gated at
- * WCAG 4.5:1 and every non-text pair at 3:1; APCA below the size-aware level
+ * links, selected text and checked indicators. It goes lighter or darker by
+ * which end (white or black) reaches the higher ratio on the grounds, not by
+ * whether the page is dark (a #6E6E6E page takes light text: white 5.10:1,
+ * black 4.12:1); accent-subtle sits at the other end. Every text pair is
+ * gated at WCAG 4.5:1 and every non-text pair at 3:1; APCA below the size-aware level
  * of design-theory.md B6 for --label px/weight (default 14/600: Lc 75; Lc 60
  * at ≥ 24px or ≥ 16px/700) is a warning with the nearest fills that read well
  * (the admin options), never a gate. --dark adds dark mode (--dark '#RRGGBB'
@@ -79,6 +82,15 @@ const lcOf = (bg, fg) => Math.abs(apca(C(bg), C(fg)));
 const okl = (x) => { const [l, c, h] = C(x).to('oklch').coords; return { l, c: c ?? 0, h: Number.isFinite(h) ? h : null }; };
 // sRGB from OKLCH, reducing chroma (never lightness or hue) to fit the gamut.
 const fromOklch = (l, c, h) => HEX(new Color('oklch', [Math.min(1, Math.max(0, l)), Math.max(0, c), h ?? 0]).toGamut({ space: 'srgb', method: 'oklch.c' }));
+// sRGB at exactly this OKLCH lightness and hue, with the most chroma up to c that fits. toGamut's CSS Color 4
+// mapping clips once it is within a JND, which near L 0 or 1 lands visibly off the asked lightness.
+function atLightness(l, c, h) {
+  const at = (x) => new Color('oklch', [Math.min(1, Math.max(0, l)), x, h ?? 0]);
+  if (at(c).inGamut('srgb')) return HEX(at(c));
+  let lo = 0, hi = c;
+  for (let i = 0; i < 24; i++) { const m = (lo + hi) / 2; if (at(m).inGamut('srgb')) lo = m; else hi = m; }
+  return HEX(at(lo));
+}
 const r2 = (x) => Math.round(x * 100) / 100;
 const dE100 = (x, y) => Math.round(C(x).deltaE(C(y), 'OK') * 1000) / 10;
 
@@ -128,9 +140,15 @@ function tenantLabel(fill, ink) {
   return pass.length ? pass.sort((x, y) => y.lc - x.lc)[0] : c.sort((x, y) => y.w - x.w)[0];
 }
 
+// Which way from a ground text and fills can move: toward white (+1) or toward black (-1), whichever end of the
+// lightness range reaches the higher worst-case WCAG ratio on the grounds. Not OKLCH L 0.5: WCAG's crossover
+// is at luminance 0.18 (about OKLCH L 0.56 for a grey), so on a page such as #6E6E6E (L 0.54) only lighter
+// text reaches 4.5:1 (white 5.10:1, black 4.12:1). On a single ground one end always reaches √21 ≈ 4.58:1.
+const BLACK = '#000000';
+const lighterSide = (grounds) => (Math.min(...grounds.map((g) => wc(WHITE, g))) >= Math.min(...grounds.map((g) => wc(BLACK, g))) ? 1 : -1);
+
 function tenantRoles(t, { grounds, status, labelSize }) {
   const page = grounds[0];
-  const darkGround = okl(page).l < 0.5;
   const T = okl(t);
   const { achromatic, H, Cc, ink } = inkFor(T);
   const flags = [], warnings = [];
@@ -143,7 +161,7 @@ function tenantRoles(t, { grounds, status, labelSize }) {
     flags.push(nearGround ? 'tenant colour ≈ page ground: fill moved' : 'no label passes WCAG on the tenant colour: fill lightness moved');
     let found = null;
     for (let d = 0.005; d <= 1 && !found; d += 0.005) {
-      for (const sgn of nearGround ? [darkGround ? 1 : -1] : [-1, 1]) {
+      for (const sgn of nearGround ? [lighterSide([page])] : [-1, 1]) {
         const L = T.l + sgn * d;
         if (L < 0 || L > 1) continue;
         const c = fromOklch(L, Cc, H);
@@ -164,21 +182,40 @@ function tenantRoles(t, { grounds, status, labelSize }) {
   if (brandHover === brand) flags.push('hover cannot move further from the label (the fill is at the end of the lightness range): give hover another cue');
   // 3. subtle ground (selected row, soft badge), then 4. accent-strong solved on every ground and the subtle one:
   // WCAG 4.5:1 and APCA Lc 75 where reachable (it is not the brand fill, so this costs no brand fidelity).
-  const accentSubtle = darkGround ? fromOklch(0.29, Math.min(Cc, 0.12) * 0.5, H) : fromOklch(0.965, Math.min(Cc, 0.12) * 0.3, H);
-  const textGrounds = [...grounds, accentSubtle];
-  const solveText = (lcMin) => {
+  // Accent text goes to the side of the grounds that reaches the higher ratio, and the subtle ground to the
+  // other end (a pale tint under dark text, a deep shade under light text). If only the other side reaches
+  // Lc 75 as well (a page near mid-grey: white text Lc 77 on #767676, black Lc 33), that side is used.
+  const subtleFor = (sgn) => (sgn > 0 ? fromOklch(0.29, Math.min(Cc, 0.12) * 0.5, H) : fromOklch(0.965, Math.min(Cc, 0.12) * 0.3, H));
+  const solveText = (sgn, lcMin) => {
+    const textGrounds = [...grounds, subtleFor(sgn)];
     const ok = (c) => textGrounds.every((g) => wc(c, g) >= TG.text && lcOf(g, c) >= lcMin);
-    if (ok(t)) return t;
-    for (let d = 0.005; d <= 1; d += 0.005) {
-      const L = T.l + (darkGround ? d : -d);
-      if (L < 0 || L > 1) break;
-      const c = fromOklch(L, Cc, H);
-      if (ok(c)) return c;
-    }
-    return null;
+    const walk = (at) => {
+      for (let d = 0.005; ; d += 0.005) {
+        const L = Math.min(1, Math.max(0, T.l + sgn * d));
+        const c = at(L);
+        if (ok(c)) return c;
+        if (L === 0 || L === 1) return null;
+      }
+    };
+    // Then at the asked lightness exactly, whose last step is white or black itself: toGamut's clipping near
+    // the ends lands off it (yellow at L 1 gives #FFFF84, 4.43:1 on #747474, where white gives 4.67:1).
+    return ok(t) ? t : walk((L) => fromOklch(L, Cc, H)) ?? walk((L) => atLightness(L, Cc, H));
   };
-  const accentStrong = solveText(TG.lcText) ?? solveText(0) ?? t;
-  if (accentStrong === t && !textGrounds.every((g) => wc(t, g) >= TG.text)) flags.push('no lightness of the tenant hue reaches 4.5:1 on every ground: grounds this far apart (a light page and a dark band) need an accent each');
+  const side = lighterSide(grounds);
+  let accentStrong = null, textSide = side;
+  search: for (const lcMin of [TG.lcText, 0]) for (const sgn of [side, -side]) {
+    const c = solveText(sgn, lcMin);
+    if (c) { accentStrong = c; textSide = sgn; break search; }
+  }
+  const accentSubtle = subtleFor(textSide);
+  const textGrounds = [...grounds, accentSubtle];
+  if (!accentStrong) {
+    accentStrong = t;
+    // On a single ground one end always reaches 4.5:1, so this takes grounds on both sides of mid-grey.
+    const worst = (x) => grounds.map((g) => ({ g, w: wc(x, g) })).sort((p, q) => p.w - q.w)[0];
+    const [w, b] = [worst(WHITE), worst(BLACK)];
+    flags.push(`no lightness of the tenant hue reaches 4.5:1 on every ground — white text reaches only ${w.w.toFixed(2)}:1 on ${w.g}, black only ${b.w.toFixed(2)}:1 on ${b.g}: grounds on both sides of mid-grey (such as a light page and a dark band) need an accent each`);
+  }
   const weak = textGrounds.filter((g) => lcOf(g, accentStrong) < TG.lcText);
   if (weak.length) warnings.push(`accent-strong reads below APCA Lc ${TG.lcText} on ${weak.join(', ')} (Lc ${Math.round(Math.min(...weak.map((g) => lcOf(g, accentStrong))))})`);
   // 5. a brand fill under 3:1 on a ground gets a 1 px accent-strong border.

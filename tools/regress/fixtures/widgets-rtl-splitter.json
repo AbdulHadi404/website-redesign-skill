@@ -1,0 +1,6 @@
+[
+  { "type": "splitter", "separator": "#sep-good" },
+  { "type": "splitter", "separator": "#sep-bad" },
+  { "type": "splitter", "separator": "#sep-pointer" },
+  { "type": "splitter", "separator": "#sep-edge" }
+]

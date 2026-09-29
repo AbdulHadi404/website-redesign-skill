@@ -22,8 +22,11 @@
  *   licence    the licence text shipped in the tarball (npm pack), classified from its words. The package.json field is
  *              used only when no text exists, or when the shipped file is not this package's licence (third-party
  *              notices, a multi-licence repository notice) — and a field naming commercial terms beside a permissive
- *              file is reported as a conflict, not resolved. A pointer file or a missing file falls back to the
- *              repository's root licence. Licence documents that are not text (a PDF EULA) are named, not read.
+ *              file is reported as a conflict, not resolved. An SPDX OR expression in the field ("(MIT OR
+ *              GPL-3.0-or-later)") is the licensee's choice: the class is the best alternative's, provided the file
+ *              names no licence outside the expression and no commercial terms. AND expressions and prose ("Dual
+ *              licensed under the MIT or GPL") are not read as a choice. A pointer file or a missing file falls back to
+ *              the repository's root licence. Licence documents that are not text (a PDF EULA) are named, not read.
  *   activity   the repository over git (treeless, shallow since 12 months ago): commits, human authors, the top
  *              author's share (bus factor), last commit; "unmaintained/archived/deprecated" notices about THIS package
  *              in the package README or the repository README
@@ -41,10 +44,19 @@
  *
  * Evidence (research/stage2/streams/S4-capability-catalogue.md, F1 and "Changes after review"): 34 regression cases
  * (the reviewer's wrong verdicts and the F1 licence traps), 15/16 right on held-out packages at the first run. At
- * promotion, 52 more held-out packages found 7 wrong verdicts (third-party notices read as the package's licence, a
- * commercial field beside a copied MIT file, a PDF EULA read as text, a purchase-page pointer, a licence folder that
- * crashed it, a trial-mode README, a negated "licence key"); each is fixed and is now a regression case:
- * tools/regress.mjs, group libcheck (add every future wrong verdict there).
+ * promotion, 52 more held-out packages (32 in common use, 20 commercial) turned up 8 wrong verdicts from 6 causes:
+ * third-party notices read as the package's own licence (2), a commercial package.json field beside a permissive file
+ * that was not the package's (2: a copied MIT file, an examples repository's root licence), a PDF EULA read as text, a
+ * pointer to a purchase page, a licence folder that crashed it, and a sentence denying a licence key read as a paid
+ * tier. Each is fixed and is a regression case (tools/regress.mjs, group libcheck), as is a README saying the build
+ * runs in trial mode; add every future wrong verdict there. After the fixes 65 of the 68 held-out packages get the
+ * verdict a careful reader gives; two stay cautious (a licence that only links to a licensing page reads "?", read
+ * it; a commercial package with no licence text anywhere reads D) and one is not on the public registry. None of those
+ * 68 had an OR expression: a review found jszip and node-forge read C and dompurify B. On 25 more packages (17 with
+ * dual-licence fields, 8 controls: AND expressions, GPL with commercial terms), 16 matched a careful reader before the
+ * OR rule and 23 after; ckeditor4 4.22.1 stays C (its file adds LTS commercial terms beside the choice) and
+ * jquery-ui-touch-punch "?" (prose field, no text). The same review found that two versions of one package checked in
+ * one run read each other's licence files; each check now has its own folder.
  *
  * --search ranks npm text-search results by weekly downloads (npm's own score fields are constant and carry no signal)
  * and prints the top ones with their last publish date. It yields candidate NAMES only, with a measured miss rate
@@ -264,13 +276,34 @@ export async function repoLicence(repo) {
 }
 
 const SPDX_RE = /^[A-Za-z0-9.+-]+$/;
-// When no licence text exists anywhere, the package.json field is all there is: an SPDX id is reported as
-// that licence with a warning (the text is missing, not the permission); anything else is a custom licence
-// to read (GSAP: "Standard 'no charge' license: <url>"), never "all rights reserved" by default.
+// An SPDX OR expression in package.json ("(MIT OR GPL-3.0-or-later)") lets the licensee pick one: its alternatives, or
+// null (a single id, an AND expression, nested parentheses, prose such as "Dual licensed under the MIT or GPL").
+export function spdxChoice(field) {
+  const f = String(field || '').trim().replace(/^\((.*)\)$/, '$1');
+  if (/[()]/.test(f) || /\sAND\s/i.test(f)) return null;
+  const alts = f.split(/\s+OR\s+/i);
+  return alts.length > 1 && alts.every((a) => /^[A-Za-z0-9.+-]+(\s+WITH\s+[A-Za-z0-9.+-]+)?$/i.test(a)) ? alts : null;
+}
+const family = (id) => String(id).replace(/\s+WITH\s+.*$/i, '').replace(/-(only|or-later)$|\+$/i, '').toUpperCase();
+// Whether a licence the file names (a TESTS id) is one of the field's alternatives. The GPL family is matched loosely
+// (an LGPL-2.1 text also matches the GPL-2.0 test); every member of it is class C anyway.
+const sameLicence = (alt, cls) => { const a = family(alt), c = family(cls); return a === c || new RegExp(`^${c.replace(/[.+]/g, '\\$&')}-\\d`).test(a) || (/GPL/.test(a) && /GPL/.test(c) && /AGPL/.test(a) === /AGPL/.test(c)); };
+const RANK = { A: 0, B: 1, '?': 2, C: 3, D: 4 };
+/** The alternative a licensee would pick: the one with the best class (the first named among equals). */
+export function bestChoice(alts) {
+  return alts.map((id) => ({ id, lc: licenceClass({ classified: id, classes: [id], flags: [] }) })).sort((a, b) => RANK[a.lc.cls] - RANK[b.lc.cls])[0];
+}
+const choiceOf = (field, alts, extra = '') => { const best = bestChoice(alts); return { choice: alts, chosen: best.id, classified: `${best.id} (your choice: package.json ${String(field).trim()}${extra})` }; };
+
+// When no licence text exists anywhere, the package.json field is all there is: an SPDX id (or an OR expression, as
+// the licensee's pick) is reported as that licence with a warning (the text is missing, not the permission); anything
+// else is a custom licence to read (GSAP: "Standard 'no charge' license: <url>"), never "all rights reserved" by default.
 function fromField(field) {
   if (!field) return null;
   const f = String(field).trim();
   if (/^SEE LICEN[CS]E IN /i.test(f)) return null;
+  const alts = spdxChoice(f);
+  if (alts) { const c = choiceOf(f, alts); return { ...c, classes: [c.chosen], flags: [], evidence: [], fieldOnly: true, choiceTextMissing: true }; }
   if (SPDX_RE.test(f) && !/^(UNLICENSED|proprietary|commercial)$/i.test(f)) return { classified: f, classes: [f], flags: [], evidence: [], fieldOnly: true };
   return { classified: restrictiveField(f) ? 'custom / proprietary' : 'custom', classes: [], flags: [], evidence: [`[package.json] ${f.slice(0, 200)}`], fieldOnly: true };
 }
@@ -286,7 +319,7 @@ function fromRepoNotice(text, name, field) {
   if (named) { const c = classifyLicenceText(named); return { ...c, classified: `${c.classified} (repo notice names this package)`, notice: true }; }
   const f = fromField(field);
   if (f && !f.classified.startsWith('custom')) {
-    const others = classifyLicenceText(text).classes.filter((c) => c !== f.classified);
+    const others = classifyLicenceText(text).classes.filter((c) => (f.choice ? !f.choice.some((a) => sameLicence(a, c)) : c !== f.classified));
     return { ...f, fieldOnly: false, classified: f.classified, notice: true, noticeOthers: others, evidence: others.length ? [`[repo notice] the repository also contains ${others.join(', ')} code (other packages)`] : [] };
   }
   return null;
@@ -335,10 +368,19 @@ export async function licenceFromDir(dir, repo) {
   const notice = fromRepoNotice(text, pj.name, field);
   if (notice) return withDocs({ source: source + '; multi-licence repo notice', file, bytes: text.length, ...notice });
   let res = withDocs({ source, file, bytes: text.length, ...classifyLicenceText(text) });
+  // An OR expression in the field is the licensee's choice (jszip "(MIT OR GPL-3.0-or-later)" ships both texts in one
+  // file, dompurify "(MPL-2.0 OR Apache-2.0)" two files): the class is the best alternative's, when the file names no
+  // licence outside the expression and no commercial terms (ckeditor4 4.22 adds its LTS terms: left to a human).
+  const alts = spdxChoice(field);
+  if (alts && res.classes?.length && !(res.flags || []).some((f) => STRONG.has(f)) && !/\(dual\)/.test(res.classified)
+      && res.classes.every((c) => alts.some((a) => sameLicence(a, c)))) {
+    const c = choiceOf(field, alts, `; ${file} has ${res.classes.join(' + ')}`);
+    if (RANK[licenceClass({ ...res, ...c }).cls] < RANK[licenceClass(res).cls]) res = { ...res, ...c, choiceTextMissing: !res.classes.some((x) => sameLicence(c.chosen, x)) };
+  }
   // A field naming commercial terms beside a permissive file is a conflict for a human, not a permissive licence: the
   // file can be a copied one (fusioncharts ships Meta's MIT LICENSE.md, its field is ".../buy/") or the root licence of
   // an examples repository (scichart's field is its EULA URL).
-  if (restrictiveField(field) && licenceClass(res).cls === 'A') {
+  if (restrictiveField(field) && !res.choice && licenceClass(res).cls === 'A') {
     const holder = text.match(/Copyright[^\n]{0,80}/i)?.[0].trim();
     res = { ...res, conflict: String(field), evidence: [`[package.json] "${String(field).slice(0, 120)}", but ${file} is ${res.classified}${holder ? ` (${holder})` : ''}: it may cover copied or bundled code only`, ...(res.evidence || [])] };
   }
@@ -352,6 +394,7 @@ export function licenceClass(lic) {
   if (!lic || /NO LICENCE/.test(c)) return { cls: 'D', why: 'no licence text or field anywhere: all rights reserved' };
   const buy = flags.filter((f) => (PROCUREMENT.has(f) && f !== 'watermark' && f !== 'keep-logo') || f === 'proprietary' || (f === 'commercial' && !(lic.classes || []).length));
   if (buy.length || /^custom \/ proprietary/.test(c)) return { cls: 'C', kind: 'procurement', why: 'source-available, paid, trial or capped: the client buys it or it is not used' };
+  if (lic.choice) { const { id, lc } = bestChoice(lic.choice); return { ...lc, why: `${lc.why}: ${id}, chosen from ${lic.choice.join(' OR ')} (write the choice in CREDITS.md)` }; }
   if (lic.conflict) return { cls: 'C', kind: 'procurement', why: 'package.json names commercial terms but the licence file is permissive: read both' };
   if (flags.includes('watermark') || flags.includes('keep-logo')) return { cls: 'C', kind: 'brand decision', why: 'a third-party watermark or logo must stay visible in the product' };
   if (flags.includes('no-logo-use')) return { cls: 'C', kind: 'restricted use', why: 'forbids logo or identity use (and usually resale as a library)' };
@@ -427,22 +470,27 @@ export async function repoReadme(repo) {
   return null;
 }
 
+// A fresh folder per check, removed afterwards: two versions of one package checked in one run (has the licence
+// changed?) once shared a folder, and each read the other's licence file (ua-parser-js 1.0.40 ships license.md, 2.0.0
+// LICENSE.md: 1.0.40 read "AGPL-3.0 + MIT", class C).
+export const workDir = (tmp, name) => mkdir(tmp, { recursive: true }).then(() => mkdtemp(path.join(tmp, name.replace(/[@/]/g, '_') + '-')));
 async function packLicence(name, version, repo, tmp) {
-  const dest = path.join(tmp, 'pack-' + name.replace(/[@/]/g, '_'));
-  await mkdir(dest, { recursive: true });
-  const { stdout } = await run('npm', ['pack', `${name}@${version}`, '--pack-destination', dest, '--json', '--silent'], { maxBuffer: 32 << 20 });
-  const tgz = path.join(dest, JSON.parse(stdout)[0].filename);
-  // Only the top-level files are read (licence files, README, package.json): @progress/kendo-ui unpacks to 210 MB.
-  await run('tar', ['-xzf', tgz, '-C', dest, '--exclude=*/*/*']);
-  await rm(tgz, { force: true });
-  const pkgDir = path.join(dest, 'package');
-  const readme = existsSync(pkgDir) ? (await readdir(pkgDir)).find((x) => /^readme(\.md)?$/i.test(x)) : null;
-  const readmeText = readme ? await readFile(path.join(pkgDir, readme), 'utf8') : '';
-  // The tarball README can be older than the repository's (vaul 1.1.2 ships none of the "unmaintained" note).
-  const rootReadme = await repoReadme(repo);
-  const notice = readmeNotice(readmeText, name) || (rootReadme && readmeNotice(rootReadme, name));
-  const noticeSource = readmeNotice(readmeText, name) ? 'package README' : notice ? `github.com/${repo} README` : null;
-  return { ...(await licenceFromDir(pkgDir, repo)), readmeNotice: notice, readmeNoticeSource: noticeSource, readmeMaintenance: readmeMaintenance(readmeText) || readmeMaintenance(rootReadme), readmeProcurement: readmeProcurement(readmeText), readmeCommercial: readmeCommercial(readmeText + '\n' + (rootReadme || '')) };
+  const dest = await workDir(tmp, 'pack-' + name);
+  try {
+    const { stdout } = await run('npm', ['pack', `${name}@${version}`, '--pack-destination', dest, '--json', '--silent'], { maxBuffer: 32 << 20 });
+    const tgz = path.join(dest, JSON.parse(stdout)[0].filename);
+    // Only the top-level files are read (licence files, README, package.json): @progress/kendo-ui unpacks to 210 MB.
+    await run('tar', ['-xzf', tgz, '-C', dest, '--exclude=*/*/*']);
+    await rm(tgz, { force: true });
+    const pkgDir = path.join(dest, 'package');
+    const readme = existsSync(pkgDir) ? (await readdir(pkgDir)).find((x) => /^readme(\.md)?$/i.test(x)) : null;
+    const readmeText = readme ? await readFile(path.join(pkgDir, readme), 'utf8') : '';
+    // The tarball README can be older than the repository's (vaul 1.1.2 ships none of the "unmaintained" note).
+    const rootReadme = await repoReadme(repo);
+    const notice = readmeNotice(readmeText, name) || (rootReadme && readmeNotice(rootReadme, name));
+    const noticeSource = readmeNotice(readmeText, name) ? 'package README' : notice ? `github.com/${repo} README` : null;
+    return { ...(await licenceFromDir(pkgDir, repo)), readmeNotice: notice, readmeNoticeSource: noticeSource, readmeMaintenance: readmeMaintenance(readmeText) || readmeMaintenance(rootReadme), readmeProcurement: readmeProcurement(readmeText), readmeCommercial: readmeCommercial(readmeText + '\n' + (rootReadme || '')) };
+  } finally { await rm(dest, { recursive: true, force: true }); }
 }
 
 // ── Repository activity over git ────────────────────────────────────────────────────────────────
@@ -538,7 +586,8 @@ export function flagsFor({ reg, lic, act, size, adopt }) {
   else if (lc.cls === 'B') amber.push(`licence class B (${lc.why}): ${lic.classified}`);
   else if (lc.cls === '?') amber.push(`licence needs reading (${lc.why}): ${lic.classified}${ev}`);
   if (lic?.fieldOnly && lc.cls !== 'D') amber.push(`no licence text in the package or the repository root: only the package.json field (${reg?.licenseField}) — record the source in CREDITS.md`);
-  if (lic && !lic.fieldOnly && !lic.notice && reg?.licenseField && lc.cls === 'A' && !String(reg.licenseField).includes((lic.classes || [])[0] || lic.classified)) amber.push(`package.json says ${reg.licenseField} but the file says ${lic.classified}`);
+  if (lic && !lic.fieldOnly && !lic.notice && !lic.choice && reg?.licenseField && lc.cls === 'A' && !String(reg.licenseField).includes((lic.classes || [])[0] || lic.classified)) amber.push(`package.json says ${reg.licenseField} but the file says ${lic.classified}`);
+  if (lic?.choice && lic.choiceTextMissing && !lic.fieldOnly) amber.push(`${lic.chosen} is chosen from package.json (${lic.choice.join(' OR ')}), but the licence file has no ${lic.chosen} text — record the source in CREDITS.md`);
   if (lic?.notice && lic.noticeOthers?.length) amber.push(`the licence file is a repository notice: this package is ${lic.classified} (package.json), other packages in the repo are ${lic.noticeOthers.join(', ')}`);
   if (lic?.readmeCommercial) amber.push('README mentions a paid tier: ' + lic.readmeCommercial);
   if (act === null) amber.push('no GitHub repository in package.json: activity unknown (pass --repo owner/name)');
@@ -579,8 +628,7 @@ export async function check(arg, { tmp, repo: repoOpt = null, size: withSize = f
   catch (e) { return { name, version, error: `could not fetch the package (${String(e.stderr || e.message).trim().split('\n')[0].slice(0, 160)})` }; }
   let size = null;
   if (withSize) {
-    const root = path.join(tmp, 'size-' + name.replace(/[@/]/g, '_'));
-    await mkdir(root, { recursive: true });
+    const root = await workDir(tmp, 'size-' + name);                // one per check, as for the licence
     await writeFile(path.join(root, 'package.json'), '{"private":true}');
     try {
       await run('npm', ['install', '--silent', '--ignore-scripts', '--no-audit', '--no-fund', '--legacy-peer-deps', `${name}@${version}`, 'esbuild'], { cwd: root, maxBuffer: 64 << 20, timeout: 600000 });
@@ -624,7 +672,7 @@ async function main() {
     for (const e of l.evidence || []) console.log(`            ${e}`);
     if (a && !a.error) console.log(`  activity  ${a.repo}: ${a.humanCommits12m} human commits / 12 months, ${a.authors12m} authors, top ${a.topAuthor} ${a.topShare ?? '—'}%, last commit ${a.lastCommit}`);
     else if (a?.error) console.log(`  activity  ${a.repo}: ${a.error}`);
-    if (s) console.log(s.ok ? `  size      initial ${kb(s.initialGz)} gz · all JS ${kb(s.jsGz)} · CSS ${kb(s.cssGz)} · assets ${kb(s.assetsGz)} · ${s.packages} packages` : `  size      build failed: ${s.error} (pass --entry with a real import)`);
+    if (s) console.log(s.ok ? `  size      initial ${kb(s.initialGz)} gz · all JS ${kb(s.jsGz)} · CSS ${kb(s.cssGz)} · assets ${kb(s.assetsGz)} · ${s.packages} package${s.packages === 1 ? '' : 's'}` : `  size      build failed: ${s.error} (pass --entry with a real import)`);
     for (const x of r.red) console.log(`  RED       ${x}`);
     for (const x of r.amber) console.log(`  AMBER     ${x}`);
     if (!r.red.length && !r.amber.length) console.log('  no flags');

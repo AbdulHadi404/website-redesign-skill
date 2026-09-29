@@ -142,6 +142,9 @@ export function overflowCulprits() {
  * An absolutely positioned box is clipped only by its containing block and what contains that; a fixed one by
  * nothing (transformed ancestors aside). Inline boxes and table rows ignore overflow. Body and html never count:
  * their overflow goes to the viewport, which scrolls.
+ * The letters are measured as drawn: text-transform applied, small caps through the canvas's fontVariantCaps, at the
+ * zoomed size under CSS zoom; under a transform that scales (a thumbnail, a slide preview) the ink scales with the
+ * fragment, and text that is rotated or skewed is not judged.
  * Each text node costs one Range: the whole string's ink is placed on every line first, and only a node that this
  * conservative estimate flags is measured again line by line (a Range per character, up to 400).
  * opts: { scripts: 'all' | 'arabic' (default 'all'), minPx: 1 (flag a cut of at least this), limit: 600 (clipped
@@ -153,9 +156,24 @@ export function overflowCulprits() {
 export function glyphClipProbe(opts = {}) {
   const t0 = performance.now();
   const minPx = opts.minPx ?? 1, arabicOnly = opts.scripts === 'arabic', limit = opts.limit ?? 600;
-  const AR = /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/;
+  const AR = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
   const ctx = document.createElement('canvas').getContext('2d');
   const sel = (el) => { if (el.id) return '#' + el.id; const c = [...el.classList].slice(0, 2).map((x) => '.' + x).join(''); const p = el.parentElement; const own = el.tagName.toLowerCase() + c; return p && p !== document.body && !el.id && !c ? `${p.id ? '#' + p.id : p.tagName.toLowerCase() + [...p.classList].slice(0, 1).map((x) => '.' + x).join('')} > ${own}` : own; };
+  // The letters as drawn, not as written: text-transform changes them (an uppercased "shipping" has no descenders).
+  // Small caps go to the canvas as fontVariantCaps; small caps asked for through font-feature-settings (which canvas
+  // cannot take) are measured as capitals, whose ink is no taller and has no descenders.
+  const CAPS = new Set(['small-caps', 'all-small-caps', 'petite-caps', 'all-petite-caps', 'unicase', 'titling-caps']);
+  const same = (x) => x;
+  const drawnAs = (c, el) => {
+    const tt = c.textTransform;
+    // the case mapping of the text's language, as the browser applies it (Turkish i uppercases to İ, with a dot)
+    let lang = el.closest('[lang]')?.getAttribute('lang') || undefined;
+    try { 'i'.toLocaleUpperCase(lang); } catch { lang = undefined; }
+    if (tt === 'uppercase' || /["'](smcp|c2sc|pcap|c2pc)["'](?!\s*(0|off)\b)/.test(c.fontFeatureSettings || '') || (CAPS.has(c.fontVariantCaps) && !('fontVariantCaps' in ctx))) return (x) => x.toLocaleUpperCase(lang);
+    if (tt === 'lowercase') return (x) => x.toLocaleLowerCase(lang);
+    if (tt === 'capitalize') return (x) => x.replace(/(^|[^\p{L}\p{N}'’])(\p{Ll})/gu, (m, a, b) => a + b.toUpperCase());
+    return same;
+  };
   const csMemo = new Map();
   const cs = (e) => { let c = csMemo.get(e); if (!c) { c = getComputedStyle(e); csMemo.set(e, c); } return c; };
   const NO_OVERFLOW = /^(inline|contents|none|table-row|table-row-group|table-header-group|table-footer-group|table-column|table-column-group)$/;
@@ -205,17 +223,32 @@ export function glyphClipProbe(opts = {}) {
     const scroller = /auto|scroll/.test(ccs.overflowY) && clipper.scrollHeight > clipper.clientHeight + 1;
     if (scroller) { clip.top -= clipper.scrollTop; clip.bottom = clip.top + clipper.scrollHeight; }
     const c = cs(el);
-    ctx.font = `${c.fontStyle} ${c.fontWeight} ${c.fontSize} ${c.fontFamily}`;
+    // The font as drawn: CSS zoom scales the used size (the computed one is unzoomed), and small caps change the ink
+    const zoom = el.currentCSSZoom || 1;
+    ctx.font = `${c.fontStyle} ${c.fontWeight} ${parseFloat(c.fontSize) * zoom}px ${c.fontFamily}`;
+    if (CAPS.has(c.fontVariantCaps) && 'fontVariantCaps' in ctx) ctx.fontVariantCaps = c.fontVariantCaps;
+    const drawn = drawnAs(c, el);
     // Lines: the node's fragments grouped by their bottom edge (a bidi line splits into several fragments).
     range.selectNodeContents(n);
     const frags = [...range.getClientRects()].filter((q) => q.height > 0 && q.width > 0);
     if (!frags.length) continue;
+    const whole = ctx.measureText(drawn(text.trim()));
+    // A text fragment is exactly as tall as the font's ascent + descent (equal to the pixel on 1,100 nodes of
+    // fixtures, Bootstrap, GOV-SA and the blind-eval builds), so a fragment of another height is under a transform:
+    // scale (a thumbnail, a slide preview) scales the ink with it; rotation or skew leaves no block axis to judge.
+    const fh = whole.fontBoundingBoxAscent + whole.fontBoundingBoxDescent;
+    let s = 1;
+    if (fh > 0 && Math.abs(frags[0].height - fh) > 0.5) {
+      const b = el.getBoundingClientRect(), ky = el.offsetHeight ? b.height / el.offsetHeight : 0;
+      if (!ky || !el.offsetWidth || Math.abs(b.width - ky * el.offsetWidth) > 2 + 0.03 * b.width) continue;
+      s = frags[0].height / fh;
+    }
     const judge = (lines) => {
       let worst = null, hiddenLines = 0, inkTop = Infinity, inkBottom = -Infinity;
       for (const line of lines) {
         const m = line.m;
-        const baseline = line.bottom - m.fontBoundingBoxDescent;
-        const top = baseline - m.actualBoundingBoxAscent, bottom = baseline + m.actualBoundingBoxDescent;
+        const baseline = line.bottom - s * m.fontBoundingBoxDescent;
+        const top = baseline - s * m.actualBoundingBoxAscent, bottom = baseline + s * m.actualBoundingBoxDescent;
         inkTop = Math.min(inkTop, top); inkBottom = Math.max(inkBottom, bottom);
         if (line.top >= clip.bottom - 1 || line.bottom <= clip.top + 1) { hiddenLines++; continue; }
         const cutTop = clip.top - top, cutBottom = bottom - clip.bottom;
@@ -228,9 +261,9 @@ export function glyphClipProbe(opts = {}) {
     };
     const byBottom = new Map();
     for (const q of frags) { const k = Math.round(q.bottom); const l = byBottom.get(k); if (l) l.top = Math.min(l.top, q.top); else byBottom.set(k, { top: q.top, bottom: q.bottom }); }
-    const whole = ctx.measureText(text.trim());
-    let res = judge([...byBottom.values()].map((l) => ({ ...l, m: whole })));
-    if (res.worst && byBottom.size > 1) {
+    const rough = judge([...byBottom.values()].map((l) => ({ ...l, m: whole })));
+    let res = rough, extent = rough;
+    if (rough.worst && byBottom.size > 1) {
       // The conservative estimate flags a cut: measure each line's own characters.
       const lines = new Map();
       const L = Math.min(text.length, 400);
@@ -241,11 +274,13 @@ export function glyphClipProbe(opts = {}) {
         const line = lines.get(key) || { top: b.top, bottom: b.bottom, chars: '' };
         line.chars += text[i]; lines.set(key, line);
       }
-      if (lines.size) res = judge([...lines.values()].map((l) => ({ ...l, m: ctx.measureText(l.chars.trim() || l.chars) })));
+      if (lines.size) res = judge([...lines.values()].map((l) => ({ ...l, m: ctx.measureText(drawn(l.chars.trim() || l.chars)) })));
+      // the exact extent only when every character was measured; past 400, the rough one covers all the lines
+      if (text.length <= 400) extent = res;
     }
-    if (opts.mark && Number.isFinite(res.inkTop)) {
+    if (opts.mark && Number.isFinite(extent.inkTop)) {
       const prev = inkOf.get(el);
-      inkOf.set(el, prev ? [Math.min(prev[0], res.inkTop + sy), Math.max(prev[1], res.inkBottom + sy)] : [res.inkTop + sy, res.inkBottom + sy]);
+      inkOf.set(el, prev ? [Math.min(prev[0], extent.inkTop + sy), Math.max(prev[1], extent.inkBottom + sy)] : [extent.inkTop + sy, extent.inkBottom + sy]);
     }
     if (res.worst) {
       const fs = parseFloat(c.fontSize);

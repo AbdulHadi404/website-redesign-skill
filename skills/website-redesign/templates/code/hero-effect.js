@@ -1,5 +1,5 @@
 // hero-effect.js — the production wrapper for a generative hero background (a shader, particles, a Canvas 2D field):
-// the part demos leave out. ~2.5 KB min+gzip, plus governor.js and tier.js's measureRefresh (~1.4 KB together).
+// the part demos leave out. ~2.0 KB min+gzip; ~3.0 KB with governor.js and tier.js's measureRefresh, which it imports.
 // It is research/stage2/experiments/S10-shaders-generative/src/lib/hero.js without its lab-only query flags and
 // instrumentation, with S10's inline governor replaced by governor.js (stepUp: false), as S11 decided. Read
 // generative-visuals.md first: it decides whether a moving background is warranted at all. Copy the three files into
@@ -35,15 +35,19 @@
 // What it does:
 //   1. Poster first. The canvas crossfades in only when a WebGL2 fence says the GPU has finished frame 1 (polled once per
 //      animation frame, never blocking); the loop starts then too. The draw call returns long before the frame exists:
-//      a crossfade started there pops in, and frames queued behind a compiling GPU block the main thread (S10: 1,379
-//      against 210 ms with the fence). WebGL1 and 2D have no fence: revealed on the next frame.
+//      a crossfade started there pops in, and frames queued behind a compiling GPU block the main thread (S10, fluid:
+//      the longest main-thread task was 1,379 ms without the fence, 210 ms with it). WebGL1 and 2D have no fence:
+//      revealed on the next frame.
 //   2. Renders only while the hero is on screen (IntersectionObserver), the tab is visible and nobody paused it: zero
 //      requestAnimationFrame callbacks otherwise. Browsers do not pause JavaScript loops off-screen.
 //   3. Time-based motion with a clamped step; paused time does not advance (30 Hz Low Power Mode and 120 Hz play alike).
-//   4. Pixel ratio capped (default 2) × render scale; ResizeObserver keeps the buffer matched to the box.
+//   4. Pixel ratio capped (default 2) × render scale; ResizeObserver keeps the buffer matched to the box. Resizing clears
+//      the buffer, so a running loop applies a new size just before its next draw and a stopped one redraws at once: no
+//      frame is painted blank (black for WebGL with alpha: false) and no frame draws twice.
 //   5. governor.js with stepUp: false and the refresh measured before the effect starts: each step down halves the render
-//      scale (to 0.25 at most); a halving that saved < 15 % of the frame time is undone and resolution is left alone
-//      (the effect is not fill-bound); below ~27 fps at the lowest level it fades back to the poster.
+//      scale (to 0.25 at most); a halving that cut the mean frame interval by less than 15 % is undone and resolution
+//      is left alone (the effect is not fill-bound: S10's particles once dropped to 320×180 for +14 %); below ~27 fps
+//      at the lowest level it fades back to the poster.
 //   6. settle: N seconds of motion in total, wall clock, easing included (the last min(1.5 s, N/3) eases to a stop); the
 //      loop ends before a frame would start past N. Keep N ≤ 4 so the last frame lands inside WCAG 2.2.2's 5 s. The
 //      pause control stays either way; Play after settling replays the moment.
@@ -55,8 +59,9 @@
 // Tested: the S10 lab ran hero.js on ten effects (raw WebGL, OGL, regl, twgl, three.js, Paper, particles, fluid, post)
 // in headless Chromium on SwiftShader, 1× and 4× CPU: no black frame in 162 runs, settle measured 3.7–4.0 s on screen
 // for N = 4. This file: tools/regress.mjs, group templates (fence, off-screen, hidden, reduced motion, context loss,
-// governor give-up, pixel-ratio cap, settle). [K] set in emulation, not on a real GPU: the ×1.25 budget, the 15 % rule,
-// the ~27 fps give-up; the fence's benefit on real GPUs (which mostly compile at link time) is unmeasured.
+// governor give-up, pixel-ratio cap, settle; no blank or doubled frame at a scale change or a window resize). [K] set in
+// emulation, not on a real GPU: the ×1.25 budget, the 15 % rule, the ~27 fps give-up; the fence's benefit on real GPUs
+// (which mostly compile at link time) is unmeasured.
 import { createGovernor } from './governor.js';
 import { measureRefresh } from './tier.js';
 
@@ -68,7 +73,7 @@ export async function run(bg, effect, opts = {}) {
   const toggle = opts.toggle ?? (bg.closest('.hero') || document).querySelector('.bg-toggle');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const easeFor = Math.min(1.5, settle / 3);
-  let scale = opts.scale || 1, base = scale, fillBound = true, pending = null;
+  let scale = opts.scale || 1, base = scale, fillBound = true, pending = null, resizeDue = false;
   let canvas, handle, gov, raf = 0, last = 0, t = 0, runWall = 0, inView = true, visible = !document.hidden;
   let paused = false, settled = false, lost = false, losses = 0, failed = false, ready = false, revealed = false, why = '';
   let optIn = !!opts.optIn, ro, io, onVis, onReduce, onToggle;
@@ -76,7 +81,7 @@ export async function run(bg, effect, opts = {}) {
 
   const want = () => ready && !failed && !lost && !paused && !settled && (!reduce.matches || optIn) && inView && visible;
   const schedule = () => { if (!raf && want()) { last = performance.now(); raf = requestAnimationFrame(tick); } };
-  const stop = () => { if (raf) cancelAnimationFrame(raf); raf = 0; gov?.pause(); };
+  const stop = () => { if (raf) cancelAnimationFrame(raf); raf = 0; gov?.pause(); if (resizeDue) resizeNow(); };
   const halted = () => paused || settled || (reduce.matches && !optIn);
   const syncLabel = () => { if (toggle) toggle.textContent = halted() ? LABEL.play : LABEL.pause; };
   const update = () => { want() ? schedule() : stop(); };
@@ -89,19 +94,27 @@ export async function run(bg, effect, opts = {}) {
     onFallback(why);
   }
 
-  function sizeCanvas() {
-    if (effect.ownsSize || !canvas) return;
+  // Setting canvas.width clears the buffer, and a frame that ends with nothing drawn after it is painted blank (black for
+  // WebGL with alpha: false, the poster for 2D). So a running loop applies a new size at the start of its next frame,
+  // just before it draws (resizeDue); a stopped one resizes and redraws at once. Either way one draw per frame.
+  function sizeCanvas() {                                             // true when the buffer changed (and was cleared)
+    if (effect.ownsSize || !canvas) return false;
     const dpr = Math.min(devicePixelRatio || 1, dprCap) * scale;
     const w = Math.max(1, Math.round(bg.clientWidth * dpr)), h = Math.max(1, Math.round(bg.clientHeight * dpr));
-    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; effect.resize?.(w, h, dpr); if (revealed && !raf) draw(); }
+    if (canvas.width === w && canvas.height === h) return false;
+    canvas.width = w; canvas.height = h; effect.resize?.(w, h, dpr); return true;
   }
   const draw = () => { try { effect.frame(t, 0); } catch (e) { fail(e.message); } };
+  const resizeNow = () => { resizeDue = false; if (!failed && !lost && sizeCanvas()) draw(); };   // a lost or fading canvas is left alone
+  const resized = () => { if (raf) resizeDue = true; else resizeNow(); };   // ResizeObserver
 
-  // governor.js levels 0–2 halve the render scale; level 3 only checks whether the last halving paid off.
+  // governor.js levels 0–2 halve the render scale; level 3 only checks whether the last halving paid off. The mean
+  // interval, not the median: intervals come in whole vsyncs, and a 70 ms effect's median flips between 66.7 and 83.3 ms
+  // from one window to the next, which credits a halving with a 20 % saving it did not make.
   function onLevel(level, _why, s) {
-    if (fillBound && pending && s.p50 > pending.p50 * 0.85) { scale = pending.scale; fillBound = false; }   // saved < 15 %: undo, leave resolution alone
-    else if (fillBound && level < SCALES.length && !effect.ownsSize) { pending = { scale, p50: s.p50 }; scale = base * SCALES[level]; }
-    sizeCanvas();
+    if (fillBound && pending && s.mean > pending.mean * 0.85) { scale = pending.scale; fillBound = false; }   // saved < 15 %: undo, leave resolution alone
+    else if (fillBound && level < SCALES.length && !effect.ownsSize) { pending = { scale, mean: s.mean }; scale = base * SCALES[level]; }
+    resizeDue = true;                                                 // called inside tick, after this frame's draw
   }
   const makeGov = (start) => governor ? createGovernor({ levels: SCALES.length + 1, start, refreshMs: refreshMs || 0, capMs: fps ? 1000 / fps : 0, stepUp: false, onChange: onLevel, onFloor: (w) => fail('governor: ' + w) }) : null;
 
@@ -120,6 +133,7 @@ export async function run(bg, effect, opts = {}) {
       final = runWall + Math.max(elapsed / 1000, 1 / 60) >= settle;   // the next frame would start too late
     }
     t += dt * speed;
+    if (resizeDue) { resizeDue = false; sizeCanvas(); }               // cleared here, drawn on the next line
     try { effect.frame(t, dt); } catch (e) { return fail(e.message); }
     gov?.frame(now);
     if (failed) return;
@@ -170,7 +184,7 @@ export async function run(bg, effect, opts = {}) {
   gov = makeGov(0);
   build();
   if (failed) return controller();
-  ro = new ResizeObserver(sizeCanvas); ro.observe(bg);
+  ro = new ResizeObserver(resized); ro.observe(bg);
   io = new IntersectionObserver(([e]) => { inView = e.isIntersecting; update(); }); io.observe(bg.closest('.hero') || bg);
   onVis = () => { visible = !document.hidden; update(); };
   onReduce = () => { update(); syncLabel(); };

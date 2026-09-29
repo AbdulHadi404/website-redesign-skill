@@ -43,14 +43,16 @@
  *    reveal trap)
  *  - paint: LCP element and time, CLS, bytes by resource type, fonts loaded
  *  - clipping by ink: glyphs (accents, Arabic marks, descenders) cut by the box that clips them, in any script
- *    (lib/probes.mjs glyphClipProbe: ink from canvas measureText on each rendered line; FAIL on a cut of 1px or
- *    more). The clipped-text check uses the same ink down the block axis, so padding past a clip is not a cut
+ *    (lib/probes.mjs glyphClipProbe: ink from canvas measureText on each rendered line, the letters as drawn —
+ *    text-transform, small caps, zoom and scale applied; FAIL on a cut of 1px or more). The clipped-text check uses
+ *    the same ink down the block axis, so padding past a clip, or a scaled-down preview, is not a cut
  *  - numbers: digit systems mixed in a row, numeric columns not right-aligned in paint, tabular figures, decimals
  *  - right to left (only when the page is RTL or holds Arabic; lib/rtl.mjs): text-align: left in RTL text, tracking
  *    or italics on Arabic, LTR data out of order within a line and LTR-data fields laid out RTL, drawers parked off
  *    the left, icons that mirror wrongly (names checked against lib/icon-names.json), physical CSS and x-moving
  *    keyframes, glyphs drawn by a system fallback font
- *  - phone width (lib/rtl.mjs): hover-only reveals, no pressed state with the tap highlight off, the keyboard each
+ *  - phone width (lib/rtl.mjs): hover-only reveals (rules whose media query matches the phone), no pressed state
+ *    with the tap highlight off, the keyboard each
  *    field brings, controls under the emulated safe-area insets (only with viewport-fit=cover), fixed bars over a
  *    focused field (only with interactive-widget=resizes-content), a primary action pinned in the top third
  *  - signals: generic-look tells to review — gradient text, violet gradients,
@@ -432,7 +434,7 @@ try {
       // The RTL and phone blocks (lib/rtl.mjs): FAIL is a fail, WARN a warning, INFO a decision to record.
       for (const [label, res] of [['RTL', rtl], ['Phone', phone]]) {
         if (!res) continue;
-        if (res.error) { W.push(`${label} checks could not run: ${res.error}`); continue; }
+        if (res.error) W.push(`${label} checks ${res.findings.length ? 'stopped early' : 'could not run'}: ${res.error}`);
         for (const f of res.findings) {
           const cut = f.message.indexOf(' — '), head = cut > 0 ? f.message.slice(0, cut) : f.message, advice = cut > 0 ? f.message.slice(cut) : '';
           const ex = f.examples.length ? ` (${f.examples.length}): ${f.examples.slice(0, 6).join('; ')}${f.examples.length > 6 ? `; … ${f.examples.length - 6} more` : ''}` : '';

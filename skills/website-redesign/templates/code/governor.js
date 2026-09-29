@@ -15,7 +15,7 @@
 //     lowest level (measured: 3 false step-downs from 4.2 s) and prints a console warning.
 //   - onChange(level, why, stats): level 0 is full quality, levels − 1 the lowest. Change resolution, effect count or
 //     tessellation, never the look (same lights, materials, framing, UI and actions). stats is the window that decided
-//     it: { n, p50, p90, p95, budget } in ms.
+//     it: { n, p50, p90, p95, mean, budget } in ms.
 //   - onFloor(why, stats): called once, at the lowest level, when the median is still below ~27 fps: stop the loop
 //     and keep (or fade back to) the poster. A scene holding ~30 fps at the lowest level keeps running.
 //   - level, refresh, floor (getters), log (every change), dispose() (removes the visibilitychange listener).
@@ -50,7 +50,8 @@
 //   - Held out, on pages it was not written on (three S10 hero builds and tools/regress/fixtures/capture-webgl.html at
 //     CPU 1/4/6×, hooked into each page's own rAF, judging only): onFloor at 9.6–10.3 s on a 2–4 fps SwiftShader scene
 //     in 6 of 6 runs (v1: 0 step-downs); steady 30 fps scenes kept running; no page errors. Recovery was not testable
-//     there (the hook cannot change what the page renders).
+//     there (the hook cannot change what the page renders). Re-run at promotion, one run per cell: onFloor at 9.7–10.2 s
+//     on the SwiftShader scene at 1/4/6×, none on the idle page, no page errors.
 //   - Synthetic frame streams in Node, deterministic: tools/regress.mjs, group templates.
 // [K] set in emulation, not validated on devices: the 1.25 × p90 and 2 × median thresholds, 45 frames / 1 s windows,
 // the 1.5 s settle, 8 s before a step up, the 30 s memory and the ~27 fps give-up. Not tested: 120 Hz displays,
@@ -100,7 +101,7 @@ export function createGovernor({
       win.push(dt);
       if (win.length < windowFrames && !(now - winStart >= windowMs && win.length >= 2)) return;
       const B = budget(), n = win.length, p50 = [...win].sort((a, b) => a - b)[(n - 1) >> 1], p90 = pct(win, 0.9), p95 = pct(win, 0.95); // lower median: conservative on small windows
-      const stats = { n, p50, p90, p95, budget: B };
+      const stats = { n, p50, p90, p95, mean: win.reduce((a, b) => a + b, 0) / n, budget: B };
       win = []; winStart = 0;
       // Fast frames with long gaps between them: an on-demand loop that never calls pause(), or long tasks elsewhere.
       if (!warned && p50 <= B * 1.1 && p90 > idleGapMs && typeof console !== 'undefined') { warned = true; console.warn(`governor: fast frames separated by ${Math.round(p90)} ms gaps — if the loop stops between frames, call gov.pause() when it stops`); }

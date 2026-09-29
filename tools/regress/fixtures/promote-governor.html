@@ -6,7 +6,7 @@
      CPU 1× (so the work is the same share of a frame on any host), measures the refresh while nothing runs, then waits.
      window.__g.start(ms): a continuous loop whose per-frame work is `ms` at 1×, divided by 4 at each governor level.
      window.__g.detect(ms): detectTier({ needsWebGL: false, work }) with a probe of `ms` at 1×.
-     ?block=MS: a task that blocks the main thread for MS every MS + 30 ms (a page rendering at ~3 fps). -->
+     ?block=MS: the page's own animation loop busy-waits MS in every frame (a scene rendering at 1000/MS fps). -->
 <style>body { margin: 0; font: 16px system-ui, sans-serif; } canvas { display: block; width: 100%; height: 50vh; background: #09122a; }</style>
 </head><body>
 <canvas id="c" aria-hidden="true"></canvas>
@@ -21,10 +21,10 @@ let sink = 0;
 const unit = () => { let x = 0; for (let i = 0; i < 10000; i++) x += Math.sqrt(i * 1.0001) * Math.sin(i); sink += x; };
 function calibrate() { let n = 0; const t0 = performance.now(); while (performance.now() - t0 < 200) { unit(); n++; } return n / (performance.now() - t0); }
 const block = Number(q.get('block') || 0);
-if (block) setInterval(() => { const until = performance.now() + block; while (performance.now() < until); }, block + 30);
 const ctx = document.getElementById('c').getContext('2d');
 G.perMs = calibrate();
 G.refreshMs = await measureRefresh();
+if (block) { const slow = () => { const until = performance.now() + block; while (performance.now() < until); requestAnimationFrame(slow); }; requestAnimationFrame(slow); }
 G.start = (ms) => {
   const gov = createGovernor({ levels: 4, refreshMs: G.refreshMs || 0, onChange: (level, why, stats) => { G.level = level; G.changes.push({ t: Math.round(performance.now() - G.t0), level, p50: stats && Math.round(stats.p50) }); }, onFloor: (why) => { G.floor = Math.round(performance.now() - G.t0); } });
   G.gov = gov; G.t0 = performance.now();

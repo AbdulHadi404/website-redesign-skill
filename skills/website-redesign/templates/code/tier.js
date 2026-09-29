@@ -17,8 +17,9 @@
 //      refuse SwiftShader in the lab): the renderer string backs it up.
 //   4. start: a guess that only ever lowers (Save-Data or deviceMemory ≤ 2 → low; coarse pointer → average), for
 //      choosing the first assets before the probe. Never hardwareConcurrency, battery or effectiveType.
-//   5. For CPU-bound scenes, after hydration: time the TOP TIER'S OWN per-frame JS (pass one frame of it as `work`) for
-//      at least 24 frames, and divide the median by the refresh: < 0.3 strong, < 0.6 average, else low.
+//   5. For CPU-bound scenes, after hydration: time the TOP TIER'S OWN per-frame JS (pass one frame of it as `work`), and
+//      divide the median by the refresh: < 0.3 strong, < 0.6 average, else low. It answers early once 24 frames sit
+//      clearly inside one band (12 after warm-up, then 12 stable), else at the 1.5 s wall-clock cap from ≥ 12 frames.
 //      - 'undetermined' (too few frames arrived: the page is busy, the GPU is the bottleneck): probe again once the
 //        page is quiet; if it is still undetermined, start at 'low' and let the governor step up.
 //      - nearEdge (within 10% of an edge): expect the tier to differ between visits. Proposal [K]: start at the lower
@@ -33,11 +34,12 @@
 //     a scene holding a steady 30 fps looks exactly like a 30 Hz display — measure before the scene.
 //   - The probe with the default stand-in work: quiet 1× and 2× strong, 3× and 4× average, 6× low in 10 of 10 runs each;
 //     5× (0.66 of the frame, on the 0.6 edge) split 5/5. Busy throttled runs (twelve ~50 ms boot tasks during the
-//     probe): undetermined in 17 of 20, never a wrong tier. With only 12 frames an earlier run was two tiers off
-//     (the throttler dropping out), hence at least 24.
+//     probe): undetermined in 17 of 20, never a wrong tier. (Judged on 12 frames, an earlier run called 5× and 6×
+//     "strong" in 1 and 2 of 10 runs, the throttler dropping out: hence 24 frames before an early answer.)
 //   - Held out, on pages it was not written on (three S10 hero builds and tools/regress/fixtures/capture-webgl.html at
 //     CPU 1/4/6×): a 2–4 fps SwiftShader scene → undetermined in 2.3–3.2 s in 6 of 6 (the first version took 6.3–8.9 s
 //     and said "average"); a Canvas2D hero → strong / average / low; a page without a loop answered in 0.8–1.9 s.
+//     Re-run at promotion, one run per cell: the same answers (the SwiftShader scene undetermined in 2.4–2.7 s at 1/4/6×).
 //   - Rejected on measurement: an fps probe (called every quiet level from 1× to 6× "strong": vsync hides the work) and
 //     a min-of-N burst (2–9 of 10 under CDP).
 //   - tools/regress.mjs, group templates: the forced tier, the wall-clock cap on a page that renders at 3 fps, and a
@@ -125,7 +127,7 @@ const median = (xs) => { const s = [...xs].sort((a, b) => a - b); return s.lengt
 // Measures the work's own duration (robust to other tasks on the thread), not the frame rate (vsync hides work that
 // fits in the frame). Exits early once the median has sat clearly inside one band for `stableFrames` frames.
 // bands are fractions of refreshMs. enough = false when fewer than minFrames frames (after warm-up) arrived in time.
-export function frameProbe({ work = makeWork(), refreshMs = 1000 / 60, maxMs = 1500, minFrames = 24, warmup = 3, bands = [0.3, 0.6], stableFrames = 12, earlyExit = true } = {}) {
+export function frameProbe({ work = makeWork(), refreshMs = 1000 / 60, maxMs = 1500, minFrames = 12, warmup = 3, bands = [0.3, 0.6], stableFrames = 12, earlyExit = true } = {}) {
   return new Promise((resolve) => {
     const works = [], gaps = [], edges = bands.map((b) => b * refreshMs);
     let last = 0, sameSince = 0, prevBand = -1, done = false;

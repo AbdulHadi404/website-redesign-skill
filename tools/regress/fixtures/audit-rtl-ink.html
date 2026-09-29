@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ink and clipping boxes</title>
+<!-- audit.mjs clipping by ink (lib/probes.mjs glyphClipProbe, stage-2 S8), in Latin: accents and descenders reach past
+     the line box, and a box is not its text.
+       .chip      line-height 1 in a 1em-high overflow:hidden chip: the ring of Å and the cedilla of Ç are cut
+                  → "Glyphs cut by their clipping box" (no box pokes out, so the box check never saw it)
+       .padded    a paragraph whose 28px padding runs past its 64px overflow:hidden frame, its one line well inside
+                  → nothing (the box check alone reported it as text cut off)
+       .clamped   five lines in a three-line overflow:hidden box: whole lines hidden → "Text cut off" (unchanged)
+       .fixed     the chip's recipe with overflow-x: clip; overflow-y: visible (the fix) → nothing
+       .scroll    a scroller whose lines pass its scrollport edge: they scroll into view → nothing -->
+<style>
+  body { margin: 24px; font: 16px/1.5 sans-serif; color: #16181d; }
+  main { display: grid; gap: 20px; max-width: 480px; }
+  h1 { font-size: 22px; margin: 0; }
+  .chip { display: inline-block; font-size: 22px; line-height: 1; height: 22px; overflow: hidden; white-space: nowrap; background: #eef0f6; padding-inline: 8px; }
+  .frame { height: 64px; overflow: hidden; background: #eef0f6; }
+  .padded { margin: 0; padding: 28px 12px; }
+  .crop { height: 72px; width: 220px; overflow: hidden; background: #eef0f6; }
+  .cropped { margin: 0; }
+  .fixed { display: inline-block; font-size: 22px; line-height: 1; height: 22px; overflow-x: clip; overflow-y: visible; white-space: nowrap; text-overflow: ellipsis; background: #eef0f6; padding-inline: 8px; }
+  .scroll { height: 60px; overflow-y: auto; background: #eef0f6; }
+  .scroll p { margin: 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ink and clipping boxes</h1>
+  <div><span class="chip">Ångström Çağlayan</span></div>
+  <div class="frame"><p class="padded">A calm line inside a padded paragraph.</p></div>
+  <div class="crop"><p class="cropped">One line of text. Two lines of text, and more words to wrap them. Three lines of text, and more words to wrap them. Four lines of text, and more words to wrap them. Five lines.</p></div>
+  <div><span class="fixed">Ångström Çağlayan</span></div>
+  <div class="scroll"><p>First line.</p><p>Second line.</p><p>Third line.</p><p>Fourth line.</p><p>Fifth line.</p></div>
+</main>
+</body>
+</html>

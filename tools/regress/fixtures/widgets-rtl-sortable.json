@@ -1,0 +1,9 @@
+[
+  { "type": "sortable", "list": "#stages-good" },
+  { "type": "sortable", "list": "#stages-bad" },
+  { "type": "sortable", "list": "#stages-row" },
+  { "type": "sortable", "list": "#stages-delete" },
+  { "type": "sortable", "list": "#stages-delete", "handle": ".delete" },
+  { "type": "sortable", "list": "#stages-link" },
+  { "type": "sortable", "list": "#stages-link", "handle": "a" }
+]

@@ -1,0 +1,3 @@
+/* linked with media="(min-width: 1024px)": none of this applies to a phone */
+.mega-panel { display: none; }
+.mega:hover .mega-panel { display: block; }

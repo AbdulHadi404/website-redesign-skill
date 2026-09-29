@@ -1,0 +1,4 @@
+[
+  { "type": "palette", "trigger": "#open-good" },
+  { "type": "palette", "trigger": "#open-bad" }
+]

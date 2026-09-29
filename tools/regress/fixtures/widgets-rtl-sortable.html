@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keyboard reordering — widgets.mjs regression</title>
+<!--
+  widgets.mjs "sortable" contract (research/stage2/streams/S4-capability-catalogue.md F3, D5).
+  #stages-good: each row has a handle named "Reorder <item>" with instructions in aria-describedby; Space picks up,
+  the arrows move, Space drops, Escape puts the item back; a status region that exists from load names the item and
+  its position; focus stays on the moved item's handle.
+  #stages-bad: dnd-kit's defaults and two common bugs: a handle named "Drag" on every row, no instructions,
+  announcements that name internal ids ("item-1 was moved over item-2"), a drop that re-renders the list and drops
+  focus to <body>, and an Escape that drops where the item is instead of cancelling.
+  #stages-row (dir="rtl"): a horizontal row whose next item is on the left; ArrowLeft moves the item toward the end.
+  #stages-delete: no keyboard reordering; each row is [Delete ✕][label][a grip that only a pointer can drag]. Space
+  or Enter on the Delete button deletes the row and announces it: the contract must not press them, and must not
+  report two deletions as a move.
+  #stages-link: each row starts with a link to the stage's page, then a correct "Reorder <item>" handle: the handle,
+  not the link, is the one to press.
+-->
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; margin: 24px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  ul { list-style: none; padding: 0; width: 320px; }
+  li { display: flex; gap: 8px; align-items: center; padding: 6px; margin: 4px 0; border: 1px solid #ccc; background: #fff; }
+  li.lifted { outline: 2px dashed #06c; }
+  .row { display: flex; gap: 6px; width: auto; }
+  .row li { margin: 0; }
+  button { font: inherit; }
+</style>
+</head>
+<body>
+<h1>Project stages</h1>
+<p id="sort-help" hidden>Press Space to pick up. Use the arrow keys to move, Space to drop, Escape to cancel.</p>
+<ul id="stages-good" aria-label="Project stages"></ul>
+<ul id="stages-bad" aria-label="Launch plan"></ul>
+<ul id="stages-row" class="row" dir="rtl" lang="ar" aria-label="المراحل"></ul>
+<ul id="stages-delete" aria-label="Checklist"></ul>
+<ul id="stages-link" aria-label="Release stages"></ul>
+<div id="live" role="status" aria-live="assertive" class="sr"></div>
+<button type="button">After the lists</button>
+
+<script>
+const live = document.getElementById('live');
+const say = (t) => { live.textContent = t; };
+function sortable(ul, labels, { good, keysNext, keysPrev, link = false }) {
+  let order = labels.map((l, i) => ({ id: `item-${i + 1}`, label: l }));
+  let lifted = null, start = null;
+  const render = (focusId) => {
+    ul.innerHTML = order.map((it) => `<li data-id="${it.id}"${lifted === it.id ? ' class="lifted"' : ''}>${link ? `<a href="widgets-rtl-away.html?stage=${it.id}">${it.label}</a>` : ''}<button type="button" class="handle"${good ? ` aria-label="Reorder ${it.label}" aria-describedby="sort-help"` : ' aria-label="Drag"'}>⠿</button>${link ? '' : `<span>${it.label}</span>`}</li>`).join('');
+    if (focusId) ul.querySelector(`[data-id="${focusId}"] .handle`).focus();
+  };
+  const pos = (id) => order.findIndex((x) => x.id === id);
+  const name = (id) => (good ? order[pos(id)].label : id);
+  ul.addEventListener('keydown', (e) => {
+    const li = e.target.closest('li'); if (!li || !e.target.matches('.handle')) return;
+    const id = li.dataset.id, i = pos(id);
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      if (!lifted) { lifted = id; start = order.slice(); say(good ? `Picked up ${name(id)}, position ${i + 1} of ${order.length}.` : `Picked up draggable item ${id}.`); render(id); }
+      else { lifted = null; say(good ? `${name(id)} dropped at position ${i + 1} of ${order.length}.` : `Draggable item ${id} was dropped over droppable area ${order[Math.min(i + 1, order.length - 1)].id}.`); render(good ? id : null); if (!good) document.activeElement.blur(); }
+    } else if (lifted && (keysNext.includes(e.key) || keysPrev.includes(e.key))) {
+      e.preventDefault();
+      const j = keysNext.includes(e.key) ? Math.min(order.length - 1, i + 1) : Math.max(0, i - 1);
+      const over = order[j].id;
+      const [m] = order.splice(i, 1); order.splice(j, 0, m);
+      say(good ? `${name(id)} moved to position ${j + 1} of ${order.length}.` : `Draggable item ${id} was moved over droppable area ${over}.`);
+      render(id);
+    } else if (lifted && e.key === 'Escape') {
+      e.preventDefault();
+      if (good) { order = start; say(`Move cancelled. ${name(id)} returned to position ${pos(id) + 1}.`); } else say(`Draggable item ${id} was dropped.`);
+      lifted = null; render(id);
+    }
+  });
+  render();
+}
+sortable(document.getElementById('stages-good'), ['Brief', 'Wireframes', 'Visual design', 'Build', 'Launch'], { good: true, keysNext: ['ArrowDown'], keysPrev: ['ArrowUp'] });
+sortable(document.getElementById('stages-bad'), ['Research', 'Copy', 'Photography', 'Review', 'Publish'], { good: false, keysNext: ['ArrowDown'], keysPrev: ['ArrowUp'] });
+sortable(document.getElementById('stages-row'), ['الموجز', 'التصميم', 'البناء', 'الإطلاق'], { good: true, keysNext: ['ArrowLeft'], keysPrev: ['ArrowRight'] });
+sortable(document.getElementById('stages-link'), ['Plan', 'Freeze', 'Test', 'Ship'], { good: true, keysNext: ['ArrowDown'], keysPrev: ['ArrowUp'], link: true });
+// A list with no keyboard reordering: Delete buttons first in each row, and a grip for pointer dragging only.
+(() => {
+  const ul = document.getElementById('stages-delete');
+  let items = ['Brief', 'Wireframes', 'Visual design'];
+  const render = () => { ul.innerHTML = items.map((l) => `<li><button type="button" class="delete" aria-label="Delete ${l}">✕</button><span>${l}</span><span class="grip" aria-hidden="true">⠿</span></li>`).join(''); };
+  render();
+  ul.addEventListener('click', (e) => {
+    const b = e.target.closest('.delete'); if (!b) return;
+    const l = b.getAttribute('aria-label').replace(/^Delete /, '');
+    items = items.filter((x) => x !== l); render(); say(`${l} deleted.`);
+    ul.querySelector('.delete')?.focus();
+  });
+})();
+</script>
+</body>
+</html>

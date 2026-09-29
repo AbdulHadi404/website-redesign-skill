@@ -6,27 +6,34 @@
  *
  * rtlChecks(page, cdp) runs only when the page is right-to-left or holds Arabic (rtlScope). FAIL = wrong for every
  * right-to-left reader; WARN = usually wrong, confirm; INFO = a decision to record.
- *   align     text-align: left on block text in RTL, where it visibly moves the text (numbers and code excluded)  FAIL
+ *   align     text-align: left on block text in RTL, where it visibly moves the text (numbers and code excluded;
+ *             the first 200 candidate blocks are tried)                                                           FAIL
  *   arabic    letter-spacing ≥ 0.01em, or italic/oblique, on Arabic text                                          FAIL
  *   bidi      LTR text out of order within one line box: letters or digits reordered, or a data-like value (sign,
  *             currency, time range, phone) reordered: FAIL; only end punctuation moved: WARN. Fields for LTR data
  *             that resolve to RTL: FAIL when the value is laid out scrambled, else WARN. Order is compared line by
  *             line: wrapped English is not scrambled (the lab's first version, which sorted a whole node, raised 58
- *             false alarms in 64 out of sample; this one 0 in 6)
- *   drawers   off-canvas panels parked off the LEFT edge in RTL (they slide in from the wrong side)               FAIL
+ *             false alarms in 64 out of sample; this one 6 true of 6). The first 8,000 LTR tokens are measured
+ *   drawers   off-canvas panels parked off the LEFT edge in RTL (they slide in from the wrong side), unless the
+ *             panel is meant for the inline end (its trigger sits on the left, or its class or id says end)       FAIL
  *   icons     names from data-icon, class, <use href> or ligature text, classified against lib/icon-names.json
  *             (Codex, Flutter, Material, Firefox): a never-mirror icon two or more sources agree on, flipped: FAIL;
  *             an arrow pointing against its label ("next", "التالي" point left in RTL): FAIL; a never-mirror name
- *             one source backs, flipped, or a directional icon not flipped whose label cannot confirm it: WARN;
- *             names the sources disagree on: INFO; unknown names: never reported
+ *             one source backs (or a media seek icon, forward_10), flipped, or a directional icon not flipped whose
+ *             label cannot confirm it: WARN; names the sources disagree on: INFO; unknown names (back-to-top, an up
+ *             arrow) never reported. Which way an icon points comes from the transform, rotate and scale properties
+ *             of the icon and three ancestors composed; an arrow turned to point up or down is not directional
  *   css       rules with physical inline-axis values (as served, a deliberate value and a mistake look alike): INFO;
  *             @keyframes that move along x applied to RTL content: WARN
  *   fonts     glyphs drawn by a system fallback font where the element's stack names faces the page loaded
  *             (CDP CSS.getPlatformFontsForNode, sampled; the missing characters named): WARN
  *   structure dir="rtl" on body instead of html: WARN
  * phoneChecks(page, cdp, { width, height }) at phone width:
- *   hover     content revealed only by :hover, hidden on a touch screen: FAIL (WARN when a click toggle opens it too)
- *   pressed   controls with no :active change and the tap highlight turned off (forcePseudoState, transitions off): WARN
+ *   hover     content (text, a control, an image with a text alternative) revealed only by :hover, hidden on a touch
+ *             screen: FAIL (WARN when a click toggle opens it too). Rules inside a media query that does not match
+ *             this width (a desktop menu's @media (min-width: 1024px), a sheet linked with media=) are not judged
+ *   pressed   controls with no :active change and the tap highlight turned off (forcePseudoState, transitions off
+ *             through a constructed stylesheet, which a CSP that refuses inline styles allows): WARN
  *   keyboards type=number for codes, phone and card numbers: FAIL; the wrong keyboard, a missing autocomplete, text
  *             under 16px (iOS zooms on focus): WARN
  *   safe-area controls in fixed or sticky bars inside emulated insets (59/34, iPhone portrait): FAIL, only when the
@@ -34,7 +41,9 @@
  *             one INFO, and only when the page has fixed bars
  *   keyboard  fixed bars over the focused field with a 336px keyboard: WARN, only with interactive-widget=resizes-content
  *   thumb     a primary action pinned (fixed or sticky) in the top third of a portrait phone: WARN (a regrip for either hand)
- * Each returns { findings: [{ level, check, message, examples }], ms, … } for audit.mjs to print; neither throws.
+ * Each returns { findings: [{ level, check, message, examples }], ms, error?, … } for audit.mjs to print (rtlChecks
+ * returns null when the block does not apply); after an error the findings made before it stand, and audit.mjs
+ * prints the error as one warning line beside them.
  */
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -45,13 +54,13 @@ export function rtlScope() {
   const dir = (e) => (e ? getComputedStyle(e).direction : null);
   const main = document.querySelector('main, [role=main]');
   const text = body ? body.innerText || '' : '';
-  const arabic = (text.match(/[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/g) || []).length;
+  const arabic = (text.match(/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/g) || []).length;
   return { rtl: dir(html) === 'rtl' || dir(body) === 'rtl' || dir(main) === 'rtl', arabic: arabic >= 2, htmlDir: html.getAttribute('dir'), bodyDir: body ? body.getAttribute('dir') : null };
 }
 
 // ---------------------------------------------------------------- in-page: rendered checks on the RTL page
 export function rtlStatic() {
-  const AR = /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/, HE = /[֐-׿]/;
+  const AR = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/, HE = /[\u0590-\u05FF]/;
   const sel = (el) => {
     if (el.id) return '#' + el.id;
     const own = el.tagName.toLowerCase() + [...el.classList].slice(0, 2).map((c) => '.' + c).join('');
@@ -70,12 +79,14 @@ export function rtlStatic() {
     shownMemo.set(el, ok);
     return ok;
   };
-  const res = { align: [], tracking: [], italic: [], scrambled: [], ltrInputs: [], drawers: [] };
+  const res = { align: [], alignCount: 0, tracking: [], italic: [], scrambled: [], ltrInputs: [], drawers: [] };
+  const LIGATURE = /material (icons|symbols)/i;
   const range = document.createRange();
-  const tokens = (t) => { const out = []; const re = /[A-Za-z0-9٠-٩]+|[^\sA-Za-z0-9٠-٩؀-ۿ]/g; let m; while ((m = re.exec(t))) out.push({ t: m[0], i: m.index }); return out; };
+  const tokens = (t) => { const out = []; const re = /[A-Za-z0-9\u0660-\u0669]+|[^\sA-Za-z0-9\u0660-\u0669\u0600-\u06FF]/g; let m; while ((m = re.exec(t))) out.push({ t: m[0], i: m.index }); return out; };
   // the block container that lays out a text node's line: the nearest ancestor that is not a plain inline box
   const blockOf = (el) => { let b = el; while (b && b !== document.body && /^(inline|contents)$/.test(cs(b).display)) b = b.parentElement; return b; };
   const alignSeen = new Set(), typeSeen = new Set();
+  let alignTried = 0, tokenBudget = 8000;
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   for (let n = walker.nextNode(); n; n = walker.nextNode()) {
     const t = n.data;
@@ -83,6 +94,8 @@ export function rtlStatic() {
     const el = n.parentElement;
     if (!el || el.closest('script, style, noscript, template, svg, textarea, select, option') || !shown(el)) continue;
     const c = cs(el);
+    // an icon font's ligature ("forward_10" drawn as one glyph by Material Symbols) is an icon, not text
+    if (LIGATURE.test(c.fontFamily) || /material-(icons|symbols)/i.test(String(el.className))) continue;
     // (b) text-align: left in RTL, judged on the block container that lays the line out, only where it shows: the
     // text moves when the block is set to right. Blocks with no right-to-left letters (an English island that wants
     // dir="ltr"), numbers and code are not this check's business.
@@ -90,14 +103,17 @@ export function rtlStatic() {
     if (block && block !== document.body && !alignSeen.has(block)) {
       alignSeen.add(block);
       const bc = cs(block);
-      if (bc.direction === 'rtl' && /^(left|-webkit-left)$/.test(bc.textAlign) && !block.closest('pre, code, kbd, samp') && (AR.test(block.textContent) || HE.test(block.textContent)) && res.align.length < 40) {
+      const candidate = bc.direction === 'rtl' && /^(left|-webkit-left)$/.test(bc.textAlign) && !block.closest('pre, code, kbd, samp') && (AR.test(block.textContent) || HE.test(block.textContent));
+      // each trial costs two layouts: a page aligned left throughout is judged on its first 200 blocks
+      if (candidate && alignTried++ >= 200) res.alignCapped = true;
+      else if (candidate) {
         range.selectNodeContents(n);
         const before = [...range.getClientRects()].map((q) => q.left);
         const was = block.style.getPropertyValue('text-align'), prio = block.style.getPropertyPriority('text-align');
         block.style.setProperty('text-align', 'right', 'important');
         const after = [...range.getClientRects()].map((q) => q.left);
         if (was) block.style.setProperty('text-align', was, prio); else block.style.removeProperty('text-align');
-        if (after.some((x, i) => before[i] !== undefined && Math.abs(x - before[i]) > 2)) res.align.push(sel(block));
+        if (after.some((x, i) => before[i] !== undefined && Math.abs(x - before[i]) > 2)) { if (res.align.length < 40) res.align.push(sel(block)); res.alignCount++; }
       }
     }
     // (c) tracking and italics on Arabic
@@ -112,7 +128,9 @@ export function rtlStatic() {
     if (cs(holder).direction !== 'rtl' || AR.test(t) || HE.test(t) || !/[0-9A-Za-z]/.test(t) || res.scrambled.length >= 40) continue;
     const toks = tokens(t);
     if (toks.length < 2) continue;
-    const dataLike = /^(?=.*\d)\s*[+\-−]?\s*[$€£¥]?[\d\s().,:%+\-−/]+\s*$|\S+@\S+\.\S+|^\s*(https?:\/\/|www\.)|^\s*[A-Z]{2}\d{2}[\d\sA-Z]{8,}$|\d{1,2}:\d{2}\s*[-–]\s*\d{1,2}:\d{2}/.test(t);
+    // a Range per token: a page with a great deal of LTR text in RTL blocks is judged on its first 8,000 tokens
+    if ((tokenBudget -= toks.length) < 0) { res.bidiCapped = true; continue; }
+    const dataLike = /^(?=.*\d)\s*[+\-\u2212]?\s*[$€£¥]?[\d\s().,:%+\-\u2212/]+\s*$|\S+@\S+\.\S+|^\s*(https?:\/\/|www\.)|^\s*[A-Z]{2}\d{2}[\d\sA-Z]{8,}$|\d{1,2}:\d{2}\s*[-–]\s*\d{1,2}:\d{2}/.test(t);
     const bx = toks.map(({ t: s, i }) => { range.setStart(n, i); range.setEnd(n, i + s.length); const b = range.getBoundingClientRect(); return { x: b.left, top: b.top, bottom: b.bottom, rects: range.getClientRects().length }; });
     // Order means something only within one line box: a wrapped phrase puts later words on a lower line, further
     // LEFT in an RTL block. Tokens are grouped by line (vertical centre within half a line of the line's first
@@ -153,14 +171,22 @@ export function rtlStatic() {
     }
     if (scrambled || dataType) res.ltrInputs.push({ field: sel(inp), type: inp.type, value: v.slice(0, 30), scrambled });
   }
-  // (e) off-canvas panels in RTL parked off the left edge: they slide in from the wrong side
+  // (e) off-canvas panels in RTL parked off the left edge: they slide in from the wrong side. Not when the panel is
+  // meant for the inline end: its on-screen trigger sits in the left half (Bootstrap's dashboard: an offcanvas-end
+  // opened from a button on the left), or, with no trigger found, its class or id says end.
   const W = document.documentElement.clientWidth;
+  const endSide = (el) => {
+    const id = el.id && CSS.escape(el.id);
+    const triggers = id ? [...document.querySelectorAll(`[aria-controls~="${id}"], [data-bs-target="#${id}"], [data-target="#${id}"], a[href="#${id}"]`)].filter((t) => !el.contains(t) && shown(t)).map((t) => t.getBoundingClientRect()).filter((b) => b.right > 0 && b.left < W) : [];
+    if (triggers.length) return triggers.every((b) => b.left + b.width / 2 < W / 2);
+    return /(^|[-_\s])end($|[-_\s])/i.test(`${el.id} ${el.className}`);
+  };
   for (const el of document.querySelectorAll('nav, aside, dialog, [role=dialog], [class*=drawer], [class*=offcanvas], [class*=off-canvas], [class*=sidebar], [class*=side-menu], [class*=sidenav]')) {
     const c = cs(el);
     if (!/fixed|absolute/.test(c.position) || c.direction !== 'rtl' || c.display === 'none') continue;
     const r = el.getBoundingClientRect();
     if (r.width < 120 || r.height < 120) continue;
-    if (r.right <= 1 && !res.drawers.some((d) => d.el.contains(el))) res.drawers.push({ el, panel: sel(el) });
+    if (r.right <= 1 && !res.drawers.some((d) => d.el.contains(el)) && !endSide(el)) res.drawers.push({ el, panel: sel(el) });
     else if (r.left >= W - 1) { /* parked off the right edge: the inline-start side in RTL */ }
   }
   res.drawers = res.drawers.map((d) => d.panel);
@@ -179,16 +205,31 @@ export function findIcons() {
     return bits.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
   };
   const ctxOf = (el) => { const c = el.closest('a, button, [role=button], [role=link], [role=tab], [role=menuitem]'); if (!c) return ''; return (c.getAttribute('aria-label') || c.getAttribute('title') || c.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40) + (c.getAttribute('rel') ? ` rel=${c.getAttribute('rel')}` : ''); };
-  // flipped: a negative x scale on the icon or up to three ancestors (transform matrix, matrix3d, or the scale property)
-  const flipOf = (el) => {
-    let sx = 1;
-    for (let p = el, k = 0; p && k < 4; p = p.parentElement, k++) {
-      const c = getComputedStyle(p);
-      const m = c.transform.match(/matrix(3d)?\(([^)]+)\)/);
-      if (m && parseFloat(m[2].split(',')[0]) < 0) sx *= -1;
-      if (c.scale && c.scale !== 'none' && parseFloat(c.scale) < 0) sx *= -1;
-    }
-    return sx < 0;
+  // Which way the icon's x axis ends up: the transforms of the icon and up to three ancestors composed, each from its
+  // individual rotate and scale properties (Tailwind v4's rtl:rotate-180 and -scale-x-100 compile to these) and its
+  // transform. flipped: x now points left (a mirror, or a half turn); vertical: an arrow turned to point up or down.
+  const DEG = { deg: 1, rad: 180 / Math.PI, turn: 360, grad: 0.9 };
+  const matrixOf = (c) => {
+    let m = new DOMMatrix();
+    try {
+      if (c.rotate && c.rotate !== 'none') {
+        const t = c.rotate.trim().split(/\s+/), a = t.pop().match(/^(-?[\d.e+-]+)(deg|rad|turn|grad)?$/);
+        const axis = t.length === 3 ? t.map(Number) : { x: [1, 0, 0], y: [0, 1, 0], z: [0, 0, 1] }[t[0]] || [0, 0, 1];
+        if (a) m = m.rotateAxisAngle(...axis, parseFloat(a[1]) * DEG[a[2] || 'deg']);
+      }
+      if (c.scale && c.scale !== 'none') {
+        const v = c.scale.trim().split(/\s+/).map((x) => (x.endsWith('%') ? parseFloat(x) / 100 : parseFloat(x)));
+        m = m.scale(v[0], v[1] ?? v[0], v[2] ?? 1);
+      }
+      if (c.transform && c.transform !== 'none') m = m.multiply(new DOMMatrix(c.transform));
+    } catch { /* a value DOMMatrix cannot read: taken as no transform */ }
+    return m;
+  };
+  const turnOf = (el) => {
+    let m = new DOMMatrix();
+    for (let p = el, k = 0; p && k < 4; p = p.parentElement, k++) m = matrixOf(getComputedStyle(p)).multiply(m);
+    const len = Math.hypot(m.m11, m.m12, m.m13) || 1;
+    return { flipped: m.m11 / len < -0.5, vertical: Math.abs(m.m11 / len) < 0.5 };
   };
   const out = [], seen = new Set();
   for (const el of document.querySelectorAll('svg, i, span, img, [data-icon]')) {
@@ -200,7 +241,7 @@ export function findIcons() {
     const island = el.closest('[dir=ltr]');
     const name = nameOf(el).slice(0, 80);
     if (!name) continue;
-    out.push({ name, context: ctxOf(el), flipped: flipOf(el), dir: getComputedStyle(el).direction, ltrIsland: !!island && island !== document.documentElement });
+    out.push({ name, context: ctxOf(el), ...turnOf(el), dir: getComputedStyle(el).direction, ltrIsland: !!island && island !== document.documentElement });
   }
   return out;
 }
@@ -272,13 +313,21 @@ let LISTS = null;
 const lists = () => (LISTS ??= existsSync(namesFile) ? JSON.parse(readFileSync(namesFile, 'utf8')) : { mirror: {}, never: {}, ambiguous: {} });
 const CORE = /(arrow|chevron|caret|angle|triangle|navigate)s?[\s_-]*(double[\s_-]*)?(left|right|back|forward|next|before|prev|previous|start|end)\b|(double|dbl)[\s_-]*(chevron|arrow|angle)|arrow[\w-]*?[-_](left|right)\b|(^|[\s_#-])(back|forward|next|prev|previous)([\s_-]|$)|\bundo\b|\bredo\b|reply|(^|[\s_-])send([\s_-]|$)|external|open[-_ ]?in[-_ ]?new|new[-_]window|launch|indent|outdent|(^|[\s_-])list([\s_-]|$)|list[-_](ul|bullet|bulleted)|align[-_](left|right|start|end)|text[-_](left|right|start|end)|first[-_]page|last[-_]page|wrap[-_]text|text[-_]flow/i;
 const has = (toks, t) => (`-${toks.join('-')}-`).includes(`-${t}-`);
+// A seek control: a media verb with its seconds (Material forward_10, replay_30; Carbon rewind--5). Media playback does
+// not mirror, and tokensOf drops the digits, so without this forward_10 would key as Flutter's mail "forward".
+const SEEK = /(^|[^a-z0-9])(forward|replay|rewind|back|skip|seek)[\s_-]*(5|10|15|30|45|60)(?![0-9])/i;
+// A vertical destination does not mirror: back-to-top is an up arrow, not a back arrow. (Up and down alone are not
+// enough: Tabler's arrow-back-up and arrow-forward-up are undo and redo, curved arrows that point along the line.)
+const VERT = ['top', 'bottom', 'upward', 'downward', 'north', 'south'], HORIZ = ['left', 'right', 'start', 'end', 'east', 'west'];
 function classifyOne(w, toks, L) {
   for (const [fam, a] of Object.entries(L.ambiguous)) if (a.tokens.some((t) => has(toks, t))) return { class: 'ambiguous', family: fam, note: a.note };
-  const src = L.mirror[keyOf(w)];
+  if (SEEK.test(w)) return { class: 'never', strength: 'weak', family: 'media', sources: ['seek pattern'] };
+  const vertical = VERT.some((t) => has(toks, t)) && !HORIZ.some((t) => has(toks, t));
+  const src = !vertical && L.mirror[keyOf(w)];
   if (src) return { class: 'directional', strength: src.length > 1 || CORE.test(w) ? 'strong' : 'weak', sources: src };
   const nev = Object.entries(L.never).find(([, x]) => x.tokens.some((t) => has(toks, t)));
   if (nev && nev[1].sources.length > 1) return { class: 'never', strength: 'strong', family: nev[0], sources: nev[1].sources };
-  if (CORE.test(w)) return { class: 'directional', strength: 'strong', sources: ['pattern'] };
+  if (!vertical && CORE.test(w)) return { class: 'directional', strength: 'strong', sources: ['pattern'] };
   if (nev) return { class: 'never', strength: 'weak', family: nev[0], sources: nev[1].sources };
   return { class: 'unknown' };
 }
@@ -322,8 +371,8 @@ function fallbackCandidates() {
     }
   };
   for (const s of document.styleSheets) { try { walk(s.cssRules); } catch { /* cross-origin */ } }
-  const RARE = /[٫٬٪،؟ژکگپچیڤ﷼⃁ٱ-ۓ۰-۹]/;
-  const SCRIPT = /[֐-ࣿיִ-﷿ﹰ-﻿⃁]/;
+  const RARE = /[\u066B\u066C\u066A\u060C\u061F\u0698\u06A9\u06AF\u067E\u0686\u06CC\u06A4\uFDFC\u20C1\u0671-\u06D3\u06F0-\u06F9]/;
+  const SCRIPT = /[\u0590-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF\u20C1]/;
   const out = [], perStack = new Map(), seen = new Set();
   const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   const pool = [];
@@ -347,7 +396,7 @@ function fallbackCandidates() {
     p.el.setAttribute('data-audit-fb', String(i));
     const chosen = new Set(p.stack);
     for (const f of p.stack) for (const l of locals.get(f) || []) chosen.add(l);
-    out.push({ i, sel: p.el.tagName.toLowerCase() + (p.el.id ? '#' + p.el.id : [...p.el.classList].slice(0, 2).map((x) => '.' + x).join('')), text: (p.el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40), chars: [...new Set([...p.el.textContent].filter((ch) => /\S/.test(ch) && ch.charCodeAt(0) > 0x2af))].slice(0, 60).join(''), stack: c0(p.stack), chosen: [...chosen] });
+    out.push({ i, sel: p.el.tagName.toLowerCase() + (p.el.id ? '#' + p.el.id : [...p.el.classList].slice(0, 2).map((x) => '.' + x).join('')), text: (p.el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40), chars: [...new Set([...p.el.textContent].filter((ch) => /\S/.test(ch)))].slice(0, 80).join(''), stack: c0(p.stack), chosen: [...chosen] });
   }
   function c0(s) { return s.slice(0, 3).join(', '); }
   // faces declared but never loaded, with their ranges: a face the family's other faces outrank (a font-weight or
@@ -411,9 +460,15 @@ export async function rtlChecks(page, cdp) {
   if (!scope.rtl && !scope.arabic) return null;
   const findings = [];
   const add = (level, check, message, examples = []) => findings.push({ level, check, message, examples });
+  try { await rtlBlock(page, cdp, scope, add); } catch (e) { return { scope, findings, error: String(e?.message || e).split('\n')[0], ms: Date.now() - t0 }; }
+  return { scope, findings, ms: Date.now() - t0 };
+}
+
+// the findings made before an error stand: rtlChecks reports the error beside them
+async function rtlBlock(page, cdp, scope, add) {
   const st = await page.evaluate(rtlStatic);
   if (scope.rtl && !scope.htmlDir && scope.bodyDir === 'rtl') add('WARN', 'structure', 'dir="rtl" is on <body>, not <html>: the root, the scrollbar and anything outside body stay left to right');
-  if (st.align.length) add('FAIL', 'align', 'text-align: left inside right-to-left text — use text-align: start (numbers keep right in both directions)', st.align);
+  if (st.align.length) add('FAIL', 'align', `text-align: left inside right-to-left text${st.alignCount > st.align.length || st.alignCapped ? ` (${st.alignCount}${st.alignCapped ? '+' : ''} blocks; the first ${st.align.length} listed)` : ''} — use text-align: start (numbers keep right in both directions)`, st.align);
   if (st.tracking.length) add('FAIL', 'arabic', 'Letter-spacing on Arabic text — it pulls the joined letters apart; set it to 0 under :lang(ar)', st.tracking);
   if (st.italic.length) add('FAIL', 'arabic', 'Italic or oblique on Arabic text — a synthesised slant, not an Arabic style; use weight or colour', st.italic);
   const scr = st.scrambled.filter((s) => !s.punctuationOnly), punct = st.scrambled.filter((s) => s.punctuationOnly);
@@ -431,10 +486,13 @@ export async function rtlChecks(page, cdp) {
     // which way the drawn (LTR) icon points, from its name's tokens; a flip turns it round
     const pointing = (v) => { const t = tokensOf(v.word); const side = t.some((x) => /^(right|forward|next|end|send)$/.test(x)) ? 'right' : t.some((x) => /^(left|back|prev|previous|start|before)$/.test(x)) ? 'left' : null; return side && v.flipped ? (side === 'right' ? 'left' : 'right') : side; };
     const verdict = (v) => { const p = pointing(v); if (!p) return null; if (FWD.test(v.context)) return p === 'left'; if (BWD.test(v.context)) return p === 'right'; return null; };
-    const dirIcons = icons.filter((v) => v.class === 'directional');
+    // Bootstrap Icons' "list" is the hamburger: on a menu toggle it is a symmetric menu glyph, not a bulleted list
+    const MENU = /menu|navigation|\bnav\b|toggle|القائمة|قائمة|التنقل/i;
+    // an arrow turned to point up or down (an open disclosure's chevron) has no reading direction to follow
+    const dirIcons = icons.filter((v) => v.class === 'directional' && !v.vertical && !(/^(list|bi-list)$/i.test(v.word) && MENU.test(v.context)));
     const wrongWay = dirIcons.filter((v) => verdict(v) === false);
     if (wrongWay.length) add('FAIL', 'icons', 'Arrows that point against the reading direction for their action (forward actions point left in RTL, back actions right)', wrongWay.map((v) => `${v.word} in "${v.context}"`));
-    for (const [lvl, strength, what] of [['FAIL', 'strong', 'checks, media, circular time, search: every source agrees'], ['WARN', 'weak', 'one source: calendar, edit, keyboard, camera']]) {
+    for (const [lvl, strength, what] of [['FAIL', 'strong', 'checks, media, circular time, search: every source agrees'], ['WARN', 'weak', 'one source: calendar, edit, keyboard, camera, a media seek control']]) {
       const n = icons.filter((v) => v.class === 'never' && v.strength === strength && v.flipped);
       if (n.length) add(lvl, 'icons', `Icons that must not mirror but are flipped (${what})`, n.map(lbl));
     }
@@ -456,12 +514,11 @@ export async function rtlChecks(page, cdp) {
       const whole = fb.tested && fb.missed / fb.tested >= 0.5;
       const why = fb.idle?.length ? ` The face declared for them never loaded: ${fb.idle.join(', ')} — another face of the family outranks it (match its font-weight/font-style descriptors to theirs).`
         : whole ? ' The page\'s faces do not cover this script: add one that does (fonts.mjs lists a face\'s coverage).'
-        : ` Missing from the page's faces: ${fb.miss.slice(0, 12).map((ch) => `${ch} ${unicodeName(ch)}`).join(', ')} — choose a face that covers them (fonts.mjs lists a face's coverage; Intl's ٫ ٬ and the riyal sign U+20C1 are the usual gaps).`;
+        : ` ${fb.miss.length ? `Missing from the page's faces: ${fb.miss.slice(0, 12).map((ch) => `${ch} ${unicodeName(ch)}`).join(', ')}${fb.miss.length > 12 ? ', …' : ''} — c` : 'C'}hoose a face that covers them (fonts.mjs lists a face's coverage; Intl's ٫ ٬ and the riyal sign U+20C1 are the usual gaps).`;
       add('WARN', 'fonts', `Glyphs drawn by a system fallback font, not the page's own faces${whole ? ' (most of the text)' : ''} — each device substitutes its own.${why}`,
         fb.hits.map((h) => `${h.sel} "${h.text}" (${h.fallback.join(', ')} glyphs; stack ${h.stack})`));
     }
   }
-  return { scope, findings, ms: Date.now() - t0 };
 }
 
 // ---------------------------------------------------------------- in-page: phone width
@@ -470,11 +527,25 @@ function hoverOnly() {
   const HIDE = /opacity|visibility|display|transform|max-height|clip|height/;
   const NOHOVER = /(any-)?hover:\s*hover|(any-)?pointer:\s*fine/;
   const shownEl = (e) => !e.checkVisibility || e.checkVisibility({ checkOpacity: false, checkVisibilityCSS: true });
+  // A rule applies only where its media query matches: a desktop menu's hover inside @media (min-width: 1024px) is
+  // not the phone's (media text a browser cannot evaluate counts as matching)
+  const matches = (m) => { if (!m || m === 'all') return true; try { return matchMedia(m).matches; } catch { return true; } };
+  // what a hover reveals is content when it holds text, a control or an image with a text alternative; a decorative
+  // layer (a colour version over a grey logo, an empty overlay, an img with alt="") is not lost on a touch screen
+  const CONTROL = 'a[href], button, input, select, textarea, [tabindex], [role=button], [role=link], [role=menuitem]';
+  const content = (e) => {
+    if (e.closest('[aria-hidden=true]')) return false;
+    if ((e.textContent || '').trim() || e.matches(CONTROL) || e.querySelector(CONTROL)) return true;
+    return [e, ...e.querySelectorAll('img, svg, video, canvas, [role=img]')].some((i) => (i.tagName === 'IMG' ? !i.hasAttribute('alt') || i.getAttribute('alt').trim() !== ''
+      : /^(VIDEO|CANVAS)$/.test(i.tagName) || !!(i.getAttribute('aria-label') || i.getAttribute('aria-labelledby') || (i.tagName.toLowerCase() === 'svg' && i.querySelector('title')))));
+  };
   const walk = (rules, media) => {
     for (const r of rules) {
+      if (typeof CSSImportRule !== 'undefined' && r instanceof CSSImportRule) { try { walk(r.styleSheet.cssRules, [...media, r.media.mediaText]); } catch { /* cross-origin */ } continue; }
       if (r.media && r.cssRules) { walk(r.cssRules, [...media, r.media.mediaText]); continue; }
+      if (typeof CSSSupportsRule !== 'undefined' && r instanceof CSSSupportsRule && !CSS.supports(r.conditionText)) continue;
       if (r.cssRules && !r.selectorText) { walk(r.cssRules, media); continue; }
-      if (!r.selectorText || !/:hover/.test(r.selectorText) || media.some((m) => NOHOVER.test(m))) continue;
+      if (!r.selectorText || !/:hover/.test(r.selectorText) || media.some((m) => NOHOVER.test(m)) || !media.every(matches)) continue;
       if (![...r.style].some((p) => HIDE.test(p))) continue;
       for (const part of r.selectorText.split(/,(?![^(]*\))/)) {
         const m = part.match(/^(.*?:hover[^\s>~+]*)\s*([>~+\s]\s*.+)$/); if (!m) continue; // the hovered element reveals another
@@ -482,7 +553,9 @@ function hoverOnly() {
         let els = [], hov = [];
         try { els = [...document.querySelectorAll(target)]; hov = [...document.querySelectorAll(hovered || '*')].filter((e) => shownEl(e) && e.getBoundingClientRect().width > 0); } catch { continue; }
         if (!hov.length) continue;
-        const hidden = els.filter((e) => { const cs = getComputedStyle(e); if (cs.display === 'none') return true; const b = e.getBoundingClientRect(); return b.width > 0 && (cs.opacity === '0' || cs.visibility === 'hidden'); });
+        // hidden now, by the very property this rule changes (a box hidden some other way is not this rule's doing)
+        const sets = new Set([...r.style]);
+        const hidden = els.filter((e) => { const cs = getComputedStyle(e); if (cs.display === 'none') return sets.has('display') && content(e); const b = e.getBoundingClientRect(); if (!(b.width > 0)) return false; return ((cs.opacity === '0' && sets.has('opacity')) || (cs.visibility === 'hidden' && sets.has('visibility'))) && content(e); });
         if (!hidden.length) continue;
         // a click or tap path opens it as well: a toggle inside the hovered element, or a control pointing at the target
         const toggle = hov.some((h) => h.querySelector('[aria-expanded], [aria-haspopup]') || h.matches('[aria-expanded], [aria-haspopup]')) || hidden.some((e) => e.id && document.querySelector(`[aria-controls~="${CSS.escape(e.id)}"]`));
@@ -491,7 +564,7 @@ function hoverOnly() {
       }
     }
   };
-  for (const s of document.styleSheets) { try { walk(s.cssRules, []); } catch { /* cross-origin */ } }
+  for (const s of document.styleSheets) { if (s.disabled) continue; try { walk(s.cssRules, s.media?.mediaText ? [s.media.mediaText] : []); } catch { /* cross-origin */ } }
   return found;
 }
 
@@ -524,8 +597,8 @@ function phoneInputs() {
 }
 
 const PURPOSE = [
-  ['email', /e-?mail|البريد/i], ['tel', /phone|mobile|\btel\b|جوال|هاتف/i], ['otp', /one-time|\botp\b|verification code|رمز التحقق/i], ['card', /card number|cc-?number|رقم البطاقة/i],
-  ['cvc', /security code|\bcvc\b|\bcvv\b|\bcsc\b|cc-csc/i], ['postcode', /post ?code|\bzip\b|postal/i], ['url', /website|\burl\b/i], ['search', /search|بحث/i],
+  ['postcode', /post ?code|\bzip\b|postal|الرمز البريدي|الرمز البريدى/i], ['email', /e-?mail|البريد الإلكتروني|البريد الالكتروني|بريد إلكتروني/i], ['tel', /phone|mobile|\btel\b|جوال|هاتف/i], ['otp', /one-time|\botp\b|verification code|رمز التحقق/i], ['card', /card number|cc-?number|رقم البطاقة/i],
+  ['cvc', /security code|\bcvc\b|\bcvv\b|\bcsc\b|cc-csc/i], ['url', /website|\burl\b/i], ['search', /search|بحث/i],
   ['amount', /amount|price|المبلغ/i], ['quantity', /quantity|\bqty\b|الكمية/i],
 ];
 const keyboardOf = (i) => i.inputmode || { email: 'email', tel: 'tel', url: 'url', number: 'number (spinner; decimal pad on iOS)', search: 'search', password: 'text (secure)', date: 'date picker' }[i.type] || 'text';
@@ -544,6 +617,19 @@ function judgeInput(i) {
   return { k: i.k, field: i.field, label: i.label, purpose, keyboard: kb, issues };
 }
 
+// Transitions off, through a constructed stylesheet: a Content-Security-Policy without 'unsafe-inline' in style-src
+// refuses page.addStyleTag (and logs a console error the audit would report as the page's), not adoptedStyleSheets.
+// Returns the function that puts them back, or null when neither way works.
+async function noTransitions(page) {
+  const css = '*, *::before, *::after { transition: none !important; }';
+  const adopted = await page.evaluate((css) => {
+    try { const s = new CSSStyleSheet(); s.replaceSync(css); document.adoptedStyleSheets = [...document.adoptedStyleSheets, s]; window.__auditNoTransitions = s; return true; } catch { return false; }
+  }, css).catch(() => false);
+  if (adopted) return () => page.evaluate(() => { const s = window.__auditNoTransitions; document.adoptedStyleSheets = document.adoptedStyleSheets.filter((x) => x !== s); delete window.__auditNoTransitions; }).catch(() => {});
+  const tag = await page.addStyleTag({ content: css }).catch(() => null);
+  return tag ? () => tag.evaluate((t) => t.remove()).catch(() => {}) : null;
+}
+
 /** The phone-width block. The page is left as found: insets back to 0, viewport restored, nothing focused. */
 export async function phoneChecks(page, cdp, { width, height, insets = [59, 34, 0, 0], keyboard = 336 } = {}) {
   const t0 = Date.now();
@@ -552,6 +638,7 @@ export async function phoneChecks(page, cdp, { width, height, insets = [59, 34, 
   const meta = await page.evaluate(() => document.querySelector('meta[name=viewport]')?.getAttribute('content') || '');
   const cover = /viewport-fit\s*=\s*cover/i.test(meta), resizesContent = /interactive-widget\s*=\s*resizes-content/i.test(meta);
   await page.evaluate(() => { document.activeElement?.blur?.(); scrollTo(0, 0); });
+  let error = null;
   try {
     // hover-only reveals
     const hov = await page.evaluate(hoverOnly);
@@ -568,22 +655,26 @@ export async function phoneChecks(page, cdp, { width, height, insets = [59, 34, 
     // pressed states: :active forced through CDP, transitions off so an end state is read, not the first frame
     const tapOff = C.filter((c) => c.tapOff && /^(a|button)$/.test(c.tag)).slice(0, 40);
     if (cdp && tapOff.length) {
-      await cdp.send('DOM.enable'); await cdp.send('CSS.enable');
-      const { root } = await cdp.send('DOM.getDocument', { depth: 0 });
-      const noTr = await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; }' });
-      const noPress = [];
-      const look = (k) => page.evaluate((k) => { const e = document.querySelector(`[data-audit-mc="${k}"]`); if (!e) return null; const s = getComputedStyle(e); const p = getComputedStyle(e, '::before'), q = getComputedStyle(e, '::after'); return [s.backgroundColor, s.color, s.transform, s.opacity, s.boxShadow, s.filter, s.outlineStyle, s.borderColor, s.textDecorationLine, p.opacity, p.backgroundColor, q.opacity, q.backgroundColor].join('|'); }, k);
-      for (const c of tapOff) {
-        const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector: `[data-audit-mc="${c.k}"]` }).catch(() => ({}));
-        if (!nodeId) continue;
-        const a = await look(c.k);
-        await cdp.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: ['active'] });
-        const b = await look(c.k);
-        await cdp.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: [] });
-        if (a !== null && a === b) noPress.push(c.sel);
-      }
-      await noTr.evaluate((t) => t.remove()).catch(() => {});
-      if (noPress.length) add('WARN', 'pressed', 'Controls with no pressed (:active) state and the tap highlight turned off: a tap shows nothing until the result arrives', noPress);
+      const restore = await noTransitions(page);
+      try {
+        if (!restore) throw new Error('transitions could not be switched off');
+        await cdp.send('DOM.enable'); await cdp.send('CSS.enable');
+        const { root } = await cdp.send('DOM.getDocument', { depth: 0 });
+        const noPress = [];
+        const look = (k) => page.evaluate((k) => { const e = document.querySelector(`[data-audit-mc="${k}"]`); if (!e) return null; const s = getComputedStyle(e); const p = getComputedStyle(e, '::before'), q = getComputedStyle(e, '::after'); return [s.backgroundColor, s.color, s.transform, s.opacity, s.boxShadow, s.filter, s.outlineStyle, s.borderColor, s.textDecorationLine, p.opacity, p.backgroundColor, q.opacity, q.backgroundColor].join('|'); }, k);
+        for (const c of tapOff) {
+          const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector: `[data-audit-mc="${c.k}"]` }).catch(() => ({}));
+          if (!nodeId) continue;
+          const a = await look(c.k);
+          await cdp.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: ['active'] });
+          const b = await look(c.k);
+          await cdp.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: [] });
+          if (a !== null && a === b) noPress.push(c.sel);
+        }
+        if (noPress.length) add('WARN', 'pressed', 'Controls with no pressed (:active) state and the tap highlight turned off: a tap shows nothing until the result arrives', noPress);
+      } catch (e) {
+        add('WARN', 'pressed', `Pressed states not checked: ${String(e?.message || e).split('\n')[0].slice(0, 160)}`);
+      } finally { if (restore) await restore(); }
     }
     // safe areas: only when the page opts in to edge-to-edge (without cover, iOS keeps it inside the safe area)
     const bars = C.filter((c) => c.bar && (c.vy < insets[0] + 8 || c.vy + c.h > height - insets[1] - 8));
@@ -617,12 +708,17 @@ export async function phoneChecks(page, cdp, { width, height, insets = [59, 34, 
     }
     // the primary action pinned in the top third (portrait): a regrip for either thumb
     if (height > width) {
+      // a primary action: named so, a submit, or a filled button (not the brand or logo link a dark bar paints)
       const PRIMARY = /(^|[\s_-])(primary|cta|buy|checkout)([\s_-]|$)|btn-primary/i;
-      const pinned = C.filter((c) => c.bar && c.vy >= 0 && c.vy + c.h / 2 < height / 3 && (PRIMARY.test(c.cls) || c.type === 'submit' || c.filled));
+      const pinned = C.filter((c) => c.bar && c.vy >= 0 && c.vy + c.h / 2 < height / 3 && !/brand|logo/i.test(c.cls)
+        && (PRIMARY.test(c.cls) || c.type === 'submit' || (c.filled && (c.tag === 'button' || /(^|[\s_-])(btn|button)/i.test(c.cls)))));
       if (pinned.length) add('WARN', 'thumb', 'Primary action pinned in the top third of the phone screen: a regrip for either thumb — a bottom bar, or in flow after the content it acts on', pinned.map((c) => c.sel));
     }
+  } catch (e) {
+    // the findings made before the error stand; the error is reported beside them
+    error = String(e?.message || e).split('\n')[0];
   } finally {
     await page.evaluate(() => { for (const a of ['data-audit-mc', 'data-audit-in']) document.querySelectorAll(`[${a}]`).forEach((e) => e.removeAttribute(a)); document.activeElement?.blur?.(); scrollTo(0, 0); }).catch(() => {});
   }
-  return { cover, resizesContent, findings, ms: Date.now() - t0 };
+  return { cover, resizesContent, findings, ...(error ? { error } : {}), ms: Date.now() - t0 };
 }

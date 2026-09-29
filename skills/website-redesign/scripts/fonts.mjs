@@ -105,7 +105,7 @@ async function inspect(buf, label, extra = {}) {
   console.log(`  figures: ${figures.join(' · ') || 'no digits'}${feats.has('zero') ? ' · slashed zero' : ''}`);
   console.log(`  features: ${named.map((f) => f).join(' ')}${ss.length ? ` · stylistic sets ${ss.join(' ')}` : ''}${cv.length ? ` · character variants ${cv.length}` : ''}`);
   console.log(`  layout scripts: ${[...scripts].join(' ') || '—'} · covers: ${Object.entries(coverage).filter(([, v]) => v).map(([k]) => k).join(', ')}`);
-  vertical(font, extra);
+  try { vertical(font, extra); } catch (e) { console.log(`  vertical metrics: could not be read (${String(e.message).slice(0, 80)})`); }
 }
 
 // ---- vertical metrics, the line box per platform, clip floors, Arabic coverage ------------------------------------
@@ -198,7 +198,8 @@ function vertical(font0, extra) {
   const on = (g) => g.names.join(', ');
   // A difference under 0.05 em (0.8 px at 16 px) moves no visible ink: listed, not flagged.
   const spread = Math.max(...boxes.map((p) => Math.max(...boxes.map((q) => Math.max(Math.abs(p.a - q.a), Math.abs(p.d - q.d))))));
-  console.log(`  vertical metrics (ascent/descent, em): ${tables.join(' · ')}${boxes.length > 1 ? '' : ' → one line box on every platform'}`);
+  const one = boxes.length > 1 ? '' : L.groups.length > 1 ? ' → the same ascent and descent on every platform; the line gap differs' : ' → one line box on every platform';
+  console.log(`  vertical metrics (ascent/descent, em): ${tables.join(' · ')}${one}`);
   if (boxes.length > 1) console.log(`  ${spread >= 0.05 ? '⚠ the line box differs by platform' : 'the line box differs slightly by platform'}: ${boxes.map((b) => `${f3(b.a)}/${f3(b.d)} from ${b.table} on ${on(b)}`).join('; ')}${spread >= 0.05 ? '. Size clipping boxes for the larger floor.' : ''}`);
   const normals = L.groups.map((g) => ({ g, v: g.a + g.d + g.gap }));
   console.log(`  line-height: normal = ${normals.map(({ g, v }) => `${v.toFixed(2)}${L.groups.length > 1 ? ` (${on(g)})` : ''}`).join(' · ')}`);
