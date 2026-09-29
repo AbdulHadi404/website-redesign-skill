@@ -8,7 +8,7 @@ Branch `claude/festive-planck-435hmn`, 2026-09-28 to 2026-09-29. Two stages: the
 - **Derive, not pick.** Direction comes from the company's own mark, words and material. Convergence toward the model's prior (and toward the skill's own past outputs) is checked by the swap test, the ledger of past outputs with captures, and a blurred side-by-side.
 - **First sites and signature experiences** (from `greenfield-discovery`): discovery when the context is thin (a social profile, a domain to learn), a product definition before the design brief, the rule that a signature experience is never shrunk to fit a website section, and what to do when an experimental prototype overtakes the original.
 - **Applications are used, not visited** (from `product-ui-mode`): density defaults, brand moments and sign-in, traps that only show while building, the seam test between the marketing site and the product, and commitment 5 (no code fonts unless the audience reads code), now enforced by `audit.mjs`.
-- **Measure what can be measured, judge the rest from renders.** Sixteen scripts, regression-tested in CI (N_CASES cases):
+- **Measure what can be measured, judge the rest from renders.** Sixteen scripts, regression-tested in CI (76 cases):
   - `capture`, `audit`, `a11y`, `widgets`, `states`, `parity`, `perf`, `contrast`, `palette`, `fonts`, `compare`;
   - new in stage 2: `motion` (does approved motion exist and survive reduced motion), `sweep` (every width from 320 to 1920 plus zoom), `stress` (real content and real networks), `model` (what a glTF costs before it ships), `libcheck` (licence, activity and size of a code library);
   - plus the stage-2 additions listed below.
@@ -102,7 +102,7 @@ These are the findings that change a decision; the evidence is in the reports ci
   - `fonts.mjs`: vertical metrics, clip floors and Arabic coverage;
   - `palette.mjs`: the fill's label chosen by WCAG, and `--tenant`;
   - `perf.mjs`: the load average of the machine.
-- **Stage 2 documents: not yet.** The findings are archived with an integration plan that names 31 destination files and four new references (`interactive.md`, `configurators.md`, `generative-visuals.md`, `resources/hard-ui.md`), the decisions that change existing rules, and a word budget per file. Integrating them is the next session's first task.
+- **Stage 2 documents: only what the landed scripts need.** That is the new `accessibility.md` §9b (canvas, WebGL and game-like interaction), tenant themes in `design-systems.md` §8, the RTL, riyal-sign and phone rules the checks cite in `multilingual.md` and `responsive.md`, and one clause per changed script row. Everything else is archived with an integration plan that names 31 destination files and four new references (`interactive.md`, `configurators.md`, `generative-visuals.md`, `resources/hard-ui.md`), the decisions that change existing rules, and a word budget per file. Integrating them is the next session's first task.
 
 ## Resource intelligence
 

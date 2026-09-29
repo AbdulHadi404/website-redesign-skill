@@ -29,7 +29,7 @@ Then: **container queries** (Baseline widely since 2025-08) for components that 
 ## 3. Viewport units, safe areas, keyboards
 
 - `svh` is stable (browser UI expanded) — use it for heroes and covers; `lvh` can hide content under toolbars; `dvh` re-lays-out as toolbars move — only for fixed full-screen layers (a sheet, an app shell whose body scrolls inside). Every browser implements plain `vh` as `lvh`. Cap tall-screen dead bands: `min-block-size: min(100svh, 56rem)`.
-- Safe areas: `viewport-fit=cover`, then pad fixed bars with `max(1rem, env(safe-area-inset-bottom))`; landscape needs the left/right insets.
+- Safe areas: `viewport-fit=cover`, then pad fixed bars with `max(1rem, env(safe-area-inset-bottom))`; landscape needs the left/right insets. `capture.mjs` emulates the iPhone insets (59/34 px) at phone widths when the page sets `viewport-fit=cover`, and its line says so: a fixed bar whose controls sit in the top 59 or bottom 34 px of the fold is under the status bar or the home indicator (`--insets t,b,l,r` for landscape, `--insets 0` to turn them off).
 - Virtual keyboard: by default a fixed bottom submit bar stays *under* the keyboard. For forms with sticky actions, `interactive-widget=resizes-content` (Chromium/Firefox Android) plus the VisualViewport API on iOS.
 - **Never disable zoom** (`user-scalable=no`, `maximum-scale`): iOS ignores it and it violates 1.4.4.
 
@@ -40,6 +40,7 @@ Then: **container queries** (Baseline widely since 2025-08) for components that 
 - **Cascade trap (measured)**: a `@media (pointer: coarse) { .btn { min-block-size: 44px } }` placed *before* the base `.btn` rule is silently overridden (same specificity). Put input-mode overrides after the base rules or in a later cascade layer — and check the rendered height, not the source.
 - **Gestures are accelerators**: every swipe, long-press or drag has a visible tap alternative (WCAG 2.5.7).
 - **Keyboards**: `type` + `inputmode` + `autocomplete` + `enterkeyhint`; card numbers and one-time codes use `inputmode="numeric"` with `autocomplete="cc-number"` / `"one-time-code"`, never `type=number`; `field-sizing: content` for growing textareas.
+- **`audit.mjs` checks these at phone widths** (lines `Phone [check]`): content revealed only by `:hover` fails (only rules whose media query matches the phone width, and only when they hide text, a control or an image with a text alternative); `type=number` for a code, phone or card number fails, and the wrong keyboard, a missing `autocomplete` or a field under 16 px warns; controls with no `:active` state under a transparent tap highlight warn; controls in fixed bars under the emulated 59/34 px insets fail only with `viewport-fit=cover`; fixed bars over a focused field with a 336 px keyboard are checked only with `interactive-widget=resizes-content`; a primary action pinned in the top third warns.
 
 ## 5. Navigation transformation
 

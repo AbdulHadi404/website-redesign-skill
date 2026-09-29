@@ -39,7 +39,7 @@ Check any candidate with `scripts/fonts.mjs --google "Family"`: it reports the A
 
 1. **Never track Arabic.** Letter-spacing adds uneven gaps after non-joining letters (Chrome now keeps the joins; older and other engines break them). Designs with negative display tracking must reset it: `:lang(ar) { letter-spacing: 0 }`.
 2. **No italic for Arabic.** Chrome synthesises a fake slanted oblique. `:lang(ar) { font-synthesis: weight }` and `:lang(ar) em { font-style: normal; font-weight: 600 }` — emphasis by weight or colour.
-3. **Size and leading**: Arabic reads smaller at the same size — set it ~10–15% larger and body line-height ~1.6–1.8. Match optically by eye with both scripts on one line.
+3. **Size and leading**: Arabic reads smaller at the same size — set it ~10–15% larger and body line-height ~1.6–1.8. Match optically by eye with both scripts on one line. In a box that clips (truncated, clamped, fixed-height), use the chosen face's own floor from `fonts.mjs` (its "clip floor" line per content class: plain, vocalised, stacked), per platform when it prints "⚠ the line box differs by platform" — faces with USE_TYPO_METRICS on and typo ≠ hhea change their line box between Apple platforms and Chromium on Linux and Android, and Tajawal's `normal` is 1.39 on Windows, at its plain floor. `line-height: normal` is not safe for Almarai, Alexandria or Readex Pro (`fonts.mjs` flags a face whose `normal` is 0.05 em or more below its plain floor).
 4. **Map fonts by script under one family name**, so each script gets its face and its size correction:
 
 ```css
@@ -55,6 +55,7 @@ body { font-family: "Brand", system-ui, sans-serif; }
 5. **Numerals are the client's decision**: Western digits (0–9) are common across the Maghreb and many Gulf and Levant products; Eastern Arabic (٠–٩) in parts of Egypt and the Gulf; Persian (۰–۹) for Farsi and Urdu. Set the system explicitly — the locale alone no longer implies it (§2a).
 6. **Subsetting keeps shaping**: `--layout-features='*'` — Arabic needs `init`, `medi`, `fina`, `rlig`, `mark`.
 7. **Display tracking, uppercase and small caps don't exist** in Arabic; a design whose hierarchy relies on them needs another device (weight, size, colour) on the Arabic side.
+8. **The Saudi riyal sign (U+20C1)**: `fonts.mjs` reports whether a face draws it. On Google Fonts load it with a second stylesheet, `css2?family=<Family>&text=%E2%83%81`: none of the standard subsets serves it, even for Noto Naskh Arabic, Roboto and Scheherazade New, which draw it.
 
 ## 2a. Numbers in data (dashboards, tables, prices, forms)
 
@@ -92,7 +93,8 @@ const toLatn = (s) => s.replace(/[٠-٩]/g, (d) => d.charCodeAt(0) - 0x660).repl
 
 ## 4. Checks
 
-- [ ] `lang` and `dir` set; logical properties throughout; the RTL render captured at phone and desktop widths (`capture.mjs` against the RTL route or with `dir` toggled).
+- [ ] `lang` and `dir` set; logical properties throughout; the RTL render captured at phone and desktop widths (`capture.mjs` against the RTL route, and `capture.mjs --dir rtl --lang ar` on the left-to-right build for the flip run).
+- [ ] `audit.mjs` on the RTL pages: its RTL block (lines `RTL [check]`) runs whenever a page is right-to-left or holds Arabic. It fails `text-align: left` in RTL text, tracking or italics on Arabic, LTR data out of order within a line (a sign, currency, time range or phone number), LTR-data fields laid out scrambled, a start drawer parked off the left, an arrow that points against its label and a never-mirror icon (check, media, clock, search) that is flipped — an icon's direction includes `rotate` and `scale`; it warns on directional icons with no flip, email/phone/IBAN fields laid out RTL, English phrases whose end punctuation moves, x-moving keyframes and glyphs drawn by a system fallback font. It does not press arrow keys: `widgets.mjs` does.
 - [ ] Directional icons mirrored, non-directional ones not; composition mirrored, photographs not.
 - [ ] Arabic text: no tracking, no synthetic italic, size and leading adjusted, numerals as decided.
 - [ ] Data: digit system set in code; no hand-built number strings; the digits actually shown are tabular (measured, not assumed); numeric columns right-aligned; numeric inputs are text inputs that accept Arabic and Persian digits.

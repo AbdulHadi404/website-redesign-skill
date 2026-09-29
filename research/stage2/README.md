@@ -10,7 +10,7 @@ Stage 2 asked what the skill must know to judge and build rich interactive work 
 **Status when stage 2 was concluded** (at the user's request, before the document integration began):
 - The reports, reviews, experiments and the plan are complete and archived here.
 - Script work already in flight was allowed to finish and landed in `skills/website-redesign/scripts/` (see the repository `REPORT.md`).
-- **The skill's documents do not yet carry the stage-2 findings.** The plan lists the 31 destination files, the four new references (`interactive.md`, `configurators.md`, `generative-visuals.md`, `resources/hard-ui.md`) and the word budget for each; it is the brief for the next session.
+- **The skill's documents do not yet carry the stage-2 findings**, apart from the lines the landed scripts cite (`accessibility.md` §9b on canvas and WebGL, `design-systems.md` §8 on tenant themes, the RTL and phone rules in `multilingual.md` and `responsive.md`). The plan lists the 31 destination files, the four new references (`interactive.md`, `configurators.md`, `generative-visuals.md`, `resources/hard-ui.md`) and the word budget for each; it is the brief for the next session.
 - Blind round 5 (Stem & Wren, Hallam & Price; `experiments/H-blind-eval/round5-prompts.md`) is prepared and has not run.
 
 ## Streams

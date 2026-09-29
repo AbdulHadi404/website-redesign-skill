@@ -9,7 +9,7 @@ Checked 2026-09-28. The scripts in this skill cover the common path; the rest ar
 | `capture.mjs` | What does every page look like at each width, fold and full, with reveals finished and images decoded? Element shots at 3× for artwork; `--variant no-text,no-images,no-shadows` for the removal tests; `--reduced-motion`, `--dark`, `--no-js`, `--forced-colors`; self-checks for images that painted flat |
 | `audit.mjs` | What is measurably wrong, and which generic-look signals are present? (`--kind` switches marketing, app, field, commerce, content, docs and service rules and accepts category names such as dashboard or fintech; a signature route's names, such as configurator or builder, run the app rules.) Includes the number and script checks for bilingual and financial screens. |
 | `a11y.mjs` | What would a keyboard, screen-reader, zoom, forced-colours or colour-blind user hit that rule engines cannot see? |
-| `widgets.mjs` | Does each custom widget keep its keyboard contract (dialog, tabs, disclosure, live region, form errors, menu button)? |
+| `widgets.mjs` | Does each custom widget keep its keyboard contract (dialog, tabs, disclosure, live region, form errors, menu button, toolbar/radio group/menubar, slider, command palette, sortable list, splitter), with arrow keys that follow the visual arrow in right-to-left? |
 | `states.mjs` | What does each widget look like loading, empty, failing, offline, stale, with 200 items, open, focused — driven by mocked routes and steps, not imagined? With `--aria --each`: can a user do the top task from what is on screen (`visual-qa.md`, "Task walkthroughs")? |
 | `perf.mjs` | How fast is each page on a throttled phone, old against new, when `npx lighthouse` is unavailable? |
 | `parity.mjs` | What did the redesign add without a source, drop, or break (routes, ids, form fields, metadata)? |
@@ -17,6 +17,7 @@ Checked 2026-09-28. The scripts in this skill cover the common path; the rest ar
 | `palette.mjs` | What colours are in the logo (or a photo set), and what role scales follow from the brand colour? |
 | `fonts.mjs` | Does this face have tabular figures, the scripts we need, the axes we want — in the file we will actually serve? |
 | `compare.mjs` | Before/after sheets, blurred squint sheets, pixel diffs |
+| `libcheck.mjs` | Is this npm code library safe to build hard UI on — its licence class with the restrictive sentences quoted, releases, activity, adoption and bundle size? RED and AMBER flags are triage; the exit code is 1 only when a package could not be checked. Several versions of one package in one run show whether its licence changed |
 
 Traps they handle: a project-local Playwright newer than the installed browser (they fall back to any Chromium on disk; `CHROME_PATH` to choose, in every script that opens a browser, or `--chrome` in all of them but `a11y.mjs` and `widgets.mjs`); behind a TLS-intercepting proxy web fonts may fail silently (the audit reports declared families that are not available). `CAPTURE_PROXY` opts into a proxy explicitly — Playwright 1.56 ignores the localhost bypass, so it is never taken from `HTTPS_PROXY` automatically.
 

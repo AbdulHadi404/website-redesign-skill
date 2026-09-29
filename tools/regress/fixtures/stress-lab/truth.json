@@ -1,0 +1,165 @@
+{
+ "about": "Seeded content-fragility defects in fixtures/stress-lab/index.html: each is invisible with the page's own copy and working API and breaks under one mutation. Found = stress.mjs reports a new finding with one of `checks` under `mutation`, on an element whose selector matches `sel` (a regular expression), at any width.",
+ "seeded": [
+  {
+   "id": "S1",
+   "what": "nowrap fixed-width button",
+   "mutation": "pseudo",
+   "checks": [
+    "protrusion",
+    "overflow"
+   ],
+   "sel": "a\\.btn"
+  },
+  {
+   "id": "S2",
+   "what": "one-line card title in a clipping box",
+   "mutation": "pseudo",
+   "checks": [
+    "clipped"
+   ],
+   "sel": "plan > h3"
+  },
+  {
+   "id": "S3",
+   "what": "nowrap name in a flex item without min-width: 0",
+   "mutation": "pseudo",
+   "checks": [
+    "overflow",
+    "protrusion",
+    "edge-cut"
+   ],
+   "sel": "account|#name"
+  },
+  {
+   "id": "S4",
+   "what": "e-mail in a card without overflow-wrap",
+   "mutation": "long",
+   "checks": [
+    "protrusion",
+    "overflow"
+   ],
+   "sel": "#email|#contact"
+  },
+  {
+   "id": "S5",
+   "what": "nowrap price column in a clipping card",
+   "mutation": "numbers",
+   "checks": [
+    "clipped"
+   ],
+   "sel": "td\\.price|th\\.price"
+  },
+  {
+   "id": "S6",
+   "what": "badge absolutely placed over the title's line",
+   "mutation": "pseudo",
+   "checks": [
+    "overlap"
+   ],
+   "sel": "badge|plan > h3"
+  },
+  {
+   "id": "S7",
+   "what": "white text on a background image with no ground colour",
+   "mutation": "no-images",
+   "checks": [
+    "unreadable"
+   ],
+   "sel": "hero"
+  },
+  {
+   "id": "S8",
+   "what": "product grid with no empty state",
+   "mutation": "list-0",
+   "checks": [
+    "no-empty-state"
+   ],
+   "sel": "section"
+  },
+  {
+   "id": "S9",
+   "what": "search icon placed with left:",
+   "mutation": "rtl",
+   "checks": [
+    "not-mirrored"
+   ],
+   "sel": "#search > svg"
+  },
+  {
+   "id": "S10",
+   "what": "back chevron placed with left:",
+   "mutation": "rtl",
+   "checks": [
+    "not-mirrored"
+   ],
+   "sel": "#back > svg"
+  },
+  {
+   "id": "S11a",
+   "what": "API error rendered as undefined",
+   "mutation": "errors",
+   "checks": [
+    "junk-text"
+   ],
+   "sel": "summary"
+  },
+  {
+   "id": "S11b",
+   "what": "offline: the orders section empties with no message",
+   "mutation": "offline",
+   "checks": [
+    "silent-failure"
+   ],
+   "sel": "orders-block"
+  },
+  {
+   "id": "S12",
+   "what": "skeleton shorter than the table it becomes",
+   "mutation": "slow",
+   "checks": [
+    "late-shift",
+    "layout-shift"
+   ],
+   "sel": "."
+  },
+  {
+   "id": "S13",
+   "what": "product images without width/height",
+   "mutation": "no-images",
+   "checks": [
+    "unsized-image"
+   ],
+   "sel": "img"
+  },
+  {
+   "id": "S14",
+   "what": "nav that never wraps or shrinks (it pushes the header's Sign-in button past the viewport: overflow names the element past the edge, not the one pushing it)",
+   "mutation": "pseudo|long",
+   "checks": [
+    "nav-overflow",
+    "overflow"
+   ],
+   "sel": "nav|header"
+  },
+  {
+   "id": "S15",
+   "what": "fixed-width KPI tiles with nowrap figures",
+   "mutation": "numbers",
+   "checks": [
+    "protrusion",
+    "overflow"
+   ],
+   "sel": "kpi"
+  },
+  {
+   "id": "S16",
+   "what": "text-align: left on running text",
+   "mutation": "rtl",
+   "checks": [
+    "not-mirrored"
+   ],
+   "sel": "#note"
+  }
+ ]
+}

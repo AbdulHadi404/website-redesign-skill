@@ -1,0 +1,6 @@
+<!-- Dev fixture: the lab's original CSS ticker bug. The <output> keeps its static "0" and ::after appends the counter, so people see "01000" while the DOM text (and the Part A harness, which read --n) says the value is fine. -->
+<!doctype html><meta charset=utf-8><style>@property --n { syntax: '<integer>'; inherits: false; initial-value: 0; }
+#ticker { display:block; font-size:44px; transition: --n 800ms cubic-bezier(0.2,0,0,1); counter-reset: n var(--n); }
+#ticker::after { content: counter(n); }</style>
+<button id="hi">To 1000</button><output id="ticker">0</output>
+<script>document.querySelector('#hi').onclick = () => document.querySelector('#ticker').style.setProperty('--n', 1000);</script>

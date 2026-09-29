@@ -45,6 +45,7 @@ If a minute of preparation saves milliseconds on every frame for every visitor, 
 - Tiers change **resolution, effects and tessellation, never the look**: the same lights, materials and composition on every tier, so the lowest tier still looks intentional.
 - Start from a device guess (touch, memory), then **judge dropped frames against the display's own refresh**, only over runs of continuous frames, never in the first seconds after load or a tier change; step down, rarely up.
 - Don't let a frame-rate monitor judge an on-demand renderer: idle gaps aren't slow frames.
+- Templates: `templates/code/tier.js` picks the starting tier (URL override, the refresh measured while the poster shows, WebGL and software-renderer checks, a probe of the top tier); `templates/code/governor.js` steps down (call `frame(now)` on every rendered frame and `pause()` whenever the loop stops; `onChange(level, why, stats)` and `onFloor(why, stats)` get the deciding window) and back up no sooner than 30 s after a step-down, by design.
 
 ## 7. After the product improves, the marketing must catch up
 

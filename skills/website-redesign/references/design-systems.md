@@ -83,3 +83,7 @@ Plus four pattern pages every product redesign needs, stated as rules with numbe
 - Every value in a component traces to a token; every token to a role. `audit.mjs` distinct-value counts (sizes, spacings, radii, shadows) before and after show whether the system actually consolidated.
 - Fonts and icons travel separately from code licences: a design system's typeface (Adobe Clean, Atlassian Sans, Segoe UI) is not licensed with its components.
 - Registry items (shadcn registries, GitHub registries) are code from strangers: inspect with `--dry-run / --diff / --view` and check each item's licence before writing it into the repo.
+
+## 8. Tenant themes
+
+Check each white-label tenant's colour with `scripts/palette.mjs --tenant '#RRGGBB' --dark --ground <page> <surface>` (its roles, the pass/fail list, APCA warnings and the admin options; only an opaque `#RRGGBB` is accepted), and the whole set in CI with `palette.mjs --tenant-set tenants.txt --dark`, which exits 1 on a WCAG failure or a refused colour and only lists APCA warnings. Where tenant accent text also sits on a coloured band (a hero, a header bar), check it with that band as its own `--ground` run: a light page and a dark band need an accent each.

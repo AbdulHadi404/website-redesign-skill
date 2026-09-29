@@ -59,8 +59,9 @@
  *    backdrop blur, emoji as icons, icon tiles, card and pill counts,
  *    over-used font families, cliché copy, big-number claims to verify
  *
- * Writes <out>/<slug>-<width>.json (<slug>-<width>-<theme>.json for a theme other than light) and prints a
- * Markdown summary (also saved as <out>/audit.md). Exits 1 when any page has a fail (✗) or could not be audited,
+ * Writes <out>/<slug>-<width>.json (<slug>-<width>-<theme>.json for a theme other than light; with `ink`, `rtl` —
+ * null unless the page is RTL or holds Arabic — and `phone`, phone widths only; a block that hits an error keeps
+ * the findings made before it and names the error) and prints a Markdown summary (also saved as <out>/audit.md). Exits 1 when any page has a fail (✗) or could not be audited,
  * 2 on an unknown --kind or theme, or a --theme-key with no key.
  */
 import { mkdir, writeFile, readFile } from 'node:fs/promises';

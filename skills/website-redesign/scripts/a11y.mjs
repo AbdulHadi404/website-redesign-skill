@@ -24,7 +24,7 @@
  *             A clickable canvas that is not focusable is a WARN, not a FAIL, when the Tab walk stops on controls
  *             over it that stand in for it: a key on one changes the canvas's own pixels, or they are built as
  *             stand-ins (paint nothing until focused, let the pointer through). Check them against the canvas
- *             contract. A painted control that takes the pointer and changes nothing drawn (a Sound toggle, a
+ *             contract (accessibility.md §9b). A painted control that takes the pointer and changes nothing drawn (a Sound toggle, a
  *             header's Menu button over a hero) does not: the FAIL stays.
  *   canvas    per clickable canvas: controls over it at load, whether a key on one changes the canvas's own
  *             pixels (captured with everything over it made transparent), and whether anything is announced
@@ -724,7 +724,7 @@ if (clickableCanvases.length) {
     return out;
   };
   const KEYS = { button: ['Enter', 'ArrowRight'], checkbox: ['Space'], radio: ['ArrowDown'], slider: ['ArrowRight'], combobox: ['ArrowDown'], canvas: ['ArrowRight', 'Enter', 'Space'] };
-  const contract = 'check them against the canvas contract (accessibility.md, "Canvas, WebGL and game-like interaction"): present from load, named, a key for every pointer action, outcomes announced';
+  const contract = 'check them against the canvas contract (accessibility.md §9b, "Canvas, WebGL and game-like interaction"): present from load, named, a key for every pointer action, outcomes announced';
   // The pointer finding for a canvas that takes no focus but has Tab stops over it. ev: { acts: a key on a Tab stop
   // over it changed the canvas, built: why the Tab stops over it look like stand-ins, painted: they were found to
   // paint, keys: the keys tried (none: not tested), animated: the canvas changes by itself }.

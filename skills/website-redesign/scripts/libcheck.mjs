@@ -61,8 +61,8 @@
  * --search ranks npm text-search results by weekly downloads (npm's own score fields are constant and carry no signal)
  * and prints the top ones with their last publish date. It yields candidate NAMES only, with a measured miss rate
  * (S4 lab, 18 designer queries: no recommended leader in the top 12 for 7, only some of them for 5 more), and surfaces
- * vendor subpackages, dormant packages and unrelated CLI tools. Look first in the skill's hard-ui.md, the component
- * lists of the primitive layer in use, and the dependency lists of products that already do it well.
+ * vendor subpackages, dormant packages and unrelated CLI tools. Look first in the skill's resources/libraries.md, the
+ * component lists of the primitive layer in use, and the dependency lists of products that already do it well.
  *
  * Needs Node 18+, npm and git, and network access to registry.npmjs.org, github.com and raw.githubusercontent.com;
  * --size runs `npm install` (scripts ignored) into a temporary folder.

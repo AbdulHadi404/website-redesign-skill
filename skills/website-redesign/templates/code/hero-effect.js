@@ -2,7 +2,7 @@
 // the part demos leave out. ~2.0 KB min+gzip; ~3.0 KB with governor.js and tier.js's measureRefresh, which it imports.
 // It is research/stage2/experiments/S10-shaders-generative/src/lib/hero.js without its lab-only query flags and
 // instrumentation, with S10's inline governor replaced by governor.js (stepUp: false), as S11 decided. Read
-// generative-visuals.md first: it decides whether a moving background is warranted at all. Copy the three files into
+// motion.md §2 and §9 first: they decide whether a moving background is warranted at all. Copy the three files into
 // the project and keep this header. No third-party code is borrowed here; credit the effect's own borrowed functions
 // (a noise function, a shader) in CREDITS.md.
 //

@@ -179,6 +179,8 @@ Gates: is there a real asset (a low-poly placeholder is worse than photographs)?
 
 Don't turn a site into one canvas to prove it can be done; choose the tool per effect (§8 and below).
 
+A generative hero background (a shader, particles, a canvas field) that passes these gates starts from `templates/code/hero-effect.js`: poster first, revealed after a WebGL2 fence, no frames off-screen, hidden or paused, context-loss recovery, a Pause/Play button, never imported under reduced motion; `governor.js` halves its render scale down to 0.25 (a halving that did not help is undone) and fades back to the poster below ~27 fps, and a new scale or size is applied just before the next draw, so a resize never shows a blank frame.
+
 | Tool | Size | Use for |
 | --- | --- | --- |
 | `<model-viewer>` (Apache-2.0) | 297 KB incl. three | product viewer and AR with no 3D code: `poster`, `loading="lazy"`, `reveal="manual"`, `camera-controls`, `alt`, `ar` |
