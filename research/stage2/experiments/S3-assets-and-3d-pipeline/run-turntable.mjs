@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // "Polished 2.5D vs live 3D" on one product: a 36-frame pre-rendered turntable (drag-to-rotate image sequence)
 // against a live three.js viewer of the optimised GLB. Payload, requests and decoded memory for each.
-// Needs run-gltf.mjs first (it uses DamagedHelmet's built variants). Writes results.json → "turntable".
+// Needs run-gltf.mjs first (it uses FlightHelmet's built variants: CC0, so the sheet can sit in the repository).
+// Writes results.json → "turntable".
 import { build } from 'esbuild';
 import { readFile, stat, mkdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -11,13 +12,13 @@ import { serve, BUILD, LAB } from './lib/serve.mjs';
 import { mergeResults, launchLab } from './lib/common.mjs';
 
 const N = 36, W = 480, H = 360;
-const model = path.join(BUILD, 'gltf/DamagedHelmet/original.glb');
+const MODEL = 'FlightHelmet';
 const srv = await serve();
 const { browser } = await launchLab();
 const page = await browser.newPage({ viewport: { width: W, height: H } });
 await page.goto(`${srv.url}/build/gltf-viewer.html`);
 await page.waitForFunction(() => window.viewReady === true);
-const r = await page.evaluate((p) => window.view(p), { url: '/build/gltf/DamagedHelmet/original.glb', W, H, frames: 1, azimuths: Array.from({ length: N }, (_, i) => (i * 360) / N) });
+const r = await page.evaluate((p) => window.view(p), { url: `/build/gltf/${MODEL}/original.glb`, W, H, frames: 1, azimuths: Array.from({ length: N }, (_, i) => (i * 360) / N) });
 await browser.close(); await srv.close();
 if (r.error) { console.error(r); process.exit(1); }
 const frames = r.turntable.map((d) => Buffer.from(d.split(',')[1], 'base64'));
@@ -46,10 +47,11 @@ console.log(WebGLRenderer, Scene, PerspectiveCamera, PMREMGenerator, NeutralTone
 const b = await build({ stdin: { contents: code, resolveDir: LAB, loader: 'js' }, bundle: true, minify: true, format: 'esm', write: false, logLevel: 'silent' });
 const js = Buffer.from(b.outputFiles[0].contents);
 const glbs = {};
-for (const v of ['optimize_1k_webp', 'optimize_defaults_webp_', 'tex1k_ktx2', 'original']) {
-  try { const buf = await readFile(path.join(BUILD, `gltf/DamagedHelmet/${v}.glb`)); glbs[v] = { bytes: buf.length, gzip: zlib.gzipSync(buf).length }; } catch { /* not built */ }
+for (const v of ['optimize_1k_webp', 'optimize_defaults_webp_', 'tex1k_ktx2', 'tex1k_avif', 'original']) {
+  try { const buf = await readFile(path.join(BUILD, `gltf/${MODEL}/${v}.glb`)); glbs[v] = { bytes: buf.length, gzip: zlib.gzipSync(buf).length }; } catch { /* not built */ }
 }
-out.live = { threeViewerJs: { min: js.length, gzip: zlib.gzipSync(js, { level: 9 }).length }, glb: glbs, note: 'plus GPU texture memory: see gltf results for DamagedHelmet' };
+out.live = { threeViewerJs: { min: js.length, gzip: zlib.gzipSync(js, { level: 9 }).length }, glb: glbs, note: `plus GPU texture memory: see gltf results for ${MODEL}` };
+out.model = MODEL;
 out.sprite360Js = 'a drag-to-rotate image sequence needs ~1 KB of script (pointer x → frame index) or none (scroll-driven background-position steps)';
 await mergeResults('turntable', out);
 console.log(JSON.stringify(out, null, 1));

@@ -46,6 +46,12 @@ const FEATURES = {
   'WebGPU GPUAdapter.info': 'api.GPUAdapter.info',
   'KHR_parallel_shader_compile': 'api.KHR_parallel_shader_compile',
   'WEBGL_lose_context': 'api.WEBGL_lose_context',
+  'requestAnimationFrame in workers': 'api.DedicatedWorkerGlobalScope.requestAnimationFrame',
+  'fetch() priority option': 'api.fetch.options_parameter.priority',
+  'link rel=prefetch': 'html.elements.link.rel.prefetch',
+  'Sec-CH-Device-Memory header': 'http.headers.Sec-CH-Device-Memory',
+  'navigator.gpu (WebGPU)': 'api.Navigator.gpu',
+  'View Transitions (same-document)': 'api.ViewTransition',
 };
 const BROWSERS = ['chrome', 'chrome_android', 'firefox', 'safari', 'safari_ios'];
 const get = (p) => p.split('.').reduce((o, k) => o?.[k], bcd);

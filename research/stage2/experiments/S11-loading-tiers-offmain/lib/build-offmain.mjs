@@ -135,6 +135,45 @@ window.__spin = async () => { const w = new Worker('worker-spin.js'); const wk =
 window.__payload = async (kind) => { const w = window.__pw ||= new Worker('worker-payload.js');
   return new Promise((res) => { const t0 = performance.now(); w.onmessage = (e) => { const t = performance.now(); let d = e.data; const deser = performance.now() - t; let parse = 0; if (typeof d === 'string') { const p = performance.now(); d = JSON.parse(d); parse = performance.now() - p; } res({ deser, parse, total: performance.now() - t0 }); }; w.postMessage(kind); }); };
 </script>`);
+  // Heavy visuals: the same particle animation drawn on the main thread or in a worker through OffscreenCanvas,
+  // while the harness taps a button. ?mode=main|offscreen&n=<points>&ms=<duration>
+  const ANIM = `
+function makeScene(n, w, h) { const P = new Float32Array(n * 4); let s = 7; const r = () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
+  for (let i = 0; i < n; i++) { P[i * 4] = r() * w; P[i * 4 + 1] = r() * h; P[i * 4 + 2] = r() - 0.5; P[i * 4 + 3] = r() - 0.5; }
+  return function draw(g) { g.fillStyle = '#15171d'; g.fillRect(0, 0, w, h); g.fillStyle = '#e8b04a';
+    for (let i = 0; i < n; i++) { const k = i * 4; let x = P[k] + P[k + 2], y = P[k + 1] + P[k + 3];
+      if (x < 0 || x > w) { P[k + 2] = -P[k + 2]; x = P[k]; } if (y < 0 || y > h) { P[k + 3] = -P[k + 3]; y = P[k + 1]; }
+      P[k] = x; P[k + 1] = y; g.fillRect(x, y, 2, 2); } }; }
+function animate(g, n, w, h, ms, raf, done) { const draw = makeScene(n, w, h); const t0 = performance.now(); const iv = []; let last = 0, work = [];
+  const loop = (t) => { if (last) iv.push(t - last); last = t; const s = performance.now(); draw(g); work.push(performance.now() - s);
+    if (performance.now() - t0 < ms) raf(loop); else done({ frames: iv.length + 1, ms: performance.now() - t0, intervals: iv, workMedian: work.sort((a, b) => a - b)[work.length >> 1] }); };
+  raf(loop); }`;
+  await writeFile(path.join(dir, 'anim.js'), ANIM + '\nexport { makeScene, animate };');
+  await writeFile(path.join(dir, 'worker-visual.js'), `import { animate } from './anim.js';
+self.onmessage = (e) => { const { canvas, n, ms } = e.data; const g = canvas.getContext('2d');
+  animate(g, n, canvas.width, canvas.height, ms, (f) => (self.requestAnimationFrame ? self.requestAnimationFrame(f) : setTimeout(() => f(performance.now()), 16)), (r) => self.postMessage(r)); };`);
+  await writeFile(path.join(dir, 'visual.html'), `<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width">
+<title>heavy visual</title>
+<style>body{margin:0;font:16px system-ui;padding:16px}#tap{font:inherit;padding:10px 16px}canvas{display:block;width:390px;height:300px;margin-top:12px}</style>
+<button id=tap>Tap me <span id=count>0</span></button><canvas id=cv width=390 height=300></canvas>
+<script type=module>
+import { animate } from './anim.js';
+const q = new URLSearchParams(location.search);
+const $ = (s) => document.querySelector(s);
+let taps = 0;
+$('#tap').addEventListener('click', () => { $('#count').textContent = ++taps; });
+const W = window.__w = { events: [], gaps: [], loaf: [] };
+new PerformanceObserver((l) => l.getEntries().forEach((e) => W.events.push({ name: e.name, start: e.startTime, dur: e.duration, delay: e.processingStart - e.startTime, id: e.interactionId }))).observe({ type: 'event', durationThreshold: 16, buffered: true });
+try { new PerformanceObserver((l) => l.getEntries().forEach((e) => W.loaf.push([e.startTime, e.duration, e.blockingDuration]))).observe({ type: 'long-animation-frame', buffered: true }); } catch {}
+let last = 0; const frame = (t) => { if (last) W.gaps.push([t, t - last]); last = t; requestAnimationFrame(frame); }; requestAnimationFrame(frame);
+window.__run = (mode, n, ms) => new Promise((res) => {
+  W.t0 = performance.now();
+  const fin = (r) => { W.t1 = performance.now(); res(r); };
+  if (mode === 'main') animate($('#cv').getContext('2d'), n, 390, 300, ms, requestAnimationFrame, fin);
+  else { const off = $('#cv').transferControlToOffscreen(); const w = new Worker('worker-visual.js', { type: 'module' }); w.onmessage = (e) => fin(e.data); w.postMessage({ canvas: off, n, ms }, [off]); }
+});
+</script>`);
+
   const sizes = {};
   for (const f of ['data.json', 'data.ndjson', 'data.bin']) sizes[f] = { raw: (await stat(path.join(dir, f))).size, gzip: (await stat(path.join(dir, f + '.gz'))).size };
   return { n, sizes };

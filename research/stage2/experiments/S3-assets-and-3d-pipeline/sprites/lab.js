@@ -1,7 +1,7 @@
 // Sprite lab page (bundled by esbuild). The runner calls window.lab[name](params) and gets numbers back.
 // Every frame-cost test renders K frames in a tight loop and forces a GPU/raster sync after each one
 // (readPixels / getImageData of one pixel), so the time includes the work, not just the command submission.
-import { Application, Assets, Sprite, AnimatedSprite, Texture, Rectangle, Container, NineSliceSprite, TilingSprite, Spritesheet, RenderTexture } from 'pixi.js';
+import { Application, Assets, Sprite, AnimatedSprite, Texture, Rectangle, Container, NineSliceSprite, TilingSprite, Spritesheet, RenderTexture, ImageSource } from 'pixi.js';
 import { Spine } from '@esotericsoftware/spine-pixi-v8';
 
 const B = '/build/sprites';
@@ -108,6 +108,10 @@ const lab = {
       const base = await Assets.load(`${B}/atlas-png/atlas.png`);
       const sheet = new Spritesheet(base, json); await sheet.parse();
       textures = sheet.animations.hop;
+    } else if (source === 'grid') {
+      // one texture, untrimmed 128 px cells: isolates the draw-call effect (vs files) from the trimming effect (vs atlas)
+      const base = await Assets.load(`${B}/grid-png/grid.png`);
+      textures = names.map((_, i) => new Texture({ source: base.source, frame: new Rectangle((i % 10) * 128, Math.floor(i / 10) * 128, 128, 128) }));
     } else {
       textures = await Promise.all(names.map((k) => Assets.load(`${B}/files-png/${k}.png`)));
     }
@@ -195,6 +199,56 @@ const lab = {
     document.body.appendChild(div);
     await new Promise((r) => setTimeout(r, 300));
     return { drawCalls: calls };
+  },
+
+  // Atlas bleeding: tile t00 (green) is drawn edge to edge from an atlas where magenta tiles surround it, under the
+  // transforms a page really applies (scale 0.8, a half-pixel camera, mipmapped 0.3 scale, 2x nearest for pixel
+  // art). Counts pixels inside the tiled area that picked up magenta (bleed) or went dark (seam: transparent padding
+  // sampled, or a gap between tiles).
+  async bleed({ variant, mode }) {
+    const meta = await fetch(`${B}/bleed.json`).then((r) => r.json());
+    const v = meta[variant];
+    const bmp = await createImageBitmap(await fetch(`${B}/bleed-${variant}.png`).then((r) => r.blob()), { premultiplyAlpha: 'none' });
+    const CW = 640, CH = 360;
+    const [engine, scaleS, offS] = mode.split(':');
+    const s = Number(scaleS), off = Number(offS);
+    const step = 32 * s, n = Math.floor((Math.min(CW, CH) - 8) / step);
+    const place = (i) => off + 4 + i * step;
+    let px;
+    if (engine === 'canvas') {
+      const c = document.createElement('canvas'); c.width = CW; c.height = CH;
+      const g = c.getContext('2d', { willReadFrequently: true });
+      g.fillStyle = '#000'; g.fillRect(0, 0, CW, CH);
+      g.imageSmoothingEnabled = true;
+      const { x, y, w, h } = v.frame;
+      for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) g.drawImage(bmp, x, y, w, h, place(i), place(j), step, step);
+      px = g.getImageData(0, 0, CW, CH).data;
+    } else {
+      const app = new Application();
+      await app.init({ width: CW, height: CH, preference: 'webgl', antialias: false, autoStart: false, background: '#000000', resolution: 1, preserveDrawingBuffer: true });
+      const mip = engine === 'pixi-mip';
+      const source = new ImageSource({ resource: bmp, scaleMode: engine === 'pixi-nearest' ? 'nearest' : 'linear', autoGenerateMipmaps: mip, alphaMode: 'premultiply-alpha-on-upload' });
+      const tex = new Texture({ source, frame: new Rectangle(v.frame.x, v.frame.y, v.frame.w, v.frame.h) });
+      for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { const sp = new Sprite(tex); sp.x = place(i); sp.y = place(j); sp.width = step; sp.height = step; sp.roundPixels = false; app.stage.addChild(sp); }
+      app.renderer.render(app.stage);
+      const gl = app.renderer.gl;
+      const buf = new Uint8Array(CW * CH * 4);
+      gl.readPixels(0, 0, CW, CH, gl.RGBA, gl.UNSIGNED_BYTE, buf);
+      // flip to top-down rows so the same rectangle test applies
+      px = new Uint8Array(buf.length);
+      for (let row = 0; row < CH; row++) px.set(buf.subarray((CH - 1 - row) * CW * 4, (CH - row) * CW * 4), row * CW * 4);
+      app.destroy(true, { children: true, texture: true });
+    }
+    // interior of the tiled block, one pixel in from its outer edge
+    const x0 = Math.ceil(place(0)) + 1, x1 = Math.floor(place(n)) - 1;
+    let total = 0, bleed = 0, seam = 0;
+    for (let y = x0; y < x1; y++) for (let x = x0; x < x1; x++) {
+      const i = (y * CW + x) * 4, r = px[i], g = px[i + 1], b = px[i + 2];
+      total++;
+      if (r > 16 || b > 16) bleed++;
+      else if (g < 170) seam++;
+    }
+    return { bleedPct: (100 * bleed) / total, seamPct: (100 * seam) / total, pixels: total, tiles: n * n };
   },
 
   // Spine: render spineboy's 'run' at a fixed display scale, either live (skeletal) or capture it to frames.

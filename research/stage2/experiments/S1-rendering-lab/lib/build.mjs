@@ -21,6 +21,7 @@ export const VARIANTS = {
   three: { entry: 'src/three/main.js', label: 'three.js (mesh per item)' },
   'three-instanced': { entry: 'src/three-instanced/main.js', label: 'three.js (one InstancedMesh)' },
   r3f: { entry: 'src/r3f/main.jsx', label: 'React Three Fiber' },
+  'r3f-instanced': { entry: 'src/r3f-instanced/main.jsx', label: 'React Three Fiber (one <instancedMesh>, WebGL failure path)' },
   // accessibility builds (same scene + keyboard/screen-reader operation)
   'dom-a11y': { entry: 'src/dom/main.js', a11y: true, label: 'DOM + keyboard layer (native elements)' },
   'svg-a11y': { entry: 'src/svg/main.js', a11y: true, label: 'SVG + keyboard layer (native elements)' },
@@ -29,6 +30,8 @@ export const VARIANTS = {
 };
 export const MAIN = ['dom', 'svg', 'canvas2d', 'canvas2d-worker', 'pixi', 'phaser', 'three', 'three-instanced', 'r3f'];
 export const A11Y = ['dom-a11y', 'svg-a11y', 'pixi-a11y', 'pixi-pixia11y'];
+// Measured in their own phase (instancing), not in the main matrix.
+export const EXTRA = ['r3f-instanced'];
 
 const template = (name, label) => `<!doctype html>
 <html lang="en">

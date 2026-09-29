@@ -125,7 +125,9 @@ for (const [name, b] of Object.entries(built)) {
     const label = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${TW}" height="22"><rect width="100%" height="100%" fill="#111"/><text x="6" y="16" font-family="sans-serif" font-size="13" fill="#fff">${v} · ${(b.variants[v].bytes / 1e6).toFixed(2)} MB · Δ ${diffs[v].diffPctOfObject}%</text></svg>`);
     comps.push({ input: await sharp(t.img).resize(TW, TH).toBuffer(), left: i * TW, top: 22 }, { input: label, left: i * TW, top: 0 }, { input: await sharp(t.diff).resize(TW, TH).toBuffer(), left: i * TW, top: 22 + TH });
   }
-  await sharp({ create: { width: pick.length * TW, height: 22 + TH * 2, channels: 3, background: '#000' } }).composite(comps).jpeg({ quality: 68 }).toFile(path.join(LAB, `shots/gltf-${name}.jpg`));
+  // Renders of a model whose licence includes NC (DamagedHelmet) stay out of the repository: its sheet goes to BUILD.
+  const sheetDir = b.model.shots === false ? path.join(BUILD, 'gltf') : path.join(LAB, 'shots');
+  await sharp({ create: { width: pick.length * TW, height: 22 + TH * 2, channels: 3, background: '#000' } }).composite(comps).jpeg({ quality: 68 }).toFile(path.join(sheetDir, `gltf-${name}.jpg`));
 
   out.models[name] = {
     kind: b.model.kind, licence: b.model.licence, frame,
@@ -157,5 +159,19 @@ out.decoders = {
   'basis (basis_transcoder.js + .wasm)': [await sz('basis/basis_transcoder.js'), await sz('basis/basis_transcoder.wasm')],
 };
 out.models = { ...prev, ...out.models }; // a --models subset keeps the other models' earlier results
+
+// How close the skill's model.mjs (static estimate from the file) comes to what three.js actually allocated and drew.
+out.modelScriptCheck = {};
+for (const [name, m] of Object.entries(out.models)) {
+  for (const [v, r] of Object.entries(m.variants || {})) {
+    if (!r.model || r.drawCalls == null) continue;
+    const ratio = (a, b) => (b ? round(a / b, 2) : null);
+    out.modelScriptCheck[`${name} / ${v}`] = {
+      triangles: [r.model.trianglesDrawn, r.triangles, ratio(r.model.trianglesDrawn, r.triangles)],
+      drawCalls: [r.model.drawCalls, r.drawCalls, ratio(r.model.drawCalls, r.drawCalls)],
+      textureGpuBytes: [r.model.textureGpuBytes, r.textureGpuBytes, ratio(r.model.textureGpuBytes, r.textureGpuBytes)],
+    };
+  }
+}
 await mergeResults('gltf', out);
 console.log('gltf: done');

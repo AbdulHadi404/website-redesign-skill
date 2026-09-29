@@ -84,6 +84,10 @@ for (let i = 0; i < 24; i++) {
   else if (kind === 'blurhash' || kind === 'blurhash-6x4') {
     const px = decode(kind === 'blurhash' ? it.bh43 : it.bh64, 32, 32); const cv = document.createElement('canvas'); cv.width = cv.height = 32;
     const ctx = cv.getContext('2d'); const id = ctx.createImageData(32, 32); id.data.set(px); ctx.putImageData(id, 0, 0); c.append(cv);
+  } else if (kind === 'blurhash-full') {
+    // the trap: decoding at the rendered size (≈ a 3-column card at DPR 2) instead of 32 px scaled up by CSS
+    const W = 248, H = 186; const px = decode(it.bh43, W, H); const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    const ctx = cv.getContext('2d'); const id = ctx.createImageData(W, H); id.data.set(px); ctx.putImageData(id, 0, 0); c.append(cv);
   } else if (kind === 'blurhash-dataurl') {
     const px = decode(it.bh43, 32, 32); const cv = document.createElement('canvas'); cv.width = cv.height = 32;
     const ctx = cv.getContext('2d'); const id = ctx.createImageData(32, 32); id.data.set(px); ctx.putImageData(id, 0, 0);
@@ -134,15 +138,24 @@ const d = document.createElement('div'); d.style.background = it.dominant; cell(
   };
   const ext = { 'jpeg-baseline': 'jpg', 'jpeg-progressive': 'jpg', webp: 'webp', avif: 'avif' };
   const prog = {};
+  // the same AVIF behind a 16 px WebP placeholder inlined in the HTML (no JS): what shows before the image arrives,
+  // and whether the placeholder steals the LCP (Chromium ignores images under 0.05 bits per displayed pixel).
+  const lqip = await sharp(path.join(SRC, 'hero.jpg')).resize(16).webp({ quality: 40 }).toBuffer();
+  prog['avif-lqip'] = enc.avif.length;
+  const H = Math.round(1600 * 2225 / 2725);
+  await writeFile(path.join(dir, 'hero-avif-lqip.html'), `<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width"><title>avif-lqip</title>
+<style>body{margin:0;background:#fff}.f{position:relative;overflow:hidden}.ph{position:absolute;inset:0;background:url(data:image/webp;base64,${lqip.toString('base64')}) center/cover;filter:blur(24px);transform:scale(1.08)}img{position:relative;display:block;width:100%;height:auto}</style>
+<div class=f><div class=ph></div><img src="hero-avif.avif" width=1600 height=${H} fetchpriority=high alt=""></div>
+<script>new PerformanceObserver((l)=>l.getEntries().forEach((e)=>{window.__lcp=e.startTime;window.__lcpEl=e.element&&e.element.tagName})).observe({type:'largest-contentful-paint',buffered:true});</script>`);
   for (const [k, b] of Object.entries(enc)) {
     await writeFile(path.join(dir, `hero-${k}.${ext[k]}`), b);
     prog[k] = b.length;
     await writeFile(path.join(dir, `hero-${k}.html`), `<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width"><title>${k}</title>
 <style>body{margin:0;background:#fff}img{display:block;width:100%;height:auto}</style>
 <img src="hero-${k}.${ext[k]}" width=1600 height=${Math.round(1600 * 2225 / 2725)} fetchpriority=high alt="">
-<script>new PerformanceObserver((l)=>l.getEntries().forEach((e)=>{window.__lcp=e.startTime})).observe({type:'largest-contentful-paint',buffered:true});</script>`);
+<script>new PerformanceObserver((l)=>l.getEntries().forEach((e)=>{window.__lcp=e.startTime;window.__lcpEl=e.element&&e.element.tagName})).observe({type:'largest-contentful-paint',buffered:true});</script>`);
   }
-  return { items: items.map(({ webp, avif, ...rest }) => ({ ...rest, webpUriChars: webp.length, avifUriChars: avif.length })), decoders, progressive: prog };
+  return { items: items.map(({ webp, avif, ...rest }) => ({ ...rest, webpUriChars: webp.length, avifUriChars: avif.length })), decoders, progressive: prog, heroLqipBytes: lqip.length };
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) console.log(JSON.stringify(await buildPlaceholders(), null, 1));

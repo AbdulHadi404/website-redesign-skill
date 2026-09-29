@@ -16,7 +16,7 @@ await buildTiers();
 const srv = await serve(siteRoot);
 const { browser } = await launch();
 const out = { env: env(), method: '', calib: [], runs: [], governor: [], detectGpu: null };
-out.method = `Fresh context per run (phone viewport 390×844 @2x). CDP Emulation.setCPUThrottlingRate throttles the renderer main thread only (Chromium thread_cpu_throttler.cc: 200 µs quanta, busy-wait). Probe starts 300 ms after load. Frame probe: the default work unit (12k particles integrated + 400 rects on a 128² 2D canvas) once per rAF for 2 s, no early exit, so any shorter probe is evaluated on prefixes of the same runs. cond=busy: twelve ~60 ms (at 1x) CPU tasks every 90 ms during the probe (a page still booting). Calibration: ${smoke ? 1 : 5} separate runs at 1x quiet; bands at the geometric midpoints between the throttle levels (2.0× and 4.9× the calibrated 1x median).`;
+out.method = `Fresh context per run (phone viewport 390×844 @2x). CDP Emulation.setCPUThrottlingRate throttles the renderer main thread only (Chromium thread_cpu_throttler.cc: 200 µs quanta, busy-wait). Probe starts 300 ms after load. Frame probe: tier.js makeWork() defaults (200k particles integrated + 1,000 rects on a 128² 2D canvas) once per rAF for 2 s, no early exit, so any shorter probe is evaluated on prefixes of the same runs. cond=busy: twelve ~60 ms (at 1x) CPU tasks every 90 ms during the probe (a page still booting). Calibration: ${smoke ? 1 : 5} separate runs at 1x quiet; bands at the geometric midpoints between the throttle levels (2.0× and 4.9× the calibrated 1x median). Throttle fidelity per run: a fixed loop timed before and after the probe (and, in cond=busy, each boot task) against its 1x calibration = the slowdown the throttler actually delivered; a run is "throttle-faithful" when that is within ±30% of nominal before and after the probe.`;
 
 async function probeOnce(cpu, cond) {
   const { ctx, page } = await newPage(browser, { cpu });
@@ -33,7 +33,7 @@ for (let i = 0; i < (smoke ? 1 : 5); i++) out.calib.push(await probeOnce(1, 'qui
 for (const cond of CONDS) for (const cpu of THROTTLES) for (let i = 0; i < RUNS; i++) {
   const r = await probeOnce(cpu, cond);
   out.runs.push(r);
-  if (smoke || i === 0) console.log(cond, cpu + 'x', 'work median', r1(median(r.frame.works.slice(3))), 'gap median', r1(median(r.frame.gaps.slice(3))), 'burst', r1(r.burst.workBest), 'gl', r.gl.renderer?.slice(0, 40), r.gl.caveat, 'dgpu', JSON.stringify(r.detectGpu), 'la', r.loadavg1);
+  if (smoke || i === 0) console.log(cond, cpu + 'x', 'spin', r1(r.spinBefore), r1(r.spinAfter), 'boot', r1(median(r.bootMs || [])), 'work median', r1(median(r.frame.works.slice(3))), 'gap median', r1(median(r.frame.gaps.slice(3))), 'burst', r1(r.burst.workBest), 'gl', r.gl.renderer?.slice(0, 40), r.gl.caveat, 'dgpu', JSON.stringify(r.detectGpu), 'la', r.loadavg1);
 }
 
 // detect-gpu on renderer strings
@@ -129,6 +129,16 @@ for (const cond of CONDS) for (const cpu of THROTTLES) {
   const bb = median(out.calib.map((r) => r.burst.workBest));
   const clsB = (ms) => (ms < bb * 2 ? 'strong' : ms < bb * Math.sqrt(24) ? 'average' : 'low');
   cell.burstCorrect = bursts.filter((b) => clsB(b) === truth[cpu]).length;
+  // throttle fidelity: delivered slowdown vs nominal
+  const spin1 = median(out.calib.map((r) => r.spinBefore ?? r.spin));
+  const boot1 = spin1 * (2.5e7 / 1.6e6);
+  const eff = rs.map((r) => ({ before: r.spinBefore / spin1, after: r.spinAfter / spin1, boot: r.bootMs?.length ? median(r.bootMs) / boot1 : null }));
+  const faithful = (e) => Math.abs(Math.log(e.before / cpu)) < Math.log(1.3) && Math.abs(Math.log(e.after / cpu)) < Math.log(1.3);
+  cell.throttleDelivered = { before: r1(median(eff.map((e) => e.before))), after: r1(median(eff.map((e) => e.after))), boot: r1(median(eff.map((e) => e.boot))), bootRange: cond === 'busy' ? [r1(Math.min(...eff.map((e) => e.boot))), r1(Math.max(...eff.map((e) => e.boot)))] : null };
+  const fi = rs.map((r, i) => faithful(eff[i]));
+  cell.faithfulRuns = fi.filter(Boolean).length;
+  cell.full2sFaithful = { correct: works.filter((w, i) => fi[i] && cls(w) === truth[cpu]).length, of: cell.faithfulRuns };
+  cell.earlyExitFaithful = { correct: cell.earlyExit.filter((e, i) => fi[i] && e.tier === truth[cpu]).length, of: cell.faithfulRuns };
   cell.signals = rs[0]?.signals; cell.gl = rs[0]?.gl; cell.detectGpu = rs[0]?.detectGpu;
   cell.detectGpuMs = r1(median(rs.map((r) => r.detectGpuMs))); cell.glMs = r1(median(rs.map((r) => r.glMs)));
   analysis.byCell[`${cond}|${cpu}x`] = cell;
@@ -151,7 +161,7 @@ out.analysis = analysis;
 // keep raw per-frame arrays out of the saved file except for the first run of each cell (size)
 const seen = new Set();
 out.runs = out.runs.map((r) => { const k = `${r.cond}|${r.cpu}`; const keep = !seen.has(k); seen.add(k); return keep ? r : { ...r, frame: { frames: r.frame.frames, ms: r.frame.ms, workMedian: median(r.frame.works.slice(3)), gapMedian: median(r.frame.gaps.slice(3)) } }; });
-out.calib = out.calib.map((r) => ({ workMedian: median(r.frame.works.slice(3)), gapMedian: median(r.frame.gaps.slice(3)), burst: r.burst.workBest, loadavg1: r.loadavg1 }));
+out.calib = out.calib.map((r) => ({ workMedian: median(r.frame.works.slice(3)), gapMedian: median(r.frame.gaps.slice(3)), burst: r.burst.workBest, spinBefore: r.spinBefore, spinAfter: r.spinAfter, loadavg1: r.loadavg1 }));
 out.env.loadavgAtEnd = load();
 await saveResult(smoke ? 'tiers-smoke' : 'tiers', out);
-console.log(JSON.stringify({ base: analysis.base, bands: analysis.bands, cells: Object.fromEntries(Object.entries(analysis.byCell).map(([k, c]) => [k, { work: c.workMedian, cv: c.workCV, ok2s: c.full2s.correct, early: c.earlyExitCorrect, earlyMs: c.earlyExitMs, gap: c.gapMedian, gapOk: c.gapCorrect, burst: c.burstMedian, burstOk: c.burstCorrect }])), governor: analysis.governor.map((g) => ({ k: g.k, changes: g.changes, down: g.firstDownAfterThrottleMs, falseDown: g.falseDownBeforeThrottle, up: g.upAfterReleaseMs })) }, null, 1));
+console.log(JSON.stringify({ base: analysis.base, bands: analysis.bands, cells: Object.fromEntries(Object.entries(analysis.byCell).map(([k, c]) => [k, { thr: c.throttleDelivered, faithful: c.faithfulRuns, okFaithful: c.full2sFaithful, work: c.workMedian, cv: c.workCV, ok2s: c.full2s.correct, early: c.earlyExitCorrect, earlyMs: c.earlyExitMs, gap: c.gapMedian, gapOk: c.gapCorrect, burst: c.burstMedian, burstOk: c.burstCorrect }])), governor: analysis.governor.map((g) => ({ k: g.k, changes: g.changes, down: g.firstDownAfterThrottleMs, falseDown: g.falseDownBeforeThrottle, up: g.upAfterReleaseMs })) }, null, 1));

@@ -4,8 +4,10 @@
 //   - judge only runs of continuous frames: a gap > idleGapMs (on-demand rendering, a hidden tab, a pause) ends the
 //     run and is never counted as a slow frame;
 //   - ignore the first settleMs after start and after every level change (shader compiles, texture uploads, JIT);
-//   - the frame budget is the display's own refresh interval, measured (the median of the smallest intervals), not
-//     assumed 16.7 ms: a 120 Hz phone and a 30 Hz Low Power Mode Safari both exist;
+//   - the frame budget is the display's own refresh interval, measured (the fastest tenth of recent intervals), not
+//     assumed 16.7 ms: a 120 Hz phone exists, and WebKit halves requestAnimationFrame to 30 fps in Low Power Mode,
+//     under aggressive thermal mitigation and in a cross-origin iframe the person has not interacted with
+//     (WebKit AnimationFrameRate.cpp) — judged against 16.7 ms, all of those would read as a slow device;
 //   - step down when the window's p90 interval exceeds 1.25 × the refresh interval (a missed vsync in more than 1 frame
 //     in 10) for `downWindows` consecutive windows; step up only after upAfterMs of p95 ≤ 1.1 × refresh interval
 //     at the current level, and never back to a level that failed within the last `memoryMs`;

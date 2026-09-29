@@ -5,8 +5,8 @@
 //   node run.mjs --runs 1                            # one run per cell, for a quick look
 //   node run.mjs --phase main,post --only e1-webgl-vanilla,h-post
 //
-// Phases (default all, in this order): fetch build posters bundles main offscreen hidden reduced nowebgl
-//   contextloss contrast fill libs post shots summary
+// Phases (default all, in this order): fetch build posters video bundles licences main offscreen hidden settle governor inp reduced
+//   nowebgl contextloss contrast fill libs post shots summary
 // Results merge into results.json by phase and key, so a partial run replaces only what it measured.
 // Environment: headless Chromium 141 (playwright-core from the skill's scripts), WebGL through SwiftShader:
 // GPU work is CPU-emulated, so WebGL numbers compare only with each other.
@@ -22,12 +22,15 @@ import { launchBrowser } from './lib/browser.mjs';
 import { newPage, window_, load, median, r1, regionLuminance } from './lib/measure.mjs';
 import { fetchSources } from './fetch-sources.mjs';
 import { bundleSizes } from './lib/bundles.mjs';
+import { licences } from './lib/licences.mjs';
+import { renderFrames, encode, LOOP } from './lib/video.mjs';
+import { fetchFfmpeg } from './fetch-sources.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
 const arg = (k, d) => { const i = argv.indexOf(`--${k}`); return i < 0 ? d : argv[i + 1]; };
 const RUNS = Number(arg('runs', 5));
-const ALL = ['fetch', 'build', 'posters', 'bundles', 'main', 'offscreen', 'hidden', 'reduced', 'nowebgl', 'contextloss', 'contrast', 'fill', 'libs', 'post', 'shots', 'summary'];
+const ALL = ['fetch', 'build', 'posters', 'video', 'bundles', 'licences', 'main', 'offscreen', 'hidden', 'settle', 'governor', 'inp', 'reduced', 'nowebgl', 'contextloss', 'contrast', 'fill', 'libs', 'post', 'shots', 'summary'];
 const PHASES = arg('phase') ? arg('phase').split(',') : ALL;
 const ONLY = arg('only') ? arg('only').split(',') : null;
 const pick = (vs) => (ONLY ? vs.filter((v) => ONLY.includes(v.id)) : vs);
@@ -41,10 +44,12 @@ const webglIds = VARIANTS.filter((v) => /^(e|f|h|g)/.test(v.id)).map((v) => v.id
 await mkdir(SHOTS, { recursive: true });
 
 results.env = { date: new Date().toISOString().slice(0, 10), node: process.version, cpus: os.cpus().length, cpuModel: os.cpus()[0]?.model, runs: RUNS };
+results.phaseMeta ||= {};
+for (const ph of PHASES) results.phaseMeta[ph] = { runs: RUNS, at: new Date().toISOString(), only: ONLY, loadavg: os.loadavg().map((x) => r1(x)) };
 
 // ---------- fetch / build / posters ----------
 if (PHASES.includes('fetch')) { results.sources = fetchSources(); log('sources', results.sources.fluid.head); }
-const posterFiles = () => Object.fromEntries(Object.keys(POSTERS).filter((n) => existsSync(path.join(DIST, 'posters', `${n}-1600.avif`))).map((n) => [n, true]));
+const posterFiles = () => Object.fromEntries([...Object.keys(POSTERS), 'video'].filter((n) => existsSync(path.join(DIST, 'posters', `${n}-1600.avif`))).map((n) => [n, true]));
 if (PHASES.includes('build')) { results.build = await buildAll({ posters: posterFiles() }); log('built', Object.keys(results.build).length, 'variants'); await save(); }
 
 async function withServer(fn) { const srv = await serve(DIST); try { return await fn(srv); } finally { await srv.close(); } }
@@ -79,20 +84,47 @@ if (PHASES.includes('posters')) {
   await save();
 }
 
+// ---------- video: render e1 offline to a seamless loop, encode, make its poster, rebuild ----------
+if (PHASES.includes('video')) {
+  const ffmpeg = fetchFfmpeg();
+  const frames = path.join(DIST, '_frames');
+  const r = await withServer((srv) => withBrowser([], async (browser) => {
+    const { ctx, page } = await newPage(browser, { viewport: { width: LOOP.width, height: LOOP.height } });
+    const out = await renderFrames(page, `${srv.base}/e1-webgl-vanilla/?capture&noscrim&eager&still&t0=0`, frames);
+    await ctx.close();
+    return out;
+  }));
+  const enc = await encode(ffmpeg, frames, path.join(DIST, 'video'));
+  const rec = {};
+  for (const w of [1600, 800]) {
+    const img = sharp(r.firstFrame).resize(w);
+    await img.clone().avif({ quality: 50, effort: 6 }).toFile(path.join(DIST, 'posters', `video-${w}.avif`));
+    await img.clone().webp({ quality: 72 }).toFile(path.join(DIST, 'posters', `video-${w}.webp`));
+    rec[w] = { avif: (await sizesOf(path.join(DIST, 'posters', `video-${w}.avif`))).raw };
+  }
+  results.video = { loop: LOOP, ...r, firstFrame: undefined, encodings: enc, poster: rec, ffmpeg: path.basename(ffmpeg) };
+  results.build = await buildAll({ posters: posterFiles() });
+  log('video', JSON.stringify(enc));
+  await save();
+}
+
 if (PHASES.includes('bundles')) { results.bundles = await bundleSizes(); log('bundles', Object.keys(results.bundles).length); await save(); }
+if (PHASES.includes('licences')) { results.licences = await licences(); log('licences', Object.keys(results.licences).length); await save(); }
 
 // ---------- helpers for measured runs ----------
 const fileSizes = new Map();
 async function payloadOf(entries) {
-  const out = { html: 0, poster: 0, js: 0, other: 0, total: 0, files: [] };
+  const out = { html: 0, poster: 0, js: 0, video: 0, other: 0, total: 0, files: [] };
+  const seen = new Set();
   for (const e of entries) {
     const f = path.join(DIST, decodeURIComponent(e.path).replace(/\/$/, '/index.html'));
-    if (!existsSync(f)) continue;
+    if (!existsSync(f) || seen.has(f)) continue;     // a file counts once (media is fetched in ranges)
+    seen.add(f);
     if (!fileSizes.has(f)) fileSizes.set(f, await sizesOf(f));
     const s = fileSizes.get(f);
     const text = /\.(html|js|css|svg|json)$/.test(f);
     const n = text ? s.gzip : s.raw;
-    const k = f.endsWith('.html') ? 'html' : /posters\//.test(f) ? 'poster' : f.endsWith('.js') ? 'js' : 'other';
+    const k = f.endsWith('.html') ? 'html' : /posters\//.test(f) ? 'poster' : f.endsWith('.js') ? 'js' : /\.(webm|mp4)$/.test(f) ? 'video' : 'other';
     out[k] += n; out.total += n;
     out.files.push(`${path.relative(DIST, f)} ${n}`);
   }
@@ -126,8 +158,11 @@ function summarise(runs) {
     bootBlock: g((r) => r.bootBlock), tbt: g((r) => r.tbt), longest: g((r) => r.longest),
     fps: g((r) => r.fps), frameMedian: g((r) => r.frameMedian), frameP95: g((r) => r.frameP95), over25Pct: g((r) => r.over25Pct),
     effectFps: g((r) => r.effectFps), rafPerSec: g((r) => r.rafPerSec), busyPct: g((r) => r.busyPct), scriptPct: g((r) => r.scriptPct),
+    // CPU-emulated GPU time per rendered frame (SwiftShader): comparable across variants here, not with real GPUs.
+    gpuMsPerFrame: g((r) => (r.cpu?.GPU != null && r.effectFps ? (r.cpu.GPU * 10) / r.effectFps : null)),
+    gpuMsPerDisplayFrame: g((r) => (r.cpu?.GPU != null && r.fps ? (r.cpu.GPU * 10) / r.fps : null)),
     jsMs: median(ok.map((r) => r.jsMs)), cpuRenderer: g((r) => r.cpu?.renderer), cpuGpu: g((r) => r.cpu?.GPU), cpuBrowser: g((r) => r.cpu?.browser), cpuTotal: g((r) => r.cpu?.total),
-    payload: ok[0].payload && { html: ok[0].payload.html, poster: ok[0].payload.poster, js: ok[0].payload.js, other: ok[0].payload.other, total: ok[0].payload.total },
+    payload: ok[0].payload && { html: ok[0].payload.html, poster: ok[0].payload.poster, js: ok[0].payload.js, video: ok[0].payload.video, other: ok[0].payload.other, total: ok[0].payload.total },
     renderer: ok[0].info?.renderer, canvas: ok[0].state?.canvas, errors: [...new Set(ok.flatMap((r) => r.errors || []))].slice(0, 3),
   };
 }
@@ -165,22 +200,116 @@ if (PHASES.includes('offscreen')) await withServer((srv) => withBrowser([], asyn
   }
 }));
 
-// ---------- hidden tab: another tab brought to the front ----------
+// ---------- hidden tab ----------
+// Headless Chromium keeps every page "visible" (bringing another tab to the front does not change it), so the
+// page is told it is hidden: document.hidden/visibilityState are overridden and visibilitychange is dispatched.
+// This tests each variant's own handler. Real background tabs also stop requestAnimationFrame by themselves [K].
+const setHidden = (page, hidden) => page.evaluate((h) => {
+  Object.defineProperty(document, 'hidden', { configurable: true, get: () => h });
+  Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => (h ? 'hidden' : 'visible') });
+  document.dispatchEvent(new Event('visibilitychange'));
+}, hidden);
 if (PHASES.includes('hidden')) await withServer((srv) => withBrowser([], async (browser) => {
   for (const v of pick(VARIANTS)) {
     const { ctx, page, cdp } = await newPage(browser);
     await load(page, variantUrl(srv, v.id), { kind: v.kind });
     await page.waitForTimeout(800);
-    const other = await ctx.newPage();
-    await other.goto('about:blank');
-    await other.bringToFront();
-    await page.waitForTimeout(600);
-    const vis = await page.evaluate(() => document.visibilityState);
+    await setHidden(page, true);
+    await page.waitForTimeout(400);
     const w = await window_(browser, page, cdp, 3000);
-    const back = await page.bringToFront().then(() => page.waitForTimeout(800)).then(() => page.evaluate(() => ({ vis: document.visibilityState, state: window.__lab?.state?.() ?? null })));
-    put('hidden', v.id, { id: v.id, visibilityState: vis, rafPerSec: w.rafPerSec, effectFps: w.effectFps, cpuTotal: w.cpu?.total, busyPct: w.busyPct, resumed: back });
-    log('hidden', v.id, vis, w.rafPerSec, w.cpu?.total);
+    await setHidden(page, false);
+    await page.waitForTimeout(1200);
+    const w2 = await window_(browser, page, cdp, 1500);
+    const back = await page.evaluate(() => window.__lab?.state?.() ?? null);
+    put('hidden', v.id, { id: v.id, method: 'simulated visibilitychange', rafPerSec: w.rafPerSec, effectFps: w.effectFps, cpuTotal: w.cpu?.total, busyPct: w.busyPct, resumedRafPerSec: w2.rafPerSec, resumedCpu: w2.cpu?.total, state: back });
+    log('hidden', v.id, w.rafPerSec, w.cpu?.total, '→ resumed', w2.rafPerSec);
     await ctx.close();
+    await save();
+  }
+}));
+
+// ---------- settle: play a few seconds, ease to a stop, then render nothing ("a moment, not a loop") ----------
+if (PHASES.includes('settle')) await withServer((srv) => withBrowser([], async (browser) => {
+  for (const [id, query] of [['e1-webgl-vanilla', 'settle=4'], ['f-three-particles', 'settle=4'], ['e1-webgl-vanilla', '']]) {
+    if (ONLY && !ONLY.includes(id)) continue;
+    const runs = [];
+    for (let i = 0; i < Math.min(RUNS, 3); i++) {
+      const { ctx, page, cdp } = await newPage(browser);
+      await load(page, variantUrl(srv, id, query), { kind: 'script' });
+      const during = await window_(browser, page, cdp, 2500);
+      await page.waitForTimeout(4000);
+      const after = await window_(browser, page, cdp, 3000);
+      const st = await page.evaluate(() => ({ settledAt: window.__lab?.settled ? Math.round(window.__lab.settled) : null, state: window.__lab?.state?.(), toggle: document.querySelector('.bg-toggle')?.textContent }));
+      runs.push({ during, after, st });
+      await ctx.close();
+    }
+    const m = (f) => r1(median(runs.map(f)));
+    const s = { id, query, duringRaf: m((r) => r.during.rafPerSec), duringCpu: m((r) => r.during.cpu?.total), afterRaf: m((r) => r.after.rafPerSec), afterCpu: m((r) => r.after.cpu?.total), afterBusy: m((r) => r.after.busyPct), settledAt: runs[0].st.settledAt, toggle: runs[0].st.toggle, state: runs[0].st.state };
+    put('settle', `${id}:${query || 'loop'}`, s);
+    log('settle', id, query, JSON.stringify(s));
+    await save();
+  }
+}));
+
+// ---------- governor: the wrapper steps render scale down, then gives up to the poster, when frames are slow ----------
+// SwiftShader stands in for a weak or absent GPU here, which is exactly the case a governor exists for.
+if (PHASES.includes('governor')) await withServer((srv) => withBrowser([], async (browser) => {
+  for (const id of ['e1-webgl-vanilla', 'f-three-particles', 'h-post', 'g-fluid-wrapped', 'd-canvas2d']) {
+    if (ONLY && !ONLY.includes(id)) continue;
+    const runs = [];
+    for (let i = 0; i < Math.min(RUNS, 3); i++) {
+      const { ctx, page, cdp } = await newPage(browser);
+      await load(page, variantUrl(srv, id, 'gov'), { kind: 'script' });
+      const before = await window_(browser, page, cdp, 1500, { probe: true });
+      await page.waitForTimeout(9000);
+      const after = await window_(browser, page, cdp, 3000, { probe: true });
+      const st = await page.evaluate(() => ({ steps: window.__lab.governor, fallback: window.__lab.fallback || null, reason: window.__lab.failReason || null, state: window.__lab.state?.() }));
+      runs.push({ before, after, st });
+      await ctx.close();
+    }
+    const m = (f) => r1(median(runs.map(f)));
+    const s = { id, beforeEffectFps: m((r) => r.before.effectFps), beforeCpu: m((r) => r.before.cpu?.total), beforeProbeFps: m((r) => r.before.fps),
+      afterEffectFps: m((r) => r.after.effectFps), afterCpu: m((r) => r.after.cpu?.total), afterProbeFps: m((r) => r.after.fps),
+      outcomes: runs.map((r) => (r.st.fallback ? `poster (${r.st.steps.length} steps)` : `scale ${r.st.steps.at(-1)?.scale ?? 1}, canvas ${r.st.state?.canvas?.join('×')}`)), steps: runs[0].st.steps };
+    put('governor', id, s);
+    log('governor', id, JSON.stringify(s));
+    await save();
+  }
+}));
+
+// ---------- input responsiveness while the background runs: Event Timing at 4x CPU ----------
+// A lab button over the hero is clicked 12 times through the browser's input pipeline; each interaction's
+// duration (input delay + handler + presentation, rounded to 8 ms) is the max over its events. Interactions
+// under the 16 ms reporting threshold count as 16. INP for < 50 interactions is the worst one.
+const INP_IDS = [['a-static', ''], ['b1-css-blobs', ''], ['b2-css-property', ''], ['c1-svg-turbulence', ''], ['d-canvas2d', ''],
+  ['e1-webgl-vanilla', ''], ['e1-webgl-vanilla', 'scale=0.5'], ['e1-webgl-vanilla', 'scale=0.5&fps=30'], ['e1-webgl-vanilla', 'scale=0.25'],
+  ['e5-three', ''], ['e6-paper', ''], ['e6-paper', 'paperdpr=1'], ['f-three-particles', ''], ['h-post', ''], ['g-fluid-demo', ''], ['g-fluid-wrapped', ''], ['g-fluid-wrapped', 'lite'], ['i-video', '']];
+if (PHASES.includes('inp')) await withServer((srv) => withBrowser([], async (browser) => {
+  for (const [id, query] of INP_IDS) {
+    if (ONLY && !ONLY.includes(id)) continue;
+    const runs = [];
+    for (let i = 0; i < Math.min(RUNS, 3); i++) {
+      const { ctx, page } = await newPage(browser, { throttle: 4 });
+      await load(page, variantUrl(srv, id, query), { kind: kindOf(id) });
+      await page.waitForTimeout(1500);
+      await page.evaluate(() => {
+        window.__ev = new Map();
+        new PerformanceObserver((l) => { for (const e of l.getEntries()) if (e.interactionId) window.__ev.set(e.interactionId, Math.max(window.__ev.get(e.interactionId) || 0, e.duration)); }).observe({ type: 'event', durationThreshold: 16, buffered: true });
+        const b = document.createElement('button');
+        b.id = 'probe'; b.textContent = 'Clicked 0'; b.style.cssText = 'position:fixed;left:40px;top:90px;z-index:9;padding:10px 16px';
+        let n = 0; b.onclick = () => { n++; b.textContent = `Clicked ${n}`; document.body.classList.toggle('odd', n % 2 === 1); };
+        document.body.append(b);
+      });
+      for (let k = 0; k < 12; k++) { await page.mouse.click(70, 105); await page.waitForTimeout(300); }
+      await page.waitForTimeout(500);
+      const durs = await page.evaluate(() => [...window.__ev.values()]);
+      const all = [...durs, ...Array(Math.max(0, 12 - durs.length)).fill(16)];
+      runs.push({ median: median(all), max: Math.max(...all), reported: durs.length });
+      await ctx.close();
+    }
+    const s = { id, query, interactionMedian: median(runs.map((r) => r.median)), inp: median(runs.map((r) => r.max)), reportedOver16: runs.map((r) => r.reported) };
+    put('inp', query ? `${id}:${query}` : id, s);
+    log('inp', id, JSON.stringify(s));
     await save();
   }
 }));
@@ -229,6 +358,7 @@ if (PHASES.includes('nowebgl')) await withServer((srv) => withBrowser(['--disabl
 
 // ---------- WebGL context loss and restore ----------
 if (PHASES.includes('contextloss')) await withServer((srv) => withBrowser([], async (browser) => {
+  const shots = [];
   for (const v of pick(VARIANTS).filter((x) => webglIds.includes(x.id))) {
     const { ctx, page, errors } = await newPage(browser);
     await load(page, variantUrl(srv, v.id), { kind: v.kind });
@@ -239,9 +369,11 @@ if (PHASES.includes('contextloss')) await withServer((srv) => withBrowser([], as
       window.__ext = ext; window.__d0 = window.__lab?.draws ?? null; ext.loseContext(); return 'lost';
     });
     await page.waitForTimeout(700);
+    const fd = path.join(DIST, `_ctxlost-${v.id}.png`); await page.screenshot({ path: fd }); shots.push([`${v.id} (context lost)`, fd]);
     const during = await page.evaluate(() => { const c = document.querySelector('.hero-bg canvas'); return { canvasOpacity: c ? getComputedStyle(c).opacity : null, draws: window.__lab?.draws ?? null, state: window.__lab?.state?.() ?? null }; });
     await page.evaluate(() => window.__ext?.restoreContext?.());
-    await page.waitForTimeout(2500);
+    await page.waitForFunction(() => { const c = [...document.querySelectorAll('.hero-bg canvas')].at(-1); return c && getComputedStyle(c).opacity === '1' && (window.__lab?.contextRestored ?? 0) > 0; }, null, { timeout: 12000, polling: 200 }).catch(() => {});
+    await page.waitForTimeout(800);
     const after = await page.evaluate(() => { const c = [...document.querySelectorAll('.hero-bg canvas')].at(-1); return { canvasOpacity: c ? getComputedStyle(c).opacity : null, draws: window.__lab?.draws ?? null, restored: window.__lab?.contextRestored ?? 0, state: window.__lab?.state?.() ?? null }; });
     const f = path.join(DIST, `_ctx-${v.id}.png`); await page.screenshot({ path: f });
     put('contextloss', v.id, { id: v.id, lose, during, after, errors: errors.slice(0, 3) });
@@ -249,6 +381,7 @@ if (PHASES.includes('contextloss')) await withServer((srv) => withBrowser([], as
     await ctx.close();
     await save();
   }
+  await sheet(shots, path.join(SHOTS, 'sheet-context-lost.jpg'));
 }));
 
 // ---------- contrast of white copy over the moving background (worst frame) ----------
@@ -384,14 +517,16 @@ if (PHASES.includes('summary')) {
     const offNo = results.offscreen?.[`${v.id}:nopause`] || {};
     return {
       id: v.id, label: v.label,
-      payloadKB: a.payload && { total: r1(a.payload.total / 1024), js: r1(a.payload.js / 1024), poster: r1(a.payload.poster / 1024), html: r1(a.payload.html / 1024), other: r1(a.payload.other / 1024) },
+      payloadKB: a.payload && { total: r1(a.payload.total / 1024), js: r1(a.payload.js / 1024), poster: r1(a.payload.poster / 1024), html: r1(a.payload.html / 1024), video: r1((a.payload.video || 0) / 1024), other: r1(a.payload.other / 1024) },
       lcp1x: a.lcp, lcp4x: b.lcp, lcpEl: a.lcpEl, ttff1x: a.ttff, ttff4x: b.ttff, bootBlock4x: b.bootBlock,
       fps1x: a.fps, fps4x: b.fps, effectFps1x: a.effectFps, effectFps4x: b.effectFps, over25Pct4x: b.over25Pct,
-      busy1x: a.busyPct, busy4x: b.busyPct, cpuTotal1x: a.cpuTotal, cpuGpu1x: a.cpuGpu, cpuRenderer1x: a.cpuRenderer, jsMs4x: b.jsMs,
+      busy1x: a.busyPct, busy4x: b.busyPct, cpuTotal1x: a.cpuTotal, cpuGpu1x: a.cpuGpu, cpuRenderer1x: a.cpuRenderer, jsMs1x: a.jsMs, jsMs4x: b.jsMs,
+      gpuMsPerFrame1x: a.gpuMsPerFrame, gpuMsPerDisplayFrame1x: a.gpuMsPerDisplayFrame,
       offscreenCpu: off.cpuTotal, offscreenRaf: off.rafPerSec, offscreenCpuNoPause: offNo.cpuTotal, offscreenRafNoPause: offNo.rafPerSec,
       reduced: results.reduced?.[v.id] && { cpu: results.reduced[v.id].cpuTotal, raf: results.reduced[v.id].rafPerSec, effectLoaded: results.reduced[v.id].effectLoaded },
       nowebgl: results.nowebgl?.[v.id] && { fallback: results.nowebgl[v.id].fallback, errors: results.nowebgl[v.id].errors?.length },
       contrast: results.contrast?.[v.id] && results.contrast[v.id].h1WorstP95,
+      inp4x: results.inp?.[v.id]?.inp ?? null,
     };
   });
   results.summary = rows;

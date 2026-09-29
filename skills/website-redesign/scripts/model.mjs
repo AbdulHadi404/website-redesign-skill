@@ -7,15 +7,20 @@
  *   node model.mjs a.glb b.gltf --json               # machine-readable
  *   node model.mjs public/models/*.glb --fail        # exit 1 when any file is over budget (use in the build)
  *   node model.mjs hero.glb --max-bytes 1200000 --max-tris 60000 --max-calls 20 --max-texture 1024 --max-vram 24
+ *   node model.mjs configurator.glb --interactive    # parts/materials addressed by name: the pipeline keeps them
  *
  * Reports: file size (and gzip), requests, meshes, primitives, triangles (as stored and as drawn, with instancing),
  * draw calls, materials (and costly features: transmission, volume, blend), textures (count, dimensions, format,
  * bytes, estimated GPU memory), animations (clips, keyframes), skins, morph targets, compression extensions, what
- * dominates the bytes, unreferenced and duplicated data — then flags each budget line it breaks, with the command.
+ * dominates the bytes, unreferenced and duplicated data — then flags each budget line it breaks, with the command,
+ * and prints one gltf-transform pipeline for the whole file plus what the page's loader needs (Draco/Meshopt/KTX2).
  *
  * No dependencies: it reads the GLB/JSON and the image headers itself. Numbers are estimates:
  *  - GPU texture memory: PNG/JPEG/WebP/AVIF decode to RGBA8, 4 B/px, + 1/3 for mipmaps; KTX2 stays compressed on the
- *    GPU: UASTC → 1 B/px (ASTC 4x4 / BC7), ETC1S → 0.5 B/px opaque or 1 B/px with alpha (ETC1/BC1 · ETC2/BC3/BC7).
+ *    GPU at 1 B/px (+ 1/3 when the file carries mip levels): three.js transcodes UASTC to ASTC 4x4 or BC7 and ETC1S
+ *    to BC7 on desktop GPUs, all 1 B/px (measured: 1.00 of three.js's own allocation). Phones that take ETC1S as ETC1
+ *    use 0.5 B/px for opaque textures, so on a phone this is an upper bound. A browser with no compressed format at
+ *    all falls back to RGBA 4 B/px (rare with WebGL2).
  *  - Draw calls: one per primitive per node (one per primitive for an EXT_mesh_gpu_instancing node); a material with
  *    KHR_materials_transmission makes three.js draw the opaque objects a second time, counted as such.
  * The tier budgets are starting points, not laws (see `realtime-3d.md` §5 and `motion.md` §9); override them.
@@ -93,10 +98,7 @@ function imageInfo(buf, mimeHint = '') {
 function gpuBytes(img) {
   const px = (img.width || 0) * (img.height || 0);
   const mips = 4 / 3;
-  if (img.format === 'ktx2') {
-    if (img.codec === 'etc1s') return px * (img.alpha ? 1 : 0.5) * mips;
-    return px * 1 * mips; // UASTC → ASTC 4x4 or BC7
-  }
+  if (img.format === 'ktx2') return px * 1 * ((img.levels || 1) > 1 ? mips : 1); // see the header
   return px * 4 * mips;
 }
 
@@ -216,10 +218,12 @@ function analyse(file, budget) {
   for (const a of geoAcc) geoGpu += accBytes(acc[a]);
   const imageViews = new Set(images.map((_, i) => json.images[i].bufferView).filter((v) => v !== undefined));
   const views = json.bufferViews || [];
+  // Meshopt-compressed views record the decoded length in byteLength and the stored length in the extension.
+  const storedLen = (v) => v.extensions?.EXT_meshopt_compression?.byteLength ?? v.extensions?.KHR_meshopt_compression?.byteLength ?? v.byteLength;
   let animStored = 0;
   const animViews = new Set([...animAcc].map((a) => acc[a]?.bufferView).filter((v) => v !== undefined));
-  for (const v of animViews) animStored += views[v].byteLength;
-  const binTotal = views.reduce((s, v) => s + v.byteLength, 0);
+  for (const v of animViews) animStored += storedLen(views[v]);
+  const binTotal = views.reduce((s, v) => s + storedLen(v), 0);
   const imgInViews = [...imageViews].reduce((s, v) => s + views[v].byteLength, 0);
   const geoStored = Math.max(0, binTotal - imgInViews - animStored);
 
@@ -243,9 +247,11 @@ function analyse(file, budget) {
   const add = (level, what, fix) => flags.push({ level, what, fix });
   const MB = (x) => `${(x / 1e6).toFixed(2)} MB`;
   const texShare = size ? texBytes / size : 0;
+  const allKtx2 = images.length > 0 && imageRows.filter((r) => r.used).every((r) => r.format === 'ktx2');
   if (size > budget.bytes) {
     add('over', `transfer ${MB(size)} > ${MB(budget.bytes)}${texShare > 0.5 ? ` — textures are ${Math.round(texShare * 100)} % of it: start there` : ''}`,
-      texShare > 0.25 ? `gltf-transform optimize ${f} ${o} --compress meshopt --texture-compress webp --texture-size ${budget.texture}` : `gltf-transform optimize ${f} ${o} --compress meshopt`);
+      allKtx2 && texShare > 0.25 ? `KTX2 is already GPU-compressed; to shrink the download, lower the size (re-encode from the source textures with --texture-size ${Math.max(256, budget.texture / 2)}), use ETC1S instead of UASTC where a slot tolerates it, or accept WebP (smaller file, 4× the GPU memory)`
+        : texShare > 0.25 ? `gltf-transform optimize ${f} ${o} --compress meshopt --texture-compress webp --texture-size ${budget.texture}` : `gltf-transform optimize ${f} ${o} --compress meshopt`);
   }
   const meshopt = ext.has('EXT_meshopt_compression') || ext.has('KHR_meshopt_compression');
   if (!meshopt && !ext.has('KHR_draco_mesh_compression') && geoStored > 150e3)
@@ -272,6 +278,29 @@ function analyse(file, budget) {
   if (costly.includes('KHR_materials_pbrSpecularGlossiness')) add('advice', 'spec/gloss materials (deprecated)', `gltf-transform metalrough ${f} ${o}`);
   if (costly.some((c) => /transmission|volume/.test(c))) add('advice', `${costly.filter((c) => /transmission|volume/.test(c)).join(', ')}: three.js renders an extra transmission pass`, 'keep glass for the hero only, or fake it with an alpha-blended material on phones');
   if (ext.has('KHR_draco_mesh_compression')) add('info', 'Draco geometry: the decoder is a separate ~65–200 KB download (JS or WASM) plus worker start-up', `re-encode with meshopt if you control the pipeline: gltf-transform meshopt ${f} ${o}`);
+  // One pipeline for the whole file (the individual fixes above each start from the original).
+  // WebP when the textures fit the GPU budget once resized; KTX2 when even resized RGBA would not (KTX2 is 1 B/px on
+  // the GPU but, measured, 2–3× the transfer of WebP at the same size, and needs KTX-Software on PATH).
+  const cap = budget.texture;
+  const vramResized = used.reduce((s, r) => { const k = Math.min(1, cap / Math.max(r.width || 1, r.height || 1)); return s + (r.format === 'ktx2' ? r.gpu : (r.width || 0) * k * (r.height || 0) * k * 4 * 4 / 3); }, 0);
+  const texFmt = used.length === 0 ? null : used.every((r) => r.format === 'ktx2') ? null : vramResized > budget.vram ? 'ktx2' : 'webp';
+  const interactive = !!budget.interactive;
+  const steps = [`--compress meshopt`];
+  if (texFmt) steps.push(`--texture-compress ${texFmt}`);
+  if (maxTex > cap) steps.push(`--texture-size ${cap}`);
+  if (drawnTris <= budget.tris) steps.push('--simplify false');
+  if (interactive) steps.push('--join false --flatten false --palette false');
+  const pipeline = flags.some((x) => x.level !== 'info') ? `gltf-transform optimize ${f} ${o} ${steps.join(' ')}${ext.has('KHR_draco_mesh_compression') ? '   # re-encodes Draco as meshopt' : ''}` : null;
+  const pipelineNotes = [];
+  if (pipeline && !interactive) pipelineNotes.push('optimize joins, flattens and palettes by default: if code addresses parts or materials by name (a configurator, a hover highlight), pass --interactive for a pipeline that keeps them');
+  if (pipeline && texFmt === 'ktx2') pipelineNotes.push(`KTX2 because even ${cap}px RGBA textures would need ~${(vramResized / 1e6).toFixed(0)} MB of GPU memory; expect a larger download than WebP. Needs KTX-Software 4.4+ (ktx) on PATH`);
+  if (pipeline) pipelineNotes.push(`then check: node model.mjs ${o}${budget.name !== 'mobile' ? ' --tier ' + budget.name : ''}, and compare renders at the page's camera (visual diff) before shipping`);
+  // What the page's loader must be given for this file.
+  const needs = [];
+  if (ext.has('KHR_draco_mesh_compression')) needs.push('DRACOLoader + draco decoder files (self-host them)');
+  if (meshopt) needs.push('MeshoptDecoder (three/examples/jsm/libs/meshopt_decoder.module.js)');
+  if (ext.has('KHR_texture_basisu')) needs.push('KTX2Loader + basis transcoder files (self-host them), detectSupport(renderer)');
+  if (ext.has('EXT_texture_avif')) needs.push('AVIF decoding (fallback image needed for old browsers)');
   const rasterColour = used.filter((r) => r.format !== 'ktx2');
   if (rasterColour.length && rasterColour.every((r) => r.format === 'png') && texBytes > 500e3) add('advice', `${rasterColour.length} PNG textures (${MB(texBytes)})`, `gltf-transform webp ${f} ${o}   # or avif; keep PNG only for pixel art or lossless data`);
 
@@ -285,7 +314,7 @@ function analyse(file, budget) {
     textureBytes: texBytes, textureGpuBytes: Math.round(texVram), geometryBytesStored: geoStored, geometryGpuBytes: geoGpu, animationBytesStored: animStored,
     cameras: (json.cameras || []).length, lights: (json.extensions?.KHR_lights_punctual?.lights || []).length,
     animations: anims, skins: skins.length, maxJoints: Math.max(0, ...skins), morphTargets, unused, duplicateImages: dupImages,
-    budget, flags, ok: !flags.some((x) => x.level === 'over'),
+    budget, flags, pipeline, pipelineNotes, loaderNeeds: needs, ok: !flags.some((x) => x.level === 'over'),
   };
 }
 
@@ -305,13 +334,15 @@ function print(r) {
   if (r.animations.length || r.skins) L.push(`  animation  ${r.animations.length} clip(s): ${r.animations.map((a) => `${a.name || '?'} ${a.duration}s/${a.keyframes} keys`).join(', ')}${r.skins ? ` · ${r.skins} skin(s), max ${r.maxJoints} joints` : ''}${r.morphTargets ? ` · ${r.morphTargets} morph targets` : ''}`);
   const b = r.budget;
   L.push(`  budget     ≤ ${MB(b.bytes)}, ≤ ${b.tris.toLocaleString('en')} tris, ≤ ${b.calls} calls, textures ≤ ${b.texture}px, texture GPU ≤ ${MB(b.vram)}, ≤ ${b.materials} materials (starting points — override with --max-*)`);
+  if (r.loaderNeeds.length) L.push(`  loader     needs ${r.loaderNeeds.join('; ')}`);
   for (const x of r.flags) L.push(`  ${x.level === 'over' ? '✗' : x.level === 'advice' ? '→' : 'i'} ${x.what}\n      ${x.fix}`);
+  if (r.pipeline) L.push(`  pipeline   ${r.pipeline}${r.pipelineNotes.map((n) => `\n             ${n}`).join('')}`);
   console.log(L.join('\n'));
 }
 
 const args = parseArgs(process.argv.slice(2));
 if (!args.files.length || args.help) {
-  console.log('usage: node model.mjs <file.glb|.gltf>… [--tier mobile|desktop|scene] [--max-bytes N] [--max-tris N] [--max-calls N] [--max-texture PX] [--max-vram MB] [--max-materials N] [--json] [--fail]');
+  console.log('usage: node model.mjs <file.glb|.gltf>… [--tier mobile|desktop|scene] [--max-bytes N] [--max-tris N] [--max-calls N] [--max-texture PX] [--max-vram MB] [--max-materials N] [--interactive] [--json] [--fail]');
   process.exit(args.help ? 0 : 1);
 }
 const tier = String(args.tier || 'mobile');
@@ -323,6 +354,7 @@ if (args['max-calls']) budget.calls = Number(args['max-calls']);
 if (args['max-texture']) budget.texture = Number(args['max-texture']);
 if (args['max-vram']) budget.vram = Number(args['max-vram']) * 1e6;
 if (args['max-materials']) budget.materials = Number(args['max-materials']);
+if (args.interactive) budget.interactive = true;
 const results = [];
 for (const file of args.files) {
   try { results.push(analyse(file, budget)); } catch (e) { results.push({ file, error: e.message, ok: false }); }

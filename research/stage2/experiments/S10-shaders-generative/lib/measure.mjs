@@ -101,7 +101,7 @@ export async function window_(browser, page, cdp, ms, { probe = false } = {}) {
 export async function load(page, url, { kind, timeout = 60000 } = {}) {
   const t0 = Date.now();
   await page.goto(url, { waitUntil: 'load', timeout });
-  if (kind === 'script' || kind === 'fluid-demo') {
+  if (kind === 'script' || kind === 'fluid-demo' || kind === 'video') {
     await page.waitForFunction(() => window.__lab?.ttff != null || window.__lab?.fallback || window.__lab?.reducedSkip, null, { timeout, polling: 50 }).catch(() => {});
   }
   await page.waitForTimeout(400);

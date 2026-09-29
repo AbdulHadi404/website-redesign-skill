@@ -11,6 +11,14 @@ import path from 'node:path';
 
 const FRAMES = 60;
 const S = 128;
+export const BLEED_VARIANTS = {
+  tight: { padding: 0, extrude: 0 },
+  pad2: { padding: 2, extrude: 0 },
+  extrude1: { padding: 0, extrude: 1 },
+  extrude2: { padding: 0, extrude: 2 },
+  'extrude2+pad2': { padding: 2, extrude: 2 },
+  extrude8: { padding: 0, extrude: 8 },
+};
 
 function rng(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 2 ** 32); }
 
@@ -144,8 +152,29 @@ export async function generate(outDir) {
     await writeFile(path.join(outDir, `layer${k}.png`), b);
     layers.push(b.length);
   }
+  // 5. bleed test atlases: a green tile (t00) in the middle of a 3 x 3 block of magenta tiles, packed with different
+  //    transparent padding and edge extrusion. Laid out by hand (same meaning as free-tex-packer's `padding` and
+  //    `extrude`: extrusion copies the tile's edge pixels outwards; padding is a transparent gap after that).
+  const bleed = {};
+  const solid = (hex) => sharp({ create: { width: 32, height: 32, channels: 4, background: hex } }).png().toBuffer();
+  const green = await solid('#00c000ff'), magenta = await solid('#ff00ffff');
+  for (const [name, { padding, extrude }] of Object.entries(BLEED_VARIANTS)) {
+    const pitch = 32 + 2 * extrude + padding;
+    const size = 3 * pitch + padding;
+    const comps = [];
+    for (let k = 0; k < 9; k++) {
+      const src = k === 4 ? green : magenta;
+      const ext = extrude ? await sharp(src).extend({ top: extrude, bottom: extrude, left: extrude, right: extrude, extendWith: 'copy' }).png().toBuffer() : src;
+      comps.push({ input: ext, left: padding + (k % 3) * pitch, top: padding + Math.floor(k / 3) * pitch });
+    }
+    const png = await sharp({ create: { width: size, height: size, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } }).composite(comps).png().toBuffer();
+    await writeFile(path.join(outDir, `bleed-${name}.png`), png);
+    bleed[name] = { padding, extrude, size, frame: { x: padding + pitch + extrude, y: padding + pitch + extrude, w: 32, h: 32 } };
+  }
+  await writeFile(path.join(outDir, 'bleed.json'), JSON.stringify(bleed));
+
   const meta = {
-    frames: FRAMES, cell: S,
+    frames: FRAMES, cell: S, bleed,
     grid: { width: gm.width, height: gm.height, cols, rows },
     atlas: { width: am.width, height: am.height, json: Buffer.byteLength(JSON.stringify(atlasJson)), frames: Object.keys(atlasJson.frames).length },
     packMs: Math.round(packMs),

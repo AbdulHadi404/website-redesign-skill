@@ -3,7 +3,8 @@
 // (a full-canvas fill, which is where most of the cost is) and draws short strokes.
 import { run } from '../lib/hero.js';
 
-const N = Number(new URLSearchParams(location.search).get('n') || 1400);
+const q = new URLSearchParams(location.search);
+const N = Number(q.get('n') || 1400);
 export default function start(bg) {
   let ctx, w = 1, h = 1, dpr = 1, px, py, age;
   const field = (x, y, t) => {
@@ -21,9 +22,17 @@ export default function start(bg) {
     },
     resize(W, H, d) {
       w = W; h = H; dpr = d;
-      const g = ctx.createLinearGradient(0, 0, w, h);
-      g.addColorStop(0, '#09122a'); g.addColorStop(1, '#0a3440');
-      ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      // Seed the canvas with the poster (a still of this same effect, already decoded as the LCP image), so the
+      // crossfade continues the picture instead of restarting from an empty field.
+      const img = bg.querySelector('img.poster');
+      if (img?.complete && img.naturalWidth && !q.has('noseed')) {
+        const k = Math.max(w / img.naturalWidth, h / img.naturalHeight), iw = img.naturalWidth * k, ih = img.naturalHeight * k;
+        ctx.drawImage(img, (w - iw) / 2, (h - ih) / 2, iw, ih);
+      } else {
+        const g = ctx.createLinearGradient(0, 0, w, h);
+        g.addColorStop(0, '#09122a'); g.addColorStop(1, '#0a3440');
+        ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      }
       for (let i = 0; i < N; i++) seed(i);
     },
     frame(t, dt) {

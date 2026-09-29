@@ -114,6 +114,26 @@ export function classify({ probeMs, gl, signals, bands = [4, 10], needsWebGL = t
   return { capability, why };
 }
 
+// A first guess before any probe has run (to pick which assets to fetch first). Heuristic, not measured: every
+// input is coarse (Safari reports 4 or 8 cores; Chromium on Android reports 1, 2, 4 or 8 GB; others nothing), so it
+// only ever lowers the start, and the probe and the governor correct it.
+export function startGuess(signals = readSignals(), gl = probeWebGL()) {
+  if (!gl || gl.webgl === 0) return 'none';
+  if (gl.software) return 'low';
+  if (signals.saveData || (signals.memoryGB && signals.memoryGB <= 2)) return 'low'; // ≤ 2 GB (Chromium) ≈ ≤ 3 GB RAM
+  if (signals.coarsePointer) return 'average';                                        // phones and tablets start mid
+  return 'strong';
+}
+
+// WebGL context loss (GPU reset, memory pressure, too many contexts): keep the poster visible, stop the loop, and
+// restore; a second loss in one session drops a tier (three.js WebGLRenderer already calls preventDefault()).
+export function watchContextLoss(canvas, { onLost = () => {}, onRestored = () => {} } = {}) {
+  let losses = 0;
+  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); losses++; onLost(losses); }, false);
+  canvas.addEventListener('webglcontextrestored', () => onRestored(losses), false);
+  return { get losses() { return losses; } };
+}
+
 export function preferences(signals = readSignals()) {
   return {
     motion: signals.reducedMotion ? 'reduced' : 'full',

@@ -1,130 +1,4 @@
 {
- "sprites": {
-  "runs": 5,
-  "env": {
-   "chromium": "141.0.7390.37",
-   "note": "headless Chromium, WebGL through SwiftShader (CPU): GPU-bound numbers are pessimistic and only comparable among themselves"
-  },
-  "meta": {
-   "frames": 60,
-   "cell": 128,
-   "grid": {
-    "width": 1280,
-    "height": 768,
-    "cols": 10,
-    "rows": 6
-   },
-   "atlas": {
-    "width": 694,
-    "height": 654,
-    "json": 11605,
-    "frames": 60
-   },
-   "packMs": 593,
-   "sets": {
-    "files": {
-     "png": {
-      "bytes": 335872,
-      "requests": 60
-     },
-     "png8": {
-      "bytes": 125119,
-      "requests": 60
-     },
-     "webpLossless": {
-      "bytes": 250316,
-      "requests": 60
-     },
-     "webp": {
-      "bytes": 111734,
-      "requests": 60
-     },
-     "avif": {
-      "bytes": 104799,
-      "requests": 60
-     }
-    },
-    "grid": {
-     "png": {
-      "bytes": 274637,
-      "requests": 1
-     },
-     "png8": {
-      "bytes": 88809,
-      "requests": 1
-     },
-     "webpLossless": {
-      "bytes": 155368,
-      "requests": 1
-     },
-     "webp": {
-      "bytes": 93636,
-      "requests": 1
-     },
-     "avif": {
-      "bytes": 71402,
-      "requests": 1
-     }
-    },
-    "atlas": {
-     "png": {
-      "bytes": 253512,
-      "requests": 1
-     },
-     "png8": {
-      "bytes": 84640,
-      "requests": 1
-     },
-     "webpLossless": {
-      "bytes": 196166,
-      "requests": 1
-     },
-     "webp": {
-      "bytes": 85598,
-      "requests": 1
-     },
-     "avif": {
-      "bytes": 62129,
-      "requests": 1
-     }
-    }
-   },
-   "decodedRGBA": {
-    "files": 3932160,
-    "grid": 3932160,
-    "atlas": 1815504
-   },
-   "extras": {
-    "tilesetBytes": 1394,
-    "panelBytes": 2629,
-    "layerBytes": [
-     3639,
-     3795,
-     3731,
-     3584
-    ]
-   }
-  },
-  "quality": {
-   "png": {
-    "psnr": null
-   },
-   "png8": {
-    "psnr": 45.6
-   },
-   "webp": {
-    "psnr": 36.2
-   },
-   "avif": {
-    "psnr": 41.1
-   }
-  },
-  "measuredAt": "2026-09-29T00:49:02.727Z",
-  "host": {
-   "cpus": 4,
-   "node": "v22.22.2"
-  }
- },
  "licences": {
   "sources": {
    "spine-runtimes LICENSE (4.3)": {
@@ -284,6 +158,100 @@
      "Add > Output > glTF Material Output",
      "directly to the ``glTF Material Output`` node."
     ]
+   },
+   "Kenney pack License.txt (vendored in excaliburjs/Excalibur)": {
+    "url": "https://raw.githubusercontent.com/excaliburjs/Excalibur/760a28a8544d477a496cbb72a14ac68ff9583354/src/spec/assets/images/sprite-sheet-spec/genericItems_spriteSheet_License.txt",
+    "status": 200,
+    "sha256": "b78413d37a6655556e9ed08ff9021321e44bd9df64ad32dc83c3575c11bd1442",
+    "bytes": 468,
+    "lines": [
+     "License (Creative Commons Zero, CC0)",
+     "You may use these assets in personal and commercial projects.",
+     "Credit (Kenney or www.kenney.nl) would be nice but is not mandatory."
+    ]
+   },
+   "Kenney Starter-Kit-3D-Platformer README (code MIT, assets CC0)": {
+    "url": "https://raw.githubusercontent.com/KenneyNL/Starter-Kit-3D-Platformer/3fa8a04b1c01ab23db43123d4ce814a34c3fc7f0/README.md",
+    "status": 200,
+    "sha256": "d8f51d172d58e62d289105a5a1561e02e54cccc4c6d1215472169bc50ff2f91f",
+    "bytes": 1688,
+    "lines": [
+     "- Sprites and 3D Models _(CC0 licensed)_",
+     "- Sound effects _(CC0 licensed)_",
+     "MIT License",
+     "Assets included in this package (2D sprites, 3D models and sound effects) are [CC0 licensed](https://creativecommons.org/publicdomain/zero/1.0/)"
+    ]
+   },
+   "Quaternius pack License.txt (vendored in arn0ld87/Luther-Game)": {
+    "url": "https://raw.githubusercontent.com/arn0ld87/Luther-Game/c9a068d50cbe579c79b273af5d4ce766413826c3/game/assets/licenses/Quaternius_MegaKit_CC0_License.txt",
+    "status": 200,
+    "sha256": "ec6fd5004514cb0515a7dc1065f474644d31698861597b32e1745945ffec71de",
+    "bytes": 840,
+    "lines": [
+     "This is the standard FREE version of the Medieval Village MegaKit, which only contains",
+     "a portion of the models . You can buy the PRO version which has all the models,",
+     "CC0 1.0 Universal (CC0 1.0)"
+    ]
+   },
+   "Liberated Pixel Cup README (OpenGameArt: CC-BY 3.0 / OGA-BY 3.0)": {
+    "url": "https://raw.githubusercontent.com/ElizaWy/LPC/f07f7f5892e67c932c68f70bb04472f2c64e46bc/README.md",
+    "status": 200,
+    "sha256": "17d205b3243ff635139edc10e9f2b95e1d1cf7497e53c79b370abc3730dac88d",
+    "bytes": 2359,
+    "lines": [
+     "Each asset is listed in a credit.txt file located in the same directory as the asset file, containing the name of the original author and any other relevant information about their work. We believe in giving credit where",
+     "All of our assets are licensed under the Creative Commons Attribution 3.0 (CC-BY-3.0) or OGA-by 3.0 License, allowing you to freely use, modify, and distribute these assets in your own projects, provided you give appropr"
+    ]
+   },
+   "CC BY 4.0 legal code (Khronos LICENSES/): technical modifications, attribution": {
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f36bfdabd1031c3cf6689a50570b8cdf3678b49c/LICENSES/CC-BY-4.0.txt",
+    "status": 200,
+    "sha256": "c8041334a99cb48852b2139253cbde5f8ac87e27f124aed51223e0d5bf0080eb",
+    "bytes": 13016,
+    "lines": [
+     "B. produce, reproduce, and Share Adapted Material.",
+     "4. Media and formats; technical modifications allowed. The Licensor authorizes",
+     "or hereafter created, and to make technical modifications necessary to do",
+     "to forbid You from making technical modifications necessary to exercise the",
+     "Licensed Rights, including technical modifications necessary to circumvent",
+     "B. indicate if You modified the Licensed Material and retain an indication"
+    ]
+   },
+   "Tiled COPYING (editor GPL, libtiled BSD)": {
+    "url": "https://raw.githubusercontent.com/mapeditor/tiled/221be2066c4b0ed4bbefbcdfe25d0ad952fc51bd/COPYING",
+    "status": 200,
+    "sha256": "e18e839116ec0da1d50bd71a942509b31a07d00bd25529e9f8340c43b83a636f",
+    "bytes": 941,
+    "lines": [
+     "Tiled                src/tiled                 GPL",
+     "Tiled plugins        src/plugins               GPL",
+     "libtiled             src/libtiled              BSD 2-clause license",
+     "libtiled-java        util/java/libtiled-java   BSD 2-clause license",
+     "qtpropertybrowser    src/qtpropertybrowser     BSD 3-clause license",
+     "tmxrasterizer        src/tmxrasterizer         BSD 2-clause license"
+    ]
+   },
+   "LDtk LICENSE": {
+    "url": "https://raw.githubusercontent.com/deepnight/ldtk/6d69bd1d6be92f01ac30778f6a934f0da8448b16/LICENSE",
+    "status": 200,
+    "sha256": "f409a37a40e823efefddac3140d991141633d4db3cec4f8667bc23b846dcc335",
+    "bytes": 1092,
+    "lines": [
+     "MIT License"
+    ]
+   },
+   "Blender release/text/copyright.txt (the program is GPL)": {
+    "url": "https://raw.githubusercontent.com/blender/blender/0ae04d3e782c4f393950d2df9f764fd7688ef3ca/release/text/copyright.txt",
+    "status": 200,
+    "sha256": "770e6530a763692598a4d52431be0c4bda4499550b7c38cceda2053241453d73",
+    "bytes": 1585,
+    "lines": [
+     "It is subject to the GNU GPL license, which is part of this download.",
+     "it under the terms of the GNU General Public License as published by",
+     "GNU General Public License for more details.",
+     "You should have received a copy of the GNU General Public License",
+     "licenses which are compatible with the GNU GPL 3 or later."
+    ]
    }
   },
   "khronosSampleAssets": {
@@ -336,7 +304,858 @@
    },
    "trademarkNotices": 30
   },
-  "measuredAt": "2026-09-29T00:53:08.758Z",
+  "measuredAt": "2026-09-29T01:26:46.880Z",
+  "host": {
+   "cpus": 4,
+   "node": "v22.22.2"
+  },
+  "nasa3d": {
+   "commit": "11ebb4ee043715aefbba6aeec8a61746fad67fa7",
+   "files": 1199,
+   "licenceFiles": [],
+   "glb": 257
+  }
+ },
+ "sprites": {
+  "runs": 5,
+  "env": {
+   "chromium": "141.0.7390.37",
+   "note": "headless Chromium, WebGL through SwiftShader (CPU): GPU-bound numbers are pessimistic and only comparable among themselves"
+  },
+  "meta": {
+   "frames": 60,
+   "cell": 128,
+   "bleed": {
+    "tight": {
+     "padding": 0,
+     "extrude": 0,
+     "size": 96,
+     "frame": {
+      "x": 32,
+      "y": 32,
+      "w": 32,
+      "h": 32
+     }
+    },
+    "pad2": {
+     "padding": 2,
+     "extrude": 0,
+     "size": 104,
+     "frame": {
+      "x": 36,
+      "y": 36,
+      "w": 32,
+      "h": 32
+     }
+    },
+    "extrude1": {
+     "padding": 0,
+     "extrude": 1,
+     "size": 102,
+     "frame": {
+      "x": 35,
+      "y": 35,
+      "w": 32,
+      "h": 32
+     }
+    },
+    "extrude2": {
+     "padding": 0,
+     "extrude": 2,
+     "size": 108,
+     "frame": {
+      "x": 38,
+      "y": 38,
+      "w": 32,
+      "h": 32
+     }
+    },
+    "extrude2+pad2": {
+     "padding": 2,
+     "extrude": 2,
+     "size": 116,
+     "frame": {
+      "x": 42,
+      "y": 42,
+      "w": 32,
+      "h": 32
+     }
+    },
+    "extrude8": {
+     "padding": 0,
+     "extrude": 8,
+     "size": 144,
+     "frame": {
+      "x": 56,
+      "y": 56,
+      "w": 32,
+      "h": 32
+     }
+    }
+   },
+   "grid": {
+    "width": 1280,
+    "height": 768,
+    "cols": 10,
+    "rows": 6
+   },
+   "atlas": {
+    "width": 694,
+    "height": 654,
+    "json": 11605,
+    "frames": 60
+   },
+   "packMs": 511,
+   "sets": {
+    "files": {
+     "png": {
+      "bytes": 335872,
+      "requests": 60
+     },
+     "png8": {
+      "bytes": 125119,
+      "requests": 60
+     },
+     "webpLossless": {
+      "bytes": 250316,
+      "requests": 60
+     },
+     "webp": {
+      "bytes": 111734,
+      "requests": 60
+     },
+     "avif": {
+      "bytes": 104799,
+      "requests": 60
+     }
+    },
+    "grid": {
+     "png": {
+      "bytes": 274637,
+      "requests": 1
+     },
+     "png8": {
+      "bytes": 88809,
+      "requests": 1
+     },
+     "webpLossless": {
+      "bytes": 155368,
+      "requests": 1
+     },
+     "webp": {
+      "bytes": 93636,
+      "requests": 1
+     },
+     "avif": {
+      "bytes": 71402,
+      "requests": 1
+     }
+    },
+    "atlas": {
+     "png": {
+      "bytes": 253512,
+      "requests": 1
+     },
+     "png8": {
+      "bytes": 84640,
+      "requests": 1
+     },
+     "webpLossless": {
+      "bytes": 196166,
+      "requests": 1
+     },
+     "webp": {
+      "bytes": 85598,
+      "requests": 1
+     },
+     "avif": {
+      "bytes": 62129,
+      "requests": 1
+     }
+    }
+   },
+   "decodedRGBA": {
+    "files": 3932160,
+    "grid": 3932160,
+    "atlas": 1815504
+   },
+   "extras": {
+    "tilesetBytes": 1394,
+    "panelBytes": 2629,
+    "layerBytes": [
+     3639,
+     3795,
+     3731,
+     3584
+    ]
+   }
+  },
+  "load": {
+   "files-png": {
+    "fetchMs": 1209.3,
+    "decodeMs": 34.2,
+    "totalMs": 1250.3,
+    "requests": 60,
+    "bytes": 335872,
+    "images": 60,
+    "n": 5
+   },
+   "files-png8": {
+    "fetchMs": 1126.8,
+    "decodeMs": 30.1,
+    "totalMs": 1145.5,
+    "requests": 60,
+    "bytes": 125119,
+    "images": 60,
+    "n": 5
+   },
+   "files-webp": {
+    "fetchMs": 1151.2,
+    "decodeMs": 37.9,
+    "totalMs": 1188.8,
+    "requests": 60,
+    "bytes": 111734,
+    "images": 60,
+    "n": 5
+   },
+   "files-avif": {
+    "fetchMs": 1121.1,
+    "decodeMs": 71.8,
+    "totalMs": 1217,
+    "requests": 60,
+    "bytes": 104799,
+    "images": 60,
+    "n": 5
+   },
+   "grid-png": {
+    "fetchMs": 360.7,
+    "decodeMs": 9.4,
+    "totalMs": 369.8,
+    "requests": 1,
+    "bytes": 274637,
+    "images": 1,
+    "n": 5
+   },
+   "grid-png8": {
+    "fetchMs": 187.5,
+    "decodeMs": 5.9,
+    "totalMs": 197.2,
+    "requests": 1,
+    "bytes": 88809,
+    "images": 1,
+    "n": 5
+   },
+   "grid-webp": {
+    "fetchMs": 195.3,
+    "decodeMs": 24.3,
+    "totalMs": 219,
+    "requests": 1,
+    "bytes": 93636,
+    "images": 1,
+    "n": 5
+   },
+   "grid-avif": {
+    "fetchMs": 173.5,
+    "decodeMs": 35.8,
+    "totalMs": 207.8,
+    "requests": 1,
+    "bytes": 71402,
+    "images": 1,
+    "n": 5
+   },
+   "atlas-png": {
+    "fetchMs": 338.3,
+    "decodeMs": 5.5,
+    "totalMs": 343.7,
+    "requests": 1,
+    "bytes": 253512,
+    "images": 1,
+    "n": 5
+   },
+   "atlas-png8": {
+    "fetchMs": 184,
+    "decodeMs": 3.7,
+    "totalMs": 187.2,
+    "requests": 1,
+    "bytes": 84640,
+    "images": 1,
+    "n": 5
+   },
+   "atlas-webp": {
+    "fetchMs": 189,
+    "decodeMs": 13,
+    "totalMs": 201.8,
+    "requests": 1,
+    "bytes": 85598,
+    "images": 1,
+    "n": 5
+   },
+   "atlas-avif": {
+    "fetchMs": 168.1,
+    "decodeMs": 34.4,
+    "totalMs": 202.8,
+    "requests": 1,
+    "bytes": 62129,
+    "images": 1,
+    "n": 5
+   }
+  },
+  "decode": {
+   "files-png": {
+    "decodeMs": 24.8,
+    "n": 5
+   },
+   "files-png8": {
+    "decodeMs": 22.6,
+    "n": 5
+   },
+   "files-webp": {
+    "decodeMs": 30.2,
+    "n": 5
+   },
+   "files-avif": {
+    "decodeMs": 65,
+    "n": 5
+   },
+   "grid-png": {
+    "decodeMs": 8.3,
+    "n": 5
+   },
+   "grid-png8": {
+    "decodeMs": 4.9,
+    "n": 5
+   },
+   "grid-webp": {
+    "decodeMs": 19.6,
+    "n": 5
+   },
+   "grid-avif": {
+    "decodeMs": 36.5,
+    "n": 5
+   },
+   "atlas-png": {
+    "decodeMs": 5.9,
+    "n": 5
+   },
+   "atlas-png8": {
+    "decodeMs": 2.4,
+    "n": 5
+   },
+   "atlas-webp": {
+    "decodeMs": 12.6,
+    "n": 5
+   },
+   "atlas-avif": {
+    "decodeMs": 26.5,
+    "n": 5
+   }
+  },
+  "canvasDraw": {
+   "atlas": {
+    "frameMs": 7.3,
+    "n": 5
+   },
+   "grid": {
+    "frameMs": 19.4,
+    "n": 5
+   },
+   "files": {
+    "frameMs": 20,
+    "n": 5
+   }
+  },
+  "pixiDraw": {
+   "atlas": {
+    "frameMs": 119.65,
+    "cpuMs": 0.3,
+    "drawCalls": 1,
+    "n": 5
+   },
+   "files": {
+    "frameMs": 296,
+    "cpuMs": 0.5,
+    "drawCalls": 7,
+    "n": 5
+   }
+  },
+  "parallax": {
+   "canvas": {
+    "frameMs": 7.9,
+    "n": 5
+   },
+   "pixi": {
+    "frameMs": 170.45,
+    "cpuMs": 0.3,
+    "drawCalls": 1,
+    "n": 5
+   }
+  },
+  "tilemap": {
+   "canvas-tiles": {
+    "frameMs": 3.2,
+    "n": 5
+   },
+   "canvas-chunks": {
+    "frameMs": 0.4,
+    "n": 5
+   },
+   "pixi-all": {
+    "frameMs": 75.9,
+    "cpuMs": 13.65,
+    "drawCalls": 1,
+    "sprites": 65536,
+    "n": 5
+   },
+   "pixi-visible": {
+    "frameMs": 63.4,
+    "cpuMs": 0.6,
+    "drawCalls": 1,
+    "sprites": 1050,
+    "n": 5
+   }
+  },
+  "nineslice": {
+   "drawCalls": 1
+  },
+  "loadH2": {
+   "files-webp": {
+    "fetchMs": 288.4,
+    "decodeMs": 43.5,
+    "totalMs": 326.7,
+    "requests": 60,
+    "bytes": 111734,
+    "images": 60,
+    "n": 5,
+    "protocol": "h2"
+   },
+   "atlas-webp": {
+    "fetchMs": 184.6,
+    "decodeMs": 14.3,
+    "totalMs": 198.5,
+    "requests": 1,
+    "bytes": 85598,
+    "images": 1,
+    "n": 5,
+    "protocol": "h2"
+   },
+   "files-png": {
+    "fetchMs": 441.6,
+    "decodeMs": 28.7,
+    "totalMs": 478.7,
+    "requests": 60,
+    "bytes": 335872,
+    "images": 60,
+    "n": 5,
+    "protocol": "h2"
+   },
+   "atlas-png": {
+    "fetchMs": 339.6,
+    "decodeMs": 5.9,
+    "totalMs": 347.4,
+    "requests": 1,
+    "bytes": 253512,
+    "images": 1,
+    "n": 5,
+    "protocol": "h2"
+   }
+  },
+  "bleed": {
+   "tight": {
+    "canvas:0.8:0.37": {
+     "bleedPct": 5.38,
+     "seamPct": 0
+    },
+    "canvas:1:0.5": {
+     "bleedPct": 5.65,
+     "seamPct": 0
+    },
+    "pixi:0.8:0.37": {
+     "bleedPct": 5.38,
+     "seamPct": 0
+    },
+    "pixi:1:0.5": {
+     "bleedPct": 5.65,
+     "seamPct": 0
+    },
+    "pixi-mip:0.3:0.37": {
+     "bleedPct": 15.87,
+     "seamPct": 0
+    },
+    "pixi-nearest:2:0": {
+     "bleedPct": 0,
+     "seamPct": 0
+    }
+   },
+   "pad2": {
+    "canvas:0.8:0.37": {
+     "bleedPct": 0,
+     "seamPct": 5.38
+    },
+    "canvas:1:0.5": {
+     "bleedPct": 0,
+     "seamPct": 5.65
+    },
+    "pixi:0.8:0.37": {
+     "bleedPct": 0,
+     "seamPct": 4.2
+    },
+    "pixi:1:0.5": {
+     "bleedPct": 0,
+     "seamPct": 5.65
+    },
+    "pixi-mip:0.3:0.37": {
+     "bleedPct": 15.7,
+     "seamPct": 0.13
+    },
+    "pixi-nearest:2:0": {
+     "bleedPct": 0,
+     "seamPct": 0
+    }
+   },
+   "extrude1": {
+    "canvas:0.8:0.37": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "canvas:1:0.5": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi:0.8:0.37": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi:1:0.5": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi-mip:0.3:0.37": {
+     "bleedPct": 16.96,
+     "seamPct": 0
+    },
+    "pixi-nearest:2:0": {
+     "bleedPct": 0,
+     "seamPct": 0
+    }
+   },
+   "extrude2": {
+    "canvas:0.8:0.37": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "canvas:1:0.5": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi:0.8:0.37": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi:1:0.5": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi-mip:0.3:0.37": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi-nearest:2:0": {
+     "bleedPct": 0,
+     "seamPct": 0
+    }
+   },
+   "extrude2+pad2": {
+    "canvas:0.8:0.37": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "canvas:1:0.5": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi:0.8:0.37": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi:1:0.5": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi-mip:0.3:0.37": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi-nearest:2:0": {
+     "bleedPct": 0,
+     "seamPct": 0
+    }
+   },
+   "extrude8": {
+    "canvas:0.8:0.37": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "canvas:1:0.5": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi:0.8:0.37": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi:1:0.5": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi-mip:0.3:0.37": {
+     "bleedPct": 0,
+     "seamPct": 0
+    },
+    "pixi-nearest:2:0": {
+     "bleedPct": 0,
+     "seamPct": 0
+    }
+   }
+  },
+  "cssSprite": {
+   "background-position": {
+    "paintsPerSec": 100,
+    "styleRecalcsPerSec": 60,
+    "mainThreadMsPerSec": 21.57,
+    "n": 5
+   },
+   "transform": {
+    "paintsPerSec": 0,
+    "styleRecalcsPerSec": 1,
+    "mainThreadMsPerSec": 0.59,
+    "n": 5
+   }
+  },
+  "spine": {
+   "animations": [
+    [
+     "aim",
+     0
+    ],
+    [
+     "death",
+     4.933
+    ],
+    [
+     "hoverboard",
+     1
+    ],
+    [
+     "idle",
+     1.667
+    ],
+    [
+     "idle-turn",
+     0.267
+    ],
+    [
+     "jump",
+     1.333
+    ],
+    [
+     "portal",
+     3.167
+    ],
+    [
+     "run",
+     0.667
+    ],
+    [
+     "run-to-idle",
+     0.267
+    ],
+    [
+     "shoot",
+     0.633
+    ],
+    [
+     "walk",
+     1
+    ]
+   ],
+   "runDuration": 0.6666666865348816,
+   "frameCount": 20,
+   "frameBox": "360x320 at skeleton scale 0.4",
+   "frameAtlas": {
+    "width": 1035,
+    "height": 1042,
+    "bytes": {
+     "png": 928230,
+     "png8": 243654,
+     "webp": 226906,
+     "avif": 148060
+    },
+    "decodedRGBA": 4313880,
+    "json": 4162
+   },
+   "skeletal": {
+    "files": {
+     "spineboy-pro.skel": 65335,
+     "spineboy-pro.json": 255660,
+     "spineboy-pma.atlas": 1567,
+     "spineboy-pma.png": 241053
+    },
+    "skelGzip": 43659,
+    "total": 307955,
+    "note": "the .skel holds every animation (11); the PNG holds every part"
+   },
+   "loadParseMs": 46.6
+  },
+  "spineDraw": {
+   "skeletal-50": {
+    "frameMs": 197.6,
+    "cpuMs": 2.25,
+    "drawCalls": 1,
+    "updateMs": 1.1,
+    "n": 5
+   },
+   "frames-50": {
+    "frameMs": 184.5,
+    "cpuMs": 0.2,
+    "drawCalls": 1,
+    "updateMs": 0,
+    "n": 5
+   },
+   "skeletal-200": {
+    "frameMs": 754.1,
+    "cpuMs": 8.05,
+    "drawCalls": 1,
+    "updateMs": 3.7,
+    "n": 5
+   },
+   "frames-200": {
+    "frameMs": 737.75,
+    "cpuMs": 0.3,
+    "drawCalls": 1,
+    "updateMs": 0.1,
+    "n": 5
+   }
+  },
+  "quality": {
+   "png": {
+    "psnr": null
+   },
+   "png8": {
+    "psnr": 45.6
+   },
+   "webp": {
+    "psnr": 36.2
+   },
+   "avif": {
+    "psnr": 41.1
+   }
+  },
+  "runtimes": {
+   "pixi.js (sprites, spritesheet, animated sprite)": {
+    "js": {
+     "min": 580678,
+     "gzip": 170495,
+     "brotli": 140331
+    },
+    "wasm": null
+   },
+   "pixi.js + spine-pixi-v8": {
+    "js": {
+     "min": 778083,
+     "gzip": 227702,
+     "brotli": 186566
+    },
+    "wasm": null
+   },
+   "pixi.js + pixi-dragonbones-runtime": {
+    "js": {
+     "min": 769598,
+     "gzip": 213799,
+     "brotli": 176207
+    },
+    "wasm": null
+   },
+   "@rive-app/canvas": {
+    "js": {
+     "min": 200292,
+     "gzip": 57253,
+     "brotli": 50181
+    },
+    "wasm": {
+     "min": 1955136,
+     "gzip": 814027,
+     "brotli": 627666
+    }
+   },
+   "@rive-app/canvas-lite": {
+    "js": {
+     "min": 178999,
+     "gzip": 49732,
+     "brotli": 43501
+    },
+    "wasm": {
+     "min": 882456,
+     "gzip": 364845,
+     "brotli": 278888
+    }
+   },
+   "@rive-app/webgl2": {
+    "js": {
+     "min": 203891,
+     "gzip": 57953,
+     "brotli": 50736
+    },
+    "wasm": {
+     "min": 2224503,
+     "gzip": 918431,
+     "brotli": 716787
+    }
+   },
+   "lottie-web (full)": {
+    "js": {
+     "min": 308930,
+     "gzip": 78959,
+     "brotli": 65923
+    },
+    "wasm": null
+   },
+   "lottie-web light (svg only)": {
+    "js": {
+     "min": 172230,
+     "gzip": 49127,
+     "brotli": 42474
+    },
+    "wasm": null
+   },
+   "@lottiefiles/dotlottie-web": {
+    "js": {
+     "min": 61612,
+     "gzip": 13836,
+     "brotli": 12213
+    },
+    "wasm": {
+     "min": 1238072,
+     "gzip": 499096,
+     "brotli": 388165
+    }
+   },
+   "sample truck.riv": {
+    "bytes": 19760
+   },
+   "sample birb.riv": {
+    "bytes": 411989
+   }
+  },
+  "runtimeVersions": {
+   "pixi.js": "8.21.0",
+   "@esotericsoftware/spine-pixi-v8": "4.3.13",
+   "pixi-dragonbones-runtime": "8.0.3",
+   "@rive-app/canvas": "2.43.1",
+   "lottie-web": "5.13.0",
+   "@lottiefiles/dotlottie-web": "0.80.0",
+   "free-tex-packer-core": "0.3.9"
+  },
+  "measuredAt": "2026-09-29T01:31:40.404Z",
   "host": {
    "cpus": 4,
    "node": "v22.22.2"

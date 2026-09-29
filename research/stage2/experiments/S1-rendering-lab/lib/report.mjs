@@ -47,6 +47,39 @@ export async function writeReport(R, out) {
     }
   }
 
+  if (R.sweep) {
+    L.push('## Where the CPU renderers stop holding the frame rate (object-count sweep)', '');
+    L.push('Same scene and method as the main matrix, measured as its own round-robin set (so N = 200 and 2000 repeat the main matrix under this run\'s background load). Each cell: fps · frame p95 ms · main-thread busy % (for the Worker variant, fps is the Worker\'s and busy % is the page\'s main thread). The CPU renderers\' raster and compositing run in software here, so absolute fps is pessimistic; use the crossover points relative to each other.', '');
+    for (const thr of [1, 4]) {
+      const ns = [...new Set(Object.values(R.sweep).filter((v) => v.cell.throttle === thr).map((v) => v.cell.n))].sort((a, b) => a - b);
+      if (!ns.length) continue;
+      L.push(`### ${thr}× CPU`, '', head(['variant', ...ns.map((n) => `N=${n}`)]));
+      for (const vname of ['dom', 'svg', 'canvas2d', 'canvas2d-worker']) {
+        const cells = ns.map((n) => {
+          const k = `${vname}|${n}|${thr}x`;
+          const s = R.sweep[k]?.summary;
+          return s?.runs ? `${f(s.fps)} · ${f(s.frameP95, 0)} · ${f(s.busyPct, 0)}%` : '—';
+        });
+        L.push(row([vname, ...cells]));
+      }
+      L.push('');
+    }
+  }
+
+  if (R.instancing) {
+    L.push('## One mesh per item vs one InstancedMesh, vanilla three.js vs React Three Fiber', '');
+    L.push('Measured as one set (its own round-robin groups), so compare within this table. `JS ms/frame` is the GPU-independent column: the scene\'s update + render call on the main thread.', '');
+    L.push(head(['variant', 'N', 'CPU', 'first frame ms', 'fps', 'JS ms/frame p50/p95', 'draw calls', 'heap MB', 'drag move→frame p50/p95', 'app+runtime gzip KB', 'runs']));
+    for (const v of Object.values(R.instancing)) {
+      const s = v.summary;
+      L.push(row([v.cell.variant, v.cell.n, `${v.cell.throttle}×`, f(s.ttff, 0), f(s.fps), `${f(s.jsMs, 2)} / ${f(s.jsP95, 2)}`, f(s.drawCalls, 0), f(s.heapMB), `${f(s.moveToFrame)} / ${f(s.moveToFrameP95)}`, kb(R.build?.[v.cell.variant]?.total.gzip), s.runs]));
+    }
+    if (R.instancingNoWebgl) {
+      L.push('', 'WebGL disabled: ' + Object.entries(R.instancingNoWebgl).map(([k, v]) => `**${k}** renderer ${v.renderer ?? 'none'}, poster visible ${v.posterVisible ? 'yes' : 'no'}, canvases ${v.canvases}${v.errors?.length ? `, error "${v.errors[0].slice(0, 90)}"` : ''}`).join('; ') + '.');
+    }
+    L.push('');
+  }
+
   if (R.worker) {
     L.push('## Main thread under load (50 ms busy every 100 ms): Canvas 2D on the main thread vs in a Worker', '');
     L.push(head(['variant', 'N', 'CPU', 'scene fps', 'scene frame p95', 'main-thread fps', 'drag move→frame p50/p95 ms', 'move event delay p50/p95 ms', 'busy %', 'runs']));
@@ -134,7 +167,7 @@ export async function writeReport(R, out) {
     L.push(head(['variant', 'N=200 % px differ', 'N=2000 % px differ']));
     const vs = [...new Set(Object.keys(R.shots.diffs).map((k) => k.split('|')[0]))];
     for (const v of vs) L.push(row([v, f(R.shots.diffs[`${v}|200`], 2), f(R.shots.diffs[`${v}|2000`], 2)]));
-    L.push('', 'Sheets: `shots/scene-n200.jpg`, `shots/scene-n2000.jpg`, `shots/no-webgl.jpg`.', '');
+    L.push('', 'Sheets: `shots/scene-n200.jpg`, `shots/scene-n2000.jpg`, `shots/no-webgl.jpg`, `shots/context-loss.jpg`.', '');
   }
 
   if (R.survey?.entries) {

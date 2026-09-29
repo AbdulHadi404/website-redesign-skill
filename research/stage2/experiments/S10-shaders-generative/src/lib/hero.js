@@ -14,9 +14,14 @@
 //      (30 fps in iOS Low Power Mode and 120 Hz displays play the same motion);
 //   5. device-pixel-ratio cap and an optional render scale (a soft gradient does not need native resolution);
 //   6. WebGL context loss: show the poster, stop, rebuild on restore;
-//   7. any failure (no WebGL, shader compile error, exception) leaves the poster — never a blank hero.
+//   7. any failure (no WebGL, shader compile error, exception) leaves the poster — never a blank hero;
+//   8. optional settle (opts.settle or ?settle=N): play N seconds, ease to a stop over 1.5 s, then render
+//      nothing — "a moment, not a loop" (WCAG 2.2.2 needs no control for motion that stops within 5 s);
+//   9. optional frame-time governor (opts.governor or ?gov): after a 1 s warm-up, judge the median frame
+//      interval over 45 continuous frames; too slow → halve the render scale (down to 0.25); still under
+//      ~30 fps at the floor → stop and keep the poster. It only steps down, never up.
 //
-// Lab-only query flags: ?nopause (ignore viewport/visibility), ?dpr=N (cap, default 2), ?scale=F, ?fps=N.
+// Lab-only query flags: ?nopause (ignore viewport/visibility), ?dpr=N (cap, default 2), ?scale=F, ?fps=N, ?settle=N.
 
 const q = new URLSearchParams(location.search);
 const lab = (window.__lab ||= {});
@@ -25,9 +30,14 @@ lab.jsTimes = [];
 
 export function run(bg, effect, opts = {}) {
   const dprCap = Number(q.get('dpr') || opts.dprCap || 2);
-  const scale = Number(q.get('scale') || opts.scale || 1);
+  let scale = Number(q.get('scale') || opts.scale || 1);
+  const governor = q.has('gov') || !!opts.governor;
+  const gov = { intervals: [], since: 0, steps: [] };
+  lab.governor = gov.steps;
   const fpsCap = Number(q.get('fps') || opts.fps || 0);
   const noPause = q.has('nopause');
+  const settleAt = Number(q.get('settle') || opts.settle || 0);
+  let runTime = 0, settled = false;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const toggle = document.querySelector('.bg-toggle');
   let canvas, handle, raf = 0, last = 0, t = Number(q.get('t0') || 0), inView = true, visible = !document.hidden;
@@ -35,13 +45,13 @@ export function run(bg, effect, opts = {}) {
 
   const still = q.has('still');   // lab: draw one deterministic frame (poster capture), never loop
   const want = () => !still && !failed && !lost && !paused && (!reduce.matches || lab.optIn) && (noPause || (inView && visible));
-  const schedule = () => { if (!raf && want()) { last = performance.now(); raf = requestAnimationFrame(tick); } };
+  const schedule = () => { if (!raf && want()) { last = performance.now(); gov.since = last; gov.intervals.length = 0; raf = requestAnimationFrame(tick); } };
   const stop = () => { if (raf) cancelAnimationFrame(raf); raf = 0; };
 
   function fail(why) {
     failed = true; stop();
     lab.fallback = 'poster'; lab.failReason = String(why).slice(0, 200);
-    if (canvas) canvas.remove();
+    if (canvas) { const c = canvas; c.style.opacity = '0'; setTimeout(() => { try { effect.dispose?.(); } catch {} c.remove(); }, started ? 700 : 0); }
     if (toggle) toggle.hidden = true;     // nothing to pause: the poster is static
   }
 
@@ -66,12 +76,32 @@ export function run(bg, effect, opts = {}) {
     if (fpsCap && elapsed < 1000 / fpsCap - 2) { raf = requestAnimationFrame(tick); return; }
     last = now;
     const dt = Math.min(elapsed / 1000, 1 / 20);    // clamp: a long pause never becomes one huge step
-    t += dt;
+    runTime += Math.min(elapsed / 1000, 0.25);      // settle counts wall time: a slow device still stops on time
+    let speed = 1;
+    if (settleAt && !settled) { const k = Math.max(0, 1 - (runTime - settleAt) / 1.5); speed = runTime < settleAt ? 1 : k * k; }
+    t += dt * speed;
     const t0 = performance.now();
     try { effect.frame(t, dt); } catch (e) { return fail(e.message); }
     lab.draws++;
     if (lab.recording) lab.jsTimes.push(performance.now() - t0);
     if (!started) firstFrame();
+    if (governor && now - gov.since > 1000) {
+      gov.intervals.push(elapsed);
+      if (gov.intervals.length >= 45) {
+        const s = [...gov.intervals].sort((a, b) => a - b), med = s[s.length >> 1];
+        gov.intervals.length = 0; gov.since = now;
+        const target = fpsCap ? 1000 / fpsCap : 1000 / 60;
+        if (med > target * 1.25) {
+          if (scale > 0.25 && !effect.ownsSize) { scale = Math.max(0.25, scale / 2); gov.steps.push({ at: Math.round(now), medianMs: Math.round(med * 10) / 10, scale }); sizeCanvas(); }
+          else if (med > Math.max(target, 1000 / 30) * 1.1) { gov.steps.push({ at: Math.round(now), medianMs: Math.round(med * 10) / 10, gaveUp: true }); fail('governor: too slow at the lowest tier'); return; }
+        }
+      }
+    }
+    if (settleAt && !settled && speed === 0) {        // settled: the last frame stays on screen, the loop ends
+      settled = true; paused = true; lab.settled = performance.now();
+      if (toggle) { toggle.setAttribute('aria-pressed', 'true'); toggle.textContent = 'Play background'; }
+      return;
+    }
     raf = requestAnimationFrame(tick);
   }
 
@@ -115,8 +145,8 @@ export function run(bg, effect, opts = {}) {
   if (failed) return;
 
   new ResizeObserver(() => canvas && sizeCanvas()).observe(bg);
-  new IntersectionObserver(([e]) => { inView = e.isIntersecting; inView ? schedule() : stop(); }).observe(bg.closest('.hero') || bg);
-  document.addEventListener('visibilitychange', () => { visible = !document.hidden; visible ? schedule() : stop(); });
+  new IntersectionObserver(([e]) => { inView = e.isIntersecting; want() ? schedule() : stop(); }).observe(bg.closest('.hero') || bg);
+  document.addEventListener('visibilitychange', () => { visible = !document.hidden; want() ? schedule() : stop(); });
   reduce.addEventListener('change', () => (reduce.matches && !lab.optIn ? stop() : schedule()));
   if (toggle) {
     toggle.hidden = false;
@@ -128,8 +158,9 @@ export function run(bg, effect, opts = {}) {
     });
   }
   lab.pause = () => { paused = true; stop(); };
+  lab.renderAt = (tt) => { t = tt; drawOnce(); };   // lab: render a given time (frames for the video variant)
   lab.loseContext = () => handle?.gl?.getExtension('WEBGL_lose_context');
-  lab.state = () => ({ running: !!raf, inView, visible, paused, lost, failed, t: Math.round(t * 100) / 100, canvas: canvas && [canvas.width, canvas.height] });
+  lab.state = () => ({ running: !!raf, inView, visible, paused, lost, failed, settled, t: Math.round(t * 100) / 100, canvas: canvas && [canvas.width, canvas.height] });
 }
 
 export function webglInfo(gl) {

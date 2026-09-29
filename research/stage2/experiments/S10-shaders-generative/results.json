@@ -4,7 +4,7 @@
   "node": "v22.22.2",
   "cpus": 4,
   "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
-  "runs": 1,
+  "runs": 5,
   "chromium": "141.0.7390.37"
  },
  "sources": {
@@ -23,9 +23,9 @@
    "kind": "static",
    "poster": "shader",
    "html": {
-    "raw": 5117,
-    "gzip": 2199,
-    "brotli": 1731
+    "raw": 5337,
+    "gzip": 2296,
+    "brotli": 1800
    }
   },
   "b1-css-blobs": {
@@ -34,9 +34,9 @@
    "kind": "css",
    "poster": null,
    "html": {
-    "raw": 7475,
-    "gzip": 2948,
-    "brotli": 2363
+    "raw": 7695,
+    "gzip": 3048,
+    "brotli": 2436
    }
   },
   "b2-css-property": {
@@ -45,9 +45,9 @@
    "kind": "css",
    "poster": null,
    "html": {
-    "raw": 6870,
-    "gzip": 2843,
-    "brotli": 2273
+    "raw": 7090,
+    "gzip": 2939,
+    "brotli": 2351
    }
   },
   "c1-svg-turbulence": {
@@ -56,9 +56,9 @@
    "kind": "css",
    "poster": null,
    "html": {
-    "raw": 7048,
-    "gzip": 2937,
-    "brotli": 2371
+    "raw": 7268,
+    "gzip": 3034,
+    "brotli": 2453
    }
   },
   "c2-css-grain": {
@@ -67,9 +67,9 @@
    "kind": "css",
    "poster": "shader",
    "html": {
-    "raw": 7276,
-    "gzip": 3025,
-    "brotli": 2439
+    "raw": 7496,
+    "gzip": 3125,
+    "brotli": 2509
    }
   },
   "d-canvas2d": {
@@ -78,18 +78,18 @@
    "kind": "script",
    "poster": "canvas2d",
    "effect": {
-    "raw": 3815,
-    "gzip": 1927,
-    "brotli": 1694
+    "raw": 4319,
+    "gzip": 2142,
+    "brotli": 1887
    },
    "inputs": {
-    "lib": 2663,
-    "variants": 1130
+    "lib": 2947,
+    "variants": 1350
    },
    "html": {
-    "raw": 6358,
-    "gzip": 2769,
-    "brotli": 2177
+    "raw": 6578,
+    "gzip": 2868,
+    "brotli": 2255
    }
   },
   "e1-webgl-vanilla": {
@@ -98,18 +98,18 @@
    "kind": "script",
    "poster": "shader",
    "effect": {
-    "raw": 7353,
-    "gzip": 3446,
-    "brotli": 3034
+    "raw": 7637,
+    "gzip": 3563,
+    "brotli": 3137
    },
    "inputs": {
-    "lib": 6223,
+    "lib": 6507,
     "variants": 1108
    },
    "html": {
-    "raw": 6351,
-    "gzip": 2769,
-    "brotli": 2186
+    "raw": 6571,
+    "gzip": 2868,
+    "brotli": 2258
    }
   },
   "e2-ogl": {
@@ -118,19 +118,19 @@
    "kind": "script",
    "poster": "shader",
    "effect": {
-    "raw": 51132,
-    "gzip": 15886,
-    "brotli": 13512
+    "raw": 51432,
+    "gzip": 15989,
+    "brotli": 13564
    },
    "inputs": {
-    "ogl": 44301,
-    "lib": 6147,
+    "ogl": 44304,
+    "lib": 6444,
     "variants": 661
    },
    "html": {
-    "raw": 6345,
-    "gzip": 2765,
-    "brotli": 2190
+    "raw": 6565,
+    "gzip": 2864,
+    "brotli": 2256
    }
   },
   "e3-regl": {
@@ -139,19 +139,19 @@
    "kind": "script",
    "poster": "shader",
    "effect": {
-    "raw": 130107,
-    "gzip": 44655,
-    "brotli": 39062
+    "raw": 130420,
+    "gzip": 44759,
+    "brotli": 39139
    },
    "inputs": {
     "regl": 122521,
     "variants": 501,
-    "lib": 6482
+    "lib": 6795
    },
    "html": {
-    "raw": 6346,
-    "gzip": 2763,
-    "brotli": 2186
+    "raw": 6566,
+    "gzip": 2863,
+    "brotli": 2256
    }
   },
   "e4-twgl": {
@@ -160,19 +160,19 @@
    "kind": "script",
    "poster": "shader",
    "effect": {
-    "raw": 37836,
-    "gzip": 13675,
-    "brotli": 11987
+    "raw": 38122,
+    "gzip": 13775,
+    "brotli": 12091
    },
    "inputs": {
-    "twgl.js": 31085,
-    "lib": 6241,
+    "twgl.js": 31087,
+    "lib": 6525,
     "variants": 487
    },
    "html": {
-    "raw": 6349,
-    "gzip": 2766,
-    "brotli": 2185
+    "raw": 6569,
+    "gzip": 2866,
+    "brotli": 2253
    }
   },
   "e5-three": {
@@ -181,19 +181,19 @@
    "kind": "script",
    "poster": "shader",
    "effect": {
-    "raw": 535713,
-    "gzip": 135604,
-    "brotli": 111819
+    "raw": 536020,
+    "gzip": 135715,
+    "brotli": 111870
    },
    "inputs": {
-    "three": 528876,
-    "lib": 6275,
+    "three": 528888,
+    "lib": 6570,
     "variants": 539
    },
    "html": {
-    "raw": 6350,
-    "gzip": 2766,
-    "brotli": 2182
+    "raw": 6570,
+    "gzip": 2866,
+    "brotli": 2260
    }
   },
   "e6-paper": {
@@ -211,9 +211,9 @@
     "variants": 1320
    },
    "html": {
-    "raw": 6356,
-    "gzip": 2774,
-    "brotli": 2193
+    "raw": 6576,
+    "gzip": 2873,
+    "brotli": 2267
    }
   },
   "f-three-particles": {
@@ -222,19 +222,19 @@
    "kind": "script",
    "poster": "particles",
    "effect": {
-    "raw": 539720,
-    "gzip": 136696,
-    "brotli": 112833
+    "raw": 540027,
+    "gzip": 136810,
+    "brotli": 112895
    },
    "inputs": {
-    "three": 531026,
-    "lib": 6187,
+    "three": 531038,
+    "lib": 6482,
     "variants": 2451
    },
    "html": {
-    "raw": 6365,
-    "gzip": 2771,
-    "brotli": 2186
+    "raw": 6585,
+    "gzip": 2870,
+    "brotli": 2256
    }
   },
   "h-post": {
@@ -243,20 +243,20 @@
    "kind": "script",
    "poster": "post",
    "effect": {
-    "raw": 696727,
-    "gzip": 209330,
-    "brotli": 180122
+    "raw": 697034,
+    "gzip": 209436,
+    "brotli": 180212
    },
    "inputs": {
-    "three": 531147,
+    "three": 531159,
     "postprocessing": 156280,
-    "lib": 6187,
+    "lib": 6482,
     "variants": 3090
    },
    "html": {
-    "raw": 6339,
-    "gzip": 2764,
-    "brotli": 2178
+    "raw": 6559,
+    "gzip": 2864,
+    "brotli": 2254
    }
   },
   "g-fluid-demo": {
@@ -270,9 +270,9 @@
     "brotli": 22333
    },
    "html": {
-    "raw": 5265,
-    "gzip": 2267,
-    "brotli": 1775
+    "raw": 5485,
+    "gzip": 2364,
+    "brotli": 1856
    }
   },
   "g-fluid-wrapped": {
@@ -281,51 +281,51 @@
    "kind": "script",
    "poster": "fluid",
    "effect": {
-    "raw": 34451,
-    "gzip": 9877,
-    "brotli": 8784
+    "raw": 34752,
+    "gzip": 9996,
+    "brotli": 8879
    },
    "inputs": {
-    "dist": 31019,
-    "lib": 2929,
+    "dist": 31024,
+    "lib": 3225,
     "variants": 480
    },
    "html": {
-    "raw": 6348,
-    "gzip": 2767,
-    "brotli": 2179
+    "raw": 6568,
+    "gzip": 2866,
+    "brotli": 2254
    }
   }
  },
  "posters": {
   "shader": {
    "800": {
-    "avif": 1753,
-    "webp": 3388
+    "avif": 1879,
+    "webp": 3820
    },
    "1600": {
-    "avif": 3084,
-    "webp": 8482
+    "avif": 3414,
+    "webp": 9108
    },
    "from": "e1-webgl-vanilla",
    "query": "still&t0=0",
    "bppAt1280x720": {
-    "avif1600": 0.0268
+    "avif1600": 0.0296
    }
   },
   "canvas2d": {
    "800": {
-    "avif": 8718,
-    "webp": 12334
+    "avif": 8643,
+    "webp": 12272
    },
    "1600": {
-    "avif": 28536,
-    "webp": 39232
+    "avif": 28979,
+    "webp": 39666
    },
    "from": "d-canvas2d",
    "query": "",
    "bppAt1280x720": {
-    "avif1600": 0.24769999999999998
+    "avif1600": 0.2516
    }
   },
   "paper": {
@@ -345,47 +345,47 @@
   },
   "particles": {
    "800": {
-    "avif": 745,
-    "webp": 1894
+    "avif": 804,
+    "webp": 1982
    },
    "1600": {
-    "avif": 13489,
-    "webp": 20068
+    "avif": 13597,
+    "webp": 20858
    },
    "from": "f-three-particles",
-   "query": "still&t0=3",
+   "query": "still&t0=0",
    "bppAt1280x720": {
-    "avif1600": 0.1171
+    "avif1600": 0.118
    }
   },
   "post": {
    "800": {
-    "avif": 2080,
-    "webp": 4694
+    "avif": 2022,
+    "webp": 4848
    },
    "1600": {
-    "avif": 21269,
-    "webp": 43288
+    "avif": 21475,
+    "webp": 43676
    },
    "from": "h-post",
-   "query": "still&t0=3&fx=all",
+   "query": "still&t0=0&fx=all",
    "bppAt1280x720": {
-    "avif1600": 0.1846
+    "avif1600": 0.1864
    }
   },
   "fluid": {
    "800": {
-    "avif": 5897,
-    "webp": 9958
+    "avif": 7049,
+    "webp": 11260
    },
    "1600": {
-    "avif": 12834,
-    "webp": 47758
+    "avif": 14048,
+    "webp": 60600
    },
    "from": "g-fluid-wrapped",
    "query": "",
    "bppAt1280x720": {
-    "avif1600": 0.1114
+    "avif1600": 0.12190000000000001
    }
   }
  },
@@ -503,33 +503,35 @@
   "a-static@1x": {
    "id": "a-static",
    "throttle": 1,
-   "runs": 1,
+   "runs": 5,
    "ttff": null,
-   "fcp": 108,
-   "lcp": 108,
+   "fcp": 88,
+   "lcp": 88,
    "lcpEl": "H1",
    "bootBlock": 0,
    "tbt": 0,
    "longest": 0,
-   "fps": 57.6,
+   "fps": 59.6,
    "frameMedian": 16.7,
-   "frameP95": 16.8,
-   "over25Pct": 3.1,
+   "frameP95": 16.7,
+   "over25Pct": 0.7,
    "effectFps": null,
    "rafPerSec": 0,
-   "busyPct": 0.5,
-   "scriptPct": 0.1,
+   "busyPct": 0.8,
+   "scriptPct": 0.2,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 0.1,
    "jsMs": null,
-   "cpuRenderer": 1,
-   "cpuGpu": 0.2,
-   "cpuBrowser": 0.6,
-   "cpuTotal": 2,
+   "cpuRenderer": 1.2,
+   "cpuGpu": 0.6,
+   "cpuBrowser": 0,
+   "cpuTotal": 2.4,
    "payload": {
-    "html": 2199,
-    "poster": 3084,
+    "html": 2296,
+    "poster": 3414,
     "js": 0,
     "other": 0,
-    "total": 5283
+    "total": 5710
    },
    "errors": [
     "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
@@ -537,16 +539,72 @@
    "raw": [
     {
      "ttff": null,
-     "fps": 57.6,
+     "fps": 59.6,
      "cpu": {
-      "browser": 0.6,
-      "renderer": 1,
-      "GPU": 0.2,
+      "browser": 0.8,
+      "renderer": 1.2,
+      "GPU": 0.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 2.6
+     },
+     "busyPct": 0.7,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 59.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.4,
+      "GPU": 0.8,
       "network.mojom.NetworkService": 0.2,
       "storage.mojom.StorageService": 0,
-      "total": 2
+      "total": 2.4
      },
-     "busyPct": 0.5,
+     "busyPct": 1.1,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 59.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.4,
+      "GPU": 0.6,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 2.2
+     },
+     "busyPct": 0.7,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 59.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.2,
+      "GPU": 0.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 1.8
+     },
+     "busyPct": 0.9,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 59,
+     "cpu": {
+      "browser": 0.6,
+      "renderer": 1.2,
+      "GPU": 0.6,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 2.6
+     },
+     "busyPct": 0.8,
      "effectFps": null
     }
    ]
@@ -554,48 +612,106 @@
   "a-static@4x": {
    "id": "a-static",
    "throttle": 4,
-   "runs": 1,
+   "runs": 5,
    "ttff": null,
-   "fcp": 168,
-   "lcp": 168,
+   "fcp": 152,
+   "lcp": 152,
    "lcpEl": "H1",
    "bootBlock": 0,
    "tbt": 0,
    "longest": 0,
-   "fps": 57.4,
+   "fps": 60,
    "frameMedian": 16.7,
    "frameP95": 16.8,
-   "over25Pct": 2.4,
+   "over25Pct": 0,
    "effectFps": null,
    "rafPerSec": 0,
-   "busyPct": 3.3,
-   "scriptPct": 1,
+   "busyPct": 2.1,
+   "scriptPct": 0.7,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 0.1,
    "jsMs": null,
-   "cpuRenderer": 49.9,
+   "cpuRenderer": 66.3,
    "cpuGpu": 0.4,
    "cpuBrowser": 0,
-   "cpuTotal": 50.5,
+   "cpuTotal": 67.1,
    "payload": {
-    "html": 2199,
-    "poster": 3084,
+    "html": 2296,
+    "poster": 3414,
     "js": 0,
     "other": 0,
-    "total": 5283
+    "total": 5710
    },
    "errors": [],
    "raw": [
     {
      "ttff": null,
-     "fps": 57.4,
+     "fps": 58.4,
      "cpu": {
       "browser": 0,
-      "renderer": 49.9,
+      "renderer": 63.7,
+      "GPU": 0.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 64.1
+     },
+     "busyPct": 2.1,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 59.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 72.7,
       "GPU": 0.4,
       "network.mojom.NetworkService": 0.2,
       "storage.mojom.StorageService": 0,
-      "total": 50.5
+      "total": 73.3
      },
-     "busyPct": 3.3,
+     "busyPct": 1.7,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 60,
+     "cpu": {
+      "browser": 0,
+      "renderer": 75.1,
+      "GPU": 0.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 75.5
+     },
+     "busyPct": 1.8,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 60,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 66.3,
+      "GPU": 0.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 67.1
+     },
+     "busyPct": 2.5,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 60,
+     "cpu": {
+      "browser": 0,
+      "renderer": 63.5,
+      "GPU": 0.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 63.9
+     },
+     "busyPct": 2.1,
      "effectFps": null
     }
    ]
@@ -603,48 +719,106 @@
   "b1-css-blobs@1x": {
    "id": "b1-css-blobs",
    "throttle": 1,
-   "runs": 1,
+   "runs": 5,
    "ttff": null,
-   "fcp": 116,
-   "lcp": 116,
+   "fcp": 104,
+   "lcp": 104,
    "lcpEl": "H1",
    "bootBlock": 0,
    "tbt": 0,
    "longest": 0,
-   "fps": 54.2,
+   "fps": 58.8,
    "frameMedian": 16.7,
    "frameP95": 16.8,
-   "over25Pct": 3.3,
+   "over25Pct": 2.1,
    "effectFps": null,
    "rafPerSec": 0,
-   "busyPct": 1.8,
+   "busyPct": 2.1,
    "scriptPct": 0.2,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 7.5,
    "jsMs": null,
-   "cpuRenderer": 3.2,
-   "cpuGpu": 38.6,
-   "cpuBrowser": 0.2,
-   "cpuTotal": 42.4,
+   "cpuRenderer": 4,
+   "cpuGpu": 43.6,
+   "cpuBrowser": 0,
+   "cpuTotal": 48,
    "payload": {
-    "html": 2948,
+    "html": 3048,
     "poster": 0,
     "js": 0,
     "other": 0,
-    "total": 2948
+    "total": 3048
    },
    "errors": [],
    "raw": [
     {
      "ttff": null,
-     "fps": 54.2,
+     "fps": 59.6,
      "cpu": {
-      "browser": 0.2,
-      "renderer": 3.2,
-      "GPU": 38.6,
-      "network.mojom.NetworkService": 0.4,
+      "browser": 0,
+      "renderer": 4.2,
+      "GPU": 46.6,
+      "network.mojom.NetworkService": 0,
       "storage.mojom.StorageService": 0,
-      "total": 42.4
+      "total": 50.8
+     },
+     "busyPct": 2.2,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 58.4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 3.8,
+      "GPU": 42.9,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 46.7
+     },
+     "busyPct": 2.6,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 59.2,
+     "cpu": {
+      "browser": 0,
+      "renderer": 4,
+      "GPU": 44.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 48.6
      },
      "busyPct": 1.8,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 58.2,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 4.2,
+      "GPU": 43.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 48
+     },
+     "busyPct": 2.1,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 58.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 3.8,
+      "GPU": 43,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 46.8
+     },
+     "busyPct": 1.9,
      "effectFps": null
     }
    ]
@@ -652,12 +826,3395 @@
   "b1-css-blobs@4x": {
    "id": "b1-css-blobs",
    "throttle": 4,
-   "failed": "page.waitForTimeout: Target page, context or browser has been closed",
+   "runs": 5,
+   "ttff": null,
+   "fcp": 188,
+   "lcp": 188,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 57,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 4.2,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 11.1,
+   "scriptPct": 2.3,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 7.6,
+   "jsMs": null,
+   "cpuRenderer": 54.9,
+   "cpuGpu": 43.1,
+   "cpuBrowser": 0.2,
+   "cpuTotal": 98.2,
+   "payload": {
+    "html": 3048,
+    "poster": 0,
+    "js": 0,
+    "other": 0,
+    "total": 3048
+   },
+   "errors": [],
    "raw": [
     {
-     "failed": "page.waitForTimeout: Target page, context or browser has been closed"
+     "ttff": null,
+     "fps": 57.2,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 54.9,
+      "GPU": 43.1,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 98.2
+     },
+     "busyPct": 10.5,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 57,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 56.4,
+      "GPU": 43.1,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 99.7
+     },
+     "busyPct": 8.8,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 48.1,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 54.7,
+      "GPU": 37.7,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 92.6
+     },
+     "busyPct": 11.1,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 53.9,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 51.2,
+      "GPU": 41.1,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 92.5
+     },
+     "busyPct": 14.5,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 57.6,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 64.4,
+      "GPU": 44.6,
+      "network.mojom.NetworkService": 0.4,
+      "storage.mojom.StorageService": 0,
+      "total": 109.6
+     },
+     "busyPct": 12.5,
+     "effectFps": null
     }
    ]
+  },
+  "b2-css-property@1x": {
+   "id": "b2-css-property",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": null,
+   "fcp": 76,
+   "lcp": 76,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 57.2,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 3.9,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 15.8,
+   "scriptPct": 0.2,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 1.3,
+   "jsMs": null,
+   "cpuRenderer": 91.1,
+   "cpuGpu": 7.8,
+   "cpuBrowser": 0.2,
+   "cpuTotal": 99.3,
+   "payload": {
+    "html": 2939,
+    "poster": 0,
+    "js": 0,
+    "other": 0,
+    "total": 2939
+   },
+   "errors": [],
+   "raw": [
+    {
+     "ttff": null,
+     "fps": 57.2,
+     "cpu": {
+      "browser": 0,
+      "renderer": 93.3,
+      "GPU": 8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 101.3
+     },
+     "busyPct": 15.8,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 57.8,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 92.1,
+      "GPU": 7.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 100.1
+     },
+     "busyPct": 14.7,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 57.8,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 91.1,
+      "GPU": 8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 99.3
+     },
+     "busyPct": 11.6,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 57.2,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 90.5,
+      "GPU": 7.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 98.1
+     },
+     "busyPct": 17.8,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 54,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 87.9,
+      "GPU": 7,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 95.1
+     },
+     "busyPct": 18.5,
+     "effectFps": null
+    }
+   ]
+  },
+  "b2-css-property@4x": {
+   "id": "b2-css-property",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": null,
+   "fcp": 160,
+   "lcp": 160,
+   "lcpEl": "H1",
+   "bootBlock": 70,
+   "tbt": 20,
+   "longest": 61,
+   "fps": 39.9,
+   "frameMedian": 16.7,
+   "frameP95": 50,
+   "over25Pct": 31.2,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 58.4,
+   "scriptPct": 0.6,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 1.4,
+   "jsMs": null,
+   "cpuRenderer": 123.4,
+   "cpuGpu": 5.4,
+   "cpuBrowser": 0.2,
+   "cpuTotal": 129.8,
+   "payload": {
+    "html": 2939,
+    "poster": 0,
+    "js": 0,
+    "other": 0,
+    "total": 2939
+   },
+   "errors": [],
+   "raw": [
+    {
+     "ttff": null,
+     "fps": 33.7,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 112.3,
+      "GPU": 5,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 117.5
+     },
+     "busyPct": 66.7,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 42.9,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 123.4,
+      "GPU": 6.2,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 129.8
+     },
+     "busyPct": 57.7,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 45.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 133.2,
+      "GPU": 6.2,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 139.4
+     },
+     "busyPct": 48.1,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 39.9,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 128.1,
+      "GPU": 5.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 133.7
+     },
+     "busyPct": 58.4,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 24.5,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 98.5,
+      "GPU": 3.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 102.5
+     },
+     "busyPct": 78.5,
+     "effectFps": null
+    }
+   ]
+  },
+  "c1-svg-turbulence@1x": {
+   "id": "c1-svg-turbulence",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": null,
+   "fcp": 116,
+   "lcp": 116,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 28.5,
+   "frameMedian": 33.3,
+   "frameP95": 66.7,
+   "over25Pct": 74.5,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 78.1,
+   "scriptPct": 0,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 1.5,
+   "jsMs": null,
+   "cpuRenderer": 94.5,
+   "cpuGpu": 4.5,
+   "cpuBrowser": 0,
+   "cpuTotal": 99,
+   "payload": {
+    "html": 3034,
+    "poster": 0,
+    "js": 0,
+    "other": 0,
+    "total": 3034
+   },
+   "errors": [],
+   "raw": [
+    {
+     "ttff": null,
+     "fps": 28.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 94.5,
+      "GPU": 4.5,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 99
+     },
+     "busyPct": 80.2,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 26.1,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 85.5,
+      "GPU": 3.9,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0.2,
+      "total": 90
+     },
+     "busyPct": 79.5,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 30.3,
+     "cpu": {
+      "browser": 0,
+      "renderer": 99.9,
+      "GPU": 4.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 104.5
+     },
+     "busyPct": 78.1,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 27.1,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 92,
+      "GPU": 4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 96.2
+     },
+     "busyPct": 77.5,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 29.2,
+     "cpu": {
+      "browser": 0,
+      "renderer": 99.4,
+      "GPU": 4.5,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 103.9
+     },
+     "busyPct": 76.1,
+     "effectFps": null
+    }
+   ]
+  },
+  "c1-svg-turbulence@4x": {
+   "id": "c1-svg-turbulence",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": null,
+   "fcp": 236,
+   "lcp": 236,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 16.9,
+   "frameMedian": 50,
+   "frameP95": 116.7,
+   "over25Pct": 94,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 88.6,
+   "scriptPct": 0.1,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 1.9,
+   "jsMs": null,
+   "cpuRenderer": 111.8,
+   "cpuGpu": 3.3,
+   "cpuBrowser": 0.2,
+   "cpuTotal": 115.4,
+   "payload": {
+    "html": 3034,
+    "poster": 0,
+    "js": 0,
+    "other": 0,
+    "total": 3034
+   },
+   "errors": [],
+   "raw": [
+    {
+     "ttff": null,
+     "fps": 14.4,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 103.4,
+      "GPU": 3,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 106.8
+     },
+     "busyPct": 89.6,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 18.6,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 120.1,
+      "GPU": 3.3,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 123.8
+     },
+     "busyPct": 88.6,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 16.9,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 111.8,
+      "GPU": 3.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 115.4
+     },
+     "busyPct": 85.7,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 15.6,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 109.3,
+      "GPU": 2.9,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 112.6
+     },
+     "busyPct": 91.1,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 19.1,
+     "cpu": {
+      "browser": 0.4,
+      "renderer": 126.2,
+      "GPU": 3.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 130.2
+     },
+     "busyPct": 86.5,
+     "effectFps": null
+    }
+   ]
+  },
+  "c2-css-grain@1x": {
+   "id": "c2-css-grain",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": null,
+   "fcp": 148,
+   "lcp": 148,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 58.6,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 2.1,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 1.3,
+   "scriptPct": 0.2,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 7.8,
+   "jsMs": null,
+   "cpuRenderer": 2.8,
+   "cpuGpu": 45.6,
+   "cpuBrowser": 0,
+   "cpuTotal": 48.4,
+   "payload": {
+    "html": 3125,
+    "poster": 3414,
+    "js": 0,
+    "other": 0,
+    "total": 6539
+   },
+   "errors": [],
+   "raw": [
+    {
+     "ttff": null,
+     "fps": 58.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 3,
+      "GPU": 45.7,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 48.7
+     },
+     "busyPct": 1.3,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 58.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 2.8,
+      "GPU": 45.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 48.4
+     },
+     "busyPct": 1.5,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 59.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 2.8,
+      "GPU": 44.3,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 47.1
+     },
+     "busyPct": 1.3,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 55.8,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 2.8,
+      "GPU": 43.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 46.4
+     },
+     "busyPct": 1.2,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 55.2,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 2.8,
+      "GPU": 46.9,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 49.9
+     },
+     "busyPct": 1.4,
+     "effectFps": null
+    }
+   ]
+  },
+  "c2-css-grain@4x": {
+   "id": "c2-css-grain",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": null,
+   "fcp": 228,
+   "lcp": 228,
+   "lcpEl": "H1",
+   "bootBlock": 52,
+   "tbt": 2,
+   "longest": 52,
+   "fps": 53,
+   "frameMedian": 16.7,
+   "frameP95": 33.4,
+   "over25Pct": 11.8,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 5.1,
+   "scriptPct": 0.5,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 9.1,
+   "jsMs": null,
+   "cpuRenderer": 59.2,
+   "cpuGpu": 47.5,
+   "cpuBrowser": 0,
+   "cpuTotal": 107.2,
+   "payload": {
+    "html": 3125,
+    "poster": 3414,
+    "js": 0,
+    "other": 0,
+    "total": 6539
+   },
+   "errors": [],
+   "raw": [
+    {
+     "ttff": null,
+     "fps": 46.4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 55.6,
+      "GPU": 43.9,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 99.5
+     },
+     "busyPct": 5.2,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 43.3,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 51.9,
+      "GPU": 46,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 98.1
+     },
+     "busyPct": 5.1,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 56.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 62.9,
+      "GPU": 47.5,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 110.6
+     },
+     "busyPct": 4.7,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 56.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 65.7,
+      "GPU": 48.7,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 114.4
+     },
+     "busyPct": 5.1,
+     "effectFps": null
+    },
+    {
+     "ttff": null,
+     "fps": 53,
+     "cpu": {
+      "browser": 0,
+      "renderer": 59.2,
+      "GPU": 48,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 107.2
+     },
+     "busyPct": 4.9,
+     "effectFps": null
+    }
+   ]
+  },
+  "d-canvas2d@1x": {
+   "id": "d-canvas2d",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": 104,
+   "fcp": 96,
+   "lcp": 96,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 59.4,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 1,
+   "effectFps": 59.4,
+   "rafPerSec": 59.4,
+   "busyPct": 24.8,
+   "scriptPct": 2.3,
+   "gpuMsPerFrame": 1.3,
+   "gpuMsPerDisplayFrame": 1.3,
+   "jsMs": 0.2,
+   "cpuRenderer": 19.8,
+   "cpuGpu": 7.6,
+   "cpuBrowser": 0.2,
+   "cpuTotal": 27.6,
+   "payload": {
+    "html": 2868,
+    "poster": 28979,
+    "js": 2142,
+    "other": 0,
+    "total": 33989
+   },
+   "renderer": "canvas2d",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 104,
+     "fps": 57.6,
+     "cpu": {
+      "browser": 0.4,
+      "renderer": 19.8,
+      "GPU": 7.8,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 28.2
+     },
+     "busyPct": 25.9,
+     "effectFps": 57.7
+    },
+    {
+     "ttff": 114.79999999981374,
+     "fps": 59,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 19.4,
+      "GPU": 7.2,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 27
+     },
+     "busyPct": 24.8,
+     "effectFps": 59
+    },
+    {
+     "ttff": 118.89999999990687,
+     "fps": 60,
+     "cpu": {
+      "browser": 0,
+      "renderer": 20,
+      "GPU": 7.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 27.6
+     },
+     "busyPct": 23.3,
+     "effectFps": 60
+    },
+    {
+     "ttff": 98.80000000004657,
+     "fps": 59.8,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 19.4,
+      "GPU": 7.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 27
+     },
+     "busyPct": 21.8,
+     "effectFps": 59.9
+    },
+    {
+     "ttff": 82.89999999990687,
+     "fps": 59.4,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 20.2,
+      "GPU": 7.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 28.2
+     },
+     "busyPct": 25,
+     "effectFps": 59.4
+    }
+   ]
+  },
+  "d-canvas2d@4x": {
+   "id": "d-canvas2d",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": 270.2,
+   "fcp": 160,
+   "lcp": 160,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 58.6,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 2.4,
+   "effectFps": 58.7,
+   "rafPerSec": 58.7,
+   "busyPct": 70,
+   "scriptPct": 5.4,
+   "gpuMsPerFrame": 1.2,
+   "gpuMsPerDisplayFrame": 1.2,
+   "jsMs": 0.6,
+   "cpuRenderer": 88.1,
+   "cpuGpu": 7.2,
+   "cpuBrowser": 0,
+   "cpuTotal": 95.7,
+   "payload": {
+    "html": 2868,
+    "poster": 28979,
+    "js": 2142,
+    "other": 0,
+    "total": 33989
+   },
+   "renderer": "canvas2d",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 315.19999999995343,
+     "fps": 57.8,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 86.8,
+      "GPU": 7.2,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 94.4
+     },
+     "busyPct": 70,
+     "effectFps": 57.8
+    },
+    {
+     "ttff": 270.19999999995343,
+     "fps": 58.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 85.3,
+      "GPU": 6.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 91.9
+     },
+     "busyPct": 71.5,
+     "effectFps": 58.7
+    },
+    {
+     "ttff": 238.39999999990687,
+     "fps": 59.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 90.6,
+      "GPU": 7.2,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 98
+     },
+     "busyPct": 65.6,
+     "effectFps": 59.9
+    },
+    {
+     "ttff": 251,
+     "fps": 58.6,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 88.1,
+      "GPU": 7.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 95.7
+     },
+     "busyPct": 68.8,
+     "effectFps": 59
+    },
+    {
+     "ttff": 275,
+     "fps": 58.4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 89.7,
+      "GPU": 7.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 97.3
+     },
+     "busyPct": 75.4,
+     "effectFps": 58.6
+    }
+   ]
+  },
+  "e1-webgl-vanilla@1x": {
+   "id": "e1-webgl-vanilla",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": 87.4,
+   "fcp": 208,
+   "lcp": 208,
+   "lcpEl": "H1",
+   "bootBlock": 625,
+   "tbt": 530,
+   "longest": 437,
+   "fps": 4.2,
+   "frameMedian": 233.3,
+   "frameP95": 316.6,
+   "over25Pct": 100,
+   "effectFps": 4.6,
+   "rafPerSec": 4.6,
+   "busyPct": 99.5,
+   "scriptPct": 0.1,
+   "gpuMsPerFrame": 227.8,
+   "gpuMsPerDisplayFrame": 246.1,
+   "jsMs": 0,
+   "cpuRenderer": 1.3,
+   "cpuGpu": 104.8,
+   "cpuBrowser": 0,
+   "cpuTotal": 106.1,
+   "payload": {
+    "html": 2868,
+    "poster": 3414,
+    "js": 3563,
+    "other": 0,
+    "total": 9845
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 67.5999999998603,
+     "fps": 5.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.6,
+      "GPU": 137.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 139.4
+     },
+     "busyPct": 99.6,
+     "effectFps": 5.9
+    },
+    {
+     "ttff": 87.4000000001397,
+     "fps": 4.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.3,
+      "GPU": 109.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0.2,
+      "total": 111.3
+     },
+     "busyPct": 99.4,
+     "effectFps": 4.8
+    },
+    {
+     "ttff": 262,
+     "fps": 4.2,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.3,
+      "GPU": 104.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 106.1
+     },
+     "busyPct": 99.9,
+     "effectFps": 4.6
+    },
+    {
+     "ttff": 246.10000000009313,
+     "fps": 4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.1,
+      "GPU": 98.9,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 100
+     },
+     "busyPct": 99.4,
+     "effectFps": 4.4
+    },
+    {
+     "ttff": 59.699999999953434,
+     "fps": 3.2,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1,
+      "GPU": 76.1,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 77.1
+     },
+     "busyPct": 99.5,
+     "effectFps": 3.6
+    }
+   ]
+  },
+  "e1-webgl-vanilla@4x": {
+   "id": "e1-webgl-vanilla",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": 255.9,
+   "fcp": 256,
+   "lcp": 256,
+   "lcpEl": "H1",
+   "bootBlock": 745,
+   "tbt": 645,
+   "longest": 583,
+   "fps": 3,
+   "frameMedian": 283.3,
+   "frameP95": 616.7,
+   "over25Pct": 100,
+   "effectFps": 3.3,
+   "rafPerSec": 3.3,
+   "busyPct": 99.8,
+   "scriptPct": 0.3,
+   "gpuMsPerFrame": 219.7,
+   "gpuMsPerDisplayFrame": 241.7,
+   "jsMs": 0,
+   "cpuRenderer": 50.1,
+   "cpuGpu": 76,
+   "cpuBrowser": 0,
+   "cpuTotal": 121.9,
+   "payload": {
+    "html": 2868,
+    "poster": 3414,
+    "js": 3563,
+    "other": 0,
+    "total": 9845
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 255.9000000001397,
+     "fps": 2.4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 50.1,
+      "GPU": 58,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 108.1
+     },
+     "busyPct": 99.8,
+     "effectFps": 2.8
+    },
+    {
+     "ttff": 199,
+     "fps": 2.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 47.5,
+      "GPU": 66.2,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 113.7
+     },
+     "busyPct": 100,
+     "effectFps": 2.9
+    },
+    {
+     "ttff": 288.5,
+     "fps": 3.2,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 55.6,
+      "GPU": 77.6,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 133.6
+     },
+     "busyPct": 99.4,
+     "effectFps": 3.6
+    },
+    {
+     "ttff": 161.39999999990687,
+     "fps": 3.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 55.1,
+      "GPU": 83.5,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 138.6
+     },
+     "busyPct": 99.7,
+     "effectFps": 3.8
+    },
+    {
+     "ttff": 270.9000000001397,
+     "fps": 3,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 45.7,
+      "GPU": 76,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 121.9
+     },
+     "busyPct": 100,
+     "effectFps": 3.3
+    }
+   ]
+  },
+  "e2-ogl@1x": {
+   "id": "e2-ogl",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": 144.1,
+   "fcp": 100,
+   "lcp": 100,
+   "lcpEl": "H1",
+   "bootBlock": 611,
+   "tbt": 551,
+   "longest": 536,
+   "fps": 4.5,
+   "frameMedian": 216.7,
+   "frameP95": 349.9,
+   "over25Pct": 100,
+   "effectFps": 4.9,
+   "rafPerSec": 4.9,
+   "busyPct": 99.3,
+   "scriptPct": 0.2,
+   "gpuMsPerFrame": 222.3,
+   "gpuMsPerDisplayFrame": 243.1,
+   "jsMs": 0.1,
+   "cpuRenderer": 1.2,
+   "cpuGpu": 109.4,
+   "cpuBrowser": 0.2,
+   "cpuTotal": 111,
+   "payload": {
+    "html": 2864,
+    "poster": 3414,
+    "js": 15989,
+    "other": 0,
+    "total": 22267
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 89.70000000018626,
+     "fps": 2.4,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 0.9,
+      "GPU": 60.7,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 62
+     },
+     "busyPct": 99,
+     "effectFps": 2.8
+    },
+    {
+     "ttff": 313.30000000004657,
+     "fps": 4.9,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.2,
+      "GPU": 117.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 119
+     },
+     "busyPct": 99.7,
+     "effectFps": 5.3
+    },
+    {
+     "ttff": 145.5999999998603,
+     "fps": 4.3,
+     "cpu": {
+      "browser": 0.4,
+      "renderer": 1.2,
+      "GPU": 105.7,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 107.3
+     },
+     "busyPct": 99.2,
+     "effectFps": 4.7
+    },
+    {
+     "ttff": 144.0999999998603,
+     "fps": 4.5,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 1.2,
+      "GPU": 109.4,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 111
+     },
+     "busyPct": 99.3,
+     "effectFps": 4.9
+    },
+    {
+     "ttff": 82.80000000004657,
+     "fps": 5.2,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.2,
+      "GPU": 123.3,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 124.5
+     },
+     "busyPct": 99.7,
+     "effectFps": 5.6
+    }
+   ]
+  },
+  "e2-ogl@4x": {
+   "id": "e2-ogl",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": 244.2,
+   "fcp": 140,
+   "lcp": 140,
+   "lcpEl": "H1",
+   "bootBlock": 780,
+   "tbt": 630,
+   "longest": 496,
+   "fps": 3.9,
+   "frameMedian": 233.3,
+   "frameP95": 383.3,
+   "over25Pct": 100,
+   "effectFps": 4.3,
+   "rafPerSec": 4.3,
+   "busyPct": 99.9,
+   "scriptPct": 0.5,
+   "gpuMsPerFrame": 235.1,
+   "gpuMsPerDisplayFrame": 247.2,
+   "jsMs": 0.1,
+   "cpuRenderer": 60.9,
+   "cpuGpu": 101.4,
+   "cpuBrowser": 0,
+   "cpuTotal": 161.9,
+   "payload": {
+    "html": 2864,
+    "poster": 3414,
+    "js": 15989,
+    "other": 0,
+    "total": 22267
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 244.19999999995343,
+     "fps": 3.2,
+     "cpu": {
+      "browser": 0,
+      "renderer": 62.1,
+      "GPU": 78.3,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 140.4
+     },
+     "busyPct": 100,
+     "effectFps": 3.3
+    },
+    {
+     "ttff": 218.30000000004657,
+     "fps": 3.9,
+     "cpu": {
+      "browser": 0,
+      "renderer": 65.5,
+      "GPU": 96.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 161.9
+     },
+     "busyPct": 99.9,
+     "effectFps": 4.1
+    },
+    {
+     "ttff": 228.9000000001397,
+     "fps": 5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 60.9,
+      "GPU": 121.6,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 182.7
+     },
+     "busyPct": 99.7,
+     "effectFps": 5.4
+    },
+    {
+     "ttff": 250.19999999995343,
+     "fps": 5.4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 59.8,
+      "GPU": 134.1,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 193.9
+     },
+     "busyPct": 99.9,
+     "effectFps": 5.8
+    },
+    {
+     "ttff": 339.10000000009313,
+     "fps": 3.9,
+     "cpu": {
+      "browser": 0,
+      "renderer": 53.8,
+      "GPU": 101.4,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 155.4
+     },
+     "busyPct": 100,
+     "effectFps": 4.3
+    }
+   ]
+  },
+  "e3-regl@1x": {
+   "id": "e3-regl",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": 129.9,
+   "fcp": 116,
+   "lcp": 116,
+   "lcpEl": "H1",
+   "bootBlock": 732,
+   "tbt": 671,
+   "longest": 438,
+   "fps": 5,
+   "frameMedian": 183.3,
+   "frameP95": 283.4,
+   "over25Pct": 100,
+   "effectFps": 5.4,
+   "rafPerSec": 5.4,
+   "busyPct": 99.8,
+   "scriptPct": 0.1,
+   "gpuMsPerFrame": 228.7,
+   "gpuMsPerDisplayFrame": 247,
+   "jsMs": 0.1,
+   "cpuRenderer": 1.4,
+   "cpuGpu": 123.5,
+   "cpuBrowser": 0,
+   "cpuTotal": 125.1,
+   "payload": {
+    "html": 2863,
+    "poster": 3414,
+    "js": 44759,
+    "other": 0,
+    "total": 51036
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 170.69999999995343,
+     "fps": 4.2,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.2,
+      "GPU": 97.8,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 99.2
+     },
+     "busyPct": 99.8,
+     "effectFps": 4.2
+    },
+    {
+     "ttff": 342.5,
+     "fps": 5.6,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 1.6,
+      "GPU": 133.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 135.2
+     },
+     "busyPct": 99.9,
+     "effectFps": 6
+    },
+    {
+     "ttff": 112.69999999995343,
+     "fps": 5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.4,
+      "GPU": 123.5,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 125.1
+     },
+     "busyPct": 99.7,
+     "effectFps": 5.4
+    },
+    {
+     "ttff": 129.9000000001397,
+     "fps": 5.2,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.6,
+      "GPU": 130,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 131.6
+     },
+     "busyPct": 99.8,
+     "effectFps": 5.4
+    },
+    {
+     "ttff": 105.10000000009313,
+     "fps": 3.4,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 0.9,
+      "GPU": 84.3,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 85.4
+     },
+     "busyPct": 99.9,
+     "effectFps": 3.8
+    }
+   ]
+  },
+  "e3-regl@4x": {
+   "id": "e3-regl",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": 331.9,
+   "fcp": 168,
+   "lcp": 168,
+   "lcpEl": "H1",
+   "bootBlock": 769,
+   "tbt": 669,
+   "longest": 638,
+   "fps": 3.1,
+   "frameMedian": 308.4,
+   "frameP95": 550,
+   "over25Pct": 100,
+   "effectFps": 3.4,
+   "rafPerSec": 3.4,
+   "busyPct": 99.8,
+   "scriptPct": 0.2,
+   "gpuMsPerFrame": 218.5,
+   "gpuMsPerDisplayFrame": 242.2,
+   "jsMs": 0.1,
+   "cpuRenderer": 53.8,
+   "cpuGpu": 73.7,
+   "cpuBrowser": 0,
+   "cpuTotal": 127.5,
+   "payload": {
+    "html": 2863,
+    "poster": 3414,
+    "js": 44759,
+    "other": 0,
+    "total": 51036
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 393.89999999990687,
+     "fps": 3.1,
+     "cpu": {
+      "browser": 0,
+      "renderer": 46.8,
+      "GPU": 71.2,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 118.2
+     },
+     "busyPct": 99.8,
+     "effectFps": 3.1
+    },
+    {
+     "ttff": 331.9000000001397,
+     "fps": 3,
+     "cpu": {
+      "browser": 0,
+      "renderer": 53.8,
+      "GPU": 73.7,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 127.5
+     },
+     "busyPct": 99.9,
+     "effectFps": 3.4
+    },
+    {
+     "ttff": 342.29999999981374,
+     "fps": 4.3,
+     "cpu": {
+      "browser": 0,
+      "renderer": 51.7,
+      "GPU": 104.1,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 155.8
+     },
+     "busyPct": 99.8,
+     "effectFps": 4.7
+    },
+    {
+     "ttff": 320.10000000009313,
+     "fps": 3.7,
+     "cpu": {
+      "browser": 0,
+      "renderer": 56.6,
+      "GPU": 89.6,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 146.4
+     },
+     "busyPct": 99.9,
+     "effectFps": 4.1
+    },
+    {
+     "ttff": 162.10000000009313,
+     "fps": 2.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 55.1,
+      "GPU": 62.5,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 117.6
+     },
+     "busyPct": 99.7,
+     "effectFps": 2.9
+    }
+   ]
+  },
+  "e4-twgl@1x": {
+   "id": "e4-twgl",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": 125.8,
+   "fcp": 88,
+   "lcp": 88,
+   "lcpEl": "H1",
+   "bootBlock": 587,
+   "tbt": 537,
+   "longest": 587,
+   "fps": 4,
+   "frameMedian": 233.3,
+   "frameP95": 349.9,
+   "over25Pct": 100,
+   "effectFps": 4.4,
+   "rafPerSec": 4.4,
+   "busyPct": 99.8,
+   "scriptPct": 0.1,
+   "gpuMsPerFrame": 223.6,
+   "gpuMsPerDisplayFrame": 241,
+   "jsMs": 0,
+   "cpuRenderer": 1,
+   "cpuGpu": 96.4,
+   "cpuBrowser": 0,
+   "cpuTotal": 97.4,
+   "payload": {
+    "html": 2866,
+    "poster": 3414,
+    "js": 13775,
+    "other": 0,
+    "total": 20055
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 125.80000000004657,
+     "fps": 2.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 0.8,
+      "GPU": 62.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 63.4
+     },
+     "busyPct": 99.9,
+     "effectFps": 2.8
+    },
+    {
+     "ttff": 111.89999999990687,
+     "fps": 4.4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.1,
+      "GPU": 105.1,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 106.2
+     },
+     "busyPct": 99.8,
+     "effectFps": 4.7
+    },
+    {
+     "ttff": 105.80000000004657,
+     "fps": 5,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 1.2,
+      "GPU": 123.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 124.8
+     },
+     "busyPct": 99.6,
+     "effectFps": 5.4
+    },
+    {
+     "ttff": 135.19999999995343,
+     "fps": 4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1,
+      "GPU": 96.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 97.4
+     },
+     "busyPct": 99.8,
+     "effectFps": 4.4
+    },
+    {
+     "ttff": 165,
+     "fps": 2.4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 0.7,
+      "GPU": 60.2,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 60.9
+     },
+     "busyPct": 99.9,
+     "effectFps": 2.8
+    }
+   ]
+  },
+  "e4-twgl@4x": {
+   "id": "e4-twgl",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": 372.4,
+   "fcp": 216,
+   "lcp": 216,
+   "lcpEl": "H1",
+   "bootBlock": 868,
+   "tbt": 768,
+   "longest": 782,
+   "fps": 3.2,
+   "frameMedian": 300,
+   "frameP95": 533.3,
+   "over25Pct": 100,
+   "effectFps": 3.6,
+   "rafPerSec": 3.6,
+   "busyPct": 99.8,
+   "scriptPct": 0.1,
+   "gpuMsPerFrame": 221.3,
+   "gpuMsPerDisplayFrame": 248.8,
+   "jsMs": 0.1,
+   "cpuRenderer": 54.4,
+   "cpuGpu": 79,
+   "cpuBrowser": 0,
+   "cpuTotal": 138.1,
+   "payload": {
+    "html": 2866,
+    "poster": 3414,
+    "js": 13775,
+    "other": 0,
+    "total": 20055
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 372.4000000001397,
+     "fps": 3.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 62.8,
+      "GPU": 89.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 152.6
+     },
+     "busyPct": 99.8,
+     "effectFps": 4
+    },
+    {
+     "ttff": 396.19999999995343,
+     "fps": 3.2,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 61.7,
+      "GPU": 76.2,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 138.1
+     },
+     "busyPct": 100,
+     "effectFps": 3.6
+    },
+    {
+     "ttff": 224.19999999995343,
+     "fps": 3,
+     "cpu": {
+      "browser": 0,
+      "renderer": 54.4,
+      "GPU": 79,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 133.4
+     },
+     "busyPct": 99.8,
+     "effectFps": 3.4
+    },
+    {
+     "ttff": 542.3000000000466,
+     "fps": 2.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 48.7,
+      "GPU": 64.7,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 113.4
+     },
+     "busyPct": 100,
+     "effectFps": 3
+    },
+    {
+     "ttff": 225.19999999995343,
+     "fps": 3.5,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 53.6,
+      "GPU": 86.3,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 140.1
+     },
+     "busyPct": 99.7,
+     "effectFps": 3.9
+    }
+   ]
+  },
+  "e5-three@1x": {
+   "id": "e5-three",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": 114.8,
+   "fcp": 152,
+   "lcp": 152,
+   "lcpEl": "H1",
+   "bootBlock": 673,
+   "tbt": 573,
+   "longest": 402,
+   "fps": 4.2,
+   "frameMedian": 208.4,
+   "frameP95": 333.4,
+   "over25Pct": 100,
+   "effectFps": 4.6,
+   "rafPerSec": 4.6,
+   "busyPct": 99.7,
+   "scriptPct": 0.2,
+   "gpuMsPerFrame": 218.7,
+   "gpuMsPerDisplayFrame": 238,
+   "jsMs": 0.2,
+   "cpuRenderer": 1.2,
+   "cpuGpu": 102.4,
+   "cpuBrowser": 0,
+   "cpuTotal": 103.6,
+   "payload": {
+    "html": 2866,
+    "poster": 3414,
+    "js": 135715,
+    "other": 0,
+    "total": 141995
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 106.9000000001397,
+     "fps": 3.6,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 1.2,
+      "GPU": 85.3,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 86.7
+     },
+     "busyPct": 99.5,
+     "effectFps": 3.9
+    },
+    {
+     "ttff": 110.69999999995343,
+     "fps": 5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.4,
+      "GPU": 119.9,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 121.3
+     },
+     "busyPct": 99.6,
+     "effectFps": 5.4
+    },
+    {
+     "ttff": 114.80000000004657,
+     "fps": 4.2,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.2,
+      "GPU": 102.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 103.6
+     },
+     "busyPct": 99.7,
+     "effectFps": 4.6
+    },
+    {
+     "ttff": 201.10000000009313,
+     "fps": 3.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 0.9,
+      "GPU": 83.3,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 84.4
+     },
+     "busyPct": 99.8,
+     "effectFps": 3.9
+    },
+    {
+     "ttff": 122.80000000004657,
+     "fps": 5.5,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 1.7,
+      "GPU": 129,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 131.1
+     },
+     "busyPct": 99.7,
+     "effectFps": 5.9
+    }
+   ]
+  },
+  "e5-three@4x": {
+   "id": "e5-three",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": 308.8,
+   "fcp": 132,
+   "lcp": 132,
+   "lcpEl": "H1",
+   "bootBlock": 731,
+   "tbt": 631,
+   "longest": 628,
+   "fps": 3.5,
+   "frameMedian": 291.6,
+   "frameP95": 450,
+   "over25Pct": 100,
+   "effectFps": 3.9,
+   "rafPerSec": 3.9,
+   "busyPct": 99.7,
+   "scriptPct": 0.5,
+   "gpuMsPerFrame": 221.3,
+   "gpuMsPerDisplayFrame": 243.7,
+   "jsMs": 0.35,
+   "cpuRenderer": 56.2,
+   "cpuGpu": 85.3,
+   "cpuBrowser": 0,
+   "cpuTotal": 143.8,
+   "payload": {
+    "html": 2866,
+    "poster": 3414,
+    "js": 135715,
+    "other": 0,
+    "total": 141995
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 463.30000000004657,
+     "fps": 4.3,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 56.2,
+      "GPU": 112.1,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 168.5
+     },
+     "busyPct": 99.7,
+     "effectFps": 4.5
+    },
+    {
+     "ttff": 334.39999999990687,
+     "fps": 4.3,
+     "cpu": {
+      "browser": 0,
+      "renderer": 53.3,
+      "GPU": 104,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 157.3
+     },
+     "busyPct": 99.7,
+     "effectFps": 4.7
+    },
+    {
+     "ttff": 308.80000000004657,
+     "fps": 2.9,
+     "cpu": {
+      "browser": 0,
+      "renderer": 49.9,
+      "GPU": 68.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 118.7
+     },
+     "busyPct": 100,
+     "effectFps": 3.3
+    },
+    {
+     "ttff": 237.80000000004657,
+     "fps": 3.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 58.5,
+      "GPU": 85.3,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 143.8
+     },
+     "busyPct": 98.9,
+     "effectFps": 3.9
+    },
+    {
+     "ttff": 257,
+     "fps": 2.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 57.5,
+      "GPU": 68.8,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 126.5
+     },
+     "busyPct": 99.7,
+     "effectFps": 3
+    }
+   ]
+  },
+  "e6-paper@1x": {
+   "id": "e6-paper",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": 163.7,
+   "fcp": 120,
+   "lcp": 120,
+   "lcpEl": "H1",
+   "bootBlock": 3246,
+   "tbt": 3146,
+   "longest": 3195,
+   "fps": 0.8,
+   "frameMedian": 1200,
+   "frameP95": 1216.6,
+   "over25Pct": 100,
+   "effectFps": null,
+   "rafPerSec": 1.1,
+   "busyPct": 99.9,
+   "scriptPct": 0,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 945.8,
+   "jsMs": null,
+   "cpuRenderer": 0.7,
+   "cpuGpu": 75.4,
+   "cpuBrowser": 0,
+   "cpuTotal": 76.5,
+   "payload": {
+    "html": 2873,
+    "poster": 1630,
+    "js": 7382,
+    "other": 0,
+    "total": 11885
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    2560,
+    1440
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 233.9000000001397,
+     "fps": 1.2,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.2,
+      "GPU": 113.5,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 114.7
+     },
+     "busyPct": 100,
+     "effectFps": null
+    },
+    {
+     "ttff": 163.69999999995343,
+     "fps": 1.2,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1,
+      "GPU": 111.7,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 112.7
+     },
+     "busyPct": 99.9,
+     "effectFps": null
+    },
+    {
+     "ttff": 148,
+     "fps": 0.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 0.7,
+      "GPU": 72.7,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 73.4
+     },
+     "busyPct": 99.8,
+     "effectFps": null
+    },
+    {
+     "ttff": 161,
+     "fps": 0.7,
+     "cpu": {
+      "browser": 0,
+      "renderer": 0.7,
+      "GPU": 67.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 68.1
+     },
+     "busyPct": 99.9,
+     "effectFps": null
+    },
+    {
+     "ttff": 244,
+     "fps": 0.7,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 0.7,
+      "GPU": 75.4,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 76.5
+     },
+     "busyPct": 100,
+     "effectFps": null
+    }
+   ]
+  },
+  "e6-paper@4x": {
+   "id": "e6-paper",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": 460,
+   "fcp": 212,
+   "lcp": 212,
+   "lcpEl": "H1",
+   "bootBlock": 2904,
+   "tbt": 2704,
+   "longest": 2648,
+   "fps": 0.7,
+   "frameMedian": 1466.6,
+   "frameP95": 1933.2,
+   "over25Pct": 100,
+   "effectFps": null,
+   "rafPerSec": 1,
+   "busyPct": 99.9,
+   "scriptPct": 0,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 977.8,
+   "jsMs": null,
+   "cpuRenderer": 61.5,
+   "cpuGpu": 65.2,
+   "cpuBrowser": 0,
+   "cpuTotal": 126.7,
+   "payload": {
+    "html": 2873,
+    "poster": 1630,
+    "js": 7382,
+    "other": 0,
+    "total": 11885
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    2560,
+    1440
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 414.89999999990687,
+     "fps": 0.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 52.5,
+      "GPU": 60.5,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 113
+     },
+     "busyPct": 100,
+     "effectFps": null
+    },
+    {
+     "ttff": 309.5999999998603,
+     "fps": 0.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 65.1,
+      "GPU": 52.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 117.9
+     },
+     "busyPct": 99.9,
+     "effectFps": null
+    },
+    {
+     "ttff": 610.8999999999069,
+     "fps": 0.9,
+     "cpu": {
+      "browser": 0,
+      "renderer": 54.8,
+      "GPU": 88,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 142.8
+     },
+     "busyPct": 99.9,
+     "effectFps": null
+    },
+    {
+     "ttff": 460,
+     "fps": 0.7,
+     "cpu": {
+      "browser": 0,
+      "renderer": 61.7,
+      "GPU": 65.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 127.5
+     },
+     "busyPct": 99.6,
+     "effectFps": null
+    },
+    {
+     "ttff": 468.30000000004657,
+     "fps": 0.7,
+     "cpu": {
+      "browser": 0,
+      "renderer": 61.5,
+      "GPU": 65.2,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 126.7
+     },
+     "busyPct": 100,
+     "effectFps": null
+    }
+   ]
+  },
+  "f-three-particles@1x": {
+   "id": "f-three-particles",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": 173.8,
+   "fcp": 88,
+   "lcp": 88,
+   "lcpEl": "H1",
+   "bootBlock": 533,
+   "tbt": 179,
+   "longest": 178,
+   "fps": 21.7,
+   "frameMedian": 49.9,
+   "frameP95": 50.1,
+   "over25Pct": 97.5,
+   "effectFps": 22.1,
+   "rafPerSec": 22.1,
+   "busyPct": 96.7,
+   "scriptPct": 0.7,
+   "gpuMsPerFrame": 42.6,
+   "gpuMsPerDisplayFrame": 43.1,
+   "jsMs": 0.2,
+   "cpuRenderer": 4.5,
+   "cpuGpu": 95,
+   "cpuBrowser": 0,
+   "cpuTotal": 99.8,
+   "payload": {
+    "html": 2870,
+    "poster": 13597,
+    "js": 136810,
+    "other": 0,
+    "total": 153277
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 181.9000000001397,
+     "fps": 23.5,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 4.5,
+      "GPU": 101.2,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 105.9
+     },
+     "busyPct": 94.9,
+     "effectFps": 23.9
+    },
+    {
+     "ttff": 173.80000000004657,
+     "fps": 21.7,
+     "cpu": {
+      "browser": 0,
+      "renderer": 4.8,
+      "GPU": 95,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 99.8
+     },
+     "busyPct": 98.5,
+     "effectFps": 22.1
+    },
+    {
+     "ttff": 201.10000000009313,
+     "fps": 19.7,
+     "cpu": {
+      "browser": 0,
+      "renderer": 4.4,
+      "GPU": 89,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 93.6
+     },
+     "busyPct": 96.7,
+     "effectFps": 20.5
+    },
+    {
+     "ttff": 157.39999999990687,
+     "fps": 21.5,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 4.4,
+      "GPU": 92,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 96.8
+     },
+     "busyPct": 96.7,
+     "effectFps": 21.6
+    },
+    {
+     "ttff": 134.80000000004657,
+     "fps": 24.3,
+     "cpu": {
+      "browser": 0,
+      "renderer": 4.8,
+      "GPU": 103.3,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0.2,
+      "total": 108.3
+     },
+     "busyPct": 97.6,
+     "effectFps": 24.7
+    }
+   ]
+  },
+  "f-three-particles@4x": {
+   "id": "f-three-particles",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": 379.9,
+   "fcp": 168,
+   "lcp": 168,
+   "lcpEl": "H1",
+   "bootBlock": 623,
+   "tbt": 373,
+   "longest": 234,
+   "fps": 13.9,
+   "frameMedian": 66.6,
+   "frameP95": 150,
+   "over25Pct": 100,
+   "effectFps": 14.3,
+   "rafPerSec": 14.3,
+   "busyPct": 99.3,
+   "scriptPct": 1.7,
+   "gpuMsPerFrame": 44.9,
+   "gpuMsPerDisplayFrame": 46.1,
+   "jsMs": 0.5,
+   "cpuRenderer": 61,
+   "cpuGpu": 66,
+   "cpuBrowser": 0,
+   "cpuTotal": 123.7,
+   "payload": {
+    "html": 2870,
+    "poster": 13597,
+    "js": 136810,
+    "other": 0,
+    "total": 153277
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 379.89999999990687,
+     "fps": 12.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 63.4,
+      "GPU": 57.7,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 121.3
+     },
+     "busyPct": 99.5,
+     "effectFps": 13
+    },
+    {
+     "ttff": 330.3000000002794,
+     "fps": 13.3,
+     "cpu": {
+      "browser": 0,
+      "renderer": 58.9,
+      "GPU": 63.7,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 122.6
+     },
+     "busyPct": 99.3,
+     "effectFps": 13.5
+    },
+    {
+     "ttff": 439.79999999981374,
+     "fps": 13.9,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 63,
+      "GPU": 66.1,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 129.3
+     },
+     "busyPct": 98.9,
+     "effectFps": 14.3
+    },
+    {
+     "ttff": 326.20000000018626,
+     "fps": 14.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 57.7,
+      "GPU": 66,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 123.7
+     },
+     "busyPct": 96.5,
+     "effectFps": 15.1
+    },
+    {
+     "ttff": 479.60000000009313,
+     "fps": 14.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 61,
+      "GPU": 67.3,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 128.3
+     },
+     "busyPct": 99.6,
+     "effectFps": 15
+    }
+   ]
+  },
+  "h-post@1x": {
+   "id": "h-post",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": 209.2,
+   "fcp": 88,
+   "lcp": 88,
+   "lcpEl": null,
+   "bootBlock": 1167,
+   "tbt": 1067,
+   "longest": 1034,
+   "fps": 2.9,
+   "frameMedian": 333.3,
+   "frameP95": 566.7,
+   "over25Pct": 100,
+   "effectFps": 3.3,
+   "rafPerSec": 3.3,
+   "busyPct": 99.9,
+   "scriptPct": 0.7,
+   "gpuMsPerFrame": 356.3,
+   "gpuMsPerDisplayFrame": 402.3,
+   "jsMs": 1,
+   "cpuRenderer": 1.5,
+   "cpuGpu": 115.1,
+   "cpuBrowser": 0,
+   "cpuTotal": 116.7,
+   "payload": {
+    "html": 2864,
+    "poster": 21475,
+    "js": 209436,
+    "other": 0,
+    "total": 233775
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 242.5,
+     "fps": 2.4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.5,
+      "GPU": 96.9,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 98.6
+     },
+     "busyPct": 99.8,
+     "effectFps": 2.8
+    },
+    {
+     "ttff": 173.10000000009313,
+     "fps": 2.9,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 1.4,
+      "GPU": 115.1,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 116.7
+     },
+     "busyPct": 100,
+     "effectFps": 3.3
+    },
+    {
+     "ttff": 211.5,
+     "fps": 2.7,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.2,
+      "GPU": 105.5,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 106.7
+     },
+     "busyPct": 99.9,
+     "effectFps": 2.8
+    },
+    {
+     "ttff": 201.29999999981374,
+     "fps": 3.1,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.6,
+      "GPU": 127.4,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 129.2
+     },
+     "busyPct": 99.9,
+     "effectFps": 3.5
+    },
+    {
+     "ttff": 209.20000000018626,
+     "fps": 3.1,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.5,
+      "GPU": 124.7,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 126.2
+     },
+     "busyPct": 99.4,
+     "effectFps": 3.5
+    }
+   ]
+  }
+ },
+ "phaseMeta": {
+  "build": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "settle": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "inp": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "offscreen": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "hidden": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "reduced": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "nowebgl": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "contextloss": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "fetch": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "posters": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "bundles": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "main": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "contrast": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "fill": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "libs": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "post": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "shots": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  },
+  "summary": {
+   "runs": 5,
+   "at": "2026-09-29T01:16:32.470Z",
+   "only": null,
+   "loadavg": [
+    7.2,
+    6.3,
+    3.5
+   ]
+  }
+ },
+ "settle": {
+  "e1-webgl-vanilla:settle=4": {
+   "id": "e1-webgl-vanilla",
+   "query": "settle=4",
+   "duringRaf": 11.2,
+   "duringCpu": 257.4,
+   "afterRaf": 0,
+   "afterCpu": 1.6,
+   "afterBusy": 0,
+   "settledAt": 5627,
+   "toggle": "Play background",
+   "state": {
+    "running": false,
+    "inView": true,
+    "visible": true,
+    "paused": true,
+    "lost": false,
+    "failed": false,
+    "settled": true,
+    "t": 2.11,
+    "canvas": [
+     1280,
+     720
+    ]
+   }
+  },
+  "e1-webgl-vanilla:loop": {
+   "id": "e1-webgl-vanilla",
+   "query": "",
+   "duringRaf": 10,
+   "duringCpu": 236.1,
+   "afterRaf": 11.3,
+   "afterCpu": 270.6,
+   "afterBusy": 99.9,
+   "settledAt": null,
+   "toggle": "Pause background",
+   "state": {
+    "running": true,
+    "inView": true,
+    "visible": true,
+    "paused": false,
+    "lost": false,
+    "failed": false,
+    "settled": false,
+    "t": 5.35,
+    "canvas": [
+     1280,
+     720
+    ]
+   }
+  }
+ },
+ "inp": {
+  "a-static": {
+   "id": "a-static",
+   "interactionMedian": 16,
+   "inp": 16,
+   "reportedOver16": [
+    2
+   ]
+  },
+  "d-canvas2d": {
+   "id": "d-canvas2d",
+   "interactionMedian": 28,
+   "inp": 40,
+   "reportedOver16": [
+    12
+   ]
+  },
+  "e1-webgl-vanilla": {
+   "id": "e1-webgl-vanilla",
+   "interactionMedian": 372,
+   "inp": 640,
+   "reportedOver16": [
+    12
+   ]
+  }
+ },
+ "offscreen": {
+  "c1-svg-turbulence:pause": {
+   "id": "c1-svg-turbulence",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "busyPct": 0,
+   "cpuTotal": 1.3,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  },
+  "c1-svg-turbulence:nopause": {
+   "id": "c1-svg-turbulence",
+   "mode": "nopause",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "busyPct": 1.3,
+   "cpuTotal": 4.3,
+   "cpuGpu": 1,
+   "cpuRenderer": 3
+  },
+  "e1-webgl-vanilla:pause": {
+   "id": "e1-webgl-vanilla",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "busyPct": 0,
+   "cpuTotal": 0.3,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  },
+  "e1-webgl-vanilla:nopause": {
+   "id": "e1-webgl-vanilla",
+   "mode": "nopause",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "busyPct": 0,
+   "cpuTotal": 0.3,
+   "cpuGpu": 0,
+   "cpuRenderer": 0.3
+  },
+  "e6-paper:pause": {
+   "id": "e6-paper",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "busyPct": 0,
+   "cpuTotal": 0.3,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  },
+  "e6-paper:nopause": {
+   "id": "e6-paper",
+   "mode": "nopause",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "busyPct": 0,
+   "cpuTotal": 0.9,
+   "cpuGpu": 0,
+   "cpuRenderer": 0.3
+  },
+  "g-fluid-demo:as-built": {
+   "id": "g-fluid-demo",
+   "mode": "as-built",
+   "rafPerSec": 12.3,
+   "effectFps": null,
+   "busyPct": 100,
+   "cpuTotal": 312.2,
+   "cpuGpu": 309.4,
+   "cpuRenderer": 1.9
+  },
+  "g-fluid-wrapped:pause": {
+   "id": "g-fluid-wrapped",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "busyPct": 0,
+   "cpuTotal": 0.3,
+   "cpuGpu": 0.3,
+   "cpuRenderer": 0
+  },
+  "g-fluid-wrapped:nopause": {
+   "id": "g-fluid-wrapped",
+   "mode": "nopause",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "busyPct": 0,
+   "cpuTotal": 0.3,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  }
+ },
+ "hidden": {
+  "c1-svg-turbulence": {
+   "id": "c1-svg-turbulence",
+   "visibilityState": "visible",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "cpuTotal": 5.9,
+   "busyPct": 0.1,
+   "resumed": {
+    "vis": "visible",
+    "state": null
+   }
+  },
+  "e1-webgl-vanilla": {
+   "id": "e1-webgl-vanilla",
+   "visibilityState": "visible",
+   "rafPerSec": 1,
+   "effectFps": 1,
+   "cpuTotal": 25.2,
+   "busyPct": 9.6,
+   "resumed": {
+    "vis": "visible",
+    "state": {
+     "running": true,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": false,
+     "failed": false,
+     "settled": false,
+     "t": 1.45,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   }
+  },
+  "e6-paper": {
+   "id": "e6-paper",
+   "visibilityState": "visible",
+   "rafPerSec": 1.3,
+   "effectFps": null,
+   "cpuTotal": 104.9,
+   "busyPct": 38.4,
+   "resumed": {
+    "vis": "visible",
+    "state": {
+     "canvas": [
+      2560,
+      1440
+     ]
+    }
+   }
+  },
+  "g-fluid-demo": {
+   "id": "g-fluid-demo",
+   "visibilityState": "visible",
+   "rafPerSec": 2.6,
+   "effectFps": null,
+   "cpuTotal": 59.7,
+   "busyPct": 19.8,
+   "resumed": {
+    "vis": "visible",
+    "state": null
+   }
+  },
+  "g-fluid-wrapped": {
+   "id": "g-fluid-wrapped",
+   "visibilityState": "visible",
+   "rafPerSec": 1,
+   "effectFps": 1,
+   "cpuTotal": 56.7,
+   "busyPct": 31.9,
+   "resumed": {
+    "vis": "visible",
+    "state": {
+     "running": true,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": false,
+     "failed": false,
+     "settled": false,
+     "t": 0.95,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   }
+  }
+ },
+ "reduced": {
+  "c1-svg-turbulence": {
+   "id": "c1-svg-turbulence",
+   "rafPerSec": 0,
+   "cpuTotal": 1.6,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 92,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ]
+  },
+  "e1-webgl-vanilla": {
+   "id": "e1-webgl-vanilla",
+   "rafPerSec": 0,
+   "cpuTotal": 0.3,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 120,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  },
+  "e6-paper": {
+   "id": "e6-paper",
+   "rafPerSec": 0,
+   "cpuTotal": 0.3,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 56,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  },
+  "g-fluid-demo": {
+   "id": "g-fluid-demo",
+   "rafPerSec": 6.4,
+   "cpuTotal": 147.1,
+   "busyPct": 99.9,
+   "effectLoaded": true,
+   "lcp": {
+    "t": 56,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": null,
+   "errors": []
+  },
+  "g-fluid-wrapped": {
+   "id": "g-fluid-wrapped",
+   "rafPerSec": 0,
+   "cpuTotal": 0.3,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 84,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  }
+ },
+ "nowebgl": {
+  "c1-svg-turbulence": {
+   "id": "c1-svg-turbulence",
+   "fallback": null,
+   "reason": null,
+   "posterVisible": false,
+   "toggleVisible": true,
+   "lcp": {
+    "t": 100,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ]
+  },
+  "e1-webgl-vanilla": {
+   "id": "e1-webgl-vanilla",
+   "fallback": "poster",
+   "reason": "no WebGL",
+   "posterVisible": true,
+   "toggleVisible": false,
+   "lcp": {
+    "t": 52,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": []
+  },
+  "e6-paper": {
+   "id": "e6-paper",
+   "fallback": "poster",
+   "reason": "Paper Shaders: WebGL is not supported in this browser",
+   "posterVisible": true,
+   "toggleVisible": false,
+   "lcp": {
+    "t": 80,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": []
+  },
+  "g-fluid-demo": {
+   "id": "g-fluid-demo",
+   "fallback": null,
+   "reason": null,
+   "posterVisible": false,
+   "toggleVisible": false,
+   "lcp": {
+    "t": 52,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": [
+    "pageerror: Cannot read properties of null (reading 'getExtension')"
+   ]
+  },
+  "g-fluid-wrapped": {
+   "id": "g-fluid-wrapped",
+   "fallback": "poster",
+   "reason": "no WebGL",
+   "posterVisible": true,
+   "toggleVisible": false,
+   "lcp": {
+    "t": 84,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": []
+  }
+ },
+ "contextloss": {
+  "e1-webgl-vanilla": {
+   "id": "e1-webgl-vanilla",
+   "lose": "lost",
+   "during": {
+    "canvasOpacity": "0",
+    "draws": 13,
+    "state": {
+     "running": false,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": true,
+     "failed": false,
+     "settled": false,
+     "t": 0.55,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "after": {
+    "canvasOpacity": "1",
+    "draws": 27,
+    "restored": 1,
+    "state": {
+     "running": true,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": false,
+     "failed": false,
+     "settled": false,
+     "t": 1.15,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ]
+  },
+  "e6-paper": {
+   "id": "e6-paper",
+   "lose": "lost",
+   "during": {
+    "canvasOpacity": "1",
+    "draws": null,
+    "state": {
+     "canvas": [
+      2560,
+      1440
+     ]
+    }
+   },
+   "after": {
+    "canvasOpacity": "1",
+    "draws": null,
+    "restored": 0,
+    "state": {
+     "canvas": [
+      2560,
+      1440
+     ]
+    }
+   },
+   "errors": []
+  },
+  "g-fluid-demo": {
+   "id": "g-fluid-demo",
+   "lose": "lost",
+   "during": {
+    "canvasOpacity": "1",
+    "draws": null,
+    "state": null
+   },
+   "after": {
+    "canvasOpacity": "1",
+    "draws": null,
+    "restored": 0,
+    "state": null
+   },
+   "errors": []
+  },
+  "g-fluid-wrapped": {
+   "id": "g-fluid-wrapped",
+   "lose": "lost",
+   "during": {
+    "canvasOpacity": "0",
+    "draws": 6,
+    "state": {
+     "running": false,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": true,
+     "failed": false,
+     "settled": false,
+     "t": 0.2,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "after": {
+    "canvasOpacity": "0",
+    "draws": 8,
+    "restored": 1,
+    "state": {
+     "running": true,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": false,
+     "failed": false,
+     "settled": false,
+     "t": 0.2,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "errors": []
   }
  }
 }

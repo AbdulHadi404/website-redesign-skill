@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 // S1 rendering lab: rebuild every variant, measure everything, write results.json and results.md.
 //
-//   node run.mjs                       # everything (≈ 1.5–2 h on 4 shared CPUs)
+//   node run.mjs                       # everything (≈ 2.5–3 h on 4 shared CPUs)
 //   node run.mjs --runs 1              # one run per cell (≈ 25 min), for a quick look
 //   node run.mjs --phase main --only pixi,three --n 2000 --throttle 4
 //
-// Phases: build, shots, main, worker, present, domprobe, a11y, contextloss, reduced, nowebgl, survey, report (default: all, in that order).
+// Phases: build, shots, main, sweep, instancing, worker, present, domprobe, a11y, contextloss, reduced, nowebgl, survey, report (default: all, in that order).
 // Results merge into results.json by key, so a partial run replaces only the cells it measured.
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url';
 import os from 'node:os';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
-import { buildAll, DIST, MAIN, A11Y, VARIANTS } from './lib/build.mjs';
+import { buildAll, DIST, MAIN, A11Y, EXTRA, VARIANTS } from './lib/build.mjs';
 import { serve } from './lib/serve.mjs';
 import { launchBrowser, runOne, median } from './lib/measure.mjs';
 import { contactSheet } from './lib/sheet.mjs';
@@ -27,10 +27,14 @@ const argv = process.argv.slice(2);
 const arg = (k, d) => { const i = argv.indexOf(`--${k}`); return i < 0 ? d : argv[i + 1]; };
 const list = (k, d) => (arg(k) ? arg(k).split(',') : d);
 const RUNS = Number(arg('runs', 5));
-const PHASES = list('phase', ['build', 'shots', 'main', 'worker', 'present', 'domprobe', 'a11y', 'contextloss', 'reduced', 'nowebgl', 'survey', 'report']);
+const PHASES = list('phase', ['build', 'shots', 'main', 'sweep', 'instancing', 'worker', 'present', 'domprobe', 'a11y', 'contextloss', 'reduced', 'nowebgl', 'survey', 'report']);
 const ONLY = arg('only') ? arg('only').split(',') : null;
 const NS = list('n', ['20', '200', '2000']).map(Number);
 const THROTTLES = list('throttle', ['1', '4']).map(Number);
+// Object counts for the CPU renderers from 200 to 2000, to locate where each one stops holding the frame
+// rate. Measured as its own round-robin set (200 and 2000 again), so every cell of the sweep table shares
+// the same background load.
+const SWEEP_NS = list('sweepn', ['200', '400', '700', '1000', '1400', '2000']).map(Number);
 const pick = (names) => (ONLY ? names.filter((n) => ONLY.includes(n)) : names);
 
 const RESULTS = path.join(here, 'results.json');
@@ -65,6 +69,8 @@ function summarise(runs) {
   };
 }
 
+// Returns the browser it ended with: if the browser dies mid-run (another process on this shared machine
+// killed Chromium once), it is relaunched with the same flags and the run is repeated.
 async function matrix(browser, base, section, cells) {
   results[section] ??= {};
   const keyOf = (c) => [c.label ?? c.variant, c.n, `${c.throttle}x`, c.load ? `load${c.load}` : '', c.reduced ? 'reduced' : ''].filter(Boolean).join('|');
@@ -72,7 +78,7 @@ async function matrix(browser, base, section, cells) {
   // variant, then run 2 of every variant, … so drifting background load on the shared CPUs hits every
   // variant alike instead of whichever happened to run during a busy minute.
   const groups = new Map();
-  for (const c of cells) { const g = [c.n, c.throttle, c.load, c.reduced].join('|'); if (!groups.has(g)) groups.set(g, []); groups.get(g).push(c); }
+  for (const c of cells) { const g = c.group ?? [c.n, c.throttle, c.load, c.reduced].join('|'); if (!groups.has(g)) groups.set(g, []); groups.get(g).push(c); }
   for (const group of groups.values()) {
     const runs = new Map(group.map((c) => [keyOf(c), []]));
     const failed = new Set();
@@ -81,11 +87,21 @@ async function matrix(browser, base, section, cells) {
       for (const c of group) {
         const key = keyOf(c);
         if (failed.has(key) || i >= (c.runs ?? RUNS)) continue;
-        const r = await runOne(browser, base, c);
+        let r;
+        for (let attempt = 0; ; attempt++) {
+          try { r = await runOne(browser, base, c); break; } catch (e) {
+            if (attempt >= 2) throw e;
+            log(key, 'run threw, retrying:', e.message.split('\n')[0]);
+            if (!browser.isConnected()) browser = await launchBrowser(browser.__args || []);
+          }
+        }
         r.loadavg = os.loadavg().map((x) => Math.round(x * 10) / 10);
         runs.get(key).push(r);
         if (r.failed) { log(key, 'FAILED', r.failed); failed.add(key); }
       }
+      // Keep what has been measured so far (a long group is ~30 min).
+      for (const c of group) { const k = keyOf(c); if (runs.get(k).length) results[section][k] = { cell: c, summary: { ...summarise(runs.get(k)), partial: true }, runs: runs.get(k) }; }
+      await save();
     }
     for (const c of group) {
       const key = keyOf(c);
@@ -96,6 +112,7 @@ async function matrix(browser, base, section, cells) {
     }
     await save();
   }
+  return browser;
 }
 
 async function shots(browser, base) {
@@ -105,7 +122,7 @@ async function shots(browser, base) {
   for (const n of [200, 2000]) {
     const entries = [];
     let ref = null;
-    for (const v of ['canvas2d', ...MAIN.filter((x) => x !== 'canvas2d')]) {
+    for (const v of ['canvas2d', ...MAIN.filter((x) => x !== 'canvas2d'), ...EXTRA]) {
       const ctx = await browser.newContext({ viewport: { width: 860, height: 720 }, deviceScaleFactor: 1 });
       const page = await ctx.newPage();
       await page.goto(`${base}/${v}/?n=${n}&freeze`);
@@ -318,8 +335,8 @@ async function main() {
   };
   if (PHASES.includes('build')) { results.build = { ...(results.build || {}), ...(await buildAll()) }; await save(); log('built'); }
   const { server, base } = await serve(DIST);
-  const needBrowser = PHASES.some((p) => ['shots', 'main', 'worker', 'present', 'domprobe', 'a11y', 'contextloss', 'reduced'].includes(p));
-  const browser = needBrowser ? await launchBrowser() : null;
+  const needBrowser = PHASES.some((p) => ['shots', 'main', 'sweep', 'instancing', 'worker', 'present', 'domprobe', 'a11y', 'contextloss', 'reduced'].includes(p));
+  let browser = needBrowser ? await launchBrowser() : null;
   if (browser) {
     const probe = await browser.newPage();
     results.meta.chromium = browser.version();
@@ -335,13 +352,46 @@ async function main() {
   if (PHASES.includes('main')) {
     const cells = [];
     for (const n of NS) for (const throttle of THROTTLES) for (const variant of pick(MAIN)) cells.push({ variant, n, throttle });
-    await matrix(browser, base, 'main', cells);
+    browser = await matrix(browser, base, 'main', cells);
+  }
+  if (PHASES.includes('sweep')) {
+    const cells = [];
+    // One round-robin group per throttle across every N and variant, so drifting load hits every N alike.
+    for (const throttle of THROTTLES) for (const n of SWEEP_NS) for (const variant of pick(['dom', 'svg', 'canvas2d', 'canvas2d-worker'])) cells.push({ variant, n, throttle, group: `sweep|${throttle}` });
+    browser = await matrix(browser, base, 'sweep', cells);
+  }
+  if (PHASES.includes('instancing')) {
+    // One mesh per item vs one InstancedMesh, in vanilla three.js and in React Three Fiber, as one set.
+    const cells = [];
+    for (const n of [200, 2000]) for (const throttle of THROTTLES) for (const variant of pick(['three', 'three-instanced', 'r3f', 'r3f-instanced'])) cells.push({ variant, n, throttle });
+    browser = await matrix(browser, base, 'instancing', cells);
+    // R3F's WebGL failure path: <Canvas fallback> vs a WebGL check + error boundary with a poster.
+    const nb = await launchBrowser(['--disable-webgl', '--disable-3d-apis']);
+    results.instancingNoWebgl = {};
+    for (const v of pick(['r3f', 'r3f-instanced'])) {
+      const ctx = await nb.newContext({ viewport: { width: 860, height: 720 } });
+      const page = await ctx.newPage();
+      const errs = [];
+      page.on('pageerror', (e) => errs.push(e.message.slice(0, 160)));
+      await page.goto(`${base}/${v}/?n=200`);
+      await page.waitForTimeout(2500);
+      const r = await page.evaluate(() => {
+        const img = document.querySelector('#stage img');
+        const box = img?.getBoundingClientRect();
+        return { renderer: window.__lab?.info?.renderer ?? null, posterVisible: !!(img && img.complete && img.naturalWidth > 0 && box.width > 0 && box.height > 0), canvases: document.querySelectorAll('#stage canvas').length, stageChildren: document.getElementById('stage').children.length };
+      });
+      results.instancingNoWebgl[v] = { ...r, errors: [...new Set(errs)].slice(0, 2) };
+      log('instancing no-webgl', v, JSON.stringify(results.instancingNoWebgl[v]));
+      await ctx.close();
+    }
+    await nb.close();
+    await save();
   }
   if (PHASES.includes('worker')) {
     // Main-thread Canvas 2D vs the same drawing in a Worker, with 50 ms of other main-thread work every 100 ms.
     const cells = [];
     for (const throttle of THROTTLES) for (const n of [200, 2000]) for (const variant of pick(['canvas2d', 'canvas2d-worker', 'pixi', 'dom'])) cells.push({ variant, n, throttle, load: 50 });
-    await matrix(browser, base, 'worker', cells);
+    browser = await matrix(browser, base, 'worker', cells);
   }
   if (PHASES.includes('present')) await presented(browser, base);
   if (PHASES.includes('domprobe')) { results.domProbe = await domProbe(browser, { runs: Math.min(RUNS, 3) }); await save(); }
@@ -352,7 +402,7 @@ async function main() {
     const cells = [];
     for (const variant of pick(MAIN)) cells.push({ variant, n: 200, throttle: 1, reduced: true, idle: true, runs: Math.min(RUNS, 3) });
     if (pick(['pixi']).length) cells.push({ variant: 'pixi', label: 'pixi+Ticker.system.stop()', extra: 'stopSystemTicker', n: 200, throttle: 1, reduced: true, idle: true, runs: Math.min(RUNS, 3) });
-    await matrix(browser, base, 'reduced', cells);
+    browser = await matrix(browser, base, 'reduced', cells);
   }
   if (browser) await browser.close();
   if (PHASES.includes('nowebgl')) await nowebgl(base);

@@ -18,8 +18,14 @@ const q = new URLSearchParams(location.search);
 const cond = q.get('cond') || 'quiet';
 // A fixed CPU loop standing in for framework boot/hydration: ~60 ms per task at 1x, scaled by throttling like real work.
 function boot() { let s = 0; for (let i = 0; i < 2.5e7; i++) s += Math.sqrt(i) * 1e-9; return s; }
+// Throttle fidelity: a fixed ~4 ms (at 1x) loop, timed five times; the median over the calibrated 1x median is the
+// slowdown the CDP throttler actually delivered at that moment (on a loaded host its signal thread is starved).
+function spin() { const t = performance.now(); let s = 0; for (let i = 0; i < 1.6e6; i++) s += Math.sqrt(i) * 1e-9; return performance.now() - t; }
+const spinMedian = () => { const xs = [spin(), spin(), spin(), spin(), spin()].sort((a, b) => a - b); return xs[2]; };
 async function run() {
-  const out = { cond };
+  const out = { cond, bootMs: [] };
+  spin(); spin(); // JIT warm-up
+  out.spinBefore = spinMedian();
   const t0 = performance.now();
   out.signals = readSignals();
   out.signalsMs = performance.now() - t0;
@@ -27,9 +33,10 @@ async function run() {
   out.gl = probeWebGL();
   out.glMs = performance.now() - t1;
   const work = makeWork();
-  if (cond === 'busy') { let n = 0; const id = setInterval(() => { boot(); if (++n >= 12) clearInterval(id); }, 90); }
+  if (cond === 'busy') { let n = 0; const id = setInterval(() => { const t = performance.now(); boot(); out.bootMs.push(performance.now() - t); if (++n >= 12) clearInterval(id); }, 90); }
   const t2 = performance.now();
   const f = await frameProbe({ work, maxMs: 2000, earlyExit: false });
+  out.spinAfter = spinMedian();
   out.frame = { frames: f.frames, ms: f.ms, works: f.workAll.map((x) => +x.toFixed(3)), gaps: f.gaps.map((x) => +x.toFixed(2)) };
   out.frameWall = performance.now() - t2;
   const b = burstProbe({ work });

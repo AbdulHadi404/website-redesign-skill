@@ -29,6 +29,24 @@ for (const name of Object.keys(log.exports)) {
   inspect[name] = { bytes: j.bytes, meshes: j.meshes, nodes: j.nodes, drawCalls: j.drawCalls, instances: j.instances, triangles: j.trianglesDrawn, extensions: j.extensionsUsed, images: j.images.map((i) => `${i.format} ${i.width}² → ${i.slots.join('/')}`), animations: j.animations, cameras: j.cameras, lights: j.lights };
 }
 
+// The exporter samples animation at every frame; gltf-transform's resample (part of `optimize`) drops the redundant keys.
+{
+  const CLI = path.join(LAB, 'node_modules/.bin/gltf-transform');
+  const src = path.join(OUT, 'scene-camera-anim.glb'), dst = path.join(OUT, 'scene-camera-anim.resampled.glb');
+  execFileSync(CLI, ['resample', src, dst], { stdio: 'ignore' });
+  const j = JSON.parse(execFileSync('node', [path.join(SKILL_SCRIPTS, 'model.mjs'), dst, '--json']).toString());
+  inspect['scene-camera-anim → gltf-transform resample'] = { bytes: j.bytes, animations: j.animations, animationBytesStored: j.animationBytesStored };
+  inspect['scene-camera-anim'].animationBytesStored = JSON.parse(execFileSync('node', [path.join(SKILL_SCRIPTS, 'model.mjs'), src, '--json']).toString()).animationBytesStored;
+  // Exporter's own Draco vs exporting plain and compressing afterwards with gltf-transform.
+  for (const [name, args] of [['product-plain → gltf-transform meshopt', ['meshopt']], ['product-plain → gltf-transform draco', ['draco']], ['product-ao-png → gltf-transform optimize webp', ['optimize', '--compress', 'meshopt', '--texture-compress', 'webp', '--simplify', 'false']]]) {
+    const [cmd, ...rest] = args;
+    const input = path.join(OUT, `${name.split(' ')[0]}.glb`), outFile = path.join(OUT, `${name.replace(/[^a-z0-9]+/gi, '_')}.glb`);
+    execFileSync(CLI, [cmd, input, outFile, ...rest], { stdio: 'ignore' });
+    const j = JSON.parse(execFileSync('node', [path.join(SKILL_SCRIPTS, 'model.mjs'), outFile, '--json']).toString());
+    inspect[name] = { bytes: j.bytes, triangles: j.trianglesDrawn, extensions: j.extensionsUsed, images: j.images.map((i) => `${i.format} ${i.width}²`) };
+  }
+}
+
 // render plain / baked AO / baked lighting (unlit) from the same camera
 if (!existsSync(path.join(BUILD, 'gltf-viewer.js'))) {
   await build({ entryPoints: [path.join(LAB, 'gltf/viewer.js')], bundle: true, format: 'esm', minify: true, outfile: path.join(BUILD, 'gltf-viewer.js'), logLevel: 'silent' });

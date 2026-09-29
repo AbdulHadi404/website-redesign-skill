@@ -351,6 +351,60 @@
    "safari": "8",
    "safari_ios": "8",
    "status": "standard"
+  },
+  "requestAnimationFrame in workers": {
+   "path": "api.DedicatedWorkerGlobalScope.requestAnimationFrame",
+   "chrome": "69",
+   "chrome_android": "69",
+   "firefox": "99",
+   "safari": "16.4",
+   "safari_ios": "16.4",
+   "status": "standard"
+  },
+  "fetch() priority option": {
+   "path": "api.fetch.options_parameter.priority",
+   "chrome": "101",
+   "chrome_android": "101",
+   "firefox": "132",
+   "safari": "17.2",
+   "safari_ios": "17.2",
+   "status": "standard"
+  },
+  "link rel=prefetch": {
+   "path": "html.elements.link.rel.prefetch",
+   "chrome": "8",
+   "chrome_android": "18",
+   "firefox": "2",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "standard"
+  },
+  "Sec-CH-Device-Memory header": {
+   "path": "http.headers.Sec-CH-Device-Memory",
+   "chrome": "97",
+   "chrome_android": "97",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "experimental"
+  },
+  "navigator.gpu (WebGPU)": {
+   "path": "api.Navigator.gpu",
+   "chrome": "144",
+   "chrome_android": "121",
+   "firefox": "141 (partial)",
+   "safari": "26",
+   "safari_ios": "26",
+   "status": "standard"
+  },
+  "View Transitions (same-document)": {
+   "path": "api.ViewTransition",
+   "chrome": "111",
+   "chrome_android": "111",
+   "firefox": "144",
+   "safari": "18",
+   "safari_ios": "18",
+   "status": "standard"
   }
  }
 }

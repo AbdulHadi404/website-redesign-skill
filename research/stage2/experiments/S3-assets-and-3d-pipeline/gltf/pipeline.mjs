@@ -11,7 +11,7 @@ const KTX = path.join(CACHE, 'tools/KTX-Software-4.4.2-Linux-x86_64');
 const ENV = { ...process.env, PATH: `${KTX}/bin:${process.env.PATH}`, LD_LIBRARY_PATH: `${KTX}/lib:${process.env.LD_LIBRARY_PATH || ''}` };
 
 export const MODELS = {
-  DamagedHelmet: { src: 'khronos/DamagedHelmet/DamagedHelmet.glb', kind: 'PBR hero object (1 mesh, 5 JPEG textures 2048²)', animated: false, licence: 'CC-BY-4.0 + CC-BY-NC-4.0 (earlier version) — lab only, not shippable' },
+  DamagedHelmet: { src: 'khronos/DamagedHelmet/DamagedHelmet.glb', kind: 'PBR hero object (1 mesh, 5 JPEG textures 2048²)', animated: false, licence: 'CC-BY-4.0 + CC-BY-NC-4.0 (earlier version) — lab only, not shippable', shots: false },
   FlightHelmet: { src: 'khronos/FlightHelmet/FlightHelmet.gltf', kind: 'multi-part PBR object (6 meshes, 15 PNG textures 2048²)', animated: false, licence: 'CC0-1.0' },
   Fox: { src: 'khronos/Fox/Fox.glb', kind: 'skinned, animated character (3 clips)', animated: true, licence: 'CC0-1.0 model + CC-BY-4.0 rig/animation and conversion' },
   ABeautifulGame: { src: 'khronos/ABeautifulGame/ABeautifulGame.glb', kind: 'scene of many meshes (chess set: 33 nodes, shared meshes, transmission)', animated: false, licence: 'CC-BY-4.0' },

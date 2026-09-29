@@ -1,0 +1,116 @@
+{
+ "env": {
+  "date": "2026-09-29T01:21:35.184Z",
+  "node": "v22.22.2",
+  "cpus": 4,
+  "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "loadavgAtStart": [
+   11.1,
+   8.8,
+   5.3
+  ],
+  "loadavgAtEnd": [
+   12.2,
+   9.2,
+   5.5
+  ]
+ },
+ "built": {
+  "backendMs": 1200,
+  "appJs": {
+   "raw": 335729,
+   "gzip": 50934
+  },
+  "heroBytes": 52352,
+  "items": 24
+ },
+ "profile": "phone 390×844 @2x, CPU 4×, slow 4G (150 ms RTT, 1.6 Mbps), cache off; backend delay 1200 ms on the page (buffered, streamed) or on /api/items (csr, csr-all)",
+ "runs": [
+  {
+   "variant": "buffered",
+   "loadavg1": 11.1,
+   "cls": 0,
+   "fcp": 1384,
+   "lcp": 1764,
+   "lcpEl": "hero",
+   "list": 1345.8000000000466,
+   "ttfb": 1290.6999999999534,
+   "htmlDone": 1320.5
+  },
+  {
+   "variant": "streamed",
+   "loadavg1": 11.9,
+   "cls": 0,
+   "fcp": 240,
+   "lcp": 640,
+   "lcpEl": "hero",
+   "list": 1263.1999999999534,
+   "ttfb": 5.5,
+   "htmlDone": 1256.6999999999534
+  },
+  {
+   "variant": "csr",
+   "loadavg1": 11.9,
+   "cls": 0,
+   "fcp": 220,
+   "lcp": 1164,
+   "lcpEl": "hero",
+   "list": 2368.3000000000466,
+   "ttfb": 8.099999999860302,
+   "htmlDone": 165.5999999998603
+  },
+  {
+   "variant": "csr-all",
+   "loadavg1": 11.8,
+   "cls": 0,
+   "fcp": 892,
+   "lcp": 1320,
+   "lcpEl": "hero",
+   "list": 2075.8000000000466,
+   "ttfb": 3.4000000001396984,
+   "htmlDone": 165.70000000018626
+  }
+ ],
+ "summary": {
+  "buffered": {
+   "runs": 1,
+   "ttfb": 1291,
+   "fcp": 1384,
+   "lcp": 1764,
+   "lcpEl": "hero",
+   "listVisible": 1346,
+   "htmlDone": 1321,
+   "cls": 0
+  },
+  "streamed": {
+   "runs": 1,
+   "ttfb": 6,
+   "fcp": 240,
+   "lcp": 640,
+   "lcpEl": "hero",
+   "listVisible": 1263,
+   "htmlDone": 1257,
+   "cls": 0
+  },
+  "csr": {
+   "runs": 1,
+   "ttfb": 8,
+   "fcp": 220,
+   "lcp": 1164,
+   "lcpEl": "hero",
+   "listVisible": 2368,
+   "htmlDone": 166,
+   "cls": 0
+  },
+  "csr-all": {
+   "runs": 1,
+   "ttfb": 3,
+   "fcp": 892,
+   "lcp": 1320,
+   "lcpEl": "hero",
+   "listVisible": 2076,
+   "htmlDone": 166,
+   "cls": 0
+  }
+ }
+}

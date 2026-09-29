@@ -30,6 +30,7 @@ export const VARIANTS = [
   { id: 'h-post', label: 'h · f + postprocessing (?fx=)', kind: 'script', entry: 'h-post.js', poster: 'post' },
   { id: 'g-fluid-demo', label: 'g · fluid sim, demo as published', kind: 'fluid-demo', poster: null },
   { id: 'g-fluid-wrapped', label: 'g · fluid sim, production-wrapped', kind: 'script', entry: 'g-fluid-wrapped.js', poster: 'fluid' },
+  { id: 'i-video', label: 'i · e1 pre-rendered to an 8 s AV1/VP9 loop', kind: 'video', poster: 'video' },
 ];
 
 // How each poster is captured: the page, query and wait. Deterministic stills where the effect allows.
@@ -37,8 +38,8 @@ export const POSTERS = {
   shader: { from: 'e1-webgl-vanilla', query: 'still&t0=0', wait: 300 },
   canvas2d: { from: 'd-canvas2d', query: '', wait: 3500 },
   paper: { from: 'e6-paper', query: 'still&t0=0', wait: 600 },
-  particles: { from: 'f-three-particles', query: 'still&t0=3', wait: 600 },
-  post: { from: 'h-post', query: 'still&t0=3&fx=all', wait: 800 },
+  particles: { from: 'f-three-particles', query: 'still&t0=0', wait: 600 },
+  post: { from: 'h-post', query: 'still&t0=0&fx=all', wait: 800 },
   fluid: { from: 'g-fluid-wrapped', query: '', wait: 3000 },
 };
 
@@ -68,6 +69,7 @@ main h2 { font-size: 40px; letter-spacing: -.02em; margin: 0 0 16px; }
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .grid div { background: #fff; border-radius: 16px; padding: 24px; min-height: 180px; }
 html.capture .nav, html.capture .hero-copy, html.capture .bg-toggle { visibility: hidden; }
+html.capture .fx { transition: none; }   /* a poster is captured at full opacity, never mid-crossfade */
 @media (max-width: 700px) { .nav { padding: 18px 20px; } .nav nav { display: none; } .hero-copy { padding: 0 20px 10vh; } main section { padding: 64px 20px; } .grid { grid-template-columns: 1fr; } .lede { font-size: 18px; } }
 @media (prefers-reduced-motion: reduce) { .fx { transition: none; } }
 `;
@@ -129,6 +131,42 @@ if (!q.has('nopause')) {
 }`;
 const CSS_PAUSE = `.hero[data-offscreen] .anim, .hero[data-hidden] .anim, .hero[data-paused] .anim { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .hero:not([data-play]) .anim { animation: none; } }`;
+
+// Video variant: sources attached by script only when motion is allowed (reduced motion never downloads it),
+// paused off-screen, in hidden tabs and by the visitor; the poster is the loop's first frame.
+const VIDEO_BOOT = /* js */ `
+const q = new URLSearchParams(location.search);
+const lab = (window.__lab ||= {}); lab.draws = 0; lab.jsTimes = [];
+const bg = document.getElementById('bg'), btn = document.querySelector('.bg-toggle'), v = bg.querySelector('video');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+let inView = true, visible = !document.hidden, paused = false, loaded = false, optIn = false;
+const want = () => loaded && !paused && (!reduce.matches || optIn) && (q.has('nopause') || (inView && visible));
+const sync = () => { if (want()) v.play().catch(() => {}); else v.pause(); };
+function load() {
+  if (loaded) return; loaded = true; lab.bootStart = performance.now();
+  for (const [src, type] of [['../video/loop-av1.webm', 'video/webm; codecs=av01.0.05M.08'], ['../video/loop-vp9.webm', 'video/webm; codecs=vp9'], ['../video/loop-h264.mp4', 'video/mp4; codecs=avc1.640028']]) {
+    const s = document.createElement('source'); s.src = src; s.type = type; v.append(s);
+  }
+  v.lastElementChild.addEventListener('error', () => { lab.fallback = 'poster'; lab.failReason = 'no playable source'; v.remove(); btn.hidden = true; });
+  v.addEventListener('playing', () => { if (lab.ttff == null) requestAnimationFrame(() => { lab.ttff = performance.now(); v.style.opacity = '1'; }); });
+  const count = () => { lab.draws++; v.requestVideoFrameCallback(count); };
+  v.requestVideoFrameCallback?.(count);
+  v.load(); sync();
+  lab.info = { renderer: 'video' };
+}
+btn.hidden = false;
+btn.addEventListener('click', () => {
+  if (!loaded) { optIn = true; paused = false; load(); } else paused = !paused;
+  btn.setAttribute('aria-pressed', String(paused)); btn.textContent = paused ? 'Play background' : 'Pause background'; sync();
+});
+if (reduce.matches && !q.has('forcemotion')) { lab.reducedSkip = true; btn.textContent = 'Play background'; btn.setAttribute('aria-pressed', 'true'); }
+else if (q.has('eager')) load();
+else { const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1)); const go = () => idle(load, { timeout: 1500 }); document.readyState === 'complete' ? go() : addEventListener('load', go, { once: true }); }
+new IntersectionObserver(([e]) => { inView = e.isIntersecting; sync(); }).observe(document.getElementById('hero'));
+document.addEventListener('visibilitychange', () => { visible = !document.hidden; sync(); });
+reduce.addEventListener('change', sync);
+lab.pause = () => { paused = true; sync(); };
+lab.state = () => ({ running: !v.paused, inView, visible, paused, canvas: [v.videoWidth, v.videoHeight], src: (v.currentSrc || '').split('/').pop() });`;
 
 const hexToRow = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
 function turbulenceMatrix(dark, light) {
@@ -193,8 +231,8 @@ function shell({ v, bgInner, headCss = '', scripts = '', toggle = true }) {
 <header class="nav"><span>Halcyon</span><nav><a style="color:inherit;text-decoration:none" href="#">Product</a><a style="color:inherit;text-decoration:none" href="#">Rivers</a><a style="color:inherit;text-decoration:none" href="#">Pricing</a></nav></header>
 <section class="hero" id="hero" aria-labelledby="h1">
   <div class="hero-bg" id="bg" aria-hidden="true">${bgInner}</div>
+  ${toggle ? '<button class="bg-toggle" type="button" aria-pressed="false" hidden>Pause background</button>' : ''}<!-- before the copy in DOM order: WCAG 2.2.2's pause control is reached before the moving content's neighbours -->
   <div class="hero-copy"><p class="eyebrow">Water quality, continuously</p><h1 id="h1">Every drop, accounted for.</h1><p class="lede">Live readings from probes in your river, turned into decisions before the regulator asks.</p><a class="cta" href="#">Book a site survey</a></div>
-  ${toggle ? '<button class="bg-toggle" type="button" aria-pressed="false" hidden>Pause background</button>' : ''}
 </section>
 ${CONTENT}
 ${scripts}
@@ -263,6 +301,12 @@ export async function buildAll({ posters = null } = {}) {
       const c = CSS_VARIANTS[v.id];
       const bgInner = posterHtml(v.poster, posters) + c.bg;
       await writeFile(path.join(dir, 'index.html'), shell({ v, bgInner, headCss: c.css + CSS_PAUSE, scripts: `<script type="module">${CSS_BOOT}\n${c.extraJs || ''}</script>` }));
+    } else if (v.kind === 'video') {
+      if (!existsSync(path.join(DIST, 'video/loop-av1.webm'))) { rec.skipped = 'run the video phase first'; out[v.id] = rec; continue; }
+      const video = '<video class="fx" muted loop playsinline preload="none" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>';
+      await writeFile(path.join(dir, 'index.html'), shell({ v, bgInner: posterHtml(v.poster, posters) + video, headCss: 'video.fx { object-fit: cover; }', scripts: `<script type="module">${VIDEO_BOOT}</script>` }));
+      rec.video = {};
+      for (const f of ['loop-av1.webm', 'loop-vp9.webm', 'loop-h264.mp4']) if (existsSync(path.join(DIST, 'video', f))) rec.video[f] = (await sizesOf(path.join(DIST, 'video', f))).raw;
     } else if (v.kind === 'static') {
       await writeFile(path.join(dir, 'index.html'), shell({ v, bgInner: posterHtml(v.poster, posters), toggle: false }));
     } else if (v.kind === 'fluid-demo') {

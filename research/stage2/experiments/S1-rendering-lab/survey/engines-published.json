@@ -34,5 +34,32 @@
     "latest": "see survey rows [V registry]",
     "mobile": "engine built for mobile web; WebGPU and WebGL2 back ends [K]",
     "sources": "npm registry; node_modules/playcanvas/package.json"
+  },
+  {
+    "engine": "Needle Engine (three.js + Unity/Blender export)",
+    "payload": "not measured: npm package @needle-tools/engine 6.0.0-alpha.3 unpacks to 92 MB and depends on three, three.quarks, peerjs, n8ao, flatbuffers [V registry]; ships a three.js runtime plus components, so expect more than three.js's 130 KB gzip",
+    "licence": "no licence field in package.json [V registry]; commercial use needs a paid Pro licence (from EUR 49 per user per month), Hobby is free for personal use [S needle.tools/pricing, engine.needle.tools FAQ]",
+    "react": "none official; it is a web component / three.js scene you can drive from any framework [S engine.needle.tools/docs/three]",
+    "latest": "6.0.0-alpha.3 (2026-08-13) on the latest tag [V registry]",
+    "mobile": "web-first, WebXR [S]",
+    "sources": "registry.npmjs.org/@needle-tools/engine; needle.tools/pricing; engine.needle.tools/docs/reference/faq.html"
+  },
+  {
+    "engine": "Cocos Creator (web-mobile build)",
+    "payload": "~1.8 MB for an empty project (2021 forum report, Creator 3.x) [S forum.cocosengine.org/t/cocos-creator-3-build-size/53154]; not re-measured",
+    "licence": "engine MIT [V cocos/cocos-engine LICENSE.md, HEAD 2026-09-21]; the Cocos Creator editor is a separate free download [K]",
+    "react": "none: an engine-owned canvas",
+    "latest": "engine repo active (last commit 2026-09-21) [V git clone]; Creator 3.8.x docs [S]",
+    "mobile": "built for mobile web and mini-games [K]",
+    "sources": "forum.cocosengine.org; docs.cocos.com/creator/3.8/manual/en/editor/publish/publish-web.html; github.com/cocos/cocos-engine (cloned 2026-09-29)"
+  },
+  {
+    "engine": "Rive (as a scene engine)",
+    "payload": "@rive-app/canvas JS 56 KB gzip [L survey] + WASM 787 KB gzip (stream F); one artboard with state machines, data binding and, since 2026-01, Luau scripting for game-like logic [S rive.app/blog/scripting-is-live-in-rive]",
+    "licence": "runtime MIT [V package]; the editor is a paid plan for export [S, stream F]",
+    "react": "@rive-app/react-canvas",
+    "latest": "2.43.1 (2026-09-23) [V registry]",
+    "mobile": "native runtimes too; designer-authored, not N dynamic data-driven objects",
+    "sources": "npm registry; rive.app blog"
   }
 ]

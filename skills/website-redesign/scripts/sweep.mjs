@@ -15,7 +15,8 @@
  *                   desktop or mobile for every width
  *   --no-zoom       skip the zoom equivalents: 1280×720 at 200% (640×360) and 400% (320×180), desktop, not touch
  *   --measure a,b   characters per line allowed in running text (default 20,90)
- *   --cta sel       the primary call to action (default: the first button-like link or button in <main>)
+ *   --cta sel       the primary call to action (default: the first button-like link or button in <main>, outside
+ *                   nav, footer, forms and dialogs)
  *   --sheet N       widths in the contact sheet (default 6); --crops N  1:1 crops of the worst findings (default 12)
  *   --settle ms     longest wait for the layout to stop changing after a resize (default 400)
  *   --storage seed.json, --chrome path   as in the other scripts
@@ -33,7 +34,7 @@
  *   △ small-target  a control under 24 px at this width but not at every width (squeezed)
  *   △ wide-control  a button wider than 480 px and 60% of a ≥ 768 px viewport
  *   ✗ distorted     an image drawn at an aspect ratio more than 4% off its own (object-fit: fill)
- *   △ cropped       object-fit/background cover showing less than half the image; △ upscaled > 1.5× (blurred)
+ *   △ cropped       object-fit/background cover showing under 40% of the image; △ upscaled > 1.5× (blurred)
  *   △ dead-band     a strip taller than max(360 px, 45% of the viewport) with no text, media or controls
  *   ✗ fold          the h1, or the primary CTA, below the fold here although above it at other widths
  *   △ chrome        fixed and sticky bars covering more than 30% of the viewport
@@ -57,7 +58,7 @@ import { overflowCulprits } from './lib/probes.mjs';
 
 export const SEV = { overflow: 'error', 'edge-cut': 'error', 'zoom-out': 'error', clipped: 'error', truncated: 'warn', overlap: 'error', measure: 'warn',
   'nav-wrap': 'warn', 'nav-overflow': 'error', 'label-wrap': 'warn', 'small-target': 'warn', 'wide-control': 'warn', distorted: 'error', cropped: 'warn',
-  upscaled: 'warn', 'dead-band': 'warn', fold: 'error', chrome: 'warn', order: 'warn', layout: 'info', 'height-jump': 'info' };
+  upscaled: 'warn', 'dead-band': 'warn', fold: 'error', chrome: 'warn', order: 'warn', layout: 'info', 'height-jump': 'info', protrusion: 'error', 'wrap-orphan': 'warn' };
 const MARK = { error: '✗', warn: '△', info: '·' };
 const WEIGHT = { error: 3, warn: 1, info: 0 };
 
@@ -79,7 +80,8 @@ export function layoutProbe(opts = {}) {
       const cls = [...e.classList].filter((c) => !/^(css-|sc-|_|svelte-|astro-|is-|has-)|\d{3,}|:/.test(c)).slice(0, 2);
       let s = e.tagName.toLowerCase() + (cls.length ? '.' + cls.join('.') : '');
       const p = e.parentElement;
-      if (p && !cls.length) { const same = [...p.children].filter((c) => c.tagName === e.tagName); if (same.length > 1) s += `:nth-of-type(${same.indexOf(e) + 1})`; }
+      // Siblings the short form cannot tell apart (same tag, same classes) get their position.
+      if (p) { const same = [...p.children].filter((c) => c.tagName === e.tagName && (!cls.length || cls.every((k) => c.classList.contains(k)))); if (same.length > 1) s += `:nth-of-type(${[...p.children].filter((c) => c.tagName === e.tagName).indexOf(e) + 1})`; }
       return s;
     };
     const parts = [];
@@ -148,6 +150,36 @@ export function layoutProbe(opts = {}) {
         add('truncated', el, `"${text(el, 30)}" ${clamp ? 'line-clamped' : 'ellipsis'} (${lost}px hidden)`, el.getBoundingClientRect(), { sev: strong ? 'error' : 'warn' });
       } else add('clipped', el, `"${text(el, 30)}" cut ${lost}px by ${p === el ? 'its own' : sel(p)} overflow ${outX ? 'x' : 'y'}`, el.getBoundingClientRect());
       break;
+    }
+  }
+
+  // ---- protrusion: text running out of a drawn box (a filled or bordered card, button, badge) that does not clip ----
+  // The clipped check above covers boxes that clip; this is the visible spill (ReDeCheck's "element protrusion").
+  {
+    const drawn = (c) => {
+      const bg = c.backgroundColor, bw = ['Top', 'Right', 'Bottom', 'Left'].some((s) => parseFloat(c[`border${s}Width`]) >= 1 && !/rgba\(.*, 0\)$|transparent/.test(c[`border${s}Color`]) && c[`border${s}Style`] !== 'none');
+      return (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') || bw || (c.boxShadow && c.boxShadow !== 'none') || c.backgroundImage !== 'none';
+    };
+    let n = 0;
+    for (const [el, u] of byEl) {
+      if (n >= 30 || clipSeen.has(`${idOf(el)}`) || inFixed(el)) continue;
+      let surface = null;
+      for (let p = el, depth = 0; p && p !== body && p !== doc && depth < 8; p = p.parentElement, depth++) {
+        const c = cs(p);
+        if (p !== el && (c.overflowX !== 'visible' || c.overflowY !== 'visible')) break; // a clipping box in between: the clip check's business
+        if (drawn(c)) { surface = p; break; }
+        if (c.position === 'absolute' || c.position === 'fixed') break; // positioned out of flow: its ancestors are not its frame
+      }
+      if (!surface) continue;
+      const q = surface.getBoundingClientRect();
+      if (q.width >= vw * 0.95 || q.width < 8 || q.height < 8) continue; // a full-bleed band: overflow is the viewport check's
+      const sc = cs(surface);
+      if (sc.overflowX !== 'visible' || sc.overflowY !== 'visible') continue;
+      const out = Math.max(u.r - q.right, q.left - u.l, u.b - q.bottom, q.top - u.t);
+      if (out <= 3) continue;
+      const dir = u.r - q.right === out ? 'right' : q.left - u.l === out ? 'left' : u.b - q.bottom === out ? 'bottom' : 'top';
+      n++;
+      add('protrusion', el, `"${text(el, 30)}" runs ${Math.round(out)}px out of the ${dir} of ${surface === el ? 'its own box' : sel(surface)}`, el.getBoundingClientRect());
     }
   }
 
@@ -258,8 +290,9 @@ export function layoutProbe(opts = {}) {
     // Links inside running text are exempt (WCAG 2.5.8 inline exception): an inline link whose parent has its own text.
     if (c.tagName === 'A' && c0.display === 'inline' && [...(c.parentElement?.childNodes || [])].some((n) => n.nodeType === 3 && n.data.trim())) continue;
     const q = c.getBoundingClientRect();
+    // A button-like link is short and holds a label: a card that is one big link (image, heading, text) is not.
     const buttonLike = c.matches('button, [role=button], input[type=submit], input[type=button]') ||
-      (c.tagName === 'A' && ((c0.backgroundColor !== 'rgba(0, 0, 0, 0)' && c0.backgroundColor !== 'transparent') || parseFloat(c0.borderTopWidth) >= 1) && q.height >= 28);
+      (c.tagName === 'A' && ((c0.backgroundColor !== 'rgba(0, 0, 0, 0)' && c0.backgroundColor !== 'transparent') || parseFloat(c0.borderTopWidth) >= 1) && q.height >= 28 && q.height <= 72 && !c.querySelector('img, picture, video, h1, h2, h3, h4, h5, h6, p, ul, ol'));
     let lines = 1;
     if (buttonLike && (c.textContent || '').trim()) {
       rg.selectNodeContents(c);
@@ -288,7 +321,7 @@ export function layoutProbe(opts = {}) {
       if (off > 0.04) add('distorted', img, `${src} drawn at ${rr.toFixed(2)}:1, its own ratio is ${nr.toFixed(2)}:1 (${Math.round(off * 100)}% ${rr > nr ? 'stretched' : 'squashed'})`);
     } else if (c.objectFit === 'cover') {
       const shown = Math.min(rr / nr, nr / rr);
-      if (shown < 0.5) add('cropped', img, `${src}: object-fit cover shows ${Math.round(shown * 100)}% of the image`);
+      if (shown < 0.4) add('cropped', img, `${src}: object-fit cover shows ${Math.round(shown * 100)}% of the image`);
     }
     if (!svg) {
       const scale = (Math.min(cw / img.naturalWidth, ch / img.naturalHeight) * dpr);
@@ -302,7 +335,7 @@ export function layoutProbe(opts = {}) {
     const q = el.getBoundingClientRect();
     if (q.width < 80 || q.height < 80) continue;
     const shown = Math.min((q.width / q.height) / (nat.w / nat.h), (nat.w / nat.h) / (q.width / q.height));
-    if (shown < 0.5) add('cropped', el, `background ${nat.src}: cover shows ${Math.round(shown * 100)}% of the image`);
+    if (shown < 0.4) add('cropped', el, `background ${nat.src}: cover shows ${Math.round(shown * 100)}% of the image`);
   }
 
   // ---- dead bands ----
@@ -349,7 +382,8 @@ export function layoutProbe(opts = {}) {
   else {
     const scope = body.querySelector('main, [role=main]') || body;
     const buttonIds = new Set(controls.filter((c) => c.buttonLike).map((c) => c.id));
-    ctaEl = [...scope.querySelectorAll('a[href], button, [role=button]')].find((e) => buttonIds.has(idOf(e)) && !e.closest('nav, footer, [role=search], form[role=search]')) || null;
+    // The page's call to action, not a form's submit button (a question page's Continue sits wherever the form ends).
+    ctaEl = [...scope.querySelectorAll('a[href], button, [role=button]')].find((e) => buttonIds.has(idOf(e)) && !e.closest('nav, footer, form, [role=search], dialog, [role=dialog]')) || null;
   }
   const fold = {};
   if (h1) { const q = h1.getBoundingClientRect(); const lh = parseFloat(cs(h1).lineHeight) || q.height; fold.h1 = { id: idOf(h1), sel: sel(h1), top: Math.round(q.top + sy), below: q.top + sy + Math.min(q.height, lh) > vh, box: box(q) }; }
@@ -396,6 +430,13 @@ export function layoutProbe(opts = {}) {
       const moved = order.findIndex((o, j) => o.i !== j);
       if (moved >= 0 && kids.some((k) => k.matches('a, button, input, select, textarea, [tabindex]') || k.querySelector('a[href], button, input, select, textarea, h1, h2, h3, h4, p'))) {
         add('order', el, `children drawn in order ${order.map((o) => o.i + 1).slice(0, 8).join(',')} — DOM order differs (reading and focus order)`);
+      }
+      // A lone item on the last row of a wrapping row of peers (3 + 3 + 1, 3 + 1): the Switcher's "never 2 + 1".
+      if (n >= 3 && kids.length > n && (/grid/.test(d) || cs(el).flexWrap === 'wrap')) {
+        const last = rects.reduce((m, r) => (r.top > m.top ? r : m), rects[0]);
+        const inLast = rects.filter((r) => sameRow(r, last)).length;
+        const sameKind = new Set(kids.map((k) => k.tagName + '.' + [...k.classList].sort().join('.'))).size === 1;
+        if (inLast === 1 && sameKind && last.width < first.width * 1.5) add('wrap-orphan', el, `${kids.length} items as ${n} per row: the last row holds one`);
       }
     }
   }
@@ -487,7 +528,8 @@ function toRanges(samples) {
   const byKey = new Map();
   samples.forEach((s, i) => {
     for (const f of s.findings) {
-      const k = keyOf(f);
+      // One element per key: two elements with the same short selector must not interleave into broken ranges.
+      const k = `${f.check}|${s.passName}|${f.id || f.sel}`;
       const e = byKey.get(k) || { check: f.check, sel: f.sel, sev: f.sev, hits: [] };
       if (WEIGHT[f.sev] > WEIGHT[e.sev]) e.sev = f.sev;
       e.hits.push({ i, width: s.label || s.width, w: s.width, detail: f.detail, box: f.box, id: f.id });
@@ -503,7 +545,32 @@ function toRanges(samples) {
       ranges.push(cur);
     }
   }
-  return ranges.map(({ lastI, ...r }) => r).sort((a, b) => WEIGHT[b.sev] - WEIGHT[a.sev] || b.n - a.n);
+  return groupSiblings(ranges.map(({ lastI, ...r }) => r)).sort((a, b) => WEIGHT[b.sev] - WEIGHT[a.sev] || b.n - a.n);
+}
+
+/** Three or more siblings with the same finding over the same widths read as one row: "6 × button in div.tools". */
+export function groupSiblings(ranges) {
+  const parentOf = (s) => s.includes(' > ') ? s.slice(0, s.lastIndexOf(' > ')) : null;
+  const tagOf = (s) => s.slice(s.lastIndexOf(' > ') + 3).split(/[.:#]/)[0];
+  const normSel = (s) => s.replace(/:nth-of-type\(\d+\)/g, ':nth-of-type(n)');
+  const out = [];
+  const merged = new Set();
+  // Same finding, same widths: siblings in one parent, then repeats of one component (every card's image).
+  for (const [keyFn, label] of [[(r) => parentOf(r.sel) && `${parentOf(r.sel)}|${tagOf(r.sel)}`, (l) => `${parentOf(l[0].sel)} > ${tagOf(l[0].sel)}`], [(r) => normSel(r.sel) !== r.sel && normSel(r.sel), (l) => normSel(l[0].sel)]]) {
+    const groups = new Map();
+    for (const r of ranges) {
+      if (merged.has(r)) continue;
+      const g = keyFn(r);
+      const k = g && `${r.check}|${r.pass}|${r.from}|${r.to}|${g}`;
+      if (k) (groups.get(k) || groups.set(k, []).get(k)).push(r);
+    }
+    for (const list of groups.values()) {
+      if (list.length < 3) continue;
+      list.forEach((r) => merged.add(r));
+      out.push({ ...list[0], sel: `${label(list)} (${list.length}×)`, detail: `${list.length} alike: ${list[0].detail}; …`, members: list.map((r) => r.sel) });
+    }
+  }
+  return [...ranges.filter((r) => !merged.has(r)), ...out];
 }
 
 /** Cross-width checks: width-dependent small targets and wrapping labels, fold regressions, breakpoints. */
@@ -545,7 +612,12 @@ function crossWidth(samples) {
   for (const e of seq.values()) {
     let dir = 0, turns = 0;
     for (let i = 1; i < e.ns.length; i++) { const d = Math.sign(e.ns[i][1] - e.ns[i - 1][1]); if (!d) continue; if (dir && d !== dir) turns++; dir = d; }
-    if (turns) flips.push(`${e.sel}: per-row count ${e.ns.map((x) => x[1]).filter((v, i, arr) => i === 0 || v !== arr[i - 1]).join(' → ')} as the width grows`);
+    const steps = e.ns.map((x) => x[1]).filter((v, i, arr) => i === 0 || v !== arr[i - 1]).join(' → ');
+    if (turns) flips.push(`${e.sel}: per-row count ${steps} as the width grows`);
+    // A small-range layout (ReDeCheck's term): an arrangement that holds at one sampled width only, between two others.
+    else for (let i = 1; i < e.ns.length - 1; i++) {
+      if (e.ns[i][1] !== e.ns[i - 1][1] && e.ns[i][1] !== e.ns[i + 1][1]) flips.push(`${e.sel}: ${e.ns[i][1]} per row only at ${e.ns[i][0]} px (${e.ns[i - 1][1]} at ${e.ns[i - 1][0]}, ${e.ns[i + 1][1]} at ${e.ns[i + 1][0]}) — a layout that exists for a few pixels`);
+    }
   }
   return { breaks, flips, staticSmall };
 }
@@ -566,7 +638,7 @@ export async function drawSheet(browser, cells, out, { title = '' } = {}) {
   const page = await browser.newPage({ viewport: { width: 1600, height: 900 } });
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
   await page.setContent(`<!doctype html><html><body style="margin:0;background:#e8e8e6;font:13px/1.35 system-ui,sans-serif;color:#1b1b1b">
-    <div id="g" style="display:flex;flex-wrap:wrap;gap:18px;padding:18px;width:${Math.min(1600, cells.length * 420 + 36)}px;align-items:flex-start">
+    <div id="g" style="display:flex;flex-wrap:wrap;gap:18px;padding:18px;width:${Math.min(1600, cells.reduce((w, c) => w + (c.cellW || 380) + 18, 36))}px;align-items:flex-start">
     ${title ? `<div style="flex-basis:100%;font:600 15px system-ui">${esc(title)}</div>` : ''}
     ${cells.map((c) => `<figure style="margin:0;width:${c.cellW || 380}px"><figcaption style="margin:0 0 6px;font-weight:600">${esc(c.label)}</figcaption>
       <img src="data:image/png;base64,${c.png.toString('base64')}" style="width:100%;display:block;box-shadow:0 0 0 1px #0003">
@@ -673,7 +745,7 @@ async function sweepPage(browser, url, a, outDir) {
     const docH = await page.evaluate(() => Math.max(document.documentElement.scrollHeight, document.body.scrollHeight));
     const png = await shotAround(page, marks.find((m) => m.box && m.box.h > 0)?.box, x.s.vw, x.s.height, docH, { maxH: Math.round(x.s.height * 1.4) });
     await rm();
-    cells.push({ label: `${x.s.label} px${x.s.pass === 'zoom' ? '' : ` (${x.s.passName})`} — ${x.s.findings.filter((f) => f.sev === 'error').length} ✗, ${x.s.findings.filter((f) => f.sev === 'warn').length} △`, png, notes: marks.map((m) => `${MARK[m.sev]} ${m.check}: ${m.sel} — ${m.detail}`.slice(0, 140)), cellW: 380 });
+    cells.push({ label: `${x.s.label} px${x.s.pass === 'zoom' ? '' : ` (${x.s.passName})`} — ${x.s.findings.filter((f) => f.sev === 'error').length} ✗, ${x.s.findings.filter((f) => f.sev === 'warn').length} △`, png, notes: marks.map((m) => `${MARK[m.sev]} ${m.check}: ${m.sel} — ${m.detail}`.slice(0, 140)), cellW: x.s.vw >= 700 ? 640 : 380 });
   }
   // 1:1 crops of the worst ranges, at the first width of each range.
   const nCrops = a.crops === undefined ? 12 : Number(a.crops);

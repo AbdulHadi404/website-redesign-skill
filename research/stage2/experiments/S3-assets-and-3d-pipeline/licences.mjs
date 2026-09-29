@@ -26,6 +26,15 @@ const SOURCES = {
   'NASA-3D-Resources README.md': [`${RAW}/nasa/NASA-3D-Resources/master/README.md`, /free and without copyright|usage guidelines/],
   'Smithsonian OpenAccess README.md': [`${RAW}/Smithsonian/OpenAccess/master/README.md`, /CC0|Open Access/],
   'glTF-Blender-IO docs: glTF Material Output / occlusion, GPU instances': [`${RAW}/KhronosGroup/glTF-Blender-IO/093ad93ce4750dd496266806309ba75d5f755752/docs/blender_docs/scene_gltf2.rst`, /glTF Material Output|EXT_mesh_gpu_instancing|Instances must/],
+  // Asset-pack licence files as the packs ship them (vendored copies in public repositories; the vendor sites are not reachable here).
+  'Kenney pack License.txt (vendored in excaliburjs/Excalibur)': [`${RAW}/excaliburjs/Excalibur/760a28a8544d477a496cbb72a14ac68ff9583354/src/spec/assets/images/sprite-sheet-spec/genericItems_spriteSheet_License.txt`, /CC0|commercial|Credit/],
+  'Kenney Starter-Kit-3D-Platformer README (code MIT, assets CC0)': [`${RAW}/KenneyNL/Starter-Kit-3D-Platformer/3fa8a04b1c01ab23db43123d4ce814a34c3fc7f0/README.md`, /CC0|MIT License/],
+  'Quaternius pack License.txt (vendored in arn0ld87/Luther-Game)': [`${RAW}/arn0ld87/Luther-Game/c9a068d50cbe579c79b273af5d4ce766413826c3/game/assets/licenses/Quaternius_MegaKit_CC0_License.txt`, /CC0|FREE version|PRO/],
+  'Liberated Pixel Cup README (OpenGameArt: CC-BY 3.0 / OGA-BY 3.0)': [`${RAW}/ElizaWy/LPC/f07f7f5892e67c932c68f70bb04472f2c64e46bc/README.md`, /OGA-BY|CC-BY|credit\.txt/],
+  'CC BY 4.0 legal code (Khronos LICENSES/): technical modifications, attribution': [`${RAW}/KhronosGroup/glTF-Sample-Assets/f36bfdabd1031c3cf6689a50570b8cdf3678b49c/LICENSES/CC-BY-4.0.txt`, /technical modifications|Adapted Material\.|indicate if You modified|URI or hyperlink to a resource/],
+  'Tiled COPYING (editor GPL, libtiled BSD)': [`${RAW}/mapeditor/tiled/221be2066c4b0ed4bbefbcdfe25d0ad952fc51bd/COPYING`, /GPL|BSD/],
+  'LDtk LICENSE': [`${RAW}/deepnight/ldtk/6d69bd1d6be92f01ac30778f6a934f0da8448b16/LICENSE`, /MIT License/],
+  'Blender release/text/copyright.txt (the program is GPL)': [`${RAW}/blender/blender/0ae04d3e782c4f393950d2df9f764fd7688ef3ca/release/text/copyright.txt`, /GNU GPL|General Public License/],
 };
 
 async function one(name, [url, re]) {
@@ -61,6 +70,14 @@ try {
   }
   out.khronosSampleAssets = { commit: COMMIT, models: models.length, census, restricted, trademarkNotices: models.filter((m) => /LegalMark/.test(readFileSync(path.join(dir, 'Models', m, 'metadata.json'), 'utf8'))).length };
 } catch (e) { out.khronosSampleAssets = { error: e.message }; }
+
+// NASA-3D-Resources: is there a LICENSE file at all, and how many ready-made GLBs? (tree only, no blobs)
+try {
+  const nd = process.env.S3_NASA_CLONE || '/tmp/s2-S3/nasa3d';
+  if (!existsSync(nd)) execFileSync('git', ['clone', '-q', '--depth', '1', '--filter=blob:none', '--no-checkout', 'https://github.com/nasa/NASA-3D-Resources.git', nd]);
+  const files = execFileSync('git', ['-C', nd, 'ls-tree', '-r', '--name-only', 'HEAD'], { maxBuffer: 16 << 20 }).toString().split('\n').filter(Boolean);
+  out.nasa3d = { commit: execFileSync('git', ['-C', nd, 'rev-parse', 'HEAD']).toString().trim(), files: files.length, licenceFiles: files.filter((f) => /(^|\/)(licen[cs]e|copying)/i.test(f)), glb: files.filter((f) => /\.glb$/i.test(f)).length };
+} catch (e) { out.nasa3d = { error: e.message }; }
 
 await mergeResults('licences', out);
 console.log(JSON.stringify({ sources: Object.fromEntries(Object.entries(out.sources).map(([k, v]) => [k, v.status || v.error])), khronos: out.khronosSampleAssets.census }, null, 1));

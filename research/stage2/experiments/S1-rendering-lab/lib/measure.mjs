@@ -13,7 +13,7 @@ export async function launchBrowser(extraArgs = []) {
   const candidates = [process.env.CHROME_PATH, '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', '/opt/pw-browsers/chromium/chrome-linux/chrome'];
   const args = ['--no-sandbox', '--disable-dev-shm-usage', '--hide-scrollbars', '--font-render-hinting=none', ...extraArgs];
   for (const executablePath of candidates) {
-    if (executablePath && existsSync(executablePath)) return pw.chromium.launch({ headless: true, executablePath, args });
+    if (executablePath && existsSync(executablePath)) { const b = await pw.chromium.launch({ headless: true, executablePath, args }); b.__args = extraArgs; return b; }
   }
   // Fall back to the skill's own launcher (finds Playwright's or a system Chromium).
   const { launch } = await import(pathToFileURL(path.join(skillScripts, 'lib/env.mjs')).href);

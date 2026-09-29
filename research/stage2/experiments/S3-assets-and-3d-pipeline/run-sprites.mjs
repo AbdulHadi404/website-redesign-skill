@@ -3,7 +3,7 @@
 // and per-frame cost in Canvas 2D and PixiJS (frames, parallax, tile map, 9-slice, skeletal vs frames), plus the
 // payload of 2D animation runtimes. Writes results.json → "sprites". Needs `node fetch-assets.mjs` first (spineboy).
 //
-//   node run-sprites.mjs [--runs 5] [--skip-gen] [--only load,decode,canvas,pixi,parallax,tilemap,spine,nineslice,runtimes]
+//   node run-sprites.mjs [--runs 5] [--skip-gen] [--only load,h2,decode,canvas,pixi,parallax,tilemap,nineslice,bleed,csspaint,spine,quality,runtimes]
 import { build } from 'esbuild';
 import { mkdir, writeFile, readFile, stat } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -11,6 +11,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import sharp from 'sharp';
 import { packAsync } from 'free-tex-packer-core';
+import pixelmatch from 'pixelmatch';
 import { generate } from './sprites/gen.mjs';
 import { serve, BUILD, CACHE, LAB } from './lib/serve.mjs';
 import { median, round } from './lib/stats.mjs';
@@ -82,7 +83,7 @@ const combos = SETS.flatMap((set) => FMTS.map((fmt) => ({ set, fmt })));
 if (want('load')) out.load = await compare('load', Object.fromEntries(combos.map((c) => [`${c.set}-${c.fmt}`, call('load', c)])), { throttle: true });
 if (want('decode')) out.decode = await compare('decode', Object.fromEntries(combos.map((c) => [`${c.set}-${c.fmt}`, call('decode', c)])));
 if (want('canvas')) out.canvasDraw = await compare('canvas', Object.fromEntries(['atlas', 'grid', 'files'].map((source) => [source, call('canvasDraw', { source, n: 300 })])));
-if (want('pixi')) out.pixiDraw = await compare('pixi', Object.fromEntries(['atlas', 'files'].map((source) => [source, call('pixiDraw', { source, n: 300 })])));
+if (want('pixi')) out.pixiDraw = await compare('pixi', Object.fromEntries(['atlas', 'grid', 'files'].map((source) => [source, call('pixiDraw', { source, n: 300 })])));
 if (want('parallax')) out.parallax = await compare('parallax', Object.fromEntries(['canvas', 'pixi'].map((engine) => [engine, call('parallax', { engine })])));
 if (want('tilemap')) out.tilemap = await compare('tilemap', Object.fromEntries(['canvas-tiles', 'canvas-chunks', 'pixi-all', 'pixi-visible'].map((mode) => [mode, call('tilemap', { mode })])));
 if (want('nineslice')) {
@@ -90,6 +91,11 @@ if (want('nineslice')) {
     const r = await p.evaluate(() => window.lab.nineslice());
     await p.setViewportSize({ width: 1280, height: 1440 });
     await p.screenshot({ path: path.join(LAB, 'shots/nineslice-pixi-vs-css.jpg'), type: 'jpeg', quality: 70, fullPage: true });
+    // top half = Pixi NineSliceSprite, bottom half = CSS border-image: how many pixels differ?
+    const png = await sharp(await p.screenshot({ type: 'png', fullPage: true })).removeAlpha().ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+    const half = 720 * png.info.width * 4;
+    const a = png.data.subarray(0, half), b2 = png.data.subarray(half, 2 * half);
+    r.cssVsPixiDiffPct = round((100 * pixelmatch(a, b2, null, png.info.width, 720, { threshold: 0.1 })) / (png.info.width * 720), 3);
     return r;
   });
   const ctx = await browser.newContext({ viewport: { width: 760, height: 330 } });
@@ -99,6 +105,77 @@ if (want('nineslice')) {
   const grid = await sharp(path.join(SB, 'grid-png/grid.png')).resize(640).flatten({ background: '#1b1f33' }).toBuffer();
   const atl = await sharp(path.join(SB, 'atlas-png/atlas.png')).resize(Math.round(out.meta.atlas.width / 2)).flatten({ background: '#1b1f33' }).toBuffer();
   await sharp({ create: { width: 1000, height: 400, channels: 3, background: '#0d0f1a' } }).composite([{ input: grid, left: 0, top: 0 }, { input: atl, left: 660, top: 0 }]).jpeg({ quality: 70 }).toFile(path.join(LAB, 'shots/sprite-grid-vs-atlas.jpg'));
+}
+
+// HTTP/2: the same 60 files vs one atlas over a single multiplexed TLS connection (production CDNs speak h2/h3),
+// so the request penalty measured above over HTTP/1.1 (6 connections) is not over-read.
+if (want('h2')) {
+  const s2 = await serve(0, { h2: true });
+  const acc = {};
+  for (let r = 0; r < RUNS; r++) {
+    for (const key of ['files-webp', 'atlas-webp', 'files-png', 'atlas-png']) {
+      const [set, fmt] = key.split('-');
+      const ctx = await browser.newContext({ viewport: { width: 1280, height: 720 }, ignoreHTTPSErrors: true });
+      const page = await ctx.newPage();
+      const cdp = await ctx.newCDPSession(page);
+      await cdp.send('Network.enable');
+      await cdp.send('Network.emulateNetworkConditions', { offline: false, latency: 100, downloadThroughput: (9e6 / 8), uploadThroughput: (2e6 / 8) });
+      await page.goto(`${s2.url}/build/sprite-lab.html`);
+      await page.waitForFunction(() => window.labReady === true);
+      const res = await page.evaluate((a) => window.lab.load(a), { set, fmt });
+      res.protocol = await page.evaluate(() => performance.getEntriesByType('resource').map((e) => e.nextHopProtocol).find(Boolean));
+      (acc[key] ||= []).push(res);
+      await ctx.close();
+    }
+  }
+  out.loadH2 = Object.fromEntries(Object.entries(acc).map(([k, rs]) => { const x = summarise(`load-h2 ${k}`, rs); x.protocol = rs[0].protocol; return [k, x]; }));
+  await s2.close();
+}
+
+// Atlas bleeding: padding / extrusion variants × the transforms a page applies.
+if (want('bleed')) {
+  const { BLEED_VARIANTS } = await import('./sprites/gen.mjs');
+  const modes = ['canvas:0.8:0.37', 'canvas:1:0.5', 'pixi:0.8:0.37', 'pixi:1:0.5', 'pixi-mip:0.3:0.37', 'pixi-nearest:2:0'];
+  out.bleed = {};
+  for (const variant of Object.keys(BLEED_VARIANTS)) {
+    out.bleed[variant] = {};
+    for (const mode of modes) {
+      const r = await onPage((p) => p.evaluate((a) => window.lab.bleed(a), { variant, mode }));
+      out.bleed[variant][mode] = r.error ? r : { bleedPct: round(r.bleedPct, 2), seamPct: round(r.seamPct, 2) };
+    }
+    console.error('bleed', variant, JSON.stringify(out.bleed[variant]));
+  }
+}
+
+// CSS sprite animation: background-position steps() (a repaint per frame on the main thread) vs transform steps()
+// on an <img> strip inside an overflow:hidden box (composited). Counts Paint / style-recalc events over 3 s.
+if (want('csspaint')) {
+  const common = `body{margin:0;background:#1b1f33;display:flex;gap:24px;padding:24px;flex-wrap:wrap}`;
+  await writeFile(path.join(BUILD, 'css-sprite-transform.html'), `<!doctype html><meta charset=utf-8><style>${common}
+.s{width:128px;height:128px;overflow:hidden;contain:strict}
+.s .r{animation:y 2s steps(6) infinite}
+.s img{display:block;width:1280px;height:768px;max-width:none;animation:x .2s steps(10) infinite}
+@keyframes x{to{transform:translateX(-1280px)}}@keyframes y{to{transform:translateY(-768px)}}
+@media (prefers-reduced-motion:reduce){.s .r,.s img{animation:none}}
+</style>${'<div class=s><div class=r><img src="/build/sprites/grid-png/grid.png" alt="" width=1280 height=768></div></div>'.repeat(12)}`);
+  const acc = { 'background-position': [], transform: [] };
+  for (let r = 0; r < RUNS; r++) {
+    for (const [k, file] of [['background-position', 'css-sprite.html'], ['transform', 'css-sprite-transform.html']]) {
+      const page = await browser.newPage({ viewport: { width: 760, height: 330 } });
+      await page.goto(`${srv.url}/build/${file}`);
+      await page.waitForTimeout(800);
+      await browser.startTracing(page, { categories: ['devtools.timeline', 'disabled-by-default-devtools.timeline'] });
+      await page.waitForTimeout(3000);
+      const trace = JSON.parse((await browser.stopTracing()).toString());
+      const ev = trace.traceEvents || trace;
+      const main = ev.filter((e) => e.ph === 'X' && ['Paint', 'UpdateLayoutTree', 'Layout', 'PrePaint', 'Layerize'].includes(e.name));
+      const count = (n) => main.filter((e) => e.name === n).length;
+      const ms = main.reduce((s, e) => s + (e.dur || 0), 0) / 1000;
+      acc[k].push({ paintsPerSec: count('Paint') / 3, styleRecalcsPerSec: count('UpdateLayoutTree') / 3, mainThreadMsPerSec: ms / 3 });
+      await page.close();
+    }
+  }
+  out.cssSprite = Object.fromEntries(Object.entries(acc).map(([k, rs]) => [k, summarise(`csspaint ${k}`, rs)]));
 }
 
 if (want('spine')) {
@@ -128,7 +205,7 @@ if (want('spine')) {
       frameAtlas: { width: meta.width, height: meta.height, bytes: enc, decodedRGBA: meta.width * meta.height * 4, json: Buffer.byteLength(JSON.stringify(json)) },
       skeletal: { files: src, skelGzip: skelGz, total: src['spineboy-pro.skel'] + src['spineboy-pma.atlas'] + src['spineboy-pma.png'], note: 'the .skel holds every animation (' + cap.animations.length + '); the PNG holds every part' },
     };
-    await sharp(png).flatten({ background: '#1b1f33' }).resize({ width: 900, withoutEnlargement: true }).jpeg({ quality: 70 }).toFile(path.join(LAB, 'shots/spineboy-run-frames.jpg'));
+    await sharp(png).flatten({ background: '#1b1f33' }).resize({ width: 900, withoutEnlargement: true }).jpeg({ quality: 70 }).toFile(path.join(BUILD, 'spineboy-run-frames.jpg')); // Esoteric's example art: no licence stated for it, so the sheet stays out of the repository
     out.spineDraw = await compare('spine', Object.fromEntries([50, 200].flatMap((n) => ['skeletal', 'frames'].map((mode) => [`${mode}-${n}`, call('spineDraw', { mode, n })]))));
     const lt = [];
     for (let r = 0; r < RUNS; r++) lt.push(await onPage((p) => p.evaluate(() => window.lab.spineLoad())));
