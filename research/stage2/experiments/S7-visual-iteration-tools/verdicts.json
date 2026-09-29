@@ -1112,5 +1112,15 @@
    "v": "FP",
    "note": "a page without a viewport meta: phone Chrome text-autosizes it, so the link measured 595×40 in one load and 218×15 in the next, whatever the mutation (fixed since: control sizes are not compared on such pages) (held-out page)"
   }
+ },
+ "rtl": {
+  "s8-en-broken|not-mirrored|tbody > tr > td > a.row-open": {
+   "v": "TP",
+   "note": "the Open link stays on the physical left because its cell keeps text-align: left: a consequence of the th/td rule, named on the element the reader sees"
+  },
+  "s8-ar-broken|not-mirrored|tbody > tr > td > a.row-open": {
+   "v": "TP",
+   "note": "the Open link stays on the physical left because its cell keeps text-align: left: a consequence of the th/td rule, named on the element the reader sees"
+  }
  }
 }
