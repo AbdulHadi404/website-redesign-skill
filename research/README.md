@@ -14,6 +14,9 @@ The environment allowed only GitHub, npm, PyPI and Google Fonts. Most live websi
 
 | Path | What it is |
 | --- | --- |
+| `REPORT.md` | The R&D report for both stages: what the skill can do now, discoveries, experiments, changes, rejections, remaining gaps |
+| `merge/` | The unit-by-unit merge of `product-ui-mode` and `greenfield-discovery`: 416 units, per-file instructions, the 27 decisions |
+| `stage2/` | Stage 2 (interactive, game-like and rich experiences; verification across widths, content, motion and RTL): the baseline map, twelve stream reports with skeptical reviews, their experiments, and the integration plan for the next session |
 | `00-skill-audit.md` | The audit of the 1.x skill: strengths worth keeping, weaknesses, inconsistencies (including a capture script that still had the bug its own lessons described) |
 | `streams/A-ai-design-skills-ecosystem.md` | ~45 AI design skills, prompts, Cursor rules and MCPs, read from source: what each does well or badly, the ideas worth adopting (ranked), a deduplicated catalogue of AI-UI tells, verification-loop techniques, rejections, licensing |
 | `streams/B-components-and-design-systems.md` | Component libraries and design systems as of 2026-09 (what changed since 2025, measured bundle costs, a decision guide); what mature systems agree on for state matrices, tokens, type, density, forms, errors, notifications, navigation, tables and documentation |
@@ -85,6 +88,8 @@ Full lists: A §6, C §11, F §5.
 - **Resources rejected on staleness, consent or licence grounds**: Feather, UI Faces, placeholder hosts, Material Symbols' full font, AI-generated "customers".
 
 ## Open items and future work
+
+The current list is in `REPORT.md` → "Remaining gaps". The items below are from stage 1 and still stand.
 
 - **Re-verify [K] items when network access allows**:
   - WebAIM Million category shares

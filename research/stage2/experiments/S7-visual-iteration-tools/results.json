@@ -17,7 +17,7 @@
   "sheetsMs": 3169,
   "scoreMs": 14,
   "motionMs": 13615,
-  "holdoutMs": 781317,
+  "holdoutMs": 793555,
   "holdout-sweepMs": 165487,
   "scripts": {
    "sweep.mjs": "656ee69cd500",
@@ -14585,8 +14585,8 @@
  "holdout": {
   "sweep": {
    "scripts": {
-    "sweep.mjs": "26cb1f826272",
-    "stress.mjs": "d0dba7ab1c3a"
+    "sweep.mjs": "656ee69cd500",
+    "stress.mjs": "aaec5fe02925"
    },
    "targets": [
     {
@@ -14594,9 +14594,9 @@
      "kind": "holdout fixture (H-blind-eval Hallam & Price, a 2014 Bootstrap-style site)",
      "url": "/repo/research/experiments/H-blind-eval/hallam/fixture/",
      "widths": 147,
-     "ms": 27578,
-     "msPerWidth": 188,
-     "wallMs": 31306,
+     "ms": 28164,
+     "msPerWidth": 192,
+     "wallMs": 32697,
      "loads": 2,
      "errors": 8,
      "warnings": 6,
@@ -14806,21 +14806,21 @@
      "kind": "holdout fixture (H-blind-eval Hallam & Price)",
      "url": "/repo/research/experiments/H-blind-eval/hallam/fixture/fees/",
      "widths": 147,
-     "ms": 19093,
-     "msPerWidth": 130,
-     "wallMs": 22711,
+     "ms": 20243,
+     "msPerWidth": 138,
+     "wallMs": 23948,
      "loads": 2,
      "errors": 8,
-     "warnings": 4,
+     "warnings": 3,
      "findingKeys": 4,
      "notAtDefaultWidths": 0,
      "notAtResponsiveWidths": 0,
      "zoomOnly": 0,
-     "missedByCaptureWidths": 8,
+     "missedByCaptureWidths": 7,
      "breakpoints": 2,
      "flips": [],
      "verdicts": {
-      "TP": 12,
+      "TP": 11,
       "INT": 0,
       "FP": 0,
       "unlabelled": 0
@@ -14947,19 +14947,6 @@
        "check": "measure",
        "sev": "warn",
        "sel": "div.wrap > div.content > p:nth-of-type(1)",
-       "from": "320",
-       "to": "320",
-       "pass": "phone",
-       "detail": "152 characters per line (1 line) > 90",
-       "verdict": {
-        "v": "TP",
-        "note": "152 characters a line (held-out page)"
-       }
-      },
-      {
-       "check": "measure",
-       "sev": "warn",
-       "sel": "div.wrap > div.content > p:nth-of-type(1)",
        "from": "640 (1280 at 200%)",
        "to": "640 (1280 at 200%)",
        "pass": "zoom",
@@ -14989,9 +14976,9 @@
      "kind": "holdout fixture (H-blind-eval Hallam & Price)",
      "url": "/repo/research/experiments/H-blind-eval/hallam/fixture/services/",
      "widths": 147,
-     "ms": 19299,
-     "msPerWidth": 131,
-     "wallMs": 22324,
+     "ms": 19633,
+     "msPerWidth": 134,
+     "wallMs": 22934,
      "loads": 2,
      "errors": 8,
      "warnings": 0,
@@ -15120,9 +15107,9 @@
      "kind": "holdout fixture (H-blind-eval Hallam & Price)",
      "url": "/repo/research/experiments/H-blind-eval/hallam/fixture/contact/",
      "widths": 147,
-     "ms": 19646,
-     "msPerWidth": 134,
-     "wallMs": 22686,
+     "ms": 20395,
+     "msPerWidth": 139,
+     "wallMs": 23743,
      "loads": 2,
      "errors": 8,
      "warnings": 0,
@@ -15251,9 +15238,9 @@
      "kind": "holdout fixture",
      "url": "/repo/tools/regress/fixtures/basket.html",
      "widths": 147,
-     "ms": 18860,
+     "ms": 18889,
      "msPerWidth": 128,
-     "wallMs": 19784,
+     "wallMs": 19934,
      "loads": 2,
      "errors": 0,
      "warnings": 0,
@@ -15277,9 +15264,9 @@
      "kind": "holdout fixture",
      "url": "/repo/tools/regress/fixtures/a11y-wizard.html",
      "widths": 147,
-     "ms": 19976,
-     "msPerWidth": 136,
-     "wallMs": 20807,
+     "ms": 20791,
+     "msPerWidth": 141,
+     "wallMs": 21746,
      "loads": 2,
      "errors": 0,
      "warnings": 0,
@@ -15303,9 +15290,9 @@
      "kind": "holdout real site (Astro portfolio example)",
      "url": "(astro)/work/h20/",
      "widths": 147,
-     "ms": 21181,
-     "msPerWidth": 144,
-     "wallMs": 24424,
+     "ms": 22086,
+     "msPerWidth": 150,
+     "wallMs": 25633,
      "loads": 2,
      "errors": 0,
      "warnings": 3,
@@ -15368,14 +15355,14 @@
     }
    ],
    "totals": {
-    "ranges": 45,
-    "TP": 40,
+    "ranges": 44,
+    "TP": 39,
     "INT": 2,
     "FP": 3,
     "unlabelled": 0,
-    "msPerWidthMedian": 134,
-    "wallMsMedian": 22686,
-    "missedByCaptureWidths": 29,
+    "msPerWidthMedian": 139,
+    "wallMsMedian": 23743,
+    "missedByCaptureWidths": 28,
     "findingKeys": 17,
     "notAtDefaultWidths": 1,
     "notAtResponsiveWidths": 0,
@@ -15387,70 +15374,32 @@
      "INT": 1,
      "FP": 1,
      "unlabelled": 0,
-     "actionable": 88,
-     "intShare": 6,
-     "fpShare": 6,
-     "fpToolCaused": 1,
      "unseeded": {
       "all": 17,
       "TP": 15,
       "INT": 1,
-      "FP": 1,
-      "unlabelled": 0,
-      "actionable": 88,
-      "intShare": 6,
-      "fpShare": 6,
-      "fpToolCaused": 1
-     },
-     "realSite": {
-      "all": 2,
-      "TP": 1,
-      "INT": 1,
-      "FP": 0,
-      "unlabelled": 0,
-      "actionable": 50,
-      "intShare": 50,
-      "fpShare": 0,
-      "fpToolCaused": 0
-     },
-     "nativeRtl": {
-      "all": 0,
-      "TP": 0,
-      "INT": 0,
-      "FP": 0,
-      "unlabelled": 0,
-      "actionable": null,
-      "intShare": null,
-      "fpShare": null,
-      "fpToolCaused": 0
-     },
-     "notAtDefaultWidths": {
-      "all": 1,
-      "TP": 0,
-      "INT": 1,
-      "FP": 0
-     },
-     "zoomOnly": 0
+      "FP": 1
+     }
     }
    }
   },
   "stress": {
    "scripts": {
-    "sweep.mjs": "26cb1f826272",
-    "stress.mjs": "d0dba7ab1c3a"
+    "sweep.mjs": "656ee69cd500",
+    "stress.mjs": "aaec5fe02925"
    },
    "targets": [
     {
      "name": "hallam-home",
      "kind": "holdout fixture (H-blind-eval Hallam & Price, a 2014 Bootstrap-style site)",
      "url": "/repo/research/experiments/H-blind-eval/hallam/fixture/",
-     "ms": 213725,
-     "wallMs": 214574,
+     "ms": 217704,
+     "wallMs": 218616,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 6550,
+       "ms": 6566,
        "applied": "24 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -15458,7 +15407,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 6794,
+       "ms": 6815,
        "applied": "13 text(s) changed; data-like texts only (13): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 1,
        "warnings": 0
@@ -15466,7 +15415,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 6563,
+       "ms": 6565,
        "applied": "6 text(s) changed; 6 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -15474,7 +15423,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 6561,
+       "ms": 6576,
        "applied": "2 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -15482,7 +15431,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 6701,
+       "ms": 6758,
        "applied": "1 image request(s) blocked",
        "errors": 0,
        "warnings": 1
@@ -15490,7 +15439,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 6854,
+       "ms": 6904,
        "applied": "dir=rtl lang=ar; 26 element(s) checked for mirroring; 24 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -15498,7 +15447,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 6554,
+       "ms": 6569,
        "applied": "div.cols: 3 → 0 div; div.accred: 3 → 0 span",
        "errors": 0,
        "warnings": 0
@@ -15506,7 +15455,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 6580,
+       "ms": 6556,
        "applied": "div.cols: 3 → 1 div; div.accred: 3 → 1 span",
        "errors": 0,
        "warnings": 0
@@ -15514,15 +15463,15 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 11523,
-       "applied": "div.cols: 3 → 500 div (443px tall, layout 24 ms); div.accred: 3 → 500 span (107px tall, layout 8 ms)",
+       "ms": 13872,
+       "applied": "div.cols: 3 → 500 div (443px tall, layout 26 ms); div.accred: 3 → 500 span (107px tall, layout 7 ms)",
        "errors": 1,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 4124,
+       "ms": 4128,
        "applied": "4 frames; CLS 0.000; load event at 1.3 s; loading indicators seen: none",
        "errors": 0,
        "warnings": 0
@@ -15530,7 +15479,7 @@
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 30,
+       "ms": 40,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -15538,7 +15487,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 22,
+       "ms": 20,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -15546,7 +15495,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 6560,
+       "ms": 6600,
        "applied": "24 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -15554,7 +15503,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 6559,
+       "ms": 6564,
        "applied": "13 text(s) changed; data-like texts only (13): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -15562,7 +15511,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 6547,
+       "ms": 6561,
        "applied": "6 text(s) changed; 6 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -15570,7 +15519,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 6545,
+       "ms": 6582,
        "applied": "2 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -15578,7 +15527,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 6708,
+       "ms": 6696,
        "applied": "1 image request(s) blocked",
        "errors": 0,
        "warnings": 1
@@ -15586,7 +15535,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 6850,
+       "ms": 6868,
        "applied": "dir=rtl lang=ar; 26 element(s) checked for mirroring; 24 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -15594,7 +15543,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 6663,
+       "ms": 6693,
        "applied": "div.cols: 3 → 0 div; div.accred: 3 → 0 span",
        "errors": 0,
        "warnings": 1
@@ -15602,7 +15551,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 6551,
+       "ms": 6574,
        "applied": "div.cols: 3 → 1 div; div.accred: 3 → 1 span",
        "errors": 0,
        "warnings": 0
@@ -15610,15 +15559,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 6907,
-       "applied": "div.cols: 3 → 500 div (443px tall, layout 21 ms); div.accred: 3 → 500 span (107px tall, layout 6 ms)",
+       "ms": 6993,
+       "applied": "div.cols: 3 → 500 div (443px tall, layout 26 ms); div.accred: 3 → 500 span (107px tall, layout 8 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 6573,
+       "ms": 6595,
        "applied": "24 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -15626,7 +15575,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 6767,
+       "ms": 6831,
        "applied": "13 text(s) changed; data-like texts only (13): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 1,
        "warnings": 0
@@ -15634,7 +15583,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 6552,
+       "ms": 6597,
        "applied": "6 text(s) changed; 6 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -15642,7 +15591,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 6548,
+       "ms": 6546,
        "applied": "2 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -15650,7 +15599,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 6697,
+       "ms": 6786,
        "applied": "1 image request(s) blocked",
        "errors": 0,
        "warnings": 1
@@ -15658,7 +15607,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 6844,
+       "ms": 6926,
        "applied": "dir=rtl lang=ar; 27 element(s) checked for mirroring; 24 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -15666,7 +15615,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 6707,
+       "ms": 6724,
        "applied": "div.cols: 3 → 0 div; div.accred: 3 → 0 span",
        "errors": 0,
        "warnings": 1
@@ -15674,7 +15623,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 6557,
+       "ms": 6579,
        "applied": "div.cols: 3 → 1 div; div.accred: 3 → 1 span",
        "errors": 0,
        "warnings": 0
@@ -15682,8 +15631,8 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 8836,
-       "applied": "div.cols: 3 → 500 div (443px tall, layout 25 ms); div.accred: 3 → 500 span (107px tall, layout 6 ms)",
+       "ms": 9569,
+       "applied": "div.cols: 3 → 500 div (443px tall, layout 25 ms); div.accred: 3 → 500 span (107px tall, layout 8 ms)",
        "errors": 1,
        "warnings": 0
       }
@@ -15863,13 +15812,13 @@
      "name": "hallam-fees",
      "kind": "holdout fixture (H-blind-eval Hallam & Price)",
      "url": "/repo/research/experiments/H-blind-eval/hallam/fixture/fees/",
-     "ms": 96924,
-     "wallMs": 97790,
+     "ms": 97413,
+     "wallMs": 98358,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 2566,
+       "ms": 2579,
        "applied": "14 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -15877,7 +15826,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 2808,
+       "ms": 2849,
        "applied": "4 text(s) changed; data-like texts only (4): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 1,
        "warnings": 0
@@ -15885,7 +15834,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 2572,
+       "ms": 2584,
        "applied": "3 text(s) changed; 3 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -15893,7 +15842,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 2558,
+       "ms": 2563,
        "applied": "2 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -15901,7 +15850,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 6687,
+       "ms": 6779,
        "applied": "1 image request(s) blocked",
        "errors": 0,
        "warnings": 1
@@ -15909,7 +15858,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 2715,
+       "ms": 2774,
        "applied": "dir=rtl lang=ar; 12 element(s) checked for mirroring; 14 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -15917,7 +15866,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 2543,
+       "ms": 2575,
        "applied": "div.accred: 3 → 0 span",
        "errors": 0,
        "warnings": 0
@@ -15925,7 +15874,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 2555,
+       "ms": 2571,
        "applied": "div.accred: 3 → 1 span",
        "errors": 0,
        "warnings": 0
@@ -15933,23 +15882,23 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 2607,
-       "applied": "div.accred: 3 → 500 span (107px tall, layout 7 ms)",
+       "ms": 2615,
+       "applied": "div.accred: 3 → 500 span (107px tall, layout 9 ms)",
        "errors": 1,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 4084,
-       "applied": "4 frames; CLS 0.001; load event at 1.3 s; loading indicators seen: none",
+       "ms": 4117,
+       "applied": "4 frames; CLS 0.000; load event at 1.3 s; loading indicators seen: none",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 34,
+       "ms": 43,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -15957,7 +15906,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 27,
+       "ms": 39,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -15965,7 +15914,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 2568,
+       "ms": 2571,
        "applied": "14 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -15973,7 +15922,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 2576,
+       "ms": 2559,
        "applied": "4 text(s) changed; data-like texts only (4): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -15981,78 +15930,6 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2564,
-       "applied": "3 text(s) changed; 3 item(s), one slot each",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "numbers",
-       "width": 768,
-       "ms": 2557,
-       "applied": "2 text(s) changed",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "no-images",
-       "width": 768,
-       "ms": 6646,
-       "applied": "1 image request(s) blocked",
-       "errors": 0,
-       "warnings": 1
-      },
-      {
-       "mutation": "rtl",
-       "width": 768,
-       "ms": 2715,
-       "applied": "dir=rtl lang=ar; 12 element(s) checked for mirroring; 14 text(s) in Arabic",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "list-0",
-       "width": 768,
-       "ms": 2543,
-       "applied": "div.accred: 3 → 0 span",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "list-1",
-       "width": 768,
-       "ms": 2543,
-       "applied": "div.accred: 3 → 1 span",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "list-500",
-       "width": 768,
-       "ms": 2589,
-       "applied": "div.accred: 3 → 500 span (107px tall, layout 6 ms)",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "pseudo",
-       "width": 1280,
-       "ms": 2550,
-       "applied": "14 text(s) changed",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "long",
-       "width": 1280,
-       "ms": 2560,
-       "applied": "4 text(s) changed; data-like texts only (4): list items, cells, names, e-mails, URLs — --targets to choose",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "empty",
-       "width": 1280,
        "ms": 2555,
        "applied": "3 text(s) changed; 3 item(s), one slot each",
        "errors": 0,
@@ -16060,8 +15937,80 @@
       },
       {
        "mutation": "numbers",
+       "width": 768,
+       "ms": 2556,
+       "applied": "2 text(s) changed",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "no-images",
+       "width": 768,
+       "ms": 6689,
+       "applied": "1 image request(s) blocked",
+       "errors": 0,
+       "warnings": 1
+      },
+      {
+       "mutation": "rtl",
+       "width": 768,
+       "ms": 2717,
+       "applied": "dir=rtl lang=ar; 12 element(s) checked for mirroring; 14 text(s) in Arabic",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "list-0",
+       "width": 768,
+       "ms": 2544,
+       "applied": "div.accred: 3 → 0 span",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "list-1",
+       "width": 768,
+       "ms": 2542,
+       "applied": "div.accred: 3 → 1 span",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "list-500",
+       "width": 768,
+       "ms": 2582,
+       "applied": "div.accred: 3 → 500 span (107px tall, layout 8 ms)",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "pseudo",
        "width": 1280,
-       "ms": 2550,
+       "ms": 2553,
+       "applied": "14 text(s) changed",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "long",
+       "width": 1280,
+       "ms": 2552,
+       "applied": "4 text(s) changed; data-like texts only (4): list items, cells, names, e-mails, URLs — --targets to choose",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "empty",
+       "width": 1280,
+       "ms": 2548,
+       "applied": "3 text(s) changed; 3 item(s), one slot each",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "numbers",
+       "width": 1280,
+       "ms": 2544,
        "applied": "2 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -16069,7 +16018,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 6660,
+       "ms": 6661,
        "applied": "1 image request(s) blocked",
        "errors": 0,
        "warnings": 1
@@ -16077,7 +16026,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 2708,
+       "ms": 2711,
        "applied": "dir=rtl lang=ar; 13 element(s) checked for mirroring; 14 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -16085,7 +16034,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2543,
+       "ms": 2557,
        "applied": "div.accred: 3 → 0 span",
        "errors": 0,
        "warnings": 0
@@ -16093,7 +16042,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 2545,
+       "ms": 2547,
        "applied": "div.accred: 3 → 1 span",
        "errors": 0,
        "warnings": 0
@@ -16101,7 +16050,7 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 2571,
+       "ms": 2588,
        "applied": "div.accred: 3 → 500 span (107px tall, layout 8 ms)",
        "errors": 1,
        "warnings": 0
@@ -16201,13 +16150,13 @@
      "name": "hallam-contact",
      "kind": "holdout fixture (H-blind-eval Hallam & Price)",
      "url": "/repo/research/experiments/H-blind-eval/hallam/fixture/contact/",
-     "ms": 96882,
-     "wallMs": 97704,
+     "ms": 97158,
+     "wallMs": 98054,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 2555,
+       "ms": 2568,
        "applied": "47 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -16215,7 +16164,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 2849,
+       "ms": 2825,
        "applied": "35 text(s) changed; data-like texts only (35): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 1,
        "warnings": 0
@@ -16223,7 +16172,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 2562,
+       "ms": 2566,
        "applied": "3 text(s) changed; 3 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -16231,7 +16180,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 2596,
+       "ms": 2548,
        "applied": "8 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -16239,7 +16188,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 6766,
+       "ms": 6709,
        "applied": "1 image request(s) blocked",
        "errors": 0,
        "warnings": 1
@@ -16247,7 +16196,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 2740,
+       "ms": 2728,
        "applied": "dir=rtl lang=ar; 43 element(s) checked for mirroring; 47 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -16255,7 +16204,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 2546,
+       "ms": 2549,
        "applied": "div.accred: 3 → 0 span",
        "errors": 0,
        "warnings": 0
@@ -16263,7 +16212,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 2546,
+       "ms": 2555,
        "applied": "div.accred: 3 → 1 span",
        "errors": 0,
        "warnings": 0
@@ -16271,15 +16220,15 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 2590,
-       "applied": "div.accred: 3 → 500 span (107px tall, layout 7 ms)",
+       "ms": 2594,
+       "applied": "div.accred: 3 → 500 span (107px tall, layout 8 ms)",
        "errors": 1,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 4103,
+       "ms": 4095,
        "applied": "4 frames; CLS 0.000; load event at 1.3 s; loading indicators seen: none",
        "errors": 0,
        "warnings": 0
@@ -16287,7 +16236,7 @@
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 20,
+       "ms": 25,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -16295,7 +16244,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 18,
+       "ms": 24,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -16303,7 +16252,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 2538,
+       "ms": 2568,
        "applied": "47 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -16311,7 +16260,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 2545,
+       "ms": 2575,
        "applied": "35 text(s) changed; data-like texts only (35): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -16319,7 +16268,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2546,
+       "ms": 2560,
        "applied": "3 text(s) changed; 3 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -16327,7 +16276,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 2543,
+       "ms": 2575,
        "applied": "8 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -16335,7 +16284,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 6680,
+       "ms": 6709,
        "applied": "1 image request(s) blocked",
        "errors": 0,
        "warnings": 1
@@ -16343,7 +16292,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 2720,
+       "ms": 2748,
        "applied": "dir=rtl lang=ar; 43 element(s) checked for mirroring; 47 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -16351,7 +16300,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 2535,
+       "ms": 2552,
        "applied": "div.accred: 3 → 0 span",
        "errors": 0,
        "warnings": 0
@@ -16359,7 +16308,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 2539,
+       "ms": 2564,
        "applied": "div.accred: 3 → 1 span",
        "errors": 0,
        "warnings": 0
@@ -16367,15 +16316,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 2570,
-       "applied": "div.accred: 3 → 500 span (107px tall, layout 6 ms)",
+       "ms": 2590,
+       "applied": "div.accred: 3 → 500 span (107px tall, layout 7 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 2530,
+       "ms": 2564,
        "applied": "47 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -16383,7 +16332,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 2529,
+       "ms": 2542,
        "applied": "35 text(s) changed; data-like texts only (35): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -16391,7 +16340,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 2527,
+       "ms": 2544,
        "applied": "3 text(s) changed; 3 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -16399,7 +16348,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 2544,
+       "ms": 2539,
        "applied": "8 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -16407,7 +16356,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 6691,
+       "ms": 6692,
        "applied": "1 image request(s) blocked",
        "errors": 0,
        "warnings": 1
@@ -16415,7 +16364,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 2733,
+       "ms": 2726,
        "applied": "dir=rtl lang=ar; 44 element(s) checked for mirroring; 47 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -16423,7 +16372,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2559,
+       "ms": 2560,
        "applied": "div.accred: 3 → 0 span",
        "errors": 0,
        "warnings": 0
@@ -16431,7 +16380,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 2551,
+       "ms": 2558,
        "applied": "div.accred: 3 → 1 span",
        "errors": 0,
        "warnings": 0
@@ -16439,7 +16388,7 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 2572,
+       "ms": 2589,
        "applied": "div.accred: 3 → 500 span (107px tall, layout 7 ms)",
        "errors": 1,
        "warnings": 0
@@ -16539,13 +16488,13 @@
      "name": "a11y-wizard",
      "kind": "holdout fixture",
      "url": "/repo/tools/regress/fixtures/a11y-wizard.html",
-     "ms": 91518,
-     "wallMs": 92301,
+     "ms": 92336,
+     "wallMs": 93228,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 3005,
+       "ms": 3016,
        "applied": "92 text(s) changed",
        "errors": 2,
        "warnings": 0
@@ -16553,7 +16502,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 3026,
+       "ms": 3098,
        "applied": "56 text(s) changed; data-like texts only (59): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 4,
        "warnings": 0
@@ -16561,7 +16510,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 2772,
+       "ms": 2785,
        "applied": "11 text(s) changed; 11 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -16569,7 +16518,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 2769,
+       "ms": 2784,
        "applied": "13 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -16577,7 +16526,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 2774,
+       "ms": 2801,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -16585,7 +16534,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 3595,
+       "ms": 3659,
        "applied": "dir=rtl lang=ar; 54 element(s) checked for mirroring; 92 text(s) in Arabic",
        "errors": 2,
        "warnings": 2
@@ -16593,7 +16542,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 2778,
+       "ms": 2783,
        "applied": "dl: 11 → 0 div",
        "errors": 0,
        "warnings": 0
@@ -16601,7 +16550,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 2769,
+       "ms": 2784,
        "applied": "dl: 11 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -16609,15 +16558,15 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 3031,
-       "applied": "dl: 11 → 500 div (33098px tall, layout 18 ms)",
+       "ms": 3121,
+       "applied": "dl: 11 → 500 div (33098px tall, layout 20 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 4102,
+       "ms": 4103,
        "applied": "4 frames; CLS 0.000; load event at 0.7 s; loading indicators seen: none",
        "errors": 0,
        "warnings": 0
@@ -16625,7 +16574,7 @@
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 20,
+       "ms": 24,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -16633,7 +16582,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 21,
+       "ms": 20,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -16641,7 +16590,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 2651,
+       "ms": 2678,
        "applied": "92 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -16649,7 +16598,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 2883,
+       "ms": 2917,
        "applied": "56 text(s) changed; data-like texts only (59): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 1,
        "warnings": 0
@@ -16657,7 +16606,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2648,
+       "ms": 2667,
        "applied": "11 text(s) changed; 11 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -16665,7 +16614,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 2653,
+       "ms": 2659,
        "applied": "13 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -16673,7 +16622,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 2659,
+       "ms": 2679,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -16681,7 +16630,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 3237,
+       "ms": 3352,
        "applied": "dir=rtl lang=ar; 57 element(s) checked for mirroring; 92 text(s) in Arabic",
        "errors": 1,
        "warnings": 2
@@ -16689,7 +16638,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 2647,
+       "ms": 2656,
        "applied": "dl: 11 → 0 div",
        "errors": 0,
        "warnings": 0
@@ -16697,7 +16646,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 2648,
+       "ms": 2657,
        "applied": "dl: 11 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -16705,15 +16654,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 2900,
-       "applied": "dl: 11 → 500 div (26000px tall, layout 23 ms)",
+       "ms": 2953,
+       "applied": "dl: 11 → 500 div (26000px tall, layout 17 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 2653,
+       "ms": 2665,
        "applied": "92 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -16721,7 +16670,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 2681,
+       "ms": 2660,
        "applied": "56 text(s) changed; data-like texts only (59): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -16729,7 +16678,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 2660,
+       "ms": 2668,
        "applied": "11 text(s) changed; 11 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -16737,7 +16686,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 2661,
+       "ms": 2662,
        "applied": "13 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -16745,7 +16694,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 2667,
+       "ms": 2669,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -16753,7 +16702,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 3321,
+       "ms": 3351,
        "applied": "dir=rtl lang=ar; 58 element(s) checked for mirroring; 92 text(s) in Arabic",
        "errors": 1,
        "warnings": 2
@@ -16761,7 +16710,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2664,
+       "ms": 2663,
        "applied": "dl: 11 → 0 div",
        "errors": 0,
        "warnings": 0
@@ -16769,7 +16718,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 2669,
+       "ms": 2661,
        "applied": "dl: 11 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -16777,8 +16726,8 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 2905,
-       "applied": "dl: 11 → 500 div (26000px tall, layout 16 ms)",
+       "ms": 2990,
+       "applied": "dl: 11 → 500 div (26000px tall, layout 25 ms)",
        "errors": 0,
        "warnings": 0
       }
@@ -17020,13 +16969,13 @@
      "name": "astro-about",
      "kind": "holdout real site (Astro portfolio example)",
      "url": "(astro)/about/",
-     "ms": 114045,
-     "wallMs": 114876,
+     "ms": 113739,
+     "wallMs": 114625,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 3448,
+       "ms": 3368,
        "applied": "32 text(s) changed",
        "errors": 2,
        "warnings": 0
@@ -17034,7 +16983,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 3114,
+       "ms": 3116,
        "applied": "0 text(s) changed; data-like texts only (0): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -17042,7 +16991,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 3066,
+       "ms": 3087,
        "applied": "0 text(s) changed; no repeated items or table rows found: pass --targets for the fields that can be empty",
        "errors": 0,
        "warnings": 0
@@ -17050,7 +16999,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 3112,
+       "ms": 3099,
        "applied": "0 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -17058,7 +17007,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 7161,
+       "ms": 7134,
        "applied": "9 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -17066,7 +17015,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 3394,
+       "ms": 3372,
        "applied": "dir=rtl lang=ar; 18 element(s) checked for mirroring; 32 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -17074,7 +17023,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 3146,
+       "ms": 3007,
        "applied": "no repeated list found: pass --list",
        "errors": 0,
        "warnings": 0
@@ -17082,7 +17031,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 3143,
+       "ms": 3081,
        "applied": "no repeated list found: pass --list",
        "errors": 0,
        "warnings": 0
@@ -17090,7 +17039,7 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 3195,
+       "ms": 3118,
        "applied": "no repeated list found: pass --list",
        "errors": 0,
        "warnings": 0
@@ -17098,7 +17047,7 @@
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 6185,
+       "ms": 6126,
        "applied": "5 frames; CLS 0.000; load event at 2.1 s; loading indicators seen: none",
        "errors": 0,
        "warnings": 0
@@ -17106,7 +17055,7 @@
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 37,
+       "ms": 24,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -17114,7 +17063,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 32,
+       "ms": 19,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -17122,7 +17071,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 3203,
+       "ms": 3190,
        "applied": "32 text(s) changed",
        "errors": 0,
        "warnings": 1
@@ -17130,7 +17079,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 2968,
+       "ms": 3037,
        "applied": "0 text(s) changed; data-like texts only (0): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -17138,7 +17087,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 3088,
+       "ms": 2976,
        "applied": "0 text(s) changed; no repeated items or table rows found: pass --targets for the fields that can be empty",
        "errors": 0,
        "warnings": 0
@@ -17146,7 +17095,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 2948,
+       "ms": 2989,
        "applied": "0 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -17154,7 +17103,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 6888,
+       "ms": 6988,
        "applied": "9 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -17162,7 +17111,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 3203,
+       "ms": 3213,
        "applied": "dir=rtl lang=ar; 19 element(s) checked for mirroring; 32 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -17170,7 +17119,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 2993,
+       "ms": 2970,
        "applied": "no repeated list found: pass --list",
        "errors": 0,
        "warnings": 0
@@ -17178,7 +17127,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 2964,
+       "ms": 2942,
        "applied": "no repeated list found: pass --list",
        "errors": 0,
        "warnings": 0
@@ -17186,7 +17135,7 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 2992,
+       "ms": 3055,
        "applied": "no repeated list found: pass --list",
        "errors": 0,
        "warnings": 0
@@ -17194,7 +17143,7 @@
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 3029,
+       "ms": 3003,
        "applied": "32 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -17202,7 +17151,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 3014,
+       "ms": 3015,
        "applied": "0 text(s) changed; data-like texts only (0): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -17210,7 +17159,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 2995,
+       "ms": 3038,
        "applied": "0 text(s) changed; no repeated items or table rows found: pass --targets for the fields that can be empty",
        "errors": 0,
        "warnings": 0
@@ -17218,7 +17167,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 3055,
+       "ms": 2941,
        "applied": "0 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -17226,7 +17175,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 7038,
+       "ms": 7002,
        "applied": "9 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -17234,7 +17183,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 3466,
+       "ms": 3534,
        "applied": "dir=rtl lang=ar; 38 element(s) checked for mirroring; 32 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -17242,7 +17191,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 3041,
+       "ms": 3010,
        "applied": "no repeated list found: pass --list",
        "errors": 0,
        "warnings": 0
@@ -17250,7 +17199,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 3080,
+       "ms": 3045,
        "applied": "no repeated list found: pass --list",
        "errors": 0,
        "warnings": 0
@@ -17258,7 +17207,7 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 2921,
+       "ms": 2993,
        "applied": "no repeated list found: pass --list",
        "errors": 0,
        "warnings": 0
@@ -17339,42 +17288,11 @@
      "INT": 2,
      "FP": 10,
      "unlabelled": 0,
-     "actionable": 52,
-     "intShare": 8,
-     "fpShare": 40,
-     "fpToolCaused": 10,
      "unseeded": {
       "all": 25,
       "TP": 13,
       "INT": 2,
-      "FP": 10,
-      "unlabelled": 0,
-      "actionable": 52,
-      "intShare": 8,
-      "fpShare": 40,
-      "fpToolCaused": 10
-     },
-     "realSite": {
-      "all": 4,
-      "TP": 3,
-      "INT": 1,
-      "FP": 0,
-      "unlabelled": 0,
-      "actionable": 75,
-      "intShare": 25,
-      "fpShare": 0,
-      "fpToolCaused": 0
-     },
-     "nativeRtl": {
-      "all": 0,
-      "TP": 0,
-      "INT": 0,
-      "FP": 0,
-      "unlabelled": 0,
-      "actionable": null,
-      "intShare": null,
-      "fpShare": null,
-      "fpToolCaused": 0
+      "FP": 10
      }
     }
    }

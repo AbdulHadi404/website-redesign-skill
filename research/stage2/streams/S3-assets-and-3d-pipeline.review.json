@@ -1,0 +1,109 @@
+{
+ "reran": "I re-ran the runners in a copy at /tmp/review-S3, with S3_BUILD set to a /tmp folder so nothing in the repository changed. The pinned cache was shared with the stream.\n- fetch-assets: all 31 SHA-256 values match.\n- licences.mjs: all 23 primary sources have the same sha256 as the stream recorded. The Khronos census is identical (150 models: 80 CC0, 57 CC BY, 4 mixed, 9 restricted, 30 with trademark notices). NASA: 257 GLBs, no licence file.\n- run-sprites --runs 3 (the stream used 5): every ordering reproduces.\n  - HTTP/1.1, 60 WebP files vs atlas: 1147 vs 196 ms (report 1189/202). HTTP/2: 307 vs 195 (report 327/199).\n  - Canvas 2D, trimmed atlas / grid / files: 6.8 / 17.8 / 18.9 ms (report 7.3/19.4/20.0).\n  - Pixi on SwiftShader: 49 / 136 / 136 ms (report 115/255/248). The ordering holds but the absolute numbers halved between runs.\n  - Pixi tile map CPU: 8.9 vs 0.4 ms (report 13.7/0.6).\n  - CSS background-position: 100 paints/s, 18.5 ms/s of main thread, against 0 and 0.25 ms/s for transform (report 21.6/0.6).\n  - Spine update for 200 skeletons: 3.8 ms vs 0 ms for frames.\n  - Bleed and format-quality tables are identical (deterministic).\n- run-gltf --runs 3 on DamagedHelmet, Fox and FlightHelmet × 8 variants:\n  - Every file is byte-identical: 3.77 MB, 3.29, 3.40, 922 KB, 2.57 MB, 545 KB, 48.38 MB, 11.16 MB and so on.\n  - Triangles, draw calls, texture GPU and object-view PSNR are identical. The ktx2-encoder README-defaults variant again gives 13.4 dB.\n  - Timings do not reproduce well:\n    - Draco vs meshopt load: DamagedHelmet 210 vs 195 ms (report 557/382); FlightHelmet 1412 vs 802 (2277/1412); Fox 36.9 vs 36.9, a tie (54/47).\n    - Original rows: DamagedHelmet 185 ms and FlightHelmet 1169 ms. The report says 335 and 2045; results.json says 364 and 751.\n- run-modelcheck: identical outputs (547 KB, 1.11 MB, 9.44 MB, 5.70 MB, 3.69 MB).\n- run-blender: identical exports. 24 cups went from 168 KB and 24 calls to 10 KB and 1 call with GPU instances. AO bake took 13.0 s (report 18.4 s).\n- Not re-run: closeup, isolate, turntable and the chess timings. Instead I checked the isolate cause in source: gltf-transform quantize.ts transformBatch/transformMeshMaterials, and three.js transmission_pars_fragment L121–133, which uses modelMatrix only. Both confirm the finding.\n\nExtra checks:\n1. Any gltf-transform CLI step after optimize silently drops meshopt. Even `copy` does it: Fox 73 KB → 84 KB, extension gone. Confirmed.\n2. My own FlightHelmet close-up of model.mjs's 512 WebP output: PSNR 33.1 dB, 0.78 % of the view changed. 1K WebP gives 37.2 dB and 1K KTX2 gives 37.7 dB.\n3. CDP LayerTree on the lab's CSS-sprite pages: the transform version makes 12 layers of 1280×768 (about 48.6 MB at 4 B/px) against about 1.5 MB for background-position.\n4. model.mjs on 16 models it was not built on, all with zero crashes:\n   - Khronos: AlphaBlendModeTest, GlassHurricaneCandleHolder, MorphStressTest, SimpleInstancing, SpecGlossVsMetalRough, ToyCar, TransmissionRoughnessTest, TransmissionTest, MeshPrimitiveModes (.gltf), SimpleSparseAccessor (.gltf), SciFiHelmet (.gltf with external files), BrainStem (GLB and meshopt .gltf), CesiumMan, and the ABeautifulGame KTX2-ETC1S-Draco variant.\n   - From a real site: the Codrops cyberpunk_skyscraper.glb (8K texture).\n   - 13 of 16 match three.js renderer.info exactly. The misses are two double-sided cases and one spec/gloss texture overcount (see problems).\n\nVendor licence pages (Sketchfab, LottieFiles and others) are blocked by the egress proxy here as well, so those [S] rows stay unverified.",
+ "problems": [
+  {
+   "severity": "should-fix",
+   "claim": "C: \"The skill's model.mjs matches three.js exactly. Its static triangle, draw-call and texture-GPU numbers match three.js renderer.info and the actual allocations exactly (ratio 1.00) on all 58 variants\"",
+   "problem": "(1) The texture-GPU part is circular. For PNG/JPEG/WebP/AVIF, gltf/viewer.js textureBytes() computes w×h×4×4/3, the same formula as model.mjs gpuBytes(), so a ratio of 1.00 is guaranteed; no allocation is measured. Only the KTX2 numbers (transcoded mip byte lengths) are real measurements.\n(2) The triangle and draw-call rule was fitted on these four models. On 16 models the script was not built on, 13 match, but two undercount:\n- AlphaBlendModeTest: 61 triangles / 9 calls vs three.js 65 / 11. Double-sided BLEND materials are drawn twice, back side then front.\n- TransmissionTest: 172,590 / 32 vs 257,550 / 44. Each double-sided transmissive primitive gets an extra back-face draw in the transmission pass when WEBGL_multisampled_render_to_texture is absent (WebGLRenderer.js ~L2091).\n(3) SpecGlossVsMetalRough is overcounted: 8 images / 157 MB vs three.js 6 / 112 MB, because r186 GLTFLoader ignores KHR_materials_pbrSpecularGlossiness. model.mjs raises this only as 'advice'.\n(4) results.json has 60 variant rows, not 58.",
+   "fix": "Report wording: \"Triangles and draw calls match renderer.info on the 4 lab models. Texture memory is the standard RGBA estimate (4 B/px × 4/3), measured only for KTX2.\"\nmodel.mjs:\n- count doubleSided + BLEND primitives twice (calls and triangles);\n- add one back-face draw per doubleSided transmissive primitive, noting it depends on the device;\n- make spec/gloss an 'over' flag (three.js renders it wrong) and put `gltf-transform metalrough` in the pipeline.\nAdd AlphaBlendModeTest and TransmissionTest to the check."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "model.mjs and G7: one validated pipeline for the whole file that fixes the flags (\"re-encodes Draco as meshopt\")",
+   "problem": "I tested the printed pipeline on Khronos ABeautifulGame glTF-Binary-KTX-ETC1S-Draco, which is not one of the lab inputs. With `--tier scene` the main flag is transfer (12.11 MB > 8 MB). The script prints `gltf-transform optimize … --compress meshopt --instance false`. Running it grew the file to 13.79 MB: geometry went from 734 KB (Draco) to 2.41 MB (meshopt). The line the pipeline was meant to fix got worse. The 'meshopt by default' rule was never tested on already-Draco input where geometry is a large share of the bytes.",
+   "fix": "When the input already uses KHR_draco_mesh_compression and geometry is a large share of the bytes, keep `--compress draco`, or print both options with a note to compare. Add a KTX2+Draco input to run-modelcheck.mjs so this case stays covered."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "Header: \"Every timing is the median of 5 interleaved runs\"; `node tables.mjs` \"prints every table in this report\"; C table: DamagedHelmet original 335 ms, FlightHelmet original 2,045 ms, ABeautifulGame original 3.2 s",
+   "problem": "results.json, printed by tables.mjs, says 364 ms, 751 ms and 2.3 s. The cause: run-gltf.mjs re-measures 'original' on every `--only-variants` run (see /tmp/s2-S3/run-extra.log), overwriting the value. So the original row and most variants in each table come from different sessions and were not interleaved. My re-run gave DamagedHelmet 185 ms and FlightHelmet 1,169 ms.\nFiles with identical content differ by up to 2× in load time: FlightHelmet original .gltf 751–1,169 ms vs clean .glb 1,518–1,824 ms. Per-run samples are not stored, so the spread cannot be checked.",
+   "fix": "Store per-run samples. Re-measure every variant being compared in the same session. Regenerate the report's numbers from tables.mjs and give min–max next to each median."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "C: \"Draco … decoding was slower in every model: 557 vs 382 ms, 2,277 vs 1,412 ms, and 4.5 vs 3.8 s. Decoding is CPU work, so these numbers are fair.\"",
+   "problem": "These figures are loadMs: fetch, parse, texture decode and geometry decode together, not geometry decode alone. Textures dominate DamagedHelmet and FlightHelmet.\nRe-run with 3 runs:\n- DamagedHelmet: 210 vs 195 ms (+8 %), which is inside the spread between two files with identical geometry (original vs clean).\n- FlightHelmet: 1,412 vs 802 ms (1.76×).\n- Fox: 36.9 vs 36.9 ms, a tie.\nThe chess scene's 1.18× is inside its own 1.5× original-vs-clean spread.",
+   "fix": "Reword: \"Draco loaded slower on the geometry-heavy FlightHelmet (1.6–1.8×); on small or texture-dominated models the difference was within noise.\" Rest the meshopt default on the decoder size (7 vs 59 KB brotli) and on animation compression, both of which are solid. If a decode claim is wanted, time geometry decode on texture-free variants."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "B: \"Trimming is what speeds up drawing, not the number of draw calls\" (Canvas 7.3 vs 19.4 ms; PixiJS 115 vs 255 ms)",
+   "problem": "Both engines rasterise on the CPU here: Canvas 2D was forced to CPU with willReadFrequently, and Pixi runs on SwiftShader. The ranking therefore measures the cost of filling transparent pixels, which is nearly free on a real GPU. The Pixi times halved between runs (re-run 49/136/136 ms vs 115/255/248), so they depend on machine load. The ordering reproduces, but it is a CPU-raster effect and cannot become a rule.",
+   "fix": "Restate: \"A trimmed atlas halves decoded memory (1.82 vs 3.93 MB) and CPU-raster fill; 1 vs 7 draw calls cost ≤ 0.1 ms of CPU submit.\" Remove Pixi ms/frame from the decision guidance and mark GPU draw cost as not measured."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "G4: \"Never `background-position`: 100 paints per second against 0\"",
+   "problem": "The paint numbers reproduce (100 paints/s and 18.5 ms/s vs 0 and 0.25 ms/s), but that is about 2 % of the main thread for 12 sprites. The cost of the alternative was not measured. CDP LayerTree on the lab's own pages shows the transform version creates 12 composited layers of 1280×768 each, about 48.6 MB at 4 B/px, against about 1.5 MB for background-position. On phones that memory can matter more than the paints.",
+   "fix": "\"Prefer transform on an `<img>` strip, and keep each strip small (one row per element, ≤ ~1K px), because each animated sprite becomes a composited layer the size of its strip. background-position is acceptable for a few small sprites. Check memory in the Layers panel.\""
+  },
+  {
+   "severity": "should-fix",
+   "claim": "G7 rows: \"Many large textures, on a phone: the printed pipeline picks 512 WebP … 48 MB → 1.1 MB, 21 MB GPU\" and \"Product or hero … keep 2K WebP\"",
+   "problem": "The report gives no quality measurement for the 512 output. I rendered model.mjs's FlightHelmet output at the lab's hero close-up (2.5× closer): 0.78 % of the view changed, PSNR 33.1 dB. 1K WebP gives 37.2 dB and the `--ktx2` output 37.7 dB. At normal framing: 39.3 vs 46.7 and 40.5 dB.\nSeparately, \"keep 2K WebP\" conflicts with the default mobile tier, which flags any texture over 1024 px as over budget, so `--fail` would break the build.",
+   "fix": "Add the 512 PSNR to the Expect column and state that halving is a phone GPU-memory choice with a visible cost at hero size. In the hero row, say to pass `--tier desktop` or `--max-texture 2048`."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "G4/G5: add tile maps (\"Author them in Tiled or LDtk\"), Pixi 9-slice, parallax, atlas extrusion, and Pixi/Spine/DragonBones rows to motion.md §5 Techniques and §8",
+   "problem": "motion.md §5 and §8 are read for every site. Tile maps, tile editors and atlas mipmapping are game-development scope, and they push the skill toward technology-first choices.\nPixi's advantage is also unmeasured: in this lab Pixi was 7–16× slower than Canvas 2D, an artefact of SwiftShader, so the claim \"Pixi is justified for thousands of sprites\" is [K].",
+   "fix": "Keep in §5 only DOM frame animation (transform strip, holding a frame under reduced motion) and the CSS border-image 9-slice finding. Move tile maps, atlas extrusion and 2D runtime choice to realtime-3d.md or resources/libraries.md, gated by \"only when the brief is a game-like signature experience\". Tag the Pixi row [K]."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "G5: \"Replace the Rive and dotLottie WASM figures with brotli sizes: 628/279/717 KB and 388 KB\"; add Pixi at 140 KB",
+   "problem": "motion.md §8 is headed \"sizes min+gzip, measured\", and the existing 787 and 485 KB are gzip figures. Swapping in brotli numbers mixes units within one table. It is a unit change, not a correction: the lab's Rive JS gzip of 57 KB matches the existing 56 KB.",
+   "fix": "Use the lab's gzip figures in §8: Pixi 170 KB; +spine 228 KB; +DragonBones 214 KB; canvas-lite 50 KB JS plus its gzip WASM. Give brotli only in a column labelled as brotli."
+  },
+  {
+   "severity": "minor",
+   "claim": "A matrix: Smithsonian \"CC0 only where marked\" tagged [V] to the OpenAccess README @c2ac3e2; NASA \"no insignia, logos or implied endorsement\" tagged [V] to the NASA README",
+   "problem": "The Smithsonian README (61 lines) has no licence or CC0 text at all. The NASA README does say \"free and without copyright\" (verified), but the insignia rule is on the linked nasa.gov brand-center page, which was not fetched. licences.mjs also fetches both READMEs at `master`, not the commits the report cites.",
+   "fix": "Tag those parts [S], and pin the fetch URLs to the cited commits."
+  },
+  {
+   "severity": "minor",
+   "claim": "G2 class C: \"the Spine runtimes, since every user needs an Editor licence\"",
+   "problem": "The verified LICENSE (Apr 2025) first allows integration under Section 2 of the Spine Editor License Agreement, which was not fetched. Only as a fallback does it require that \"each user of the Products must obtain their own Spine Editor license\". \"Every user\" invites the reading that site visitors need a licence.",
+   "fix": "\"Developers who integrate or use the Spine runtimes need a Spine Editor licence (see the editor agreement, Section 2, not verified here); site visitors don't.\" Keep class C."
+  },
+  {
+   "severity": "minor",
+   "claim": "KTX2 download cost: \"2.5–2.8× the download of WebP\" (C) vs \"2.5–5×\" (G7, rejected ideas, model.mjs strings)",
+   "problem": "The ratio is stated two ways, and neither covers all the data. Measured at 1K, KTX2 vs WebP: DamagedHelmet 2.79×, FlightHelmet 2.44×, chess 1.45×, Fox 1.05×. The ratio depends on how many UASTC data slots a model has.",
+   "fix": "\"1–2.8× at the same size, highest when normal and ORM maps are UASTC.\" Align the model.mjs strings with it."
+  },
+  {
+   "severity": "minor",
+   "claim": "G3 CREDITS template, Fox row: \"'Fox' by PixelMannen (CC0), rigged and animated by tomkranis (CC BY 4.0), modified\"",
+   "problem": "The row leaves out the CC BY 4.0 glTF conversion credit (@AsoboStudio and @scurest), which metadata.json and the lab's own CREDITS.md both list. A template meant to be copied teaches incomplete attribution, against its own \"credit every author\" rule.",
+   "fix": "Add the conversion credit to the example row."
+  },
+  {
+   "severity": "minor",
+   "claim": "G2 class A: add \"LottieFiles free (note its same-terms clause)\"",
+   "problem": "Class A in resources/README.md is for permissive licences (\"use, modify, commit\"). By the report's own [S] reading, the Lottie Simple License requires derivatives to stay on the same terms with no added restrictions, which works like share-alike. The text was never read from a primary source.",
+   "fix": "Put it in class B or C until the licence text is verified, or state the condition in the class A row."
+  },
+  {
+   "severity": "minor",
+   "claim": "G5: \"DragonBones (avoid: its editor is unmaintained)\"",
+   "problem": "This is presented as a rule, but the only [V] evidence is the DragonBonesJS runtime's last commit (May 2025, message \"change website\"). The editor's status has no source. The bundle size in the table is for a third-party port (pixi-dragonbones-runtime by h1ve2), not the official runtime.",
+   "fix": "Tag it [K] or [S] and name the package that was measured."
+  },
+  {
+   "severity": "minor",
+   "claim": "G4: \"one trimmed atlas with 2 px extrusion\"",
+   "problem": "The mipmapped case was tested once, at 0.3× on one layout. At mip level n the texture footprint spans 2^n texels, so 2 px is not a general guarantee for mipmapped atlases.",
+   "fix": "\"Extrude ≥ 1–2 px without mipmaps; with mipmaps, extrude or pad 2^(highest mip level used) px, or turn mipmaps off.\""
+  },
+  {
+   "severity": "minor",
+   "claim": "E: \"They need no shader compile, and the first frame of this SwiftShader lab took 5–14 s\"",
+   "problem": "This SwiftShader number is used as an argument for pre-rendered frames. First-frame times halved in my re-run (2.8–3.2 s on DamagedHelmet and Fox), so the figure mostly reflects CPU emulation and machine load, not real devices.",
+   "fix": "Drop the number and keep the qualitative point (no compile stall, offline quality)."
+  }
+ ],
+ "strongest": "Findings that were verified and belong in the skill:\n1. **ktx2-encoder defaults.** They tag normal, occlusion and metallic-roughness maps as sRGB (isInputSRGB and isSetKTX2SRGBTransferFunc are both true in dist/utils.js). three.js KTX2Loader trusts the header, so the shading breaks: 13.4 dB on rebuild. model.mjs's DFD check caught it statically on the rebuilt file and stayed silent on the correct one.\n2. **Instanced glass renders at the wrong thickness in three.js r186 after quantization.** Verified in gltf-transform quantize.ts (transformBatch plus the thickness factor ×1/scale) and in three.js transmission_pars_fragment (modelMatrix only). The isolation table attributes the regression to quantize plus instancing.\n3. **Command order.** Any gltf-transform CLI step after optimize silently drops EXT_meshopt_compression. Reproduced with `copy`: 73 → 84 KB, extension gone.\n4. **gltf-transform defaults, all verified in source.** `optimize --texture-compress ktx2` runs UASTC level 4 (cli.ts L434). Instancing starts at 5 copies. Simplify error is 1e-4, and it damages low-poly models (Fox 576 → 486 triangles).\n5. **Transfer vs GPU memory.** WebP saves transfer and KTX2 saves GPU memory. KTX2 is 1 B/px on desktop (BC7) and 0.5 B/px for ETC1S on ETC2 phones, verified in KTX2Loader FORMAT_OPTIONS priorities. Byte sizes reproduce exactly. The Basis transcoder costs 217 KB brotli.\n6. **Licences.** The Khronos census (150 models, 9 restricted, DamagedHelmet NC) reproduces exactly. The Spine runtime licence clause is quoted correctly.\n7. **2D.** CSS border-image 9-slice renders identically to Pixi's NineSliceSprite. The atlas padding-vs-extrusion bleed table is deterministic and reproduces.\n8. **Blender.** GPU instances take 24 cups from 24 draw calls and 168 KB to 1 call and 10 KB; reproduced.\n9. **model.mjs robustness.** No crashes on 20 models: .gltf with external files, sparse accessors, points and lines, KTX2+Draco, and an 8K-texture model from a real site. With `--fail` and exit codes it is directly usable in a build, once the double-sided counting and the Draco re-encoding are fixed.\n10. **Decision tree.** The DOF tree for pre-rendered frames vs live 3D extends motion.md §9 consistently.",
+ "weakest": "Findings that are least supported:\n1. **All timing claims.** Draco \"slower in every model\" is a tie on Fox and within noise on DamagedHelmet. The original-row load times in the report don't match results.json, and rows were measured in different sessions.\n2. **Draw-cost rankings from CPU rasterisation.** Both \"trimming, not draw calls\" and the Pixi ms/frame figures come from Canvas CPU raster and SwiftShader.\n3. **\"Never background-position\".** It ignores the layer memory of the transform alternative (about 48.6 MB of layer area for 12 sprites of a 1280×768 sheet).\n4. **\"model.mjs matches three.js exactly\".** The texture-memory match is circular, and out of sample the script undercounts double-sided BLEND and transmission.\n5. **The 512 WebP default.** It shipped without a quality measurement: 33.1 dB at hero size.\n6. **Vendor licence rows on search snippets only.** Sketchfab Standard and NoAI, itch.io, Mixamo, LottieFiles, OpenGameArt, ambientCG and Poly Pizza cannot be verified from this sandbox. The LottieFiles class A placement and the DragonBones \"unmaintained editor\" rule rest on them.\n7. **Scope.** Tile maps, the Tiled/LDtk editors and Pixi/Spine runtime rows in motion.md are game-development material for a web design skill.\n8. **The \"when 2D beats 3D\" section.** Its examples are mostly [S] or reasoning, and one argument uses a SwiftShader first-frame time."
+}
