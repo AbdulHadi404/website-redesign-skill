@@ -1,7 +1,8 @@
 // S11 — loading experiences, device tiers, off-main-thread work. One runner: fetches the test photos, rebuilds every
 // fixture, re-measures everything (one benchmark browser at a time), and merges results/*.json into results.json.
-//   node run.mjs                 everything (≈ 60–80 min on a shared 4-CPU machine)
-//   node run.mjs tiers|loading|placeholders|offmain|streaming|support|budget   one part, then re-merge
+//   node run.mjs                 everything (≈ 2 h on a shared 4-CPU machine: tiers ≈ 35 min, loading ≈ 50 min)
+//   node run.mjs unit|tiers|heldout|loading|placeholders|offmain|streaming|support|budget   one part, then re-merge
+//   (tiers writes results/tiers.json and results/governor.json; heldout runs the templates on S10's pages)
 //   node run.mjs merge           only re-merge results/*.json (and redraw shots/*.jpg charts)
 import { spawnSync } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
@@ -13,7 +14,9 @@ import { renderCharts } from './lib/charts.mjs';
 const PARTS = {
   support: ['lib/support.mjs'],
   budget: ['lib/budget.mjs'],
+  unit: ['lib/governor-unit.mjs'],
   tiers: ['run-tiers.mjs', '--runs', '10'],
+  heldout: ['run-heldout.mjs', '--runs', '2'],
   placeholders: ['run-placeholders.mjs', '--runs', '5'],
   offmain: ['run-offmain.mjs', '--runs', '5'],
   loading: ['run-loading.mjs', '--runs', '5'],
@@ -30,7 +33,7 @@ for (const p of parts) {
 }
 
 // Merge: keep summaries and analysis; the raw per-run arrays stay in results/<part>.json.
-const [support, budget, tiers, placeholders, offmain, loading, streaming] = await Promise.all(['support', 'budget', 'tiers', 'placeholders', 'offmain', 'loading', 'streaming'].map(readResult));
+const [support, budget, tiers, placeholders, offmain, loading, streaming, governor, heldout, governorUnit] = await Promise.all(['support', 'budget', 'tiers', 'placeholders', 'offmain', 'loading', 'streaming', 'governor', 'heldout', 'governor-unit'].map(readResult));
 const merged = {
   stream: 'S11 — loading experiences, device tiers and progressive degradation, off-main-thread work',
   generated: new Date().toISOString(),
@@ -45,9 +48,11 @@ const merged = {
   support: support?.features,
   budget,
   tiers: tiers && { env: tiers.env, method: tiers.method, analysis: tiers.analysis, detectGpu: tiers.detectGpu, calib: tiers.calib },
+  governor: governor && { env: governor.env, cells: governor.cells, summary: governor.summary, unit: governorUnit },
+  heldout: heldout && { env: heldout.env, method: heldout.method, summary: heldout.summary },
   placeholders: placeholders && { env: placeholders.env, items: placeholders.built.items, decoders: placeholders.built.decoders, progressiveBytes: placeholders.built.progressive, heroLqipBytes: placeholders.built.heroLqipBytes, decode: placeholders.decodeSummary, film: placeholders.filmSummary, curves: placeholders.film.filter((f) => f.curve).map((f) => ({ net: f.net, k: f.k, curve: f.curve })) },
   offmain: offmain && { env: offmain.env, dataset: offmain.built, summary: offmain.summary, visual: offmain.visualSummary, spin: offmain.spinSummary, payload: offmain.payloadSummary, throttlerIdleBurn: offmain.idleBurnSummary },
-  loading: loading && { env: loading.env, profile: loading.profile, variants: loading.built.variants, sizes: loading.built.sizes, journeys: loading.journeys, summary: loading.summary, perf: loading.perf },
+  loading: loading && { env: loading.env, provenance: loading.provenance, profile: loading.profile, variants: loading.built.variants, sizes: loading.built.sizes, journeys: loading.journeys, summary: loading.summary, perf: loading.perf },
   streaming: streaming && { env: streaming.env, profile: streaming.profile, built: streaming.built, summary: streaming.summary },
 };
 await writeFile(path.join(here, 'results.json'), JSON.stringify(merged, null, 1));

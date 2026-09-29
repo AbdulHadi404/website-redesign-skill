@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 // S5 runner: rebuilds and re-measures everything, writes results.json.
 //   npm install && node run.mjs  history lab (correctness + benchmark, 5 runs each) and the prototype checks
-//   node run.mjs --only history  just the history lab (about 40 min on 4 shared cores; the 5,000-item full-copy cell dominates)
-//   node run.mjs --only prototype  just the cake-configurator prototype (about 6 min): model tests, browser behaviour
+//   node run.mjs --only history  just the history lab (about 60 min on 4 shared cores: the benchmark, dominated by the
+//                                5,000-item full-copy cell, then the immer autofreeze pairs)
+//   node run.mjs --only prototype  just the cake-configurator prototype (about 7 min): model tests, browser behaviour
 //                                  tests, the skill's capture/audit/a11y/states scripts, JPEG sheets into shots/
 //   node run.mjs --only workloads  regenerate the workload summary only
+//   node run.mjs --only correctness  re-run the history correctness checks and the array pitfall (about 10 s)
+//   node run.mjs --only freeze   the immer autofreeze experiment alone (about 20 min): paired, interleaved runs
 //   node run.mjs --runs 5        repetitions per benchmark cell (median reported)
 // The benchmark runs every (strategy, scene, operations, mode) cell in a fresh `node --expose-gc` process, one at a time.
 // The prototype stage needs the skill's scripts installed (skills/website-redesign/scripts: npm install), python3 with
@@ -40,13 +43,10 @@ async function buildWorkloads() {
   return workloads;
 }
 
-async function historyLab() {
-  const pkg = JSON.parse(await readFile(path.join(here, 'package.json'), 'utf8'));
-  const env = { node: process.version, cpus: os.cpus().length, cpuModel: os.cpus()[0]?.model, date: new Date().toISOString(), deps: pkg.dependencies, runs: RUNS };
+async function correctnessAndPitfall() {
   console.log('== correctness');
   const { correctness } = await import('./lab/correctness.mjs');
   const corr = await correctness();
-
   console.log('== array pitfall (immer patches for one delete)');
   enablePatches();
   const arr = { order: Array.from({ length: 1000 }, (_, i) => `i${i}`) };
@@ -54,6 +54,46 @@ async function historyLab() {
   const keyed = { items: Object.fromEntries(Array.from({ length: 1000 }, (_, i) => [`i${i}`, { z: i }])) };
   const [, pk] = produceWithPatches(keyed, (d) => { delete d.items.i0; });
   const arrayPitfall = { arrayOf1000_deleteFirst: { patches: pa.length, bytes: JSON.stringify(pa).length }, keyedMapOf1000_deleteOne: { patches: pk.length, bytes: JSON.stringify(pk).length } };
+  return { corr, arrayPitfall };
+}
+
+// immer autofreeze on/off, measured as PAIRS run back to back in alternating order (on-off, off-on, ...), history
+// mode only, so that load drift on a shared machine hits both sides of a pair alike. Reports medians and the median
+// of the per-pair ratios with their range, plus the 1-minute load average around each run.
+async function immerFreezePairs() {
+  const { workloadCachePath } = await import('./lab/model.mjs');
+  const out = { method: 'bench-one.mjs immerPatches <scene> 1000 history, IMMER_AUTOFREEZE=1 vs 0, alternating order per pair', cells: [] };
+  for (const [scene, pairs] of [[200, 9], [5000, 7]]) {
+    if (!existsSync(workloadCachePath(scene, 1000, 11))) await buildWorkloads();
+    const on = [], off = [], ratios = [], loads = [];
+    for (let i = 0; i < pairs; i++) {
+      const order = i % 2 ? ['0', '1'] : ['1', '0'];
+      const got = {};
+      for (const f of order) {
+        loads.push(os.loadavg()[0]);
+        const o = execFileSync(process.execPath, ['--expose-gc', '--max-old-space-size=6144', path.join(here, 'lab/bench-one.mjs'), 'immerPatches', String(scene), '1000', 'history'], { encoding: 'utf8', env: { ...process.env, IMMER_AUTOFREEZE: f }, maxBuffer: 1 << 24 });
+        got[f] = JSON.parse(o.trim().split('\n').pop());
+      }
+      on.push(got['1']); off.push(got['0']);
+      ratios.push({ update: got['1'].updateP95us / got['0'].updateP95us, undo: got['1'].undoMeanUs / got['0'].undoMeanUs, play: got['1'].playMs / got['0'].playMs });
+      console.log(`  immer ${scene} pair ${i + 1}/${pairs}: upd p95 ${got['1'].updateP95us} vs ${got['0'].updateP95us} µs, undo ${got['1'].undoMeanUs} vs ${got['0'].undoMeanUs} µs, load ${os.loadavg()[0].toFixed(1)}`);
+    }
+    const m = (xs, k) => median(xs.map((x) => x[k])), rng = (xs, k) => [Math.min(...xs.map((x) => x[k])), Math.max(...xs.map((x) => x[k]))].map(r2);
+    out.cells.push({
+      scene, ops: 1000, pairs, correct: [...on, ...off].every((x) => x.finalOk && x.undoAllOk),
+      freezeOn: { updateP95us: r1(m(on, 'updateP95us')), commitP95us: r1(m(on, 'commitP95us')), undoMeanUs: r1(m(on, 'undoMeanUs')), playMs: r1(m(on, 'playMs')), updateP95usRange: rng(on, 'updateP95us') },
+      freezeOff: { updateP95us: r1(m(off, 'updateP95us')), commitP95us: r1(m(off, 'commitP95us')), undoMeanUs: r1(m(off, 'undoMeanUs')), playMs: r1(m(off, 'playMs')), updateP95usRange: rng(off, 'updateP95us') },
+      ratioOnOverOff: { updateP95: r2(m(ratios, 'update')), updateP95Range: rng(ratios, 'update'), undoMean: r2(m(ratios, 'undo')), undoMeanRange: rng(ratios, 'undo'), playMs: r2(m(ratios, 'play')) },
+      loadAvg1m: { min: r1(Math.min(...loads)), max: r1(Math.max(...loads)) },
+    });
+  }
+  return out;
+}
+
+async function historyLab() {
+  const pkg = JSON.parse(await readFile(path.join(here, 'package.json'), 'utf8'));
+  const env = { node: process.version, cpus: os.cpus().length, cpuModel: os.cpus()[0]?.model, date: new Date().toISOString(), deps: pkg.dependencies, runs: RUNS };
+  const { corr, arrayPitfall } = await correctnessAndPitfall();
 
   const workloads = await buildWorkloads();
 
@@ -85,10 +125,14 @@ async function historyLab() {
     cells.push(cell);
     console.log(`${String(scene).padStart(5)} items ${String(ops).padStart(6)} ops  ${st.padEnd(21)} hist ${String(cell.historyMB).padStart(8)} MB  ${String(cell.bytesPerEntry).padStart(7)} B/step  upd p95 ${String(cell.updateP95us).padStart(7)} µs  commit p95 ${String(cell.commitP95us).padStart(8)} µs  undo ${String(cell.undoMeanUs).padStart(8)} µs  json ${String(cell.serializedKB).padStart(8)} KB  ${cell.correct ? 'ok' : 'WRONG'}`);
   }
-  results.history = { env, workloads, workload: 'mix per user operation: add 20%, drag 35% (20 pointer updates each), recolour 17%, delete 8%, group 8%, select-only 4%, undo 6%, redo 2%; seed 11; no no-op edits', correctness: corr, arrayPitfall, benchmark: cells };
+  console.log('== immer autofreeze pairs');
+  const immerFreeze = await immerFreezePairs();
+  results.history = { env, workloads, workload: 'mix per user operation: add 20%, drag 35% (20 pointer updates each), recolour 17%, delete 8%, group 8%, select-only 4%, undo 6%, redo 2%; seed 11; no no-op edits', correctness: corr, arrayPitfall, benchmark: cells, immerFreeze };
 }
 
 if (!only || only === 'history') await historyLab();
+if (only === 'correctness') { const { corr, arrayPitfall } = await correctnessAndPitfall(); results.history = { ...(results.history || {}), correctness: corr, arrayPitfall, correctnessRerunAt: new Date().toISOString() }; }
+if (only === 'freeze') { results.history = results.history || {}; results.history.immerFreeze = { ...(await immerFreezePairs()), date: new Date().toISOString() }; }
 if (only === 'workloads') { results.history = results.history || {}; results.history.workloads = await buildWorkloads(); }
 if (!only || only === 'prototype') {
   const { prototypeLab } = await import('./prototype-run.mjs');

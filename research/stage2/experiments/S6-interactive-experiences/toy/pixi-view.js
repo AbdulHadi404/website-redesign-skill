@@ -31,7 +31,10 @@ function drawKind(g, kind) {
 
 export async function createPixiView(model, host, initOptions = {}) {
   const app = new Application();
-  await app.init({ width: W, height: H, background: '#fbf3e4', antialias: true, resolution: Math.min(devicePixelRatio || 1, 2), autoDensity: true, preserveDrawingBuffer: true, ...initOptions });
+  // Engine defaults (preserveDrawingBuffer: false). ?pdb=1 keeps the drawing buffer only so that
+  // run-toy.mjs can count distinct frames with toDataURL; nothing else in the lab depends on it.
+  const pdb = new URLSearchParams(location.search).get('pdb') === '1';
+  await app.init({ width: W, height: H, background: '#fbf3e4', antialias: true, resolution: Math.min(devicePixelRatio || 1, 2), autoDensity: true, ...(pdb ? { preserveDrawingBuffer: true } : {}), ...initOptions });
   const canvas = app.canvas;
   canvas.style.width = '100%'; canvas.style.maxWidth = W + 'px'; canvas.style.height = 'auto'; canvas.style.touchAction = 'none';
   host.appendChild(canvas);

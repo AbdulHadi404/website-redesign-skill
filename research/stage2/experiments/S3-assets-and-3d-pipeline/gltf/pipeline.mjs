@@ -36,13 +36,27 @@ export function recipes(m) {
     'tex1k-webp': [...clean, RESIZE(1024), ['webp']],
     'tex1k-avif': [...clean, RESIZE(1024), ['avif']],
     'tex1k-ktx2': [...clean, RESIZE(1024), UASTC, ETC1S],
+    // ETC1S in every slot, normal maps included: the smallest KTX2, at a quality cost to normals/ORM.
+    'tex1k-ktx2-etc1s': [...clean, RESIZE(1024), ETC1S],
+    // The same UASTC/ETC1S split encoded by the ktx2-encoder npm package (WASM): no KTX-Software install needed.
+    'tex1k-ktx2-wasm': [...clean, RESIZE(1024), ['node:gltf/ktx2-wasm.mjs']],
+    // ...and with the package's README defaults, which tag normal/ORM maps as sRGB (the pitfall, kept as evidence).
+    'tex1k-ktx2-wasm-readme': [...clean, RESIZE(1024), ['node:gltf/ktx2-wasm.mjs', '--readme-defaults']],
+    // Geometry only (every texture removed), so geometry decode can be timed without texture fetch and decode.
+    'geo-only': [...clean, ['node:gltf/strip-textures.mjs']],
+    'geo-only draco': [...clean, ['node:gltf/strip-textures.mjs'], ['draco']],
+    'geo-only meshopt': [...clean, ['node:gltf/strip-textures.mjs'], ['meshopt', '--level', 'high']],
     'optimize (defaults, webp)': [['optimize', '--compress', 'meshopt', '--texture-compress', 'webp']],
     'optimize 1k webp': [['optimize', '--compress', 'meshopt', '--texture-compress', 'webp', '--texture-size', '1024']],
     'optimize 1k ktx2': [['optimize', '--compress', 'meshopt', '--texture-compress', 'ktx2', '--texture-size', '1024']],
     'optimize 1k avif draco': [['optimize', '--compress', 'draco', '--texture-compress', 'avif', '--texture-size', '1024']],
   };
   if (m.name === 'DamagedHelmet') r['tex2k-ktx2'] = [...clean, UASTC, ETC1S];
-  if (m.name === 'FlightHelmet' || m.name === 'ABeautifulGame') delete r['optimize 1k ktx2']; // UASTC level 4 on 15–33 textures: too slow for this shared machine
+  // `optimize --texture-compress ktx2` runs UASTC at quality 4. On this shared 4-CPU machine (load ≈ 15) one 1K
+  // DamagedHelmet texture was still encoding after 10.5 min (2026-09-29 run, stopped by hand), so the variant runs
+  // only on Fox, whose single texture is a base colour (ETC1S). Pass --slow-ktx to run it everywhere.
+  if (!process.argv.includes('--slow-ktx') && m.name !== 'Fox') delete r['optimize 1k ktx2'];
+  if (m.name === 'FlightHelmet' || m.name === 'ABeautifulGame') { delete r['tex1k-ktx2-wasm']; delete r['tex1k-ktx2-wasm-readme']; } // single-threaded WASM on 15–33 textures: minutes each here
   if (m.name === 'ABeautifulGame') {
     r.instance = [...clean, ['instance', '--min', '2']];
     r['optimize 1k webp, no join/flatten'] = [['optimize', '--compress', 'meshopt', '--texture-compress', 'webp', '--texture-size', '1024', '--join', 'false', '--flatten', 'false', '--instance-min', '2']];
@@ -50,7 +64,7 @@ export function recipes(m) {
   return r;
 }
 
-export const cmdString = (steps) => steps.map(([c, ...a]) => `gltf-transform ${c} in.glb out.glb${a.length ? ' ' + a.map((x) => (/[{}* ]/.test(x) ? `'${x}'` : x)).join(' ') : ''}`).join(' && ');
+export const cmdString = (steps) => steps.map(([c, ...a]) => (c.startsWith('node:') ? `node ${c.slice(5)} in.glb out.glb` : `gltf-transform ${c} in.glb out.glb${a.length ? ' ' + a.map((x) => (/[{}* ]/.test(x) ? `'${x}'` : x)).join(' ') : ''}`)).join(' && ');
 
 export async function buildModel(name, { only } = {}) {
   const m = { ...MODELS[name], name };
@@ -66,7 +80,8 @@ export async function buildModel(name, { only } = {}) {
     try {
       for (const [i, [cmd, ...args]] of steps.entries()) {
         const tmp = i === steps.length - 1 ? file : `${file}.step${i}.glb`;
-        execFileSync(CLI, [cmd, input, tmp, ...args], { env: ENV, stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 64 << 20 });
+        if (cmd.startsWith('node:')) execFileSync(process.execPath, [path.join(LAB, cmd.slice(5)), input, tmp, ...args], { stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 64 << 20 });
+        else execFileSync(CLI, [cmd, input, tmp, ...args], { env: ENV, stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 64 << 20 });
         if (input !== src) await rm(input, { force: true });
         input = tmp;
       }

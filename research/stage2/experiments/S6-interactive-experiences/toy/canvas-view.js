@@ -15,6 +15,14 @@ export function createCanvasView(model, canvas, opts = {}) {
   const ctx = canvas.getContext('2d');
   const mq = matchMedia('(prefers-reduced-motion: reduce)');
   const juicy = () => juice === 'always' || !mq.matches;
+  // Pointer hit radius (canvas units): the drawn topping plus a margin, and never below 24 CSS px
+  // across, 44 on coarse pointers (accessibility.md §2 Targets), however small the canvas is scaled.
+  // ?hit=legacy restores the first version (a fixed ITEM + 6) for the before/after measurement.
+  const legacyHit = new URLSearchParams(location.search).get('hit') === 'legacy';
+  const coarse = matchMedia('(pointer: coarse)');
+  let scale = 1; // CSS px per canvas unit, kept by a ResizeObserver so hitRadius() never reads layout
+  new ResizeObserver(() => { scale = canvas.clientWidth / W || 1; invalidate(); }).observe(canvas);
+  const hitRadius = () => legacyHit ? ITEM + 6 : Math.max(ITEM + 6, (coarse.matches ? 22 : 12) / scale);
   const toPx = (x, y) => [CX + x * R, CY + y * R];
   const toCake = (px, py) => [(px - CX) / R, (py - CY) / R];
   const particles = [];
@@ -124,7 +132,7 @@ export function createCanvasView(model, canvas, opts = {}) {
   const hitItem = (x, y) => {
     for (let i = model.state.items.length - 1; i >= 0; i--) {
       const it = model.state.items[i]; const [px, py] = toPx(it.x, it.y);
-      if (Math.hypot(x - px, y - py) < ITEM + 6) return it;
+      if (Math.hypot(x - px, y - py) < hitRadius()) return it;
     }
     return null;
   };
@@ -173,7 +181,7 @@ export function createCanvasView(model, canvas, opts = {}) {
   invalidate();
 
   return {
-    canvas, toPx, W, H, R, ITEM, ICON, PALETTE_X, PALETTE_Y,
+    canvas, toPx, W, H, R, ITEM, ICON, PALETTE_X, PALETTE_Y, hitRadius, legacyHit,
     get armed() { return armed; },
     disarm() { armed = null; invalidate(); },
     invalidate, render, onFrame(fn) { frameHooks.add(fn); return () => frameHooks.delete(fn); },

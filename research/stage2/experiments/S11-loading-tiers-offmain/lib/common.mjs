@@ -1,13 +1,14 @@
 // Shared helpers for the S11 runners.
 import os from 'node:os';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 
 export const here = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const siteRoot = path.join(here, 'captures/site');
 export const resultsDir = path.join(here, 'results');
-export const { launch } = await import('/home/user/website-redesign-skill/skills/website-redesign/scripts/lib/env.mjs');
+export const skillScripts = path.resolve(here, '../../../../skills/website-redesign/scripts');
+export const { launch } = await import(pathToFileURL(path.join(skillScripts, 'lib/env.mjs')).href);
 
 export const median = (xs) => { const s = xs.filter((x) => Number.isFinite(x)).sort((a, b) => a - b); if (!s.length) return null; const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
 export const pct = (xs, p) => { const s = xs.filter((x) => Number.isFinite(x)).sort((a, b) => a - b); if (!s.length) return null; return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };

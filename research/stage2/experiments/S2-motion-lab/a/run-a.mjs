@@ -8,10 +8,13 @@ import { launch, median, round } from '../lib/browser.mjs';
 import { buildA, IMPLS } from './build.mjs';
 import { parseArgs } from '../../../../../skills/website-redesign/scripts/lib/env.mjs';
 import { startScreencast, firstRowOfColour } from '../lib/screencast.mjs';
+import { textOf } from '../lib/text.mjs';
 
 const args = parseArgs();
 const RUNS = +(args.runs || 5);
-const only = args.only ? String(args.only).split(',') : null;
+// --variants css,gsap (from run.mjs or directly); --only is accepted when this file is run directly
+const isMain = import.meta.url === `file://${process.argv[1]}`;
+const only = args.variants ? String(args.variants).split(',') : isMain && args.only ? String(args.only).split(',') : null;
 const harness = await readFile(path.join(labRoot, 'a/harness.js'), 'utf8');
 const VIEWPORT = { width: 1000, height: 800 };
 const SLOW = 4; // interruption runs play every duration 4x slower (tokens.js ?slow=4), waits scaled the same
@@ -160,6 +163,9 @@ async function singleRun(browser, base, v, name, mode) {
   const opts = mode === 'normal' ? { reducedMotion: 'no-preference', guard: true } : mode === 'reduce-default' ? { reducedMotion: 'reduce', guard: false } : { reducedMotion: 'reduce', guard: true };
   const { ctx, page, c, errors } = await openPage(browser, base, v, opts);
   const { samples, events } = await record(page, sc.keys, sc.ms, () => sc.act(page, c));
+  // the ticker's number as people see it (rendered text incl. CSS counters), as DOM text, and in the accessibility tree
+  let text = null;
+  if (name === 'ticker') { await page.waitForTimeout(300); text = await textOf(page, '#ticker'); }
   await ctx.close();
   const t0 = events.find((e) => e.type === (name === 'scroll' ? 'scroll' : name === 'press' ? 'pointerdown' : 'click'))?.t ?? samples[0].t;
   const S = samples.filter((s) => s.t >= t0 - 1);
@@ -169,6 +175,7 @@ async function singleRun(browser, base, v, name, mode) {
   let lastChange = null; for (let i = S.length - 1; i > 0; i--) if (JSON.stringify(sc.keys.map((k) => S[i][k])) !== JSON.stringify(sc.keys.map((k) => S[i - 1][k]))) { lastChange = S[i].t - t0; break; }
   r.doneMs = lastChange == null ? 0 : round(lastChange, 0);
   r.state = r.moves ? 'moves' : r.fades ? 'fades' : 'instant';
+  if (text) { r.text = text; r.textOk = text.rendered === '1000' && text.dom === '1000'; }
   if (errors.length) r.errors = errors.slice(0, 2);
   return r;
 }
@@ -234,7 +241,7 @@ export async function runA() {
   const { browser } = await launch();
   const results = { sizes, interrupt: {}, single: {}, compositor: {}, cost: {}, env: { browser: browser.version(), runs: RUNS, viewport: VIEWPORT } };
   const variants = VARIANTS.filter((v) => !only || only.includes(v.id) || only.includes(v.impl));
-  for (const v of variants) {
+  for (const v of args['cost-only'] ? [] : variants) {
     const list = v.only || ALL;
     results.interrupt[v.id] = {}; results.single[v.id] = {};
     for (const name of list) {
@@ -249,12 +256,22 @@ export async function runA() {
       for (const mode of ['normal', 'reduce-default', 'reduce-guard']) results.single[v.id][name][mode] = await singleRun(browser, base, v, name, mode);
       process.stderr.write(`A ${v.id} ${name}\n`);
     }
-    if (list.includes('sheet')) { const cr = []; for (let i = 0; i < 3; i++) cr.push(await compositorRun(browser, base, v)); results.compositor[v.id] = { movedPx: median(cr.map((r) => r.movedPx)), framesInBlock: median(cr.map((r) => r.framesInBlock)) }; }
-    const costs = []; for (let i = 0; i < RUNS; i++) costs.push(await costRun(browser, base, v, false));
-    results.cost[v.id] = Object.fromEntries(['task', 'script', 'layout', 'style', 'restTaskPerS', 'restRafPerS'].map((k) => [k, round(median(costs.map((c) => c[k])), 1)]));
+    if (list.includes('sheet')) { const cr = []; for (let i = 0; i < RUNS; i++) cr.push(await compositorRun(browser, base, v)); results.compositor[v.id] = { movedPx: median(cr.map((r) => r.movedPx)), framesInBlock: median(cr.map((r) => r.framesInBlock)), runs: cr.map((r) => r.movedPx) }; }
   }
-  const idles = []; for (let i = 0; i < RUNS; i++) idles.push(await costRun(browser, base, { impl: 'css', q: '' }, true));
-  results.cost.idleBaseline = Object.fromEntries(['task', 'script', 'layout', 'style', 'restTaskPerS', 'restRafPerS'].map((k) => [k, round(median(idles.map((c) => c[k])), 1)]));
+  // Main-thread cost, interleaved: every round runs every variant once (and the idle baseline), so a change in the
+  // machine's load hits all of them alike. Reported: median, min and max over the rounds, and in how many rounds
+  // each pair kept its order.
+  const costVariants = args['no-cost'] ? [] : [...variants, { id: 'idleBaseline', impl: 'css', q: '', idle: true }];
+  const rounds = [];
+  for (let i = 0; i < (costVariants.length ? RUNS : 0); i++) { const round = {}; for (const v of costVariants) round[v.id] = await costRun(browser, base, v, !!v.idle); rounds.push(round); process.stderr.write(`A cost round ${i + 1}/${RUNS}\n`); }
+  for (const v of costVariants) {
+    const xs = rounds.map((r) => r[v.id]);
+    results.cost[v.id] = Object.fromEntries(['task', 'script', 'layout', 'style', 'restTaskPerS', 'restRafPerS'].map((k) => [k, round(median(xs.map((c) => c[k])), 1)]));
+    results.cost[v.id].scriptMin = round(Math.min(...xs.map((c) => c.script)), 1); results.cost[v.id].scriptMax = round(Math.max(...xs.map((c) => c.script)), 1);
+    results.cost[v.id].scriptRuns = xs.map((c) => round(c.script, 1));
+  }
+  const ids = costVariants.length ? variants.map((v) => v.id) : [];
+  results.costOrder = {}; for (const a of ids) for (const b of ids) if (a < b) { const n = rounds.filter((r) => r[a].script < r[b].script).length; results.costOrder[`${a}<${b}`] = `${n}/${rounds.length}`; }
   await browser.close(); await close();
   await mkdir(path.join(labRoot, 'captures'), { recursive: true });
   await writeFile(path.join(labRoot, 'captures/a-results.json'), JSON.stringify(results, null, 1));

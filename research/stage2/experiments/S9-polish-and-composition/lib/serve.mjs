@@ -32,3 +32,24 @@ export async function serve(root, variants, port = 0) {
   await new Promise((r) => server.listen(port, '127.0.0.1', r));
   return { server, base: `http://127.0.0.1:${server.address().port}`, close: () => new Promise((r) => server.close(r)) };
 }
+
+// A read-only static server for another folder (the outside pages the probe is checked on). Serves files under
+// root only; unknown types go out as octet-stream.
+export async function serveDir(root, port = 0) {
+  const T = { ...TYPES, '.json': 'application/json', '.ttf': 'font/ttf', '.woff': 'font/woff', '.webp': 'image/webp', '.avif': 'image/avif', '.gif': 'image/gif', '.mjs': 'text/javascript' };
+  const server = http.createServer(async (req, res) => {
+    try {
+      const url = new URL(req.url, 'http://x');
+      let p = path.join(root, decodeURIComponent(url.pathname));
+      if (!p.startsWith(root)) { res.writeHead(403); return res.end(); }
+      if (p.endsWith('/')) p = path.join(p, 'index.html');
+      const body = await readFile(p);
+      res.writeHead(200, { 'content-type': T[path.extname(p)] || 'application/octet-stream', 'cache-control': 'no-store' });
+      res.end(body);
+    } catch {
+      res.writeHead(404); res.end('not found');
+    }
+  });
+  await new Promise((r) => server.listen(port, '127.0.0.1', r));
+  return { server, base: `http://127.0.0.1:${server.address().port}`, close: () => new Promise((r) => server.close(r)) };
+}

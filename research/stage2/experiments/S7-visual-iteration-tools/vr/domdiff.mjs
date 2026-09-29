@@ -59,7 +59,7 @@ export function diff(A, B, { tol = 0.5 } = {}) {
     if (st.length && !e.masked) styled.push({ el: e.name, props: st.map((p) => `${p}: ${e.style[p] ?? '—'} → ${f.style[p] ?? '—'}`) });
     if (e.svg !== f.svg && !e.masked) styled.push({ el: e.name, props: ['svg attributes changed'] });
     if (e.src !== f.src) styled.push({ el: e.name, props: [`src: ${e.src} → ${f.src}`] });
-    if (e.text !== f.text && !e.masked) texted.push({ el: e.name, from: e.text.slice(0, 60), to: f.text.slice(0, 60) });
+    if (e.text !== f.text && !e.masked) texted.push({ el: e.name, from: e.text, to: f.text });
     const [dx, dy, dw, dh] = f.box.map((v, i) => v - e.box[i]);
     if (e.masked) continue;
     if (Math.abs(dw) > tol || Math.abs(dh) > tol) resized.push({ el: e.name, order: e.order, dw, dh, dx, dy });
@@ -78,7 +78,7 @@ export function diff(A, B, { tol = 0.5 } = {}) {
     ...removed.slice(0, 5).map((n) => `removed: ${n}`), ...(removed.length > 5 ? [`… ${removed.length - 5} more removed`] : []),
     ...added.slice(0, 5).map((n) => `added: ${n}`),
     ...styled.slice(0, 6).map((s) => `${s.el}: ${s.props.slice(0, 3).join('; ')}`), ...(styled.length > 6 ? [`… style changes on ${styled.length - 6} more elements`] : []),
-    ...texted.slice(0, 4).map((t) => `${t.el}: text "${t.from}" → "${t.to}"`),
+    ...texted.slice(0, 4).map((t) => { let i = 0; while (i < t.from.length && t.from[i] === t.to[i]) i++; const cut = (x) => (i > 12 ? '…' : '') + x.slice(Math.max(0, i - 12), i + 36); return `${t.el}: text "${cut(t.from)}" → "${cut(t.to)}"`; }),
     ...causes.slice(0, 5).map((r) => `${r.el}: size ${r.dw >= 0 ? '+' : ''}${r.dw}×${r.dh >= 0 ? '+' : ''}${r.dh}px`), ...(resized.length > causes.length ? [`(${resized.length - Math.min(5, causes.length)} ancestors resized with them)`] : []),
     ...[...moves.values()].sort((x, y) => y.n - x.n).slice(0, 4).map((m) => `${m.n} element(s) moved by (${m.dx}, ${m.dy}) px, first ${m.first}`),
   ];

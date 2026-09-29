@@ -1,0 +1,5 @@
+{ "_note": "Held-out spec (designer's intent), written before motion.mjs ran on this page.",
+  "motion": [
+  { "id": "toggle-hover", "trigger": "hover", "on": "button[data-bs-toggle=\"button\"]", "target": "button[data-bs-toggle=\"button\"]", "properties": ["background-color"], "duration": "small", "easing": "out", "reduced": "keep" },
+  { "id": "toggle-press", "trigger": "press", "on": "button[data-bs-toggle=\"button\"]", "target": "button[data-bs-toggle=\"button\"]", "properties": ["background-color"], "duration": "small", "easing": "out", "reduced": "keep" }
+] }

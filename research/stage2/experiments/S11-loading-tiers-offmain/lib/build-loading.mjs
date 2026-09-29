@@ -93,6 +93,21 @@ export async function boot(cv, { onProgress = () => {}, priority = 'auto' } = {}
   await writeText(path.join(dir, 'rest.js'), `${rest.code}\nconst yieldNow = () => (globalThis.scheduler?.yield ? scheduler.yield() : new Promise((r) => setTimeout(r, 0)));
 export async function init(){ const FNS=[${rest.names.join(',')}]; let acc=0; for(let i=0;i<FNS.length;i+=3){ acc+=FNS[i](i,acc); if(i%300===0) await yieldNow() } return acc }`);
 
+  // Added after review: a small island (~30 KB gzip of code + a 16 KB asset), loaded on idle or on interaction, to
+  // test where the "never idle-boot" rule for heavy modules stops applying.
+  const small = genCode('s', 400, 31);
+  await writeText(path.join(dir, 'small.js'), `${small.code}\n${work}
+export async function boot(cv, { onProgress = () => {}, priority = 'auto' } = {}) {
+  performance.mark('mod-eval-start');
+  ${init(small.names, 3)}
+  cpu(8);
+  performance.mark('mod-evaluated');
+  const b = await (await fetch('assets/small.bin', { priority })).arrayBuffer(); decode(b, 3);
+  drawScene(cv, 'full'); interactive(cv, () => 'full');
+  performance.mark('mod-ready'); performance.mark('mod-usable');
+  return acc;
+}`);
+  await writeFile(path.join(dir, 'assets', 'small.bin'), randomBytes(16 * 1024));
   for (const a of ASSETS) await writeFile(path.join(dir, 'assets', a + '.bin'), randomBytes(512 * 1024));
   await writeFile(path.join(dir, 'assets', 'lowres.bin'), randomBytes(128 * 1024));
 
@@ -109,11 +124,13 @@ export async function init(){ const FNS=[${rest.names.join(',')}]; let acc=0; fo
     prefetch: 'poster + button; modulepreload + asset prefetch (low priority) when the section is one viewport away or the button gets pointerdown/focus; boot on click',
     staged: 'poster + button; on click a core (25% of the code) + a 128 KB low-res asset make it usable, the rest streams in behind',
     'prefetch-staged': 'staged, with the core and the low-res asset prefetched on approach',
+    'idle-small': 'a small island (~30 KB gzip + 16 KB asset): import() in requestIdleCallback after load',
+    'interaction-small': 'the same small island: poster + button; import() on click',
   };
   const para = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper.';
   for (const [v, desc] of Object.entries(VARIANTS)) {
     const staged = v.includes('staged');
-    const entry = staged ? './core.js' : './heavy.js';
+    const entry = staged ? './core.js' : v.endsWith('-small') ? './small.js' : './heavy.js';
     const html = `<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
 <title>Loading — ${v}</title>
 ${v === 'eager' ? '<link rel=modulepreload href="./heavy.js">' : ''}
@@ -178,7 +195,7 @@ function warm() {
 start.addEventListener('click', () => { performance.mark('start-click'); wantShow = true; if (!modP) { status.textContent = 'Loading…'; load('click'); } show(); });
 if (V === 'eager') load('eager');
 if (V === 'visible') new IntersectionObserver((es, io) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); load('visible'); } }).observe($('#module'));
-if (V === 'idle') addEventListener('load', () => (window.requestIdleCallback || ((f) => setTimeout(f, 1)))(() => load('idle'), { timeout: 4000 }));
+if (V === 'idle' || V === 'idle-small') addEventListener('load', () => (window.requestIdleCallback || ((f) => setTimeout(f, 1)))(() => load('idle'), { timeout: 4000 }));
 if (V === 'prefetch' || V === 'prefetch-staged') {
   new IntersectionObserver((es, io) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); warm(); } }, { rootMargin: '100% 0px' }).observe($('#module'));
   for (const ev of ['pointerdown', 'focus', 'pointerenter']) start.addEventListener(ev, warm, { once: true });
@@ -187,12 +204,12 @@ if (V === 'prefetch' || V === 'prefetch-staged') {
     await writeText(path.join(dir, `${v}.html`), html);
   }
   const sizes = {};
-  for (const f of ['heavy.js', 'core.js', 'rest.js']) {
+  for (const f of ['heavy.js', 'core.js', 'rest.js', 'small.js']) {
     const raw = await readFile(path.join(dir, f));
     sizes[f] = { raw: raw.length, gzip: gz(raw).length };
   }
   for (const f of ['hero.avif', 'poster.avif']) sizes[f] = { raw: (await readFile(path.join(dir, f))).length };
-  sizes.assets = { full: 4 * 512 * 1024, lowres: 128 * 1024 };
+  sizes.assets = { full: 4 * 512 * 1024, lowres: 128 * 1024, small: 16 * 1024 };
   return { variants: VARIANTS, sizes };
 }
 

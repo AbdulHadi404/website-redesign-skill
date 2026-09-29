@@ -1,0 +1,107 @@
+{
+ "60 fps on 60 Hz": {
+  "finalLevel": 0,
+  "onFloor": 0,
+  "warned": false,
+  "changes": []
+ },
+ "300 ms frames (< 4 fps)": {
+  "finalLevel": 3,
+  "onFloor": 1,
+  "warned": false,
+  "changes": [
+   {
+    "t": 2700,
+    "from": 0,
+    "to": 1,
+    "floor": false
+   },
+   {
+    "t": 5100,
+    "from": 1,
+    "to": 2,
+    "floor": false
+   },
+   {
+    "t": 7500,
+    "from": 2,
+    "to": 3,
+    "floor": false
+   },
+   {
+    "t": 9900,
+    "from": 3,
+    "to": 3,
+    "floor": true
+   }
+  ]
+ },
+ "30 fps scene on a 60 Hz display": {
+  "finalLevel": 3,
+  "onFloor": 0,
+  "warned": false,
+  "changes": [
+   {
+    "t": 3596,
+    "from": 0,
+    "to": 1,
+    "floor": false
+   },
+   {
+    "t": 7160,
+    "from": 1,
+    "to": 2,
+    "floor": false
+   },
+   {
+    "t": 10723,
+    "from": 2,
+    "to": 3,
+    "floor": false
+   }
+  ]
+ },
+ "30 Hz display, refreshMs 33.3 measured before the scene": {
+  "finalLevel": 0,
+  "onFloor": 0,
+  "warned": false,
+  "changes": []
+ },
+ "on-demand bursts, pause() called": {
+  "finalLevel": 0,
+  "onFloor": 0,
+  "warned": false,
+  "changes": []
+ },
+ "on-demand bursts, pause() never called (misuse)": {
+  "finalLevel": 3,
+  "onFloor": 0,
+  "warned": true,
+  "changes": [
+   {
+    "t": 4750,
+    "from": 0,
+    "to": 1,
+    "floor": false
+   },
+   {
+    "t": 8851,
+    "from": 1,
+    "to": 2,
+    "floor": false
+   },
+   {
+    "t": 12951,
+    "from": 2,
+    "to": 3,
+    "floor": false
+   }
+  ]
+ },
+ "300 ms frames with gapsArePauses (v1 behaviour)": {
+  "finalLevel": 0,
+  "onFloor": 0,
+  "warned": false,
+  "changes": []
+ }
+}

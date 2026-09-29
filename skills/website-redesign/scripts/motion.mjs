@@ -42,16 +42,25 @@
  *              instant) · instant (final state in one frame) · static (already in its final state, nothing changes:
  *              scroll reveals) · pause (a loop that must not run)
  * How it decides: a channel (translate, scale, opacity, colour, shadow, size, text, a transitioning custom property)
- * that changes over ≥ 3 frames animates; 1–2 changes is instant. CSS/WAAPI durations and easings are read exactly from
- * the Animation objects; JavaScript-driven motion (GSAP, anime.js, React Spring) is judged from samples: a duration
- * range (last visible change … duration fitted with the best easing) and the easing that fits best. Targets mounted
- * by the trigger (React AnimatePresence) are picked up late. Channels already moving before the trigger (a pulsing
- * loop) are ignored. A box that moves because something near it changed size is a note, not a failure.
- * Writes <out>/motion.md, <out>/motion.json and <out>/filmstrip-<id>.png. Exits 1 when a spec entry fails (with
- * --strict, also on any flag). Limits: sampling reads computed styles, so canvas, WebGL, Lottie and Rive frames are
- * invisible to it (their <canvas> is one element); hover checks need a fine pointer (skipped with --device phone);
- * a CSS counter's digits are not readable (the transitioning custom property is). Scored on four builds of one page
- * and six held-out pages: research/stage2/experiments/S2-motion-lab (c/).
+ * that changes over ≥ 3 frames animates, or over 2 frames when the middle value lies between start and end (a busy
+ * machine painted it in two frames); otherwise it is instant. A one-step change across dropped frames is measured
+ * again (up to twice) before it is called static. CSS/WAAPI durations and easings are read exactly from the
+ * Animation objects; JavaScript-driven motion (GSAP, anime.js, React Spring) is judged from samples: a duration range
+ * (last visible change … duration fitted with the best easing) and the easing that fits best. Targets mounted by the
+ * trigger (React AnimatePresence) are picked up late. Channels already moving before the trigger (a pulsing loop) are
+ * ignored. A box that moves because something near it changed size is a note, not a failure. A scroll-driven
+ * (animation-timeline) reveal is scroll-linked: no duration or easing check. A reduced-motion fade is timed from its
+ * opacity/colour animations, never from ::view-transition-group. For a `text` property the text people see is read
+ * from the layout tree (so a CSS counter() counts), and it must equal the DOM text once it settles.
+ * Audit flags skip what computed styles cannot judge or motion.md keeps: native selects/checkboxes/radios and unstyled
+ * buttons with no author :hover rule (the browser draws their hover); small rotate-only or progressbar/status loops
+ * (spinners: kept under reduce, §6, listed instead); no-reduced-motion when nothing moves (colour/opacity only).
+ * Writes <out>/motion.md, <out>/motion.json and <out>/filmstrip-<id>.png (sized to fit all frames). Exits 1 when a
+ * spec entry fails (with --strict, also on any flag: advisory, not a gate). Limits: sampling reads computed styles, so
+ * canvas, WebGL, Lottie and Rive frames are invisible to it (their <canvas> is one element); shadow DOM is not
+ * searched; hover checks need a fine pointer (skipped with --device phone); a view transition's pseudo-elements are
+ * read, React <ViewTransition> untested. Scored on four fixture builds, the six Part A pages (guarded and not), five
+ * development pages and 15 held-out pages: research/stage2/experiments/S2-motion-lab (c/).
  */
 import { writeFile, readFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -223,16 +232,48 @@ function pageHelpers() {
     return { n: vt.length, move: move.join(' '), fade: fade.join(' ') };
   };
   const fingerprint = (el) => {
+    // everything a hover or focus style commonly changes: colours, borders (width and style too: a hover that adds
+    // `border-bottom: 3px solid`), underline (thickness and offset: GOV.UK's hover thickens it), background
+    // size/position (sliding underlines), shadows, outline, weight, transforms
     const f = (e, pseudo) => { const cs = getComputedStyle(e, pseudo); if (pseudo && (cs.content === 'none' || cs.content === 'normal')) return '';
-      return [cs.color, cs.backgroundColor, cs.backgroundImage, cs.borderTopColor, cs.borderBottomColor, cs.boxShadow, cs.outlineStyle === 'none' ? 'none' : `${cs.outlineWidth} ${cs.outlineStyle} ${cs.outlineColor}`,
-        `${cs.textDecorationLine} ${cs.textDecorationColor}`, cs.opacity, cs.transform, cs.translate, cs.scale, cs.filter].join('|'); };
-    const kids = [...el.querySelectorAll('*')].slice(0, 6).map((k) => { const cs = getComputedStyle(k); return [cs.color, cs.opacity, cs.transform, cs.translate, cs.backgroundColor, cs.fill, cs.stroke].join('|'); });
+      return [cs.color, cs.backgroundColor, cs.backgroundImage, cs.backgroundSize, cs.backgroundPosition,
+        ...['Top', 'Right', 'Bottom', 'Left'].map((s) => `${cs[`border${s}Width`]} ${cs[`border${s}Style`]} ${cs[`border${s}Color`]}`),
+        cs.boxShadow, cs.textShadow, cs.outlineStyle === 'none' ? 'none' : `${cs.outlineWidth} ${cs.outlineStyle} ${cs.outlineColor} ${cs.outlineOffset}`,
+        `${cs.textDecorationLine} ${cs.textDecorationStyle} ${cs.textDecorationColor} ${cs.textDecorationThickness} ${cs.textUnderlineOffset}`, cs.fontWeight,
+        cs.opacity, cs.transform, cs.translate, cs.scale, cs.filter].join('|'); };
+    const kids = [...el.querySelectorAll('*')].slice(0, 6).map((k) => { const cs = getComputedStyle(k); return [cs.color, cs.opacity, cs.transform, cs.translate, cs.backgroundColor, cs.fill, cs.stroke, `${cs.textDecorationLine} ${cs.textDecorationThickness}`, cs.borderBottomWidth].join('|'); });
     return [f(el), f(el, '::before'), f(el, '::after'), ...kids].join('§');
   };
   // finish what ends; hold loops (a pulsing button) at their first frame, so two reads compare states, not loop phases
   const finishAll = (el) => { for (const x of el.getAnimations?.({ subtree: true }) ?? []) { try { if (x.effect?.getComputedTiming?.().iterations !== Infinity) x.finish(); else { x.pause(); x.currentTime = 0; } } catch { /* ignore */ } } };
   const visible = (el) => { const r = el.getBoundingClientRect(); const cs = getComputedStyle(el); return r.width > 2 && r.height > 2 && cs.visibility !== 'hidden' && cs.display !== 'none' && +cs.opacity > 0.05 && !el.closest('[inert],[aria-hidden="true"]'); };
-  window.__mh = { describe, LAYOUT, MOVE, splitTop, ms, read, animInfo, readVT, fingerprint, finishAll, visible };
+  // A native form control (select, checkbox, radio, …) with its native appearance: the browser draws its hover
+  // state, and computed styles cannot see it.
+  // An unstyled button keeps the browser's own look (outset ButtonFace), and with it a native hover and press.
+  const native = (el) => { const cs = getComputedStyle(el); if (cs.appearance === 'none') return false;
+    if (el.matches('select, input[type=checkbox], input[type=radio], input[type=range], input[type=file], input[type=color], input[type=date], input[type=time], input[type=datetime-local], input[type=month], input[type=week]')) return true;
+    return el.matches('button, input[type=submit], input[type=button], input[type=reset]') && cs.borderTopStyle === 'outset' && cs.backgroundImage === 'none' && /^rgb\((239, 239, 239|107, 107, 107)\)$/.test(cs.backgroundColor); };
+  // Author :hover rules (readable stylesheets), with :hover removed, so an element can be tested against them
+  let hoverSels = null;
+  const authorHover = (el) => {
+    if (!hoverSels) { hoverSels = [];
+      const walk = (rules) => { for (const r of rules) { if (r.selectorText && r.selectorText.includes(':hover')) for (const part of r.selectorText.split(/,(?![^(]*\))/)) if (part.includes(':hover')) hoverSels.push(part.replace(/:hover/g, '').trim() || '*'); if (r.cssRules) walk(r.cssRules); } };
+      for (const sh of document.styleSheets) { try { walk(sh.cssRules); } catch { /* cross-origin */ } } }
+    return hoverSels.some((s) => { try { return el.matches(s); } catch { return false; } });
+  };
+  // A loading indicator: an infinite animation on a small element that only rotates, or that sits in a
+  // progressbar/status/busy region, or is named like one. motion.md §6 keeps these under reduced motion.
+  const spinner = (an) => {
+    const el = an.effect?.target; if (!el || an.effect?.getComputedTiming?.().iterations !== Infinity) return false;
+    let kf = []; try { kf = an.effect.getKeyframes(); } catch { /* ignore */ }
+    const props = new Set(kf.flatMap((k) => Object.keys(k)).filter((p) => !['offset', 'computedOffset', 'easing', 'composite'].includes(p)));
+    const rotateOnly = props.size > 0 && [...props].every((p) => p === 'transform' || p === 'rotate') && kf.every((k) => k.transform == null || /^(none|(\s*rotate[z]?\([^)]*\)\s*)+)$/i.test(String(k.transform).trim()));
+    const r = el.getBoundingClientRect(); const small = r.width <= 96 && r.height <= 96;
+    const aria = !!el.closest('[role=progressbar],[role=status],[aria-busy=true]');
+    const named = /spin|loader|loading|busy/i.test(`${el.id} ${el.getAttribute('class') || ''} ${an.animationName || ''}`);
+    return small && (rotateOnly || aria || named);
+  };
+  window.__mh = { describe, LAYOUT, MOVE, splitTop, ms, read, animInfo, readVT, fingerprint, finishAll, visible, native, authorHover, spinner };
 }
 
 /** The static inventory: every element that has a transition or an animation, plus stylesheet facts. */
@@ -251,19 +292,24 @@ function inventory(maxEls) {
       const tl = splitTop(cs.animationTimeline || 'auto'); const dl = splitTop(cs.animationDelay).map(ms);
       const animations = names.map((n, i) => ({ n, d: ad[i % ad.length], it: ai[i % ai.length], e: ae[i % ae.length], delay: dl[i % dl.length], tl: tl[i % tl.length] })).filter((x) => x.n !== 'none' && (x.d > 0 || x.tl !== 'auto'));
       if (!transitions.length && !animations.length) continue;
-      items.push({ sel: describe(el) + pseudo, interactive: interactive(el), transitions, animations });
+      const spin = animations.some((x) => x.it === 'infinite') && el.getAnimations({ subtree: true }).some((x) => (x.effect?.pseudoElement || '') === pseudo && x.effect?.target === el && window.__mh.spinner(x));
+      // not rendered yet (a spinner in a hidden step has no running animation): judge from its CSS size and names
+      const w = parseFloat(cs.width), h = parseFloat(cs.height);
+      const hint = (w <= 96 && h <= 96) || !!el.closest('[role=progressbar],[role=status],[aria-busy=true]') || /spin|loader|loading|busy/i.test(`${el.id} ${el.getAttribute('class') || ''}`);
+      items.push({ sel: describe(el) + pseudo, interactive: interactive(el), transitions, animations, spinner: spin, spinHint: hint });
     }
     if (items.length >= maxEls * 20) break;
   }
   // Stylesheets: keyframes (which properties they animate, scale(0) entrances), reduced-motion blocks, a universal kill rule.
-  const keyframes = {}; let reduceBlocks = 0; let killAll = null; let blocked = 0; const tokenProps = {};
+  const keyframes = {}; let reduceBlocks = 0; let killAll = null; let blocked = 0; const tokenProps = {}; const infiniteRules = []; const nameProps = {};
   const walk = (rules, inReduce) => {
     for (const r of rules) {
       if (r.type === CSSRule.KEYFRAMES_RULE) {
         const props = new Set(); let scale0 = false;
         for (const k of r.cssRules) { for (let i = 0; i < k.style.length; i++) props.add(k.style[i]);
           if (/^(from|0%)$/.test(k.keyText.trim()) && /scale\(\s*0(\.0+)?\s*[,)]|scale:\s*0(\s|;|$)|matrix\(\s*0(\.0+)?\s*,/.test(k.style.cssText)) scale0 = true; }
-        keyframes[r.name] = { props: [...props], layout: [...props].filter((p) => LAYOUT.test(p)), move: [...props].filter((p) => MOVE.test(p)), scale0 };
+        const rotateOnly = props.size > 0 && [...props].every((p) => p === 'transform' || p === 'rotate') && [...r.cssRules].every((k) => !k.style.transform || /^(none|(\s*rotate[z]?\([^)]*\)\s*)+)$/i.test(k.style.transform.trim()));
+        keyframes[r.name] = { props: [...props], layout: [...props].filter((p) => LAYOUT.test(p)), move: [...props].filter((p) => MOVE.test(p)), scale0, rotateOnly };
       } else if (r.type === CSSRule.MEDIA_RULE) {
         const red = /prefers-reduced-motion:\s*reduce/.test(r.conditionText || r.media?.mediaText || '');
         if (red) reduceBlocks++;
@@ -272,19 +318,26 @@ function inventory(maxEls) {
       else if (r.type === CSSRule.STYLE_RULE) {
         if (inReduce && /(^|,)\s*(\*|html\s+\*|body\s+\*|:root\s+\*)(\s*,|\s*$|::)/.test(r.selectorText) &&
           /(animation|transition)(-duration)?\s*:\s*(none|0s|0\.0*1ms|0ms|1ms)\b[^;]*!important/.test(r.style.cssText)) killAll = `${r.selectorText} { ${r.style.cssText.slice(0, 120)} }`;
+        if (/\binfinite\b/.test(r.style.cssText)) infiniteRules.push(r.style.cssText);
+        for (let i = 0; i < r.style.length; i++) { const n = r.style[i]; if (n.startsWith('--')) (nameProps[n] ??= new Set()).add(r.style.getPropertyValue(n).trim()); }
         if (/(^|,)\s*(:root|html)\s*(,|$)/.test(r.selectorText)) for (let i = 0; i < r.style.length; i++) { const n = r.style[i]; if (/^--(motion-)?(dur|duration|ease|easing|time)-/.test(n)) tokenProps[n] = getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
         if (r.cssRules?.length) walk(r.cssRules, inReduce); // nested CSS
       }
     }
   };
   for (const sh of document.styleSheets) { try { walk(sh.cssRules, false); } catch { blocked++; } }
+  // keyframes used in a loop (`infinite` in the same rule, by name or through a custom property holding the name):
+  // a loader pulse from scale(0) is not an entrance
+  for (const [name, kf] of Object.entries(keyframes)) { const viaProps = Object.entries(nameProps).filter(([, v]) => v.has(name)).map(([k]) => k);
+    kf.loop = infiniteRules.some((t) => new RegExp(`(^|[\\s,:(])${name.replace(/[-]/g, '\\-')}([\\s,;)]|$)`).test(t) || viaProps.some((p) => t.includes(`var(${p}`))) || /spin|loader|loading/i.test(name); }
+  for (const it of items) if (!it.spinner && it.spinHint && it.animations.some((x) => x.it === 'infinite' && keyframes[x.n]?.rotateOnly)) it.spinner = true;
   return { items, keyframes, reduceBlocks, killAll, blockedSheets: blocked, tokenProps };
 }
 
 /** Motion at load: CSS/WAAPI animations seen in the first seconds, and elements whose inline style kept changing. */
 function loadMotion() {
-  const { describe, animInfo } = window.__mh;
-  const anims = document.getAnimations().map(animInfo);
+  const { describe, animInfo, spinner } = window.__mh;
+  const anims = document.getAnimations().map((an) => ({ ...animInfo(an), spinner: spinner(an) }));
   const churn = [...(window.__styleChurn || new Map())].filter(([, n]) => n >= 4).map(([el, n]) => ({ sel: describe(el), n })).slice(0, 30);
   return { anims, churn, mqReduce: window.__mqReduce || 0 };
 }
@@ -335,13 +388,20 @@ function channelStats(frames, idx, tFrom) {
   for (const ch of [...Object.keys(CH), ...STR_CH, 'num']) {
     const vals = F.map((f) => (ch === 'num' ? numOf(f.v[idx].text) : f.v[idx][ch]));
     if (ch === 'num' && vals.some((x) => x == null)) continue;
-    let changes = 0, first = null, last = null, firstI = null;
+    let changes = 0, first = null, last = null, firstI = null, lastI = null;
     for (let i = 1; i < vals.length; i++) {
       const diff = typeof vals[i] === 'number' ? Math.abs(vals[i] - vals[i - 1]) > EPS[ch] : vals[i] !== vals[i - 1];
-      if (diff) { changes++; if (first == null) { first = F[i].t; firstI = i; } last = F[i].t; }
+      if (diff) { changes++; if (first == null) { first = F[i].t; firstI = i; } last = F[i].t; lastI = i; }
     }
     if (!changes) continue;
-    out[ch] = { changes, first, last, from: vals[0], to: vals.at(-1), range: typeof vals[0] === 'number' ? Math.max(...vals) - Math.min(...vals) : null, firstFrameBefore: F[firstI - 1].t };
+    // Two changes where the middle value lies strictly between start and end: an animation the busy machine
+    // painted in two frames (JavaScript-driven motion has no Animation object to prove it ran), not a jump.
+    let between = false;
+    if (changes === 2 && typeof vals[0] === 'number') { const a0 = vals[firstI - 1], a1 = vals.at(-1), mid = vals[firstI], span = Math.abs(a1 - a0);
+      between = span > EPS[ch] * 4 && Math.min(Math.abs(mid - a0), Math.abs(a1 - mid)) >= Math.max(EPS[ch], span * 0.02) && (mid - a0) * (a1 - mid) > 0; }
+    // the longest gap between sampled frames across the change: a starved main thread (dropped frames) if large
+    let gap = 0; for (let i = firstI; i <= lastI; i++) gap = Math.max(gap, F[i].t - F[i - 1].t);
+    out[ch] = { changes, first, last, from: vals[0], to: vals.at(-1), range: typeof vals[0] === 'number' ? Math.max(...vals) - Math.min(...vals) : null, firstFrameBefore: F[firstI - 1].t, between, gap: Math.round(gap) };
   }
   // a changing number reflows its own box: width/height changes that come with text changes are not layout animation
   if (out.text) { delete out.ow; delete out.oh; delete out.ol; }
@@ -349,21 +409,25 @@ function channelStats(frames, idx, tFrom) {
 }
 /** animates: changed over ≥ 3 frames; instant: changed in 1–2 steps; none. */
 function classify(stats) {
-  if (!stats || !Object.keys(stats).length) return { state: 'none', moves: false, fades: false, counts: false, layout: false, jumps: [], shifted: [] };
-  const anim = (ch) => stats[ch] && stats[ch].changes >= 3;
+  if (!stats || !Object.keys(stats).length) return { state: 'none', moves: false, fades: false, counts: false, layout: false, jumps: [], shifted: [], starved: false };
+  const anim = (ch) => stats[ch] && (stats[ch].changes >= 3 || (stats[ch].changes === 2 && stats[ch].between));
   const moves = MOVE_CH.some(anim) || SIZE_CH.some(anim);
   const fades = anim('op') || ['color', 'bg', 'shadow', 'filter', 'outline'].some(anim) || anim('clip');
   const counts = anim('text') || anim('cvar'); // a number counting, or a custom property driving something the sampler cannot name
-  const any = Object.values(stats).some((s) => s.changes >= 3);
-  const jumped = stats.vis ? [] : [...SIZE_CH, 'ol', 'ot'].filter((ch) => stats[ch] && stats[ch].changes < 3); // display:none ↔ shown moves every box
+  const any = Object.keys(stats).some(anim);
+  // display:none ↔ shown (its own, or an ancestor's: its size goes from or to 0) moves every box: not a layout jump
+  const appears = SIZE_CH.some((ch) => stats[ch] && (stats[ch].from === 0 || stats[ch].to === 0));
+  const jumped = stats.vis || appears ? [] : [...SIZE_CH, 'ol', 'ot'].filter((ch) => stats[ch] && !anim(ch));
   // its own size jumped (with or without position): a layout property changed without transitioning; position alone: something around it re-laid out
   const jumps = jumped.some((ch) => SIZE_CH.includes(ch)) ? jumped : [];
   const shifted = jumps.length ? [] : jumped;
-  return { state: any ? 'animates' : 'instant', moves, fades, counts, layout: SIZE_CH.some(anim) || (anim('ol') || anim('ot')), jumps, shifted };
+  // a one-step change across a long frame gap: the sampler (and any JavaScript animation) was starved of frames
+  const starved = !any && Object.values(stats).some((s) => s.gap > 50);
+  return { state: any ? 'animates' : 'instant', moves, fades, counts, layout: SIZE_CH.some(anim) || (anim('ol') || anim('ot')), jumps, shifted, starved };
 }
 function dominant(stats) {
   let best = null, score = 0;
-  for (const [ch, s] of Object.entries(stats || {})) if (CH[ch] && s.range != null && s.changes >= 3) { const k = s.range / CH[ch]; if (k > score) { score = k; best = ch; } }
+  for (const [ch, s] of Object.entries(stats || {})) if (CH[ch] && s.range != null && (s.changes >= 3 || s.between)) { const k = s.range / CH[ch]; if (k > score) { score = k; best = ch; } }
   if (!best && stats?.num && stats.num.changes >= 3) best = 'num'; // a counting number is the motion when nothing else moves
   return best;
 }
@@ -393,7 +457,7 @@ function fitEasing(frames, idx, ch, candidates) {
     res[name] = +Math.sqrt(best[0] / pts.length).toFixed(3); dur[name] = Math.round(best[1]);
   }
   const top = Object.entries(res).sort((x, y) => x[1] - y[1])[0];
-  return { best: top?.[0], rms: res, duration: dur, samples: pts.length };
+  return { best: top?.[0], rms: res, duration: dur, samples: pts.length, inside: Math.max(0, i1 - i0 - 1) };
 }
 /** Continuity at the moment of a second input (as in the lab's interruption test). */
 function continuity(frames, idx, ch, tInt) {
@@ -472,7 +536,7 @@ if (!a['no-audit']) {
   if (rafAtRest > 5) flag('raf-at-rest', 'page', `requestAnimationFrame fires ${Math.round(rafAtRest)}×/s with no input — a JS loop runs at rest (seen in the lab: GSAP ScrollTrigger once registered, anime.js onScroll, React Spring useScroll, Motion scroll() with x/y/scale values, Rive and dotLottie until stopRendering()/freeze(), hand-written loops); stop it when nothing moves`, 'warn');
   const group = (arr) => { const m = new Map(); for (const x of arr) { const k = x.sel; m.set(k, (m.get(k) || 0) + 1); } return m; };
   // flags from the inventory
-  const seen = new Set();
+  const seen = new Set(); const spinners = new Set();
   const once = (kind, sel, detail, level) => { const k = `${kind}|${sel}`; if (seen.has(k)) return; seen.add(k); flag(kind, sel, detail, level); };
   const { LAYOUT_RE, MOVE_RE } = { LAYOUT_RE: /^(width|height|min-width|min-height|max-width|max-height|top|left|right|bottom|inset(-.+)?|margin(-.+)?|padding(-.+)?|border(-top|-right|-bottom|-left)?-width|font-size|line-height|letter-spacing|flex-basis|gap|row-gap|column-gap)$/, MOVE_RE: /^(transform|translate|scale|rotate|top|left|right|bottom|margin.*)$/ };
   for (const it of inv.items) {
@@ -487,8 +551,9 @@ if (!a['no-audit']) {
       const kf = inv.keyframes[x.n];
       const scrollLinked = x.tl && x.tl !== 'auto';
       if (kf?.layout.length) once('layout-keyframes', it.sel, `@keyframes ${x.n} animates ${kf.layout.join(', ')}`, 'warn');
-      if (kf?.scale0) once('scale-zero', it.sel, `@keyframes ${x.n} enters from scale(0) — start at 0.9–0.97 with opacity 0`, 'warn');
-      if (x.it === 'infinite') once('infinite', it.sel, `@keyframes ${x.n} loops forever (${x.d}ms) — pause control or stop within 5 s (WCAG 2.2.2), off under reduce`, 'info');
+      if (kf?.scale0 && !kf.loop && x.it !== 'infinite') once('scale-zero', it.sel, `@keyframes ${x.n} enters from scale(0) — start at 0.9–0.97 with opacity 0`, 'warn');
+      if (x.it === 'infinite' && it.spinner) spinners.add(it.sel); // a loading indicator: kept under reduce (motion.md §6), not flagged
+      else if (x.it === 'infinite') once('infinite', it.sel, `@keyframes ${x.n} loops forever (${x.d}ms) — pause control or stop within 5 s (WCAG 2.2.2), off under reduce`, 'info');
       else if (!scrollLinked) {
         if (!onToken(x.d)) once('off-token', it.sel, `animation ${x.n} ${x.d}ms is not a token (${tokenValues.join('/')})`, 'warn');
         if (x.d > maxToken) once('long', it.sel, `animation ${x.n} ${x.d}ms is longer than the largest token (${maxToken}ms)`, 'warn');
@@ -498,7 +563,7 @@ if (!a['no-audit']) {
   for (const [name, kf] of Object.entries(inv.keyframes)) {
     // keyframes no element uses at load (a toast, a reveal that runs later) still ship
     if (kf.layout.length && !flags.some((f) => f.kind === 'layout-keyframes' && f.detail.includes(`@keyframes ${name} `))) once('layout-keyframes', `@keyframes ${name}`, `@keyframes ${name} animates ${kf.layout.join(', ')} (not running at load)`, 'warn');
-    if (kf.scale0 && !flags.some((f) => f.kind === 'scale-zero' && f.detail.includes(`@keyframes ${name} `))) once('scale-zero', `@keyframes ${name}`, `@keyframes ${name} enters from scale(0) — start at 0.9–0.97 with opacity 0 (not running at load)`, 'warn');
+    if (kf.scale0 && !kf.loop && !flags.some((f) => f.kind === 'scale-zero' && f.detail.includes(`@keyframes ${name} `))) once('scale-zero', `@keyframes ${name}`, `@keyframes ${name} enters from scale(0) — start at 0.9–0.97 with opacity 0 (not running at load)`, 'warn');
   }
   for (const an of lm.anims) {
     const lay = an.props.filter((p) => LAYOUT_RE.test(p));
@@ -506,9 +571,20 @@ if (!a['no-audit']) {
   }
   // reduced-motion handling
   const jsDriven = lm.churn.length;
-  if (!inv.reduceBlocks && !lm.mqReduce) flag('no-reduced-motion', 'page', 'no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript', 'warn');
+  // Reduced-motion handling is only owed when something moves: transitions or keyframes on movement properties
+  // (or `all`), running animations that move or loop, JavaScript-driven movement, a loop at rest. Colour and
+  // opacity changes are acceptable under reduce (motion.md §6), so a page with only those needs no rule.
+  const kfMoves = (n) => !!inv.keyframes[n]?.move.length;
+  const moving = [
+    // a transitioned custom property may drive anything (a transform through var(), a counter): counted as motion
+    ...inv.items.filter((it) => it.transitions.some((t) => t.p === 'all' || t.p.startsWith('--') || MOVE_RE.test(t.p)) || it.animations.some((x) => kfMoves(x.n) || (x.it === 'infinite' && !it.spinner))).map((it) => it.sel),
+    ...lm.anims.filter((x) => !x.spinner && (x.iterations === Infinity || x.props.some((p) => MOVE_RE.test(p)))).map((x) => x.target),
+    ...lm.churn.map((c) => c.sel), ...(rafAtRest > 5 ? ['requestAnimationFrame loop'] : []),
+  ];
+  if (!inv.reduceBlocks && !lm.mqReduce && moving.length) flag('no-reduced-motion', 'page', `no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript, and ${moving.length} thing(s) move (${[...new Set(moving)].slice(0, 3).join(', ')}…)`, 'warn');
   if (inv.killAll) flag('reduce-kills-all', 'page', `under reduce a universal rule removes every animation and transition, press and focus feedback included: ${inv.killAll}`, 'warn');
-  const movingUnderReduce = lmR.anims.filter((x) => x.iterations === Infinity || x.props.some((p) => MOVE_RE.test(p)));
+  const movingUnderReduce = lmR.anims.filter((x) => !x.spinner && (x.iterations === Infinity || (x.props.some((p) => MOVE_RE.test(p)) && (x.duration ?? 0) > 20)));
+  for (const x of lmR.anims.filter((y) => y.spinner)) spinners.add(x.target + (x.pseudo || ''));
   for (const x of movingUnderReduce) once('moves-under-reduce', x.target + (x.pseudo || ''), `${x.kind} ${x.name || ''} (${x.props.join(', ')}, ${x.duration}ms${x.iterations === Infinity ? ', infinite' : ''}) still runs at load under reduce`, 'warn');
   for (const c of lmR.churn) once('moves-under-reduce', c.sel, `inline style changed ${c.n}× in the first 4 s under reduce (JavaScript-driven motion)`, 'warn');
 
@@ -521,7 +597,7 @@ if (!a['no-audit']) {
     window.__cands = els;
     window.__base = els.map((e) => { window.__mh.finishAll(e); return fingerprint(e); });
     return els.map((e, i) => { const cs = getComputedStyle(e); const inline = e.tagName === 'A' && cs.display === 'inline' && !e.closest('nav, header, footer, [role=navigation], [role=tablist]');
-      return { i, sel: describe(e), control: !inline, button: e.matches('button, [role=button], input[type=submit], input[type=button]') || (e.tagName === 'A' && /\b(btn|button|cta)\b/i.test(e.className)) }; });
+      return { i, sel: describe(e), control: !inline, native: window.__mh.native(e) && !window.__mh.authorHover(e), button: e.matches('button, [role=button], input[type=submit], input[type=button]') || (e.tagName === 'A' && /\b(btn|button|cta)\b/i.test(e.className)) }; });
   }, MAX);
   const centre = (i) => page.evaluate((i) => { const e = window.__cands[i]; e.scrollIntoView({ block: 'center', behavior: 'instant' }); const r = e.getBoundingClientRect();
     const x = r.left + r.width / 2, y = r.top + r.height / 2; const top = document.elementFromPoint(x, y); const vv = window.visualViewport || { scale: 1, offsetLeft: 0, offsetTop: 0 };
@@ -529,10 +605,14 @@ if (!a['no-audit']) {
   if (!phone) {
     for (const c of candidates) {
       const p = await centre(c.i); if (!p.hit) continue;
+      await page.evaluate((i) => { window.__pre = new Set(window.__cands[i].getAnimations({ subtree: true })); }, c.i);
       await page.mouse.move(p.x, p.y); await page.waitForTimeout(60);
-      const changed = await page.evaluate((i) => { const e = window.__cands[i]; window.__mh.finishAll(e); return window.__mh.fingerprint(e) !== window.__base[i]; }, c.i);
+      // a hover that starts an animation (a pulse or wobble whose first and last frames equal the rest state) is feedback
+      const changed = await page.evaluate((i) => { const e = window.__cands[i]; const started = e.getAnimations({ subtree: true }).some((x) => !window.__pre.has(x) && x.effect?.getComputedTiming?.().activeDuration > 0);
+        window.__mh.finishAll(e); return started || window.__mh.fingerprint(e) !== window.__base[i]; }, c.i);
       hoverRes.push({ ...c, changed });
-      if (!changed && c.control) once('hover-none', c.sel, 'hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)', 'warn');
+      // a native select/checkbox/radio with no author :hover rule: the browser draws its hover state, computed styles cannot see it
+      if (!changed && c.control && !c.native) once('hover-none', c.sel, 'hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)', 'warn');
       await page.mouse.move(1, 1); await page.waitForTimeout(30);
     }
   }
@@ -553,12 +633,13 @@ if (!a['no-audit']) {
     for (const c of candidates.filter((x) => x.button)) {
       const p = await centre(c.i).catch(() => null); if (!p?.hit) continue;
       await page.mouse.move(p.x, p.y); await page.waitForTimeout(60);
-      const hov = await page.evaluate((i) => { const e = window.__cands[i]; window.__mh.finishAll(e); return window.__mh.fingerprint(e); }, c.i);
+      const hov = await page.evaluate((i) => { const e = window.__cands[i]; window.__mh.finishAll(e); window.__pre = new Set(e.getAnimations({ subtree: true })); return window.__mh.fingerprint(e); }, c.i);
       await page.mouse.down(); await page.waitForTimeout(60);
-      const act = await page.evaluate((i) => { const e = window.__cands[i]; window.__mh.finishAll(e); return window.__mh.fingerprint(e); }, c.i);
+      const [act, started] = await page.evaluate((i) => { const e = window.__cands[i]; const st = e.getAnimations({ subtree: true }).some((x) => !window.__pre.has(x) && x.effect?.getComputedTiming?.().activeDuration > 0);
+        window.__mh.finishAll(e); return [window.__mh.fingerprint(e), st]; }, c.i);
       await page.mouse.move(1, 1); await page.mouse.up(); await page.keyboard.press('Escape'); await page.waitForTimeout(40);
-      pressRes.push({ ...c, changed: hov !== act });
-      if (hov === act) once('no-active', c.sel, 'no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered', 'warn');
+      pressRes.push({ ...c, changed: hov !== act || started });
+      if (hov === act && !started) once('no-active', c.sel, 'no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered', 'warn');
     }
   }
   await ctx.close();
@@ -569,6 +650,7 @@ if (!a['no-audit']) {
     inventoryNormal: { elements: inv.items.length, transitions: inv.items.reduce((s, x) => s + x.transitions.length, 0), animations: inv.items.reduce((s, x) => s + x.animations.length, 0) },
     reduceBlocks: inv.reduceBlocks, killAll: inv.killAll, blockedSheets: inv.blockedSheets, mqReduce: lm.mqReduce,
     loadNormal: { anims: lm.anims.length, churn: lm.churn }, loadReduce: { anims: lmR.anims.length, churn: lmR.churn, moving: movingUnderReduce.map((x) => `${x.target}${x.pseudo} ${x.name}`) },
+    spinners: [...spinners], moving: [...new Set(moving)].slice(0, 20),
     hover: hoverRes, focus: focusRes, press: pressRes, jsDriven, rafAtRest,
   };
 }
@@ -650,10 +732,13 @@ async function runEntry(entry, mode, film) {
       await page.goto(url, { waitUntil: 'load' }).catch(() => {});
       await page.waitForFunction(() => window.__sample?.done, null, { timeout: ms + 10000 }).catch(() => {});
       data = await page.evaluate(samplerCollect);
+      if (data && wantsText(entry)) data.text = { before: null, after: await renderedText(page, entry.target) };
     } else {
       await load(page);
+      const before = wantsText(entry) ? await renderedText(page, entry.target) : null;
       if (film) cast = await screencast(page);
       data = await trigger(page, entry, ms);
+      if (data && !data.error && wantsText(entry)) data.text = { before, after: await renderedText(page, entry.target) };
     }
     if (data && !data.error && cast) {
       const rect = await page.evaluate((s) => { const els = [...document.querySelectorAll(s)].slice(0, 12); if (!els.length) return null;
@@ -667,13 +752,40 @@ async function runEntry(entry, mode, film) {
       const lag = frames.map((fr) => fr.recv - fr.meta).sort((x, y) => x - y);
       const metaToNode = lag.length ? lag[Math.floor(lag.length * 0.1)] : 0;
       for (const fr of frames) fr.wall = fr.meta + metaToNode;
-      data.film = { frames, rect: entry.trigger === 'scroll' ? { x: 0, y: 0, w: rect?.vw ?? CTX.viewport.width, h: rect?.vh ?? CTX.viewport.height, vw: rect?.vw ?? CTX.viewport.width, vh: rect?.vh ?? CTX.viewport.height } : rect,
+      // the targets' box when sampling ended (for a scroll row: where the scroll left them, which is where the
+      // strip's frames, taken after the scroll, show them)
+      data.film = { frames, rect: rect ?? { x: 0, y: 0, w: CTX.viewport.width, h: CTX.viewport.height, vw: CTX.viewport.width, vh: CTX.viewport.height },
         origin: pg[1] + ((n0 + n1) / 2 - pg[0]) };
     } else if (cast) await cast.stop();
   } catch (e) { data = { error: e.message.split('\n')[0] }; }
   await ctx.close();
   if (data) data.errors = errors.slice(0, 3);
   return data;
+}
+
+const wantsText = (entry) => (entry.properties || []).some((p) => /^text$/i.test(String(p)));
+/** The text people see in the first element matching sel, including CSS generated content (::before/::after,
+ *  counter()), from the layout tree (CDP DOMSnapshot), next to its DOM textContent. */
+async function renderedText(page, sel) {
+  const dom = await page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; e.setAttribute('data-motion-probe', ''); return (e.textContent || '').replace(/\s+/g, ' ').trim(); }, sel).catch(() => null);
+  if (dom == null) return null;
+  const cdp = await page.context().newCDPSession(page);
+  try {
+    const snap = await cdp.send('DOMSnapshot.captureSnapshot', { computedStyles: [] });
+    const d = snap.documents[0], S = snap.strings, N = d.nodes;
+    const probe = N.attributes.findIndex((at) => { for (let i = 0; i < at.length; i += 2) if (S[at[i]] === 'data-motion-probe') return true; return false; });
+    if (probe < 0) return { dom, rendered: null };
+    const txt = new Map(); d.layout.nodeIndex.forEach((ni, k) => { const t = d.layout.text[k]; if (t >= 0) txt.set(ni, (txt.get(ni) || '') + S[t]); });
+    const kids = new Map(); N.parentIndex.forEach((p, i) => { if (!kids.has(p)) kids.set(p, []); kids.get(p).push(i); });
+    const pseudo = new Map(); (N.pseudoType?.index || []).forEach((ni, k) => pseudo.set(ni, S[N.pseudoType.value[k]]));
+    const order = (i) => { const ks = kids.get(i) || []; return [...ks.filter((k) => ['marker', 'before'].includes(pseudo.get(k))), ...ks.filter((k) => !pseudo.has(k)), ...ks.filter((k) => pseudo.get(k) === 'after')]; };
+    const walk = (i) => (txt.get(i) || '') + order(i).map(walk).join('');
+    let generated = ''; const gen = (i) => { for (const k of kids.get(i) || []) { if (['before', 'after'].includes(pseudo.get(k))) generated += walk(k); else if (!pseudo.has(k)) gen(k); } }; gen(probe);
+    return { dom, rendered: walk(probe).replace(/\s+/g, ' ').trim(), generated: generated.trim() };
+  } catch { return { dom, rendered: null }; } finally {
+    await cdp.detach().catch(() => {});
+    await page.evaluate((s) => document.querySelector(s)?.removeAttribute('data-motion-probe'), sel).catch(() => {});
+  }
 }
 
 async function screencast(page) {
@@ -729,15 +841,26 @@ function analyse(entry, data) {
   const stagger = dGaps.length && dGaps.some((x) => x > 0) ? Math.round(dGaps.reduce((s, x) => s + x, 0) / dGaps.length) : gaps.length ? Math.round(gaps.reduce((s, x) => s + x, 0) / gaps.length) : null;
   const staggerSource = dGaps.length && dGaps.some((x) => x > 0) ? 'declared' : gaps.length ? 'sampled' : null;
   const changedProps = new Set();
-  for (const p of perTarget) for (const [ch, s] of Object.entries(p.stats || {})) if ((s.changes >= 3 || (s.changes && ch === 'text')) && !['vis', 'num'].includes(ch)) changedProps.add({ tx: 'transform', ty: 'transform', sx: 'transform', sy: 'transform', rot: 'transform', op: 'opacity', ow: 'width', oh: 'height', ol: 'left/margin', ot: 'top/margin', bg: 'background-color', color: 'color', shadow: 'box-shadow', filter: 'filter', clip: 'clip-path', outline: 'outline', text: 'text' }[ch]);
+  for (const p of perTarget) for (const [ch, s] of Object.entries(p.stats || {})) if ((s.changes >= 3 || s.between || (s.changes && ch === 'text')) && !['vis', 'num'].includes(ch)) changedProps.add({ tx: 'transform', ty: 'transform', sx: 'transform', sy: 'transform', rot: 'transform', op: 'opacity', ow: 'width', oh: 'height', ol: 'left/margin', ot: 'top/margin', bg: 'background-color', color: 'color', shadow: 'box-shadow', filter: 'filter', clip: 'clip-path', outline: 'outline', text: 'text' }[ch]);
   for (const x of anims) if (!x.pseudo.startsWith('::view-transition')) for (const pr of x.props) changedProps.add(pr); // a view-transition group always animates width/height
   const ch0 = dominant(perTarget[0]?.stats);
   const fin = data.frames.at(-1)?.v?.[0] || null;
-  const scrollLinked = anims.some((x) => x.timeline !== 'document');
+  // A scroll-driven reveal exists before the scroll starts (it is attached at load), so for scroll and load
+  // triggers every animation seen on the targets counts, not only those that appeared after the trigger.
+  const scrollLinked = (entry.trigger === 'scroll' || entry.trigger === 'load' ? data.anims : anims).some((x) => x.timeline !== 'document' && !x.pseudo.startsWith('::view-transition'));
+  // The fade's own duration: opacity/colour animations, never the view-transition group (the browser's size and
+  // position morph, which runs for the group's duration even when the old and new views only crossfade)
+  const fadeAnims = docAnims.filter((x) => !/^::view-transition-(group|image-pair)/.test(x.pseudo) && x.props.some((p) => /^(opacity|color|background-color|box-shadow|filter|outline-color|border(-\w+)?-color|fill|stroke)$/.test(p)));
+  const fadeDeclared = fadeAnims.length ? Math.max(...fadeAnims.map((x) => x.duration + (x.delay || 0))) : null;
+  // starved: a one-step change while frames near the trigger were far apart (a busy machine, or a busy page)
+  const near = data.frames.filter((f) => f.t >= tT - 20 && f.t <= tT + 300);
+  const maxGap = near.length > 1 ? Math.max(...near.slice(1).map((f, i) => f.t - near[i].t)) : 0;
+  const starved = state === 'instant' && (perTarget.some((p) => p.cls.starved) || maxGap > 50);
   const inViewAtStart = entry.trigger === 'scroll' && (data.inView || []).some(Boolean);
   const jumps = [...new Set(perTarget.flatMap((p) => (p.cls.state === 'animates' || state === 'animates' ? p.cls.jumps : [])))];
   const shifted = [...new Set(perTarget.flatMap((p) => p.cls.shifted))];
-  return { tT: Math.round(tT), jumps, shifted, state, moves, fades, counts, layout, vt, declared, observed, stagger, staggerSource, scrollLinked, inViewAtStart, props: [...changedProps], anims: anims.slice(0, 8), dominant: ch0,
+  return { tT: Math.round(tT), jumps, shifted, state, moves, fades, counts, layout, vt, declared, fadeDeclared, starved, maxGap: Math.round(maxGap), observed, stagger, staggerSource, scrollLinked, inViewAtStart, props: [...changedProps].filter(Boolean), anims: anims.slice(0, 8), dominant: ch0,
+    text: data.text || null,
     final: fin && { op: fin.op, vis: fin.vis, tx: fin.tx, ty: fin.ty, sx: fin.sx, text: fin.text }, targets: data.n, perTarget: perTarget.map((p) => p.cls.state),
     interrupt: entry.interrupt ? interruptInfo(entry, data, ch0, state) : null, frames: data.frames.length, ambient: [...ambient] };
 }
@@ -760,7 +883,7 @@ function judge(entry, n, r) {
   const problems = [];
   if (n.error) return { pass: false, problems: [`normal run: ${n.error}`] };
   if (n.state === 'none') problems.push(`static: nothing changed after the trigger${n.inViewAtStart ? ' (the target was already in view before the scroll: it may have played at load)' : ''}`);
-  else if (n.state === 'instant') problems.push('static: changed in one frame (no animation)');
+  else if (n.state === 'instant') problems.push(`static: changed in one frame (no animation)${n.starved ? ` — frames were dropped across the change even after ${n.retries} retries (a busy machine?): re-run before trusting this` : ''}`);
   const dur = resolveDuration(entry.duration);
   // declared durations (CSS/WAAPI) are exact; for JavaScript-driven motion, the duration fitted with the best-fitting easing
   // Sampled (JavaScript-driven) motion: the duration lies between the last visible change (a decelerating tail
@@ -782,7 +905,10 @@ function judge(entry, n, r) {
   if (wantE && n.state === 'animates' && !n.scrollLinked) {
     const decl = n.anims.filter((x) => x.timeline === 'document' && x.iterations !== Infinity).map((x) => x.easing);
     if (decl.length) { const d = Math.min(...decl.map((e) => easingDistance(e, wantE) ?? 1)); easing = { declared: [...new Set(decl)].slice(0, 3), distance: +d.toFixed(3) }; if (d > 0.04) problems.push(`easing ${easing.declared.join(' / ')} is not ${entry.easing} (${wantE})`); }
-    else if (n.fit) { easing = { estimated: n.fit.best, rms: n.fit.rms }; const mine = n.fit.rms.__spec; const best = Math.min(...Object.values(n.fit.rms)); if (mine != null && mine > best + 0.03 && mine > 0.06) problems.push(`sampled curve fits ${n.fit.best} better than ${entry.easing} (rms ${mine} vs ${best})`); }
+    else if (n.fit) { easing = { estimated: n.fit.best, rms: n.fit.rms, inside: n.fit.inside }; const mine = n.fit.rms.__spec; const best = Math.min(...Object.values(n.fit.rms));
+      // a curve needs frames inside the motion: with fewer than 4 (a 100 ms press on a busy machine) the fit is noise
+      if (n.fit.inside < 4) notes.push(`easing not judged: only ${n.fit.inside} sampled frame(s) inside the motion`);
+      else if (mine != null && mine > best + 0.03 && mine > 0.06) problems.push(`sampled curve fits ${n.fit.best} better than ${entry.easing} (rms ${mine} vs ${best})`); }
   }
   const want = (entry.properties || []).map((p) => String(p).toLowerCase());
   if (want.length && n.state === 'animates') {
@@ -791,9 +917,16 @@ function judge(entry, n, r) {
     if (extra.length) problems.push(`animates layout properties not in the spec: ${[...new Set(extra)].join(', ')}`);
     if (n.layout && !want.some((p) => LAYOUT.test(p)) && !extra.length) problems.push('the element\'s layout box changes size or position during the animation');
     const alias = { transform: ['transform', 'translate', 'scale', 'rotate'], opacity: ['opacity'], 'background-color': ['background-color', 'background'], color: ['color'], 'box-shadow': ['box-shadow'], text: ['text'] };
-    const missing = want.filter((p) => alias[p] && !alias[p].some((q) => n.props.includes(q)) && !(p === 'transform' && n.vt?.moves) && !(p === 'opacity' && n.vt?.fades));
+    // a number drawn by CSS (a registered custom property printed by counter()) changes the rendered text, not the DOM text
+    const textSeen = n.props.some((q) => String(q).startsWith('--')) || (n.text?.before && n.text?.after && n.text.before.rendered !== n.text.after.rendered);
+    const missing = want.filter((p) => alias[p] && !alias[p].some((q) => n.props.includes(q)) && !(p === 'transform' && n.vt?.moves) && !(p === 'opacity' && n.vt?.fades) && !(p === 'text' && textSeen));
     if (missing.length) problems.push(`spec'd properties that did not change: ${missing.join(', ')}`);
   }
+  // What people see must be the DOM text at rest: counter() output cannot be selected, found, translated or
+  // reliably announced, and stale DOM text next to it shows twice ("0" + "1000" = "01000").
+  const norm = (s) => String(s ?? '').replace(/\s+/g, ' ').trim();
+  if (/\d/.test(n.text?.after?.generated || '') && norm(n.text.after.rendered) !== norm(n.text.after.dom))
+    problems.push(`text on screen "${norm(n.text.after.rendered).slice(0, 40)}" is not the DOM text "${norm(n.text.after.dom).slice(0, 40)}" when it settles: CSS generated content (counter()) cannot be selected, found, translated or reliably announced; put the final value in the DOM text`);
   if (entry.stagger && n.targets > 1 && n.state === 'animates') {
     if (n.stagger == null || Math.abs(n.stagger - entry.stagger) > Math.max(20, entry.stagger * 0.5)) problems.push(`stagger ${n.stagger ?? '—'}ms, spec ${entry.stagger}ms`);
   }
@@ -801,13 +934,15 @@ function judge(entry, n, r) {
   let reduced = null;
   if (r && !r.error) {
     const outcome = r.state === 'none' ? 'nothing changes' : r.state === 'instant' ? 'stops (instant)' : r.moves ? 'still moves' : r.fades ? 'substituted (fade/colour)' : r.counts ? 'still animates (text or custom property)' : 'substituted (fade/colour)';
-    const lost = n.final && r.final && ((n.final.vis && !r.final.vis) || (n.final.vis && r.final.vis && n.final.op > 0.5 && r.final.op < 0.5) || (n.final.text && r.final.text !== n.final.text));
+    const lost = n.final && r.final && ((n.final.vis && !r.final.vis) || (n.final.vis && r.final.vis && n.final.op > 0.5 && r.final.op < 0.5) || (n.final.text && r.final.text !== n.final.text)
+      || (n.text?.after?.rendered != null && r.text?.after?.rendered != null && norm(n.text.after.rendered) !== norm(r.text.after.rendered)));
     const exp = String(entry.reduced || '').toLowerCase();
     let ok = true;
     if (lost) { ok = false; problems.push('reduced motion: the content ends in a different state (hidden or unfinished)'); }
-    if (exp === 'keep' && r.state !== 'animates') { ok = false; problems.push(`reduced motion removed essential feedback (${outcome})`); }
+    if (exp === 'keep' && r.state !== 'animates') { ok = false; problems.push(`reduced motion removed essential feedback (${outcome})${r.starved ? ` — frames were dropped across the change even after ${r.retries} retries (a busy machine?): re-run before trusting this` : ''}`); }
     if (['fade', 'crossfade', 'instant', 'static', 'pause', 'none', 'off'].includes(exp) && r.moves) { ok = false; problems.push(`reduced motion: ${outcome} — spec says ${exp}`); }
-    if (exp === 'fade' && r.state === 'animates' && !r.moves && !entry.interrupt && (r.declared ?? r.observed ?? 0) > 250) { ok = false; problems.push(`reduced motion: the fade takes ${r.declared ?? r.observed}ms (≤ 200 ms)`); }
+    const fadeMs = r.fadeDeclared ?? (r.vt ? null : r.declared) ?? r.observed ?? 0;
+    if (exp === 'fade' && r.state === 'animates' && !r.moves && !entry.interrupt && fadeMs > 250) { ok = false; problems.push(`reduced motion: the fade takes ${fadeMs}ms (≤ 200 ms)`); }
     if (['instant', 'static', 'pause', 'none', 'off'].includes(exp) && r.state === 'animates' && !r.moves) { ok = false; problems.push(`reduced motion: ${outcome} — spec says ${exp}`); }
     if (exp === 'static' && r.state === 'instant' && entry.trigger !== 'load') { ok = false; problems.push('reduced motion: the content was hidden until the trigger (spec says it is simply present)'); }
     reduced = { expected: exp || '—', outcome, ok, final: r.final };
@@ -822,9 +957,15 @@ if (spec) {
   for (const entry of spec.motion) {
     if (!entry.id || !entry.target) { report.spec.push({ id: entry.id || '(no id)', pass: false, problems: ['entry needs id and target'] }); continue; }
     const film = !filmIds || filmIds.includes(entry.id);
-    const dn = await runEntry(entry, 'no-preference', film);
-    const dr = await runEntry(entry, 'reduce', film);
-    const n = analyse(entry, dn), r = analyse(entry, dr);
+    // A one-frame change across dropped frames may be an animation the busy machine never painted: run it again
+    // (up to twice) before calling it static.
+    const measure = async (mode) => { let d = await runEntry(entry, mode, film); let x = analyse(entry, d); let k = 0;
+      // under reduce an instant change is usually what the spec wants: re-measure only when it must animate (keep)
+      const retry = mode === 'no-preference' || String(entry.reduced || '').toLowerCase() === 'keep';
+      while (retry && !x.error && x.starved && k < 2) { k++; d = await runEntry(entry, mode, film); x = analyse(entry, d); }
+      x.retries = k; return [d, x]; };
+    const [dn, n] = await measure('no-preference');
+    const [dr, r] = await measure('reduce');
     const wantE = resolveEasing(entry.easing);
     if (!n.error && n.dominant && wantE) {
       const cands = { __spec: wantE, linear: 'linear', ease: 'ease', 'ease-in': 'ease-in', 'ease-out': 'ease-out', 'ease-in-out': 'ease-in-out', ...Object.fromEntries(Object.entries(easeTokens).map(([k, v]) => [`--ease-${k}`, v])) };
@@ -853,17 +994,21 @@ async function filmstrip(f) {
   const w = Math.min(rect.vw - x, rect.w + pad * 2, 900), h = Math.min(rect.vh - y, rect.h + pad * 2, 600);
   const scale = Math.min(1, 1400 / (w * TIMES.length));
   const row = (label, cells) => `<div class="row"><div class="lab">${label}</div>${cells.map((c) => `<figure><div class="clip" style="width:${w * scale}px;height:${h * scale}px">${c.fr ? `<img src="data:image/jpeg;base64,${c.fr.data}" style="width:${c.fr.w * scale}px;margin-left:${-x * scale}px;margin-top:${-y * scale}px">` : ''}</div><figcaption>${c.ms} ms${c.fr && Math.abs(c.at - c.ms) > 20 ? ` <i>(frame ${c.at})</i>` : ''}</figcaption></figure>`).join('')}</div>`;
-  const html = `<!doctype html><meta charset=utf-8><style>body{margin:0;padding:12px;background:#fff;font:12px/1.3 system-ui,sans-serif;color:#222}h1{font-size:13px;margin:0 0 8px}.row{display:flex;gap:6px;align-items:flex-start;margin-bottom:8px}.lab{width:70px;font-weight:600;padding-top:4px}figure{margin:0}.clip{overflow:hidden;outline:1px solid #ccc;background:#f4f4f4}.clip img{display:block}figcaption{text-align:center;color:#555;margin-top:2px}i{color:#a33;font-style:normal}</style>
+  const html = `<!doctype html><meta charset=utf-8><style>body{margin:0;padding:12px;width:max-content;background:#fff;font:12px/1.3 system-ui,sans-serif;color:#222}h1{font-size:13px;margin:0 0 8px;max-width:1200px}.row{display:flex;gap:6px;align-items:flex-start;margin-bottom:8px}.lab{flex:none;width:70px;font-weight:600;padding-top:4px}figure{flex:none;margin:0}.clip{overflow:hidden;outline:1px solid #ccc;background:#f4f4f4}.clip img{display:block;max-width:none}figcaption{text-align:center;color:#555;margin-top:2px}i{color:#a33;font-style:normal}</style>
 <h1>${f.id} — frames after ${f.after} (last frame painted at or before each time; red: when that frame was painted)</h1>${row('normal', pick(f.n, f.tn))}${row('reduce', pick(f.r, f.tr))}`;
   const page = await browser.newPage();
   await page.setContent(html);
   await page.waitForTimeout(100);
+  // size the page to the strip, so no frame is cut off at the default 1280 px width
+  const size = await page.evaluate(() => ({ w: Math.ceil(document.body.getBoundingClientRect().width), h: Math.ceil(document.body.getBoundingClientRect().height) }));
+  await page.setViewportSize({ width: Math.max(320, size.w), height: Math.max(200, size.h) });
+  f.fit = await page.evaluate(() => { const figs = [...document.querySelectorAll('figure')]; return { frames: figs.length, allInside: figs.every((g) => g.getBoundingClientRect().right <= innerWidth + 0.5), width: innerWidth }; });
   const file = path.join(outDir, `filmstrip-${f.id.replace(/[^a-z0-9_-]+/gi, '-')}.${a.jpeg ? 'jpg' : 'png'}`);
   await page.locator('body').screenshot({ path: file, type: a.jpeg ? 'jpeg' : 'png', ...(a.jpeg ? { quality: 80 } : {}) });
   await page.close();
   return file;
 }
-for (const f of films) { const file = await filmstrip(f).catch((e) => { console.error(`filmstrip ${f.id}: ${e.message}`); return null; }); const row = report.spec.find((x) => x.id === f.id); if (row && file) row.filmstrip = path.basename(file); }
+for (const f of films) { const file = await filmstrip(f).catch((e) => { console.error(`filmstrip ${f.id}: ${e.message}`); return null; }); const row = report.spec.find((x) => x.id === f.id); if (row && file) { row.filmstrip = path.basename(file); row.filmstripFit = f.fit; } }
 await browser.close();
 
 // ---------------------------------------------------------------- report
@@ -890,8 +1035,10 @@ if (report.audit) {
   md.push(`- Reduced-motion handling: ${A.reduceBlocks} CSS \`prefers-reduced-motion: reduce\` block(s)${A.killAll ? ' including a universal kill rule' : ''}; JavaScript queried it ${A.mqReduce}×.${A.blockedSheets ? ` ${A.blockedSheets} stylesheet(s) unreadable (cross-origin): their rules are not inventoried.` : ''}`);
   md.push(`- At rest (no input, after load): requestAnimationFrame ${A.rafAtRest}×/s.`);
   md.push(`- At load: ${A.loadNormal.anims} CSS/WAAPI animation(s) normally, ${A.loadReduce.anims} under reduce; JS-driven inline-style motion on ${A.loadNormal.churn.length} element(s) normally, ${A.loadReduce.churn.length} under reduce.`);
-  const hv = A.hover.filter((x) => x.control), fc = A.focus, pr = A.press;
-  md.push(`- Hover: ${hv.filter((x) => x.changed).length}/${hv.length} controls change visibly · keyboard focus: ${fc.filter((x) => x.changed).length}/${fc.length} · press (:active): ${pr.filter((x) => x.changed).length}/${pr.length} buttons.`, '');
+  const hv = A.hover.filter((x) => x.control && !x.native), nat = A.hover.filter((x) => x.control && x.native).length, fc = A.focus, pr = A.press;
+  md.push(`- Hover: ${hv.filter((x) => x.changed).length}/${hv.length} controls change visibly${nat ? ` (${nat} native select/checkbox/radio with no author :hover rule not judged: the browser draws their hover)` : ''} · keyboard focus: ${fc.filter((x) => x.changed).length}/${fc.length} · press (:active): ${pr.filter((x) => x.changed).length}/${pr.length} buttons.`);
+  if (A.spinners.length) md.push(`- Loading indicators (kept under reduce, motion.md §6; stop them when loading ends and say the state in text): ${A.spinners.slice(0, 6).map((s) => `\`${s}\``).join(', ')}.`);
+  md.push('');
   const order = ['reduce-kills-all', 'no-reduced-motion', 'moves-under-reduce', 'raf-at-rest', 'transition-all', 'layout-transition', 'layout-keyframes', 'scale-zero', 'off-token', 'long', 'no-active', 'hover-none', 'focus-none', 'linear-movement', 'infinite'];
   const byKind = new Map(); for (const f of flags) { if (!byKind.has(f.kind)) byKind.set(f.kind, []); byKind.get(f.kind).push(f); }
   md.push('### Flags', '');

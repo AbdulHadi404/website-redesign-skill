@@ -12,7 +12,7 @@ import { buildOffmain } from './lib/build-offmain.mjs';
 
 const args = process.argv.slice(2);
 const RUNS = Number(args[args.indexOf('--runs') + 1]) || 5;
-const JOBS = ['main', 'main-yield', 'main-stream', 'worker', 'worker-clone', 'worker-stream', 'binary-main'];
+const JOBS = ['main', 'main-yield', 'main-stream', 'worker', 'worker-clone', 'worker-stream', 'json4-main', 'json4col-main', 'binary-main'];
 const built = await buildOffmain();
 const srv = await serve(siteRoot);
 const { browser } = await launch();
@@ -21,7 +21,7 @@ const out = { env: env(), built, runs: [], visual: [], spin: [], payload: [] };
 // Heavy visuals: the same particle animation on the main thread or in a worker (OffscreenCanvas). CDP throttling
 // cannot slow a worker, so a weak device is emulated by scaling the work (heavy ≈ 4× light) at CPU 1×; the light
 // scene at 4× on the main thread is the cross-check.
-const VISUAL = [['main', 30000, 1], ['offscreen', 30000, 1], ['main', 110000, 1], ['offscreen', 110000, 1], ['main', 30000, 4]];
+const VISUAL = [['main', 30000, 1], ['offscreen', 30000, 1], ['main', 110000, 1], ['offscreen', 110000, 1], ['settle', 110000, 1], ['main', 30000, 4]];
 async function once(job, cpu, visual = null) {
   const { ctx, page, cdp } = await newPage(browser, { cpu, phone: false });
   await page.goto(`${srv.url}/offmain/${visual ? 'visual.html' : ''}`, { waitUntil: 'load' });
@@ -38,6 +38,7 @@ async function once(job, cpu, visual = null) {
     }
   })();
   const r = visual ? await page.evaluate(([m, n]) => window.__run(m, n, 4000), visual) : await page.evaluate((j) => window.__run(j), job);
+  const la2 = load()[0];
   await sleep(400);
   stop = true; await pinger; await sleep(300);
   const W = await page.evaluate(() => ({ events: window.__w.events, gaps: window.__w.gaps, loaf: window.__w.loaf, t0: window.__w.t0, t1: window.__w.t1, deser: window.__w.deser }));
@@ -50,13 +51,13 @@ async function once(job, cpu, visual = null) {
   const inter = [...byId.values()];
   const gaps = W.gaps.filter(([t]) => inWin(t)).map(([, g]) => g);
   return {
-    job, cpu, loadavg1: la, ms: r.ms, first: r.first, taps,
+    job, cpu, loadavg1: la, loadavgAfter: la2, ms: r.ms, first: r.first, taps,
     slowTaps: inter.length, // interactions whose longest event took ≥ 16 ms (Event Timing's minimum threshold)
     maxDur: Math.max(0, ...inter.map((e) => e.dur)), maxDelay: Math.max(0, ...inter.map((e) => e.delay)),
     over200: inter.filter((e) => e.dur > 200).length, over100: inter.filter((e) => e.dur > 100).length,
     maxGap: Math.max(0, ...gaps), gapsOver50: gaps.filter((g) => g > 50).length, frames: gaps.length,
     loafBlocking: W.loaf.filter(([t]) => inWin(t)).reduce((a, l) => a + (l[2] || 0), 0), deser: W.deser,
-    ...(visual ? { animFps: (r.frames / r.ms) * 1000, animWorkMedian: r.workMedian, tapDurs: inter.map((e) => Math.round(e.dur)) } : {}),
+    ...(visual ? { animFps: (r.frames / r.ms) * 1000, animWorkMedian: r.workMedian, tapDurs: inter.map((e) => Math.round(e.dur)), gapsOver100: gaps.filter((g) => g > 100).length } : {}),
   };
 }
 
@@ -112,7 +113,7 @@ const S = {};
 for (const cpu of [1, 4]) for (const job of JOBS) {
   const rs = out.runs.filter((r) => r.cpu === cpu && r.job === job);
   const m = (f) => r0(median(rs.map(f)));
-  S[`${cpu}x|${job}`] = { runs: rs.length, doneMs: m((r) => r.ms), firstMs: m((r) => r.first), maxDelay: m((r) => r.maxDelay), maxDur: m((r) => r.maxDur), over200: m((r) => r.over200), over100: m((r) => r.over100), taps: m((r) => r.taps), maxGap: m((r) => r.maxGap), gapsOver50: m((r) => r.gapsOver50), loafBlocking: m((r) => r.loafBlocking), deser: m((r) => r.deser ?? NaN), loadavg1: r1(median(rs.map((r) => r.loadavg1))) };
+  S[`${cpu}x|${job}`] = { runs: rs.length, doneRange: [r0(Math.min(...rs.map((r) => r.ms))), r0(Math.max(...rs.map((r) => r.ms)))], maxDurRange: [r0(Math.min(...rs.map((r) => r.maxDur))), r0(Math.max(...rs.map((r) => r.maxDur)))], doneMs: m((r) => r.ms), firstMs: m((r) => r.first), maxDelay: m((r) => r.maxDelay), maxDur: m((r) => r.maxDur), over200: m((r) => r.over200), over100: m((r) => r.over100), taps: m((r) => r.taps), maxGap: m((r) => r.maxGap), gapsOver50: m((r) => r.gapsOver50), loafBlocking: m((r) => r.loafBlocking), deser: m((r) => r.deser ?? NaN), loadavg1: r1(median(rs.map((r) => r.loadavg1))) };
 }
 const V = {};
 for (const [mode, n, cpu] of VISUAL) {
@@ -120,7 +121,7 @@ for (const [mode, n, cpu] of VISUAL) {
   const rs = out.visual.filter((r) => r.cpu === cpu && r.job === job);
   const m = (f) => r0(median(rs.map(f)));
   const all = rs.flatMap((r) => r.tapDurs);
-  V[`${cpu}x|${job}`] = { runs: rs.length, points: n, animFps: r1(median(rs.map((r) => r.animFps))), animWorkMs: r1(median(rs.map((r) => r.animWorkMedian))), taps: m((r) => r.taps), slowTaps: m((r) => r.slowTaps), maxDelay: m((r) => r.maxDelay), maxDur: m((r) => r.maxDur), over100: m((r) => r.over100), over200: m((r) => r.over200), maxGap: m((r) => r.maxGap), loafBlocking: m((r) => r.loafBlocking), loadavg1: r1(median(rs.map((r) => r.loadavg1))) };
+  V[`${cpu}x|${job}`] = { runs: rs.length, points: n, over100Range: [Math.min(...rs.map((r) => r.over100)), Math.max(...rs.map((r) => r.over100))], maxDurRange: [r0(Math.min(...rs.map((r) => r.maxDur))), r0(Math.max(...rs.map((r) => r.maxDur)))], loafRange: [r0(Math.min(...rs.map((r) => r.loafBlocking))), r0(Math.max(...rs.map((r) => r.loafBlocking)))], loadavgRange: [Math.min(...rs.map((r) => r.loadavg1)), Math.max(...rs.map((r) => r.loadavg1))], animFps: r1(median(rs.map((r) => r.animFps))), animWorkMs: r1(median(rs.map((r) => r.animWorkMedian))), taps: m((r) => r.taps), slowTaps: m((r) => r.slowTaps), maxDelay: m((r) => r.maxDelay), maxDur: m((r) => r.maxDur), over100: m((r) => r.over100), over200: m((r) => r.over200), maxGap: m((r) => r.maxGap), loafBlocking: m((r) => r.loafBlocking), loadavg1: r1(median(rs.map((r) => r.loadavg1))) };
 }
 out.visualSummary = V;
 const spin = {}; for (const cpu of [1, 4]) { const s = out.spin.filter((x) => x.cpu === cpu); spin[`${cpu}x`] = { worker: r0(median(s.map((x) => x.worker))), main: r0(median(s.map((x) => x.main))) }; }

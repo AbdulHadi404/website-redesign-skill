@@ -23,10 +23,12 @@
 }
 @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes reveal { from { opacity: 0; transform: translateY(16px); } }
-/* 6 ticker: a registered integer property, transitioned, printed by a counter */
+/* 6 ticker: a registered integer property, transitioned, printed by a counter WHILE it counts. At rest the number
+   is ordinary DOM text (css.js writes it on transitionend), so it can be selected, found, translated and announced;
+   the counter is decorative (empty alt text after the slash) and integer-only, with no locale grouping. */
 @property --n { syntax: '<integer>'; inherits: false; initial-value: 0; }
 #ticker { transition: --n var(--dur-count) var(--ease-out); counter-reset: n var(--n); }
-#ticker::after { content: counter(n); }
+#ticker.counting::after { content: counter(n) / ""; }
 /* 7 grid: transitions with a per-index delay */
 #grid .cell { opacity: 0; transform: translateY(12px);
   transition: opacity var(--dur-medium) var(--ease-out), transform var(--dur-medium) var(--ease-out);

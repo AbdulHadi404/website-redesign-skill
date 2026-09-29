@@ -3,14 +3,15 @@
   "device": "phone",
   "states": [
     { "name": "start" },
-    { "name": "size", "steps": [{ "click": "#tab-size" }] },
-    { "name": "flavour", "steps": [{ "click": "#tab-flavour" }] },
-    { "name": "outside-custom", "steps": [{ "click": "#tab-outside" }, { "click": "[data-key=colour] label.opt[data-value='custom']" }] },
-    { "name": "decorate", "steps": [{ "click": "#tab-decorate" }] },
-    { "name": "repair-notice", "steps": [{ "click": "#tab-size" }, { "click": "[data-key=people] label.opt[data-value='30']" }, { "click": "[data-key=shape] label.opt[data-value='heart']" }] },
-    { "name": "review-errors", "steps": [{ "click": "#review-btn" }, { "click": "#request button[type=submit]" }] },
-    { "name": "sent", "steps": [{ "click": "#review-btn" }, { "fill": ["#f-date", "2026-12-24"] }, { "fill": ["#f-name", "Maya Patel"] }, { "fill": ["#f-email", "maya@example.com"] }, { "click": "#request button[type=submit]" }] },
-    { "name": "repair-desktop", "device": "desktop", "steps": [{ "click": "#tab-size" }, { "click": "[data-key=people] label.opt[data-value='30']" }, { "click": "[data-key=shape] label.opt[data-value='heart']" }] },
+    { "name": "size", "steps": [{ "tap": "#tab-size" }] },
+    { "name": "flavour", "steps": [{ "tap": "#tab-flavour" }] },
+    { "name": "outside-custom", "steps": [{ "tap": "#tab-outside" }, { "tap": "[data-key=colour] label.opt[data-value='custom']" }] },
+    { "name": "decorate", "steps": [{ "tap": "#tab-decorate" }] },
+    { "name": "repair-notice", "steps": [{ "tap": "#tab-size" }, { "tap": "[data-key=people] label.opt[data-value='20']" }, { "tap": "[data-key=tiers] label.opt[data-value='2']" }, { "tap": "[data-key=shape] label.opt[data-value='heart']" }] },
+    { "name": "inactive-need", "steps": [{ "tap": "#tab-size" }, { "tap": "[data-key=people] label.opt[data-value='30']" }, { "tap": "[data-key=shape] label.opt[data-value='heart']" }] },
+    { "name": "review-errors", "steps": [{ "tap": "#review-btn" }, { "tap": "#request button[type=submit]" }] },
+    { "name": "sent", "steps": [{ "tap": "#review-btn" }, { "fill": ["#f-date", "2026-12-24"] }, { "fill": ["#f-name", "Maya Patel"] }, { "fill": ["#f-email", "maya@example.com"] }, { "tap": "#request button[type=submit]" }] },
+    { "name": "repair-desktop", "device": "desktop", "steps": [{ "click": "#tab-size" }, { "click": "[data-key=people] label.opt[data-value='20']" }, { "click": "[data-key=tiers] label.opt[data-value='2']" }, { "click": "[data-key=shape] label.opt[data-value='heart']" }] },
     { "name": "review-desktop", "device": "desktop", "steps": [{ "click": "#review-btn" }] }
   ]
 }

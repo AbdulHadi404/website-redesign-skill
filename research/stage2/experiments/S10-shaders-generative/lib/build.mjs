@@ -56,6 +56,7 @@ body { margin: 0; font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, 
 .hero-bg::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;   /* one static scrim for every variant */
   background: linear-gradient(90deg, rgba(9,18,42,.55) 0%, rgba(9,18,42,.2) 45%, rgba(9,18,42,0) 70%), linear-gradient(0deg, rgba(9,18,42,.4) 0%, rgba(9,18,42,0) 50%); }
 html.noscrim .hero-bg::after { display: none; }
+html.noposter .hero-bg picture { visibility: hidden; }   /* lab: time the effect's own first frame on a flat ground */
 .fx { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .6s ease-out; touch-action: pan-y; }
 .hero-copy { padding: 0 40px 13vh; max-width: 820px; position: relative; }
 .eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: 13px; opacity: .8; margin: 0 0 18px; }
@@ -101,8 +102,10 @@ const load = () => {
 };
 if (reduce && !q.has('forcemotion')) {
   lab.reducedSkip = true;
-  btn.hidden = false; btn.textContent = 'Play background'; btn.setAttribute('aria-pressed', 'true');
-  btn.addEventListener('click', () => { lab.optIn = true; btn.textContent = 'Pause background'; btn.setAttribute('aria-pressed', 'false'); load(); }, { once: true });
+  // A plain button whose label says what it will do (no aria-pressed: the label changes). The effect's wrapper
+  // takes the button over once loaded.
+  btn.hidden = false; btn.textContent = 'Play background animation';
+  btn.addEventListener('click', () => { lab.optIn = true; btn.textContent = 'Pause background animation'; load(); }, { once: true });
 } else if (q.has('eager')) load();
 else {
   const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1));
@@ -117,13 +120,14 @@ const hero = document.getElementById('hero'), btn = document.querySelector('.bg-
 if (q.has('blur')) document.documentElement.classList.add('with-blur');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 btn.hidden = false;
-if (reduce) { btn.textContent = 'Play background'; btn.setAttribute('aria-pressed', 'true'); }
+let paused = reduce;               // under reduced motion the animation starts stopped; the button opts in
+const label = () => { btn.textContent = paused ? 'Play background animation' : 'Pause background animation'; };
+label();
 btn.addEventListener('click', () => {
-  const paused = btn.getAttribute('aria-pressed') !== 'true';
+  paused = !paused;
   if (reduce) hero.toggleAttribute('data-play', !paused);
   hero.toggleAttribute('data-paused', paused);
-  btn.setAttribute('aria-pressed', String(paused));
-  btn.textContent = paused ? 'Play background' : 'Pause background';
+  label();
 });
 if (!q.has('nopause')) {
   new IntersectionObserver(([e]) => hero.toggleAttribute('data-offscreen', !e.isIntersecting)).observe(hero);
@@ -151,15 +155,16 @@ function load() {
   v.addEventListener('playing', () => { if (lab.ttff == null) requestAnimationFrame(() => { lab.ttff = performance.now(); v.style.opacity = '1'; }); });
   const count = () => { lab.draws++; v.requestVideoFrameCallback(count); };
   v.requestVideoFrameCallback?.(count);
-  v.load(); sync();
+  v.load(); sync(); label();
   lab.info = { renderer: 'video' };
 }
 btn.hidden = false;
+const label = () => { btn.textContent = !loaded || paused ? 'Play background animation' : 'Pause background animation'; };
 btn.addEventListener('click', () => {
   if (!loaded) { optIn = true; paused = false; load(); } else paused = !paused;
-  btn.setAttribute('aria-pressed', String(paused)); btn.textContent = paused ? 'Play background' : 'Pause background'; sync();
+  label(); sync();
 });
-if (reduce.matches && !q.has('forcemotion')) { lab.reducedSkip = true; btn.textContent = 'Play background'; btn.setAttribute('aria-pressed', 'true'); }
+if (reduce.matches && !q.has('forcemotion')) { lab.reducedSkip = true; label(); }
 else if (q.has('eager')) load();
 else { const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1)); const go = () => idle(load, { timeout: 1500 }); document.readyState === 'complete' ? go() : addEventListener('load', go, { once: true }); }
 new IntersectionObserver(([e]) => { inView = e.isIntersecting; sync(); }).observe(document.getElementById('hero'));
@@ -226,12 +231,12 @@ function shell({ v, bgInner, headCss = '', scripts = '', toggle = true }) {
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Halcyon — ${v.label}</title>
 <style>${PAGE_CSS}${headCss}</style>
-<script>if (location.search.includes('capture')) document.documentElement.classList.add('capture'); if (location.search.includes('noscrim')) document.documentElement.classList.add('noscrim');</script>
+<script>for (const k of ['capture', 'noscrim', 'noposter']) if (location.search.includes(k)) document.documentElement.classList.add(k);</script>
 </head><body>
 <header class="nav"><span>Halcyon</span><nav><a style="color:inherit;text-decoration:none" href="#">Product</a><a style="color:inherit;text-decoration:none" href="#">Rivers</a><a style="color:inherit;text-decoration:none" href="#">Pricing</a></nav></header>
 <section class="hero" id="hero" aria-labelledby="h1">
   <div class="hero-bg" id="bg" aria-hidden="true">${bgInner}</div>
-  ${toggle ? '<button class="bg-toggle" type="button" aria-pressed="false" hidden>Pause background</button>' : ''}<!-- before the copy in DOM order: WCAG 2.2.2's pause control is reached before the moving content's neighbours -->
+  ${toggle ? '<button class="bg-toggle" type="button" hidden>Pause background animation</button>' : ''}<!-- before the copy in DOM order: WCAG 2.2.2's pause control is reached before the moving content's neighbours -->
   <div class="hero-copy"><p class="eyebrow">Water quality, continuously</p><h1 id="h1">Every drop, accounted for.</h1><p class="lede">Live readings from probes in your river, turned into decisions before the regulator asks.</p><a class="cta" href="#">Book a site survey</a></div>
 </section>
 ${CONTENT}
@@ -271,6 +276,9 @@ export async function sizesOf(file) {
 export async function buildAll({ posters = null } = {}) {
   await mkdir(DIST, { recursive: true });
   const out = {};
+  // The production wrapper on its own (minified; includes the few lab-only flags, which a copy for a site drops).
+  const w = await esbuild({ entryPoints: [path.join(SRC, 'lib/hero.js')], bundle: true, minify: true, format: 'esm', target: 'es2020', write: false, logLevel: 'silent' });
+  out._wrapper = { min: w.outputFiles[0].contents.length, gzip: gz(Buffer.from(w.outputFiles[0].contents)) };
   const fluidDir = FLUID.dir;
   const haveFluid = existsSync(path.join(fluidDir, 'script.js'));
   if (haveFluid) {
@@ -315,7 +323,8 @@ export async function buildAll({ posters = null } = {}) {
       for (const f of ['script.js', 'dat.gui.min.js', 'LDR_LLL1_0.png']) await copyFile(path.join(fluidDir, f), path.join(dir, f));
       const promo = `<div class="promo" style="display:none"><span class="promo-close"></span><a id="apple_link"></a><a id="google_link"></a></div>`;
       const scripts = `${promo}<script>window.ga = function () {}; window.__lab = { bootStart: performance.now() };</script><script src="dat.gui.min.js"></script><script src="script.js"></script>
-<script>requestAnimationFrame(() => requestAnimationFrame(() => { __lab.ttff = performance.now(); }));</script>`;
+<script>if (location.search.includes('syncfirst')) { const c = document.querySelector('.hero-bg canvas'); const gl = c.getContext('webgl2') || c.getContext('webgl'); gl.finish(); __lab.gpuFirst = performance.now(); }
+requestAnimationFrame(() => requestAnimationFrame(() => { __lab.ttff = performance.now(); }));</script>`;
       await writeFile(path.join(dir, 'index.html'), shell({ v, bgInner: '<canvas class="fx" style="opacity:1"></canvas>', headCss: '.dg.ac { display: none; }', scripts, toggle: false }));
       rec.effect = { raw: 0, gzip: 0, brotli: 0 };
       for (const f of ['script.js', 'dat.gui.min.js']) { const s = await sizesOf(path.join(dir, f)); for (const k of Object.keys(s)) rec.effect[k] += s[k]; }

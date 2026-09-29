@@ -39,6 +39,20 @@ export const FILES = [
   ['spine/spineboy-pma.png', `${SPINE}/spineboy-pma.png`],
   ['rive/truck.riv', `${RIVE}/truck.riv`],
   ['rive/birb.riv', `${RIVE}/birb.riv`],
+  // Models model.mjs was NOT built on, to check its counts against three.js (run-modelscript.mjs). Lab use only.
+  ...['AlphaBlendModeTest', 'GlassHurricaneCandleHolder', 'MorphStressTest', 'SimpleInstancing', 'SpecGlossVsMetalRough', 'ToyCar',
+    'TransmissionRoughnessTest', 'TransmissionTest', 'BrainStem', 'CesiumMan'].map((m) => [`extra/${m}/${m}.glb`, `${KHR}/${m}/glTF-Binary/${m}.glb`]),
+  ...['MeshPrimitiveModes', 'SimpleSparseAccessor'].map((m) => [`extra/${m}/${m}.gltf`, `${KHR}/${m}/glTF-Embedded/${m}.gltf`]),
+  ...['SciFiHelmet.gltf', 'SciFiHelmet.bin', 'SciFiHelmet_AmbientOcclusion.png', 'SciFiHelmet_BaseColor.png', 'SciFiHelmet_MetallicRoughness.png', 'SciFiHelmet_Normal.png'].map((f) => [`extra/SciFiHelmet/${f}`, `${KHR}/SciFiHelmet/glTF/${f}`]),
+  // Held out: 22 more Khronos models chosen after model.mjs's counting rules were fixed (transmission, volume,
+  // iridescence, sheen, clearcoat, unlit, dispersion, diffuse transmission, texture transforms, negative scale…).
+  ...['DragonAttenuation', 'MosquitoInAmber', 'IridescenceLamp', 'SheenChair', 'ClearCoatCarPaint', 'UnlitTest', 'TextureTransformMultiTest',
+    'CompareAlphaCoverage', 'DiffuseTransmissionTeacup', 'EmissiveStrengthTest', 'GlassBrokenWindow', 'GlassVaseFlowers', 'AttenuationTest',
+    'TransmissionOrderTest', 'SunglassesKhronos', 'DispersionTest', 'NegativeScaleTest', 'MultiUVTest', 'IridescentDishWithOlives',
+    'CommercialRefrigerator', 'Corset', 'BoomBox'].map((m) => [`heldout/${m}/${m}.glb`, `${KHR}/${m}/glTF-Binary/${m}.glb`]),
+  ['extra/BrainStem-meshopt/BrainStem.gltf', `${KHR}/BrainStem/glTF-Meshopt/BrainStem.gltf`],
+  ['extra/BrainStem-meshopt/BrainStem.bin', `${KHR}/BrainStem/glTF-Meshopt/BrainStem.bin`],
+  ['extra/ABeautifulGame-KTX2-Draco/ABeautifulGame.glb', `${KHR}/ABeautifulGame/glTF-Binary-KTX-ETC1S-Draco/ABeautifulGame.glb`],
   ['tools/KTX-Software-4.4.2-Linux-x86_64.tar.bz2', 'https://github.com/KhronosGroup/KTX-Software/releases/download/v4.4.2/KTX-Software-4.4.2-Linux-x86_64.tar.bz2', 'a8781bad05f9624edbf910b7f258cd0a4ba7d3e63b49ecc0a0ab440bf6a0a245'],
 ];
 
@@ -75,6 +89,13 @@ export async function fetchAll({ print = false } = {}) {
     execFileSync('tar', ['-xjf', path.join(CACHE, 'tools/KTX-Software-4.4.2-Linux-x86_64.tar.bz2'), '-C', path.join(CACHE, 'tools')]);
   }
   const pins = Object.fromEntries(results.map((r) => [r.rel, r.sha256]));
+  const unpinned = results.filter((r) => !PINS[r.rel] && !FILES.find((x) => x[0] === r.rel)?.[2]);
+  if (unpinned.length && !print) {
+    // First fetch of a newly listed file: pin it (existing pins are never rewritten without --print).
+    for (const r of unpinned) PINS[r.rel] = r.sha256;
+    await writeFile(pinFile, JSON.stringify(PINS, null, 1) + '\n');
+    console.error(`pinned ${unpinned.length} new checksum(s) in fetch-pins.json`);
+  }
   if (print || Object.keys(PINS).length === 0) {
     await writeFile(pinFile, JSON.stringify(pins, null, 1) + '\n');
     console.error(`pinned ${results.length} checksums in fetch-pins.json`);

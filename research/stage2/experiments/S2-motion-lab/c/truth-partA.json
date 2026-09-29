@@ -1,0 +1,7 @@
+{
+ "_note": "Normal-run problem categories of the six Part A pages against a/spec.json, from the page sources (a/impl/*): every implementation takes its durations, easing and stagger from a/tokens.js, so all rows are correct except motion|view: Motion 13.4.4's animateView() drops the x/y shorthands (motion-dom dist/es/view/start.mjs: 'the x shorthand has no effect - use transform'; a/probe-motion-view.mjs shows only opacity keyframes on the view-transition pseudos), so that view only crossfades and the spec's transform never changes. spring|list uses the productive spring (tension 700, friction 47.6) with no duration, so whether it lands inside 'medium' is not decidable from the source: excluded from scoring. The reduced-motion category is not written here: c/run-heldout.mjs derives it from Part A's own sampler (results.json a.single, reduce-default or reduce-guard) with reducedTruth().",
+ "uncertain": ["spring|list"],
+ "normal": {
+  "css": {}, "motion": { "view": ["props"] }, "motion-react": {}, "gsap": {}, "anime": {}, "spring": {}
+ }
+}

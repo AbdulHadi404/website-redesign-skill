@@ -72,9 +72,11 @@ h1 { margin: 0 0 0 4px; padding-left: 16px; border-left: 1px solid var(--line); 
 .buybar { grid-area: bar; }
 .editor { display: grid; grid-template-rows: auto minmax(0, 1fr); }
 .editor[hidden], .review[hidden], .buybar[hidden] { display: none; }
-.notice { display: none; }
-.notice.is-on { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 10px 16px 10px 20px; background: var(--notice); border-bottom: 1px solid #ead7bd; border-left: 4px solid var(--effect); font-size: 15px; }
-.notice p { margin: 0; flex: 1 1 14em; }
+/* the live text stays in the accessibility tree while empty (a region inserted with its text is often not announced) */
+.notice { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; height: 0; overflow: hidden; }
+.notice.is-on { height: auto; padding: 10px 16px 10px 20px; background: var(--notice); border-bottom: 1px solid #ead7bd; border-left: 4px solid var(--effect); font-size: 15px; }
+.notice-text { margin: 0; flex: 1 1 14em; }
+.notice-actions { display: flex; flex-wrap: wrap; gap: 4px 12px; flex: 1 0 auto; }
 .notice .dismiss { margin-left: auto; }
 .tabs { display: flex; border-bottom: 1px solid var(--line); }
 [role="tab"] { flex: 1 1 0; min-width: 0; min-height: 60px; padding: 8px 4px 6px; border: 1px solid transparent; border-bottom: 3px solid transparent; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; color: var(--ink-2); }

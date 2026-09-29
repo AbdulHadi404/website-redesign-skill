@@ -1,0 +1,109 @@
+{
+ "reran": "I ran everything in a scratch copy (scratchpad/repo/.../S5copy). The repo's S5 folder is unchanged.\n\n(1) History correctness (`lab/correctness.mjs`, all 9 strategies, the M1–M3 multi-user cases and the Yjs capture test). The output is identical to results.json: every unit flag, 843/843 steps, the history JSON sizes, M1–M3 per strategy, and Yjs default = 1 step for two clicks 50 ms apart and 2 steps for a drag with a 650 ms pause.\n\n(2) Benchmark subset through the same `bench-one.mjs`, with workloads regenerated independently. Cells: all 10 strategies at 200×1000 (3 runs), all 9 non-naive strategies at 5000×1000 (3 runs), 7 strategies at 200×10000 (2 runs), naive 5000×1000 (1 run). Load average was 12–20 on 4 cores.\n- **Memory reproduces within about 1% in every cell.** Examples: naive 75.7 MB / 1,529.6 MB; spread 158.43 MB (197,070 B per step); record diff 941 B; property delta 878 B; command 452 B. Yjs at 10k was 98.8 MB against 100.8 MB, and its document was 9,494 KB against 1,519 KB, identical to the report. The exception is Yjs at 200×1000: 3.4 MB against 4.2 MB (GC noise).\n- **Every ordering and every `correct` flag reproduces.** Pointer-update p95 at 5,000 items: spread 5.8 ms (reported 7.1), persistent map 4.3 µs, record diff 2.6 µs, property delta 2.9 µs. Event-log undo at 5,000 items: 31 ms mean / 82 ms p95 (reported 18.7 / 42). Same direction, noisier.\n- **One figure does not reproduce: the immer autofreeze penalty at 5,000 items.** With freeze I got 7.9 ms p95 per move against 7.0 ms without (1.1×); the report has 15.9 against 6.6 ms (2.4×). Undo was 3.5 against 2.5 ms (reported 7.3 against 2.6). The original cell's own spread (playMs 35–84 s) shows it was noisy. At 200 items the penalty does reproduce: 197 against 59 µs.\n- The immer array pitfall reproduces exactly: 1,000 patches / 52,767 B against 1 patch / 39 B.\n\n(3) Prototype stage (`prototype-run.mjs`).\n- Model tests are identical: 13,871 transitions, 1,492 repairs, 0 invalid, 0 overrides, randomise 2,000/2,000 valid, links 400/400.\n- Every behaviour check reproduces: repair in 1 step, no-op, redo, text in 1 step, slider and canvas gestures, Escape, 2 px wobble, camera, link/reload/resume, 77 keys (43 navigation), phone at 0.36 of the height with no overflow.\n- Render cost keeps its ordering: full render 2.5/7.8 ms against moving-part 0.3/0.9 ms at 1×; 6.7/70 against 0.9/3.3 ms at 4×.\n- Skill scripts: `capture.mjs` 0 warnings; `audit.mjs` 0 fails, axe clean, the same \"3 charts\" signal; `a11y.mjs` 1280 = 0 FAIL / 2 WARN, 390 = 0/0; `states.mjs` 10/10, axe clean.\n\n(4) Sources checked directly:\n- the tldraw options, breakpoints, HistoryManager and `Store.applyDiff`; the excalidraw history, constants and delta files; Yjs UndoManager;\n- licences: tldraw LICENSE.md and `npm view` (SEE LICENSE); MIT for excalidraw, immer, immutable, yjs, zundo and redux-undo;\n- NN/g, Leclercq (28 car configurators, 75%) and the 46/54 repair study, via search snippets.\n\nNo stream script was added under `skills/`, so item 3 (run a new script on other pages) does not apply. Instead I probed the `audit.mjs` chart detector on the prototype to check the stream's proposed fix.",
+ "problems": [
+  {
+   "severity": "blocking",
+   "claim": "G1 configurator playbook: chapters in dependency order (tabs) around a preview, SVG/canvas \"sketch\" for illustrated looks, to be linked from categories.md \"Signature experiences\" as \"extends\" (the prototype is exactly this: Start/Size/Flavour/Outside/Decorate around a 2D SVG \"A sketch of your choices\")",
+   "problem": "This pattern contradicts the skill's own recorded failure, and the report does not say so. lessons.md (2026-09-26, The Cake Junction) records: \"The user rejected the builder direction. It had been made to fit neatly inside the website as five form chapters around a 2D sketch\". ledger.md repeats it: \"builder as five form chapters around a 2D sketch rejected\". anti-patterns.md \"Shrinking a signature experience\" and discovery.md §5b say the same. G1 never says whether it covers signature or supporting configurators, and the planned pointer from \"Signature experiences\" would hand the rejected pattern back to the case where it failed.",
+   "fix": "Scope G1 §2, §4 and §5 to supporting and made-to-order ordering flows. Add a first line: \"If this is the signature experience (framing.md §1), discovery.md §5b/§5c and ui-ux.md §7b come first: direct manipulation and fidelity lead, and chapters are the accessible, form-based path beside the canvas, not the experience.\" Cite the Cake Junction lesson. From categories.md \"Signature experiences\", link only G1's constraint, undo, save/share and analytics parts."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "G2: \"Selection is view state: it never makes an undo step and never clears redo, but undo restores it.\" The lab's header (strategies.mjs lines 5–7) attributes this to \"excalidraw History.record, tldraw setSelectedShapes with record-preserveRedoStack\".",
+   "problem": "Both editors do record selection changes as undo steps.\n- excalidraw: History.record (packages/excalidraw/history.ts:117-131) pushes every non-empty delta, including selection-only appState deltas; only the redo-clearing depends on whether elements changed. Its own test (tests/history.test.tsx:889) expects an undo stack of 6 that includes two selection changes, and walks the selection back one Ctrl+Z at a time.\n- tldraw: PointingShape/Idle call markHistoryStoppingPoint('selecting shape') before setSelectedShapes, which records in record-preserveRedoStack mode. HistoryManager.undo then reverts back to that stop, so undo reverts a selection-only change.\nThe [V] attribution is wrong, and the rule is a [K] design choice.",
+   "fix": "Present the two models honestly: (a) selection is not an undo step (the lab's choice, Figma-like [K]); (b) selection-only changes are undo steps that never clear redo (excalidraw and tldraw [V]). Recommend one per product type. Correct the comment in strategies.mjs and the G2 wording."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "G1 §3 \"Never use a modal conflict dialog (manual repair)\"; Rejected ideas: \"Modal conflict resolution... these are the failures the configurator surveys report [S]\".",
+   "problem": "The cited surveys, as far as the search snippets show (Leclercq et al. on 28 car configurators; the 46/54 repair study), criticise invisible propagation, blocked options with no explanation and ad-hoc repair. Nothing I could find calls a confirm or manual-repair step a bad practice. The absolute \"never\" is therefore [K], but it is presented as [S]. It also removes a reasonable choice: confirming before a repair that removes something with a price, the way car configurators do for packages.",
+   "fix": "Tag the rule [K] and soften it: prefer an inline automatic repair with Undo when the change is cheap and reversible; confirm first when a repair removes a priced option or changes a stated need. Remove \"modal conflict resolution\" from the list of failures attributed to the surveys."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "Constraint levels, \"repair the other option automatically\"; showcase: \"Heart at 30 people becomes 20 people, one tier, heart, in 1 step\".",
+   "problem": "The repair lowers a stated need. The customer said 30 people, chose a heart (a taste option) and silently ended up with a cake for 20; the price dropped from the 30-person estimate to £128. This contradicts the stream's own principle that taste never overrides needs (\"Surprise me\" keeps headcount). The model test checks only that the option just chosen was not overridden, not that a need was never changed (model.js resolve(): `if (c.people > 20) set('people', 20, ...)`).",
+   "fix": "Add the rule: a taste option that conflicts with a need is shown inactive with its reason (\"Heart cakes serve up to 20\"), or asks first. Automatic repair changes only other taste options. Add a test: no repair triggered by a taste option changes people or message."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "M1–M3 table and Rejected ideas: the command pattern \"throws on a target deleted by a collaborator [L M3]. Property deltas get these for free\"; G3: \"command/immer throwing and record-diff resurrecting failed\".",
+   "problem": "These are artefacts of how the lab implemented each strategy, not properties of the strategies:\n- the command undo has no existence guard (`m.get(id).x`);\n- PropDiff's no-op on a deleted target is an explicit guard (strategies.mjs:292, `if (cur) ... // missing (deleted by someone else): skip`);\n- each M case is a single scripted scenario (n=1).\nOnly the per-property granularity (M1) follows from the strategy itself.",
+   "fix": "Say that every strategy needs a one-line \"skip if the target is missing\" guard. Rank strategies on what they get by construction (the property granularity behind M1, and serialisability). Drop \"throws\" as grounds for rejecting the command pattern."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "G1 §7 \"the configuration lives in the URL\" together with §11 \"Never send free text, only its length\"; test result `textInAnalytics:false`.",
+   "problem": "`encode()` writes the cake message into the query string as `tx=` (model.js KEYS). That string goes into history.replaceState and into the shared link: the test's 121-character query carries \"Happy 30th Maya\". Any page_view that records page_location (the GA4 default, or GTM history-change triggers), server logs and referrers therefore receive the free text. The test checks only window.dataLayer events.",
+   "fix": "Keep free text out of the URL (local draft, or a server-side configuration id), or state that analytics must strip the query string. Extend the test to check the recorded page URL."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "G1 §3: an inline notice with Undo that says what changed; repairs and undo are announced.",
+   "problem": "The prototype puts the Undo and Dismiss buttons inside the role=\"status\" aria-live region (index.html:46; app.js notice() sets innerHTML). A screen reader therefore reads \"…one tier. Undo Dismiss\"; the behaviour test's recorded notice text is \"…one tier.UndoDismiss\". This breaks the skill's own rules in app-ui.md (around line 111) and accessibility.md (line 169): keep a toast's action outside its live region. axe does not catch it.",
+   "fix": "Split the notice into a live text node plus buttons outside the region, in the prototype and in the G1 §3 wording. Add the rule to the checklist."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "D and G3: \"immer with patches... 15.9 ms (6.6 ms with autofreeze off)\"; G3 row: \"autofreeze off on hot paths; 2.4× faster without freeze\".",
+   "problem": "At 5,000 items this did not reproduce. Three runs gave a pointer-update p95 of 7.9 ms with autofreeze against 7.0 ms without (1.1×), and undo 3.5 against 2.5 ms. The original cell's playMs ranged 35–84 s. The 2.4× holds only at about 300 items (my rerun 197 against 59 µs). The robust conclusion is that immer per move costs about 7 ms or more at 5,000 items either way, the same as a spread.",
+   "fix": "Report immer per move at 5,000 items as about 7–16 ms with and without freeze. Limit the freeze-penalty claim to small scenes, or rerun with more repetitions on a quiet machine."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "\"audit.mjs reported my three aria-hidden decorative SVGs as charts with no text... fix: exclude aria-hidden SVGs\".",
+   "problem": "The diagnosis is wrong. I ran the detector's own logic (lib/inventory.mjs:827-832) on the prototype. At both 1440 and 390 it flags svg#cake, which has role=\"img\" and aria-labelledby=\"cake-desc\" and is not aria-hidden. At 390 the three hits are #cake plus two aria-hidden preset SVGs. The detector accepts aria-label and title but not aria-labelledby, so the proposed fix would leave the main preview flagged.",
+   "fix": "Treat aria-labelledby, or role=img with a computed name, as labelled, and also skip aria-hidden SVGs. Correct the report's description."
+  },
+  {
+   "severity": "should-fix",
+   "claim": "G4: \"Use prototype-states.json as the states.mjs --axe template for configurators... Playwright's click waits on aria-disabled, and states.mjs click steps are built on the same checks.\"",
+   "problem": "Two problems.\n- The template uses `click` steps on the phone device, but visual-qa.md (Flows) says to step phone flows with `tap`, not `click`. G4 itself recommends tap.\n- The inference about states.mjs is wrong. Its click tries Playwright's click with a 4 s timeout, then falls back to `el.click()` (states.mjs:357-363). It does not hang; it logs a misleading \"blocked for a pointer (covered?)\" note.",
+   "fix": "Convert the template's phone steps to `tap`. Correct the inference to \"states.mjs falls back to a direct click after 4 s\"."
+  },
+  {
+   "severity": "minor",
+   "claim": "Unmarked numeric rules in G1 and G2.",
+   "problem": "The brief asks for [S]/[K] tags, but these numbers are untagged [K] or come from one prototype (n=1), and are presented as rules:\n- up to about 8 independent decisions → one panel; 3–6 starting solutions;\n- a 400–440 px panel; preview at 36–40 dvh (the prototype's single value);\n- a 100–200 step cap; \"at most two levels\" behind More;\n- undo top-left on desktop and bottom on phones (tldraw only; the prototype itself puts undo top-right on desktop).",
+   "fix": "Tag each [K] or [L, prototype], or give a range with its source."
+  },
+  {
+   "severity": "minor",
+   "claim": "G3 table: Yjs \"12.5 KB per step retained and the document grew 6.2×\"; event log \"1.4 KB per step, but undo 18.7 ms mean at 5,000 items\".",
+   "problem": "Both rows quote a figure from one scale as if it were general.\n- **Yjs:** document growth was 6.2× only at 200×10000. It was 2.2× at 200×1000 and 1.05–1.10× at 5000×1000; it grows with the number of pointer-move writes the UndoManager keeps.\n- **Event log:** 1.4 KB/step is the 200-item figure; at 5,000 items it is 18.4 KB/step, from full-copy checkpoints. Undo there is dominated by structuredClone of the checkpoint, which is an implementation choice.",
+   "fix": "Quote both scales. Say that Yjs growth scales with intermediate writes, and recommend sending drag positions over awareness or an ephemeral channel. Note the event log's checkpoint design."
+  },
+  {
+   "severity": "minor",
+   "claim": "\"Every strategy passed the round trip [benchmark[*].correct]: final state..., undo-all..., redo-all, and 843 or 8,424 steps matching the oracle.\"",
+   "problem": "The benchmark's `correct` flag checks only the final state and undo-all. Redo-all and the step count against the oracle are checked only in correctness.mjs at 200×1000; bench-one records undoSteps (842), not a comparison.",
+   "fix": "Reword the claim, or add redo-all and step-count assertions to bench-one."
+  },
+  {
+   "severity": "minor",
+   "claim": "\"Repainting per pointer move... 8.3 ms / 30.1 ms p95; repainting only the moving part 1.2 / 6.9 ms\".",
+   "problem": "This is script time for building the DOM, measured with performance.now inside page.evaluate in headless Chromium. It excludes style, layout, paint and raster, so it is not repaint cost. The p95 values are noisy: my rerun gave 70 ms for the full render at 4×.",
+   "fix": "Call it \"DOM update script time\", or measure frames with a performance trace or requestAnimationFrame deltas."
+  },
+  {
+   "severity": "minor",
+   "claim": "\"Preview... always on screen with the controls, and labelled honestly\".",
+   "problem": "The prototype hides the honest label on phones and on landscape phones (styles.css:203 and 216, `.honest { display: none; }`). Only the screen-reader description still says \"Sketch of…\". This goes against discovery.md §5 and G1 §4.",
+   "fix": "Keep a short label visible on phones, for example \"Sketch · hand-decorated\" in the stage caption."
+  },
+  {
+   "severity": "minor",
+   "claim": "G2 shortcuts: \"a shortcuts dialog on ⌘/ (tldraw)\"; G2 layout: \"fixed right-hand inspector; Figma reverted floating panels\"; G5 anti-pattern: \"Undo grouped by time\".",
+   "problem": "Three small inaccuracies:\n- tldraw binds the dialog to cmd+alt+/ (actions.tsx:226).\n- ui-ux.md §7b says contextual inspectors float over the canvas; G2 does not reconcile \"fixed\" with that.\n- G5 bans time-grouped undo, but G1 §8 merges same-control key nudges within 1 s.",
+   "fix": "Correct the shortcut to ⌘⌥/. Say that persistent panels are fixed and contextual tools float, per §7b. Reword G5 to \"time windows that merge different controls\"."
+  },
+  {
+   "severity": "minor",
+   "claim": "Brief coverage.",
+   "problem": "Several items the brief names are thin or missing:\n- comparison of variants gets no guidance, only \"not tested\";\n- Nike By You yields no findings;\n- snapping and guides are covered only as thresholds, with nothing on how guides are drawn or on distance labels;\n- game character creators rest on one forum claim.\nAlso, a hostile or old link is repaired silently (heart + 50 people opens as round with no notice), which contradicts \"never drop a choice silently\".",
+   "fix": "Add at least [K]-tagged guidance on comparison and guide rendering, or list these explicitly as gaps. Show a notice when a decoded link was repaired."
+  }
+ ],
+ "strongest": "- **The history lab's memory figures and correctness contract.** They reproduce to about 1%, and the contract is sound: one gesture = one step, cancel records nothing and keeps redo, no step for a no-op, undo restores selection, a new edit clears redo. So does the core scaling conclusion: at thousands of objects, the cost per pointer move comes from copying immutable state on every move, not from the history strategy. Record or property diffs and a persistent map stay at 3–6 µs; spread and immer take 6–8 ms or more per move at 5,000 items.\n- **Keyed maps with a z number instead of arrays.** Deleting the first of 1,000 array items gives 1,000 patches (52 KB) against 1 patch for a keyed map. Reproduced.\n- **Yjs grouping.** Time-based capture groups the wrong things; stopCapturing() at gesture boundaries with captureTimeout: Infinity fixes it (reproduced). The UndoManager keeps deleted content alive (verified keepItem; document 9.5 MB against 1.5 MB at 10k operations).\n- **tldraw facts from source.** Interaction thresholds: drag 4/6 px, toolbar drag 25 px on touch, snap 8 px, hit margin 3/4 px, handles 12/20 px, 840/640 breakpoints. Record-level undo overwrites a collaborator's change to the same shape, and brings back a shape a collaborator deleted. Licence: tldraw may not be used in production without a licence; excalidraw, immer and Yjs are MIT.\n- **Model first, then an exhaustive single-change test.** 13,871 transitions, 0 invalid, 0 overrides (reproduced exactly).\n- **Hints from the rules.** Side-effect hints computed by running the rules on the hypothetical choice, and a choice plus its repairs as one undo step.\n- **The four levels in outline.** Prevent, explain inactive options with aria-disabled and a stated reason, warn, repair. Needs the fixes above.\n- **Behaviour checks screenshots cannot show.** Gesture = step on mouse and touch, the tap-slop distance, the camera ignoring decorations, keyboard-only completion. Also, never re-render a form while someone types.",
+ "weakest": "- **Attribution of \\\"selection is never an undo step\\\" to excalidraw and tldraw.** Contradicted by their source and tests.\n- **\\\"Never use a modal conflict dialog\\\".** [K] presented as survey evidence.\n- **Rejecting the command pattern because it throws on a deleted target, and \\\"property deltas get it for free\\\".** Artefacts of the lab's implementation, each tested once.\n- **The immer autofreeze 2.4× figure at 5,000 items.** Did not reproduce: 1.1×.\n- **Figures quoted from one scale in G3.** Yjs 6.2× growth and event log 1.4 KB/step.\n- **Numbers taken from one prototype and presented as layout rules.** 36–40 dvh, 400–440 px, 3–6 presets, ≤8 decisions.\n- **The audit.mjs fix.** Based on a misdiagnosis.\n- **The claim that free text never reaches analytics.** The message sits in the URL.\n- **The prototype applied as a model for signature builders.** It repeats the Cake Junction pattern the skill already records as rejected."
+}

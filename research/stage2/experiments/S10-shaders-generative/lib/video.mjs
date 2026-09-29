@@ -37,7 +37,11 @@ export async function renderFrames(page, url, outDir) {
 
 export async function encode(ffmpeg, framesDir, outDir) {
   await mkdir(outDir, { recursive: true });
-  const input = ['-y', '-hide_banner', '-loglevel', 'error', '-framerate', String(LOOP.fps), '-i', path.join(framesDir, 'f%04d.png')];
+  // RGB frames → BT.709 YUV, tagged, so every decoder agrees on the colour. (The videocolour phase found Chromium
+  // decodes tagged and untagged VP9 alike, within 1/255 of the source frame; ffmpeg's own PNG dump of the untagged
+  // file drifted purple. Judge video colour in the browser, not from ffmpeg frame dumps.)
+  const input = ['-y', '-hide_banner', '-loglevel', 'error', '-framerate', String(LOOP.fps), '-i', path.join(framesDir, 'f%04d.png'),
+    '-vf', 'scale=out_color_matrix=bt709:out_range=tv', '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-color_range', 'tv'];
   const jobs = {
     'loop-av1.webm': ['-c:v', 'libaom-av1', '-crf', '38', '-b:v', '0', '-cpu-used', '6', '-row-mt', '1', '-tiles', '2x2', '-pix_fmt', 'yuv420p', '-an'],
     'loop-vp9.webm': ['-c:v', 'libvpx-vp9', '-crf', '38', '-b:v', '0', '-deadline', 'good', '-cpu-used', '4', '-row-mt', '1', '-pix_fmt', 'yuv420p', '-an'],

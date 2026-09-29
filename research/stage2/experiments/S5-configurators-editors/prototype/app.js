@@ -20,9 +20,14 @@ const STORE = 'crumb-cake-draft-v1';
 const fromUrl = M.decode(location.search.slice(1));
 let saved = null;
 try { saved = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch { saved = null; }
-const fromSaved = saved?.config ? M.decode(M.encode({ ...M.DEFAULT, ...saved.config })) : null;
+// The message's words never go in the URL (model.js encode); they live in this device's draft. A link that shows
+// the same cake as the draft (a reload, or this person's own link) gets its words back; anyone else's link opens
+// the design without them.
+const savedText = typeof saved?.config?.text === 'string' ? saved.config.text.slice(0, M.MAX_TEXT) : '';
+const fromSaved = saved?.config ? { ...M.decode(M.encode({ ...M.DEFAULT, ...saved.config })), text: savedText } : null;
+const withWords = (c) => (c && fromSaved && M.same({ ...c, text: '' }, { ...fromSaved, text: '' }) ? { ...c, text: savedText } : c);
 const entry = fromUrl ? 'link' : fromSaved ? 'resume' : 'default';
-const hist = new History(fromUrl ?? fromSaved ?? M.DEFAULT, { onChange: onHistory });
+const hist = new History(withWords(fromUrl) ?? fromSaved ?? M.DEFAULT, { onChange: onHistory });
 window.__cake = { hist, M, fullRender: () => render() }; // for the scripted checks in prototype-run.mjs
 
 // ---------------------------------------------------------------- the option panels, built from the model
@@ -74,7 +79,7 @@ function buildPanels() {
       radioGroup('drip', 'Drip colour', M.DRIPS.map((d) => ({ id: d.id, name: d.name, chip: d.colour })), { cls: 'cols-2 dep-drip' }) +
       `<div class="group dep-flowers"><div class="field-row"><label for="flowerPos" class="field-label">Where the flowers sit</label><output id="flower-out" class="field-out" for="flowerPos"></output></div><input type="range" id="flowerPos" min="-100" max="100" step="5" aria-describedby="flower-out flower-hint"><p class="group-hint" id="flower-hint">You can also drag the flowers on the cake.</p></div>` +
       radioGroup('message', 'Message', M.MESSAGES.map((m) => ({ id: m.id, name: m.name, sub: m.price ? `+${money(m.price)}` : m.id === 'none' ? '' : 'Included' })), { cls: 'cols-3' }) +
-      `<div class="group dep-text"><label for="text" class="field-label">What should it say?</label><input type="text" id="text" maxlength="${M.MAX_TEXT}" autocomplete="off" aria-describedby="text-count"><p class="group-hint" id="text-count"></p></div>` +
+      `<div class="group dep-text"><label for="text" class="field-label">What should it say?</label><input type="text" id="text" maxlength="${M.MAX_TEXT}" autocomplete="off" aria-describedby="text-count text-privacy"><p class="group-hint" id="text-count"></p><p class="group-hint" id="text-privacy">Your words stay on this device until you send the request. A copied link shares the design, not the words.</p></div>` +
       `<div class="pane-next"><button type="button" class="secondary" data-open-review>Next: review</button></div>`),
   ].join('');
 }
@@ -155,7 +160,7 @@ function choose(key, value, { source = 'control', mergeKey, mergeMs } = {}) {
   if (reason) { notice(`${reason}.`); track('inactive_option_tapped', { key, value, reason }); render(); return false; }
   const { config, adjustments } = M.resolve({ ...cur, [key]: value }, [key]);
   const label = `${KEY_LABEL[key]}: ${key === 'hue' ? M.hueName(value) : key === 'flowerPos' ? $('#flower-out').textContent : key === 'text' ? `“${value}”` : M.nameOf(key, value)}`;
-  const changed = hist.commit(config, { label, mergeKey, mergeMs, source });
+  const changed = hist.commit(config, { label, key, mergeKey, mergeMs, source });
   if (!changed) return false;
   if (firstChangeAt === null) { firstChangeAt = Math.round(performance.now() - t0); track('first_change', { key, ms_to_first_change: firstChangeAt }); }
   changesBeforeReview++;
@@ -184,21 +189,33 @@ function phrases(as) {
   }
   return M.listJoin([...(made.length ? [`made it ${made.join(', ')}`] : []), ...other]);
 }
-let noticeTimer = 0;
+// The notice: its text is a polite live region that is always in the page (empty until needed); its buttons sit
+// OUTSIDE that region, so a screen reader announces the message only, not "… Undo Dismiss" (accessibility.md §7,
+// app-ui.md; the first version put the buttons inside the region: caught in review, invisible to axe).
 function notice(text, undoable = false, extra = '') {
-  const n = $('#notice');
-  n.innerHTML = `<p>${text}</p>${undoable ? '<button type="button" class="link" data-undo>Undo</button>' : ''}${extra}<button type="button" class="link dismiss" data-dismiss aria-label="Dismiss message">Dismiss</button>`;
-  n.classList.add('is-on');
-  clearTimeout(noticeTimer);
+  const live = $('#notice-text');
+  if (live.textContent === text) { live.textContent = ''; requestAnimationFrame(() => { live.textContent = text; }); } // repeat: clear first
+  else live.textContent = text;
+  const actions = $('#notice-actions');
+  actions.innerHTML = `${undoable ? '<button type="button" class="link" data-undo>Undo</button>' : ''}${extra}<button type="button" class="link dismiss" data-dismiss aria-label="Dismiss message">Dismiss</button>`;
+  // handlers on the buttons themselves: a delegated listener on the (often empty) notice reads as a pointer-only control
+  for (const b of actions.querySelectorAll('button')) b.addEventListener('click', noticeAction);
+  $('#notice').classList.add('is-on');
 }
-function clearNotice() { const n = $('#notice'); n.classList.remove('is-on'); n.innerHTML = ''; }
+function noticeAction(e) {
+  const b = e.currentTarget;
+  if (b.matches('[data-undo]')) { doUndo(); clearNotice(); $('#undo').disabled ? $('#panel').focus() : $('#undo').focus(); }
+  else if (b.matches('[data-dismiss]')) clearNotice();
+  else if (b.matches('[data-restart]')) { hist.commit(structuredClone(M.DEFAULT), { label: 'Started again', source: 'restart' }); track('restarted'); notice('Started again from Blush garden.', true); }
+}
+function clearNotice() { $('#notice').classList.remove('is-on'); $('#notice-text').textContent = ''; $('#notice-actions').innerHTML = ''; }
 function announce(text) { const a = $('#announcer'); a.textContent = ''; requestAnimationFrame(() => { a.textContent = text; }); }
 
 // ---------------------------------------------------------------- persistence: URL (shareable) + this device (resume)
 let saveTimer = 0;
 // During a gesture only what moves is repainted (the flowers; the cake itself for a colour); the panel, price,
-// description and link catch up once, on release. Measured: a full render per pointer move cost 13.7 ms median at
-// a 4x CPU slowdown; see results.json prototype.behaviour.renderCost.
+// description and link catch up once, on release. Measured against a full render per pointer move in
+// results.json prototype.behaviour.renderCost.
 function renderPreview() {
   const c = hist.present;
   const flowers = svg.querySelector('[data-part="flowers"]');
@@ -280,7 +297,7 @@ function wireControls() {
       else choose(key, toValue(el.value), { source: 'keyboard-slider', mergeKey: key });
     });
     el.addEventListener('change', () => {
-      if (hist.gesture && hist.end({ label: `${KEY_LABEL[key]}: ${key === 'hue' ? M.hueName(hist.present.hue) : $('#flower-out').textContent}`, source: 'control' })) { track('option_changed', { key, value: hist.present[key], source: 'slider-drag' }); changesBeforeReview++; }
+      if (hist.gesture && hist.end({ label: `${KEY_LABEL[key]}: ${key === 'hue' ? M.hueName(hist.present.hue) : $('#flower-out').textContent}`, key, source: 'control' })) { track('option_changed', { key, value: hist.present[key], source: 'slider-drag' }); changesBeforeReview++; }
     });
     el.addEventListener('keydown', (e) => { if (e.key === 'Escape' && hist.gesture) hist.cancel(); });
   }
@@ -288,16 +305,12 @@ function wireControls() {
   let textVisit = 0;
   $('#text').addEventListener('focus', () => { textVisit++; });
   $('#text').addEventListener('input', (e) => choose('text', e.target.value.slice(0, M.MAX_TEXT), { mergeKey: `text-${textVisit}`, mergeMs: Infinity, source: 'keyboard-slider' }));
-  $('#notice').addEventListener('click', (e) => {
-    if (e.target.closest('[data-undo]')) { doUndo(); clearNotice(); $('#undo').disabled ? $('#panel').focus() : $('#undo').focus(); }
-    if (e.target.closest('[data-dismiss]')) clearNotice();
-    if (e.target.closest('[data-restart]')) { hist.commit(structuredClone(M.DEFAULT), { label: 'Started again', source: 'restart' }); track('restarted'); notice('Started again from Blush garden.', true); }
-  });
 }
 
 // ---------------------------------------------------------------- undo / redo / share
-function doUndo() { const e = hist.undo(); if (e) { announce(`Undone: ${e.label}`); track('undo', { label: e.label }); clearNotice(); } }
-function doRedo() { const e = hist.redo(); if (e) { announce(`Redone: ${e.label}`); track('redo', { label: e.label }); clearNotice(); } }
+// Analytics get the key, never the label: a label can quote what the person typed ("Message text: “Happy 30th Maya”").
+function doUndo() { const e = hist.undo(); if (e) { announce(`Undone: ${e.label}`); track('undo', { key: e.key ?? e.source }); clearNotice(); } }
+function doRedo() { const e = hist.redo(); if (e) { announce(`Redone: ${e.label}`); track('redo', { key: e.key ?? e.source }); clearNotice(); } }
 function wireTools() {
   $('#undo').addEventListener('click', doUndo);
   $('#redo').addEventListener('click', doRedo);
@@ -340,7 +353,7 @@ function wireCanvas() {
     if (!dragging || dragging.id !== e.pointerId) return;
     const d = dragging; dragging = null; svg.classList.remove('is-dragging');
     if (d.started) {
-      if (hist.end({ label: `Flower position: ${hist.present.flowerPos < -0.25 ? 'left' : hist.present.flowerPos > 0.25 ? 'right' : 'centre'}`, source: 'canvas' })) { track('option_changed', { key: 'flowerPos', value: hist.present.flowerPos, source: 'canvas' }); changesBeforeReview++; }
+      if (hist.end({ label: `Flower position: ${hist.present.flowerPos < -0.25 ? 'left' : hist.present.flowerPos > 0.25 ? 'right' : 'centre'}`, key: 'flowerPos', source: 'canvas' })) { track('option_changed', { key: 'flowerPos', value: hist.present.flowerPos, source: 'canvas' }); changesBeforeReview++; }
       return;
     }
     // a tap: open the chapter that owns what was tapped (the canvas never moves; the panel changes)

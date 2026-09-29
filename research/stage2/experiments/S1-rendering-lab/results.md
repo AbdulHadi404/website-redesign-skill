@@ -1,6 +1,6 @@
 # S1 rendering lab — results
 
-Generated 2026-09-28T21:46 · Chromium 141.0.7390.37 headless · 4 × Intel(R) Xeon(R) Processor @ 2.10GHz (shared) · WebGL: ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)
+Generated 2026-09-29T03:21 · Chromium 141.0.7390.37 headless · 4 × Intel(R) Xeon(R) Processor @ 2.10GHz (shared) · WebGL: ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)
 
 **Every GPU-bound number here is CPU-emulated.** WebGL runs on SwiftShader and the display compositor runs in software (`SoftwareRenderer`), so frame rates of the WebGL variants — and, less so, of DOM/SVG compositing — are pessimistic and comparable only with each other. `JS ms/frame` (the scene's own update + render call) and `renderer ms/frame` (renderer-process CPU per displayed frame) are the GPU-independent columns. `busy %` (CDP TaskDuration) counts a main thread blocked waiting for the emulated GPU as busy, so it overstates WebGL main-thread load.
 
@@ -23,8 +23,9 @@ Fresh browser context per run; viewport 860×720 at DPR 1; stage 800×600. Warm-
 | svg-a11y | 9.5 | 4.2 | 3.8 | 0.0 | 9.5 | 4.2 | 4.2 | 1 |
 | pixi-a11y | 564.8 | 166.6 | 137.7 | 547.6 | 9.8 | 4.4 | 172.9 | 23 |
 | pixi-pixia11y | 563.7 | 165.7 | 136.9 | 547.4 | 7.3 | 3.3 | 173.7 | 28 |
+| r3f-instanced | 1128.8 | 313.7 | 251.6 | 1118.4 | 9.7 | 4.5 | — | 1 |
 
-Runtime packages (min KB): pixi: pixi.js 524.3, @pixi/colord 9.0, earcut 7.1, eventemitter3 2.8; phaser: phaser 1356.0; three: three 519.2; three-instanced: three 522.3; r3f: three 726.5, react-dom 205.1, @react-three/fiber 166.3, react 8.3; pixi-a11y: pixi.js 524.3, @pixi/colord 9.0, earcut 7.1, eventemitter3 2.8; pixi-pixia11y: pixi.js 524.1, @pixi/colord 9.0, earcut 7.1, eventemitter3 2.8
+Runtime packages (min KB): pixi: pixi.js 524.3, @pixi/colord 9.0, earcut 7.1, eventemitter3 2.8; phaser: phaser 1356.0; three: three 519.2; three-instanced: three 522.3; r3f: three 726.5, react-dom 205.1, @react-three/fiber 166.3, react 8.3; pixi-a11y: pixi.js 524.3, @pixi/colord 9.0, earcut 7.1, eventemitter3 2.8; pixi-pixia11y: pixi.js 524.1, @pixi/colord 9.0, earcut 7.1, eventemitter3 2.8; r3f-instanced: three 726.5, react-dom 205.1, @react-three/fiber 166.3, react 8.3
 
 ## Steady state and drag, per N and CPU throttle (medians of runs)
 
@@ -112,6 +113,53 @@ Runtime packages (min KB): pixi: pixi.js 524.3, @pixi/colord 9.0, earcut 7.1, ev
 | three-instanced | three-instanced-webgl2 | 369 | 1.6 | 641.7 / 1050.0 | 2.05 / 4.90 | 397.5 | 95 | 100 | 1118.2 / 1645.5 | 816 | 3.9 | 44 | 2 | 5 |
 | r3f | r3f-webgl2 | 2506 | 1.4 | 616.7 / 1149.9 | 18.20 / 39.40 | 407.1 | 88 | 100 | 1240.4 / 2046.6 | 1456 | 14.3 | 48 | — | 5 |
 
+## Where the CPU renderers stop holding the frame rate (object-count sweep)
+
+Same scene and method as the main matrix, measured as its own round-robin set (so N = 200 and 2000 repeat the main matrix under this run's background load). Each cell: fps · frame p95 ms · main-thread busy % (for the Worker variant, fps is the Worker's and busy % is the page's main thread). The CPU renderers' raster and compositing run in software here, so absolute fps is pessimistic; use the crossover points relative to each other.
+
+### 1× CPU
+
+| variant | N=200 | N=400 | N=700 | N=1000 | N=1400 | N=2000 |
+| --- | --- | --- | --- | --- | --- | --- |
+| dom | 58.8 · 17 · 20% | 57.0 · 17 · 39% | 42.7 · 50 · 69% | 16.0 · 133 · 67% | 9.6 · 250 · 72% | 7.6 · 250 · 74% |
+| svg | 51.8 · 33 · 26% | 55.4 · 33 · 37% | 45.3 · 50 · 78% | 29.9 · 83 · 95% | 18.8 · 117 · 97% | 14.5 · 167 · 96% |
+| canvas2d | 57.5 · 17 · 22% | 59.6 · 17 · 38% | 58.4 · 17 · 56% | 55.6 · 17 · 77% | 53.6 · 17 · 96% | 34.7 · 50 · 99% |
+| canvas2d-worker | 57.4 · 17 · 1% | 59.0 · 17 · 1% | 58.6 · 17 · 2% | 55.2 · 33 · 1% | 50.2 · 33 · 1% | 38.6 · 33 · 1% |
+
+### 4× CPU
+
+| variant | N=200 | N=400 | N=700 | N=1000 | N=1400 | N=2000 |
+| --- | --- | --- | --- | --- | --- | --- |
+| dom | 49.0 · 33 · 70% | 26.3 · 83 · 90% | 12.1 · 167 · 84% | 7.0 · 383 · 85% | 4.2 · 417 · 80% | 3.3 · 867 · 81% |
+| svg | 49.0 · 33 · 70% | 39.3 · 50 · 84% | 21.3 · 83 · 96% | 13.5 · 167 · 98% | 8.4 · 217 · 99% | 6.2 · 283 · 100% |
+| canvas2d | 50.8 · 33 · 76% | 42.3 · 33 · 91% | 31.0 · 50 · 98% | 20.0 · 83 · 99% | 15.3 · 100 · 99% | 10.9 · 150 · 100% |
+| canvas2d-worker | 56.4 · 17 · 8% | 52.0 · 33 · 7% | 51.0 · 33 · 8% | 37.6 · 50 · 9% | 36.7 · 50 · 5% | 26.9 · 83 · 7% |
+
+## One mesh per item vs one InstancedMesh, vanilla three.js vs React Three Fiber
+
+Measured as one set (its own round-robin groups), so compare within this table. `JS ms/frame` is the GPU-independent column: the scene's update + render call on the main thread.
+
+| variant | N | CPU | first frame ms | fps | JS ms/frame p50/p95 | draw calls | heap MB | drag move→frame p50/p95 | app+runtime gzip KB | runs |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| three | 200 | 1× | 191 | 9.8 | 0.80 / 4.10 | 201 | 4.1 | 167.5 / 336.3 | 133.8 | 5 |
+| three-instanced | 200 | 1× | 171 | 10.3 | 0.30 / 1.50 | 2 | 3.7 | 178.7 / 299.5 | 134.8 | 5 |
+| r3f | 200 | 1× | 627 | 10.3 | 1.00 / 4.20 | — | 6.6 | 161.0 / 282.8 | 312.7 | 5 |
+| r3f-instanced | 200 | 1× | 607 | 10.2 | 0.30 / 2.20 | 2 | 5.7 | 166.9 / 369.2 | 313.7 | 5 |
+| three | 200 | 4× | 340 | 6.6 | 2.85 / 8.30 | 201 | 4.1 | 243.3 / 465.0 | 133.8 | 5 |
+| three-instanced | 200 | 4× | 363 | 7.2 | 0.95 / 4.30 | 2 | 3.7 | 250.9 / 510.7 | 134.8 | 5 |
+| r3f | 200 | 4× | 1040 | 6.5 | 2.80 / 8.50 | — | 6.6 | 235.2 / 489.3 | 312.7 | 5 |
+| r3f-instanced | 200 | 4× | 1196 | 7.3 | 0.40 / 4.30 | 2 | 5.6 | 240.6 / 512.6 | 313.7 | 5 |
+| three | 2000 | 1× | 221 | 2.1 | 6.90 / 13.20 | 2001 | 6.9 | 802.0 / 1147.2 | 133.8 | 5 |
+| three-instanced | 2000 | 1× | 170 | 2.5 | 0.50 / 3.20 | 2 | 3.9 | 771.1 / 1151.1 | 134.8 | 5 |
+| r3f | 2000 | 1× | 783 | 2.2 | 7.70 / 13.20 | — | 14.3 | 889.1 / 1183.6 | 312.7 | 5 |
+| r3f-instanced | 2000 | 1× | 662 | 2.5 | 0.60 / 3.40 | 2 | 6.1 | 861.4 / 1253.9 | 313.7 | 5 |
+| three | 2000 | 4× | 486 | 1.6 | 18.30 / 33.40 | 2001 | 6.9 | 1337.4 / 2228.9 | 133.8 | 5 |
+| three-instanced | 2000 | 4× | 394 | 1.5 | 1.90 / 5.60 | 2 | 3.9 | 1228.5 / 1965.0 | 134.8 | 5 |
+| r3f | 2000 | 4× | 2434 | 1.7 | 19.40 / 28.90 | — | 14.3 | 1176.7 / 1840.3 | 312.7 | 5 |
+| r3f-instanced | 2000 | 4× | 1371 | 1.5 | 2.30 / 6.60 | 2 | 6.1 | 1085.7 / 1781.0 | 313.7 | 5 |
+
+WebGL disabled: **r3f** renderer none, poster visible no, canvases 0, error "THREE.WebGLRenderer: Error creating WebGL context."; **r3f-instanced** renderer poster, poster visible yes, canvases 0.
+
 ## Main thread under load (50 ms busy every 100 ms): Canvas 2D on the main thread vs in a Worker
 
 | variant | N | CPU | scene fps | scene frame p95 | main-thread fps | drag move→frame p50/p95 ms | move event delay p50/p95 ms | busy % | runs |
@@ -134,6 +182,48 @@ Runtime packages (min KB): pixi: pixi.js 524.3, @pixi/colord 9.0, earcut 7.1, ev
 | dom | 2000 | 4× | 4.2 | 316.7 | 4.2 | 370.8 / 611.6 | 98.3 / 329.3 | 99 | 5 |
 
 For the Worker variant, "scene fps" is the Worker's own rAF cadence and move→frame is measured in the Worker (event timestamp → the Worker finished drawing the frame that used it); "main-thread fps" is the page's rAF.
+
+## Frames that reached the screen (compositor), with and without main-thread load
+
+viz Display::DrawAndSwap events per second over a 3 s trace, after 1.5 s warm-up, with the harness rAF loop off (?idle), so only the page's own work runs; busy % = main-thread TaskDuration share; median of runs. load = 50 ms of main-thread busy work every 100 ms.
+
+| variant | N | no load: presented fps | no load: main busy % | load 50/100 ms: presented fps |
+| --- | --- | --- | --- | --- |
+| dom | 200 | 36.8 | 0.1 | 45.2 |
+| svg | 200 | 38.8 | 23.4 | 34.3 |
+| canvas2d | 200 | 39.9 | 20.2 | 32.3 |
+| canvas2d-worker | 200 | 50.5 | 0.1 | 53.4 |
+| pixi | 200 | 8.6 | 99.7 | 7.4 |
+| dom | 2000 | 7.4 | 0.0 | 5.8 |
+| svg | 2000 | 11.0 | 97.1 | 9.1 |
+| canvas2d | 2000 | 10.8 | 99.0 | 7.5 |
+| canvas2d-worker | 2000 | 32.8 | 0.1 | 27.7 |
+| pixi | 2000 | 2.6 | 99.9 | 1.6 |
+
+## Compositor-driven CSS animations and the main thread (plain divs)
+
+Plain 40px divs, one looping 1.6 s bob each; 2 s trace after 0.8 s; style recalcs per second and mean ms each (median of runs). "+ rAF loop" adds an empty requestAnimationFrame loop elsewhere on the page; "+ moving one element (drag)" moves one (non-animated) div from a 16 ms timer, as pointermove handlers do during a drag, with no rAF loop.
+
+| mode | N | style recalcs / s | ms each | main busy % |
+| --- | --- | --- | --- | --- |
+| css translate | 200 | 0.0 | 0.00 | 0.3 |
+| css transform | 200 | 0.0 | 0.00 | 0.1 |
+| waapi transform | 200 | 0.0 | 0.00 | 0.1 |
+| css translate + rAF loop | 200 | 59.0 | 0.75 | 14.7 |
+| css transform + rAF loop | 200 | 60.0 | 0.78 | 10.9 |
+| waapi transform + rAF loop | 200 | 60.0 | 0.86 | 13.6 |
+| no animation + rAF loop | 200 | 0.0 | 0.00 | 0.8 |
+| css translate + moving one element (drag) | 200 | 53.5 | 1.17 | 19.1 |
+| no animation + moving one element (drag) | 200 | 56.0 | 0.09 | 2.8 |
+| css translate | 2000 | 0.0 | 0.00 | 4.2 |
+| css transform | 2000 | 0.5 | 10.95 | 1.1 |
+| waapi transform | 2000 | 0.0 | 0.00 | 0.3 |
+| css translate + rAF loop | 2000 | 13.5 | 24.90 | 62.3 |
+| css transform + rAF loop | 2000 | 13.0 | 23.45 | 55.1 |
+| waapi transform + rAF loop | 2000 | 15.5 | 19.63 | 49.0 |
+| no animation + rAF loop | 2000 | 0.0 | 0.00 | 0.8 |
+| css translate + moving one element (drag) | 2000 | 10.0 | 28.58 | 69.3 |
+| no animation + moving one element (drag) | 2000 | 56.5 | 0.17 | 5.7 |
 
 ## Accessibility
 
@@ -191,15 +281,38 @@ For the Worker variant, "scene fps" is the Worker's own rAF cadence and move→f
 
 | variant | renderer chosen | first frame | fps | drag works | errors |
 | --- | --- | --- | --- | --- | --- |
-| dom | dom | 57 ms | 60.0 | yes |  |
-| svg | svg | 82 ms | 59.0 | yes |  |
-| canvas2d | canvas2d | 52 ms | 60.0 | yes |  |
-| canvas2d-worker | canvas2d-offscreen-worker | 70 ms | 60.0 | yes |  |
-| pixi | pixi-canvas | 250 ms | 58.5 | yes |  |
-| phaser | phaser-canvas | 196 ms | 60.0 | yes |  |
+| dom | dom | 222 ms | 59.5 | yes |  |
+| svg | svg | 358 ms | 59.5 | yes |  |
+| canvas2d | canvas2d | 78 ms | 60.0 | yes |  |
+| canvas2d-worker | canvas2d-offscreen-worker | 289 ms | 60.0 | yes |  |
+| pixi | pixi-canvas | 346 ms | 60.0 | yes |  |
+| phaser | phaser-canvas | 176 ms | 60.0 | yes |  |
 | three | none | none | — | no | THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch; THREE.WebGLRenderer |
 | three-instanced | none | none | — | no | THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch; THREE.WebGLRenderer |
 | r3f | — | none | — | no | THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch; THREE.WebGLRenderer |
+
+## WebGL context loss and restore (N=200, animating)
+
+WEBGL_lose_context.loseContext(), 500 ms, restoreContext(), 1.5 s; pixel difference of the stage vs just before the loss (the bob animation alone moves a few %); frames = scene JS frames counted in the 1 s after restore.
+
+| variant | recovered | lost / restored events | scene frames in 1 s after | % px differ vs before | errors |
+| --- | --- | --- | --- | --- | --- |
+| pixi | yes | 1 / 1 | 19 | 4.56 | [.WebGL-0x393c00160e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels; [.WebGL-0x393c00160e00] |
+| phaser | yes | 1 / 1 | 17 | 7.00 | WebGL Context lost. Renderer disabled; WebGL Context restored. Renderer running again. |
+| three | yes | 1 / 1 | 20 | 6.81 |  |
+| three-instanced | yes | 1 / 1 | 8 | 6.66 |  |
+| r3f | yes | 1 / 1 | 29 | 7.76 | THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. |
+
+### Engines on their Canvas 2D fallback vs vanilla Canvas 2D (WebGL disabled, 1× CPU)
+
+| variant | N | renderer | fps | frame p95 | JS ms/frame p50/p95 | renderer ms/frame | busy % | drag move→frame p50/p95 | heap MB | runs |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| canvas2d | 200 | canvas2d | 59.6 | 16.8 | 0.20 / 0.30 | 3.2 | 19 | 14.6 / 19.0 | 1.9 | 3 |
+| pixi | 200 | pixi-canvas | 60.0 | 16.8 | 0.50 / 0.70 | 3.4 | 20 | 15.1 / 19.5 | 4.1 | 3 |
+| phaser | 200 | phaser-canvas | 60.0 | 16.7 | 0.40 / 0.70 | 3.9 | 24 | 14.7 / 23.1 | 5.5 | 3 |
+| canvas2d | 2000 | canvas2d | 41.9 | 33.4 | 1.60 / 2.50 | 22.6 | 99 | 46.2 / 57.5 | 2.1 | 3 |
+| pixi | 2000 | pixi-canvas | 42.2 | 33.4 | 3.50 / 4.70 | 22.7 | 100 | 47.0 / 57.7 | 6.8 | 3 |
+| phaser | 2000 | phaser-canvas | 38.3 | 33.4 | 3.00 / 4.80 | 26.0 | 99 | 47.3 / 82.2 | 7.5 | 3 |
 
 ## Visual parity
 
@@ -216,8 +329,9 @@ Frozen pose (same time, selection, hover and particle burst in every variant); p
 | three | 0.02 | 0.02 |
 | three-instanced | 0.02 | 0.02 |
 | r3f | 0.02 | 0.02 |
+| r3f-instanced | 0.02 | 0.02 |
 
-Sheets: `shots/scene-n200.jpg`, `shots/scene-n2000.jpg`, `shots/no-webgl.jpg`.
+Sheets: `shots/scene-n200.jpg`, `shots/scene-n2000.jpg`, `shots/no-webgl.jpg`, `shots/context-loss.jpg`.
 
 ## Engine survey: hello-world payload and boot (not built as the scene)
 
@@ -225,31 +339,32 @@ esbuild 0.28.2, minified ESM with code splitting, NODE_ENV=production; 'initial'
 
 | entry | kind | initial gzip KB | all chunks gzip KB | fetched at boot gzip KB | WASM | boot to first frame (4× CPU) ms | renderer | licence (package.json · file) | latest (published) | React binding |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| react-baseline (+React) | baseline | 67.3 | 67.3 | 67.3 | — | 258 | react-only | react: MIT; react-dom: MIT | 19.3.0 (2026-09-09); 19.3.0 (2026-09-09) | — |
-| pixi | 2D WebGL/WebGPU renderer | 162.2 | 162.8 | 169.0 | — | 777 | webgl | pixi.js: MIT | 8.21.0 (2026-09-17) | @pixi/react |
-| pixi-react (+React) | React binding | 270.2 | 271.0 | 277.1 | — | 993 | webgl | @pixi/react: MIT; pixi.js: MIT | 8.0.5 (2025-12-01); 8.21.0 (2026-09-17) | — |
-| phaser | 2D game framework | 361.5 | 361.5 | 361.5 | — | 611 | webgl | phaser: MIT | 4.2.1 (2026-07-09) | none official (the official React template bridges with an EventBus) |
-| three | 3D WebGL/WebGPU library | 130.6 | 130.6 | 130.6 | — | 187 | webgl2 | three: MIT | 0.186.1 (2026-09-24) | @react-three/fiber |
-| r3f (+React) | React renderer for three | 309.8 | 309.8 | 309.8 | — | 598 | webgl2 | @react-three/fiber: MIT (no file); three: MIT | 9.8.1 (2026-09-24); 0.186.1 (2026-09-24) | — |
-| babylon | 3D engine | 24.7 | 333.7 | 270.9 | — | 402 | webgl2 | @babylonjs/core: Apache-2.0 | 9.28.0 (2026-09-24) | react-babylonjs (community) |
-| playcanvas | 3D engine (+ hosted editor) | 493.0 | 493.0 | 493.0 | — | 675 | webgl2 | playcanvas: MIT | 2.22.6 (2026-09-28) | @playcanvas/react |
-| playcanvas-react (+React) | React binding | 592.8 | 592.8 | 592.8 | — | 1141 | webgl | @playcanvas/react: MIT; playcanvas: MIT | 0.11.7 (2026-09-25); 2.22.6 (2026-09-28) | — |
-| ogl | minimal WebGL | 15.1 | 15.1 | 15.1 | — | 205 | webgl | ogl: Unlicense (no file) | 1.0.11 (2025-01-27) | none (react-ogl, community) |
-| konva | 2D canvas scene graph (core + Image) | 33.2 | 33.2 | 33.2 | — | 159 | canvas2d | konva: MIT | 10.7.0 (2026-09-23) | react-konva |
-| konva-full | 2D canvas scene graph (full import) | 56.5 | 56.5 | 56.5 | — | 188 | canvas2d | konva: MIT | 10.7.0 (2026-09-23) | — |
-| react-konva (+React) | React binding | 166.9 | 166.9 | 166.9 | — | 505 | canvas2d | react-konva: MIT; konva: MIT | 19.3.0 (2026-09-15); 10.7.0 (2026-09-23) | — |
-| fabric | 2D canvas object editor | 86.2 | 86.2 | 86.2 | — | 234 | canvas2d | fabric: MIT | 7.4.0 (2026-05-18) | none (imperative in an effect) |
-| two | 2D drawing (SVG/Canvas/WebGL back ends) | 49.5 | 49.5 | 49.5 | — | 154 | canvas2d | two.js: MIT | 0.8.24 (2026-08-29) | none (react-two.js, community) |
-| p5 | creative-coding sketchbook | 413.3 | 413.3 | 826.5 | — | 2611 | p5-2d | p5: LGPL-2.1 (no file) | 2.3.4 (2026-09-25) | none (instance mode in an effect) |
-| excalibur | 2D game engine (TypeScript) | 122.5 | 122.5 | 122.5 | — | 2177 | webgl | excalibur: BSD-2-Clause | 0.32.0 (2025-12-23) | none |
-| kaplay | 2D game library (Kaboom successor) | 68.2 | 68.2 | 68.2 | — | 1150 | webgl | kaplay: MIT | 3001.0.19 (2025-06-15) | none |
-| kaboom | 2D game library (superseded by KAPLAY) | 50.9 | 50.9 | 50.9 | — | 1158 | webgl | kaboom: MIT | 3000.1.17 (2023-11-13) DEPRECATED | none |
-| litecanvas | tiny 2D canvas game loop | 6.0 | 6.0 | 6.0 | — | 134 | canvas2d | litecanvas: MIT | 0.302.0 (2026-06-16) | none |
-| littlejs | tiny 2D game engine | 24.6 | 24.6 | 24.6 | — | 179 | webgl | littlejsengine: MIT | 1.19.3 (2026-09-22) | none |
-| melonjs | 2D game engine | 244.4 | 244.4 | 244.4 | — | 502 | WebGL2 | melonjs: MIT (no file) | 20.7.0 (2026-09-22) | none |
-| matter | 2D physics (add-on) | 26.4 | 26.4 | 26.4 | — | 91 | physics-only | matter-js: MIT | 0.20.0 (2024-06-23) | — |
-| rapier2d | 2D physics, WASM inlined as base64 (add-on) | 1251.2 | 1251.2 | 1251.2 | — | 490 | physics-only | @dimforge/rapier2d-compat: Apache-2.0 | 0.21.0 (2026-09-25) | @react-three/rapier (3D) |
-| rive | vector animation runtime (JS only; WASM separate) | 56.0 | 56.0 | 56.0 | — | 116 | js-only | @rive-app/canvas: MIT (no file) | 2.43.1 (2026-09-23) | @rive-app/react-canvas |
+| react-baseline (+React) | baseline | 67.3 | 67.3 | 67.3 | — | 244 | react-only | react: MIT; react-dom: MIT | 19.3.0 (2026-09-09); 19.3.0 (2026-09-09) | — |
+| pixi | 2D WebGL/WebGPU renderer | 162.2 | 162.8 | 169.0 | — | 680 | webgl | pixi.js: MIT | 8.21.0 (2026-09-17) | @pixi/react |
+| pixi-react (+React) | React binding | 270.2 | 271.0 | 277.1 | — | 839 | webgl | @pixi/react: MIT; pixi.js: MIT | 8.0.5 (2025-12-01); 8.21.0 (2026-09-17) | — |
+| phaser | 2D game framework | 361.5 | 361.5 | 361.5 | — | 726 | webgl | phaser: MIT | 4.2.1 (2026-07-09) | none official (the official React template bridges with an EventBus) |
+| three | 3D WebGL/WebGPU library | 130.6 | 130.6 | 130.6 | — | 242 | webgl2 | three: MIT | 0.186.1 (2026-09-24) | @react-three/fiber |
+| r3f (+React) | React renderer for three | 309.8 | 309.8 | 309.8 | — | 622 | webgl2 | @react-three/fiber: MIT (no file); three: MIT | 9.8.1 (2026-09-24); 0.186.1 (2026-09-24) | — |
+| r3f-createroot (+React) | R3F createRoot + extend (no <Canvas>) | 188.6 | 188.6 | 188.6 | — | 415 | webgl2 | @react-three/fiber: MIT (no file); three: MIT | 9.8.1 (2026-09-24); 0.186.1 (2026-09-24) | — |
+| babylon | 3D engine | 24.7 | 333.7 | 270.9 | — | 521 | webgl2 | @babylonjs/core: Apache-2.0 | 9.28.0 (2026-09-24) | react-babylonjs (community) |
+| playcanvas | 3D engine (+ hosted editor) | 493.0 | 493.0 | 493.0 | — | 561 | webgl2 | playcanvas: MIT | 2.22.6 (2026-09-28) | @playcanvas/react |
+| playcanvas-react (+React) | React binding | 592.8 | 592.8 | 592.8 | — | 1033 | webgl | @playcanvas/react: MIT; playcanvas: MIT | 0.11.7 (2026-09-25); 2.22.6 (2026-09-28) | — |
+| ogl | minimal WebGL | 15.1 | 15.1 | 15.1 | — | 180 | webgl | ogl: Unlicense (no file) | 1.0.11 (2025-01-27) | none (react-ogl, community) |
+| konva | 2D canvas scene graph (core + Image) | 33.2 | 33.2 | 33.2 | — | 187 | canvas2d | konva: MIT | 10.7.0 (2026-09-23) | react-konva |
+| konva-full | 2D canvas scene graph (full import) | 56.5 | 56.5 | 56.5 | — | 201 | canvas2d | konva: MIT | 10.7.0 (2026-09-23) | — |
+| react-konva (+React) | React binding | 166.9 | 166.9 | 166.9 | — | 602 | canvas2d | react-konva: MIT; konva: MIT | 19.3.0 (2026-09-15); 10.7.0 (2026-09-23) | — |
+| fabric | 2D canvas object editor | 86.2 | 86.2 | 86.2 | — | 205 | canvas2d | fabric: MIT | 7.4.0 (2026-05-18) | none (imperative in an effect) |
+| two | 2D drawing (SVG/Canvas/WebGL back ends) | 49.5 | 49.5 | 49.5 | — | 189 | canvas2d | two.js: MIT | 0.8.24 (2026-08-29) | none (react-two.js, community) |
+| p5 | creative-coding sketchbook | 413.3 | 413.3 | 413.3 | — | 2903 | p5-2d | p5: LGPL-2.1 (no file) | 2.3.4 (2026-09-25) | none (instance mode in an effect) |
+| excalibur | 2D game engine (TypeScript) | 122.5 | 122.5 | 122.5 | — | 2120 | webgl | excalibur: BSD-2-Clause | 0.32.0 (2025-12-23) | none |
+| kaplay | 2D game library (Kaboom successor) | 68.2 | 68.2 | 68.2 | — | 896 | webgl | kaplay: MIT | 3001.0.19 (2025-06-15) | none |
+| kaboom | 2D game library (superseded by KAPLAY) | 50.9 | 50.9 | 50.9 | — | 888 | webgl | kaboom: MIT | 3000.1.17 (2023-11-13) DEPRECATED | none |
+| litecanvas | tiny 2D canvas game loop | 6.0 | 6.0 | 6.0 | — | 105 | canvas2d | litecanvas: MIT | 0.302.0 (2026-06-16) | none |
+| littlejs | tiny 2D game engine | 24.6 | 24.6 | 24.6 | — | 244 | webgl | littlejsengine: MIT | 1.20.0 (2026-09-29) | none |
+| melonjs | 2D game engine | 244.4 | 244.4 | 244.4 | — | 518 | WebGL2 | melonjs: MIT (no file) | 20.7.0 (2026-09-22) | none |
+| matter | 2D physics (add-on) | 26.4 | 26.4 | 26.4 | — | 83 | physics-only | matter-js: MIT | 0.20.0 (2024-06-23) | — |
+| rapier2d | 2D physics, WASM inlined as base64 (add-on) | 1251.2 | 1251.2 | 1251.2 | — | 538 | physics-only | @dimforge/rapier2d-compat: Apache-2.0 | 0.21.0 (2026-09-25) | @react-three/rapier (3D) |
+| rive | vector animation runtime (JS only; WASM separate) | 56.0 | 56.0 | 56.0 | — | 146 | js-only | @rive-app/canvas: MIT (no file) | 2.43.1 (2026-09-23) | @rive-app/react-canvas |
 
 ### Engines that are not npm packages (published figures; tags as in the stream report)
 
@@ -259,3 +374,6 @@ esbuild 0.28.2, minified ESM with code splitting, NODE_ENV=production; 'initial'
 | Unity 6 (Web platform) | 3.76 MB brotli for a small test scene on 6000.6 built-in pipeline, WebGL2 (3.29 MB 'min size' settings); URP adds ~2.5 MB (5.6–8.8 MB) [V repo README] | proprietary; Unity Personal free under US$200k revenue/funding, Runtime Fee cancelled (2024-09), splash screen optional in Unity 6 [S] | none official: an iframe or a <canvas> the Unity loader owns; community react-unity-webgl wraps the loader; messaging via SendMessage / jslib | 6000.6 (demo builds 2026-09) [V repo] | Unity 6 supports mobile browsers (WebGL2); performance well below native; brotli needs correct Content-Encoding on the host; screen-reader API covers Android, iOS, Windows, macOS — the Web is not listed [S] | github.com/JohannesDeml/UnityWebGL-LoadingTest README (cloned 2026-09-28); unity.com/blog/unity-is-canceling-the-runtime-fee; docs.unity3d.com Accessibility module |
 | Defold | 1.02 MB for a complete empty HTML5 bundle (zip of wasm engine + loader + game archive) on 1.13.1; 1.22 MB on 1.13.2-beta [V defold/build-size bundle_report.csv] | Defold License 1.0 (Apache-2.0 plus a clause against selling the engine itself; games are free to sell; not OSI) [V LICENSE.txt, S defold.com/license] | none: an iframe or a canvas the engine owns; JS bridge via extensions | 1.13.x (build-size data updated 2026-09-28) [V] | designed for mobile first; smallest of the full engines on the web [V size] | github.com/defold/build-size (cloned 2026-09-28); raw.githubusercontent.com/defold/defold/dev/LICENSE.txt |
 | PlayCanvas (engine + hosted editor) | measured here: see the playcanvas row (engine hello world, full engine; does not tree-shake to a small core) | engine MIT [V package]; the editor is a hosted service with paid plans for private projects [K] | @playcanvas/react (0.x) [V registry] | see survey rows [V registry] | engine built for mobile web; WebGPU and WebGL2 back ends [K] | npm registry; node_modules/playcanvas/package.json |
+| Needle Engine (three.js + Unity/Blender export) | not measured: npm package @needle-tools/engine 6.0.0-alpha.3 unpacks to 92 MB and depends on three, three.quarks, peerjs, n8ao, flatbuffers [V registry]; ships a three.js runtime plus components, so expect more than three.js's 130 KB gzip | no licence field in package.json [V registry]; commercial use needs a paid Pro licence (from EUR 49 per user per month), Hobby is free for personal use [S needle.tools/pricing, engine.needle.tools FAQ] | none official; it is a web component / three.js scene you can drive from any framework [S engine.needle.tools/docs/three] | 6.0.0-alpha.3 (2026-08-13) on the latest tag [V registry] | web-first, WebXR [S] | registry.npmjs.org/@needle-tools/engine; needle.tools/pricing; engine.needle.tools/docs/reference/faq.html |
+| Cocos Creator (web-mobile build) | ~1.8 MB for an empty project (2021 forum report, Creator 3.x) [S forum.cocosengine.org/t/cocos-creator-3-build-size/53154]; not re-measured | engine MIT [V cocos/cocos-engine LICENSE.md, HEAD 2026-09-21]; the Cocos Creator editor is a separate free download [K] | none: an engine-owned canvas | engine repo active (last commit 2026-09-21) [V git clone]; Creator 3.8.x docs [S] | built for mobile web and mini-games [K] | forum.cocosengine.org; docs.cocos.com/creator/3.8/manual/en/editor/publish/publish-web.html; github.com/cocos/cocos-engine (cloned 2026-09-29) |
+| Rive (as a scene engine) | @rive-app/canvas JS 56 KB gzip [L survey] + WASM 787 KB gzip (stream F); one artboard with state machines, data binding and, since 2026-01, Luau scripting for game-like logic [S rive.app/blog/scripting-is-live-in-rive] | runtime MIT [V package]; the editor is a paid plan for export [S, stream F] | @rive-app/react-canvas | 2.43.1 (2026-09-23) [V registry] | native runtimes too; designer-authored, not N dynamic data-driven objects | npm registry; rive.app blog |

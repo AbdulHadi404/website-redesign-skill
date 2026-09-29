@@ -20,22 +20,25 @@ function curvesSvg(curves, net, w = 560, h = 300, tMax) {
     pts.forEach(([t, v], i) => { d += (i ? `L${X(t).toFixed(1)},${Y(pts[i - 1][1]).toFixed(1)}L` : 'M') + `${X(t).toFixed(1)},${Y(v).toFixed(1)}`; });
     s += `<path d="${d}" fill="none" stroke="${COLORS[c.k] || '#000'}" stroke-width="2"/>`;
   }
-  let ly = pad.t + 4;
+  let ly = Y(0.42);
   for (const [k, col] of Object.entries(COLORS)) { s += `<rect x="${w - pad.r - 150}" y="${ly}" width="10" height="10" fill="${col}"/><text x="${w - pad.r - 135}" y="${ly + 9}">${k}</text>`; ly += 16; }
   return s + '</svg>';
 }
 
-function journeySvg(summary, jname, w = 1120, h = 250) {
+function journeySvg(summary, jname, runs = [], w = 1120, h = 310) {
   const rows = Object.entries(summary).filter(([k]) => k.startsWith(jname + '|'));
-  const tMax = Math.ceil(Math.max(...rows.map(([, r]) => Math.max(r.ready ?? 0, r.shown ?? 0))) / 5000) * 5000;
+  const med = (xs) => { const s = xs.filter(Number.isFinite).sort((a, b) => a - b); return s.length ? s[s.length >> 1] : null; };
+  for (const [k, r] of rows) if (r.warm == null) r.warm = med(runs.filter((x) => `${x.journey}|${x.variant}` === k).map((x) => x.warm));
+  const tMax = Math.ceil((Math.max(...rows.map(([, r]) => Math.max(r.ready ?? 0, r.shown ?? 0))) + 2500) / 5000) * 5000;
   const pad = { l: 120, r: 16, t: 30, b: 28 }, rh = (h - pad.t - pad.b) / rows.length;
   const X = (t) => pad.l + (t / tMax) * (w - pad.l - pad.r);
   let s = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" font-family="system-ui,sans-serif" font-size="12">`;
-  s += `<text x="${pad.l}" y="16" font-weight="600">"${jname}" visitor — slow 4G, CPU 4×: bar = module requested → usable (dark) → full fidelity (light); | = tap on "Try it live"</text>`;
+  s += `<text x="${pad.l}" y="16" font-weight="600">"${jname}" visitor, slow 4G + CPU 4× · thin: prefetched on approach · dark: requested → usable · light: → full detail · red: tap on "Try it live"</text>`;
   for (let t = 0; t <= tMax; t += 5000) s += `<line x1="${X(t)}" x2="${X(t)}" y1="${pad.t}" y2="${h - pad.b}" stroke="#eee"/><text x="${X(t)}" y="${h - 10}" text-anchor="middle" fill="#555">${t / 1000} s</text>`;
   rows.forEach(([k, r], i) => {
     const y = pad.t + i * rh + 4, bh = rh - 8;
     s += `<text x="${pad.l - 8}" y="${y + bh / 2 + 4}" text-anchor="end">${k.split('|')[1]}</text>`;
+    if (r.warm != null && r.request != null && r.request > r.warm) s += `<rect x="${X(r.warm)}" y="${y + bh / 2 - 2}" width="${X(r.request) - X(r.warm)}" height="4" fill="#7a9cc6"/>`;
     if (r.request != null && r.usable != null) s += `<rect x="${X(r.request)}" y="${y}" width="${Math.max(1, X(r.usable) - X(r.request))}" height="${bh}" fill="#2c6fbb"/>`;
     if (r.usable != null && r.ready != null && r.ready > r.usable) s += `<rect x="${X(r.usable)}" y="${y}" width="${X(r.ready) - X(r.usable)}" height="${bh}" fill="#a9c6ea"/>`;
     if (r.clickAt != null) s += `<line x1="${X(r.clickAt)}" x2="${X(r.clickAt)}" y1="${y - 2}" y2="${y + bh + 2}" stroke="#c2562c" stroke-width="3"/>`;
@@ -61,7 +64,7 @@ export async function renderCharts() {
     out.push('shots/progressive-images.jpg');
   }
   if (lo?.summary) {
-    await shot(`${journeySvg(lo.summary, 'quick')}${journeySvg(lo.summary, 'reader')}`, 'loading-journeys.jpg', 1120, 500);
+    await shot(`${journeySvg(lo.summary, 'quick', lo.runs)}${journeySvg(lo.summary, 'reader', lo.runs)}`, 'loading-journeys.jpg', 1120, 620);
     out.push('shots/loading-journeys.jpg');
   }
   await browser.close();

@@ -1,0 +1,4 @@
+{ "_note": "Dev-page spec (the reviewer wrote their own; this one is the lab's): a designer's intent for the fixture's reveal. The build uses `transition: all .8s ease` with no reduced-motion rule, so the truth is: duration (800 vs medium), easing (ease vs out), reduced (still moves).",
+  "motion": [
+  { "id": "features-reveal", "trigger": "scroll", "on": "#features", "target": "#features .card", "properties": ["transform", "opacity"], "duration": "medium", "easing": "out", "reduced": "static", "stagger": 0 }
+] }

@@ -1,0 +1,1116 @@
+{
+ "about": "Verdicts given by eye (the 1:1 crops, the sheets and, where needed, a probe of the page) for each finding key: target|check|selector (sweep), target|mutation|check|selector (stress) or target|check|selector (rtl controls), nth-of-type indices normalised. TP = real, and a designer would fix it. INT = real, the tool aimed at the right thing, but intended or harmless. FP = not real, pinned on the wrong element, or caused by the tool: a mutation aimed at authored copy as if it were data, a list detector that took prose, badges or sections for a list, a check that ignores what is painted. Tool-caused FPs carry cause: tool. Relabelled after the review (2026-09-29): 44 keys that had been INT because the tool mis-targeted authored copy or missed a painted band are FP (cause: tool). Checked by the S7 stream (the tools' author): one rater.",
+ "sweep": {
+  "sweep-lab|truncated|#trunc": {
+   "v": "TP",
+   "note": "seeded D15"
+  },
+  "sweep-lab|distorted|#distorted": {
+   "v": "TP",
+   "note": "seeded D7"
+  },
+  "sweep-lab|overlap|#promo-title": {
+   "v": "TP",
+   "note": "seeded D3; with the container capped at 1200 px the overlap persists to 1920 in this font"
+  },
+  "sweep-lab|fold|#cta": {
+   "v": "TP",
+   "note": "seeded D9"
+  },
+  "sweep-lab|clipped|#clip1": {
+   "v": "TP",
+   "note": "seeded D2 (and 320–352, where the fixed-height card also clips)"
+  },
+  "sweep-lab|overflow|#chips > span": {
+   "v": "TP",
+   "note": "seeded D5"
+  },
+  "sweep-lab|zoom-out|(page)": {
+   "v": "TP",
+   "note": "consequence of D5"
+  },
+  "sweep-lab|fold|#title": {
+   "v": "TP",
+   "note": "the image-first phone order pushes the h1 down at 520–592 and 760"
+  },
+  "sweep-lab|overlap|main > section.wrap:nth-of-type(n) > div.tools > button:nth-of-type(n)": {
+   "v": "TP",
+   "note": "D14: squeezed icon buttons, glyphs over each other"
+  },
+  "sweep-lab|overflow|#promo-title": {
+   "v": "TP",
+   "note": "D3's nowrap heading also widens the page at 1024–1104"
+  },
+  "sweep-lab|protrusion|main > section.wrap:nth-of-type(n) > div.tools > button:nth-of-type(n)": {
+   "v": "TP",
+   "note": "D14: glyph wider than its squeezed button"
+  },
+  "sweep-lab|cropped|#cropped": {
+   "v": "TP",
+   "note": "seeded D7b"
+  },
+  "sweep-lab|dead-band|main": {
+   "v": "TP",
+   "note": "seeded D8"
+  },
+  "sweep-lab|measure|#longline": {
+   "v": "TP",
+   "note": "seeded D4"
+  },
+  "sweep-lab|order|#split": {
+   "v": "TP",
+   "note": "seeded D10"
+  },
+  "sweep-lab|order|main > section.hero > div.wrap": {
+   "v": "INT",
+   "note": "image-first on phones is deliberate; the image holds nothing focusable"
+  },
+  "sweep-lab|label-wrap|#cta": {
+   "v": "TP",
+   "note": "seeded D6"
+  },
+  "sweep-lab|nav-wrap|#nav": {
+   "v": "TP",
+   "note": "seeded D1"
+  },
+  "sweep-lab|small-target|main > section.wrap:nth-of-type(n) > div.tools > button": {
+   "v": "TP",
+   "note": "seeded D14"
+  },
+  "sweep-lab|wrap-orphan|#nav > ul": {
+   "v": "TP",
+   "note": "D1's wrapped nav leaves one link alone on row 2"
+  },
+  "sweep-lab|label-wrap|div.wrap > div:nth-of-type(n) > div.actions > a.btn:nth-of-type(n)": {
+   "v": "INT",
+   "note": "a two-line secondary button at 320–360 is the acceptable fallback"
+  },
+  "sweep-lab|measure|#clip1": {
+   "v": "TP",
+   "note": "three card columns at 768 squeeze the text to 19 characters a line"
+  },
+  "sweep-lab|chrome|header": {
+   "v": "TP",
+   "note": "seeded D13 (two sticky bars at 400% zoom)"
+  },
+  "slop|overlap|footer > div.social > a:nth-of-type(n)": {
+   "v": "TP",
+   "note": "Privacy and Terms forced into 16 px inline-blocks run over each other"
+  },
+  "slop|overflow|section > table": {
+   "v": "TP",
+   "note": "the fixture's 900 px table"
+  },
+  "slop|zoom-out|(page)": {
+   "v": "TP"
+  },
+  "slop|fold|div.hero > a.btn.ghost": {
+   "v": "TP",
+   "note": "from 1520 px the inline img.shot fits on the buttons' line and the buttons drop to its baseline (y 553 → 1229); invisible at every capture width (max 1440)"
+  },
+  "slop|fold|div.hero > a.btn.primary": {
+   "v": "TP",
+   "note": "same inline-image fault"
+  },
+  "slop|label-wrap|section:nth-of-type(n) > div.grid > div.card.price:nth-of-type(n) > a.btn.ghost": {
+   "v": "TP",
+   "note": "symptom of the three-column grid held down to 700 px"
+  },
+  "slop|measure|section:nth-of-type(n) > div.grid > div.card.reveal:nth-of-type(n) > p": {
+   "v": "TP",
+   "note": "same squeezed grid"
+  },
+  "slop|measure|section:nth-of-type(n) > div.card > p:nth-of-type(n)": {
+   "v": "TP",
+   "note": "32 px card padding at 320 leaves 17 characters a line"
+  },
+  "dashboard|clipped|main > div.row:nth-of-type(n) > div.card:nth-of-type(n)": {
+   "v": "TP",
+   "note": "the fixture's table clipped by an overflow: hidden card"
+  },
+  "dashboard|overflow|main": {
+   "v": "TP"
+  },
+  "dashboard|zoom-out|(page)": {
+   "v": "TP"
+  },
+  "card|overflow|(page)": {
+   "v": "FP",
+   "note": "1 px sub-pixel rounding with no element past the edge (fixed: ignored since)"
+  },
+  "card|no-viewport|(page)": {
+   "v": "TP",
+   "note": "the fixture has no viewport meta"
+  },
+  "card|overflow|main > ul > li": {
+   "v": "TP",
+   "note": "three 234 px cards in a no-wrap flex row at 400% zoom"
+  },
+  "app-traps|edge-cut|main > div.hero > span.chip": {
+   "v": "TP",
+   "note": "seeded: nowrap chip under a page-level clip"
+  },
+  "states-overflow|overflow|div.wrap > form > div.wide": {
+   "v": "TP"
+  },
+  "states-overflow|zoom-out|(page)": {
+   "v": "TP"
+  },
+  "states-overflow|dead-band|div.wrap": {
+   "v": "TP",
+   "note": "the fixture's 900 px empty filler"
+  },
+  "states-overflow|dead-band|(page)": {
+   "v": "TP",
+   "note": "same band; above 1808 px the owning element is too narrow to be named"
+  },
+  "permit-home|overflow|div.cards > div.card": {
+   "v": "TP",
+   "note": "the old permit build loaded zoomed out on phones (its redesign report says so)"
+  },
+  "permit-home|zoom-out|(page)": {
+   "v": "TP"
+  },
+  "permit-apply|overflow|#zones": {
+   "v": "TP",
+   "note": "the contact-centre complaint 'the zone table goes off the screen'"
+  },
+  "permit-apply|zoom-out|(page)": {
+   "v": "TP"
+  },
+  "milkline-home|fold|header.hero > a.btn.primary": {
+   "v": "TP",
+   "note": "same inline img.shot fault as slop, from 1520 px"
+  },
+  "milkline-home|fold|header.hero > a.btn.ghost": {
+   "v": "TP",
+   "note": "same"
+  },
+  "milkline-home|measure|#features > div.grid > div.card.reveal:nth-of-type(n) > p": {
+   "v": "TP",
+   "note": "four columns at 704–808 squeeze the text"
+  },
+  "milkline-app|clipped|#herd": {
+   "v": "TP",
+   "note": "the herd table in an overflow: hidden card (experiment K's finding)"
+  },
+  "astro-home|order|div.stack.backgrounds > div.stack.gap-20 > main.wrapper.stack > section.section.with-background:nth-of-type(n)": {
+   "v": "INT",
+   "note": "grid-template-areas puts 'View All' beside the heading, before the gallery; tab order reaches it after the cards; minor"
+  },
+  "astro-home|measure|div.wrapper.stack > section.box.skills > div.stack.gap-2:nth-of-type(n) > p": {
+   "v": "TP",
+   "note": "three skill columns from 800 px leave 14–19 characters a line (crop 02)"
+  },
+  "astro-home|wrap-orphan|#menu-content > div.menu-footer > div.socials": {
+   "v": "TP",
+   "note": "the header's social icons wrap 5 + 1 at 992–1056 (crop 04)"
+  },
+  "astro-home|wide-control|main.wrapper.stack > section.section.with-background:nth-of-type(n) > div.cta > a": {
+   "v": "INT",
+   "note": "the phone's full-width 'View All' pill held to 792 px; a design choice"
+  },
+  "astro-home|cropped|ul.grid.offset > li:nth-of-type(n) > a.card > img": {
+   "v": "INT",
+   "note": "abstract artwork: a 40% crop loses nothing"
+  },
+  "astro-about|measure|main.wrapper.about > section:nth-of-type(n) > div.content > p:nth-of-type(n)": {
+   "v": "TP",
+   "note": "91–95 characters a line from 1216 px; mild"
+  },
+  "astro-about|wrap-orphan|#menu-content > div.menu-footer > div.socials": {
+   "v": "TP",
+   "note": "same header fault on every page"
+  },
+  "astro-work|wrap-orphan|#menu-content > div.menu-footer > div.socials": {
+   "v": "TP",
+   "note": "same"
+  },
+  "astro-work|measure|main.wrapper.stack > div.hero.stack > div.stack.gap-2 > p.tagline": {
+   "v": "INT",
+   "note": "a large-type tagline at 320 px; 18 characters a line is expected there"
+  },
+  "astro-work|cropped|ul.grid.offset > li:nth-of-type(n) > a.card > img": {
+   "v": "INT",
+   "note": "abstract artwork"
+  },
+  "astro-project|wrap-orphan|#menu-content > div.menu-footer > div.socials": {
+   "v": "TP",
+   "note": "same"
+  },
+  "slop|label-wrap|section:nth-of-type(n) > div.grid > div.card.price:nth-of-type(n) > a.btn.primary": {
+   "v": "TP",
+   "note": "same squeezed pricing grid; reported since gradient-filled links count as button-like"
+  },
+  "hallam-home|no-viewport|(page)": {
+   "v": "TP",
+   "note": "no viewport meta (held-out page)"
+  },
+  "hallam-home|overflow|div.wrap": {
+   "v": "TP",
+   "note": ".wrap { width: 960px } (held-out page)"
+  },
+  "hallam-home|nav-overflow|div.wrap > header > nav > a:nth-of-type(n)": {
+   "v": "TP",
+   "note": "the nav runs past the edge below 960 px (held-out page)"
+  },
+  "hallam-fees|no-viewport|(page)": {
+   "v": "TP",
+   "note": "no viewport meta (held-out page)"
+  },
+  "hallam-fees|overflow|div.wrap": {
+   "v": "TP",
+   "note": ".wrap { width: 960px } (held-out page)"
+  },
+  "hallam-fees|nav-overflow|div.wrap > header > nav > a:nth-of-type(n)": {
+   "v": "TP",
+   "note": "the nav runs past the edge below 960 px (held-out page)"
+  },
+  "hallam-services|no-viewport|(page)": {
+   "v": "TP",
+   "note": "no viewport meta (held-out page)"
+  },
+  "hallam-services|overflow|div.wrap": {
+   "v": "TP",
+   "note": ".wrap { width: 960px } (held-out page)"
+  },
+  "hallam-services|nav-overflow|div.wrap > header > nav > a:nth-of-type(n)": {
+   "v": "TP",
+   "note": "the nav runs past the edge below 960 px (held-out page)"
+  },
+  "hallam-contact|no-viewport|(page)": {
+   "v": "TP",
+   "note": "no viewport meta (held-out page)"
+  },
+  "hallam-contact|overflow|div.wrap": {
+   "v": "TP",
+   "note": ".wrap { width: 960px } (held-out page)"
+  },
+  "hallam-contact|nav-overflow|div.wrap > header > nav > a:nth-of-type(n)": {
+   "v": "TP",
+   "note": "the nav runs past the edge below 960 px (held-out page)"
+  },
+  "hallam-home|measure|div.wrap > div.content > p": {
+   "v": "TP",
+   "note": "124 characters a line of 13 px text (held-out page)"
+  },
+  "hallam-fees|measure|div.wrap > div.content > p:nth-of-type(n)": {
+   "v": "TP",
+   "note": "152 characters a line (held-out page)"
+  },
+  "hallam-home|dead-band|div.wrap": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] the image-less slider and grey image placeholders: painted, but the check counts only text, media and controls (held-out page) — the band is painted (a grey slider and image placeholders); the check counts only text, media and controls",
+   "cause": "tool"
+  },
+  "astro-h20|wrap-orphan|#menu-content > div.menu-footer > div.socials": {
+   "v": "TP",
+   "note": "the shared header fault (held-out page)"
+  },
+  "astro-h20|measure|div.wrapper.stack > div.hero.stack > div.details > p.description": {
+   "v": "INT",
+   "note": "a centred large-type lede at 320 px (held-out page)"
+  },
+  "hallam-fees|small-target|div.wrap > div.content > p:nth-of-type(n) > a.more": {
+   "v": "FP",
+   "note": "a text link that fits on one line at 320 is one line tall (15 px); it is not squeezed (fixed since: a height under 24 px counts only when the label kept its line count) (held-out page)"
+  }
+ },
+ "stress": {
+  "stress-lab|pseudo|clipped|#plans > article.plan:nth-of-type(n) > h3": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|pseudo|clipped|table > thead > tr > th:nth-of-type(n)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|pseudo|clipped|table > thead > tr > th.price": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|pseudo|clipped|table > tbody > tr:nth-of-type(n) > td:nth-of-type(n)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|pseudo|clipped|table > tbody > tr:nth-of-type(n) > td.price": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|pseudo|protrusion|#kpis > div.kpi:nth-of-type(n) > small": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|pseudo|protrusion|#plans > article.plan:nth-of-type(n) > a.btn": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|pseudo|protrusion|#email": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|pseudo|overlap|#plans > article.plan:nth-of-type(n) > span.badge": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|pseudo|overlap|#plans > article.plan:nth-of-type(n) > h3": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|pseudo|overflow|#account > a.btn": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|pseudo|zoom-out|(page)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|clipped|#plans > article.plan:nth-of-type(n) > h3": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|clipped|table > thead > tr > th:nth-of-type(n)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|clipped|table > thead > tr > th.price": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|clipped|table > tbody > tr:nth-of-type(n) > td:nth-of-type(n)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|clipped|table > tbody > tr:nth-of-type(n) > td.price": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|clipped|#products > article.product:nth-of-type(n) > div.body > div:nth-of-type(n)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|protrusion|#kpis > div.kpi:nth-of-type(n) > small": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|protrusion|#plans > article.plan:nth-of-type(n) > p": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|protrusion|#plans > article.plan:nth-of-type(n) > div.price": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|protrusion|#plans > article.plan:nth-of-type(n) > a.btn": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|protrusion|#name": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|protrusion|#account > div.who > div:nth-of-type(n)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|protrusion|#contact": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|protrusion|#email": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|overlap|#kpis > div.kpi:nth-of-type(n) > small": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|overlap|#plans > article.plan:nth-of-type(n) > span.badge": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|overflow|header > div.wrap > a.btn.signin": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|zoom-out|(page)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|overlap|#plans > article.plan:nth-of-type(n) > a.btn": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|nav-overflow|nav > ul > li:nth-of-type(n) > a": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|overflow|header > div.wrap > nav": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|overlap|#plans > article.plan:nth-of-type(n) > h3": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|overlap|#plans > article.plan:nth-of-type(n) > p": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|overflow|#kpis > div.kpi > small": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|long|overflow|#account > a.btn": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|empty|squeezed|#plans > article.plan:nth-of-type(n) > a.btn": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|numbers|clipped|table > thead > tr > th:nth-of-type(n)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|numbers|clipped|table > thead > tr > th.price": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|numbers|clipped|table > tbody > tr:nth-of-type(n) > td:nth-of-type(n)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|numbers|clipped|table > tbody > tr:nth-of-type(n) > td.price": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|numbers|protrusion|#kpis > div.kpi:nth-of-type(n) > b": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|numbers|overlap|#kpis > div.kpi:nth-of-type(n) > b": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|numbers|overflow|#kpis > div.kpi > b": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|numbers|zoom-out|(page)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|no-images|unreadable|h1#hero-title": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|no-images|unreadable|p#hero-lede": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|no-images|unsized-image|article.product > img": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|rtl|overlap|#plans > article.plan:nth-of-type(n) > span.badge": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|rtl|overlap|#plans > article.plan:nth-of-type(n) > h3": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|rtl|not-mirrored|#plans > article.plan > span.badge": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|rtl|not-mirrored|#search > svg": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|rtl|not-mirrored|#back > svg": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|rtl|not-mirrored|table > tbody > tr > td": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|rtl|not-mirrored|#note": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|rtl|not-mirrored|table > thead > tr > th": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|list-0|no-empty-state|section.block": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|list-0|no-empty-state|section#orders-block.block": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|slow|late-shift|section.block": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|errors|junk-text|p#summary": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|offline|silent-failure|section#orders-block.block": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|offline|page-error|(page)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|errors|page-error|(page)": {
+   "v": "TP",
+   "note": "seeded fixture; checked in the crops"
+  },
+  "stress-lab|no-images|unsized-image|div.account > img": {
+   "v": "FP",
+   "note": "pinned on the avatar, which shares its file with a product image: images were matched by URL (fixed: matched by document order since)"
+  },
+  "dashboard|rtl|not-mirrored|table > tbody > tr > th": {
+   "v": "TP",
+   "note": "th { text-align: left }"
+  },
+  "dashboard|numbers|overflow|main": {
+   "v": "TP",
+   "note": "large KPI figures widen the page at 768"
+  },
+  "dashboard|long|overflow|main": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] driven by the div-based sidebar labels, which are authored navigation — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "dashboard|long|protrusion|div.side > div.item.active": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] sidebar navigation labels are authored; the fixture builds its nav from divs, so it reads as a list — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "dashboard|long|protrusion|div.side > div.item:nth-of-type(n)": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] same — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "dashboard|long|overlap|main > div.kpis > div.card.kpi:nth-of-type(n) > div.label": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] sidebar text spilling over the KPIs; same cause — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "dashboard|long|overlap|main > div.kpis > div.card.kpi:nth-of-type(n) > div.delta": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] same — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "govuk|pseudo|protrusion|div.govuk-error-summary__body > ul.govuk-list.govuk-error-summary__list > li > a": {
+   "v": "TP",
+   "note": "a 25-character compound in the error summary runs out of it at 390 (no overflow-wrap)"
+  },
+  "govuk|pseudo|protrusion|#email-error": {
+   "v": "TP",
+   "note": "same in the inline error"
+  },
+  "govuk|pseudo|overflow|… > li > a": {
+   "v": "TP",
+   "note": "same, widening the page by 14 px"
+  },
+  "govuk|pseudo|zoom-out|(page)": {
+   "v": "TP",
+   "note": "consequence"
+  },
+  "govuk|rtl|not-mirrored|table.govuk-table > tbody.govuk-table__body > tr.govuk-table__row > th.govuk-table__header": {
+   "v": "TP",
+   "note": "govuk-frontend sets text-align: left on table headers"
+  },
+  "govuk|rtl|not-mirrored|#main-content > div.govuk-grid-row > div.govuk-grid-column-two-thirds": {
+   "v": "TP",
+   "note": "govuk-frontend grid columns float left: the column stays on the left in RTL"
+  },
+  "govuk|slow|late-shift|div.govuk-grid-row": {
+   "v": "TP",
+   "note": "the content moves 49 px after first paint on a throttled load"
+  },
+  "govuk|rtl|squeezed|div.govuk-error-summary__body > ul.govuk-list.govuk-error-summary__list > li > a": {
+   "v": "FP",
+   "note": "a two-line link became one line of shorter Arabic, not squeezed (fixed: line counts for every control)"
+  },
+  "permit-home|no-images|unsized-image|div.top > img": {
+   "v": "TP",
+   "note": "crest.svg without dimensions: 0 → 36 px when it arrives"
+  },
+  "permit-home|rtl|overflow|div.top": {
+   "v": "FP",
+   "note": "re-checked: in RTL the page overflows because the cards (a fault the page already has) reach past the left edge; the shared probe looks right and named the header (fixed since: RTL culprits are found past the left edge, and the finding is no longer new)"
+  },
+  "permit-home|list-0|no-empty-state|div.cards": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored information cards: zero of them is not a real state — the list mutation reached authored items",
+   "cause": "tool"
+  },
+  "permit-home|slow|late-shift|div.cards": {
+   "v": "TP",
+   "note": "the cards move 346 px after first paint while the header and hero fill in"
+  },
+  "permit-home|pseudo|overflow|div.cards > div.card": {
+   "v": "TP",
+   "note": "the cards overflow at 768 with 35% longer text (at baseline only below 448)"
+  },
+  "permit-home|long|overflow|div.cards > div.card": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored cards treated as a list — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "permit-home|long|overflow|div.top > span.name": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] the council name is authored — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "permit-apply|long|overflow|div.top > span.name": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] the council name is authored — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "permit-apply|no-images|unsized-image|div.top > img": {
+   "v": "TP",
+   "note": "crest.svg without dimensions"
+  },
+  "permit-apply|rtl|overflow|div.top": {
+   "v": "FP",
+   "note": "re-checked: in RTL the page overflows because the cards (a fault the page already has) reach past the left edge; the shared probe looks right and named the header (fixed since: RTL culprits are found past the left edge, and the finding is no longer new)"
+  },
+  "permit-apply|rtl|not-mirrored|#zones > tbody > tr > td": {
+   "v": "TP",
+   "note": "td { text-align: left }"
+  },
+  "permit-apply|slow|late-shift|div.wrap": {
+   "v": "TP",
+   "note": "the unsized crest pushes the form down 57 px"
+  },
+  "permit-apply|errors|page-error|(page)": {
+   "v": "TP",
+   "note": "d.zones is not iterable: no error handling on the zones fetch"
+  },
+  "permit-apply|offline|page-error|(page)": {
+   "v": "TP",
+   "note": "Failed to fetch, unhandled"
+  },
+  "permit-apply|long|overflow|#zones": {
+   "v": "TP",
+   "note": "long street names widen the zone table past the viewport at 1280"
+  },
+  "milkline-app|pseudo|overflow|#greeting": {
+   "v": "TP",
+   "note": "the nowrap greeting overflows at 390 with 35% longer text"
+  },
+  "milkline-app|pseudo|zoom-out|(page)": {
+   "v": "TP",
+   "note": "consequence"
+  },
+  "milkline-app|numbers|overflow|#kpis > div.card.kpi": {
+   "v": "TP",
+   "note": "KPI tiles cannot hold large figures"
+  },
+  "milkline-app|numbers|zoom-out|(page)": {
+   "v": "TP",
+   "note": "consequence"
+  },
+  "milkline-app|rtl|not-mirrored|#toast": {
+   "v": "TP",
+   "note": "the toast is placed with right: 24px"
+  },
+  "milkline-app|rtl|not-mirrored|table > thead > tr > th": {
+   "v": "TP",
+   "note": "th { text-align: left }"
+  },
+  "milkline-app|slow|layout-shift|div.row": {
+   "v": "TP",
+   "note": "CLS 0.93 on a throttled load: the herd table and cards arrive and move everything"
+  },
+  "milkline-app|slow|late-shift|div.top": {
+   "v": "TP",
+   "note": "same load sequence"
+  },
+  "milkline-app|errors|page-error|(page)": {
+   "v": "TP",
+   "note": "no error handling on the herd fetch"
+  },
+  "milkline-app|offline|page-error|(page)": {
+   "v": "TP",
+   "note": "same"
+  },
+  "milkline-app|long|clipped|#herd-body > tr.cow-row:nth-of-type(n) > td.chg-down": {
+   "v": "TP",
+   "note": "long cow names widen the name column and push the change column out of the clipping card"
+  },
+  "milkline-app|long|clipped|#herd-body > tr.cow-row:nth-of-type(n) > td.chg-up": {
+   "v": "TP",
+   "note": "same"
+  },
+  "milkline-app|long|overflow|#kpis > div.card.kpi": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] KPI labels are authored — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "milkline-app|long|zoom-out|(page)": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] same cause — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "milkline-app|long|protrusion|div.side > div.item.active": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] div-based sidebar navigation — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "milkline-app|long|protrusion|div.side > div.item:nth-of-type(n)": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] same — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "milkline-app|long|overlap|#kpis > div.card.kpi:nth-of-type(n) > div.label": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] sidebar text spilling; same cause — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "milkline-app|long|overlap|#kpis > div.card.kpi:nth-of-type(n) > div.value": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] same — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "milkline-app|long|overlap|#kpis > div.card.kpi:nth-of-type(n) > div.delta": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] same — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "astro-home|pseudo|edge-cut|… > div.stack.gap-2 > h1.title": {
+   "v": "TP",
+   "note": "long compound words at display size overflow at 390 under a page-level clip: no overflow-wrap or hyphens on headings"
+  },
+  "astro-home|pseudo|edge-cut|… > div.stack.gap-2 > p.tagline": {
+   "v": "TP",
+   "note": "long compound words at display size overflow at 390 under a page-level clip: no overflow-wrap or hyphens on headings"
+  },
+  "astro-home|pseudo|edge-cut|… > header.section-header.stack > h3": {
+   "v": "TP",
+   "note": "long compound words at display size overflow at 390 under a page-level clip: no overflow-wrap or hyphens on headings"
+  },
+  "astro-home|pseudo|edge-cut|… > header.section-header.stack > p": {
+   "v": "TP",
+   "note": "long compound words at display size overflow at 390 under a page-level clip: no overflow-wrap or hyphens on headings"
+  },
+  "astro-home|pseudo|edge-cut|… > div.gallery > ul.grid.offset > li > a.card > span.title": {
+   "v": "TP",
+   "note": "long compound words at display size overflow at 390 under a page-level clip: no overflow-wrap or hyphens on headings"
+  },
+  "astro-home|pseudo|edge-cut|… > div.gallery > ul.grid.small > li.mention-card > p": {
+   "v": "TP",
+   "note": "long compound words at display size overflow at 390 under a page-level clip: no overflow-wrap or hyphens on headings"
+  },
+  "astro-home|pseudo|edge-cut|… > div.stack.gap-2 > h2": {
+   "v": "TP",
+   "note": "a 29-character compound skill title overflows its column at 1280"
+  },
+  "astro-home|pseudo|edge-cut|… > div.stack.gap-2 > p": {
+   "v": "TP",
+   "note": "same column"
+  },
+  "astro-home|pseudo|wide-control|div.stack.backgrounds > div.stack.gap-20 > aside > a": {
+   "v": "INT",
+   "note": "the pill grows with its label"
+  },
+  "astro-home|rtl|not-mirrored|div.stack.backgrounds > div.stack.gap-20 > aside > h2": {
+   "v": "TP",
+   "note": "text-align: left"
+  },
+  "astro-home|long|edge-cut|… > div.gallery > ul.grid.offset > li > a.card > span.title": {
+   "v": "TP",
+   "note": "a long project title overflows the card and is cut at the viewport edge"
+  },
+  "astro-home|long|edge-cut|… > div.gallery > ul.grid.small > li.mention-card > p": {
+   "v": "TP",
+   "note": "a long publication name in the mentions list"
+  },
+  "astro-home|long|edge-cut|… > div.stack.gap-2 > h1.title": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] pushed by the authored tagline (tagline matched as data before the token fix) — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "astro-home|long|edge-cut|… > div.stack.gap-2 > p.tagline": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored tagline — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "astro-home|long|edge-cut|… > header.section-header.stack > h3": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "astro-home|long|edge-cut|… > header.section-header.stack > p": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "astro-work|pseudo|edge-cut|div.stack.backgrounds > div.stack.gap-20 > aside > h2": {
+   "v": "TP",
+   "note": "long compound in the contact heading at 390"
+  },
+  "astro-work|pseudo|edge-cut|div.stack.backgrounds > div.stack.gap-20 > aside > a": {
+   "v": "TP",
+   "note": "the centred pill wider than the phone spills past both edges"
+  },
+  "astro-work|pseudo|wide-control|div.stack.backgrounds > div.stack.gap-20 > aside > a": {
+   "v": "INT",
+   "note": "the pill grows with its label"
+  },
+  "astro-work|rtl|not-mirrored|div.stack.backgrounds > div.stack.gap-20 > aside > h2": {
+   "v": "TP",
+   "note": "text-align: left"
+  },
+  "astro-work|long|edge-cut|… > li > a.card > span.title": {
+   "v": "TP",
+   "note": "long project title"
+  },
+  "astro-work|long|edge-cut|… > div.stack.gap-2 > p.tagline": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored tagline — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "astro-work|list-0|no-empty-state|ul.grid.offset": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] an authored portfolio with no projects is not a real state — the list mutation reached authored items",
+   "cause": "tool"
+  },
+  "astro-work|slow|blank|(page)": {
+   "v": "INT",
+   "note": "render-blocking CSS and fonts on a throttled link: a performance finding (perf.mjs), not a layout fault"
+  },
+  "astro-home|slow|blank|(page)": {
+   "v": "INT",
+   "note": "same"
+  },
+  "govuk|slow|blank|(page)": {
+   "v": "INT",
+   "note": "render-blocking CSS on a throttled link"
+  },
+  "stress-lab|pseudo|overflow|header > div.wrap > a.btn.signin": {
+   "v": "TP",
+   "note": "seeded S14: the nowrap nav pushes Sign in past the viewport at 768"
+  },
+  "stress-lab|long|overflow|#plans > article.plan > span.badge": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] plan cards are list items, so their authored badges took the long token — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "stress-lab|long|wide-control|#account > a.btn": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] the Edit label sits under #account, whose id reads as data — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "stress-lab|pseudo|clipped|#products > article.product:nth-of-type(n) > div.body > div:nth-of-type(n)": {
+   "v": "TP",
+   "note": "product names 35% longer are cut by the card overflow at 1280"
+  },
+  "stress-lab|long|overflow|#plans > article.plan > a.btn": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored button label inside a list item — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "govuk|long|protrusion|div.govuk-error-summary__body > ul.govuk-list.govuk-error-summary__list > li > a": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored copy tied to the email field (id tokens read as data) — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "govuk|long|protrusion|#email-hint": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored copy tied to the email field (id tokens read as data) — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "govuk|long|protrusion|#email-error": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored copy tied to the email field (id tokens read as data) — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "govuk|long|overflow|… > li > a": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] same — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "govuk|long|zoom-out|(page)": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] same — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "hallam-home|long|overflow|div.wrap > div.cols > div.col": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored teaser columns read as a list (held-out page) — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "hallam-home|no-images|unsized-image|header > img": {
+   "v": "TP",
+   "note": "logo.svg without dimensions: 16 → 56 px (held-out page)"
+  },
+  "hallam-fees|no-images|unsized-image|header > img": {
+   "v": "TP",
+   "note": "logo.svg without dimensions: 16 → 56 px (held-out page)"
+  },
+  "hallam-contact|no-images|unsized-image|header > img": {
+   "v": "TP",
+   "note": "logo.svg without dimensions: 16 → 56 px (held-out page)"
+  },
+  "hallam-home|rtl|not-mirrored|div.wrap > div.slider > div.dots": {
+   "v": "INT",
+   "note": "left: 50% without a translate: off-centre in both directions (held-out page)"
+  },
+  "hallam-home|list-500|overflow|div.wrap > div.cols > div.col": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] 500 authored teasers is not a real state (held-out page) — the list mutation reached authored items",
+   "cause": "tool"
+  },
+  "hallam-home|list-0|dead-band|div.wrap": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] same (held-out page) — the list mutation reached authored items",
+   "cause": "tool"
+  },
+  "hallam-fees|long|overflow|div.wrap > div.accred > span": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored accreditation badges read as a list (held-out page) — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "hallam-fees|list-500|overflow|div.wrap > div.accred > span": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] same (held-out page) — the list mutation reached authored items",
+   "cause": "tool"
+  },
+  "hallam-contact|long|overflow|div.wrap > div.accred > span": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored accreditation badges read as a list (held-out page) — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "hallam-contact|list-500|overflow|div.wrap > div.accred > span": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] same (held-out page) — the list mutation reached authored items",
+   "cause": "tool"
+  },
+  "a11y-wizard|pseudo|overflow|a.skip": {
+   "v": "FP",
+   "note": "the overflow is real (the fieldset and h1), but the skip link parked at left: -9999px is named, which cannot widen a left-to-right page (fixed since: culprits must lie past the end edge) (held-out page)"
+  },
+  "a11y-wizard|pseudo|zoom-out|(page)": {
+   "v": "TP",
+   "note": "35% longer text makes the phone page zoom out (held-out page)"
+  },
+  "a11y-wizard|long|protrusion|#step-check > dl > div.row:nth-of-type(n) > dt": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored questions in a summary list read as data (held-out page) — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "a11y-wizard|long|protrusion|dl > div.row:nth-of-type(n) > dd.act > a": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] authored Change links (held-out page) — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "a11y-wizard|long|overflow|a.skip": {
+   "v": "FP",
+   "note": "same misattribution to the parked skip link (held-out page)"
+  },
+  "a11y-wizard|long|zoom-out|(page)": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] caused by authored text (held-out page) — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "a11y-wizard|rtl|overflow|a.skip": {
+   "v": "TP",
+   "note": "left: -9999px parks the skip link inside the scrollable area of an RTL page: 9,999 px of sideways scroll (held-out page)"
+  },
+  "a11y-wizard|rtl|zoom-out|(page)": {
+   "v": "TP",
+   "note": "same (held-out page)"
+  },
+  "a11y-wizard|rtl|not-mirrored|a.skip": {
+   "v": "TP",
+   "note": "same root cause: physical left (held-out page)"
+  },
+  "a11y-wizard|rtl|not-mirrored|#main > div.drawer": {
+   "v": "TP",
+   "note": "the drawer is placed with left (held-out page)"
+  },
+  "astro-about|pseudo|edge-cut|div.stack.backgrounds > div.stack.gap-20 > aside > h2": {
+   "v": "TP",
+   "note": "long compound in the contact heading (held-out page)"
+  },
+  "astro-about|pseudo|edge-cut|div.stack.backgrounds > div.stack.gap-20 > aside > a": {
+   "v": "TP",
+   "note": "the pill spills past both edges (held-out page)"
+  },
+  "astro-about|long|edge-cut|… > p": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] prose paragraphs read as a list (fixed since: paragraphs are not list items) (held-out page) — the long-token mutation reached authored copy",
+   "cause": "tool"
+  },
+  "astro-about|list-0|no-empty-state|section": {
+   "v": "FP",
+   "note": "the \"list\" was a run of prose paragraphs; emptying it is not a state the page can be in (fixed since) (held-out page)"
+  },
+  "astro-about|pseudo|wide-control|div.stack.backgrounds > div.stack.gap-20 > aside > a": {
+   "v": "INT",
+   "note": "the pill grows with its label (held-out page)"
+  },
+  "astro-about|rtl|not-mirrored|div.stack.backgrounds > div.stack.gap-20 > aside > h2": {
+   "v": "TP",
+   "note": "text-align: left (held-out page)"
+  },
+  "dashboard|rtl|overflow|(page)": {
+   "v": "FP",
+   "note": "same RTL attribution fault, before the fix"
+  },
+  "permit-home|rtl|overflow|(page)": {
+   "v": "FP",
+   "note": "same"
+  },
+  "permit-apply|rtl|overflow|(page)": {
+   "v": "FP",
+   "note": "same"
+  },
+  "hallam-fees|list-500|overflow|(page)": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] 500 authored accreditation badges in a no-wrap row (held-out page) — the list mutation reached authored items",
+   "cause": "tool"
+  },
+  "hallam-contact|list-500|overflow|(page)": {
+   "v": "FP",
+   "note": "[was INT; tool-caused] 500 authored accreditation badges in a no-wrap row (held-out page) — the list mutation reached authored items",
+   "cause": "tool"
+  },
+  "a11y-wizard|pseudo|overflow|#step-check > fieldset": {
+   "v": "TP",
+   "note": "the fieldset with 35% longer labels widens the phone page (held-out page)"
+  },
+  "a11y-wizard|long|overflow|#main > div.drawer > table": {
+   "v": "TP",
+   "note": "long values in the drawer table widen the page; the drawer does not clip (held-out page)"
+  },
+  "hallam-fees|empty|squeezed|div.wrap > div.content > p:nth-of-type(n) > a.more": {
+   "v": "FP",
+   "note": "a page without a viewport meta: phone Chrome text-autosizes it, so the link measured 595×40 in one load and 218×15 in the next, whatever the mutation (fixed since: control sizes are not compared on such pages) (held-out page)"
+  },
+  "hallam-fees|no-images|squeezed|div.wrap > div.content > p:nth-of-type(n) > a.more": {
+   "v": "FP",
+   "note": "a page without a viewport meta: phone Chrome text-autosizes it, so the link measured 595×40 in one load and 218×15 in the next, whatever the mutation (fixed since: control sizes are not compared on such pages) (held-out page)"
+  },
+  "hallam-fees|list-0|squeezed|div.wrap > div.content > p:nth-of-type(n) > a.more": {
+   "v": "FP",
+   "note": "a page without a viewport meta: phone Chrome text-autosizes it, so the link measured 595×40 in one load and 218×15 in the next, whatever the mutation (fixed since: control sizes are not compared on such pages) (held-out page)"
+  },
+  "hallam-fees|list-1|squeezed|div.wrap > div.content > p:nth-of-type(n) > a.more": {
+   "v": "FP",
+   "note": "a page without a viewport meta: phone Chrome text-autosizes it, so the link measured 595×40 in one load and 218×15 in the next, whatever the mutation (fixed since: control sizes are not compared on such pages) (held-out page)"
+  }
+ }
+}

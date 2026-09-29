@@ -3,7 +3,7 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
-import { registry as reg, adoption, activity as act, licenceFromDir } from '../libcheck.mjs';
+import { registry as reg, adoption, activity as act, licenceFromDir, readmeNotice as notice, readmeProcurement, repoReadme } from '../libcheck.mjs';
 
 export const CUTOFF = '2025-09-28'; // twelve months before the lab date (2026-09-28)
 
@@ -17,12 +17,15 @@ export async function licence(root, pkg, repo) {
   if (!existsSync(dir)) return { pkg, error: 'not installed' };
   return { pkg, ...(await licenceFromDir(dir, repo)) };
 }
-export async function readmeNotice(root, pkg) {
+// README notices about this package (package README first, then the repository's root README, which can be
+// newer than the tarball: vaul 1.1.2 ships no "unmaintained" note, its repository README has one).
+export async function readmeNotice(root, pkg, repo) {
   const dir = path.join(root, 'node_modules', pkg);
-  if (!existsSync(dir)) return null;
-  const f = (await readdir(dir)).find((x) => /^readme(\.md)?$/i.test(x));
-  if (!f) return null;
-  const t = await readFile(path.join(dir, f), 'utf8');
-  const m = t.match(/[^\n]{0,80}(unmaintained|no longer (being )?maintained|not (actively )?maintained|looking for (new )?maintainers|deprecated in favou?r|placeholder package|archived)[^\n]{0,80}/i);
-  return m ? m[0].trim().slice(0, 200) : null;
+  const f = existsSync(dir) ? (await readdir(dir)).find((x) => /^readme(\.md)?$/i.test(x)) : null;
+  const t = f ? await readFile(path.join(dir, f), 'utf8') : '';
+  const own = notice(t, pkg);
+  if (own) return { notice: own, source: 'package README', procurement: readmeProcurement(t) };
+  const rootText = await repoReadme(repo);
+  const r = rootText ? notice(rootText, pkg) : null;
+  return { notice: r, source: r ? `github.com/${repo} README` : null, procurement: readmeProcurement(t) };
 }

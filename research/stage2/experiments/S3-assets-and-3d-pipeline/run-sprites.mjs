@@ -66,6 +66,9 @@ const summarise = (label, rs) => {
   const keys = Object.keys(ok[0]).filter((k) => typeof ok[0][k] === 'number');
   const res = Object.fromEntries(keys.map((k) => [k, round(median(ok.map((x) => x[k])), 2)]));
   res.n = ok.length;
+  // per-run samples and min–max, so the spread behind each median can be checked
+  res.range = Object.fromEntries(keys.map((k) => { const v = ok.map((x) => x[k]).filter(Number.isFinite); return [k, v.length ? [round(Math.min(...v), 2), round(Math.max(...v), 2)] : null]; }));
+  res.samples = Object.fromEntries(keys.map((k) => [k, ok.map((x) => round(x[k], 2))]));
   console.error(label, JSON.stringify(res));
   return res;
 };
@@ -148,9 +151,14 @@ if (want('bleed')) {
 }
 
 // CSS sprite animation: background-position steps() (a repaint per frame on the main thread) vs transform steps()
-// on an <img> strip inside an overflow:hidden box (composited). Counts Paint / style-recalc events over 3 s.
+// on an <img> inside an overflow:hidden box (composited). Counts Paint / style-recalc events over 3 s, and reads the
+// compositor's layer tree (CDP LayerTree): each transform-animated <img> becomes its own composited layer the size of
+// the WHOLE image, so the memory side of the trade is measured too (layer area × 4 B/px, an upper bound on raster
+// memory). Two sheet shapes: the 1280×768 grid (60 frames, animated on two axes) and a one-row strip (1280×128,
+// 10 frames), the shape the skill recommends.
 if (want('csspaint')) {
   const common = `body{margin:0;background:#1b1f33;display:flex;gap:24px;padding:24px;flex-wrap:wrap}`;
+  await sharp(path.join(SB, 'grid-png/grid.png')).extract({ left: 0, top: 0, width: 1280, height: 128 }).png().toFile(path.join(SB, 'strip.png'));
   await writeFile(path.join(BUILD, 'css-sprite-transform.html'), `<!doctype html><meta charset=utf-8><style>${common}
 .s{width:128px;height:128px;overflow:hidden;contain:strict}
 .s .r{animation:y 2s steps(6) infinite}
@@ -158,10 +166,29 @@ if (want('csspaint')) {
 @keyframes x{to{transform:translateX(-1280px)}}@keyframes y{to{transform:translateY(-768px)}}
 @media (prefers-reduced-motion:reduce){.s .r,.s img{animation:none}}
 </style>${'<div class=s><div class=r><img src="/build/sprites/grid-png/grid.png" alt="" width=1280 height=768></div></div>'.repeat(12)}`);
-  const acc = { 'background-position': [], transform: [] };
+  await writeFile(path.join(BUILD, 'css-sprite-strip-transform.html'), `<!doctype html><meta charset=utf-8><style>${common}
+.s{width:128px;height:128px;overflow:hidden;contain:strict}
+.s img{display:block;width:1280px;height:128px;max-width:none;animation:x .5s steps(10) infinite}
+@keyframes x{to{transform:translateX(-1280px)}}
+@media (prefers-reduced-motion:reduce){.s img{animation:none}}
+</style>${'<div class=s><img src="/build/sprites/strip.png" alt="" width=1280 height=128></div>'.repeat(12)}`);
+  await writeFile(path.join(BUILD, 'css-sprite-strip-bgpos.html'), `<!doctype html><meta charset=utf-8><style>${common}
+.s{width:128px;height:128px;background:url(/build/sprites/strip.png) 0 0/1280px 128px;animation:x .5s steps(10) infinite}
+@keyframes x{to{background-position-x:-1280px}}
+@media (prefers-reduced-motion:reduce){.s{animation:none}}
+</style>${'<div class=s></div>'.repeat(12)}`);
+  const VARIANTS = [
+    ['background-position, grid 1280×768', 'css-sprite.html'], ['transform, <img> grid 1280×768', 'css-sprite-transform.html'],
+    ['background-position, strip 1280×128', 'css-sprite-strip-bgpos.html'], ['transform, <img> strip 1280×128', 'css-sprite-strip-transform.html'],
+  ];
+  const acc = Object.fromEntries(VARIANTS.map(([k]) => [k, []]));
   for (let r = 0; r < RUNS; r++) {
-    for (const [k, file] of [['background-position', 'css-sprite.html'], ['transform', 'css-sprite-transform.html']]) {
+    for (const [k, file] of VARIANTS) {
       const page = await browser.newPage({ viewport: { width: 760, height: 330 } });
+      const cdp = await page.context().newCDPSession(page);
+      let layers = [];
+      cdp.on('LayerTree.layerTreeDidChange', (e) => { if (e.layers) layers = e.layers; });
+      await cdp.send('LayerTree.enable');
       await page.goto(`${srv.url}/build/${file}`);
       await page.waitForTimeout(800);
       await browser.startTracing(page, { categories: ['devtools.timeline', 'disabled-by-default-devtools.timeline'] });
@@ -170,8 +197,13 @@ if (want('csspaint')) {
       const ev = trace.traceEvents || trace;
       const main = ev.filter((e) => e.ph === 'X' && ['Paint', 'UpdateLayoutTree', 'Layout', 'PrePaint', 'Layerize'].includes(e.name));
       const count = (n) => main.filter((e) => e.name === n).length;
-      const ms = main.reduce((s, e) => s + (e.dur || 0), 0) / 1000;
-      acc[k].push({ paintsPerSec: count('Paint') / 3, styleRecalcsPerSec: count('UpdateLayoutTree') / 3, mainThreadMsPerSec: ms / 3 });
+      const ms = main.reduce((s2, e) => s2 + (e.dur || 0), 0) / 1000;
+      // memory side: layers that draw content, their area at 4 B/px (the root/document layer included in both)
+      const drawn = layers.filter((l) => l.drawsContent);
+      const areaBytes = drawn.reduce((s2, l) => s2 + l.width * l.height * 4, 0);
+      const largest = drawn.reduce((m, l) => (l.width * l.height > m.width * m.height ? l : m), { width: 0, height: 0 });
+      acc[k].push({ paintsPerSec: count('Paint') / 3, styleRecalcsPerSec: count('UpdateLayoutTree') / 3, mainThreadMsPerSec: ms / 3, layers: drawn.length, layerAreaMB: areaBytes / 1e6, largestLayerW: largest.width, largestLayerH: largest.height });
+      await cdp.send('LayerTree.disable').catch(() => {});
       await page.close();
     }
   }

@@ -1,4 +1,4 @@
-# Motion check — http://127.0.0.1:42563/captures/c/static.html
+# Motion check — http://127.0.0.1:42223/captures/c/static.html
 
 2026-09-29 · desktop · Chromium 141.0.7390.37 · tokens from motion.md defaults: micro 100, small 150, medium 240, large 300, page 400, hero 700
 
@@ -16,7 +16,7 @@
 | hero-in | load | none | — (spec hero) | — | fade → nothing changes | ✗ static: nothing changed after the trigger |
 | panel-swap | click | none | — (spec page) | — | fade → nothing changes | ✗ static: nothing changed after the trigger |
 
-Filmstrips: `filmstrip-cta-press.jpg`, `filmstrip-cta-hover.jpg`, `filmstrip-plan-hover.jpg`, `filmstrip-toast.jpg`, `filmstrip-features-reveal.jpg`, `filmstrip-stat-count.jpg`, `filmstrip-hero-in.jpg`, `filmstrip-panel-swap.jpg`
+Filmstrips: `filmstrip-cta-press.jpg`, `filmstrip-cta-hover.jpg`, `filmstrip-plan-hover.jpg`, `filmstrip-sheet-open.jpg`, `filmstrip-toast.jpg`, `filmstrip-features-reveal.jpg`, `filmstrip-stat-count.jpg`, `filmstrip-hero-in.jpg`, `filmstrip-panel-swap.jpg`
 
 ## Audit
 

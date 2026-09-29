@@ -8,7 +8,8 @@
  *   node sweep.mjs --base http://localhost:3000 --paths / /pricing [--from 320 --to 1920 --step 8,16] [--out sweep]
  *
  * Options
- *   --step a[,b]    px between widths: a below 1024, b from 1024 up (default 8,16 → about 190 widths)
+ *   --step a[,b]    px between widths: a below 1024, b from 1024 up (default 8,16: 147 widths and the two zoom
+ *                   cases, 20–35 s for a page on a shared 4-CPU machine)
  *   --widths list   explicit widths instead of a range
  *   --height N      viewport height for every width (default: 740 below 600, 960 below 1024, 800 above — the fold)
  *   --device d      auto (default: phone emulation — touch, mobile viewport — below 768, desktop from 768),
@@ -25,7 +26,11 @@
  *   ✗ overflow      the page is wider than the viewport; the outermost culprits (lib/probes.mjs overflowCulprits)
  *   ✗ edge-cut      readable text past the viewport edge that no scroll reaches (a page-level clip)
  *   ✗ zoom-out      phone emulation only: the layout viewport widened — phones show the page zoomed out
- *   ✗ clipped       text cut by its own or an ancestor's overflow: hidden/clip (not a scroller)
+ *   ✗ no-viewport   phone emulation only: no width=device-width viewport meta (the page is laid out 980 px wide)
+ *   ✗ clipped       text cut by its own or an ancestor's overflow: hidden/clip (not a scroller); three or more
+ *                   texts cut by one box are reported once, as that box (a table in an overflow: hidden card)
+ *   ✗ protrusion    text running more than 3 px out of a drawn box (filled, bordered or shadowed: a button, card,
+ *                   badge) that does not clip — ReDeCheck's "element protrusion"
  *   △ truncated     text shortened by an ellipsis or line clamp (✗ on a control, heading or nav item)
  *   ✗ overlap       text drawn over other text, or a control drawn over text
  *   △ measure       running text outside the characters-per-line range (--measure)
@@ -39,12 +44,20 @@
  *   ✗ fold          the h1, or the primary CTA, below the fold here although above it at other widths
  *   △ chrome        fixed and sticky bars covering more than 30% of the viewport
  *   △ order         flex/grid children drawn in a different order than the DOM (reading and focus order)
+ *   △ wrap-orphan   a wrapping row of peers (3+ per row) whose last row holds one item: 3 + 3 + 1
  *   · layout        breakpoints: containers whose column count changes between adjacent widths, and
- *                   document-height jumps over 20% — capture both sides of each and look
+ *                   document-height jumps over 20% — capture both sides of each and look; per-row counts that go
+ *                   back and forth as the width grows, and arrangements that hold at one sampled width only
+ *                   (a "small-range layout": two breakpoints a few pixels apart)
+ * Findings are merged into width ranges per element; three or more alike elements with the same finding over the
+ * same widths (every card's image, six buttons in one toolbar) are one row with a count.
  *
- * Writes <out>/<slug>.json (ranges, breakpoints, per-width counts, timings), <out>/<slug>.md, a contact sheet
- * <out>/<slug>-sheet.jpg (the worst widths, each scrolled to its worst finding, findings boxed and numbered) and
- * 1:1 crops <out>/<slug>-crops/*.png. Exit code 1 when any ✗ range is found.
+ * Writes <out>/<slug>.json (ranges, breakpoints, per-width counts, timings, and the browser build that rendered
+ * them), <out>/<slug>.md, a contact sheet <out>/<slug>-sheet.jpg (the worst widths, each scrolled to its worst
+ * finding, findings boxed and numbered) and 1:1 crops <out>/<slug>-crops/*.png. Exit code 1 when any ✗ range is found.
+ * Evidence shots start from the document's scroll origin (a right-to-left page that overflows left is shifted), and
+ * on a phone page the screen shows zoomed out (no device-width viewport) they are what the screen shows, not a
+ * full-page re-render (which changes the page scale, and text autosizing then moves the text off its marks).
  *
  * The measurements are leads, not verdicts: an intentional truncation, a decorative overlap or a deliberate
  * crop is reported too. Open the crop before fixing, and say which findings you dismissed and why.
@@ -56,7 +69,7 @@ import { pathToFileURL } from 'node:url';
 import { parseArgs, asList, launch, open, settle, slugFor, urlFor } from './lib/env.mjs';
 import { overflowCulprits } from './lib/probes.mjs';
 
-export const SEV = { overflow: 'error', 'edge-cut': 'error', 'zoom-out': 'error', clipped: 'error', truncated: 'warn', overlap: 'error', measure: 'warn',
+export const SEV = { overflow: 'error', 'edge-cut': 'error', 'zoom-out': 'error', 'no-viewport': 'error', clipped: 'error', truncated: 'warn', overlap: 'error', measure: 'warn',
   'nav-wrap': 'warn', 'nav-overflow': 'error', 'label-wrap': 'warn', 'small-target': 'warn', 'wide-control': 'warn', distorted: 'error', cropped: 'warn',
   upscaled: 'warn', 'dead-band': 'warn', fold: 'error', chrome: 'warn', order: 'warn', layout: 'info', 'height-jump': 'info', protrusion: 'error', 'wrap-orphan': 'warn' };
 const MARK = { error: '✗', warn: '△', info: '·' };
@@ -148,7 +161,7 @@ export function layoutProbe(opts = {}) {
       if ((ell && outX) || (clamp && outY)) {
         const strong = isControl(el) || el.closest('h1,h2,h3,h4,nav,th,button,a[href]');
         add('truncated', el, `"${text(el, 30)}" ${clamp ? 'line-clamped' : 'ellipsis'} (${lost}px hidden)`, el.getBoundingClientRect(), { sev: strong ? 'error' : 'warn' });
-      } else add('clipped', el, `"${text(el, 30)}" cut ${lost}px by ${p === el ? 'its own' : sel(p)} overflow ${outX ? 'x' : 'y'}`, el.getBoundingClientRect());
+      } else add('clipped', el, `"${text(el, 30)}" cut ${lost}px by ${p === el ? 'its own' : sel(p)} overflow ${outX ? 'x' : 'y'}`, el.getBoundingClientRect(), { by: p === el ? null : sel(p), byId: p === el ? null : idOf(p) });
       break;
     }
   }
@@ -206,7 +219,7 @@ export function layoutProbe(opts = {}) {
     };
     for (const r of runs) {
       if (inFixed(r.el)) continue;
-      const [cl, ct, cr, cb] = clipOf(r.el.parentElement);
+      const [cl, ct, cr, cb] = clipOf(r.el); // the text's own box clips it too (a one-line title with overflow: hidden)
       for (const q of r.rects) {
         const it = { el: r.el, l: Math.max(q.left, cl), t: Math.max(q.top, ct), r: Math.min(q.right, cr), b: Math.min(q.bottom, cb), text: true };
         if (it.r - it.l > 1 && it.b - it.t > 1) items.push(it);
@@ -292,9 +305,9 @@ export function layoutProbe(opts = {}) {
     const q = c.getBoundingClientRect();
     // A button-like link is short and holds a label: a card that is one big link (image, heading, text) is not.
     const buttonLike = c.matches('button, [role=button], input[type=submit], input[type=button]') ||
-      (c.tagName === 'A' && ((c0.backgroundColor !== 'rgba(0, 0, 0, 0)' && c0.backgroundColor !== 'transparent') || parseFloat(c0.borderTopWidth) >= 1) && q.height >= 28 && q.height <= 72 && !c.querySelector('img, picture, video, h1, h2, h3, h4, h5, h6, p, ul, ol'));
+      (c.tagName === 'A' && ((c0.backgroundColor !== 'rgba(0, 0, 0, 0)' && c0.backgroundColor !== 'transparent') || c0.backgroundImage !== 'none' || parseFloat(c0.borderTopWidth) >= 1) && q.height >= 28 && q.height <= 120 && !c.querySelector('img, picture, video, h1, h2, h3, h4, h5, h6, p, ul, ol'));
     let lines = 1;
-    if (buttonLike && (c.textContent || '').trim()) {
+    if ((c.textContent || '').trim()) {
       rg.selectNodeContents(c);
       const tops = [];
       for (const r of rg.getClientRects()) if (r.width > 1 && !tops.some((y) => Math.abs(y - r.top) < r.height * 0.5)) tops.push(r.top);
@@ -379,11 +392,13 @@ export function layoutProbe(opts = {}) {
   const h1 = [...body.querySelectorAll('h1')].find((h) => !hiddenAnc(h) && visible(h));
   let ctaEl = null;
   if (ctaSel) ctaEl = [...document.querySelectorAll(ctaSel)].find((e) => visible(e)) || null;
+  else if (W.cta?.isConnected && visible(W.cta)) ctaEl = W.cta; // the one chosen at the first width of this load
   else {
     const scope = body.querySelector('main, [role=main]') || body;
     const buttonIds = new Set(controls.filter((c) => c.buttonLike).map((c) => c.id));
     // The page's call to action, not a form's submit button (a question page's Continue sits wherever the form ends).
     ctaEl = [...scope.querySelectorAll('a[href], button, [role=button]')].find((e) => buttonIds.has(idOf(e)) && !e.closest('nav, footer, form, [role=search], dialog, [role=dialog]')) || null;
+    if (ctaEl && !W.cta) W.cta = ctaEl;
   }
   const fold = {};
   if (h1) { const q = h1.getBoundingClientRect(); const lh = parseFloat(cs(h1).lineHeight) || q.height; fold.h1 = { id: idOf(h1), sel: sel(h1), top: Math.round(q.top + sy), below: q.top + sy + Math.min(q.height, lh) > vh, box: box(q) }; }
@@ -441,7 +456,7 @@ export function layoutProbe(opts = {}) {
     }
   }
 
-  return { vw, vh, iw: innerWidth, docW: doc.scrollWidth, docH: Math.max(doc.scrollHeight, body.scrollHeight), findings, controls, fold, cols, headerH,
+  return { vw, vh, iw: innerWidth, docW: doc.scrollWidth, rtl: cs(body).direction === 'rtl', viewportMeta: document.querySelector('meta[name=viewport]')?.getAttribute('content') || '', docH: Math.max(doc.scrollHeight, body.scrollHeight), findings, controls, fold, cols, headerH,
     clip: [doc, body].some((e) => /hidden|clip/.test(cs(e).overflowX)) };
 }
 
@@ -488,7 +503,14 @@ export async function measureAt(page, opts = {}) {
   const needOverflow = r.docW > r.vw || r.clip || r.iw > r.vw;
   if (needOverflow) {
     const o = await page.evaluate(overflowCulprits).catch(() => null);
-    if (o?.overflow) {
+    // One pixel with no element past the edge is sub-pixel rounding (device scale factors), not a fault.
+    // Only what lies past the end edge can widen a page: a skip link parked at left: -9999px is past the start edge of
+    // a left-to-right page and never the cause. In a right-to-left page the end edge is the left one, and the shared
+    // probe looks right: find the outermost boxes past the left edge instead (on a phone whose layout viewport has
+    // widened, that edge sits at innerWidth − clientWidth).
+    if (o?.culprits?.length && !r.rtl) o.culprits = o.culprits.filter((c) => c.right > r.vw + 1);
+    if (o && r.rtl) o.culprits = await page.evaluate(rtlCulprits, Math.max(0, r.iw - r.vw)).catch(() => []);
+    if (o?.overflow && !(o.by <= 1 && !o.culprits.length)) {
       const c = o.culprits[0];
       const where = c ? await page.evaluate(locate, c.selector).catch(() => null) : null;
       r.findings.push({ check: 'overflow', id: where?.id || 0, sel: c ? c.selector : '(page)', detail: `page ${o.by}px wider than the viewport${o.culprits.length ? `: ${o.culprits.slice(0, 3).map((x) => x.selector).join(', ')}` : ''}`, box: where?.box || null });
@@ -499,9 +521,31 @@ export async function measureAt(page, opts = {}) {
       r.findings.push({ check: 'edge-cut', id: where?.id || 0, sel: e.selector, detail: `"${e.text}" ${e.past}px past the ${e.edge === 'left' ? 'left' : 'right'} edge, which no scroll reaches`, box: where?.box || null });
     }
   }
-  if (r.iw > r.vw + 1 && opts.mobile) r.findings.push({ check: 'zoom-out', id: 0, sel: '(page)', detail: `layout viewport ${r.iw}px at a ${r.vw}px screen — phones show the page zoomed out`, box: null });
+  if (opts.mobile && !/width\s*=\s*device-width/i.test(r.viewportMeta)) r.findings.push({ check: 'no-viewport', id: 0, sel: '(page)', detail: `no <meta name="viewport" content="width=device-width">: phones lay the page out ${r.vw}px wide and shrink it`, box: null, sev: 'error' });
+  else if (r.iw > r.vw + 1 && opts.mobile) r.findings.push({ check: 'zoom-out', id: 0, sel: '(page)', detail: `layout viewport ${r.iw}px at a ${r.vw}px screen — phones show the page zoomed out`, box: null });
   for (const f of r.findings) f.sev ||= SEV[f.check] || 'warn';
   return r;
+}
+
+/** Right-to-left pages: the outermost boxes that reach past the left (end) edge. Self-contained (page.evaluate). */
+function rtlCulprits(edge) {
+  const sel = (el) => {
+    if (el.id) return `#${el.id}`;
+    const cls = [...el.classList].slice(0, 2).map((c) => `.${c}`).join('');
+    const parent = el.parentElement && el.parentElement !== document.body ? sel(el.parentElement) + ' > ' : '';
+    return (parent.length > 80 ? '… > ' : parent) + el.tagName.toLowerCase() + cls;
+  };
+  const clipped = (el) => { for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) if (getComputedStyle(p).overflowX !== 'visible') return true; return false; };
+  const out = [];
+  for (const el of document.body.querySelectorAll('*')) {
+    const q = el.getBoundingClientRect();
+    if (q.width === 0 || q.height === 0 || q.left >= edge - 1 || clipped(el)) continue;
+    const pq = el.parentElement?.getBoundingClientRect();
+    if (el.parentElement !== document.body && pq && pq.left < edge - 1 && !clipped(el.parentElement)) continue;
+    out.push({ selector: sel(el), right: Math.round(q.right), width: Math.round(q.width) });
+    if (out.length >= 8) break;
+  }
+  return out;
 }
 
 /** An element named by lib/probes.mjs's selector (it may start with "… > "): its sweep id and document box. */
@@ -532,7 +576,7 @@ function toRanges(samples) {
       const k = `${f.check}|${s.passName}|${f.id || f.sel}`;
       const e = byKey.get(k) || { check: f.check, sel: f.sel, sev: f.sev, hits: [] };
       if (WEIGHT[f.sev] > WEIGHT[e.sev]) e.sev = f.sev;
-      e.hits.push({ i, width: s.label || s.width, w: s.width, detail: f.detail, box: f.box, id: f.id });
+      e.hits.push({ i, width: s.label || s.width, w: s.width, detail: f.detail, box: f.box, id: f.id, by: f.by, byId: f.byId });
       byKey.set(k, e);
     }
   });
@@ -540,12 +584,29 @@ function toRanges(samples) {
   for (const e of byKey.values()) {
     let cur = null;
     for (const h of e.hits) {
-      if (cur && h.i === cur.lastI + 1 && samples[h.i].pass === samples[cur.lastI].pass) { cur.to = h.width; cur.lastI = h.i; cur.n++; continue; }
-      cur = { check: e.check, sev: e.sev, sel: e.sel, from: h.width, to: h.width, lastI: h.i, n: 1, detail: h.detail, at: h.w, box: h.box, id: h.id, pass: samples[h.i].pass };
+      // Adjacent widths of one load merge into a range; the two zoom widths are separate cases, never a range.
+      if (cur && h.i === cur.lastI + 1 && samples[h.i].pass === samples[cur.lastI].pass && samples[h.i].pass !== 'zoom') { cur.to = h.width; cur.lastI = h.i; cur.n++; continue; }
+      cur = { check: e.check, sev: e.sev, sel: e.sel, from: h.width, to: h.width, lastI: h.i, n: 1, detail: h.detail, at: h.w, box: h.box, id: h.id, pass: samples[h.i].pass, by: h.by, byId: h.byId };
       ranges.push(cur);
     }
   }
-  return groupSiblings(ranges.map(({ lastI, ...r }) => r)).sort((a, b) => WEIGHT[b.sev] - WEIGHT[a.sev] || b.n - a.n);
+  return groupSiblings(byClipper(ranges.map(({ lastI, ...r }) => r))).sort((a, b) => WEIGHT[b.sev] - WEIGHT[a.sev] || b.n - a.n);
+}
+
+/** Text cut by one clipping box is one fault however many cells it cuts: a table in an overflow: hidden card. */
+function byClipper(ranges) {
+  const g = new Map();
+  for (const r of ranges) if (r.check === 'clipped' && r.byId) { const k = `${r.pass}|${r.byId}`; (g.get(k) || g.set(k, []).get(k)).push(r); }
+  const merged = new Set(), out = [];
+  const num = (w) => Number(String(w).split(' ')[0]);
+  for (const list of g.values()) {
+    if (list.length < 3) continue;
+    list.forEach((r) => merged.add(r));
+    const from = list.reduce((m, r) => (num(r.from) < num(m.from) ? r : m)).from, to = list.reduce((m, r) => (num(r.to) > num(m.to) ? r : m)).to;
+    const texts = [...new Set(list.map((r) => (String(r.detail).match(/^"([^"]*)"/) || [])[1]).filter(Boolean))];
+    out.push({ ...list[0], sel: list[0].by, from, to, n: list.reduce((s, r) => s + r.n, 0), detail: `${list.length} texts cut by its overflow at some or all of these widths: ${texts.slice(0, 5).map((t) => `"${t}"`).join(', ')}${texts.length > 5 ? ', …' : ''} — the box clips; let it scroll or let its content fit`, members: list.map((r) => `${r.sel} ${r.from}–${r.to}`) });
+  }
+  return [...ranges.filter((r) => !merged.has(r)), ...out];
 }
 
 /** Three or more siblings with the same finding over the same widths read as one row: "6 × button in div.tools". */
@@ -578,21 +639,32 @@ function crossWidth(samples) {
   const ctl = new Map();
   // Element ids are per page load: key them by pass.
   const ck = (s, c) => `${s.passName}:${c.id}`;
-  for (const s of samples) for (const c of s.controls) { const e = ctl.get(ck(s, c)) || { lines1: false, small: 0, n: 0 }; e.n++; if (Math.min(c.w, c.h) < 24) e.small++; if (c.lines === 1) e.lines1 = true; ctl.set(ck(s, c), e); }
+  for (const s of samples) for (const c of s.controls) {
+    const e = ctl.get(ck(s, c)) || { lines1: false, small: 0, n: 0, bigLines: Infinity }; e.n++;
+    if (Math.min(c.w, c.h) < 24) e.small++; else e.bigLines = Math.min(e.bigLines, c.lines);
+    if (c.lines === 1) e.lines1 = true; ctl.set(ck(s, c), e);
+  }
   let staticSmall = 0;
   for (const [, e] of ctl) if (e.small === e.n) staticSmall++;
+  // A phone page without a device-width viewport is text-autosized: control sizes move with the width for no reason
+  // the page chose (the no-viewport finding already says so), so they are not compared there.
+  const autosized = (s) => s.passName === 'phone' && !/width\s*=\s*device-width/i.test(s.viewportMeta || '');
   for (const s of samples) {
+    if (autosized(s)) continue;
     for (const c of s.controls) {
       const e = ctl.get(ck(s, c));
-      if (Math.min(c.w, c.h) < 24 && e.small < e.n) s.findings.push({ check: 'small-target', sev: 'warn', id: c.id, sel: c.sel, detail: `"${c.label}" ${c.w}×${c.h}px here, ≥ 24 px at other widths`, box: c.box });
+      // Squeezed: narrower than 24 px here, or shorter without having lost a line (a link that fits on one line is
+      // one line tall, not squeezed).
+      if (Math.min(c.w, c.h) < 24 && e.small < e.n && (c.w < 24 || c.lines >= e.bigLines)) s.findings.push({ check: 'small-target', sev: 'warn', id: c.id, sel: c.sel, detail: `"${c.label}" ${c.w}×${c.h}px here, ≥ 24 px at other widths`, box: c.box });
       if (c.buttonLike && c.lines >= 2 && e.lines1) s.findings.push({ check: 'label-wrap', sev: 'warn', id: c.id, sel: c.sel, detail: `"${c.label}" wraps to ${c.lines} lines (${c.w}×${c.h}px)`, box: c.box });
     }
   }
   for (const which of ['h1', 'cta']) {
     const pass = new Map();
-    for (const s of samples) { const f = s.fold[which]; if (!f || s.pass === 'zoom') continue; const e = pass.get(s.pass) || { above: 0, below: 0 }; f.below ? e.below++ : e.above++; pass.set(s.pass, e); }
+    // Counted per element: a CTA that is hidden at some widths is not compared with whatever stood in for it.
+    for (const s of samples) { const f = s.fold[which]; if (!f || s.pass === 'zoom') continue; const k = `${s.pass}:${f.id}`; const e = pass.get(k) || { above: 0, below: 0 }; f.below ? e.below++ : e.above++; pass.set(k, e); }
     for (const s of samples) {
-      const f = s.pass !== 'zoom' && s.fold[which]; const e = f && pass.get(s.pass);
+      const f = s.pass !== 'zoom' && s.fold[which]; const e = f && pass.get(`${s.pass}:${f.id}`);
       if (f?.below && e.above > 0) s.findings.push({ check: 'fold', sev: 'error', id: f.id, sel: f.sel, detail: `${which === 'h1' ? 'h1' : `primary CTA "${f.label}"`} at y=${f.top}, below the ${s.vh}px fold (above it at ${e.above} other width${e.above > 1 ? 's' : ''})`, box: f.box });
     }
   }
@@ -653,24 +725,126 @@ export async function drawSheet(browser, cells, out, { title = '' } = {}) {
   await page.close();
 }
 
-/** Boxes and numbers over findings (absolute overlays, no layout change); returns a remover. */
+/**
+ * Boxes and numbers over findings (absolute overlays, no layout change); returns a remover.
+ * The marks sit in one layer the size of the document that clips them, so a box past an edge can never widen the
+ * page: in a right-to-left document, overflow to the left is scrollable, and a mark at a negative x used to grow the
+ * page leftward and push the content out of every later shot.
+ */
 export async function markFindings(page, marks) {
   await page.evaluate((marks) => {
+    document.getElementById('__sw_marks')?.remove();
+    const d = document.documentElement;
+    const sx = scrollX, sy = scrollY;
+    // The document's scroll origin: 0 in a left-to-right page, negative in a right-to-left page that overflows left.
+    scrollTo({ left: -1e7, top: sy, behavior: 'instant' });
+    const minX = Math.min(0, scrollX);
+    scrollTo({ left: sx, top: sy, behavior: 'instant' });
+    const W = d.scrollWidth, H = Math.max(d.scrollHeight, document.body?.scrollHeight || 0);
     const layer = document.createElement('div');
     layer.id = '__sw_marks';
-    layer.style.cssText = 'position:absolute;left:0;top:0;width:0;height:0;z-index:2147483647;pointer-events:none';
+    layer.style.cssText = `position:absolute;left:0;top:0;width:${W}px;height:${H}px;overflow:hidden;z-index:2147483647;pointer-events:none;margin:0;padding:0;border:0;transform:none`;
+    d.append(layer);
+    // Where the layer landed (a positioned html moves it): put its origin on the document's scroll origin.
+    const r = layer.getBoundingClientRect();
+    layer.style.left = `${minX - (r.left + scrollX)}px`;
+    layer.style.top = `${-(r.top + scrollY)}px`;
+    const clampX = (v) => Math.max(0, Math.min(W - 6, v)), clampY = (v) => Math.max(0, Math.min(H - 6, v));
     marks.forEach((m, i) => {
       if (!m.box) return;
-      const d = document.createElement('div');
-      d.style.cssText = `position:absolute;left:${m.box.x - 3}px;top:${m.box.y - 3}px;width:${Math.max(6, m.box.w + 6)}px;height:${Math.max(6, m.box.h + 6)}px;outline:3px solid ${m.sev === 'error' ? '#e0112b' : '#e08a00'};outline-offset:0;box-shadow:0 0 0 5px #fff9`;
+      const x0 = clampX(m.box.x - 3 - minX), x1 = Math.max(x0 + 6, Math.min(W, m.box.x + m.box.w + 3 - minX));
+      const y0 = clampY(m.box.y - 3), y1 = Math.max(y0 + 6, Math.min(H, m.box.y + m.box.h + 3));
+      const colour = m.sev === 'error' ? '#e0112b' : '#e08a00';
+      const b = document.createElement('div');
+      b.style.cssText = `position:absolute;left:${x0}px;top:${y0}px;width:${x1 - x0}px;height:${y1 - y0}px;outline:3px solid ${colour};outline-offset:-3px;box-shadow:0 0 0 2px #fff9`;
       const n = document.createElement('div');
       n.textContent = String(i + 1);
-      n.style.cssText = `position:absolute;left:${m.box.x - 3}px;top:${Math.max(0, m.box.y - 22)}px;background:${m.sev === 'error' ? '#e0112b' : '#e08a00'};color:#fff;font:700 13px/18px system-ui;padding:0 6px;border-radius:3px`;
-      layer.append(d, n);
+      n.style.cssText = `position:absolute;left:${Math.min(x0, W - 28)}px;top:${Math.max(0, y0 - 19)}px;background:${colour};color:#fff;font:700 13px/18px system-ui;padding:0 6px;border-radius:3px`;
+      layer.append(b, n);
     });
-    document.body.append(layer);
   }, marks).catch(() => {});
   return () => page.evaluate(() => document.getElementById('__sw_marks')?.remove()).catch(() => {});
+}
+
+/**
+ * The page's geometry for evidence shots. minX: the document's scroll origin (full-page screenshots start there, so a
+ * right-to-left page that overflows left is shifted). zoomed: the phone shows the page zoomed out (no device-width
+ * viewport, or a layout viewport widened by overflow): a full-page screenshot changes the page scale there, and text
+ * autosizing then re-lays the page out, so the shot would not match the measured boxes.
+ */
+async function geometry(page) {
+  return page.evaluate(() => {
+    const d = document.documentElement, sx = scrollX, sy = scrollY;
+    scrollTo({ left: -1e7, top: sy, behavior: 'instant' });
+    const minX = Math.min(0, scrollX);
+    scrollTo({ left: sx, top: sy, behavior: 'instant' });
+    return { minX, docW: d.scrollWidth, docH: Math.max(d.scrollHeight, document.body?.scrollHeight || 0), cw: d.clientWidth,
+      scale: window.visualViewport ? visualViewport.scale : 1, vvH: window.visualViewport ? visualViewport.height : innerHeight, dpr: devicePixelRatio };
+  });
+}
+
+/** A zoomed-out phone page: scroll the layout so the box sits 20% from the top and shoot what the screen shows. */
+async function screenShot(page, g, box) {
+  await page.evaluate(({ y }) => scrollTo({ left: 0, top: y, behavior: 'instant' }), { y: box ? Math.max(0, box.y - Math.round(g.vvH * 0.2)) : 0 });
+  const png = await page.screenshot();
+  const at = box ? await page.evaluate((b) => ({ x: (b.x - scrollX - (visualViewport?.offsetLeft || 0)) * (visualViewport?.scale || 1), y: (b.y - scrollY - (visualViewport?.offsetTop || 0)) * (visualViewport?.scale || 1), s: visualViewport?.scale || 1 }), box) : null;
+  return { png, at };
+}
+
+/**
+ * Evidence around a box: a viewport-wide strip (height × up to maxH) with the box 20% from its top, moved sideways only
+ * when the box lies outside the first screen (right-to-left overflow, a culprit past the edge). PNG buffer.
+ */
+export async function evidenceShot(page, box, { height = 800, maxH } = {}) {
+  const g = await geometry(page);
+  if (g.scale < 0.98) return (await screenShot(page, g, box)).png;
+  const vw = g.cw;
+  let x = 0;
+  if (box && (box.x < 0 || box.x + box.w > vw)) x = box.x < 0 ? box.x - 24 : Math.min(box.x - 24, box.x + box.w + 24 - vw);
+  x = Math.max(g.minX, Math.min(x, g.minX + g.docW - vw));
+  const y0 = box ? Math.max(0, Math.min(box.y - Math.round(height * 0.2), g.docH - height)) : 0;
+  const h = Math.min(maxH || height, Math.max(1, g.docH - y0));
+  return page.screenshot({ clip: { x: x - g.minX, y: y0, width: vw, height: h }, fullPage: true });
+}
+
+/** A crop of the box and 32 px around it, 1:1 (on a zoomed-out phone page: as the screen shows it). Writes a PNG. */
+export async function evidenceCrop(page, box, file, { pad = 32, maxH = 1400 } = {}) {
+  if (!box || box.w < 1 || box.h < 1) return false;
+  const g = await geometry(page);
+  if (g.scale < 0.98) {
+    const { png, at } = await screenShot(page, g, box);
+    const { PNG } = await import('pngjs');
+    const im = PNG.sync.read(png), k = g.dpr;
+    const x = Math.max(0, Math.floor((at.x - pad) * k)), y = Math.max(0, Math.floor((at.y - pad - 22) * k));
+    const w = Math.min(im.width - x, Math.ceil((box.w * at.s + pad * 2) * k)), h = Math.min(im.height - y, Math.ceil((box.h * at.s + pad * 2 + 22) * k));
+    if (w < 4 || h < 4) return false;
+    const out = new PNG({ width: w, height: h });
+    PNG.bitblt(im, out, x, y, w, h, 0, 0);
+    await writeFile(file, PNG.sync.write(out));
+    return true;
+  }
+  const x0 = Math.max(g.minX, box.x - pad), y0 = Math.max(0, box.y - pad - 22);
+  const clip = { x: x0 - g.minX, y: y0, width: Math.min(g.minX + g.docW - x0, box.w + pad * 2), height: Math.min(g.docH - y0, box.h + pad * 2 + 22, maxH) };
+  if (clip.width < 4 || clip.height < 4) return false;
+  return !!(await page.screenshot({ path: file, clip, fullPage: true }).catch(() => null));
+}
+
+/**
+ * What rendered the shots: product, revision, the executable and the flags that change rasterisation. Two captures
+ * are comparable pixel for pixel only when these match: browser.version() alone is the same for full Chromium and
+ * the headless shell, whose text rendering differs.
+ */
+export async function browserBuild(browser) {
+  try {
+    const s = await browser.newBrowserCDPSession();
+    const v = await s.send('Browser.getVersion');
+    const info = await s.send('SystemInfo.getInfo').catch(() => ({}));
+    await s.detach().catch(() => {});
+    const cl = String(info.commandLine || '');
+    const exe = cl.split(' --')[0];
+    const flags = [...cl.matchAll(/--(font-render-hinting|force-color-profile|force-device-scale-factor|disable-gpu|use-gl|use-angle|enable-gpu-rasterization|disable-lcd-text|disable-font-subpixel-positioning|headless)(=[^\s]+)?/g)].map((m) => m[0]).sort();
+    return { product: v.product, revision: v.revision, executable: exe, flags, platform: process.platform };
+  } catch { return { product: browser.version(), revision: null, executable: null, flags: [], platform: process.platform }; }
 }
 
 /** Refresh the box of each finding from its element id at the current width (boxes move as the width changes). */
@@ -680,12 +854,6 @@ async function currentBoxes(page, marks) {
     const byId = new Map(); for (const e of all) if (e.__swid) byId.set(e.__swid, e);
     return marks.map((m) => { const e = m.id && byId.get(m.id); if (!e) return m; const r = e.getBoundingClientRect(); return { ...m, box: { x: Math.round(r.left + scrollX), y: Math.round(r.top + scrollY), w: Math.round(r.width), h: Math.round(r.height) } }; });
   }, marks);
-}
-
-async function shotAround(page, box, vw, vh, docH, { pad = 24, maxH } = {}) {
-  const y0 = box ? Math.max(0, Math.min(box.y - Math.round(vh * 0.2), docH - vh)) : 0;
-  const h = Math.min(maxH || vh, Math.max(1, docH - y0));
-  return page.screenshot({ clip: { x: 0, y: y0, width: vw, height: h }, fullPage: true });
 }
 
 async function sweepPage(browser, url, a, outDir) {
@@ -742,8 +910,7 @@ async function sweepPage(browser, url, a, outDir) {
     const top = x.s.findings.filter((f) => f.sev !== 'info').sort((p, q) => WEIGHT[q.sev] - WEIGHT[p.sev]).slice(0, 8);
     const marks = await currentBoxes(page, top);
     const rm = await markFindings(page, marks);
-    const docH = await page.evaluate(() => Math.max(document.documentElement.scrollHeight, document.body.scrollHeight));
-    const png = await shotAround(page, marks.find((m) => m.box && m.box.h > 0)?.box, x.s.vw, x.s.height, docH, { maxH: Math.round(x.s.height * 1.4) });
+    const png = await evidenceShot(page, marks.find((m) => m.box && m.box.h > 0)?.box, { height: x.s.height, maxH: Math.round(x.s.height * 1.4) });
     await rm();
     cells.push({ label: `${x.s.label} px${x.s.pass === 'zoom' ? '' : ` (${x.s.passName})`} — ${x.s.findings.filter((f) => f.sev === 'error').length} ✗, ${x.s.findings.filter((f) => f.sev === 'warn').length} △`, png, notes: marks.map((m) => `${MARK[m.sev]} ${m.check}: ${m.sel} — ${m.detail}`.slice(0, 140)), cellW: x.s.vw >= 700 ? 640 : 380 });
   }
@@ -759,19 +926,14 @@ async function sweepPage(browser, url, a, outDir) {
     const [m] = await currentBoxes(page, [{ ...r, box: r.box }]);
     if (!m.box || m.box.w < 1 || m.box.h < 1) continue;
     const rm = await markFindings(page, [m]);
-    const docH = await page.evaluate(() => Math.max(document.documentElement.scrollHeight, document.body.scrollHeight));
-    const pad = 32;
-    const clip = { x: Math.max(0, m.box.x - pad), y: Math.max(0, m.box.y - pad - 22), width: 0, height: 0 };
-    clip.width = Math.min(Math.max(s.vw, s.iw) - clip.x, m.box.w + pad * 2);
-    clip.height = Math.min(docH - clip.y, m.box.h + pad * 2 + 22, 1400);
     const file = path.join(cropDir, `${String(crops.length + 1).padStart(2, '0')}-${r.check}-${String(r.from).split(' ')[0]}.png`);
-    if (clip.width > 4 && clip.height > 4) { await page.screenshot({ path: file, clip, fullPage: true }).catch(() => null); crops.push({ file, check: r.check, sel: r.sel, width: r.from }); }
+    if (await evidenceCrop(page, m.box, file)) crops.push({ file, check: r.check, sel: r.sel, width: r.from });
     await rm();
   }
   const sheetFile = cells.length ? path.join(outDir, `${slug}-sheet.jpg`) : null;
   if (sheetFile) await drawSheet(browser, cells, sheetFile, { title: `${url} — worst widths (findings boxed and numbered; captions below each)` });
   for (const pp of pages) await pp.ctx.close();
-  return { url, loads, widths: samples.length, ms, msPerWidth: Math.round(ms / samples.length), ranges, breakpoints: cross.breaks, flips: cross.flips, staticSmallTargets: cross.staticSmall, perWidth, sheet: sheetFile, crops };
+  return { url, browser: a.__build || null, loads, widths: samples.length, ms, msPerWidth: Math.round(ms / samples.length), ranges, breakpoints: cross.breaks, flips: cross.flips, staticSmallTargets: cross.staticSmall, perWidth, sheet: sheetFile, crops };
 }
 
 function markdown(res) {
@@ -803,6 +965,7 @@ async function main() {
   const outDir = a.out || 'sweep';
   await mkdir(outDir, { recursive: true });
   const { browser } = await launch({ chrome: a.chrome });
+  a.__build = await browserBuild(browser);
   let anyError = false;
   const md = ['# Width sweep', ''];
   try {

@@ -42,9 +42,14 @@ $('#swap').addEventListener('click', () => {
   if (document.startViewTransition) document.startViewTransition(swap); else swap();
 });
 
-// 6 ticker — set the registered property; the transition retargets from the current value
-const ticker = $('#ticker');
-const setN = (n) => { ticker.style.setProperty('--n', n); ticker.setAttribute('aria-label', String(n)); };
+// 6 ticker — set the registered property; the transition retargets from the current value. While it counts the
+// DOM text is empty and ::after shows the counter; when it settles (or at once, if nothing transitions) the
+// final value becomes the DOM text again.
+const ticker = $('#ticker'); let goal = 0;
+const settle = () => { ticker.classList.remove('counting'); ticker.textContent = String(goal); };
+ticker.addEventListener('transitionend', (e) => { if (e.propertyName === '--n') settle(); });
+const setN = (n) => { goal = n; ticker.textContent = ''; ticker.classList.add('counting'); ticker.style.setProperty('--n', n);
+  requestAnimationFrame(() => { if (!ticker.getAnimations().length) settle(); }); };
 $('#tick-hi').addEventListener('click', () => setN(1000));
 $('#tick-lo').addEventListener('click', () => setN(200));
 window.__read = { ...(window.__read || {}), ticker: () => parseFloat(getComputedStyle(ticker).getPropertyValue('--n')) };

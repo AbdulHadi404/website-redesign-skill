@@ -1,7 +1,9 @@
 // Measurements for one page load of one variant. One browser at a time; a fresh context per run.
 //
 // Numbers and what they mean here (SwiftShader: WebGL and compositing run on the CPU, in the GPU process):
-//   ttff        effect's first frame on screen (ms from navigation start); CSS/static: first contentful paint
+//   ttff        "draw issued": the rAF after the effect's first draw call (ms from navigation start). NOT the first
+//               presented frame: the GPU can finish that frame much later (shader compile); the firstframe phase
+//               measures that (gpuFirst via gl.finish(), firstVisible via screencast). CSS/static: first contentful paint
 //   lcp         largest-contentful-paint time and element (the poster <img> or the <h1>)
 //   bootBlock   sum of long tasks (>50 ms) on the main thread from navigation to first effect frame + 500 ms
 //   fps         main-thread rAF cadence over a 5 s window (a no-op probe loop; the display is 60 Hz)

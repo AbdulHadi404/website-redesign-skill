@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spinner only</title>
+<style>
+  body { margin: 0; font: 16px system-ui, sans-serif; padding: 40px; }
+  .spinner { width: 48px; height: 48px; border: 6px solid #ddd; border-top-color: #e8590c; border-radius: 50%; animation: spin .9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .pulse { width: 120px; height: 12px; background: #1d4ed8; animation: pulse 1.3s ease-in-out infinite alternate; margin-top: 24px; }
+  @keyframes pulse { from { opacity: .2; } to { opacity: 1; } }
+</style></head>
+<body><h1>Loading your rota</h1><div class="spinner" aria-hidden="true"></div><div class="pulse" aria-hidden="true"></div></body></html>

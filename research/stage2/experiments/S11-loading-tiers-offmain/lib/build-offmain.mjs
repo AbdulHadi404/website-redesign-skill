@@ -21,10 +21,15 @@ export async function buildOffmain({ n = 200000 } = {}) {
     recs.push(rec); lat[i] = rec.lat; lon[i] = rec.lon; val[i] = rec.v; cat[i] = c;
   }
   const json = JSON.stringify(recs);
+  // Added after review: the same data with only the four fields the view uses, as objects and as columns, to split the
+  // binary's speed-up into "fewer fields" and "typed columnar layout".
+  const json4 = JSON.stringify(recs.map((x) => ({ lat: x.lat, lon: x.lon, v: x.v, cat: x.cat })));
+  const json4c = JSON.stringify({ n, lat: recs.map((x) => x.lat), lon: recs.map((x) => x.lon), v: recs.map((x) => x.v), cat: Array.from(cat) });
   const ndjson = recs.map((x) => JSON.stringify(x)).join('\n') + '\n';
   const bin = Buffer.concat([Buffer.from(new Uint32Array([n]).buffer), Buffer.from(lat.buffer), Buffer.from(lon.buffer), Buffer.from(val.buffer), Buffer.from(cat.buffer)]);
   const put = async (name, data, compress = true) => { await writeFile(path.join(dir, name), data); if (compress) await writeFile(path.join(dir, name + '.gz'), gzipSync(data, { level: constants.Z_BEST_SPEED })); };
   await put('data.json', json); await put('data.ndjson', ndjson); await put('data.bin', bin);
+  await put('data4.json', json4); await put('data4c.json', json4c);
 
   // The job, shared by the page and the workers: aggregates per category, a 64-bin histogram of v, a 128×128
   // density grid, the top 50 by v, and the points as a Float32Array for drawing.
@@ -127,6 +132,8 @@ const JOBS = {
       while ((nl = buf.indexOf('\\n')) >= 0) { const line = buf.slice(0, nl); buf = buf.slice(nl + 1); if (!line) continue; const r = JSON.parse(line); addOne(A, r.lat, r.lon, r.v, ci[r.cat]);
         if (performance.now() - t > 8) { await yieldNow(); t = performance.now(); } }
       if (A.n >= next || done) { next += 20000; show(summary(A), !done); } if (done) break; } },
+  async 'json4-main'() { const recs = await (await fetch('data4.json')).json(); const A = makeAcc(recs.length); addRecords(A, recs); show(summary(A)); },
+  async 'json4col-main'() { const d = await (await fetch('data4c.json')).json(); const A = makeAcc(d.n); for (let i = 0; i < d.n; i++) addOne(A, d.lat[i], d.lon[i], d.v[i], d.cat[i]); show(summary(A)); },
   async 'binary-main'() { const buf = await (await fetch('data.bin')).arrayBuffer(); const A = makeAcc(new Uint32Array(buf, 0, 1)[0]); addBinary(A, buf); show(summary(A)); },
 };
 window.__run = async (name) => { W.first = 0; $('#status').textContent = 'working'; const t = performance.now(); W.t0 = t; await JOBS[name](); W.t1 = performance.now(); return { ms: W.t1 - t, first: W.first - t }; };
@@ -170,12 +177,14 @@ window.__run = (mode, n, ms) => new Promise((res) => {
   W.t0 = performance.now();
   const fin = (r) => { W.t1 = performance.now(); res(r); };
   if (mode === 'main') animate($('#cv').getContext('2d'), n, 390, 300, ms, requestAnimationFrame, fin);
+  // settle: the same animation plays 1.2 s, eases out and stops (motion.md §9: a moment, not a loop); taps continue to ms
+  else if (mode === 'settle') animate($('#cv').getContext('2d'), n, 390, 300, 1200, requestAnimationFrame, (r) => setTimeout(() => fin(r), Math.max(0, ms - (performance.now() - W.t0))));
   else { const off = $('#cv').transferControlToOffscreen(); const w = new Worker('worker-visual.js', { type: 'module' }); w.onmessage = (e) => fin(e.data); w.postMessage({ canvas: off, n, ms }, [off]); }
 });
 </script>`);
 
   const sizes = {};
-  for (const f of ['data.json', 'data.ndjson', 'data.bin']) sizes[f] = { raw: (await stat(path.join(dir, f))).size, gzip: (await stat(path.join(dir, f + '.gz'))).size };
+  for (const f of ['data.json', 'data4.json', 'data4c.json', 'data.ndjson', 'data.bin']) sizes[f] = { raw: (await stat(path.join(dir, f))).size, gzip: (await stat(path.join(dir, f + '.gz'))).size };
   return { n, sizes };
 }
 

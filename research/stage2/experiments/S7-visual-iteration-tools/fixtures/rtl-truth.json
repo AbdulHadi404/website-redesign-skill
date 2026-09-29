@@ -1,0 +1,33 @@
+{
+  "about": "What stress.mjs --only rtl should report on the RTL controls. S8's bilingual page (research/stage2/experiments/S8-rtl-mobile-haptics/fixtures/bilingual.html) in four variants: English and Arabic, built right (logical properties; the few physical values are deliberate and sit in dir=ltr islands) and 'broken' (bilingual-broken.css: the physical-property mistakes RTL builds usually ship). Sanad (H-blind-eval, Arabic-first, same CSS for ?lang=en) with the text-align: left rules in its assets/app.css. 'expect' lists what the mirror check is built to catch (an element pinned by a physical left/right, or text-align: left/right); each entry is matched on the finding's selector. 'outOfScope' lists mistakes in the same CSS the check does not look for (they move an element without pinning it, or are not about position).",
+  "pages": {
+    "s8-en": { "url": "/fixtures/bilingual.html?lang=en", "server": "s8", "expect": [] },
+    "s8-ar": { "url": "/fixtures/bilingual.html?lang=ar", "server": "s8", "expect": [] },
+    "s8-en-broken": {
+      "url": "/fixtures/bilingual.html?lang=en&variant=broken", "server": "s8",
+      "expect": [
+        { "id": "badge", "sel": "span\\.badge", "css": ".badge { position: absolute; top: 2px; right: 2px }" },
+        { "id": "alert-icon", "sel": "icon-alert", "css": ".with-icon .icon { position: absolute; right: 10px }" },
+        { "id": "toast", "sel": "toast", "css": ".toast { position: fixed; right: 16px }" },
+        { "id": "drawer", "sel": "drawer", "css": ".drawer { position: fixed; left: 0; transform: translateX(-100%) }" },
+        { "id": "lede", "sel": "p\\.lede", "css": ".lede { text-align: left }" },
+        { "id": "hint", "sel": "p\\.hint", "css": ".hint { text-align: left }" },
+        { "id": "caption", "sel": "caption", "css": ".orders caption { text-align: left }" },
+        { "id": "th-td", "sel": "t(head|body) > tr > t[hd]$", "css": ".orders th, .orders td { text-align: left }" }
+      ],
+      "outOfScope": ["margin-right on .brand", "margin-left: auto on .search", "margin-left on .due", "padding-right on .with-icon input", "a directional box-shadow on .card", "a slide-in animation from translateX(-24px)", "icons flipped wholesale", "Latin-only font and a clipping line-height on Arabic"]
+    },
+    "s8-ar-broken": { "url": "/fixtures/bilingual.html?lang=ar&variant=broken", "server": "s8", "sameAs": "s8-en-broken" },
+    "sanad-ar": {
+      "url": "/repo/research/experiments/H-blind-eval/sanad/fixture/", "server": "main",
+      "expect": [
+        { "id": "nav-item", "sel": "nav-item", "css": ".nav-item { text-align: left }" },
+        { "id": "h1", "sel": "#hello", "css": "h1 { text-align: left }" },
+        { "id": "card-title", "sel": "card-title", "css": ".card-title { text-align: left }" },
+        { "id": "th", "sel": "> th$", "css": "th { text-align: left }" },
+        { "id": "td", "sel": "> td$", "css": "td { text-align: left }" }
+      ]
+    },
+    "sanad-en": { "url": "/repo/research/experiments/H-blind-eval/sanad/fixture/?lang=en", "server": "main", "sameAs": "sanad-ar" }
+  }
+}

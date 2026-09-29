@@ -2,11 +2,12 @@
 // mobile profile (slow 4G: 150 ms RTT, 1.6 Mbps down; CPU 4×). Two scripted visitors:
 //   quick  — taps Menu at 3 s, scrolls to the module at 5 s, taps "Try it live" at 6.5 s, then drags on it;
 //   reader — taps Menu at 3 s, scrolls at 18 s, taps at 19.5 s, then drags.
-// Plus the skill's own scripts/perf.mjs on every variant (a visitor who never interacts).
+// Plus the skill's own scripts/perf.mjs on every variant (a visitor who never interacts). --only re-measures the named
+// variants and keeps the stored runs of the others.
 //   node run-loading.mjs [--runs 5] [--only eager,idle] [--skip-perf] [--skip-journeys]
 import { spawn } from 'node:child_process';
 import path from 'node:path';
-import { launch, siteRoot, env, newPage, NETS, median, r0, r1, load, saveResult, readResult, sleep } from './lib/common.mjs';
+import { launch, siteRoot, skillScripts, env, newPage, NETS, median, r0, r1, load, saveResult, readResult, sleep } from './lib/common.mjs';
 import { serve } from './lib/serve.mjs';
 import { buildLoading } from './lib/build-loading.mjs';
 
@@ -19,7 +20,7 @@ const JOURNEYS = { quick: { menu: 3000, scrollStart: 3500, scroll: 5000, click: 
 const srv = await serve(siteRoot);
 const base = `${srv.url}/loading`;
 const prev = (await readResult('loading')) || {};
-const out = { env: env(), built, profile: 'phone 390×844 @2x, CPU 4×, slow 4G (150 ms RTT, 1.6 Mbps down, 750 kbps up), fresh context per run (empty cache), HTTP/1.1 localhost with gzip', journeys: JOURNEYS, runs: prev.runs && args.includes('--skip-journeys') ? prev.runs : [], perf: prev.perf || null };
+const out = { env: env(), built, profile: 'phone 390×844 @2x, CPU 4×, slow 4G (150 ms RTT, 1.6 Mbps down, 750 kbps up), fresh context per run (empty cache), HTTP/1.1 localhost with gzip', journeys: JOURNEYS, runs: prev.runs && (args.includes('--skip-journeys') || opt('--only', null)) ? prev.runs : [], perf: prev.perf || null };
 
 const { browser } = await launch();
 
@@ -136,7 +137,7 @@ await browser.close();
 
 // perf.mjs from the skill: LCP, CLS, TBT, transfer, median of RUNS, for a visitor who never interacts.
 if (!args.includes('--skip-perf')) {
-  const perfJs = '/home/user/website-redesign-skill/skills/website-redesign/scripts/perf.mjs';
+  const perfJs = path.join(skillScripts, 'perf.mjs');
   const text = await new Promise((res) => {
     const p = spawn(process.execPath, [perfJs, '--base', base, '--paths', ...VARIANTS.map((v) => `/${v}.html`), '--runs', String(RUNS), '--out', path.join(siteRoot, '..', 'perf-loading.md')], { stdio: ['ignore', 'pipe', 'inherit'] });
     let s = ''; p.stdout.on('data', (d) => { s += d; process.stdout.write(d); }); p.on('close', () => res(s));
@@ -160,7 +161,7 @@ for (const jname of Object.keys(JOURNEYS)) for (const v of Object.keys(built.var
     runs: rs.length, lcp: m((r) => r.lcp), lcpEl: rs[0].lcpEl, tbt10: m((r) => r.tbt10), tbtSession: m((r) => r.tbtSession), loafBlocking: m((r) => r.loafBlocking),
     worstTap: m((r) => r.worstTap), secondTap: m((r) => r.secondTap), tapsOver200: m((r) => r.tapsOver200), tapsOver100: m((r) => r.tapsOver100), taps: m((r) => r.loadingTaps),
     menuInp: m((r) => r.menu.dur), menuDelay: m((r) => r.menu.delay), startClickInp: m((r) => r.startClick?.dur ?? 0), moduleInp: m((r) => r.moduleInp),
-    request: m((r) => r.request), usable: m((r) => r.usable), ready: m((r) => r.ready), shown: m((r) => r.shown), clickAt: m((r) => r.clickAt),
+    warm: m((r) => r.warm), request: m((r) => r.request), usable: m((r) => r.usable), ready: m((r) => r.ready), shown: m((r) => r.shown), clickAt: m((r) => r.clickAt),
     waitAfterClick: m((r) => r.waitAfterClick), fullAfterClick: m((r) => r.fullAfterClick), waitRange: [r0(Math.min(...rs.map((r) => r.waitAfterClick ?? NaN))), r0(Math.max(...rs.map((r) => r.waitAfterClick ?? NaN)))],
     kbBeforeMenu: m((r) => r.bytes.beforeMenu / 1024), kbBeforeScroll: m((r) => r.bytes.beforeScroll / 1024), kbBeforeClick: m((r) => r.bytes.beforeClick / 1024), kbTotal: m((r) => r.bytes.total / 1024),
     loadavg1: r1(median(rs.map((r) => r.loadavg1))),

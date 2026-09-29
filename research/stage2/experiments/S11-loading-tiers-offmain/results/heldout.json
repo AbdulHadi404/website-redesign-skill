@@ -1,0 +1,2495 @@
+{
+ "env": {
+  "date": "2026-09-29T05:56:47.113Z",
+  "node": "v22.22.2",
+  "cpus": 4,
+  "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "loadavgAtStart": [
+   4,
+   5.2,
+   6.8
+  ],
+  "loadavgAtEnd": [
+   11.8,
+   12.8,
+   10.4
+  ]
+ },
+ "method": "governor hooked into the page rAF for 15 s at each CPU rate, then detectTier() on the running page; no refreshMs given (60 Hz assumed)",
+ "runs": [
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 1,
+   "governor": "governor.js",
+   "loadavg1": 4,
+   "gov": {
+    "log": [
+     {
+      "t": 2534,
+      "from": 0,
+      "to": 1,
+      "why": "6 frames: p50 183.3 / p90 200.1 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 4950,
+      "from": 1,
+      "to": 2,
+      "why": "5 frames: p50 200.0 / p90 299.9 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 7567,
+      "from": 2,
+      "to": 3,
+      "why": "5 frames: p50 250.0 / p90 283.3 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 10167,
+      "from": 3,
+      "to": 3,
+      "floor": true,
+      "why": "6 frames: p50 166.7 / p90 233.3 ms vs budget 16.7 ms"
+     }
+    ],
+    "level": 3,
+    "floor": true,
+    "refresh": 16.666666666666668,
+    "frames": 75,
+    "err": null,
+    "p50": 200,
+    "p90": 266.59999999999945
+   },
+   "tier": {
+    "cap": "undetermined",
+    "why": "only 8 frames (5 after warm-up) in 1620 ms (frames ~200 ms apart, work 2.6 ms); refresh not measurable (page busy?), 60 Hz assumed",
+    "ms": 2490,
+    "refreshMs": 16.666666666666668,
+    "probe": {
+     "frames": 8,
+     "kept": 5,
+     "ms": 1620,
+     "workMedian": 2.599999997764826,
+     "gapMedian": 200
+    },
+    "wallMs": 3031
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 1,
+   "governor": "governor-v1.js",
+   "loadavg1": 4.8,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.666666666666668,
+    "frames": 67,
+    "err": null,
+    "p50": 200.09999999999854,
+    "p90": 333.2999999999993
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 4,
+   "governor": "governor.js",
+   "loadavg1": 6.1,
+   "gov": {
+    "log": [
+     {
+      "t": 2417,
+      "from": 0,
+      "to": 1,
+      "why": "4 frames: p50 316.6 / p90 316.7 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 4950,
+      "from": 1,
+      "to": 2,
+      "why": "3 frames: p50 400.0 / p90 433.4 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 7466,
+      "from": 2,
+      "to": 3,
+      "why": "3 frames: p50 433.4 / p90 466.6 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 10300,
+      "from": 3,
+      "to": 3,
+      "floor": true,
+      "why": "4 frames: p50 350.0 / p90 400.0 ms vs budget 16.7 ms"
+     }
+    ],
+    "level": 3,
+    "floor": true,
+    "refresh": 16.666666666666668,
+    "frames": 46,
+    "err": null,
+    "p50": 316.60000000000036,
+    "p90": 433.39999999999964
+   },
+   "tier": {
+    "cap": "undetermined",
+    "why": "only 3 frames (0 after warm-up) in 1876 ms (frames ~0 ms apart, work ? ms); refresh not measurable (page busy?), 60 Hz assumed",
+    "ms": 3212,
+    "refreshMs": 16.666666666666668,
+    "probe": {
+     "frames": 3,
+     "kept": 0,
+     "ms": 1876,
+     "workMedian": null,
+     "gapMedian": null
+    },
+    "wallMs": 4392
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 4,
+   "governor": "governor-v1.js",
+   "loadavg1": 8.6,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.666666666666668,
+    "frames": 42,
+    "err": null,
+    "p50": 349.99999999999955,
+    "p90": 466.6999999999989
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 6,
+   "governor": "governor.js",
+   "loadavg1": 9.9,
+   "gov": {
+    "log": [
+     {
+      "t": 2200,
+      "from": 0,
+      "to": 1,
+      "why": "3 frames: p50 383.3 / p90 416.6 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 4533,
+      "from": 1,
+      "to": 2,
+      "why": "3 frames: p50 366.6 / p90 533.3 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 7150,
+      "from": 2,
+      "to": 3,
+      "why": "3 frames: p50 350.0 / p90 516.6 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 9616,
+      "from": 3,
+      "to": 3,
+      "floor": true,
+      "why": "3 frames: p50 466.6 / p90 483.3 ms vs budget 16.7 ms"
+     }
+    ],
+    "level": 3,
+    "floor": true,
+    "refresh": 16.666666666666668,
+    "frames": 36,
+    "err": null,
+    "p50": 399.89999999999964,
+    "p90": 583.2999999999993
+   },
+   "tier": {
+    "cap": "undetermined",
+    "why": "only 5 frames (2 after warm-up) in 1819 ms (frames ~417 ms apart, work 19.9 ms); refresh not measurable (page busy?), 60 Hz assumed",
+    "ms": 2881,
+    "refreshMs": 16.666666666666668,
+    "probe": {
+     "frames": 5,
+     "kept": 2,
+     "ms": 1819,
+     "workMedian": 19.899999998509884,
+     "gapMedian": 416.59999999999854
+    },
+    "wallMs": 4588
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 6,
+   "governor": "governor-v1.js",
+   "loadavg1": 11,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.666666666666668,
+    "frames": 53,
+    "err": null,
+    "p50": 283.3000000000002,
+    "p90": 350
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 1,
+   "governor": "governor.js",
+   "loadavg1": 10.6,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": false,
+    "refresh": 16.600000000000364,
+    "frames": 891,
+    "err": null,
+    "p50": 16.699999999999818,
+    "p90": 16.700000000000728
+   },
+   "tier": {
+    "cap": "strong",
+    "why": "probe work 1.5 ms = 0.09 × the 16.6 ms refresh",
+    "ms": 793,
+    "refreshMs": 16.600000000000364,
+    "probe": {
+     "frames": 27,
+     "kept": 24,
+     "ms": 438,
+     "workMedian": 1.5,
+     "gapMedian": 16.69999999999891
+    },
+    "wallMs": 805
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 1,
+   "governor": "governor-v1.js",
+   "loadavg1": 9,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.600000000000364,
+    "frames": 892,
+    "err": null,
+    "p50": 16.699999999999818,
+    "p90": 16.700000000000728
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 4,
+   "governor": "governor.js",
+   "loadavg1": 8.5,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": false,
+    "refresh": 16.600000000000364,
+    "frames": 842,
+    "err": null,
+    "p50": 16.699999999999818,
+    "p90": 16.799999999999727
+   },
+   "tier": {
+    "cap": "average",
+    "why": "probe work 8.0 ms = 0.48 × the 16.6 ms refresh",
+    "ms": 1919,
+    "refreshMs": 16.600000000000364,
+    "probe": {
+     "frames": 55,
+     "kept": 52,
+     "ms": 1505,
+     "workMedian": 8,
+     "gapMedian": 33.29999999999927
+    },
+    "wallMs": 1973
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 4,
+   "governor": "governor-v1.js",
+   "loadavg1": 7.8,
+   "gov": {
+    "log": [
+     {
+      "t": 6517,
+      "from": 0,
+      "to": 1,
+      "why": "p90 33.3 ms > 1.25 × 16.6 ms"
+     },
+     {
+      "t": 11217,
+      "from": 1,
+      "to": 2,
+      "why": "p90 33.3 ms > 1.25 × 16.6 ms"
+     }
+    ],
+    "level": 2,
+    "floor": null,
+    "refresh": 16.599999999998545,
+    "frames": 804,
+    "err": null,
+    "p50": 16.699999999999818,
+    "p90": 33.29999999999927
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 6,
+   "governor": "governor.js",
+   "loadavg1": 7.3,
+   "gov": {
+    "log": [
+     {
+      "t": 2533,
+      "from": 0,
+      "to": 1,
+      "why": "34 frames: p50 33.3 / p90 49.9 ms vs budget 16.6 ms"
+     },
+     {
+      "t": 5000,
+      "from": 1,
+      "to": 2,
+      "why": "29 frames: p50 33.4 / p90 50.0 ms vs budget 16.6 ms"
+     },
+     {
+      "t": 7516,
+      "from": 2,
+      "to": 3,
+      "why": "35 frames: p50 33.3 / p90 50.0 ms vs budget 16.6 ms"
+     }
+    ],
+    "level": 3,
+    "floor": false,
+    "refresh": 16.600000000000364,
+    "frames": 457,
+    "err": null,
+    "p50": 33.30000000000018,
+    "p90": 50
+   },
+   "tier": {
+    "cap": "low",
+    "why": "probe work 12.2 ms = 0.73 × the 16.7 ms refresh; refresh not measurable (page busy?), 60 Hz assumed",
+    "ms": 2125,
+    "refreshMs": 16.666666666666668,
+    "probe": {
+     "frames": 31,
+     "kept": 28,
+     "ms": 1536,
+     "workMedian": 12.199999999254942,
+     "gapMedian": 50
+    },
+    "wallMs": 2236
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 6,
+   "governor": "governor-v1.js",
+   "loadavg1": 7.3,
+   "gov": {
+    "log": [
+     {
+      "t": 4450,
+      "from": 0,
+      "to": 1,
+      "why": "p90 50.0 ms > 1.25 × 16.6 ms"
+     },
+     {
+      "t": 8834,
+      "from": 1,
+      "to": 2,
+      "why": "p90 33.4 ms > 1.25 × 16.6 ms"
+     },
+     {
+      "t": 13383,
+      "from": 2,
+      "to": 3,
+      "why": "p90 50.0 ms > 1.25 × 16.6 ms"
+     }
+    ],
+    "level": 3,
+    "floor": null,
+    "refresh": 16.600000000000364,
+    "frames": 448,
+    "err": null,
+    "p50": 33.30000000000018,
+    "p90": 50
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 1,
+   "governor": "governor.js",
+   "loadavg1": 7.3,
+   "gov": {
+    "log": [
+     {
+      "t": 3550,
+      "from": 0,
+      "to": 1,
+      "why": "26 frames: p50 33.4 / p90 50.1 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 6050,
+      "from": 1,
+      "to": 2,
+      "why": "26 frames: p50 33.4 / p90 50.0 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 9550,
+      "from": 2,
+      "to": 3,
+      "why": "32 frames: p50 33.3 / p90 33.4 ms vs budget 16.7 ms"
+     }
+    ],
+    "level": 3,
+    "floor": false,
+    "refresh": 16.600000000000364,
+    "frames": 476,
+    "err": null,
+    "p50": 33.30000000000018,
+    "p90": 50
+   },
+   "tier": {
+    "cap": "strong",
+    "why": "probe work 2.2 ms = 0.07 × the 33.3 ms refresh",
+    "ms": 1681,
+    "refreshMs": 33.29999999999927,
+    "probe": {
+     "frames": 27,
+     "kept": 24,
+     "ms": 1022,
+     "workMedian": 2.199999999254942,
+     "gapMedian": 33.399999999999636
+    },
+    "wallMs": 1776
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 1,
+   "governor": "governor-v1.js",
+   "loadavg1": 8.6,
+   "gov": {
+    "log": [
+     {
+      "t": 4533,
+      "from": 0,
+      "to": 1,
+      "why": "p90 33.4 ms > 1.25 × 16.8 ms"
+     },
+     {
+      "t": 8316,
+      "from": 1,
+      "to": 2,
+      "why": "p90 33.4 ms > 1.25 × 16.7 ms"
+     },
+     {
+      "t": 12332,
+      "from": 2,
+      "to": 3,
+      "why": "p90 33.4 ms > 1.25 × 16.6 ms"
+     }
+    ],
+    "level": 3,
+    "floor": null,
+    "refresh": 16.600000000000364,
+    "frames": 519,
+    "err": null,
+    "p50": 33.299999999999955,
+    "p90": 33.40000000000009
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 4,
+   "governor": "governor.js",
+   "loadavg1": 8.1,
+   "gov": {
+    "log": [
+     {
+      "t": 2533,
+      "from": 0,
+      "to": 1,
+      "why": "21 frames: p50 50.0 / p90 50.1 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 5050,
+      "from": 1,
+      "to": 2,
+      "why": "26 frames: p50 33.4 / p90 50.0 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 7566,
+      "from": 2,
+      "to": 3,
+      "why": "20 frames: p50 49.9 / p90 100.0 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 10083,
+      "from": 3,
+      "to": 3,
+      "floor": true,
+      "why": "23 frames: p50 49.9 / p90 50.1 ms vs budget 16.7 ms"
+     }
+    ],
+    "level": 3,
+    "floor": true,
+    "refresh": 16.666666666666668,
+    "frames": 313,
+    "err": null,
+    "p50": 50,
+    "p90": 66.60000000000002
+   },
+   "tier": {
+    "cap": "average",
+    "why": "probe work 8.9 ms = 0.53 × the 16.7 ms refresh; refresh not measurable (page busy?), 60 Hz assumed",
+    "ms": 2239,
+    "refreshMs": 16.666666666666668,
+    "probe": {
+     "frames": 27,
+     "kept": 24,
+     "ms": 1504,
+     "workMedian": 8.900000002235174,
+     "gapMedian": 50
+    },
+    "wallMs": 2435
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 4,
+   "governor": "governor-v1.js",
+   "loadavg1": 8.9,
+   "gov": {
+    "log": [
+     {
+      "t": 5300,
+      "from": 0,
+      "to": 1,
+      "why": "p90 50.1 ms > 1.25 × 33.3 ms"
+     },
+     {
+      "t": 11350,
+      "from": 1,
+      "to": 2,
+      "why": "p90 83.2 ms > 1.25 × 33.3 ms"
+     }
+    ],
+    "level": 2,
+    "floor": null,
+    "refresh": 33.29999999999927,
+    "frames": 304,
+    "err": null,
+    "p50": 49.899999999999636,
+    "p90": 66.70000000000073
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 6,
+   "governor": "governor.js",
+   "loadavg1": 9.7,
+   "gov": {
+    "log": [
+     {
+      "t": 2517,
+      "from": 0,
+      "to": 1,
+      "why": "15 frames: p50 50.0 / p90 116.7 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 5100,
+      "from": 1,
+      "to": 2,
+      "why": "18 frames: p50 50.0 / p90 83.3 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 7583,
+      "from": 2,
+      "to": 3,
+      "why": "20 frames: p50 50.0 / p90 83.3 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 10067,
+      "from": 3,
+      "to": 3,
+      "floor": true,
+      "why": "20 frames: p50 50.0 / p90 66.7 ms vs budget 16.7 ms"
+     }
+    ],
+    "level": 3,
+    "floor": true,
+    "refresh": 16.666666666666668,
+    "frames": 245,
+    "err": null,
+    "p50": 50,
+    "p90": 83.30000000000109
+   },
+   "tier": {
+    "cap": "low",
+    "why": "probe work 10.5 ms = 0.63 × the 16.7 ms refresh; refresh not measurable (page busy?), 60 Hz assumed",
+    "ms": 2275,
+    "refreshMs": 16.666666666666668,
+    "probe": {
+     "frames": 24,
+     "kept": 21,
+     "ms": 1502,
+     "workMedian": 10.5,
+     "gapMedian": 50.099999999998545
+    },
+    "wallMs": 2390
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 6,
+   "governor": "governor-v1.js",
+   "loadavg1": 10.2,
+   "gov": {
+    "log": [
+     {
+      "t": 6683,
+      "from": 0,
+      "to": 1,
+      "why": "p90 66.8 ms > 1.25 × 33.3 ms"
+     },
+     {
+      "t": 13883,
+      "from": 1,
+      "to": 2,
+      "why": "p90 100.0 ms > 1.25 × 33.3 ms"
+     }
+    ],
+    "level": 2,
+    "floor": null,
+    "refresh": 33.30000000000018,
+    "frames": 246,
+    "err": null,
+    "p50": 50,
+    "p90": 100
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 1,
+   "governor": "governor.js",
+   "loadavg1": 10.5,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": false,
+    "refresh": 16.666666666666668,
+    "frames": 0,
+    "err": null,
+    "p50": null,
+    "p90": null
+   },
+   "tier": {
+    "cap": "strong",
+    "why": "probe work 1.8 ms = 0.11 × the 16.6 ms refresh",
+    "ms": 832,
+    "refreshMs": 16.600000000000364,
+    "probe": {
+     "frames": 27,
+     "kept": 24,
+     "ms": 459,
+     "workMedian": 1.800000000745058,
+     "gapMedian": 16.69999999999891
+    },
+    "wallMs": 848
+   },
+   "errs": []
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 1,
+   "governor": "governor-v1.js",
+   "loadavg1": 11.5,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.666666666666668,
+    "frames": 0,
+    "err": null,
+    "p50": null,
+    "p90": null
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 4,
+   "governor": "governor.js",
+   "loadavg1": 12.1,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": false,
+    "refresh": 16.666666666666668,
+    "frames": 0,
+    "err": null,
+    "p50": null,
+    "p90": null
+   },
+   "tier": {
+    "cap": "average",
+    "why": "probe work 9.0 ms = 0.54 × the 16.6 ms refresh",
+    "ms": 1886,
+    "refreshMs": 16.600000000000364,
+    "probe": {
+     "frames": 87,
+     "kept": 84,
+     "ms": 1513,
+     "workMedian": 9,
+     "gapMedian": 16.69999999999891
+    },
+    "wallMs": 1919
+   },
+   "errs": []
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 4,
+   "governor": "governor-v1.js",
+   "loadavg1": 13.6,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.666666666666668,
+    "frames": 0,
+    "err": null,
+    "p50": null,
+    "p90": null
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 6,
+   "governor": "governor.js",
+   "loadavg1": 13.2,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": false,
+    "refresh": 16.666666666666668,
+    "frames": 0,
+    "err": null,
+    "p50": null,
+    "p90": null
+   },
+   "tier": {
+    "cap": "low",
+    "why": "probe work 12.0 ms = 0.72 × the 16.6 ms refresh",
+    "ms": 1905,
+    "refreshMs": 16.600000000000364,
+    "probe": {
+     "frames": 88,
+     "kept": 85,
+     "ms": 1503,
+     "workMedian": 12,
+     "gapMedian": 16.69999999999891
+    },
+    "wallMs": 1934
+   },
+   "errs": []
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 6,
+   "governor": "governor-v1.js",
+   "loadavg1": 12.2,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.666666666666668,
+    "frames": 0,
+    "err": null,
+    "p50": null,
+    "p90": null
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 1,
+   "governor": "governor.js",
+   "loadavg1": 11.9,
+   "gov": {
+    "log": [
+     {
+      "t": 2617,
+      "from": 0,
+      "to": 1,
+      "why": "4 frames: p50 283.3 / p90 366.7 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 5134,
+      "from": 1,
+      "to": 2,
+      "why": "2 frames: p50 316.7 / p90 716.6 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 7467,
+      "from": 2,
+      "to": 3,
+      "why": "3 frames: p50 299.9 / p90 433.4 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 9900,
+      "from": 3,
+      "to": 3,
+      "floor": true,
+      "why": "3 frames: p50 366.7 / p90 416.7 ms vs budget 16.7 ms"
+     }
+    ],
+    "level": 3,
+    "floor": true,
+    "refresh": 16.666666666666668,
+    "frames": 45,
+    "err": null,
+    "p50": 333.2000000000007,
+    "p90": 466.7000000000007
+   },
+   "tier": {
+    "cap": "undetermined",
+    "why": "only 6 frames (3 after warm-up) in 1930 ms (frames ~433 ms apart, work 2.4 ms); refresh not measurable (page busy?), 60 Hz assumed",
+    "ms": 2681,
+    "refreshMs": 16.666666666666668,
+    "probe": {
+     "frames": 6,
+     "kept": 3,
+     "ms": 1930,
+     "workMedian": 2.400000002235174,
+     "gapMedian": 433.2999999999993
+    },
+    "wallMs": 3370
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 1,
+   "governor": "governor-v1.js",
+   "loadavg1": 12.2,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.666666666666668,
+    "frames": 55,
+    "err": null,
+    "p50": 266.6999999999989,
+    "p90": 350.10000000000014
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 4,
+   "governor": "governor.js",
+   "loadavg1": 12.3,
+   "gov": {
+    "log": [
+     {
+      "t": 2817,
+      "from": 0,
+      "to": 1,
+      "why": "4 frames: p50 283.3 / p90 533.3 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 4967,
+      "from": 1,
+      "to": 2,
+      "why": "2 frames: p50 483.3 / p90 533.4 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 7567,
+      "from": 2,
+      "to": 3,
+      "why": "3 frames: p50 416.7 / p90 449.9 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 10333,
+      "from": 3,
+      "to": 3,
+      "floor": true,
+      "why": "4 frames: p50 283.4 / p90 383.4 ms vs budget 16.7 ms"
+     }
+    ],
+    "level": 3,
+    "floor": true,
+    "refresh": 16.666666666666668,
+    "frames": 36,
+    "err": null,
+    "p50": 383.3000000000011,
+    "p90": 666.5
+   },
+   "tier": {
+    "cap": "undetermined",
+    "why": "only 5 frames (2 after warm-up) in 1672 ms (frames ~283 ms apart, work 11.9 ms); refresh not measurable (page busy?), 60 Hz assumed",
+    "ms": 2568,
+    "refreshMs": 16.666666666666668,
+    "probe": {
+     "frames": 5,
+     "kept": 2,
+     "ms": 1672,
+     "workMedian": 11.899999998509884,
+     "gapMedian": 283.2999999999993
+    },
+    "wallMs": 3742
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 4,
+   "governor": "governor-v1.js",
+   "loadavg1": 12.4,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.666666666666668,
+    "frames": 42,
+    "err": null,
+    "p50": 350,
+    "p90": 483.3000000000011
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 6,
+   "governor": "governor.js",
+   "loadavg1": 12.2,
+   "gov": {
+    "log": [
+     {
+      "t": 1983,
+      "from": 0,
+      "to": 1,
+      "why": "2 frames: p50 350.1 / p90 1633.2 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 4616,
+      "from": 1,
+      "to": 2,
+      "why": "4 frames: p50 300.1 / p90 366.5 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 7199,
+      "from": 2,
+      "to": 3,
+      "why": "3 frames: p50 333.3 / p90 516.7 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 9616,
+      "from": 3,
+      "to": 3,
+      "floor": true,
+      "why": "2 frames: p50 666.7 / p90 749.9 ms vs budget 16.7 ms"
+     }
+    ],
+    "level": 3,
+    "floor": true,
+    "refresh": 16.666666666666668,
+    "frames": 37,
+    "err": null,
+    "p50": 350,
+    "p90": 666.7000000000007
+   },
+   "tier": {
+    "cap": "undetermined",
+    "why": "only 3 frames (0 after warm-up) in 1510 ms (frames ~0 ms apart, work ? ms); refresh not measurable (page busy?), 60 Hz assumed",
+    "ms": 2288,
+    "refreshMs": 16.666666666666668,
+    "probe": {
+     "frames": 3,
+     "kept": 0,
+     "ms": 1510,
+     "workMedian": null,
+     "gapMedian": null
+    },
+    "wallMs": 3636
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/e5-three/?nopause",
+   "cpu": 6,
+   "governor": "governor-v1.js",
+   "loadavg1": 13.3,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.666666666666668,
+    "frames": 28,
+    "err": null,
+    "p50": 499.89999999999986,
+    "p90": 766.6000000000004
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 1,
+   "governor": "governor.js",
+   "loadavg1": 14.2,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": false,
+    "refresh": 16.600000000000364,
+    "frames": 877,
+    "err": null,
+    "p50": 16.699999999999818,
+    "p90": 16.700000000000728
+   },
+   "tier": {
+    "cap": "strong",
+    "why": "probe work 2.1 ms = 0.13 × the 16.6 ms refresh",
+    "ms": 859,
+    "refreshMs": 16.600000000000364,
+    "probe": {
+     "frames": 27,
+     "kept": 24,
+     "ms": 454,
+     "workMedian": 2.099999997764826,
+     "gapMedian": 16.69999999999891
+    },
+    "wallMs": 1022
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 1,
+   "governor": "governor-v1.js",
+   "loadavg1": 14.6,
+   "gov": {
+    "log": [
+     {
+      "t": 4600,
+      "from": 0,
+      "to": 1,
+      "why": "p90 33.3 ms > 1.25 × 16.6 ms"
+     }
+    ],
+    "level": 1,
+    "floor": null,
+    "refresh": 16.600000000000364,
+    "frames": 810,
+    "err": null,
+    "p50": 16.699999999999818,
+    "p90": 16.700000000000728
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 4,
+   "governor": "governor.js",
+   "loadavg1": 15.4,
+   "gov": {
+    "log": [
+     {
+      "t": 3466,
+      "from": 0,
+      "to": 1,
+      "why": "44 frames: p50 16.7 / p90 33.4 ms vs budget 16.6 ms"
+     },
+     {
+      "t": 6766,
+      "from": 1,
+      "to": 2,
+      "why": "45 frames: p50 16.7 / p90 33.4 ms vs budget 16.6 ms"
+     },
+     {
+      "t": 10249,
+      "from": 2,
+      "to": 3,
+      "why": "43 frames: p50 16.7 / p90 33.4 ms vs budget 16.6 ms"
+     }
+    ],
+    "level": 3,
+    "floor": false,
+    "refresh": 16.600000000000364,
+    "frames": 700,
+    "err": null,
+    "p50": 16.699999999999818,
+    "p90": 33.399999999999636
+   },
+   "tier": {
+    "cap": "average",
+    "why": "probe work 7.8 ms = 0.47 × the 16.6 ms refresh",
+    "ms": 1209,
+    "refreshMs": 16.600000000000364,
+    "probe": {
+     "frames": 27,
+     "kept": 24,
+     "ms": 735,
+     "workMedian": 7.800000000745058,
+     "gapMedian": 33.19999999999891
+    },
+    "wallMs": 1296
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 4,
+   "governor": "governor-v1.js",
+   "loadavg1": 15.8,
+   "gov": {
+    "log": [
+     {
+      "t": 5217,
+      "from": 0,
+      "to": 1,
+      "why": "p90 33.4 ms > 1.25 × 16.6 ms"
+     },
+     {
+      "t": 9500,
+      "from": 1,
+      "to": 2,
+      "why": "p90 33.4 ms > 1.25 × 16.6 ms"
+     },
+     {
+      "t": 13100,
+      "from": 2,
+      "to": 3,
+      "why": "p90 50.0 ms > 1.25 × 16.6 ms"
+     }
+    ],
+    "level": 3,
+    "floor": null,
+    "refresh": 16.600000000000364,
+    "frames": 689,
+    "err": null,
+    "p50": 16.699999999999818,
+    "p90": 33.399999999999636
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 6,
+   "governor": "governor.js",
+   "loadavg1": 15.7,
+   "gov": {
+    "log": [
+     {
+      "t": 3500,
+      "from": 0,
+      "to": 1,
+      "why": "42 frames: p50 16.7 / p90 33.4 ms vs budget 16.6 ms"
+     },
+     {
+      "t": 6017,
+      "from": 1,
+      "to": 2,
+      "why": "36 frames: p50 33.3 / p90 49.9 ms vs budget 16.6 ms"
+     },
+     {
+      "t": 8534,
+      "from": 2,
+      "to": 3,
+      "why": "24 frames: p50 33.4 / p90 83.2 ms vs budget 16.6 ms"
+     }
+    ],
+    "level": 3,
+    "floor": false,
+    "refresh": 16.600000000000364,
+    "frames": 483,
+    "err": null,
+    "p50": 33.29999999999927,
+    "p90": 50
+   },
+   "tier": {
+    "cap": "low",
+    "why": "probe work 14.0 ms = 0.84 × the 16.7 ms refresh; refresh not measurable (page busy?), 60 Hz assumed",
+    "ms": 2037,
+    "refreshMs": 16.666666666666668,
+    "probe": {
+     "frames": 27,
+     "kept": 24,
+     "ms": 1458,
+     "workMedian": 14,
+     "gapMedian": 50
+    },
+    "wallMs": 2196
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/d-canvas2d/?nopause",
+   "cpu": 6,
+   "governor": "governor-v1.js",
+   "loadavg1": 16.2,
+   "gov": {
+    "log": [
+     {
+      "t": 4467,
+      "from": 0,
+      "to": 1,
+      "why": "p90 50.0 ms > 1.25 × 16.6 ms"
+     },
+     {
+      "t": 8833,
+      "from": 1,
+      "to": 2,
+      "why": "p90 50.0 ms > 1.25 × 16.6 ms"
+     },
+     {
+      "t": 13716,
+      "from": 2,
+      "to": 3,
+      "why": "p90 50.0 ms > 1.25 × 16.6 ms"
+     }
+    ],
+    "level": 3,
+    "floor": null,
+    "refresh": 16.600000000000364,
+    "frames": 435,
+    "err": null,
+    "p50": 33.30000000000018,
+    "p90": 50.09999999999991
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 1,
+   "governor": "governor.js",
+   "loadavg1": 16.7,
+   "gov": {
+    "log": [
+     {
+      "t": 2533,
+      "from": 0,
+      "to": 1,
+      "why": "26 frames: p50 33.4 / p90 50.0 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 6033,
+      "from": 1,
+      "to": 2,
+      "why": "29 frames: p50 33.3 / p90 50.0 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 9550,
+      "from": 2,
+      "to": 3,
+      "why": "30 frames: p50 33.3 / p90 50.0 ms vs budget 16.7 ms"
+     }
+    ],
+    "level": 3,
+    "floor": false,
+    "refresh": 16.666666666666668,
+    "frames": 429,
+    "err": null,
+    "p50": 33.30000000000109,
+    "p90": 50
+   },
+   "tier": {
+    "cap": "strong",
+    "why": "probe work 2.1 ms = 0.06 × the 33.3 ms refresh",
+    "ms": 1687,
+    "refreshMs": 33.29999999999927,
+    "probe": {
+     "frames": 27,
+     "kept": 24,
+     "ms": 982,
+     "workMedian": 2.100000001490116,
+     "gapMedian": 33.30000000000291
+    },
+    "wallMs": 1888
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 1,
+   "governor": "governor-v1.js",
+   "loadavg1": 15.9,
+   "gov": {
+    "log": [
+     {
+      "t": 5783,
+      "from": 0,
+      "to": 1,
+      "why": "p90 50.0 ms > 1.25 × 33.3 ms"
+     },
+     {
+      "t": 10933,
+      "from": 1,
+      "to": 2,
+      "why": "p90 50.0 ms > 1.25 × 33.3 ms"
+     }
+    ],
+    "level": 2,
+    "floor": null,
+    "refresh": 33.29999999999927,
+    "frames": 364,
+    "err": null,
+    "p50": 33.399999999999636,
+    "p90": 50.00000000000091
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 4,
+   "governor": "governor.js",
+   "loadavg1": 17.1,
+   "gov": {
+    "log": [
+     {
+      "t": 2500,
+      "from": 0,
+      "to": 1,
+      "why": "14 frames: p50 50.0 / p90 133.3 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 4967,
+      "from": 1,
+      "to": 2,
+      "why": "16 frames: p50 50.0 / p90 116.7 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 7350,
+      "from": 2,
+      "to": 3,
+      "why": "17 frames: p50 50.0 / p90 100.1 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 9883,
+      "from": 3,
+      "to": 3,
+      "floor": true,
+      "why": "16 frames: p50 50.0 / p90 116.7 ms vs budget 16.7 ms"
+     }
+    ],
+    "level": 3,
+    "floor": true,
+    "refresh": 16.666666666666668,
+    "frames": 222,
+    "err": null,
+    "p50": 50,
+    "p90": 133.29999999999927
+   },
+   "tier": {
+    "cap": "strong",
+    "why": "probe work 2.2 ms = 0.13 × the 16.7 ms refresh; refresh not measurable (page busy?), 60 Hz assumed",
+    "ms": 2246,
+    "refreshMs": 16.666666666666668,
+    "probe": {
+     "frames": 16,
+     "kept": 13,
+     "ms": 1516,
+     "workMedian": 2.199999999254942,
+     "gapMedian": 116.70000000000073
+    },
+    "wallMs": 2651
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 4,
+   "governor": "governor-v1.js",
+   "loadavg1": 17.1,
+   "gov": {
+    "log": [
+     {
+      "t": 7999,
+      "from": 0,
+      "to": 1,
+      "why": "p90 133.3 ms > 1.25 × 33.3 ms"
+     }
+    ],
+    "level": 1,
+    "floor": null,
+    "refresh": 33.299999999999955,
+    "frames": 218,
+    "err": null,
+    "p50": 50,
+    "p90": 133.39999999999964
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 6,
+   "governor": "governor.js",
+   "loadavg1": 17.2,
+   "gov": {
+    "log": [
+     {
+      "t": 2467,
+      "from": 0,
+      "to": 1,
+      "why": "6 frames: p50 133.3 / p90 366.5 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 5117,
+      "from": 1,
+      "to": 2,
+      "why": "16 frames: p50 66.6 / p90 116.7 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 7617,
+      "from": 2,
+      "to": 3,
+      "why": "9 frames: p50 133.2 / p90 250.0 ms vs budget 16.7 ms"
+     },
+     {
+      "t": 9883,
+      "from": 3,
+      "to": 3,
+      "floor": true,
+      "why": "8 frames: p50 99.9 / p90 350.1 ms vs budget 16.7 ms"
+     }
+    ],
+    "level": 3,
+    "floor": true,
+    "refresh": 16.666666666666668,
+    "frames": 159,
+    "err": null,
+    "p50": 66.60000000000036,
+    "p90": 200
+   },
+   "tier": {
+    "cap": "low",
+    "why": "probe work 12.8 ms = 0.77 × the 16.7 ms refresh; refresh not measurable (page busy?), 60 Hz assumed",
+    "ms": 2390,
+    "refreshMs": 16.666666666666668,
+    "probe": {
+     "frames": 23,
+     "kept": 20,
+     "ms": 1578,
+     "workMedian": 12.799999997019768,
+     "gapMedian": 66.59999999999854
+    },
+    "wallMs": 2814
+   },
+   "errs": []
+  },
+  {
+   "page": "/s10/f-three-particles/?nopause",
+   "cpu": 6,
+   "governor": "governor-v1.js",
+   "loadavg1": 16.9,
+   "gov": {
+    "log": [
+     {
+      "t": 7883,
+      "from": 0,
+      "to": 1,
+      "why": "p90 133.3 ms > 1.25 × 33.3 ms"
+     }
+    ],
+    "level": 1,
+    "floor": null,
+    "refresh": 33.30000000000018,
+    "frames": 201,
+    "err": null,
+    "p50": 50,
+    "p90": 133.40000000000055
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 1,
+   "governor": "governor.js",
+   "loadavg1": 16.2,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": false,
+    "refresh": 16.666666666666668,
+    "frames": 0,
+    "err": null,
+    "p50": null,
+    "p90": null
+   },
+   "tier": {
+    "cap": "strong",
+    "why": "probe work 1.5 ms = 0.09 × the 16.6 ms refresh",
+    "ms": 775,
+    "refreshMs": 16.600000000000364,
+    "probe": {
+     "frames": 27,
+     "kept": 24,
+     "ms": 439,
+     "workMedian": 1.5,
+     "gapMedian": 16.700000000000728
+    },
+    "wallMs": 788
+   },
+   "errs": []
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 1,
+   "governor": "governor-v1.js",
+   "loadavg1": 14.3,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.666666666666668,
+    "frames": 0,
+    "err": null,
+    "p50": null,
+    "p90": null
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 4,
+   "governor": "governor.js",
+   "loadavg1": 13,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": false,
+    "refresh": 16.666666666666668,
+    "frames": 0,
+    "err": null,
+    "p50": null,
+    "p90": null
+   },
+   "tier": {
+    "cap": "average",
+    "why": "probe work 7.4 ms = 0.45 × the 16.6 ms refresh",
+    "ms": 981,
+    "refreshMs": 16.600000000000364,
+    "probe": {
+     "frames": 38,
+     "kept": 35,
+     "ms": 620,
+     "workMedian": 7.400000002235174,
+     "gapMedian": 16.69999999999891
+    },
+    "wallMs": 997
+   },
+   "errs": []
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 4,
+   "governor": "governor-v1.js",
+   "loadavg1": 12.5,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.666666666666668,
+    "frames": 0,
+    "err": null,
+    "p50": null,
+    "p90": null
+   },
+   "tier": null,
+   "errs": []
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 6,
+   "governor": "governor.js",
+   "loadavg1": 12,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": false,
+    "refresh": 16.666666666666668,
+    "frames": 0,
+    "err": null,
+    "p50": null,
+    "p90": null
+   },
+   "tier": {
+    "cap": "low",
+    "why": "probe work 12.1 ms = 0.73 × the 16.6 ms refresh",
+    "ms": 1925,
+    "refreshMs": 16.600000000000364,
+    "probe": {
+     "frames": 88,
+     "kept": 85,
+     "ms": 1512,
+     "workMedian": 12.100000001490116,
+     "gapMedian": 16.700000000000728
+    },
+    "wallMs": 1943
+   },
+   "errs": []
+  },
+  {
+   "page": "/fx/capture-webgl.html",
+   "cpu": 6,
+   "governor": "governor-v1.js",
+   "loadavg1": 12.3,
+   "gov": {
+    "log": [],
+    "level": 0,
+    "floor": null,
+    "refresh": 16.666666666666668,
+    "frames": 0,
+    "err": null,
+    "p50": null,
+    "p90": null
+   },
+   "tier": null,
+   "errs": []
+  }
+ ],
+ "summary": {
+  "/s10/e5-three/?nopause|1x|governor.js": {
+   "intervalP50": 266.6,
+   "intervalP90": 366.7,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2534,
+    2617
+   ],
+   "floorMs": [
+    10167,
+    9900
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "undetermined",
+    "undetermined"
+   ],
+   "tierMs": [
+    2490,
+    2681
+   ],
+   "tierWork": [
+    2.6,
+    2.4
+   ],
+   "errors": 0
+  },
+  "/s10/e5-three/?nopause|1x|governor-v1.js": {
+   "intervalP50": 233.4,
+   "intervalP90": 341.7,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/e5-three/?nopause|4x|governor.js": {
+   "intervalP50": 350,
+   "intervalP90": 549.9,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2417,
+    2817
+   ],
+   "floorMs": [
+    10300,
+    10333
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "undetermined",
+    "undetermined"
+   ],
+   "tierMs": [
+    3212,
+    2568
+   ],
+   "tierWork": [
+    null,
+    11.9
+   ],
+   "errors": 0
+  },
+  "/s10/e5-three/?nopause|4x|governor-v1.js": {
+   "intervalP50": 350,
+   "intervalP90": 475,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/e5-three/?nopause|6x|governor.js": {
+   "intervalP50": 374.9,
+   "intervalP90": 625,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2200,
+    1983
+   ],
+   "floorMs": [
+    9616,
+    9616
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "undetermined",
+    "undetermined"
+   ],
+   "tierMs": [
+    2881,
+    2288
+   ],
+   "tierWork": [
+    19.9,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/e5-three/?nopause|6x|governor-v1.js": {
+   "intervalP50": 391.6,
+   "intervalP90": 558.3,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/d-canvas2d/?nopause|1x|governor.js": {
+   "intervalP50": 16.7,
+   "intervalP90": 16.7,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    16.6
+   ],
+   "tier": [
+    "strong",
+    "strong"
+   ],
+   "tierMs": [
+    793,
+    859
+   ],
+   "tierWork": [
+    1.5,
+    2.1
+   ],
+   "errors": 0
+  },
+  "/s10/d-canvas2d/?nopause|1x|governor-v1.js": {
+   "intervalP50": 16.7,
+   "intervalP90": 16.7,
+   "stepDowns": [
+    0,
+    1
+   ],
+   "firstDownMs": [
+    null,
+    4600
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    16.6
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/d-canvas2d/?nopause|4x|governor.js": {
+   "intervalP50": 16.7,
+   "intervalP90": 25.1,
+   "stepDowns": [
+    0,
+    3
+   ],
+   "firstDownMs": [
+    null,
+    3466
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    16.6
+   ],
+   "tier": [
+    "average",
+    "average"
+   ],
+   "tierMs": [
+    1919,
+    1209
+   ],
+   "tierWork": [
+    8,
+    7.8
+   ],
+   "errors": 0
+  },
+  "/s10/d-canvas2d/?nopause|4x|governor-v1.js": {
+   "intervalP50": 16.7,
+   "intervalP90": 33.3,
+   "stepDowns": [
+    2,
+    3
+   ],
+   "firstDownMs": [
+    6517,
+    5217
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    16.6
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/d-canvas2d/?nopause|6x|governor.js": {
+   "intervalP50": 33.3,
+   "intervalP90": 50,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2533,
+    3500
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    16.6
+   ],
+   "tier": [
+    "low",
+    "low"
+   ],
+   "tierMs": [
+    2125,
+    2037
+   ],
+   "tierWork": [
+    12.2,
+    14
+   ],
+   "errors": 0
+  },
+  "/s10/d-canvas2d/?nopause|6x|governor-v1.js": {
+   "intervalP50": 33.3,
+   "intervalP90": 50,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    4450,
+    4467
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    16.6
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/f-three-particles/?nopause|1x|governor.js": {
+   "intervalP50": 33.3,
+   "intervalP90": 50,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    3550,
+    2533
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    16.7
+   ],
+   "tier": [
+    "strong",
+    "strong"
+   ],
+   "tierMs": [
+    1681,
+    1687
+   ],
+   "tierWork": [
+    2.2,
+    2.1
+   ],
+   "errors": 0
+  },
+  "/s10/f-three-particles/?nopause|1x|governor-v1.js": {
+   "intervalP50": 33.3,
+   "intervalP90": 41.7,
+   "stepDowns": [
+    3,
+    2
+   ],
+   "firstDownMs": [
+    4533,
+    5783
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.6,
+    33.3
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/f-three-particles/?nopause|4x|governor.js": {
+   "intervalP50": 50,
+   "intervalP90": 99.9,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2533,
+    2500
+   ],
+   "floorMs": [
+    10083,
+    9883
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "average",
+    "strong"
+   ],
+   "tierMs": [
+    2239,
+    2246
+   ],
+   "tierWork": [
+    8.9,
+    2.2
+   ],
+   "errors": 0
+  },
+  "/s10/f-three-particles/?nopause|4x|governor-v1.js": {
+   "intervalP50": 49.9,
+   "intervalP90": 100.1,
+   "stepDowns": [
+    2,
+    1
+   ],
+   "firstDownMs": [
+    5300,
+    7999
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    33.3,
+    33.3
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/s10/f-three-particles/?nopause|6x|governor.js": {
+   "intervalP50": 58.3,
+   "intervalP90": 141.7,
+   "stepDowns": [
+    3,
+    3
+   ],
+   "firstDownMs": [
+    2517,
+    2467
+   ],
+   "floorMs": [
+    10067,
+    9883
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "low",
+    "low"
+   ],
+   "tierMs": [
+    2275,
+    2390
+   ],
+   "tierWork": [
+    10.5,
+    12.8
+   ],
+   "errors": 0
+  },
+  "/s10/f-three-particles/?nopause|6x|governor-v1.js": {
+   "intervalP50": 50,
+   "intervalP90": 116.7,
+   "stepDowns": [
+    2,
+    1
+   ],
+   "firstDownMs": [
+    6683,
+    7883
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    33.3,
+    33.3
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/fx/capture-webgl.html|1x|governor.js": {
+   "intervalP50": null,
+   "intervalP90": null,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "strong",
+    "strong"
+   ],
+   "tierMs": [
+    832,
+    775
+   ],
+   "tierWork": [
+    1.8,
+    1.5
+   ],
+   "errors": 0
+  },
+  "/fx/capture-webgl.html|1x|governor-v1.js": {
+   "intervalP50": null,
+   "intervalP90": null,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/fx/capture-webgl.html|4x|governor.js": {
+   "intervalP50": null,
+   "intervalP90": null,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "average",
+    "average"
+   ],
+   "tierMs": [
+    1886,
+    981
+   ],
+   "tierWork": [
+    9,
+    7.4
+   ],
+   "errors": 0
+  },
+  "/fx/capture-webgl.html|4x|governor-v1.js": {
+   "intervalP50": null,
+   "intervalP90": null,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  },
+  "/fx/capture-webgl.html|6x|governor.js": {
+   "intervalP50": null,
+   "intervalP90": null,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    "low",
+    "low"
+   ],
+   "tierMs": [
+    1905,
+    1925
+   ],
+   "tierWork": [
+    12,
+    12.1
+   ],
+   "errors": 0
+  },
+  "/fx/capture-webgl.html|6x|governor-v1.js": {
+   "intervalP50": null,
+   "intervalP90": null,
+   "stepDowns": [
+    0,
+    0
+   ],
+   "firstDownMs": [
+    null,
+    null
+   ],
+   "floorMs": [
+    null,
+    null
+   ],
+   "refreshEnd": [
+    16.7,
+    16.7
+   ],
+   "tier": [
+    null,
+    null
+   ],
+   "tierMs": [
+    null,
+    null
+   ],
+   "tierWork": [
+    null,
+    null
+   ],
+   "errors": 0
+  }
+ }
+}

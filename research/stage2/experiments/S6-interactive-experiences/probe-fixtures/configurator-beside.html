@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Configurator with controls beside the preview</title>
+<!-- A preview that spins on drag (pointer only) with colour radios beside it and a status line. The keyboard
+     changes the picture, but the drag verb has no equivalent. Expected: WARN (controls beside; check the verbs). -->
+<style>body{margin:0;padding:20px;font:16px system-ui}.row{display:flex;gap:24px}canvas{display:block}</style></head>
+<body><main><h1>Your chair</h1><div class="row"><canvas id="c" width="420" height="320" aria-label="Preview of your chair"></canvas>
+<fieldset><legend>Colour</legend><label><input type="radio" name="col" value="#c0392b" checked> Red</label><br><label><input type="radio" name="col" value="#2c7a4b"> Green</label><br><label><input type="radio" name="col" value="#2a5bd7"> Blue</label></fieldset></div><p role="status" id="s"></p></main>
+<script>const c=document.getElementById('c'),x=c.getContext('2d');let col='#c0392b',ang=0,drag=null;
+function d(){x.fillStyle='#f3f1ec';x.fillRect(0,0,420,320);x.save();x.translate(210,160);x.scale(Math.cos(ang),1);x.fillStyle=col;x.fillRect(-80,-60,160,120);x.restore();}d();
+document.querySelectorAll('input[name=col]').forEach(r=>r.addEventListener('change',()=>{col=r.value;d();document.getElementById('s').textContent='Colour: '+r.parentElement.textContent.trim()+'.';}));
+c.addEventListener('pointerdown',e=>{drag=e.clientX});addEventListener('pointermove',e=>{if(drag!==null){ang+=(e.clientX-drag)/100;drag=e.clientX;d()}});addEventListener('pointerup',()=>drag=null);</script></body></html>

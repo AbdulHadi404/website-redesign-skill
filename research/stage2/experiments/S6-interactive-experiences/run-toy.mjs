@@ -12,10 +12,14 @@
  *   f  e with accessibilityOptions.enabledByDefault = true (the overlay exists from load)
  * For each: accessibility tree at load and after the tasks, a keyboard walkthrough of
  * three tasks, drag and single-pointer walkthroughs, reduced-motion frames, idle rAF,
- * sound defaults, axe-core, the skill's a11y.mjs, a canvas probe, byte and line cost,
- * and (b) the per-frame cost of keeping proxies over moving objects (5 runs, median).
+ * sound defaults, axe-core, the skill's a11y.mjs, lib/probe-canvas.mjs, byte and line cost;
+ * then the canvas's pointer hit targets (b now, b's first version via ?hit=legacy, Pixi e), Pixi's
+ * overlay offset with a positioned and a static parent (each also scrolled), and (b) the per-frame
+ * cost of keeping proxies over moving objects (5 runs, median).
+ * The Pixi builds use the engine's default drawing buffer except in the reduced-motion frame count,
+ * which reads toDataURL and so loads them with ?pdb=1 (preserveDrawingBuffer: true).
  *
- *   node run-toy.mjs [--quick]      writes results/toy.json and shots/*.jpg
+ *   node run-toy.mjs [--quick] [--only b,f,hit]   writes results/toy.json and shots/*.jpg
  */
 import { mkdir, readFile, writeFile, mkdtemp, rm, copyFile } from 'node:fs/promises';
 import os from 'node:os';
@@ -91,7 +95,7 @@ async function newPage(browser, base, v, opts = {}) {
   await ctx.addInitScript(INIT);
   const page = await ctx.newPage();
   page.on('pageerror', (e) => console.error(`[${v.id}] pageerror`, e.message));
-  await page.goto(`${base}/${v.file}`);
+  await page.goto(`${base}/${v.file}${opts.query || ''}`);
   await page.waitForFunction(() => window.__toy?.ready);
   await page.waitForTimeout(300);
   return { ctx, page, cdp: await ctx.newCDPSession(page) };
@@ -138,7 +142,7 @@ async function alignment(page) {
     const nameOf = (e) => (e.getAttribute('aria-label') || e.textContent.trim() || e.title || '');
     const btns = [...document.querySelectorAll('button')].filter((b) => b.offsetParent !== null || getComputedStyle(b).position === 'absolute');
     const centre = (e) => { const b = e.getBoundingClientRect(); return [b.x + b.width / 2, b.y + b.height / 2, b.width, b.height]; };
-    const errs = [], sizes = [];
+    const errs = [], sizes = [], pe = new Set();
     ['Strawberry', 'Candle', 'Flower', 'Star'].forEach((name, i) => {
       const b = btns.find((x) => nameOf(x) === name); if (!b) return;
       const [x, y] = centre(b);
@@ -147,9 +151,9 @@ async function alignment(page) {
     for (const it of m.state.items) {
       const b = btns.find((x) => nameOf(x).startsWith(m.label(it) + ',') || nameOf(x) === m.label(it)); if (!b) continue;
       const [x, y, w, h] = centre(b); const [px, py] = v.toPx(it.x, it.y);
-      errs.push(Math.hypot(x - (c.x + px * k), y - (c.y + py * k))); sizes.push(Math.round(Math.min(w, h)));
+      errs.push(Math.hypot(x - (c.x + px * k), y - (c.y + py * k))); sizes.push(Math.round(Math.min(w, h))); pe.add(getComputedStyle(b).pointerEvents);
     }
-    return errs.length ? { stand_ins: errs.length, maxErrorPx: +Math.max(...errs).toFixed(1), itemTargetMinCssPx: sizes.length ? Math.min(...sizes) : null } : null;
+    return errs.length ? { stand_ins: errs.length, maxErrorPx: +Math.max(...errs).toFixed(1), itemStandInMinCssPx: sizes.length ? Math.min(...sizes) : null, itemStandInPointerEvents: [...pe] } : null;
   });
 }
 
@@ -323,6 +327,52 @@ async function pointerTasks(page, mode) {
   return res;
 }
 
+// ---------- pointer hit targets ----------
+async function hitTargets(page, cdp, touch) {
+  await page.evaluate(() => { const m = window.__toy.model; for (const it of [...m.state.items]) m.remove(it.id); m.add('strawberry', -0.35, 0, { exact: true }); m.add('candle', 0.35, 0, { exact: true }); m.select?.(null); });
+  await page.waitForTimeout(400);
+  const g = await geometry(page);
+  const items = () => page.evaluate(() => window.__toy.model.state.items.map((i) => ({ id: i.id, kind: i.kind, x: i.x, y: i.y })));
+  const seed = await items();
+  const restore = () => page.evaluate((s) => { const m = window.__toy.model; for (const it of s) { const cur = m.find(it.id); if (cur && (cur.x !== it.x || cur.y !== it.y)) m.move(it.id, it.x, it.y, { exact: true }); } m.select?.(null); window.__toy.view.disarm?.(); }, seed);
+  async function drag([x0, y0], [x1, y1]) {
+    if (!touch) { await page.mouse.move(x0, y0); await page.mouse.down(); await page.mouse.move(x1, y1, { steps: 4 }); await page.mouse.up(); }
+    else {
+      const pt = (x, y) => [{ x, y, id: 1 }];
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: pt(x0, y0) });
+      for (let i = 1; i <= 4; i++) await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: pt(x0 + (x1 - x0) * i / 4, y0 + (y1 - y0) * i / 4) });
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    }
+    await page.waitForTimeout(120);
+  }
+  // Drag perpendicular to the probe direction: a drop centres the topping on the pointer, so a drag
+  // back along the probe direction could land it where it started and read as a miss.
+  async function grabs(it, ox, oy) {
+    const [cx, cy] = cake(g, it.x, it.y);
+    const [px, py] = ox !== 0 ? [0, 30] : [30, 0];
+    await drag([cx + ox, cy + oy], [cx + ox + px, cy + oy + py]);
+    const now = (await items()).find((i) => i.id === it.id);
+    const moved = !!now && Math.hypot(now.x - it.x, now.y - it.y) > 0.01;
+    await restore(); await page.waitForTimeout(60);
+    return moved;
+  }
+  const out = {};
+  for (const it of seed) {
+    const d = {};
+    if (!await grabs(it, 0, 0)) { out[it.kind] = { centreGrabs: false }; continue; }
+    for (const [name, dx, dy] of [['right', 1, 0], ['left', -1, 0], ['down', 0, 1], ['up', 0, -1]]) {
+      let lo = 0, hi = 64; // CSS px: lo grabs, hi assumed to miss
+      while (hi - lo > 1) { const mid = (lo + hi) / 2; if (await grabs(it, dx * mid, dy * mid)) lo = mid; else hi = mid; }
+      d[name] = lo;
+    }
+    out[it.kind] = { ...d, widthCssPx: d.right + d.left, heightCssPx: d.down + d.up, smallestCssPx: Math.min(d.right + d.left, d.down + d.up), resolutionPx: 1 };
+  }
+  // stand-in boxes for the same toppings (b only)
+  out.standIns = await page.evaluate(() => [...document.querySelectorAll('.proxy.item')].map((b) => { const r = b.getBoundingClientRect(); return { name: b.textContent.split(',')[0], w: +r.width.toFixed(1), h: +r.height.toFixed(1), pointerEvents: getComputedStyle(b).pointerEvents }; }));
+  out.canvasCssWidth = g.k * 480;
+  return out;
+}
+
 // ---------- motion, idle, sound ----------
 async function motionFrames(page) {
   return page.evaluate(async () => {
@@ -367,7 +417,15 @@ async function skillA11y(url, out) {
 }
 
 // ---------- main ----------
-const srv = await serve(toyDir, { '/vendor/pixi.mjs': PIXI });
+// Variants derived at serve time for the Pixi overlay check: a static parent, and each scrolled.
+const fromFile = (f, fn) => async () => fn(await readFile(path.join(toyDir, f), 'utf8'));
+const staticWrap = (s) => s.replace('<div class="wrap" id="wrap">', '<div class="wrap" id="wrap" style="position:static">');
+const spacer = (s) => s.replace('<h1>Top the cake</h1>', '<h1>Top the cake</h1><div style="height:900px"></div>');
+const srv = await serve(toyDir, { '/vendor/pixi.mjs': PIXI }, {
+  '/gen-f-static.html': fromFile('f-pixi-enabled.html', staticWrap),
+  '/gen-f-scroll.html': fromFile('f-pixi-enabled.html', spacer),
+  '/gen-f-static-scroll.html': fromFile('f-pixi-enabled.html', (s) => spacer(staticWrap(s))),
+});
 const { browser } = await launch();
 const results = { date: new Date().toISOString(), chromium: browser.version(), runs: RUNS, variants: {} };
 try {
@@ -419,7 +477,8 @@ try {
     // reduced motion vs default
     r.motion = {};
     for (const reduce of [false, true]) {
-      const { ctx, page } = await newPage(browser, srv.base, v, { reduce });
+      // frames are counted with toDataURL, so the WebGL builds keep their drawing buffer here only (?pdb=1)
+      const { ctx, page } = await newPage(browser, srv.base, v, { reduce, query: ['e', 'f'].includes(v.id) ? '?pdb=1' : '' });
       r.motion[reduce ? 'reduce' : 'noPreference'] = await motionFrames(page);
       await ctx.close();
     }
@@ -478,6 +537,39 @@ try {
       await ctx.close(); }
     r.skillA11y = await skillA11y(`${srv.base}/${v.file}`, path.join(here, 'results', 'a11y', v.id));
     results.variants[v.id] = r;
+  }
+  // Pointer hit targets on the canvas (WCAG 2.5.8 applies here, not to stand-ins that ignore the pointer):
+  // binary-search how far from a topping's centre a drag still grabs it, in four directions.
+  if (!ONLY || ONLY.includes('hit')) {
+    results.hitTargets = {};
+    const builds = [['b', VARIANTS[1], ''], ['b-legacy (first version: fixed hit radius, 44-unit stand-ins)', VARIANTS[1], '?hit=legacy'], ['e', VARIANTS[4], '']];
+    for (const [name, v, query] of builds) {
+      results.hitTargets[name] = {};
+      for (const phone of [false, true]) {
+        const { ctx, page, cdp } = await newPage(browser, srv.base, v, { query, ctx: phone ? { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2, userAgent: PHONE_UA } : {} });
+        const coarse = await page.evaluate(() => matchMedia('(pointer: coarse)').matches);
+        results.hitTargets[name][phone ? 'phone390' : 'desktop'] = { pointerCoarse: coarse, ...(await hitTargets(page, cdp, phone)) };
+        await ctx.close();
+        console.error(`hit ${name} ${phone ? 'phone' : 'desktop'}`, JSON.stringify(results.hitTargets[name][phone ? 'phone390' : 'desktop']));
+      }
+    }
+  }
+  // Pixi's overlay with a positioned parent (the toy's .wrap), a static parent, and each after scrolling.
+  if (!ONLY || ONLY.includes('f')) {
+    results.pixiOverlayOffset = {};
+    for (const [name, file, scroll] of [['positioned parent', 'f-pixi-enabled.html', false], ['positioned parent, scrolled', 'gen-f-scroll.html', true], ['static parent', 'gen-f-static.html', false], ['static parent, scrolled', 'gen-f-static-scroll.html', true]]) {
+      const row = {};
+      for (const phone of [false, true]) {
+        const { ctx, page } = await newPage(browser, srv.base, { id: 'f', file }, { ctx: phone ? { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2, userAgent: PHONE_UA } : {} });
+        await page.evaluate(() => { const m = window.__toy.model; m.addToZone('strawberry', 'centre'); m.addToZone('candle', 'top-left'); });
+        if (scroll) await page.evaluate(() => window.__toy.view.canvas.scrollIntoView({ block: 'center' }));
+        await page.waitForTimeout(700);
+        row[phone ? 'phone390' : 'desktop'] = await alignment(page);
+        await ctx.close();
+      }
+      results.pixiOverlayOffset[name] = row;
+    }
+    console.error('pixi overlay offset', JSON.stringify(results.pixiOverlayOffset));
   }
   // proxy sync cost: b with proxies on vs off, n toppings all moving every frame
   const bench = [];

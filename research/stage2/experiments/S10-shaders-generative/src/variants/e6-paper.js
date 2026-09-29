@@ -28,15 +28,18 @@ export default function start(bg) {
   const ext = gl.getExtension('WEBGL_debug_renderer_info');
   lab.info = { renderer: ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : '', webgl2: true, library: 'paper' };
   lab.loseContext = () => gl.getExtension('WEBGL_lose_context');
-  requestAnimationFrame(() => requestAnimationFrame(() => { lab.ttff = performance.now(); host.style.opacity = '1'; }));
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    lab.ttff = performance.now(); host.style.opacity = '1';
+    if (q.has('syncfirst')) { gl.finish(); lab.gpuFirst = performance.now(); }   // lab: when frame 1 is really done
+  }));
   const toggle = document.querySelector('.bg-toggle');
   if (toggle) {
-    toggle.hidden = false;
+    // A plain button whose label says what it will do; no aria-pressed (APG: a toggle's label must not change).
+    toggle.hidden = false; toggle.removeAttribute('aria-pressed');
     let paused = false;
     toggle.addEventListener('click', () => {
       paused = !paused; mount.setSpeed(paused ? 0 : 0.6);
-      toggle.setAttribute('aria-pressed', String(paused));
-      toggle.textContent = paused ? 'Play background' : 'Pause background';
+      toggle.textContent = paused ? 'Play background animation' : 'Pause background animation';
     });
   }
   lab.pause = () => mount.setSpeed(0);

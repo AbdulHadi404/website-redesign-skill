@@ -1,4 +1,4 @@
-# Motion check — http://127.0.0.1:42563/captures/c/good.html
+# Motion check — http://127.0.0.1:42223/captures/c/good.html
 
 2026-09-29 · desktop · Chromium 141.0.7390.37 · tokens from page custom properties: micro 100, small 150, medium 240, large 300, page 400, hero 700, count 800
 
@@ -12,11 +12,11 @@
 | sheet-open | click | animates | 300ms (spec large) | cubic-bezier(0.2, 0, 0, 1) / ease | fade → substituted (fade/colour) | ✓ |
 | toast | click | animates | 240ms (spec medium) | cubic-bezier(0.2, 0, 0, 1) | fade → substituted (fade/colour) | ✓ |
 | features-reveal | scroll | animates, stagger 40ms (declared) | 240ms (spec medium) | cubic-bezier(0.2, 0, 0, 1) | static → nothing changes | ✓ |
-| stat-count | scroll | animates | ~780ms (spec 800) | ≈ __spec | instant → nothing changes | ✓ |
+| stat-count | scroll | animates | ~783ms (spec 800) | ≈ __spec | instant → nothing changes | ✓ |
 | hero-in | load | animates | 700ms (spec hero) | cubic-bezier(0.05, 0.7, 0.1, 1) | fade → substituted (fade/colour) | ✓ |
 | panel-swap | click | animates | 400ms (spec page) | cubic-bezier(0.2, 0, 0, 1) | fade → substituted (fade/colour) | ✓ |
 
-Filmstrips: `filmstrip-cta-press.jpg`, `filmstrip-cta-hover.jpg`, `filmstrip-plan-hover.jpg`, `filmstrip-toast.jpg`, `filmstrip-features-reveal.jpg`, `filmstrip-stat-count.jpg`, `filmstrip-hero-in.jpg`, `filmstrip-panel-swap.jpg`
+Filmstrips: `filmstrip-cta-press.jpg`, `filmstrip-cta-hover.jpg`, `filmstrip-plan-hover.jpg`, `filmstrip-sheet-open.jpg`, `filmstrip-toast.jpg`, `filmstrip-features-reveal.jpg`, `filmstrip-stat-count.jpg`, `filmstrip-hero-in.jpg`, `filmstrip-panel-swap.jpg`
 
 ## Audit
 

@@ -1,20 +1,44 @@
-// tier.js — an initial quality tier for a rich experience (S11). ~2 KB min+gzip, no dependencies.
+// tier.js — an initial quality tier for a rich experience (S11, revised after review). ~2.7 KB min+gzip, no dependencies.
 //
 // The tier is two independent answers, never one number:
-//   capability: 'strong' | 'average' | 'low' | 'none'   (how much the device can render and compute)
+//   capability: 'strong' | 'average' | 'low' | 'none' | 'undetermined'   (how much the device can render and compute)
 //   preference: { motion: 'full'|'reduced', transparency: 'full'|'reduced', data: 'full'|'save' }  (what the person asked for)
 // A strong device with reduced motion keeps full fidelity and loses camera flights and autoplay; a low device
 // without that preference keeps motion at lower resolution. Preferences never raise capability.
 //
-// Order: URL override (?tier=low, so every tier can be captured) → no WebGL / software WebGL → a frame-time probe
-// of the page's own kind of work → cheap signals only as a tie-breaker. After start, a runtime governor (governor.js)
-// owns the tier: the probe is a first guess, not a verdict.
+// Order: URL override (?tier=low, so every tier can be captured) → the display's refresh interval (empty rAF frames,
+// before any scene runs) → no WebGL / software WebGL → a frame-time probe of the page's own kind of work, judged
+// against that refresh → deviceMemory only as a pull-down. After start, a runtime governor (governor.js, given the
+// same refreshMs) owns the tier: the probe is a first guess, not a verdict.
+// The band edges (0.3 and 0.6 of the refresh interval) are a heuristic from RAIL's "~10 ms of JS per 16.7 ms frame",
+// not a measured result, and which throttle level is called "average" is a labelling choice: what the probe measures
+// is the fraction of the frame the page's own per-frame JS takes. Probe the top tier's own per-frame JS.
+
+// The display's refresh interval, from empty animation frames. Run it before the scene starts (while the poster shows):
+// once a scene runs, a 30 Hz display and a slow scene on a 60 Hz display give the same 33 ms intervals. Returns the
+// 25th-percentile interval when the intervals agree (p75 ≤ 1.15 × p25) and sit between 4 and 34 ms (240 Hz … 30 Hz);
+// otherwise null — the page was busy (in the held-out lab run, a running scene made it read 33–100 ms), the tab is
+// hidden, or frames stopped — and the caller should assume 1000/60 and not trust a relative band.
+export function measureRefresh({ frames = 20, maxMs = 700 } = {}) {
+  return new Promise((resolve) => {
+    const iv = []; let last = 0, t0 = 0, done = false;
+    const finish = () => {
+      if (done) return; done = true; clearTimeout(timer);
+      const s = iv.sort((a, b) => a - b); if (s.length < 5) return resolve(null);
+      const p25 = s[Math.floor(s.length / 4)], p75 = s[Math.floor(s.length * 3 / 4)];
+      resolve(p75 <= p25 * 1.15 && p25 >= 4 && p25 <= 34 ? p25 : null);
+    };
+    const timer = setTimeout(finish, maxMs + 100);
+    function f(now) { if (done) return; if (!t0) t0 = now; if (last) iv.push(now - last); last = now; if (iv.length >= frames || now - t0 >= maxMs) return finish(); requestAnimationFrame(f); }
+    requestAnimationFrame(f);
+  });
+}
 
 export function readSignals() {
   const n = navigator, c = n.connection, mq = (q) => { try { return matchMedia(q).matches; } catch { return false; } };
   return {
-    cores: n.hardwareConcurrency ?? null,          // all engines; Safari reports a clamped value; phones say 8 at every price
-    memoryGB: n.deviceMemory ?? null,              // Chromium only; rounded to a power of two and clamped (0.25–8)
+    cores: n.hardwareConcurrency ?? null,          // all engines; WebKit reports 4 (< 8 cores) or 8; phones say 8 at every price. Worker pools only, never tiering
+    memoryGB: n.deviceMemory ?? null,              // Chromium only; power of two, clamped: Android 1–8, desktop 2–32 (older Chromium 0.25–8)
     saveData: c ? !!c.saveData : null,             // Chromium only (the Save-Data header reaches the server too)
     effectiveType: c?.effectiveType ?? null,       // Chromium only; from recent RTT/throughput, not the radio
     reducedMotion: mq('(prefers-reduced-motion: reduce)'),
@@ -63,29 +87,38 @@ export function makeWork(n = 200000, rects = 1000) {
 
 const median = (xs) => { const s = [...xs].sort((a, b) => a - b); return s.length ? s[s.length >> 1] : NaN; };
 
-// Runs `work` once per animation frame for up to maxMs. Measures the work's own duration (robust to other tasks on
-// the thread) and the frame interval (not robust: any long task in between inflates it). Exits early once the
-// median has sat clearly inside one band for `stableFrames` frames.
-export function frameProbe({ work = makeWork(), maxMs = 1500, minFrames = 12, warmup = 3, bands = [4, 10], stableFrames = 12, earlyExit = true } = {}) {
+// Runs `work` once per animation frame for at most maxMs of wall-clock time (a timer also ends it if frames stop
+// coming). Measures the work's own duration (robust to other tasks on the thread), not the frame rate (vsync hides
+// work that fits in the frame). Exits early once the median has sat clearly inside one band for `stableFrames` frames.
+// bands are fractions of refreshMs. enough = false when fewer than minFrames frames (after warm-up) arrived in time.
+export function frameProbe({ work = makeWork(), refreshMs = 1000 / 60, maxMs = 1500, minFrames = 12, warmup = 3, bands = [0.3, 0.6], stableFrames = 12, earlyExit = true } = {}) {
   return new Promise((resolve) => {
-    const works = [], gaps = [];
-    let last = 0, t0 = 0, sameSince = 0, prevBand = -1;
-    const band = (ms) => (ms < bands[0] ? 0 : ms < bands[1] ? 1 : 2);
+    const works = [], gaps = [], edges = bands.map((b) => b * refreshMs);
+    let last = 0, t0 = 0, sameSince = 0, prevBand = -1, done = false;
+    const band = (ms) => (ms < edges[0] ? 0 : ms < edges[1] ? 1 : 2);
+    const wall0 = performance.now();
+    function finish() {
+      if (done) return; done = true; clearTimeout(timer);
+      const kept = works.slice(warmup);
+      resolve({ frames: works.length, kept: kept.length, enough: kept.length >= minFrames, ms: Math.round(performance.now() - wall0), refreshMs, edges,
+        workMedian: kept.length ? median(kept) : NaN, workMin: kept.length ? Math.min(...kept) : NaN, workAll: works, gapMedian: median(gaps.slice(warmup)), gaps });
+    }
+    const timer = setTimeout(finish, maxMs + 50);
     function frame(now) {
+      if (done) return;
       if (!t0) t0 = now;
       if (last) gaps.push(now - last);
       last = now;
       const s = performance.now(); work(); works.push(performance.now() - s);
+      if (performance.now() - wall0 >= maxMs) return finish();
       const kept = works.slice(warmup);
-      if (kept.length >= minFrames) {
+      if (earlyExit && kept.length >= minFrames) {
         const m = median(kept), b = band(m);
         // "clearly inside": at least 25% away from the nearest band edge
-        const edge = bands.reduce((d, e) => Math.min(d, Math.abs(Math.log(m / e))), Infinity);
+        const edge = edges.reduce((d, e) => Math.min(d, Math.abs(Math.log(m / e))), Infinity);
         if (b === prevBand && edge > Math.log(1.25)) sameSince++; else sameSince = 0;
         prevBand = b;
-        if ((earlyExit && sameSince >= stableFrames) || now - t0 >= maxMs) {
-          return resolve({ frames: works.length, ms: Math.round(performance.now() - t0), workMedian: m, workAll: works, gapMedian: median(gaps.slice(warmup)), gaps });
-        }
+        if (sameSince >= stableFrames) return finish();
       }
       requestAnimationFrame(frame);
     }
@@ -103,14 +136,22 @@ export function burstProbe({ work = makeWork(), reps = 5 } = {}) {
   return { workBest: best, ms: performance.now() - t0 };
 }
 
-// capability from probe milliseconds (per unit of the page's own work) and the WebGL answer.
-export function classify({ probeMs, gl, signals, bands = [4, 10], needsWebGL = true }) {
+// capability from the probe (per-frame work as a fraction of the refresh interval) and the WebGL answer.
+// 'undetermined': too few frames arrived to judge (the page is busy, the GPU is the bottleneck, or the tab is hidden):
+// start at min(startGuess(), 'low'), let the governor step up, or probe again once the page is quiet.
+export function classify({ probe, gl, signals, bands = [0.3, 0.6], needsWebGL = true }) {
   if (needsWebGL && (!gl || gl.webgl === 0)) return { capability: 'none', why: 'no WebGL context' };
   if (needsWebGL && gl.software) return { capability: 'low', why: `software WebGL (${gl.caveat ? 'failIfMajorPerformanceCaveat refused' : gl.renderer})` };
-  let capability = probeMs < bands[0] ? 'strong' : probeMs < bands[1] ? 'average' : 'low';
-  let why = `probe ${probeMs.toFixed(1)} ms per work unit`;
-  // Cheap signals only pull down, and only when they are unambiguous: tiny memory or very few cores.
-  if (signals && capability === 'strong' && ((signals.memoryGB && signals.memoryGB <= 2) || (signals.cores && signals.cores <= 2))) { capability = 'average'; why += '; ≤ 2 GB or ≤ 2 cores'; }
+  const R = probe.refreshMs || 1000 / 60;
+  if (!probe.enough) {
+    if (probe.kept >= 3 && probe.workMin >= bands[1] * R) return { capability: 'low', why: `only ${probe.kept} frames in ${probe.ms} ms, every one's work ≥ ${bands[1]} × ${R.toFixed(1)} ms` };
+    return { capability: 'undetermined', why: `only ${probe.frames} frames (${probe.kept} after warm-up) in ${probe.ms} ms (frames ~${Math.round(probe.gapMedian || 0)} ms apart, work ${Number.isFinite(probe.workMedian) ? probe.workMedian.toFixed(1) : '?'} ms)` };
+  }
+  const f = probe.workMedian / R;
+  let capability = f < bands[0] ? 'strong' : f < bands[1] ? 'average' : 'low';
+  let why = `probe work ${probe.workMedian.toFixed(1)} ms = ${f.toFixed(2)} × the ${R.toFixed(1)} ms refresh`;
+  // deviceMemory only pulls down, and only when unambiguous (Android reports ≤ 2 for ≤ ~3 GB of RAM). Never cores.
+  if (signals && capability === 'strong' && signals.memoryGB && signals.memoryGB <= 2) { capability = 'average'; why += '; deviceMemory ≤ 2'; }
   return { capability, why };
 }
 
@@ -143,17 +184,21 @@ export function preferences(signals = readSignals()) {
 }
 
 // The whole decision. `?tier=strong|average|low|none` and `?motion=reduced` force the answer for captures.
+// Returns refreshMs too: hand it to createGovernor({ refreshMs }).
 export async function detectTier(opts = {}) {
   const t0 = performance.now();
   const q = new URLSearchParams(location.search);
   const signals = readSignals();
   const prefs = preferences(signals);
   if (q.get('motion') === 'reduced') prefs.motion = 'reduced';
+  const measured = await measureRefresh();
+  const refreshMs = measured || 1000 / 60, refreshUncertain = !measured;
   const forced = q.get('tier');
-  if (forced) return { capability: forced, why: 'forced by ?tier', prefs, signals, ms: 0 };
+  if (forced) return { capability: forced, why: 'forced by ?tier', prefs, signals, refreshMs, refreshUncertain, ms: Math.round(performance.now() - t0) };
   const gl = opts.needsWebGL === false ? null : probeWebGL();
-  if (opts.needsWebGL !== false && (gl.webgl === 0 || gl.software)) return { ...classify({ gl, signals, probeMs: NaN }), prefs, signals, gl, ms: Math.round(performance.now() - t0) };
-  const probe = await frameProbe(opts);
-  const c = classify({ probeMs: probe.workMedian, gl, signals, bands: opts.bands, needsWebGL: opts.needsWebGL !== false });
-  return { ...c, prefs, signals, gl, probe: { frames: probe.frames, ms: probe.ms, workMedian: probe.workMedian }, ms: Math.round(performance.now() - t0) };
+  if (opts.needsWebGL !== false && (gl.webgl === 0 || gl.software)) return { ...classify({ gl, signals, probe: {} }), prefs, signals, gl, refreshMs, refreshUncertain, ms: Math.round(performance.now() - t0) };
+  const probe = await frameProbe({ ...opts, refreshMs });
+  const c = classify({ probe, gl, signals, bands: opts.bands, needsWebGL: opts.needsWebGL !== false });
+  if (refreshUncertain) c.why += '; refresh not measurable (page busy?), 60 Hz assumed';
+  return { ...c, prefs, signals, gl, refreshMs, refreshUncertain, probe: { frames: probe.frames, kept: probe.kept, ms: probe.ms, workMedian: probe.workMedian, gapMedian: probe.gapMedian }, ms: Math.round(performance.now() - t0) };
 }

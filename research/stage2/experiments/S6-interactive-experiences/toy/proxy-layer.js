@@ -103,11 +103,15 @@ export function createProxyLayer(model, view, wrap, announce, { instructionsId, 
   let enabled = true;
   view.onFrame(() => {
     if (!enabled) return;
+    // The stand-in's box covers the object's pointer hit area (it carries the focus ring and is what
+    // explore-by-touch finds); pointer input itself goes to the canvas (pointer-events: none).
+    const d = view.legacyHit ? 44 : 2 * view.hitRadius();
     for (const it of model.state.items) {
       const p = byId.get(it.id); if (!p) continue;
       const [x, y] = view.toPx(it.x, it.y);
-      const t = `translate(${(x - 22).toFixed(1)}px, ${(y - 22).toFixed(1)}px)`;
+      const t = `translate(${(x - d / 2).toFixed(1)}px, ${(y - d / 2).toFixed(1)}px)`;
       if (t !== p.last) { p.b.style.transform = t; p.last = t; }
+      if (d !== p.size) { p.b.style.width = p.b.style.height = d.toFixed(1) + 'px'; p.size = d; } // size only on change: it re-lays-out
     }
     if (pendingFocus !== null) { byId.get(pendingFocus)?.b.focus(); pendingFocus = null; }
   });

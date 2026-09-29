@@ -16,7 +16,7 @@ export class History {
     this.present = initial; this.past = []; this.future = []; this.gesture = null;
     this.limit = limit; this.mergeMs = mergeMs; this.onChange = onChange;
   }
-  // Record a finished change. meta: { label, mergeKey, mergeMs, source }
+  // Record a finished change. meta: { label, key, mergeKey, mergeMs, source }
   commit(next, meta = {}) {
     if (this.gesture) this.gesture = null;
     if (same(next, this.present)) return false;
@@ -26,7 +26,7 @@ export class History {
       last.after = next; last.at = now; last.label = meta.label ?? last.label;
       if (same(last.before, next)) this.past.pop(); // walked back to where it started: no step at all
     } else {
-      this.past.push({ before: this.present, after: next, label: meta.label ?? 'Change', mergeKey: meta.mergeKey ?? null, source: meta.source ?? 'control', at: now });
+      this.past.push({ before: this.present, after: next, label: meta.label ?? 'Change', key: meta.key ?? null, mergeKey: meta.mergeKey ?? null, source: meta.source ?? 'control', at: now });
       if (this.past.length > this.limit) this.past.shift();
     }
     this.future = [];
@@ -40,7 +40,7 @@ export class History {
     if (!this.gesture) return false;
     const before = this.gesture.before; this.gesture = null;
     if (same(before, this.present)) return false;
-    this.past.push({ before, after: this.present, label: meta.label ?? 'Change', mergeKey: null, source: meta.source ?? 'canvas', at: performance.now() });
+    this.past.push({ before, after: this.present, label: meta.label ?? 'Change', key: meta.key ?? null, mergeKey: null, source: meta.source ?? 'canvas', at: performance.now() });
     if (this.past.length > this.limit) this.past.shift();
     this.future = [];
     this.onChange({ type: 'commit', label: meta.label });

@@ -5,14 +5,15 @@
  * scripts stay), repeated items are found by structure, network faults are injected by request type.
  *
  *   node stress.mjs --url http://localhost:3000/products
- *   node stress.mjs --base http://localhost:3000 --paths / /pricing [--widths 390,1024] [--only pseudo,rtl] [--out stress]
+ *   node stress.mjs --base http://localhost:3000 --paths / /pricing [--widths 390,768,1280] [--only pseudo,rtl] [--out stress]
  *
  * Mutations (--only / --skip-mutations take a comma list; default all):
  *   pseudo     pseudo-localisation: accents, [brackets], +35% length on running text and more on short labels
  *              (+100% up to 10 characters, +80% to 20, +60% to 30, +40% to 50: short strings grow most in
  *              translation), the growth put into long compound words
- *   long       each text's longest word becomes a long unbroken token: a 36-letter name, a 70-character e-mail
- *              address where the text had one, a long URL where it had one (no break points anywhere)
+ *   long       in data-like texts (list items, table cells, names, e-mails, URLs; or --targets) the longest word
+ *              becomes a long unbroken token: a 49-letter name, a 70-character e-mail address where the text had
+ *              one, an 84-character URL where it had one (no break points anywhere)
  *   empty      optional fields left empty: in repeated items (cards, rows, list entries) and table cells one text
  *              slot per item is blanked, a different slot in each item
  *   numbers    every figure becomes a very large or a negative long amount, keeping its currency sign or unit
@@ -20,7 +21,11 @@
  *   no-images  every image request blocked (img, picture, CSS backgrounds): broken images, collapsed boxes,
  *              and text that sat on a photograph without a fallback colour
  *   rtl        dir="rtl" lang="ar": first what did not mirror (physical left/right: an icon or a badge that stays
- *              on the left, text-align: left), then short and long texts swapped for Arabic samples
+ *              on the left, text-align: left), then short and long texts swapped for Arabic samples. A page that is
+ *              already right-to-left is checked the other way: physical text-align: left as it stands, then the page
+ *              flipped to dir="ltr" (its other locale, when it shares the CSS) for what stays put (physical right,
+ *              text-align: right); its text and lang are left as they are, and only mirroring is reported. When the flip does not take (a direction declared !important), the position
+ *              check is skipped and the run says so
  *   list-0, list-1, list-500   every repeated list (cards, rows, results; auto-detected, or --list) emptied, cut
  *              to one item, or grown to 500 by cloning: the empty state, the lone card, the long page
  *   slow       throttled network and CPU while loading (562 ms RTT, 1.4 Mbit/s down, 4× CPU): a filmstrip of the
@@ -30,12 +35,15 @@
  * Network mutations (slow, errors, offline) run at the first width only unless --all-widths.
  *
  * Options
- *   --widths list   default 390,1024: a phone, and the narrowest desktop layout, where longer text runs out of room
- *                   first (under 768: phone emulation, touch)
+ *   --widths list   default 390,768,1280: a phone, a tablet (where desktop navigation and multi-column layouts are
+ *                   narrowest, and longer text runs out of room first) and a laptop (under 768: phone emulation)
  *   --scope sel     mutate only inside this element (default body)
  *   --targets sel   text mutations only in these elements (e.g. ".product-name, .price, td")
  *   --skip sel      never mutate these (always skipped: code, pre, kbd, samp, [translate=no], .notranslate)
- *   --list sel      the repeated containers for list-* (default: auto-detected, up to 3, outside nav/header/footer)
+ *   --list sel      the repeated containers for list-* and empty (default: auto-detected, the 4 largest: three or more
+ *                   siblings of one kind and one inner structure, outside nav/header/footer; never paragraphs, table
+ *                   cells or page sections). Authored cards also qualify: on a brochure page, list-0/-500 and long are
+ *                   mostly leads to dismiss; point them at the data (--list, --targets) on product and app routes
  *   --api glob      requests that slow/errors/offline treat as data (default: every fetch and XHR)
  *   --expand N      growth of running text for pseudo, in % (default 35)
  *   --no-full       skip the full-page JPEG per mutation (the sheet and crops are still written)
@@ -44,14 +52,14 @@
  * After each mutation the page is measured with sweep.mjs's probe (overflow and its culprit, text past the edge,
  * clipped and truncated text, protrusion out of a drawn box, overlapping text, squeezed controls, distorted images)
  * and compared with the unmutated page at the same width: only what the mutation changed is reported, keyed by
- * element. Mutation-specific checks add: text that is now "undefined"/"NaN"/"null"/"[object Object]"/"Invalid Date",
+ * check and element kind (positions dropped, so a fault the page already had is never reported as new). Mutation-specific checks add: text that is now "undefined"/"NaN"/"null"/"[object Object]"/"Invalid Date",
  * controls squeezed under 24 px or wrapping to 3+ lines, sections that lost their text with no message on screen,
  * text unreadable without its image, elements that did not mirror, and layout shifts while loading.
  *
  * Writes <out>/<slug>-stress.md and .json (per mutation and width: new findings with element, detail and box),
  * <out>/<slug>-stress-sheet.jpg (each mutation that broke something, scrolled to its worst finding, boxed and
  * numbered), <out>/<slug>-slow.jpg (the loading filmstrip), <out>/<slug>/<mutation>-<width>.jpg full pages, and
- * 1:1 crops in <out>/<slug>/crops/. Exit code 1 when any mutation produced a ✗.
+ * 1:1 crops in <out>/<slug>/crops/; the JSON records the browser build. Exit code 1 when any mutation produced a ✗.
  *
  * Leads, not verdicts: a mutation is harsher than most real content on purpose. A truncation that is designed
  * (a one-line ellipsis with the full text in a title or on the detail page) is fine; say which you dismissed and why.
@@ -60,7 +68,7 @@ import { mkdir, writeFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseArgs, asList, launch, open, settle, slugFor, urlFor } from './lib/env.mjs';
-import { measureAt, markFindings, drawSheet, prepare } from './sweep.mjs';
+import { measureAt, markFindings, drawSheet, prepare, evidenceShot, evidenceCrop, browserBuild } from './sweep.mjs';
 
 export const ALL = ['pseudo', 'long', 'empty', 'numbers', 'no-images', 'rtl', 'list-0', 'list-1', 'list-500', 'slow', 'errors', 'offline'];
 const NETWORK = new Set(['slow', 'errors', 'offline']);
@@ -84,6 +92,16 @@ export function mutateText({ kind, scope, targets, skip, expand = 35, ar }) {
   const root = (scope && document.querySelector(scope)) || document.body;
   const SKIP = skip;
   const isSkipped = (el) => !el || el.closest(SKIP);
+  // Initials in an avatar or monogram ("AM" in a small round box) are not translated and do not grow.
+  const initials = (n) => {
+    if (!/^[A-ZÀ-Þ]{1,3}$/.test(n.data.trim())) return false;
+    for (let e = n.parentElement, d = 0; e && e !== document.body && d < 3; e = e.parentElement, d++) {
+      if (/avatar|initials|monogram/i.test(`${e.id} ${typeof e.className === 'string' ? e.className : ''}`)) return true;
+      const r = e.getBoundingClientRect(), c = getComputedStyle(e);
+      if (r.width <= 64 && r.height <= 64 && r.width > 0 && parseFloat(c.borderTopLeftRadius) >= 0.3 * Math.min(r.width, r.height)) return true;
+    }
+    return false;
+  };
   const nodes = [];
   const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   for (let n = tw.nextNode(); n; n = tw.nextNode()) {
@@ -119,7 +137,7 @@ export function mutateText({ kind, scope, targets, skip, expand = 35, ar }) {
       const lead = t.match(/^\s*/)[0], trail = t.match(/\s*$/)[0];
       return `${lead}[${s}]${trail}`;
     };
-    for (const n of nodes) { const v = pseudo(n.data); if (v !== n.data) { n.data = v; changed++; } }
+    for (const n of nodes) { if (initials(n)) continue; const v = pseudo(n.data); if (v !== n.data) { n.data = v; changed++; } }
     for (const f of fields) {
       if (f.matches('input[type=submit], input[type=button], input[type=reset]') && f.value) { f.value = pseudo(f.value); changed++; }
       if (f.placeholder) { f.placeholder = pseudo(f.placeholder); changed++; }
@@ -128,7 +146,17 @@ export function mutateText({ kind, scope, targets, skip, expand = 35, ar }) {
     const NAME = 'Wolfeschlegelsteinhausenbergerdorffvoralternwaren';
     const EMAIL = 'maximiliana.wolfeschlegelsteinhausen@internationalegesellschaft.example';
     const URL_ = 'https://www.internationalegesellschaftfuerbeispiele.example/verwaltungsdokumentation';
+    // Only where data or user content lands (names, e-mails, URLs, items of a list, table cells): authored headings
+    // and labels do not grow a 49-letter word, and a finding there would be noise.
+    // Matched on whole parts of an id or class ("card-title", "user_name"), so "tagline" is not "tag".
+    const DATA = /^(name|username|user|author|email|mail|title|address|city|company|product|sku|customer|account|member|owner|contact|profile|file|filename|url|tag|tags)$/i;
+    const parts = (e) => [e.id, typeof e.className === 'string' ? e.className : ''].join(' ').split(/[\s_-]+/).filter(Boolean);
+    const dataSlot = (el) => targets || el.closest('[data-stress-item], td, dd, output, time, data, [itemprop], address, cite, figcaption, input, option') ||
+      (!el.closest('h1, h2, nav, [role=navigation]') && [el, el.parentElement, el.parentElement?.parentElement].some((e) => e && e !== document.body && parts(e).some((w) => DATA.test(w))));
+    let kept = 0;
     for (const n of nodes) {
+      if (!/@|https?:|www\.|\.(com|org|net|io|co|uk|de)\b/i.test(n.data) && !dataSlot(n.parentElement)) continue;
+      kept++;
       const t = n.data;
       const words = t.split(/(\s+)/);
       let li = -1;
@@ -140,6 +168,7 @@ export function mutateText({ kind, scope, targets, skip, expand = 35, ar }) {
       changed++;
     }
     for (const f of fields) if (f.placeholder) { f.placeholder = /@/.test(f.placeholder) ? EMAIL : NAME; changed++; }
+    note.push(`data-like texts only (${kept}): list items, cells, names, e-mails, URLs — --targets to choose`);
   } else if (kind === 'empty') {
     // One text slot blanked per repeated item or table row, rotating, so each item misses a different field.
     const items = targets ? [...root.querySelectorAll(targets)] : [...document.querySelectorAll('[data-stress-item]')];
@@ -184,7 +213,7 @@ export function mutateText({ kind, scope, targets, skip, expand = 35, ar }) {
       else { s = ''; while (s.length < core.length * 0.85) s += (s ? ' ' : '') + ar.long; s = s.slice(0, Math.max(40, Math.round(core.length * 0.85))).replace(/\s+\S*$/, ''); }
       return t.match(/^\s*/)[0] + s + (digits ? ' ' + digits : '') + t.match(/\s*$/)[0];
     };
-    for (const n of nodes) { const v = arFor(n.data); if (v !== n.data) { n.data = v; changed++; } }
+    for (const n of nodes) { if (initials(n)) continue; const v = arFor(n.data); if (v !== n.data) { n.data = v; changed++; } }
     for (const f of fields) {
       if (f.matches('input[type=submit], input[type=button], input[type=reset]') && f.value) { f.value = arFor(f.value); changed++; }
       if (f.placeholder) { f.placeholder = arFor(f.placeholder); changed++; }
@@ -217,9 +246,10 @@ export function findLists({ list, scope, max = 4 }) {
       if (c.children.length < 3 || c.closest('nav, header, footer, [role=navigation], select, datalist, svg, [role=menu], [role=menubar], [role=tablist], [aria-hidden=true], dialog:not([open])')) continue;
       const x = itemsIn(c);
       if (x.items.length < 3 || x.share < 0.6) continue;
-      if (/^(SECTION|MAIN|ASIDE|HEADER|FOOTER|NAV|FORM|SCRIPT|STYLE|OPTION|BR)$/.test(x.items[0].tagName)) continue;
+      // Page sections, table cells and runs of prose paragraphs are not list items.
+      if (/^(SECTION|MAIN|ASIDE|HEADER|FOOTER|NAV|FORM|SCRIPT|STYLE|OPTION|BR|TD|TH|COL|P|BLOCKQUOTE|PRE|HR)$/.test(x.items[0].tagName) || /^(TR|COLGROUP|THEAD)$/.test(c.tagName)) continue;
       if (x.items.some((k) => k.querySelector('main, section, h1, h2') || /^H[1-6]$/.test(k.tagName))) continue;
-      const b0 = bag(x.items[0]);
+      const b0 = bag(x.items[Math.floor(x.items.length / 2)]); // the middle item: a header row or a featured first card is not the norm
       if (x.items.filter((k) => jac(bag(k), b0) >= 0.7).length < x.items.length * 0.6) continue; // same inner structure
       const r = c.getBoundingClientRect();
       if (r.width < 40 || r.height < 20 || !(c.innerText || '').trim()) continue;
@@ -260,16 +290,18 @@ export function mirrorRecord({ scope }) {
   let id = 0;
   for (const el of root.querySelectorAll('*')) {
     if (list.length > 2500) break;
-    if (/^(SCRIPT|STYLE|NOSCRIPT|TEMPLATE|BR|WBR|OPTION)$/.test(el.tagName) || el.closest('[dir]:not(html), bdi, [aria-hidden=true] ~ *')) continue;
+    if (/^(SCRIPT|STYLE|NOSCRIPT|TEMPLATE|BR|WBR|OPTION)$/.test(el.tagName) || el.closest('[dir]:not(html):not([data-stress-dir]), bdi')) continue;
     const p = el.parentElement;
     if (!p) continue;
     const cs = getComputedStyle(el);
+    if (getComputedStyle(p).display === 'inline') continue; // inside a line of text, bidi reordering decides, not layout
     const replaced = /^(IMG|SVG|VIDEO|CANVAS|PICTURE|svg)$/.test(el.tagName);
     const positioned = cs.position === 'absolute' || cs.position === 'fixed';
     if (cs.display === 'inline' && !replaced) continue;
     if (cs.display === 'contents' || cs.display === 'none') continue;
     const r = el.getBoundingClientRect(), pr = p.getBoundingClientRect();
-    if (r.width < 4 || r.height < 4 || pr.width - r.width < 24) continue;
+    // Nearly as wide as its parent: nothing to mirror (24 px, or a fifth of a small parent: a badge in an icon button).
+    if (r.width < 4 || r.height < 4 || pr.width - r.width < Math.min(24, Math.max(8, 0.2 * pr.width))) continue;
     if (replaced && !positioned && r.width > 96) continue; // a photograph in flow follows its box
     const pcs = getComputedStyle(p);
     const L = pr.left + parseFloat(pcs.borderLeftWidth) + parseFloat(pcs.paddingLeft), R = pr.right - parseFloat(pcs.borderRightWidth) - parseFloat(pcs.paddingRight);
@@ -281,7 +313,8 @@ export function mirrorRecord({ scope }) {
   return list.length;
 }
 
-export function mirrorCheck({ tol = 3 }) {
+export function mirrorCheck({ tol = 3, to = 'rtl' }) {
+  const DIR = to === 'rtl' ? 'RTL' : 'LTR';
   const list = window.__mirror || [];
   const byId = new Map(list.map((x) => [x.id, x]));
   const sel = (e) => {
@@ -298,7 +331,7 @@ export function mirrorCheck({ tol = 3 }) {
   for (const el of document.body.querySelectorAll('*')) {
     const b = el.__mir && byId.get(el.__mir);
     if (!b || flagged.some((f) => f.contains(el))) continue;
-    if (Math.abs(b.gL - b.gR) <= 16) continue; // centred: nothing to mirror
+    if (Math.abs(b.gL - b.gR) <= Math.min(16, Math.max(4, 0.25 * el.parentElement.getBoundingClientRect().width))) continue; // centred: nothing to mirror
     const p = el.parentElement, cs = getComputedStyle(el), pcs = getComputedStyle(p);
     const r = el.getBoundingClientRect(), pr = p.getBoundingClientRect();
     const L = pr.left + parseFloat(pcs.borderLeftWidth) + parseFloat(pcs.paddingLeft), R = pr.right - parseFloat(pcs.borderRightWidth) - parseFloat(pcs.paddingRight);
@@ -311,23 +344,54 @@ export function mirrorCheck({ tol = 3 }) {
     const why = b.positioned ? (cs.left !== 'auto' && cs.right === 'auto' ? `left: ${cs.left}` : cs.right !== 'auto' && cs.left === 'auto' ? `right: ${cs.right}` : 'left/right')
       : parseFloat(cs.marginLeft) !== parseFloat(cs.marginRight) ? `margin-left ${cs.marginLeft} / margin-right ${cs.marginRight}` : pcs.textAlign === 'left' || pcs.textAlign === 'right' ? `text-align: ${pcs.textAlign} on its parent` : /flex|grid/.test(pcs.display) && pcs.direction === 'ltr' ? 'its parent keeps direction: ltr' : `${pcs.display} parent`;
     flagged.push(el);
-    out.push({ check: 'not-mirrored', sel: sel(el), detail: `${b.replaced ? 'icon/image' : b.positioned ? 'positioned element' : el.tagName.toLowerCase()} stays ${Math.round(b.gL)}px from the left and ${Math.round(b.gR)}px from the right in RTL (${why})`, box: { x: Math.round(r.left + scrollX), y: Math.round(r.top + scrollY), w: Math.round(r.width), h: Math.round(r.height) } });
+    out.push({ check: 'not-mirrored', sel: sel(el), detail: `${b.replaced ? 'icon/image' : b.positioned ? 'positioned element' : el.tagName.toLowerCase()} stays ${Math.round(b.gL)}px from the left and ${Math.round(b.gR)}px from the right in ${DIR} (${why})`, box: { x: Math.round(r.left + scrollX), y: Math.round(r.top + scrollY), w: Math.round(r.width), h: Math.round(r.height) } });
     if (out.length >= 25) break;
   }
-  // text-align: left (physical) on text blocks: stays left in RTL. Reported where it is declared (outermost).
-  let n = 0;
-  for (const el of document.body.querySelectorAll('p, li, h1, h2, h3, h4, h5, h6, td, th, dd, dt, label, blockquote, figcaption, div')) {
-    if (n >= 10) break;
+  return out;
+}
+
+/** Physical text-align on text blocks that stays put when the direction changes (left in RTL, right in LTR). */
+export function alignCheck({ side = 'left', dir = 'RTL', max = 10 }) {
+  const sel = (e) => {
+    const parts = [];
+    for (let x = e; x && x !== document.body && parts.length < 4; x = x.parentElement) {
+      if (x.id && !/\d{3,}/.test(x.id)) { parts.unshift('#' + x.id); break; }
+      const cls = [...x.classList].filter((c) => !/^(css-|sc-|_|svelte-|astro-)|\d{3,}|:/.test(c)).slice(0, 2);
+      parts.unshift(x.tagName.toLowerCase() + (cls.length ? '.' + cls.join('.') : ''));
+    }
+    return parts.join(' > ');
+  };
+  const out = [];
+  // Reported where it is declared (outermost), on text that is not a number, outside islands with their own dir.
+  for (const el of document.body.querySelectorAll('p, li, h1, h2, h3, h4, h5, h6, td, th, caption, dd, dt, label, blockquote, figcaption, div')) {
+    if (out.length >= max) break;
     const cs = getComputedStyle(el);
-    if (cs.textAlign !== 'left' || getComputedStyle(el.parentElement).textAlign === 'left') continue;
+    if (cs.textAlign !== side || getComputedStyle(el.parentElement).textAlign === side || el.closest('[dir]:not(html):not([data-stress-dir]), bdi')) continue;
     const t = (el.innerText || '').trim();
     if (t.length < 8 || /^[\d\s.,%£$€+\-−]+$/.test(t)) continue;
     const r = el.getBoundingClientRect();
     if (r.width < 40 || r.height < 4) continue;
-    n++;
-    out.push({ check: 'not-mirrored', sel: sel(el), detail: `text-align: left (physical) — stays left in RTL; use start`, box: { x: Math.round(r.left + scrollX), y: Math.round(r.top + scrollY), w: Math.round(r.width), h: Math.round(r.height) } });
+    out.push({ check: 'not-mirrored', sel: sel(el), detail: `text-align: ${side} (physical) — stays ${side} in ${dir}; use start`, box: { x: Math.round(r.left + scrollX), y: Math.round(r.top + scrollY), w: Math.round(r.width), h: Math.round(r.height) } });
   }
   return out;
+}
+
+/**
+ * The page's direction. Marks the elements that set it (html, body, and wide direct children of body carrying a dir)
+ * with data-stress-dir, so the mirror checks tell them from islands with their own dir (a number, a code sample).
+ */
+export function pageDirection() {
+  const d = (e) => (e ? getComputedStyle(e).direction : null);
+  for (const e of [document.documentElement, document.body, ...[...document.body.children].filter((e) => e.hasAttribute('dir') && e.getBoundingClientRect().width >= innerWidth * 0.5)]) e.setAttribute('data-stress-dir', '');
+  return d(document.documentElement) === 'rtl' || d(document.body) === 'rtl' ? 'rtl' : 'ltr';
+}
+/** Flip the elements pageDirection marked to `to`; returns whether it took. */
+export function flipDirection({ to }) {
+  const roots = [...document.querySelectorAll('[data-stress-dir]')];
+  for (const e of roots) { e.setAttribute('dir', to); e.style.setProperty('direction', to); }
+  if (to === 'rtl') document.documentElement.lang = 'ar'; // flipped back to LTR, the text stays Arabic: so does lang
+  // Took effect? (a direction declared !important in the page's CSS wins over all of this)
+  return roots.every((e) => getComputedStyle(e).direction === to);
 }
 
 /** Visible text that reads as a template or data fault. */
@@ -357,8 +421,10 @@ export function regionText() {
     return { key: `${i}:${name(e)}`, sel: name(e), chars: (e.innerText || '').replace(/\s+/g, ' ').trim().length, box: { x: Math.round(r.left + scrollX), y: Math.round(r.top + scrollY), w: Math.round(r.width), h: Math.round(r.height) } };
   });
   const body = (document.body.innerText || '').replace(/\s+/g, ' ');
-  const msg = body.match(/[^.!?]*\b(error|went wrong|try again|failed|couldn.t|could not|unable|offline|no connection|not available|no results|nothing (here|found|yet)|empty|no data|no items)\b[^.!?]*/i);
-  return { regions: out, chars: body.trim().length, message: msg ? msg[0].trim().slice(0, 90) : null };
+  // Error and empty-state wording on screen, as short snippets around the words (compared with the unmutated page).
+  const messages = [...body.matchAll(/\b(error|went wrong|try again|failed|couldn.t|could not|unable to|offline|no connection|not available|no results|nothing (?:here|found|yet)|is empty|no data|no items|no orders|none yet)\b/gi)]
+    .slice(0, 6).map((m) => body.slice(Math.max(0, m.index - 30), m.index + m[0].length + 30).trim());
+  return { regions: out, chars: body.trim().length, messages };
 }
 
 /** For no-images: text that sat on an image and is now on a ground it cannot be read on. */
@@ -375,13 +441,13 @@ export function imageFallback() {
   };
   const broken = [...document.images].filter((i) => i.complete && !i.naturalWidth && i.getBoundingClientRect().width > 40);
   const out = [], imgs = [];
-  for (const i of document.images) {
+  for (const [index, i] of [...document.images].entries()) {
     if (!i.complete || i.naturalWidth) continue;
     const r = i.getBoundingClientRect();
     const cs = getComputedStyle(i);
     const sized = i.hasAttribute('width') && i.hasAttribute('height') || cs.aspectRatio !== 'auto';
     const s = i.tagName.toLowerCase() + (i.id ? '#' + i.id : '') + [...i.classList].slice(0, 2).map((c) => '.' + c).join('');
-    imgs.push({ url: (i.currentSrc || i.src).split(/[?#]/)[0], src: (i.currentSrc || i.src).split(/[?#]/)[0].split('/').pop().slice(0, 40), sel: (i.parentElement ? i.parentElement.tagName.toLowerCase() + [...i.parentElement.classList].slice(0, 1).map((c) => '.' + c).join('') + ' > ' : '') + s, w: Math.round(r.width), h: Math.round(r.height), sized, alt: i.alt, box: { x: Math.round(r.left + scrollX), y: Math.round(r.top + scrollY), w: Math.round(r.width), h: Math.round(r.height) } });
+    imgs.push({ index, url: (i.currentSrc || i.src).split(/[?#]/)[0], src: (i.currentSrc || i.src).split(/[?#]/)[0].split('/').pop().slice(0, 40), sel: (i.parentElement ? i.parentElement.tagName.toLowerCase() + [...i.parentElement.classList].slice(0, 1).map((c) => '.' + c).join('') + ' > ' : '') + s, w: Math.round(r.width), h: Math.round(r.height), sized, alt: i.alt, box: { x: Math.round(r.left + scrollX), y: Math.round(r.top + scrollY), w: Math.round(r.width), h: Math.round(r.height) } });
   }
   const done = new Set();
   const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
@@ -391,8 +457,14 @@ export function imageFallback() {
     const r = el.getBoundingClientRect();
     if (r.width < 1 || r.height < 1) continue;
     // Was it on an image? A background-image on an ancestor, or a broken <img> under most of its box.
-    let onImage = null;
-    for (let e = el, d = 0; e && e !== document.body && d < 6; e = e.parentElement, d++) if (/url\(/.test(getComputedStyle(e).backgroundImage)) { onImage = 'background image'; break; }
+    let onImage = null, painted = false;
+    for (let e = el, d = 0; e && e !== document.body && d < 6; e = e.parentElement, d++) {
+      const c = getComputedStyle(e);
+      if (/url\(/.test(c.backgroundImage)) { onImage = 'background image'; break; }
+      // Something painted between the text and the image (a filled or gradient pill, a scrim) is its real ground.
+      if (c.backgroundImage !== 'none' || (lum(c.backgroundColor)?.a || 0) > 0.5) { painted = true; break; }
+    }
+    if (painted) continue;
     if (!onImage) for (const b of broken) { const q = b.getBoundingClientRect(); const iw = Math.min(q.right, r.right) - Math.max(q.left, r.left), ih = Math.min(q.bottom, r.bottom) - Math.max(q.top, r.top); if (iw > 0 && ih > 0 && iw * ih > 0.5 * r.width * r.height && !b.contains(el)) { onImage = 'image'; break; } }
     if (!onImage) continue;
     done.add(el);
@@ -454,7 +526,9 @@ function clsObserver() {
 /* ------------------------------------------------------------------------------------------------------------ */
 
 const norm = (sel) => String(sel).replace(/:nth-of-type\(\d+\)/g, ':nth-of-type(n)');
-const key = (f) => `${f.check}|${norm(f.sel)}`;
+// New against the unmutated page is judged per element kind, positions dropped: a list cut to one row renames
+// "tr:nth-of-type(3) > td" to "tr > td", and a fault the page already had must not come back as new.
+const key = (f) => `${f.check}|${String(f.sel).replace(/:nth-of-type\(\d+\)/g, '')}`;
 const esc = (s) => String(s).replace(/\|/g, '\\|');
 
 async function measure(page, mobile) {
@@ -462,13 +536,17 @@ async function measure(page, mobile) {
 }
 
 /** Mutation-specific comparisons with the unmutated page: controls squeezed or wrapping, regions emptied. */
-function compareControls(base, now) {
+function compareControls(base, now, mobile) {
+  // Without a device-width viewport, phone Chrome lays the page out 980 px wide and boosts font sizes by how much text
+  // each block holds (text autosizing), so a control's size moves from load to load: nothing to compare.
+  if (mobile && !/width\s*=\s*device-width/i.test(base.viewportMeta || '')) return [];
   const b = new Map(base.controls.map((c) => [norm(c.sel), c]));
   const out = [];
   for (const c of now.controls) {
     const p = b.get(norm(c.sel));
     if (!p) continue;
-    if (Math.min(c.w, c.h) < 24 && Math.min(p.w, p.h) >= 24) out.push({ check: 'squeezed', sev: 'warn', sel: c.sel, detail: `"${c.label}" ${p.w}×${p.h} → ${c.w}×${c.h}px`, box: c.box });
+    // Squeezed: narrower than 24 px, or shorter than 24 px without having lost a line of its label.
+    if ((c.w < 24 && p.w >= 24) || (c.h < 24 && p.h >= 24 && c.lines >= p.lines)) out.push({ check: 'squeezed', sev: 'warn', sel: c.sel, detail: `"${c.label}" ${p.w}×${p.h} → ${c.w}×${c.h}px`, box: c.box });
     else if (c.buttonLike && c.lines >= 3 && p.lines === 1) out.push({ check: 'label-wrap', sev: 'warn', sel: c.sel, detail: `"${c.label}" now wraps to ${c.lines} lines (${c.w}×${c.h}px)`, box: c.box });
     else if (/nav|tab|menu/i.test(c.sel) && c.lines >= 2 && p.lines === 1) out.push({ check: 'label-wrap', sev: 'warn', sel: c.sel, detail: `navigation item "${c.label}" now wraps (${c.lines} lines)`, box: c.box });
   }
@@ -484,11 +562,13 @@ function compareRegions(base, now, mutation) {
     if (p && p.chars >= 40 && r.chars < p.chars * 0.4) lost.push({ r, p });
   }
   if (lost.length) {
-    const msg = now.message && !base.message ? now.message : now.message && now.message !== base.message ? now.message : null;
+    const fresh = (now.messages || []).filter((m) => !(base.messages || []).includes(m));
+    const msg = fresh.length ? fresh[0] : null;
     const list0 = mutation === 'list-0';
-    for (const { r, p } of lost.slice(0, 6)) out.push({ check: msg ? 'content-lost' : list0 ? 'no-empty-state' : 'silent-failure', sev: msg ? 'info' : 'warn', sel: r.sel, detail: `${p.chars} → ${r.chars} characters of text${msg ? `; the page says "${msg}"` : list0 ? ' with its list empty, and no empty-state message' : ' and no error or empty message on screen'}`, box: r.box });
+    for (const { r, p } of lost.slice(0, 6)) out.push({ check: msg ? 'content-lost' : list0 ? 'no-empty-state' : 'silent-failure', sev: msg ? 'info' : 'warn', sel: r.sel, detail: `${p.chars} → ${r.chars} characters of text${msg ? `; the page says "…${msg}…"` : list0 ? ' with its list empty, and no empty-state message' : ' and no error or empty message on screen'}`, box: r.box });
   }
-  if (mutation.startsWith('list-0') && !lost.length && now.message && now.message !== base.message) out.push({ check: 'empty-state', sev: 'info', sel: '(page)', detail: `the page says "${now.message}"`, box: null });
+  const fresh = (now.messages || []).filter((m) => !(base.messages || []).includes(m));
+  if (mutation.startsWith('list-0') && !lost.length && fresh.length) out.push({ check: 'empty-state', sev: 'info', sel: '(page)', detail: `the page says "…${fresh[0]}…"`, box: null });
   return out;
 }
 
@@ -497,24 +577,6 @@ async function shot(page, file, maxH = 6000) {
   const vw = page.viewportSize().width;
   const clip = { x: 0, y: 0, width: Math.max(vw, await page.evaluate(() => document.documentElement.scrollWidth).catch(() => vw)), height: Math.min(docH, maxH) };
   await page.screenshot({ path: file, fullPage: true, clip, type: 'jpeg', quality: 70 }).catch(() => null);
-}
-
-async function shotAround(page, box, vh) {
-  const docH = await page.evaluate(() => Math.max(document.documentElement.scrollHeight, document.body?.scrollHeight || 0)).catch(() => vh);
-  const vw = page.viewportSize().width;
-  const y0 = box ? Math.max(0, Math.min(box.y - Math.round(vh * 0.25), docH - vh)) : 0;
-  return page.screenshot({ clip: { x: 0, y: Math.max(0, y0), width: vw, height: Math.max(1, Math.min(vh, docH - y0)) }, fullPage: true }).catch(() => null);
-}
-
-async function cropAround(page, box, file) {
-  const pad = 32;
-  const dims = await page.evaluate(() => ({ w: document.documentElement.scrollWidth, h: Math.max(document.documentElement.scrollHeight, document.body?.scrollHeight || 0) })).catch(() => null);
-  if (!box || !dims) return false;
-  const clip = { x: Math.max(0, box.x - pad), y: Math.max(0, box.y - pad - 22) };
-  clip.width = Math.min(dims.w - clip.x, box.w + pad * 2);
-  clip.height = Math.min(dims.h - clip.y, box.h + pad * 2 + 22, 1400);
-  if (clip.width < 4 || clip.height < 4) return false;
-  return !!(await page.screenshot({ path: file, clip, fullPage: true }).catch(() => null));
 }
 
 /** Throttled load: frames at fixed times, layout shifts with sources, loading indicators. */
@@ -557,7 +619,7 @@ const globToRx = (g) => new RegExp('^' + g.split('**').map((p) => p.split('*').m
 
 async function stressPage(browser, url, a, outDir) {
   const t0 = Date.now();
-  const widths = asList(a.widths, ['390', '1024']).map(Number).filter(Boolean);
+  const widths = asList(a.widths, ['390', '768', '1280']).map(Number).filter(Boolean);
   const only = a.only ? new Set(asList(a.only)) : null;
   const skipM = new Set(asList(a['skip-mutations']));
   const muts = ALL.filter((m) => (!only || only.has(m)) && !skipM.has(m));
@@ -595,7 +657,7 @@ async function stressPage(browser, url, a, outDir) {
     const base = await measure(page, mobile);
     base.rt = await page.evaluate(regionText);
     base.junk = await page.evaluate(junkText);
-    base.imgs = await page.evaluate(() => Object.fromEntries([...document.images].map((i) => [(i.currentSrc || i.src).split(/[?#]/)[0], Math.round(i.getBoundingClientRect().height)])));
+    base.imgs = await page.evaluate(() => [...document.images].map((i) => ({ url: (i.currentSrc || i.src).split(/[?#]/)[0], h: Math.round(i.getBoundingClientRect().height) })));
     const baseKeys = new Set(base.findings.map(key));
     const baseJunk = new Set(base.junk.map((j) => j.text));
     const baseErrors = errorsSeen.length;
@@ -651,17 +713,30 @@ async function stressPage(browser, url, a, outDir) {
         if (m === 'no-images') res.applied = `${hits} image request(s) blocked`;
         if (m === 'errors' || m === 'offline') res.applied = `${hits} data request(s) ${m === 'offline' ? 'aborted' : 'answered 500'}`;
         let extra = [];
-        if (m === 'empty' || m.startsWith('list-')) res.lists = await p.evaluate(findLists, { list, scope });
+        let directionOnly = false; // a right-to-left page flipped to LTR keeps its Arabic text: only mirroring is meaningful
+        if (m === 'empty' || m === 'long' || m.startsWith('list-')) res.lists = await p.evaluate(findLists, { list, scope });
         if (['pseudo', 'long', 'empty', 'numbers'].includes(m)) {
           const r = await p.evaluate(mutateText, { kind: m, scope, targets, skip, expand: Number(a.expand) || 35 });
           res.applied = `${r.changed} text(s) changed${r.note ? '; ' + r.note : ''}`;
         } else if (m === 'rtl') {
-          const n = await p.evaluate(mirrorRecord, { scope });
-          await p.evaluate(() => { document.documentElement.dir = 'rtl'; document.documentElement.lang = 'ar'; });
+          // A page that is already right-to-left: dir=rtl again would change nothing, and every asymmetric element
+          // would "stay". Check its physical text-align: left as it stands, then flip it to its other direction.
+          const native = (await p.evaluate(pageDirection)) === 'rtl';
+          directionOnly = native;
+          const to = native ? 'ltr' : 'rtl';
+          const own = native ? await p.evaluate(alignCheck, { side: 'left', dir: 'this RTL page' }) : [];
+          // A stylesheet made for right-to-left only (bootstrap.rtl.css, style-rtl.css: RTLCSS output, physical
+          // properties swapped): the LTR locale loads another one, so flipping this page says nothing about it.
+          const rtlSheet = native ? await p.evaluate(() => [...document.styleSheets].map((x) => x.href || '').find((h) => /(^|[._-])rtl([._-]|$)/i.test(h.split(/[?#]/)[0].split('/').pop())) || null) : null;
+          const n = rtlSheet ? 0 : await p.evaluate(mirrorRecord, { scope });
+          const took = rtlSheet ? false : await p.evaluate(flipDirection, { to });
           await p.waitForTimeout(150);
-          extra = (await p.evaluate(mirrorCheck, {})).map((f) => ({ ...f, sev: 'warn' }));
-          const r = await p.evaluate(mutateText, { kind: 'rtl-text', scope, targets, skip, ar: AR });
-          res.applied = `dir=rtl lang=ar; ${n} element(s) checked for mirroring; ${r.changed} text(s) in Arabic`;
+          const after = took ? [...await p.evaluate(mirrorCheck, { to }), ...await p.evaluate(alignCheck, { side: to === 'rtl' ? 'left' : 'right', dir: to.toUpperCase() })] : [];
+          extra = [...own, ...after].map((f) => ({ ...f, sev: 'warn' }));
+          const r = native ? { changed: 0 } : await p.evaluate(mutateText, { kind: 'rtl-text', scope, targets, skip, ar: AR });
+          res.applied = native
+            ? `the page is already right-to-left: physical text-align checked as it is${rtlSheet ? `; it loads a right-to-left stylesheet (${rtlSheet.split('/').pop()}), so its LTR locale uses another: not flipped (run --only rtl on the LTR page)` : `, then flipped to dir=ltr (its other locale)${took ? `; ${n} element(s) checked for mirroring` : '; the flip did not take (direction set !important?): mirroring not checked'}`}; text left as it is`
+            : `dir=rtl lang=ar${took ? `; ${n} element(s) checked for mirroring` : '; the flip did not take (direction set !important?): mirroring not checked'}; ${r.changed} text(s) in Arabic`;
         } else if (m.startsWith('list-')) {
           const r = await p.evaluate(mutateLists, { count: Number(m.slice(5)) });
           res.applied = r.containers.length ? r.containers.map((c) => `${c.container}: ${c.before} → ${c.after} ${c.item}${m === 'list-500' ? ` (${c.height}px tall, layout ${c.layoutMs} ms)` : ''}`).join('; ') : 'no repeated list found: pass --list';
@@ -678,12 +753,14 @@ async function stressPage(browser, url, a, outDir) {
         if (m === 'no-images') {
           const r = await p.evaluate(imageFallback);
           img = r.unreadable.map((f) => ({ ...f, sev: 'error' }));
-          const jumped = r.broken.filter((b) => !b.sized && base.imgs[b.url] !== undefined && Math.abs(base.imgs[b.url] - b.h) > 24);
-          if (jumped.length) img.push({ check: 'unsized-image', sev: 'warn', sel: jumped[0].sel, count: jumped.length, detail: `${jumped.length} image(s) with no width/height or aspect-ratio are ${jumped[0].h}px tall while missing and ${base.imgs[jumped[0].url]}px loaded (${jumped.slice(0, 3).map((b) => b.src).join(', ')}): everything below jumps when they arrive`, box: jumped[0].box });
+          // Same image, same place in document order, in the loaded page: how tall was it there?
+          const was = (b) => (base.imgs[b.index]?.url === b.url ? base.imgs[b.index].h : undefined);
+          const jumped = r.broken.filter((b) => !b.sized && was(b) !== undefined && Math.abs(was(b) - b.h) > 24);
+          if (jumped.length) img.push({ check: 'unsized-image', sev: 'warn', sel: jumped[0].sel, count: jumped.length, detail: `${jumped.length} image(s) with no width/height or aspect-ratio are ${jumped[0].h}px tall while missing and ${was(jumped[0])}px loaded (${jumped.slice(0, 3).map((b) => b.src).join(', ')}): everything below jumps when they arrive`, box: jumped[0].box });
         }
         const regions = ['errors', 'offline', 'list-0', 'no-images'].includes(m) ? compareRegions(base.rt, now.rt, m) : [];
         const errNote = errs.length ? [{ check: 'page-error', sev: 'warn', sel: '(page)', detail: `${errs.length} uncaught error(s): ${errs[0]}`, box: null }] : [];
-        res.new = [...fresh, ...junk, ...img, ...extra, ...compareControls(base, now), ...regions, ...(['errors', 'offline'].includes(m) ? errNote : [])];
+        res.new = directionOnly ? [...junk, ...extra] : [...fresh, ...junk, ...img, ...extra, ...compareControls(base, now, mobile), ...regions, ...(['errors', 'offline'].includes(m) ? errNote : [])];
         // Group repeats of one element kind: 40 cards clipped read as one line, "×40".
         const g = new Map();
         for (const f of res.new) { const k = key(f); const e = g.get(k); if (e) e.count++; else g.set(k, { ...f, count: 1 }); }
@@ -692,18 +769,20 @@ async function stressPage(browser, url, a, outDir) {
         // Evidence: the marked page, a cell for the sheet, crops of the worst findings.
         const marks = res.new.filter((f) => f.box && f.sev !== 'info').slice(0, 8);
         if (marks.length) {
+          // The sheet cell and the crops first; the full-page JPEG last (on a zoomed-out phone page a full-page
+          // screenshot changes the page scale, and text autosizing then moves the text away from the marks).
           const rmMarks = await markFindings(p, marks);
-          if (!a['no-full']) { const f = path.join(pageDir, `${m}-${width}.jpg`); await shot(p, f); res.full = f; }
-          const png = await shotAround(p, marks[0].box, height);
+          const png = await evidenceShot(p, marks[0].box, { height }).catch(() => null);
           if (png) cells.push({ label: `${m} @ ${width}px — ${res.new.filter((f) => f.sev === 'error').length} ✗, ${res.new.filter((f) => f.sev === 'warn').length} △`, png, notes: marks.map((f) => `${MARK[f.sev]} ${f.check}: ${f.sel}${f.count > 1 ? ` (×${f.count})` : ''} — ${f.detail}`.slice(0, 150)), cellW: mobile ? 300 : 520, sc: marks.reduce((s, f) => s + WEIGHT[f.sev], 0) });
           await rmMarks();
           for (const f of marks.filter((f) => f.sev === 'error').slice(0, 2)) {
             if (cropN >= 16) break;
             const file = path.join(pageDir, 'crops', `${String(++cropN).padStart(2, '0')}-${m}-${width}-${f.check}.png`);
             const rm1 = await markFindings(p, [f]);
-            if (await cropAround(p, f.box, file)) crops.push({ file, mutation: m, width, check: f.check, sel: f.sel });
+            if (await evidenceCrop(p, f.box, file).catch(() => false)) crops.push({ file, mutation: m, width, check: f.check, sel: f.sel });
             await rm1();
           }
+          if (!a['no-full']) { const rmAll = await markFindings(p, marks); const f = path.join(pageDir, `${m}-${width}.jpg`); await shot(p, f); res.full = f; await rmAll(); }
         }
         await p.close();
       }
@@ -718,7 +797,7 @@ async function stressPage(browser, url, a, outDir) {
   if (sheet) await drawSheet(browser, cells.sort((p, q) => q.sc - p.sc).slice(0, 12), sheet, { title: `${url} — what each content mutation broke (new findings only, boxed and numbered)` });
   const strip = filmstrip?.length ? path.join(outDir, `${slug}-slow.jpg`) : null;
   if (strip) await drawSheet(browser, filmstrip, strip, { title: `${url} — throttled load (${net.latency} ms RTT, ${net.down} kbit/s, ${net.cpu}× CPU): what the first seconds show` });
-  return { url, ms: Date.now() - t0, widths, mutations: muts, results, sheet, filmstrip: strip, crops };
+  return { url, browser: a.__build || null, ms: Date.now() - t0, widths, mutations: muts, results, sheet, filmstrip: strip, crops };
 }
 
 function markdown(r) {
@@ -758,6 +837,7 @@ async function main() {
   const outDir = a.out || 'stress';
   await mkdir(outDir, { recursive: true });
   const { browser } = await launch({ chrome: a.chrome });
+  a.__build = await browserBuild(browser);
   let anyError = false;
   const md = ['# Content stress', ''];
   try {

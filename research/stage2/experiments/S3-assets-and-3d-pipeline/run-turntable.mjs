@@ -15,13 +15,19 @@ const N = 36, W = 480, H = 360;
 const MODEL = 'FlightHelmet';
 const srv = await serve();
 const { browser } = await launchLab();
-const page = await browser.newPage({ viewport: { width: W, height: H } });
-await page.goto(`${srv.url}/build/gltf-viewer.html`);
-await page.waitForFunction(() => window.viewReady === true);
-const r = await page.evaluate((p) => window.view(p), { url: `/build/gltf/${MODEL}/original.glb`, W, H, frames: 1, azimuths: Array.from({ length: N }, (_, i) => (i * 360) / N) });
+async function turntable(w, h) {
+  const page = await browser.newPage({ viewport: { width: w, height: h } });
+  await page.goto(`${srv.url}/build/gltf-viewer.html`);
+  await page.waitForFunction(() => window.viewReady === true);
+  const r = await page.evaluate((p) => window.view(p), { url: `/build/gltf/${MODEL}/original.glb`, W: w, H: h, frames: 1, azimuths: Array.from({ length: N }, (_, i) => (i * 360) / N) });
+  await page.close();
+  if (r.error) { console.error(r); process.exit(1); }
+  return r.turntable.map((d) => Buffer.from(d.split(',')[1], 'base64'));
+}
+const frames = await turntable(W, H);
+// the same turntable for a 2× display (960×720 device pixels): frames only — one sheet would decode to ~100 MB
+const frames2x = await turntable(W * 2, H * 2);
 await browser.close(); await srv.close();
-if (r.error) { console.error(r); process.exit(1); }
-const frames = r.turntable.map((d) => Buffer.from(d.split(',')[1], 'base64'));
 const dir = path.join(BUILD, 'turntable'); await mkdir(dir, { recursive: true });
 
 const enc = { webp: (s) => s.webp({ quality: 80 }), avif: (s) => s.avif({ quality: 55 }), jpeg: (s) => s.jpeg({ quality: 80, mozjpeg: true }) };
@@ -30,6 +36,12 @@ for (const [f, e] of Object.entries(enc)) {
   let total = 0;
   for (const b of frames) total += (await e(sharp(b)).toBuffer()).length;
   out.individual[f] = { bytes: total, requests: N };
+}
+out.individual2x = { frameSize: `${W * 2}x${H * 2}` };
+for (const [f, e] of Object.entries(enc)) {
+  let total = 0;
+  for (const b of frames2x) total += (await e(sharp(b)).toBuffer()).length;
+  out.individual2x[f] = { bytes: total, requests: N, decodedRGBA: N * W * 2 * H * 2 * 4 };
 }
 const cols = 6, rows = N / cols;
 const grid = await sharp({ create: { width: cols * W, height: rows * H, channels: 3, background: '#e8e6e1' } })
@@ -52,6 +64,6 @@ for (const v of ['optimize_1k_webp', 'optimize_defaults_webp_', 'tex1k_ktx2', 't
 }
 out.live = { threeViewerJs: { min: js.length, gzip: zlib.gzipSync(js, { level: 9 }).length }, glb: glbs, note: `plus GPU texture memory: see gltf results for ${MODEL}` };
 out.model = MODEL;
-out.sprite360Js = 'a drag-to-rotate image sequence needs ~1 KB of script (pointer x → frame index) or none (scroll-driven background-position steps)';
+out.sprite360Js = 'a drag-to-rotate image sequence needs ~1 KB of script (pointer x → frame index); a scroll-scrubbed one can be CSS only (a scroll-driven animation of transform: translate with steps() on an image strip — not background-position, which repaints every frame: see sprites.cssSprite)';
 await mergeResults('turntable', out);
 console.log(JSON.stringify(out, null, 1));

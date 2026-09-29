@@ -1,4 +1,4 @@
-# Motion check — http://127.0.0.1:42563/captures/c/over.html
+# Motion check — http://127.0.0.1:42223/captures/c/over.html
 
 2026-09-29 · desktop · Chromium 141.0.7390.37 · tokens from spec: micro 100, small 150, medium 240, large 300, page 400, hero 700
 
@@ -12,25 +12,25 @@
 | sheet-open | click | animates | 800ms (spec large) | cubic-bezier(0.68, -0.55, 0.27, 1.55) / ease | fade → still moves | ✗ duration 800ms outside large (300ms); easing cubic-bezier(0.68, -0.55, 0.27, 1.55) / ease is not out (cubic-bezier(0.2, 0, 0, 1)); animates layout properties not in the spec: height, top/margin, padding-bottom, padding-top; spec'd properties that did not change: transform; reduced motion: still moves — spec says fade |
 | toast | click | animates | 900ms (spec medium) | cubic-bezier(0.68, -0.55, 0.27, 1.55) | fade → still moves | ✗ duration 900ms outside medium (240ms); easing cubic-bezier(0.68, -0.55, 0.27, 1.55) is not out (cubic-bezier(0.2, 0, 0, 1)); animates layout properties not in the spec: top/margin, margin-bottom; spec'd properties that did not change: transform; reduced motion: still moves — spec says fade |
 | features-reveal | scroll | animates, stagger 200ms (declared) | 1200ms (spec medium) | cubic-bezier(0.68, -0.55, 0.27, 1.55) | static → still moves | ✗ duration 1200ms outside medium (240ms); easing cubic-bezier(0.68, -0.55, 0.27, 1.55) is not out (cubic-bezier(0.2, 0, 0, 1)); stagger 200ms, spec 40ms; reduced motion: still moves — spec says static |
-| stat-count | scroll | animates | ~2515ms (spec 800) | ≈ linear | instant → still animates (text or custom property) | ✗ duration ~2494–2515ms (sampled: last visible change – fitted) outside 800ms; sampled curve fits linear better than out (rms 0.072 vs 0.002); reduced motion: still animates (text or custom property) — spec says instant |
+| stat-count | scroll | animates | ~2503ms (spec 800) | ≈ linear | instant → still animates (text or custom property) | ✗ duration ~2482–2503ms (sampled: last visible change – fitted) outside 800ms; sampled curve fits linear better than out (rms 0.072 vs 0.002); reduced motion: still animates (text or custom property) — spec says instant |
 | hero-in | load | animates | 1500ms (spec hero) | ease-in | fade → still moves | ✗ duration 1500ms outside hero (700ms); easing ease-in is not emphasized (cubic-bezier(0.05, 0.7, 0.1, 1)); reduced motion: still moves — spec says fade |
 | panel-swap | click | animates (view transition) | 600ms (spec page) | ease / ease-in | fade → still moves | ✗ duration 600ms outside page (400ms); easing ease / ease-in is not out (cubic-bezier(0.2, 0, 0, 1)); reduced motion: still moves — spec says fade; interrupted after 150ms: input swallowed (the second click landed on <html>; a view transition hit-tests the root for its whole duration) |
 
-Filmstrips: `filmstrip-cta-press.jpg`, `filmstrip-cta-hover.jpg`, `filmstrip-plan-hover.jpg`, `filmstrip-toast.jpg`, `filmstrip-features-reveal.jpg`, `filmstrip-stat-count.jpg`, `filmstrip-hero-in.jpg`, `filmstrip-panel-swap.jpg`
+Filmstrips: `filmstrip-cta-press.jpg`, `filmstrip-cta-hover.jpg`, `filmstrip-plan-hover.jpg`, `filmstrip-sheet-open.jpg`, `filmstrip-toast.jpg`, `filmstrip-features-reveal.jpg`, `filmstrip-stat-count.jpg`, `filmstrip-hero-in.jpg`, `filmstrip-panel-swap.jpg`
 
 ## Audit
 
 - Elements with motion: 23 (23 transitions, 2 animations); under reduce: 23 (23, 2).
 - Reduced-motion handling: 0 CSS `prefers-reduced-motion: reduce` block(s); JavaScript queried it 0×.
-- At rest (no input, after load): requestAnimationFrame 60.5×/s.
+- At rest (no input, after load): requestAnimationFrame 56×/s.
 - At load: 2 CSS/WAAPI animation(s) normally, 2 under reduce; JS-driven inline-style motion on 1 element(s) normally, 1 under reduce.
 - Hover: 10/10 controls change visibly · keyboard focus: 11/11 · press (:active): 0/7 buttons.
 
 ### Flags
 
-- **no-reduced-motion** (1): `page` — no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript
-- **moves-under-reduce** (3): `#hero-title` — animation heroin (opacity, transform, 1500ms) still runs at load under reduce; `#cta` — animation pulse (box-shadow, 1500ms, infinite) still runs at load under reduce; `#hero div.blob` — inline style changed 152× in the first 4 s under reduce (JavaScript-driven motion)
-- **raf-at-rest** (1): `page` — requestAnimationFrame fires 61×/s with no input — a JS loop runs at rest (seen in the lab: GSAP ScrollTrigger once registered, anime.js onScroll, React Spring useScroll, Motion scroll() with x/y/scale values, Rive and dotLottie until stopRendering()/freeze(), hand-written loops); stop it when nothing moves
+- **no-reduced-motion** (1): `page` — no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript, and 26 thing(s) move (#nav a, #hero-title, #cta…)
+- **moves-under-reduce** (3): `#hero-title` — animation heroin (opacity, transform, 1500ms) still runs at load under reduce; `#cta` — animation pulse (box-shadow, 1500ms, infinite) still runs at load under reduce; `#hero div.blob` — inline style changed 153× in the first 4 s under reduce (JavaScript-driven motion)
+- **raf-at-rest** (1): `page` — requestAnimationFrame fires 56×/s with no input — a JS loop runs at rest (seen in the lab: GSAP ScrollTrigger once registered, anime.js onScroll, React Spring useScroll, Motion scroll() with x/y/scale values, Rive and dotLottie until stopRendering()/freeze(), hand-written loops); stop it when nothing moves
 - **transition-all** (14): `#nav a` — transition: all 600ms — name the properties; `#cta` — transition: all 600ms — name the properties; `#open-sheet` — transition: all 600ms — name the properties; `#plan-basic` — transition: all 600ms — name the properties; `#plan-basic a.btn` — transition: all 600ms — name the properties; `#plan-pro` — transition: all 600ms — name the properties; `#plan-pro a.btn` — transition: all 600ms — name the properties; `#plan-team` — transition: all 600ms — name the properties; … 6 more
 - **layout-transition** (1): `#sheet` — transition on height (800ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)
 - **layout-keyframes** (1): `@keyframes toastin` — @keyframes toastin animates margin-bottom (not running at load)

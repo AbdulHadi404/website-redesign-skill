@@ -3,16 +3,18 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "S2 motion lab: seven interactions \u00d7 eight tools (interruption, reduced motion, main thread, rAF at rest, size); Rive vs Lottie vs dotLottie vs SVG/CSS vs sprite for one stateful toggle and a loop; scripts/motion.mjs scored on four builds of one page plus a held-out check on the Part A pages.",
+  "description": "S2 motion lab: seven interactions × eight tools (interruption, reduced motion, main thread, rAF at rest, size); Rive vs Lottie vs dotLottie vs SVG/CSS vs sprite for one stateful toggle and a loop; scripts/motion.mjs scored on four fixture builds, the six Part A pages (guarded and not), dev pages before/after, 15 held-out pages (frozen version and current), and a starved-page stress test.",
   "license": "MIT",
   "scripts": {
-    "fetch": "node fetch-assets.mjs",
+    "fetch": "node fetch-assets.mjs && node c/fetch-ext.mjs",
     "all": "node run.mjs",
     "a": "node run.mjs --only a",
     "b": "node run.mjs --only b",
     "c": "node run.mjs --only c",
     "x": "node run.mjs --only x",
     "rescore": "node run.mjs --only c --rescore",
+    "pages": "node c/run-pages.mjs --before --frozen",
+    "verify-hover": "node c/verify-hover.mjs --set heldout",
     "summary": "node summarize.mjs"
   },
   "dependencies": {

@@ -86,7 +86,8 @@
         "historyJsonKB": 38769,
         "M1_undoMyMove_keepsTheirColour": false,
         "M2_sameProperty": "my original restored (their change overwritten)",
-        "M3_undoOnDeleted": "resurrected the item"
+        "M3_undoOnDeleted": "resurrected the item",
+        "M3_withSkipMissingGuard": "n/a (whole-state restore or replay: no per-record guard)"
       },
       "command": {
         "label": "Command pattern",
@@ -107,7 +108,8 @@
         "historyJsonKB": 135,
         "M1_undoMyMove_keepsTheirColour": true,
         "M2_sameProperty": "my original restored (their change overwritten)",
-        "M3_undoOnDeleted": "throws (TypeError)"
+        "M3_undoOnDeleted": "throws (TypeError)",
+        "M3_withSkipMissingGuard": "no-op (stays deleted)"
       },
       "snapshotSpread": {
         "label": "Immutable snapshots (object spread)",
@@ -128,7 +130,8 @@
         "historyJsonKB": 38769,
         "M1_undoMyMove_keepsTheirColour": false,
         "M2_sameProperty": "my original restored (their change overwritten)",
-        "M3_undoOnDeleted": "resurrected the item"
+        "M3_undoOnDeleted": "resurrected the item",
+        "M3_withSkipMissingGuard": "n/a (whole-state restore or replay: no per-record guard)"
       },
       "snapshotHamt": {
         "label": "Immutable snapshots (persistent map)",
@@ -149,7 +152,8 @@
         "historyJsonKB": 38769,
         "M1_undoMyMove_keepsTheirColour": false,
         "M2_sameProperty": "my original restored (their change overwritten)",
-        "M3_undoOnDeleted": "resurrected the item"
+        "M3_undoOnDeleted": "resurrected the item",
+        "M3_withSkipMissingGuard": "n/a (whole-state restore or replay: no per-record guard)"
       },
       "immerPatches": {
         "label": "Patches (immer)",
@@ -170,7 +174,8 @@
         "historyJsonKB": 318,
         "M1_undoMyMove_keepsTheirColour": true,
         "M2_sameProperty": "my original restored (their change overwritten)",
-        "M3_undoOnDeleted": "throws (Error)"
+        "M3_undoOnDeleted": "throws (Error)",
+        "M3_withSkipMissingGuard": "no-op (stays deleted)"
       },
       "recordDiff": {
         "label": "Record diffs (tldraw-style)",
@@ -191,7 +196,8 @@
         "historyJsonKB": 481,
         "M1_undoMyMove_keepsTheirColour": false,
         "M2_sameProperty": "my original restored (their change overwritten)",
-        "M3_undoOnDeleted": "resurrected the item"
+        "M3_undoOnDeleted": "resurrected the item",
+        "M3_withSkipMissingGuard": "no-op (stays deleted)"
       },
       "propDiff": {
         "label": "Property deltas (excalidraw-style)",
@@ -212,7 +218,8 @@
         "historyJsonKB": 178,
         "M1_undoMyMove_keepsTheirColour": true,
         "M2_sameProperty": "my original restored (their change overwritten)",
-        "M3_undoOnDeleted": "no-op (stays deleted)"
+        "M3_undoOnDeleted": "no-op (stays deleted)",
+        "M3_withSkipMissingGuard": "guard built in (as benchmarked)"
       },
       "yjs": {
         "label": "CRDT (Yjs UndoManager)",
@@ -232,7 +239,8 @@
         "persistence": "n/a: document persists, UndoManager stacks do not",
         "M1_undoMyMove_keepsTheirColour": true,
         "M2_sameProperty": "their change kept (my undo skipped)",
-        "M3_undoOnDeleted": "no-op (stays deleted)"
+        "M3_undoOnDeleted": "no-op (stays deleted)",
+        "M3_withSkipMissingGuard": "n/a (CRDT: never overwrites remote changes)"
       },
       "eventSourced": {
         "label": "Event log + checkpoints",
@@ -253,7 +261,8 @@
         "historyJsonKB": 154,
         "M1_undoMyMove_keepsTheirColour": false,
         "M2_sameProperty": "my original restored (their change overwritten)",
-        "M3_undoOnDeleted": "resurrected the item"
+        "M3_undoOnDeleted": "resurrected the item",
+        "M3_withSkipMissingGuard": "n/a (whole-state restore or replay: no per-record guard)"
       },
       "yjsCapture": {
         "default (captureTimeout 500, no stopCapturing)": {
@@ -1181,18 +1190,161 @@
           ]
         }
       }
-    ]
+    ],
+    "correctnessRerunAt": "2026-09-29T03:13:29.914Z",
+    "immerFreeze": {
+      "method": "bench-one.mjs immerPatches <scene> 1000 history, IMMER_AUTOFREEZE=1 vs 0, alternating order per pair",
+      "cells": [
+        {
+          "scene": 200,
+          "ops": 1000,
+          "pairs": 9,
+          "correct": true,
+          "freezeOn": {
+            "updateP95us": 170.7,
+            "commitP95us": 369.7,
+            "undoMeanUs": 402.2,
+            "playMs": 1008.3,
+            "updateP95usRange": [
+              131.7,
+              402.9
+            ]
+          },
+          "freezeOff": {
+            "updateP95us": 60,
+            "commitP95us": 271.4,
+            "undoMeanUs": 270.2,
+            "playMs": 576,
+            "updateP95usRange": [
+              55.8,
+              91.9
+            ]
+          },
+          "ratioOnOverOff": {
+            "updateP95": 3.06,
+            "updateP95Range": [
+              1.43,
+              7.07
+            ],
+            "undoMean": 1.63,
+            "undoMeanRange": [
+              0.9,
+              3.66
+            ],
+            "playMs": 1.93
+          },
+          "loadAvg1m": {
+            "min": 13.5,
+            "max": 14.6
+          }
+        },
+        {
+          "scene": 5000,
+          "ops": 1000,
+          "pairs": 7,
+          "correct": true,
+          "freezeOn": {
+            "updateP95us": 5227.1,
+            "commitP95us": 3901.3,
+            "undoMeanUs": 3293.6,
+            "playMs": 24292.8,
+            "updateP95usRange": [
+              4229.2,
+              13614.7
+            ]
+          },
+          "freezeOff": {
+            "updateP95us": 4860,
+            "commitP95us": 3550.2,
+            "undoMeanUs": 2096.6,
+            "playMs": 18607.2,
+            "updateP95usRange": [
+              2635.3,
+              7860.1
+            ]
+          },
+          "ratioOnOverOff": {
+            "updateP95": 1.2,
+            "updateP95Range": [
+              0.54,
+              3.18
+            ],
+            "undoMean": 1.68,
+            "undoMeanRange": [
+              0.92,
+              2
+            ],
+            "playMs": 1.43
+          },
+          "loadAvg1m": {
+            "min": 11.2,
+            "max": 18.9
+          }
+        }
+      ],
+      "date": "2026-09-29T03:20:50.759Z"
+    }
   },
   "prototype": {
     "fonts": "present",
     "model": {
+      "firstRuleSetAsReviewed": {
+        "singleChangeTransitionsExcludingDecorations": 12531,
+        "transitionsWhereARepairChangedANeed": 237,
+        "ofWhichTriggeredByATasteChoice": 202,
+        "examples": [
+          {
+            "from": {
+              "people": 50,
+              "tiers": 3,
+              "message": "plaque"
+            },
+            "chose": [
+              "shape",
+              "heart"
+            ],
+            "changed": [
+              "people: 50 → 20"
+            ]
+          },
+          {
+            "from": {
+              "people": 50,
+              "tiers": 3,
+              "message": "piped"
+            },
+            "chose": [
+              "people",
+              30
+            ],
+            "changed": [
+              "message: piped → plaque"
+            ]
+          },
+          {
+            "from": {
+              "people": 50,
+              "tiers": 3,
+              "message": "piped"
+            },
+            "chose": [
+              "shape",
+              "heart"
+            ],
+            "changed": [
+              "people: 50 → 20"
+            ]
+          }
+        ],
+        "configsWhoseWordsWereInTheQuery": 299
+      },
       "configsTested": 400,
       "invalidConfigs": 0,
-      "singleChangeTransitions": 13871,
-      "blockedAsInactive": 676,
-      "transitionsNeedingRepair": 1492,
-      "repairShare": 0.11,
-      "repairsAnnouncedOnTheOptionBeforehand": 1492,
+      "singleChangeTransitions": 13669,
+      "blockedAsInactive": 878,
+      "transitionsNeedingRepair": 1290,
+      "repairShare": 0.09,
+      "repairsAnnouncedOnTheOptionBeforehand": 1290,
       "invalidAfterRepair": 0,
       "repairOverrodeTheChoice": 0,
       "repairsByReason": {
@@ -1200,11 +1352,28 @@
         "50 people need 3 tiers": 302,
         "8 people need 1 tier": 197,
         "12 people need 1 tier": 197,
-        "heart cakes are one tier, up to 20 people": 541,
+        "heart cakes are one tier": 37,
         "a drip slides off fondant": 127,
+        "heart cakes are one tier, up to 20 people": 184,
         "20 people need 1 or 2 tiers": 98,
         "a drip needs buttercream or ganache underneath": 78,
-        "the 5-inch top tier is too small to pipe on": 77
+        "piped writing needs a top tier of 6 inches or more": 35
+      },
+      "inactiveByReason": {
+        "Heart cakes serve up to N people": 160,
+        "Up to three decorations": 660,
+        "N tiers leave a N-inch top tier, too small to pipe your message on": 42,
+        "The N-inch top tier is too small to pipe on": 16
+      },
+      "needs": {
+        "keys": [
+          "people",
+          "message",
+          "text"
+        ],
+        "transitionsWhereARepairChangedANeed": 0,
+        "ofWhichTriggeredByATasteChoice": 0,
+        "examples": []
       },
       "randomise": {
         "runs": 2000,
@@ -1213,8 +1382,10 @@
         "distinct": 2000
       },
       "links": {
-        "roundTripExact": "400/400",
-        "longestQueryChars": 153,
+        "roundTripExactExceptWords": "400/400",
+        "configsWithWords": 299,
+        "wordsFoundInQuery": 0,
+        "longestQueryChars": 138,
         "hostileLinksOpenValidCake": [
           true,
           true,
@@ -1223,8 +1394,8 @@
         ]
       },
       "renderNode": {
-        "medianMs": 0.89,
-        "p95Ms": 6.36,
+        "medianMs": 0.76,
+        "p95Ms": 4.07,
         "svgBytesMedian": 21750.5,
         "svgBytesMax": 46773
       }
@@ -1232,8 +1403,8 @@
     "behaviour": {
       "consoleErrors": [],
       "repair": {
-        "afterPeople30": {
-          "people": 30,
+        "before": {
+          "people": 20,
           "tiers": 2
         },
         "afterHeart": {
@@ -1241,10 +1412,26 @@
           "tiers": 1,
           "shape": "heart"
         },
+        "hintOnTheOptionBeforehand": "Changes to one tier",
         "steps": 1,
-        "notice": "Heart cakes are one tier, up to 20 people, so we made it 20 people, one tier.UndoDismiss",
+        "liveRegionText": "Heart cakes are one tier, so we made it one tier.",
+        "buttonsInsideLiveRegions": 0,
         "oneUndoRestores": true,
         "announced": "Undone: Shape: Heart"
+      },
+      "needProtected": {
+        "people": [
+          30,
+          30
+        ],
+        "shape": [
+          "round",
+          "round"
+        ],
+        "steps": 0,
+        "reasonBesideOption": "Heart cakes serve up to 20 people",
+        "notice": "Heart cakes serve up to 20 people.",
+        "trackedAsUnmetDemand": true
       },
       "inactiveOption": {
         "decorations": [
@@ -1253,7 +1440,7 @@
           "sprinkles"
         ],
         "changed": false,
-        "notice": "Up to three decorations.Dismiss"
+        "notice": "Up to three decorations."
       },
       "noOpChoiceAddsStep": false,
       "redo": {
@@ -1264,6 +1451,8 @@
         "typedChars": 15,
         "steps": 1,
         "textInAnalytics": false,
+        "textInAnyPageUrl": false,
+        "pageUrlsChecked": 33,
         "previewText": "Happy 30th Maya"
       },
       "slider": {
@@ -1294,12 +1483,15 @@
         "sizeReframed": true
       },
       "persistence": {
-        "queryChars": 121,
-        "linkOpensSameCake": true,
+        "queryChars": 119,
+        "wordsInQuery": false,
+        "wordsInCopiedLink": false,
+        "linkOpensSameDesign": true,
+        "wordsFromSomeoneElsesLink": "",
         "entryFromLink": "link",
-        "reloadKeepsCake": true,
+        "reloadKeepsCakeAndWords": true,
         "bareUrlResumes": true,
-        "resumeNotice": "Welcome back. This is the cake you were designing.Start againDismiss",
+        "resumeNotice": "Welcome back. This is the cake you were designing.",
         "historyAfterReload": 0,
         "clipboardHasLink": true
       },
@@ -1357,7 +1549,7 @@
           ],
           [
             "date value",
-            "2026-10-18"
+            "2026-10-19"
           ],
           [
             "name",
@@ -1393,46 +1585,95 @@
           {
             "event": "first_change",
             "key": "people",
-            "ms_to_first_change": 269,
-            "ms": 269
+            "ms_to_first_change": 259,
+            "ms": 259
           },
           {
             "event": "review_opened",
             "estimate": 120,
             "changes_before_review": 1,
-            "ms": 451
+            "ms": 359
           },
           {
             "event": "validation_failed",
             "fields": "date,name,email",
-            "ms": 582
+            "ms": 451
           },
           {
             "event": "request_submitted",
             "estimate": 120,
             "lead_days": 3,
             "changes_before_review": 1,
-            "ms": 939
+            "ms": 664
           }
         ]
       },
       "renderCost": {
+        "runs": 5,
         "cpu1x": {
-          "commitMedianMs": 2.9,
-          "commitP95Ms": 7.7,
+          "commitMedianMs": 2.3,
+          "commitMedianMsRange": [
+            2.2,
+            2.5
+          ],
+          "commitP95Ms": 5.1,
+          "commitP95MsRange": [
+            4,
+            5.6
+          ],
           "dragPreviewMedianMs": 0.3,
-          "dragPreviewP95Ms": 1.3,
-          "dragFullRenderMedianMs": 3.5,
-          "dragFullRenderP95Ms": 11.6,
+          "dragPreviewMedianMsRange": [
+            0.2,
+            0.3
+          ],
+          "dragPreviewP95Ms": 0.5,
+          "dragPreviewP95MsRange": [
+            0.4,
+            0.6
+          ],
+          "dragFullRenderMedianMs": 2.3,
+          "dragFullRenderMedianMsRange": [
+            2.2,
+            2.5
+          ],
+          "dragFullRenderP95Ms": 4.4,
+          "dragFullRenderP95MsRange": [
+            3.7,
+            5.5
+          ],
           "svgNodes": 306
         },
         "cpu4x": {
-          "commitMedianMs": 9,
-          "commitP95Ms": 17.7,
-          "dragPreviewMedianMs": 1.2,
-          "dragPreviewP95Ms": 6.9,
-          "dragFullRenderMedianMs": 8.3,
-          "dragFullRenderP95Ms": 30.1,
+          "commitMedianMs": 9.1,
+          "commitMedianMsRange": [
+            8,
+            9.6
+          ],
+          "commitP95Ms": 14.6,
+          "commitP95MsRange": [
+            13.6,
+            19.1
+          ],
+          "dragPreviewMedianMs": 0.8,
+          "dragPreviewMedianMsRange": [
+            0.3,
+            2
+          ],
+          "dragPreviewP95Ms": 3.2,
+          "dragPreviewP95MsRange": [
+            1.8,
+            3.5
+          ],
+          "dragFullRenderMedianMs": 10.4,
+          "dragFullRenderMedianMsRange": [
+            8.9,
+            11.4
+          ],
+          "dragFullRenderP95Ms": 14.6,
+          "dragFullRenderP95MsRange": [
+            14.5,
+            22.3
+          ],
           "svgNodes": 306
         }
       },
@@ -1453,7 +1694,7 @@
     "scripts": {
       "capture": {
         "code": 0,
-        "seconds": 20,
+        "seconds": 14,
         "files": [
           "home-1440-fold.png",
           "home-1440.png",
@@ -1466,7 +1707,7 @@
       },
       "audit": {
         "code": 0,
-        "seconds": 26,
+        "seconds": 18,
         "fails": [],
         "warnings": 14,
         "signals": [
@@ -1479,9 +1720,65 @@
           "No violations in 2 views."
         ]
       },
+      "auditChartSignalProbe": {
+        "390": {
+          "flaggedByAuditPredicate": 3,
+          "flagged": [
+            {
+              "el": "svg#cake.cake",
+              "role": "img",
+              "ariaHidden": null,
+              "ariaLabelledbyText": "Sketch of a 8-inch round cake for 12 people: vanilla sponge ",
+              "size": "366×256"
+            },
+            {
+              "el": "svg.preset-svg",
+              "role": null,
+              "ariaHidden": "true",
+              "ariaLabelledbyText": null,
+              "size": "160×120"
+            },
+            {
+              "el": "svg.preset-svg",
+              "role": null,
+              "ariaHidden": "true",
+              "ariaLabelledbyText": null,
+              "size": "160×120"
+            }
+          ],
+          "flaggedAfterProposedFix": 0
+        },
+        "1440": {
+          "flaggedByAuditPredicate": 3,
+          "flagged": [
+            {
+              "el": "svg#cake.cake",
+              "role": "img",
+              "ariaHidden": null,
+              "ariaLabelledbyText": "Sketch of a 8-inch round cake for 12 people: vanilla sponge ",
+              "size": "952×743"
+            },
+            {
+              "el": "svg.preset-svg",
+              "role": null,
+              "ariaHidden": "true",
+              "ariaLabelledbyText": null,
+              "size": "181×135"
+            },
+            {
+              "el": "svg.preset-svg",
+              "role": null,
+              "ariaHidden": "true",
+              "ariaLabelledbyText": null,
+              "size": "181×135"
+            }
+          ],
+          "flaggedAfterProposedFix": 0
+        }
+      },
       "a11y1280": {
         "code": 0,
-        "seconds": 53,
+        "seconds": 46,
         "fail": 0,
         "warn": 2,
         "findings": [
@@ -1491,7 +1788,7 @@
       },
       "a11y390": {
         "code": 0,
-        "seconds": 54,
+        "seconds": 45,
         "fail": 0,
         "warn": 0,
         "findings": [],
@@ -1499,7 +1796,7 @@
       },
       "states": {
         "code": 0,
-        "seconds": 80,
+        "seconds": 72,
         "summary": [
           "✓ start (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/start-phone.png  axe: no violations",
           "✓ size (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/size-phone.png  axe: no violations",
@@ -1507,11 +1804,12 @@
           "✓ outside-custom (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/outside-custom-phone.png  axe: no violations",
           "✓ decorate (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/decorate-phone.png  axe: no violations",
           "✓ repair-notice (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/repair-notice-phone.png  axe: no violations",
+          "✓ inactive-need (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/inactive-need-phone.png  axe: no violations",
           "✓ review-errors (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/review-errors-phone.png  axe: no violations",
           "✓ sent (phone)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/sent-phone.png  axe: no violations",
           "✓ repair-desktop (desktop)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/repair-desktop-desktop.png  axe: no violations",
           "✓ review-desktop (desktop)  /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/review-desktop-desktop.png  axe: no violations",
-          "10/10 captured · axe: 10 scanned, none with a critical or serious violation · summary /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/states.md · sheet: node compare.mjs --grid /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/*.png --out /home/user/website-redesign-skill/research/stage2/exp"
+          "11/11 captured · axe: 11 scanned, none with a critical or serious violation · summary /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/states.md · sheet: node compare.mjs --grid /home/user/website-redesign-skill/research/stage2/experiments/S5-configurators-editors/captures/states/*.png --out /home/user/website-redesign-skill/research/stage2/exp"
         ]
       }
     },
@@ -1525,11 +1823,11 @@
       "states-phone-sheet.jpg"
     ],
     "sourceBytes": {
-      "index.html": 3984,
-      "styles.css": 17033,
-      "app.js": 37121,
-      "model.js": 17272,
-      "history.js": 3391,
+      "index.html": 4065,
+      "styles.css": 17268,
+      "app.js": 38700,
+      "model.js": 18896,
+      "history.js": 3442,
       "render.js": 20087
     }
   }

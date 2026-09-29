@@ -1,0 +1,5 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Static chart canvas without a name</title>
+<!-- A static canvas chart with no name, no fallback and no aria-hidden. Expected: WARN. -->
+<style>body{margin:0;padding:20px}canvas{display:block}</style></head>
+<body><main><h1>Sales</h1><canvas id="c" width="480" height="300"></canvas></main>
+<script>const x=document.getElementById('c').getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,480,300);[120,200,90,240].forEach((h,i)=>{x.fillStyle='#3b6fd8';x.fillRect(40+i*110,280-h,70,h)});</script></body></html>

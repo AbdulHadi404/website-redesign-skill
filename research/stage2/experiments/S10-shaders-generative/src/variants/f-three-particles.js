@@ -50,6 +50,9 @@ export function threeScene(canvas, { antialias = false } = {}) {
   renderer.setPixelRatio(1);
   renderer.setClearColor(new Color('#09122a'));
   const scene = new Scene();
+  // scene.background, not only the clear colour: with pmndrs/postprocessing's EffectPass the clear colour is
+  // encoded to sRGB twice and the navy lifts to a grey-blue (blacklevel phase); ?bg=clear shows that.
+  if (q.get('bg') !== 'clear') scene.background = new Color('#09122a');
   const camera = new PerspectiveCamera(50, 16 / 9, 0.1, 50);
   camera.position.set(0, 0.9, 4.2); camera.lookAt(0, 0, -0.6);
   const { points, mat } = particles();

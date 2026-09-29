@@ -1,0 +1,4 @@
+{ "_note": "Held-out spec (designer's intent), written before motion.mjs ran on this page.",
+  "motion": [
+  { "id": "tab-switch", "trigger": "click", "on": "button[data-bs-target=\"#profile\"]", "target": "#profile", "properties": ["opacity"], "duration": "small", "easing": "out", "reduced": "fade" }
+] }

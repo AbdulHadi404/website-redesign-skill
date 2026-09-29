@@ -666,13 +666,19 @@
   },
   "pixiDraw": {
    "atlas": {
-    "frameMs": 119.65,
-    "cpuMs": 0.3,
+    "frameMs": 115.25,
+    "cpuMs": 0.4,
+    "drawCalls": 1,
+    "n": 5
+   },
+   "grid": {
+    "frameMs": 255.35,
+    "cpuMs": 0.4,
     "drawCalls": 1,
     "n": 5
    },
    "files": {
-    "frameMs": 296,
+    "frameMs": 248.3,
     "cpuMs": 0.5,
     "drawCalls": 7,
     "n": 5
@@ -715,7 +721,8 @@
    }
   },
   "nineslice": {
-   "drawCalls": 1
+   "drawCalls": 1,
+   "cssVsPixiDiffPct": 0
   },
   "loadH2": {
    "files-webp": {
@@ -1155,7 +1162,8001 @@
    "@lottiefiles/dotlottie-web": "0.80.0",
    "free-tex-packer-core": "0.3.9"
   },
-  "measuredAt": "2026-09-29T01:31:40.404Z",
+  "measuredAt": "2026-09-29T03:50:13.146Z",
+  "host": {
+   "cpus": 4,
+   "node": "v22.22.2"
+  }
+ },
+ "gltf": {
+  "runs": 1,
+  "models": {
+   "DamagedHelmet": {
+    "kind": "PBR hero object (1 mesh, 5 JPEG textures 2048²)",
+    "licence": "CC-BY-4.0 + CC-BY-NC-4.0 (earlier version) — lab only, not shippable",
+    "frame": {
+     "center": [
+      -0.0024815797805786133,
+      0.00001051233508486682,
+      -0.18715500186327721
+     ],
+     "size": [
+      1.8899539709091187,
+      1.801969245445116,
+      2.0000002558849395
+     ]
+    },
+    "variants": {
+     "original": {
+      "commands": "gltf-transform copy in.glb out.glb",
+      "bytes": 3773736,
+      "gzip": 3423236,
+      "brotli": 3352672,
+      "buildMs": 566,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 364.4,
+      "firstFrameMs": 6115.7,
+      "frameMs": 155.8,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15452,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 111848105,
+      "geometryGpuBytes": 1490088,
+      "instances": 0,
+      "diffPixels": 0,
+      "diffPctOfObject": 0,
+      "psnr": null,
+      "model": {
+       "trianglesDrawn": 15452,
+       "drawCalls": 1,
+       "textureGpuBytes": 111848105,
+       "geometryGpuBytes": 558504,
+       "maxTexture": 2048,
+       "compression": [],
+       "textureBytes": 3213224,
+       "geometryBytesStored": 558504,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "over: transfer 3.77 MB > 1.50 MB — textures are 85 % of it: start there",
+        "advice: geometry stored uncompressed (0.56 MB)",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~111.85 MB > 48.00 MB"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "clean": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb",
+      "bytes": 3767336,
+      "gzip": 3421558,
+      "brotli": 3352316,
+      "buildMs": 3104,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 325.2,
+      "firstFrameMs": 10767.3,
+      "frameMs": 225.5,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15452,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 111848105,
+      "geometryGpuBytes": 1470888,
+      "instances": 0,
+      "diffPixels": 0,
+      "diffPctOfObject": 0,
+      "psnr": null,
+      "model": {
+       "trianglesDrawn": 15452,
+       "drawCalls": 1,
+       "textureGpuBytes": 111848105,
+       "geometryGpuBytes": 552104,
+       "maxTexture": 2048,
+       "compression": [],
+       "textureBytes": 3213224,
+       "geometryBytesStored": 552104,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "over: transfer 3.77 MB > 1.50 MB — textures are 85 % of it: start there",
+        "advice: geometry stored uncompressed (0.55 MB)",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~111.85 MB > 48.00 MB"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "quantize": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform quantize in.glb out.glb",
+      "bytes": 3652624,
+      "gzip": 3351157,
+      "brotli": 3290627,
+      "buildMs": 3699,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 420.1,
+      "firstFrameMs": 11581.6,
+      "frameMs": 227.6,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15452,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 111848105,
+      "geometryGpuBytes": 1126344,
+      "instances": 0,
+      "diffPixels": 55,
+      "diffPctOfObject": 0.07,
+      "psnr": 37.8,
+      "model": {
+       "trianglesDrawn": 15452,
+       "drawCalls": 1,
+       "textureGpuBytes": 111848105,
+       "geometryGpuBytes": 379832,
+       "maxTexture": 2048,
+       "compression": [
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 3213224,
+       "geometryBytesStored": 437256,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "over: transfer 3.65 MB > 1.50 MB — textures are 88 % of it: start there",
+        "advice: geometry stored uncompressed (0.44 MB)",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~111.85 MB > 48.00 MB"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "draco": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform draco in.glb out.glb",
+      "bytes": 3293532,
+      "gzip": 3179335,
+      "brotli": 3185349,
+      "buildMs": 4107,
+      "needs": [
+       "draco"
+      ],
+      "initMs": 25,
+      "loadMs": 556.6,
+      "firstFrameMs": 9462,
+      "frameMs": 195.9,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15452,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 111848105,
+      "geometryGpuBytes": 646608,
+      "instances": 0,
+      "diffPixels": 60,
+      "diffPctOfObject": 0.08,
+      "psnr": 37.5,
+      "model": {
+       "trianglesDrawn": 15452,
+       "drawCalls": 1,
+       "textureGpuBytes": 111848105,
+       "geometryGpuBytes": 553896,
+       "maxTexture": 2048,
+       "compression": [
+        "KHR_draco_mesh_compression"
+       ],
+       "textureBytes": 3213224,
+       "geometryBytesStored": 78304,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "over: transfer 3.29 MB > 1.50 MB — textures are 98 % of it: start there",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~111.85 MB > 48.00 MB",
+        "info: Draco geometry: the decoder is a separate 59 KB (WASM, brotli) or 81 KB (JS fallback) download plus worker start-up; measured decode slower than meshopt"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "meshopt": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform meshopt in.glb out.glb --level high",
+      "bytes": 3398000,
+      "gzip": 3249114,
+      "brotli": 3254853,
+      "buildMs": 4383,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0.1,
+      "loadMs": 382.3,
+      "firstFrameMs": 10818.7,
+      "frameMs": 227.2,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15452,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 111848105,
+      "geometryGpuBytes": 379832,
+      "instances": 0,
+      "diffPixels": 146,
+      "diffPctOfObject": 0.2,
+      "psnr": 36.2,
+      "model": {
+       "trianglesDrawn": 15452,
+       "drawCalls": 1,
+       "textureGpuBytes": 111848105,
+       "geometryGpuBytes": 336764,
+       "maxTexture": 2048,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 3213224,
+       "geometryBytesStored": 181707,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "over: transfer 3.40 MB > 1.50 MB — textures are 95 % of it: start there",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~111.85 MB > 48.00 MB"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "simplify50+meshopt": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform simplify in.glb out.glb --ratio 0.5 --error 0.001 && gltf-transform meshopt in.glb out.glb --level high",
+      "bytes": 3371252,
+      "gzip": 3231195,
+      "brotli": 3236932,
+      "buildMs": 4925,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0.1,
+      "loadMs": 468.2,
+      "firstFrameMs": 7456.1,
+      "frameMs": 196.3,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 12378,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 111848105,
+      "geometryGpuBytes": 315868,
+      "instances": 0,
+      "diffPixels": 1195,
+      "diffPctOfObject": 1.61,
+      "psnr": 28.9,
+      "model": {
+       "trianglesDrawn": 12378,
+       "drawCalls": 1,
+       "textureGpuBytes": 111848105,
+       "geometryGpuBytes": 279628,
+       "maxTexture": 2048,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 3213224,
+       "geometryBytesStored": 154962,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "over: transfer 3.37 MB > 1.50 MB — textures are 95 % of it: start there",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~111.85 MB > 48.00 MB"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-webp": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform webp in.glb out.glb",
+      "bytes": 921564,
+      "gzip": 684698,
+      "brotli": 620907,
+      "buildMs": 5839,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 125.6,
+      "firstFrameMs": 6538.9,
+      "frameMs": 209.2,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15452,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 27962025,
+      "geometryGpuBytes": 1470888,
+      "instances": 0,
+      "diffPixels": 435,
+      "diffPctOfObject": 0.59,
+      "psnr": 33.2,
+      "model": {
+       "trianglesDrawn": 15452,
+       "drawCalls": 1,
+       "textureGpuBytes": 27962025,
+       "geometryGpuBytes": 552104,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 367198,
+       "geometryBytesStored": 552104,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "advice: geometry stored uncompressed (0.55 MB)"
+       ],
+       "ok": true,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-avif": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform avif in.glb out.glb",
+      "bytes": 774956,
+      "gzip": 538951,
+      "brotli": 474734,
+      "buildMs": 20585,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 151.8,
+      "firstFrameMs": 7228,
+      "frameMs": 184.9,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15452,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 27962025,
+      "geometryGpuBytes": 1470888,
+      "instances": 0,
+      "diffPixels": 152,
+      "diffPctOfObject": 0.21,
+      "psnr": 35.4,
+      "model": {
+       "trianglesDrawn": 15452,
+       "drawCalls": 1,
+       "textureGpuBytes": 27962025,
+       "geometryGpuBytes": 552104,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_texture_avif"
+       ],
+       "textureBytes": 220597,
+       "geometryBytesStored": 552104,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "advice: geometry stored uncompressed (0.55 MB)"
+       ],
+       "ok": true,
+       "imageFormats": [
+        "avif"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-ktx2": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform uastc in.glb out.glb --slots '{normalTexture,occlusionTexture,metallicRoughnessTexture}' --level 2 --rdo --rdo-lambda 4 --zstd 18 && gltf-transform etc1s in.glb out.glb --quality 255",
+      "bytes": 2566888,
+      "gzip": 2328749,
+      "brotli": 2264119,
+      "buildMs": 34778,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 30.5,
+      "loadMs": 525.1,
+      "firstFrameMs": 7220.3,
+      "frameMs": 155.2,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15452,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 5,
+      "maxTexture": 1024,
+      "textureGpuBytes": 6990640,
+      "geometryGpuBytes": 1470888,
+      "instances": 0,
+      "diffPixels": 319,
+      "diffPctOfObject": 0.43,
+      "psnr": 32.2,
+      "model": {
+       "trianglesDrawn": 15452,
+       "drawCalls": 1,
+       "textureGpuBytes": 6990505,
+       "geometryGpuBytes": 552104,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 2012505,
+       "geometryBytesStored": 552104,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "over: transfer 2.57 MB > 1.50 MB — textures are 78 % of it: start there",
+        "advice: geometry stored uncompressed (0.55 MB)"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "ktx2/etc1s",
+        "ktx2/uastc"
+       ]
+      },
+      "errors": []
+     },
+     "optimize (defaults, webp)": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress meshopt --texture-compress webp",
+      "bytes": 1443004,
+      "gzip": 1399250,
+      "brotli": 1398530,
+      "buildMs": 3076,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0.1,
+      "loadMs": 472.1,
+      "firstFrameMs": 7441.7,
+      "frameMs": 200.8,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15188,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 111848105,
+      "geometryGpuBytes": 374628,
+      "instances": 0,
+      "diffPixels": 451,
+      "diffPctOfObject": 0.61,
+      "psnr": 33.2,
+      "model": {
+       "trianglesDrawn": 15188,
+       "drawCalls": 1,
+       "textureGpuBytes": 111848105,
+       "geometryGpuBytes": 332103,
+       "maxTexture": 2048,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization",
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 1260242,
+       "geometryBytesStored": 179481,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~111.85 MB > 48.00 MB"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "optimize 1k webp": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress meshopt --texture-compress webp --texture-size 1024",
+      "bytes": 545008,
+      "gzip": 506846,
+      "brotli": 504229,
+      "buildMs": 2360,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0.1,
+      "loadMs": 114.3,
+      "firstFrameMs": 7666.7,
+      "frameMs": 195.6,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15188,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 27962025,
+      "geometryGpuBytes": 374628,
+      "instances": 0,
+      "diffPixels": 588,
+      "diffPctOfObject": 0.79,
+      "psnr": 31.8,
+      "model": {
+       "trianglesDrawn": 15188,
+       "drawCalls": 1,
+       "textureGpuBytes": 27962025,
+       "geometryGpuBytes": 332103,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization",
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 362262,
+       "geometryBytesStored": 179481,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "optimize 1k avif draco": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress draco --texture-compress avif --texture-size 1024",
+      "bytes": 285008,
+      "gzip": 281122,
+      "brotli": 280095,
+      "buildMs": 19812,
+      "needs": [
+       "draco"
+      ],
+      "initMs": 26.2,
+      "loadMs": 219.5,
+      "firstFrameMs": 6847.8,
+      "frameMs": 174.4,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15188,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 27962025,
+      "geometryGpuBytes": 637776,
+      "instances": 0,
+      "diffPixels": 194,
+      "diffPctOfObject": 0.26,
+      "psnr": 33.8,
+      "model": {
+       "trianglesDrawn": 15188,
+       "drawCalls": 1,
+       "textureGpuBytes": 27962025,
+       "geometryGpuBytes": 546648,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_draco_mesh_compression",
+        "EXT_texture_avif"
+       ],
+       "textureBytes": 204934,
+       "geometryBytesStored": 77858,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "info: Draco geometry: the decoder is a separate 59 KB (WASM, brotli) or 81 KB (JS fallback) download plus worker start-up; measured decode slower than meshopt"
+       ],
+       "ok": true,
+       "imageFormats": [
+        "avif"
+       ]
+      },
+      "errors": []
+     },
+     "tex2k-ktx2": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform uastc in.glb out.glb --slots '{normalTexture,occlusionTexture,metallicRoughnessTexture}' --level 2 --rdo --rdo-lambda 4 --zstd 18 && gltf-transform etc1s in.glb out.glb --quality 255",
+      "bytes": 7828572,
+      "gzip": 7588784,
+      "brotli": 7526756,
+      "buildMs": 112907,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 30.1,
+      "loadMs": 1150.1,
+      "firstFrameMs": 8739.3,
+      "frameMs": 202.1,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15452,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 5,
+      "maxTexture": 2048,
+      "textureGpuBytes": 27962160,
+      "geometryGpuBytes": 1470888,
+      "instances": 0,
+      "diffPixels": 248,
+      "diffPctOfObject": 0.33,
+      "psnr": 32.9,
+      "model": {
+       "trianglesDrawn": 15452,
+       "drawCalls": 1,
+       "textureGpuBytes": 27962025,
+       "geometryGpuBytes": 552104,
+       "maxTexture": 2048,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 7274191,
+       "geometryBytesStored": 552104,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "over: transfer 7.83 MB > 1.50 MB — textures are 93 % of it: start there",
+        "advice: geometry stored uncompressed (0.55 MB)",
+        "over: texture 2048px > 1024px"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "ktx2/etc1s",
+        "ktx2/uastc"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-ktx2-etc1s": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform etc1s in.glb out.glb --quality 255",
+      "bytes": 1301552,
+      "gzip": 1063388,
+      "brotli": 999375,
+      "buildMs": 6615,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 19.2,
+      "loadMs": 290.2,
+      "firstFrameMs": 2963.4,
+      "frameMs": 58,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15452,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 5,
+      "maxTexture": 1024,
+      "textureGpuBytes": 6990640,
+      "geometryGpuBytes": 1470888,
+      "instances": 0,
+      "diffPixels": 1785,
+      "diffPctOfObject": 2.41,
+      "psnr": 27.4,
+      "model": {
+       "trianglesDrawn": 15452,
+       "drawCalls": 1,
+       "textureGpuBytes": 6990505,
+       "geometryGpuBytes": 552104,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 747162,
+       "geometryBytesStored": 552104,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "advice: geometry stored uncompressed (0.55 MB)"
+       ],
+       "ok": true,
+       "imageFormats": [
+        "ktx2/etc1s"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-ktx2-wasm": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && node gltf/ktx2-wasm.mjs in.glb out.glb",
+      "bytes": 2608952,
+      "gzip": 2371464,
+      "brotli": 2307766,
+      "buildMs": 80810,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 30.2,
+      "loadMs": 455.3,
+      "firstFrameMs": 5689.4,
+      "frameMs": 148.8,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15452,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 5,
+      "maxTexture": 1024,
+      "textureGpuBytes": 6990640,
+      "geometryGpuBytes": 1470888,
+      "instances": 0,
+      "diffPixels": 446,
+      "diffPctOfObject": 0.6,
+      "psnr": 31.2,
+      "model": {
+       "trianglesDrawn": 15452,
+       "drawCalls": 1,
+       "textureGpuBytes": 6990505,
+       "geometryGpuBytes": 552104,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 2054557,
+       "geometryBytesStored": 552104,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "over: transfer 2.61 MB > 1.50 MB — textures are 79 % of it: start there",
+        "advice: geometry stored uncompressed (0.55 MB)"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "ktx2/etc1s",
+        "ktx2/uastc"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-ktx2-wasm-readme": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && node gltf/ktx2-wasm.mjs in.glb out.glb",
+      "bytes": 2608952,
+      "gzip": 2371460,
+      "brotli": 2307762,
+      "buildMs": 83107,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 24.5,
+      "loadMs": 515.6,
+      "firstFrameMs": 5353.9,
+      "frameMs": 159.7,
+      "n": 5,
+      "drawCalls": 1,
+      "triangles": 15452,
+      "programs": 7,
+      "textureCount": 5,
+      "compressedTextures": 5,
+      "maxTexture": 1024,
+      "textureGpuBytes": 6990640,
+      "geometryGpuBytes": 1470888,
+      "instances": 0,
+      "diffPixels": 37009,
+      "diffPctOfObject": 49.96,
+      "psnr": 13.4,
+      "model": {
+       "trianglesDrawn": 15452,
+       "drawCalls": 1,
+       "textureGpuBytes": 6990505,
+       "geometryGpuBytes": 552104,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 2054557,
+       "geometryBytesStored": 552104,
+       "animationBytesStored": 0,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "over: 3 KTX2 data texture(s) (metallicRoughnessTexture, occlusionTexture, normalTexture) tagged sRGB: three.js will decode them as colour and the shading breaks",
+        "over: transfer 2.61 MB > 1.50 MB — textures are 79 % of it: start there",
+        "advice: geometry stored uncompressed (0.55 MB)"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "ktx2/etc1s",
+        "ktx2/uastc"
+       ]
+      },
+      "errors": []
+     }
+    }
+   },
+   "FlightHelmet": {
+    "kind": "multi-part PBR object (6 meshes, 15 PNG textures 2048²)",
+    "licence": "CC0-1.0",
+    "frame": {
+     "center": [
+      -0.02035103738307953,
+      0.3579895067214238,
+      0.014241687953472137
+     ],
+     "size": [
+      0.36658334732055664,
+      0.7160218620301748,
+      0.3715749531984329
+     ]
+    },
+    "variants": {
+     "original": {
+      "commands": "gltf-transform copy in.glb out.glb",
+      "bytes": 48382996,
+      "gzip": 47626172,
+      "brotli": 47392608,
+      "buildMs": 586,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 750.8,
+      "firstFrameMs": 6950.8,
+      "frameMs": 737.4,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 188708,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 285212667,
+      "geometryGpuBytes": 11203596,
+      "instances": 0,
+      "diffPixels": 0,
+      "diffPctOfObject": 0,
+      "psnr": null,
+      "model": {
+       "trianglesDrawn": 188708,
+       "drawCalls": 11,
+       "textureGpuBytes": 285212667,
+       "geometryGpuBytes": 3227148,
+       "maxTexture": 2048,
+       "compression": [],
+       "textureBytes": 45146723,
+       "geometryBytesStored": 3227148,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: transfer 48.38 MB > 1.50 MB — textures are 93 % of it: start there",
+        "advice: geometry stored uncompressed (3.23 MB)",
+        "over: 188,708 triangles drawn > 100,000 (incl. 93,986 redrawn for the transmission pass)",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~285.21 MB > 48.00 MB",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass",
+        "advice: 15 PNG textures (45.15 MB)"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "png"
+       ]
+      },
+      "errors": []
+     },
+     "clean": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb",
+      "bytes": 48382844,
+      "gzip": 47626166,
+      "brotli": 47392618,
+      "buildMs": 4279,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 1518.3,
+      "firstFrameMs": 10471.4,
+      "frameMs": 980.5,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 188708,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 285212667,
+      "geometryGpuBytes": 11203596,
+      "instances": 0,
+      "diffPixels": 0,
+      "diffPctOfObject": 0,
+      "psnr": null,
+      "model": {
+       "trianglesDrawn": 188708,
+       "drawCalls": 11,
+       "textureGpuBytes": 285212667,
+       "geometryGpuBytes": 3227148,
+       "maxTexture": 2048,
+       "compression": [],
+       "textureBytes": 45146723,
+       "geometryBytesStored": 3227148,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: transfer 48.38 MB > 1.50 MB — textures are 93 % of it: start there",
+        "advice: geometry stored uncompressed (3.23 MB)",
+        "over: 188,708 triangles drawn > 100,000 (incl. 93,986 redrawn for the transmission pass)",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~285.21 MB > 48.00 MB",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass",
+        "advice: 15 PNG textures (45.15 MB)"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "png"
+       ]
+      },
+      "errors": []
+     },
+     "quantize": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform quantize in.glb out.glb",
+      "bytes": 47275900,
+      "gzip": 46672964,
+      "brotli": 46489596,
+      "buildMs": 5372,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 1671.9,
+      "firstFrameMs": 10626.8,
+      "frameMs": 1211.1,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 188708,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 285212667,
+      "geometryGpuBytes": 6772236,
+      "instances": 0,
+      "diffPixels": 29,
+      "diffPctOfObject": 0.04,
+      "psnr": 43.9,
+      "model": {
+       "trianglesDrawn": 188708,
+       "drawCalls": 11,
+       "textureGpuBytes": 285212667,
+       "geometryGpuBytes": 1897740,
+       "maxTexture": 2048,
+       "compression": [
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 45146723,
+       "geometryBytesStored": 2119308,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: transfer 47.28 MB > 1.50 MB — textures are 95 % of it: start there",
+        "advice: geometry stored uncompressed (2.12 MB)",
+        "over: 188,708 triangles drawn > 100,000 (incl. 93,986 redrawn for the transmission pass)",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~285.21 MB > 48.00 MB",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass",
+        "advice: 15 PNG textures (45.15 MB)"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "png"
+       ]
+      },
+      "errors": []
+     },
+     "draco": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform draco in.glb out.glb",
+      "bytes": 45695492,
+      "gzip": 45611909,
+      "brotli": 45649355,
+      "buildMs": 4494,
+      "needs": [
+       "draco"
+      ],
+      "initMs": 19.7,
+      "loadMs": 2276.6,
+      "firstFrameMs": 10200.1,
+      "frameMs": 1103.3,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 188708,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 285212667,
+      "geometryGpuBytes": 3795480,
+      "instances": 0,
+      "diffPixels": 24,
+      "diffPctOfObject": 0.03,
+      "psnr": 41.8,
+      "model": {
+       "trianglesDrawn": 188708,
+       "drawCalls": 11,
+       "textureGpuBytes": 285212667,
+       "geometryGpuBytes": 3227148,
+       "maxTexture": 2048,
+       "compression": [
+        "KHR_draco_mesh_compression"
+       ],
+       "textureBytes": 45146723,
+       "geometryBytesStored": 540176,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: transfer 45.70 MB > 1.50 MB — textures are 99 % of it: start there",
+        "over: 188,708 triangles drawn > 100,000 (incl. 93,986 redrawn for the transmission pass)",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~285.21 MB > 48.00 MB",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass",
+        "info: Draco geometry: the decoder is a separate 59 KB (WASM, brotli) or 81 KB (JS fallback) download plus worker start-up; measured decode slower than meshopt",
+        "advice: 15 PNG textures (45.15 MB)"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "png"
+       ]
+      },
+      "errors": []
+     },
+     "meshopt": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform meshopt in.glb out.glb --level high",
+      "bytes": 45868956,
+      "gzip": 45583672,
+      "brotli": 45611448,
+      "buildMs": 4566,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0.1,
+      "loadMs": 1411.7,
+      "firstFrameMs": 9927.6,
+      "frameMs": 1145.7,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 188708,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 285212667,
+      "geometryGpuBytes": 1676172,
+      "instances": 0,
+      "diffPixels": 29,
+      "diffPctOfObject": 0.04,
+      "psnr": 43.6,
+      "model": {
+       "trianglesDrawn": 188708,
+       "drawCalls": 11,
+       "textureGpuBytes": 285212667,
+       "geometryGpuBytes": 1509996,
+       "maxTexture": 2048,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 45146723,
+       "geometryBytesStored": 706787,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: transfer 45.87 MB > 1.50 MB — textures are 98 % of it: start there",
+        "over: 188,708 triangles drawn > 100,000 (incl. 93,986 redrawn for the transmission pass)",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~285.21 MB > 48.00 MB",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass",
+        "advice: 15 PNG textures (45.15 MB)"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "png"
+       ]
+      },
+      "errors": []
+     },
+     "simplify50+meshopt": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform simplify in.glb out.glb --ratio 0.5 --error 0.001 && gltf-transform meshopt in.glb out.glb --level high",
+      "bytes": 45593136,
+      "gzip": 45431793,
+      "brotli": 45460611,
+      "buildMs": 6101,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0,
+      "loadMs": 1785.3,
+      "firstFrameMs": 10217.3,
+      "frameMs": 848.1,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 105634,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 285212667,
+      "geometryGpuBytes": 974078,
+      "instances": 0,
+      "diffPixels": 1025,
+      "diffPctOfObject": 1.4,
+      "psnr": 29.3,
+      "model": {
+       "trianglesDrawn": 105634,
+       "drawCalls": 11,
+       "textureGpuBytes": 285212667,
+       "geometryGpuBytes": 875678,
+       "maxTexture": 2048,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 45146723,
+       "geometryBytesStored": 431021,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: transfer 45.59 MB > 1.50 MB — textures are 99 % of it: start there",
+        "over: 105,634 triangles drawn > 100,000 (incl. 52,621 redrawn for the transmission pass)",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~285.21 MB > 48.00 MB",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass",
+        "advice: 15 PNG textures (45.15 MB)"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "png"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-webp": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform webp in.glb out.glb",
+      "bytes": 4577976,
+      "gzip": 3869492,
+      "brotli": 3601864,
+      "buildMs": 8252,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 379.1,
+      "firstFrameMs": 8360.7,
+      "frameMs": 1069.5,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 188708,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 83886075,
+      "geometryGpuBytes": 11203596,
+      "instances": 0,
+      "diffPixels": 51,
+      "diffPctOfObject": 0.07,
+      "psnr": 38.6,
+      "model": {
+       "trianglesDrawn": 188708,
+       "drawCalls": 11,
+       "textureGpuBytes": 83886075,
+       "geometryGpuBytes": 3227148,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 1341274,
+       "geometryBytesStored": 3227148,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: transfer 4.58 MB > 1.50 MB",
+        "advice: geometry stored uncompressed (3.23 MB)",
+        "over: 188,708 triangles drawn > 100,000 (incl. 93,986 redrawn for the transmission pass)",
+        "over: texture GPU memory ~83.89 MB > 48.00 MB",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-avif": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform avif in.glb out.glb",
+      "bytes": 4001316,
+      "gzip": 3293575,
+      "brotli": 3024146,
+      "buildMs": 46872,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 390.5,
+      "firstFrameMs": 8127.4,
+      "frameMs": 1012.8,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 188708,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 83886075,
+      "geometryGpuBytes": 11203596,
+      "instances": 0,
+      "diffPixels": 4,
+      "diffPctOfObject": 0.01,
+      "psnr": 41.1,
+      "model": {
+       "trianglesDrawn": 188708,
+       "drawCalls": 11,
+       "textureGpuBytes": 83886075,
+       "geometryGpuBytes": 3227148,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_texture_avif"
+       ],
+       "textureBytes": 764614,
+       "geometryBytesStored": 3227148,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: transfer 4.00 MB > 1.50 MB",
+        "advice: geometry stored uncompressed (3.23 MB)",
+        "over: 188,708 triangles drawn > 100,000 (incl. 93,986 redrawn for the transmission pass)",
+        "over: texture GPU memory ~83.89 MB > 48.00 MB",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "avif"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-ktx2": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform uastc in.glb out.glb --slots '{normalTexture,occlusionTexture,metallicRoughnessTexture}' --level 2 --rdo --rdo-lambda 4 --zstd 18 && gltf-transform etc1s in.glb out.glb --quality 255",
+      "bytes": 11164772,
+      "gzip": 10448681,
+      "brotli": 10187026,
+      "buildMs": 69407,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 49.4,
+      "loadMs": 1015.9,
+      "firstFrameMs": 7847,
+      "frameMs": 1023.7,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 188708,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 15,
+      "maxTexture": 1024,
+      "textureGpuBytes": 20971920,
+      "geometryGpuBytes": 11203596,
+      "instances": 0,
+      "diffPixels": 12,
+      "diffPctOfObject": 0.02,
+      "psnr": 37.3,
+      "model": {
+       "trianglesDrawn": 188708,
+       "drawCalls": 11,
+       "textureGpuBytes": 20971515,
+       "geometryGpuBytes": 3227148,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 7928018,
+       "geometryBytesStored": 3227148,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: transfer 11.16 MB > 1.50 MB — textures are 71 % of it: start there",
+        "advice: geometry stored uncompressed (3.23 MB)",
+        "over: 188,708 triangles drawn > 100,000 (incl. 93,986 redrawn for the transmission pass)",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "ktx2/uastc",
+        "ktx2/etc1s"
+       ]
+      },
+      "errors": []
+     },
+     "optimize (defaults, webp)": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress meshopt --texture-compress webp",
+      "bytes": 4774492,
+      "gzip": 4575703,
+      "brotli": 4569057,
+      "buildMs": 9167,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0,
+      "loadMs": 1228.6,
+      "firstFrameMs": 10204.9,
+      "frameMs": 1102.3,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 175778,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 285212667,
+      "geometryGpuBytes": 1565724,
+      "instances": 0,
+      "diffPixels": 416,
+      "diffPctOfObject": 0.57,
+      "psnr": 33.4,
+      "model": {
+       "trianglesDrawn": 175778,
+       "drawCalls": 11,
+       "textureGpuBytes": 285212667,
+       "geometryGpuBytes": 1410267,
+       "maxTexture": 2048,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization",
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 4098466,
+       "geometryBytesStored": 660051,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: transfer 4.77 MB > 1.50 MB — textures are 86 % of it: start there",
+        "over: 175,778 triangles drawn > 100,000 (incl. 87,554 redrawn for the transmission pass)",
+        "over: texture 2048px > 1024px",
+        "over: texture GPU memory ~285.21 MB > 48.00 MB",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "optimize 1k webp": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress meshopt --texture-compress webp --texture-size 1024",
+      "bytes": 2017284,
+      "gzip": 1818912,
+      "brotli": 1812486,
+      "buildMs": 5241,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0.1,
+      "loadMs": 307.3,
+      "firstFrameMs": 8797.5,
+      "frameMs": 1132.3,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 175778,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 83886075,
+      "geometryGpuBytes": 1565724,
+      "instances": 0,
+      "diffPixels": 419,
+      "diffPctOfObject": 0.57,
+      "psnr": 32.8,
+      "model": {
+       "trianglesDrawn": 175778,
+       "drawCalls": 11,
+       "textureGpuBytes": 83886075,
+       "geometryGpuBytes": 1410267,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization",
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 1341274,
+       "geometryBytesStored": 660051,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: transfer 2.02 MB > 1.50 MB — textures are 66 % of it: start there",
+        "over: 175,778 triangles drawn > 100,000 (incl. 87,554 redrawn for the transmission pass)",
+        "over: texture GPU memory ~83.89 MB > 48.00 MB",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "optimize 1k avif draco": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress draco --texture-compress avif --texture-size 1024",
+      "bytes": 1294320,
+      "gzip": 1266068,
+      "brotli": 1259595,
+      "buildMs": 63175,
+      "needs": [
+       "draco"
+      ],
+      "initMs": 27.5,
+      "loadMs": 778.3,
+      "firstFrameMs": 9341.8,
+      "frameMs": 1086,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 175778,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 83886075,
+      "geometryGpuBytes": 3546144,
+      "instances": 0,
+      "diffPixels": 411,
+      "diffPctOfObject": 0.56,
+      "psnr": 32.8,
+      "model": {
+       "trianglesDrawn": 175778,
+       "drawCalls": 11,
+       "textureGpuBytes": 83886075,
+       "geometryGpuBytes": 3016800,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_draco_mesh_compression",
+        "EXT_texture_avif"
+       ],
+       "textureBytes": 764614,
+       "geometryBytesStored": 520567,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: 175,778 triangles drawn > 100,000 (incl. 87,554 redrawn for the transmission pass)",
+        "over: texture GPU memory ~83.89 MB > 48.00 MB",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass",
+        "info: Draco geometry: the decoder is a separate 59 KB (WASM, brotli) or 81 KB (JS fallback) download plus worker start-up; measured decode slower than meshopt"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "avif"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-ktx2-etc1s": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform etc1s in.glb out.glb --quality 255",
+      "bytes": 5785316,
+      "gzip": 5068278,
+      "brotli": 4806934,
+      "buildMs": 13071,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 27.5,
+      "loadMs": 380.6,
+      "firstFrameMs": 5543.7,
+      "frameMs": 653.7,
+      "n": 5,
+      "drawCalls": 11,
+      "triangles": 188708,
+      "programs": 11,
+      "textureCount": 15,
+      "compressedTextures": 15,
+      "maxTexture": 1024,
+      "textureGpuBytes": 20971920,
+      "geometryGpuBytes": 11203596,
+      "instances": 0,
+      "diffPixels": 497,
+      "diffPctOfObject": 0.68,
+      "psnr": 31.5,
+      "model": {
+       "trianglesDrawn": 188708,
+       "drawCalls": 11,
+       "textureGpuBytes": 20971515,
+       "geometryGpuBytes": 3227148,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 2548579,
+       "geometryBytesStored": 3227148,
+       "animationBytesStored": 0,
+       "materialsUsed": 6,
+       "instances": 0,
+       "flags": [
+        "over: transfer 5.79 MB > 1.50 MB",
+        "advice: geometry stored uncompressed (3.23 MB)",
+        "over: 188,708 triangles drawn > 100,000 (incl. 93,986 redrawn for the transmission pass)",
+        "advice: KHR_materials_transmission: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "ktx2/etc1s"
+       ]
+      },
+      "errors": []
+     }
+    }
+   },
+   "Fox": {
+    "kind": "skinned, animated character (3 clips)",
+    "licence": "CC0-1.0 model + CC-BY-4.0 rig/animation and conversion",
+    "frame": {
+     "center": [
+      0.3328110464656815,
+      37.89185287250379,
+      -10.105551516000844
+     ],
+     "size": [
+      26.838497006931938,
+      62.91173785406436,
+      165.08246058694033
+     ]
+    },
+    "variants": {
+     "original": {
+      "commands": "gltf-transform copy in.glb out.glb",
+      "bytes": 164252,
+      "gzip": 78016,
+      "brotli": 73266,
+      "buildMs": 1110,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 38.6,
+      "firstFrameMs": 3400.5,
+      "frameMs": 16.5,
+      "n": 1,
+      "range": {
+       "initMs": [
+        0,
+        0
+       ],
+       "loadMs": [
+        38.6,
+        38.6
+       ],
+       "firstFrameMs": [
+        3400.5,
+        3400.5
+       ],
+       "frameMs": [
+        16.5,
+        16.5
+       ]
+      },
+      "samples": {
+       "initMs": [
+        0
+       ],
+       "loadMs": [
+        38.6
+       ],
+       "firstFrameMs": [
+        3400.5
+       ],
+       "frameMs": [
+        16.5
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureAllocBytes": 5592404,
+      "textureAllocFormats": {
+       "0x8c43": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 5592405,
+      "geometryGpuBytes": 304128,
+      "instances": 0,
+      "diffPixels": 0,
+      "diffPctOfObject": 0,
+      "psnr": null,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 5592405,
+       "geometryBytesStoredShare": 47,
+       "geometryGpuBytes": 76032,
+       "maxTexture": 1024,
+       "compression": [],
+       "textureBytes": 26764,
+       "geometryBytesStored": 77568,
+       "animationBytesStored": 42336,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "png"
+       ]
+      },
+      "errors": []
+     },
+     "clean": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb",
+      "bytes": 99536,
+      "gzip": 64595,
+      "brotli": 62064,
+      "buildMs": 2991,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 33.9,
+      "firstFrameMs": 3021,
+      "frameMs": 19.1,
+      "n": 1,
+      "range": {
+       "initMs": [
+        0,
+        0
+       ],
+       "loadMs": [
+        33.9,
+        33.9
+       ],
+       "firstFrameMs": [
+        3021,
+        3021
+       ],
+       "frameMs": [
+        19.1,
+        19.1
+       ]
+      },
+      "samples": {
+       "initMs": [
+        0
+       ],
+       "loadMs": [
+        33.9
+       ],
+       "firstFrameMs": [
+        3021
+       ],
+       "frameMs": [
+        19.1
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureAllocBytes": 5592404,
+      "textureAllocFormats": {
+       "0x8c43": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 5592405,
+      "geometryGpuBytes": 79840,
+      "instances": 0,
+      "diffPixels": 2,
+      "diffPctOfObject": 0.01,
+      "psnr": 47.7,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 5592405,
+       "geometryBytesStoredShare": 24,
+       "geometryGpuBytes": 22552,
+       "maxTexture": 1024,
+       "compression": [],
+       "textureBytes": 26764,
+       "geometryBytesStored": 24088,
+       "animationBytesStored": 28196,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "png"
+       ]
+      },
+      "errors": []
+     },
+     "quantize": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform quantize in.glb out.glb",
+      "bytes": 89184,
+      "gzip": 62019,
+      "brotli": 59496,
+      "buildMs": 3595,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 33.8,
+      "firstFrameMs": 3250.5,
+      "frameMs": 11,
+      "n": 1,
+      "range": {
+       "initMs": [
+        0,
+        0
+       ],
+       "loadMs": [
+        33.8,
+        33.8
+       ],
+       "firstFrameMs": [
+        3250.5,
+        3250.5
+       ],
+       "frameMs": [
+        11,
+        11
+       ]
+      },
+      "samples": {
+       "initMs": [
+        0
+       ],
+       "loadMs": [
+        33.8
+       ],
+       "firstFrameMs": [
+        3250.5
+       ],
+       "frameMs": [
+        11
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureAllocBytes": 5592404,
+      "textureAllocFormats": {
+       "0x8c43": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 5592405,
+      "geometryGpuBytes": 38176,
+      "instances": 0,
+      "diffPixels": 14,
+      "diffPctOfObject": 0.05,
+      "psnr": 40.8,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 5592405,
+       "geometryBytesStoredShare": 15,
+       "geometryGpuBytes": 11268,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 26764,
+       "geometryBytesStored": 13672,
+       "animationBytesStored": 28196,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "png"
+       ]
+      },
+      "errors": []
+     },
+     "draco": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform draco in.glb out.glb",
+      "bytes": 80532,
+      "gzip": 57904,
+      "brotli": 56468,
+      "buildMs": 4723,
+      "needs": [
+       "draco"
+      ],
+      "initMs": 12.6,
+      "loadMs": 49.6,
+      "firstFrameMs": 3307.2,
+      "frameMs": 17.7,
+      "n": 1,
+      "range": {
+       "initMs": [
+        12.6,
+        12.6
+       ],
+       "loadMs": [
+        49.6,
+        49.6
+       ],
+       "firstFrameMs": [
+        3307.2,
+        3307.2
+       ],
+       "frameMs": [
+        17.7,
+        17.7
+       ]
+      },
+      "samples": {
+       "initMs": [
+        12.6
+       ],
+       "loadMs": [
+        49.6
+       ],
+       "firstFrameMs": [
+        3307.2
+       ],
+       "frameMs": [
+        17.7
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureAllocBytes": 5592404,
+      "textureAllocFormats": {
+       "0x8c43": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 5592405,
+      "geometryGpuBytes": 26008,
+      "instances": 0,
+      "diffPixels": 14,
+      "diffPctOfObject": 0.05,
+      "psnr": 42.1,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 5592405,
+       "geometryBytesStoredShare": 6,
+       "geometryGpuBytes": 22552,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_draco_mesh_compression"
+       ],
+       "textureBytes": 26764,
+       "geometryBytesStored": 5102,
+       "animationBytesStored": 28196,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "info: Draco geometry: the page needs the Draco decoder (59 KB WASM + wrapper, brotli; 81 KB JS fallback) and a worker, against 7 KB for meshopt"
+       ],
+       "ok": true,
+       "imageFormats": [
+        "png"
+       ]
+      },
+      "errors": []
+     },
+     "meshopt": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform meshopt in.glb out.glb --level high",
+      "bytes": 66664,
+      "gzip": 42373,
+      "brotli": 41163,
+      "buildMs": 4819,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0,
+      "loadMs": 45.4,
+      "firstFrameMs": 3873.7,
+      "frameMs": 18.8,
+      "n": 1,
+      "range": {
+       "initMs": [
+        0,
+        0
+       ],
+       "loadMs": [
+        45.4,
+        45.4
+       ],
+       "firstFrameMs": [
+        3873.7,
+        3873.7
+       ],
+       "frameMs": [
+        18.8,
+        18.8
+       ]
+      },
+      "samples": {
+       "initMs": [
+        0
+       ],
+       "loadMs": [
+        45.4
+       ],
+       "firstFrameMs": [
+        3873.7
+       ],
+       "frameMs": [
+        18.8
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureAllocBytes": 5592404,
+      "textureAllocFormats": {
+       "0x8c43": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 5592405,
+      "geometryGpuBytes": 12136,
+      "instances": 0,
+      "diffPixels": 13,
+      "diffPctOfObject": 0.04,
+      "psnr": 39.8,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 5592405,
+       "geometryBytesStoredShare": 11,
+       "geometryGpuBytes": 11268,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 26764,
+       "geometryBytesStored": 7392,
+       "animationBytesStored": 8557,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "png"
+       ]
+      },
+      "errors": []
+     },
+     "simplify50+meshopt": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform simplify in.glb out.glb --ratio 0.5 --error 0.001 && gltf-transform meshopt in.glb out.glb --level high",
+      "bytes": 65692,
+      "gzip": 41488,
+      "brotli": 40338,
+      "buildMs": 4152,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0,
+      "loadMs": 37.8,
+      "firstFrameMs": 3381,
+      "frameMs": 11.3,
+      "n": 1,
+      "range": {
+       "initMs": [
+        0,
+        0
+       ],
+       "loadMs": [
+        37.8,
+        37.8
+       ],
+       "firstFrameMs": [
+        3381,
+        3381
+       ],
+       "frameMs": [
+        11.3,
+        11.3
+       ]
+      },
+      "samples": {
+       "initMs": [
+        0
+       ],
+       "loadMs": [
+        37.8
+       ],
+       "firstFrameMs": [
+        3381
+       ],
+       "frameMs": [
+        11.3
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 438,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureAllocBytes": 5592404,
+      "textureAllocFormats": {
+       "0x8c43": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 5592405,
+      "geometryGpuBytes": 9728,
+      "instances": 0,
+      "diffPixels": 139,
+      "diffPctOfObject": 0.46,
+      "psnr": 28.3,
+      "model": {
+       "trianglesDrawn": 438,
+       "drawCalls": 1,
+       "textureGpuBytes": 5592405,
+       "geometryBytesStoredShare": 10,
+       "geometryGpuBytes": 9018,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 26764,
+       "geometryBytesStored": 6423,
+       "animationBytesStored": 8557,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "png"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-webp": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform webp in.glb out.glb",
+      "bytes": 106980,
+      "gzip": 73607,
+      "brotli": 70996,
+      "buildMs": 5287,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 33,
+      "firstFrameMs": 2909.1,
+      "frameMs": 25.2,
+      "n": 1,
+      "range": {
+       "initMs": [
+        0,
+        0
+       ],
+       "loadMs": [
+        33,
+        33
+       ],
+       "firstFrameMs": [
+        2909.1,
+        2909.1
+       ],
+       "frameMs": [
+        25.2,
+        25.2
+       ]
+      },
+      "samples": {
+       "initMs": [
+        0
+       ],
+       "loadMs": [
+        33
+       ],
+       "firstFrameMs": [
+        2909.1
+       ],
+       "frameMs": [
+        25.2
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureAllocBytes": 5592404,
+      "textureAllocFormats": {
+       "0x8c43": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 5592405,
+      "geometryGpuBytes": 79840,
+      "instances": 0,
+      "diffPixels": 2,
+      "diffPctOfObject": 0.01,
+      "psnr": 42.9,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 5592405,
+       "geometryBytesStoredShare": 23,
+       "geometryGpuBytes": 22552,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 34088,
+       "geometryBytesStored": 24088,
+       "animationBytesStored": 28196,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-avif": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform avif in.glb out.glb",
+      "bytes": 83852,
+      "gzip": 50570,
+      "brotli": 47953,
+      "buildMs": 7859,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 40,
+      "firstFrameMs": 3462.2,
+      "frameMs": 12.6,
+      "n": 1,
+      "range": {
+       "initMs": [
+        0,
+        0
+       ],
+       "loadMs": [
+        40,
+        40
+       ],
+       "firstFrameMs": [
+        3462.2,
+        3462.2
+       ],
+       "frameMs": [
+        12.6,
+        12.6
+       ]
+      },
+      "samples": {
+       "initMs": [
+        0
+       ],
+       "loadMs": [
+        40
+       ],
+       "firstFrameMs": [
+        3462.2
+       ],
+       "frameMs": [
+        12.6
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureAllocBytes": 5592404,
+      "textureAllocFormats": {
+       "0x8c43": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 5592405,
+      "geometryGpuBytes": 79840,
+      "instances": 0,
+      "diffPixels": 2,
+      "diffPctOfObject": 0.01,
+      "psnr": 43.7,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 5592405,
+       "geometryBytesStoredShare": 29,
+       "geometryGpuBytes": 22552,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_texture_avif"
+       ],
+       "textureBytes": 10958,
+       "geometryBytesStored": 24088,
+       "animationBytesStored": 28196,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "avif"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-ktx2": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform uastc in.glb out.glb --slots '{normalTexture,occlusionTexture,metallicRoughnessTexture}' --level 2 --rdo --rdo-lambda 4 --zstd 18 && gltf-transform etc1s in.glb out.glb --quality 255",
+      "bytes": 111620,
+      "gzip": 77986,
+      "brotli": 75315,
+      "buildMs": 8648,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 21.1,
+      "loadMs": 89.5,
+      "firstFrameMs": 2897.9,
+      "frameMs": 11.4,
+      "n": 1,
+      "range": {
+       "initMs": [
+        21.1,
+        21.1
+       ],
+       "loadMs": [
+        89.5,
+        89.5
+       ],
+       "firstFrameMs": [
+        2897.9,
+        2897.9
+       ],
+       "frameMs": [
+        11.4,
+        11.4
+       ]
+      },
+      "samples": {
+       "initMs": [
+        21.1
+       ],
+       "loadMs": [
+        89.5
+       ],
+       "firstFrameMs": [
+        2897.9
+       ],
+       "frameMs": [
+        11.4
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 1,
+      "maxTexture": 1024,
+      "textureAllocBytes": 1398128,
+      "textureAllocFormats": {
+       "0x8e8d": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 1398128,
+      "geometryGpuBytes": 79840,
+      "instances": 0,
+      "diffPixels": 15,
+      "diffPctOfObject": 0.05,
+      "psnr": 36.8,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 1398101,
+       "geometryBytesStoredShare": 22,
+       "geometryGpuBytes": 22552,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 38721,
+       "geometryBytesStored": 24088,
+       "animationBytesStored": 28196,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "ktx2/etc1s"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-ktx2-etc1s": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform etc1s in.glb out.glb --quality 255",
+      "bytes": 111620,
+      "gzip": 77986,
+      "brotli": 75315,
+      "buildMs": 3535,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 18.1,
+      "loadMs": 88.8,
+      "firstFrameMs": 2370.2,
+      "frameMs": 14.3,
+      "n": 1,
+      "range": {
+       "initMs": [
+        18.1,
+        18.1
+       ],
+       "loadMs": [
+        88.8,
+        88.8
+       ],
+       "firstFrameMs": [
+        2370.2,
+        2370.2
+       ],
+       "frameMs": [
+        14.3,
+        14.3
+       ]
+      },
+      "samples": {
+       "initMs": [
+        18.1
+       ],
+       "loadMs": [
+        88.8
+       ],
+       "firstFrameMs": [
+        2370.2
+       ],
+       "frameMs": [
+        14.3
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 1,
+      "maxTexture": 1024,
+      "textureAllocBytes": 1398128,
+      "textureAllocFormats": {
+       "0x8e8d": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 1398128,
+      "geometryGpuBytes": 79840,
+      "instances": 0,
+      "diffPixels": 15,
+      "diffPctOfObject": 0.05,
+      "psnr": 36.8,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 1398101,
+       "geometryBytesStoredShare": 22,
+       "geometryGpuBytes": 22552,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 38721,
+       "geometryBytesStored": 24088,
+       "animationBytesStored": 28196,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "ktx2/etc1s"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-ktx2-wasm": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && node gltf/ktx2-wasm.mjs in.glb out.glb",
+      "bytes": 111444,
+      "gzip": 77812,
+      "brotli": 75154,
+      "buildMs": 11027,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 20.1,
+      "loadMs": 97.9,
+      "firstFrameMs": 3677.6,
+      "frameMs": 11.7,
+      "n": 1,
+      "range": {
+       "initMs": [
+        20.1,
+        20.1
+       ],
+       "loadMs": [
+        97.9,
+        97.9
+       ],
+       "firstFrameMs": [
+        3677.6,
+        3677.6
+       ],
+       "frameMs": [
+        11.7,
+        11.7
+       ]
+      },
+      "samples": {
+       "initMs": [
+        20.1
+       ],
+       "loadMs": [
+        97.9
+       ],
+       "firstFrameMs": [
+        3677.6
+       ],
+       "frameMs": [
+        11.7
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 1,
+      "maxTexture": 1024,
+      "textureAllocBytes": 1398128,
+      "textureAllocFormats": {
+       "0x8e8d": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 1398128,
+      "geometryGpuBytes": 79840,
+      "instances": 0,
+      "diffPixels": 21,
+      "diffPctOfObject": 0.07,
+      "psnr": 36.9,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 1398101,
+       "geometryBytesStoredShare": 22,
+       "geometryGpuBytes": 22552,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 38545,
+       "geometryBytesStored": 24088,
+       "animationBytesStored": 28196,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "ktx2/etc1s"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-ktx2-wasm-readme": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && node gltf/ktx2-wasm.mjs in.glb out.glb",
+      "bytes": 111444,
+      "gzip": 77812,
+      "brotli": 75154,
+      "buildMs": 10185,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 25.7,
+      "loadMs": 98.5,
+      "firstFrameMs": 3397.7,
+      "frameMs": 11.3,
+      "n": 1,
+      "range": {
+       "initMs": [
+        25.7,
+        25.7
+       ],
+       "loadMs": [
+        98.5,
+        98.5
+       ],
+       "firstFrameMs": [
+        3397.7,
+        3397.7
+       ],
+       "frameMs": [
+        11.3,
+        11.3
+       ]
+      },
+      "samples": {
+       "initMs": [
+        25.7
+       ],
+       "loadMs": [
+        98.5
+       ],
+       "firstFrameMs": [
+        3397.7
+       ],
+       "frameMs": [
+        11.3
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 1,
+      "maxTexture": 1024,
+      "textureAllocBytes": 1398128,
+      "textureAllocFormats": {
+       "0x8e8d": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 1398128,
+      "geometryGpuBytes": 79840,
+      "instances": 0,
+      "diffPixels": 21,
+      "diffPctOfObject": 0.07,
+      "psnr": 36.9,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 1398101,
+       "geometryBytesStoredShare": 22,
+       "geometryGpuBytes": 22552,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 38545,
+       "geometryBytesStored": 24088,
+       "animationBytesStored": 28196,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "ktx2/etc1s"
+       ]
+      },
+      "errors": []
+     },
+     "geo-only": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && node gltf/strip-textures.mjs in.glb out.glb",
+      "bytes": 72524,
+      "gzip": 39236,
+      "brotli": 36857,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 23.2,
+      "loadMs2": 9.9,
+      "firstFrameMs": 2736,
+      "frameMs": 10.8,
+      "n": 1,
+      "range": {
+       "initMs": [
+        0,
+        0
+       ],
+       "loadMs": [
+        23.2,
+        23.2
+       ],
+       "loadMs2": [
+        9.9,
+        9.9
+       ],
+       "firstFrameMs": [
+        2736,
+        2736
+       ],
+       "frameMs": [
+        10.8,
+        10.8
+       ]
+      },
+      "samples": {
+       "initMs": [
+        0
+       ],
+       "loadMs": [
+        23.2
+       ],
+       "loadMs2": [
+        9.9
+       ],
+       "firstFrameMs": [
+        2736
+       ],
+       "frameMs": [
+        10.8
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 0,
+      "compressedTextures": 0,
+      "maxTexture": 0,
+      "textureAllocBytes": 0,
+      "textureAllocFormats": {},
+      "glTextures": 0,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 0,
+      "geometryGpuBytes": 79840,
+      "instances": 0,
+      "diffPixels": 26548,
+      "diffPctOfObject": 86.93,
+      "psnr": 5.9,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 0,
+       "geometryBytesStoredShare": 33,
+       "geometryGpuBytes": 22552,
+       "maxTexture": 0,
+       "compression": [],
+       "textureBytes": 0,
+       "geometryBytesStored": 24088,
+       "animationBytesStored": 28196,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": []
+      },
+      "errors": []
+     },
+     "geo-only draco": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && node gltf/strip-textures.mjs in.glb out.glb && gltf-transform draco in.glb out.glb",
+      "bytes": 53520,
+      "gzip": 32698,
+      "brotli": 31264,
+      "needs": [
+       "draco"
+      ],
+      "initMs": 13.7,
+      "loadMs": 28.5,
+      "loadMs2": 21.6,
+      "firstFrameMs": 2959.2,
+      "frameMs": 8.8,
+      "n": 1,
+      "range": {
+       "initMs": [
+        13.7,
+        13.7
+       ],
+       "loadMs": [
+        28.5,
+        28.5
+       ],
+       "loadMs2": [
+        21.6,
+        21.6
+       ],
+       "firstFrameMs": [
+        2959.2,
+        2959.2
+       ],
+       "frameMs": [
+        8.8,
+        8.8
+       ]
+      },
+      "samples": {
+       "initMs": [
+        13.7
+       ],
+       "loadMs": [
+        28.5
+       ],
+       "loadMs2": [
+        21.6
+       ],
+       "firstFrameMs": [
+        2959.2
+       ],
+       "frameMs": [
+        8.8
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 0,
+      "compressedTextures": 0,
+      "maxTexture": 0,
+      "textureAllocBytes": 0,
+      "textureAllocFormats": {},
+      "glTextures": 0,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 0,
+      "geometryGpuBytes": 26008,
+      "instances": 0,
+      "diffPixels": 26559,
+      "diffPctOfObject": 86.97,
+      "psnr": 5.9,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 0,
+       "geometryBytesStoredShare": 10,
+       "geometryGpuBytes": 22552,
+       "maxTexture": 0,
+       "compression": [
+        "KHR_draco_mesh_compression"
+       ],
+       "textureBytes": 0,
+       "geometryBytesStored": 5102,
+       "animationBytesStored": 28196,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "info: Draco geometry: the page needs the Draco decoder (59 KB WASM + wrapper, brotli; 81 KB JS fallback) and a worker, against 7 KB for meshopt"
+       ],
+       "ok": true,
+       "imageFormats": []
+      },
+      "errors": []
+     },
+     "geo-only meshopt": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform resample in.glb out.glb && gltf-transform weld in.glb out.glb && node gltf/strip-textures.mjs in.glb out.glb && gltf-transform meshopt in.glb out.glb --level high",
+      "bytes": 39640,
+      "gzip": 17125,
+      "brotli": 16550,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0,
+      "loadMs": 18.3,
+      "loadMs2": 11.8,
+      "firstFrameMs": 2323.6,
+      "frameMs": 17.3,
+      "n": 1,
+      "range": {
+       "initMs": [
+        0,
+        0
+       ],
+       "loadMs": [
+        18.3,
+        18.3
+       ],
+       "loadMs2": [
+        11.8,
+        11.8
+       ],
+       "firstFrameMs": [
+        2323.6,
+        2323.6
+       ],
+       "frameMs": [
+        17.3,
+        17.3
+       ]
+      },
+      "samples": {
+       "initMs": [
+        0
+       ],
+       "loadMs": [
+        18.3
+       ],
+       "loadMs2": [
+        11.8
+       ],
+       "firstFrameMs": [
+        2323.6
+       ],
+       "frameMs": [
+        17.3
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 576,
+      "programs": 7,
+      "textureCount": 0,
+      "compressedTextures": 0,
+      "maxTexture": 0,
+      "textureAllocBytes": 0,
+      "textureAllocFormats": {},
+      "glTextures": 0,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 0,
+      "geometryGpuBytes": 12136,
+      "instances": 0,
+      "diffPixels": 26547,
+      "diffPctOfObject": 86.93,
+      "psnr": 5.9,
+      "model": {
+       "trianglesDrawn": 576,
+       "drawCalls": 1,
+       "textureGpuBytes": 0,
+       "geometryBytesStoredShare": 19,
+       "geometryGpuBytes": 11268,
+       "maxTexture": 0,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 0,
+       "geometryBytesStored": 7392,
+       "animationBytesStored": 8557,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": []
+      },
+      "errors": []
+     },
+     "optimize (defaults, webp)": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress meshopt --texture-compress webp",
+      "bytes": 73312,
+      "gzip": 50721,
+      "brotli": 49410,
+      "buildMs": 983,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0.1,
+      "loadMs": 38.3,
+      "firstFrameMs": 2348.6,
+      "frameMs": 10.8,
+      "n": 1,
+      "range": {
+       "initMs": [
+        0.1,
+        0.1
+       ],
+       "loadMs": [
+        38.3,
+        38.3
+       ],
+       "firstFrameMs": [
+        2348.6,
+        2348.6
+       ],
+       "frameMs": [
+        10.8,
+        10.8
+       ]
+      },
+      "samples": {
+       "initMs": [
+        0.1
+       ],
+       "loadMs": [
+        38.3
+       ],
+       "firstFrameMs": [
+        2348.6
+       ],
+       "frameMs": [
+        10.8
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 486,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureAllocBytes": 5592404,
+      "textureAllocFormats": {
+       "0x8c43": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 5592405,
+      "geometryGpuBytes": 10596,
+      "instances": 0,
+      "diffPixels": 134,
+      "diffPctOfObject": 0.44,
+      "psnr": 28.6,
+      "model": {
+       "trianglesDrawn": 486,
+       "drawCalls": 1,
+       "textureGpuBytes": 5592405,
+       "geometryBytesStoredShare": 9,
+       "geometryGpuBytes": 9828,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization",
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 34088,
+       "geometryBytesStored": 6684,
+       "animationBytesStored": 8557,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "optimize 1k webp": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress meshopt --texture-compress webp --texture-size 1024",
+      "bytes": 73312,
+      "gzip": 50721,
+      "brotli": 49410,
+      "buildMs": 1272,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0,
+      "loadMs": 31.5,
+      "firstFrameMs": 2872.1,
+      "frameMs": 19.3,
+      "n": 1,
+      "range": {
+       "initMs": [
+        0,
+        0
+       ],
+       "loadMs": [
+        31.5,
+        31.5
+       ],
+       "firstFrameMs": [
+        2872.1,
+        2872.1
+       ],
+       "frameMs": [
+        19.3,
+        19.3
+       ]
+      },
+      "samples": {
+       "initMs": [
+        0
+       ],
+       "loadMs": [
+        31.5
+       ],
+       "firstFrameMs": [
+        2872.1
+       ],
+       "frameMs": [
+        19.3
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 486,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureAllocBytes": 5592404,
+      "textureAllocFormats": {
+       "0x8c43": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 5592405,
+      "geometryGpuBytes": 10596,
+      "instances": 0,
+      "diffPixels": 134,
+      "diffPctOfObject": 0.44,
+      "psnr": 28.6,
+      "model": {
+       "trianglesDrawn": 486,
+       "drawCalls": 1,
+       "textureGpuBytes": 5592405,
+       "geometryBytesStoredShare": 9,
+       "geometryGpuBytes": 9828,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization",
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 34088,
+       "geometryBytesStored": 6684,
+       "animationBytesStored": 8557,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "optimize 1k ktx2": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress meshopt --texture-compress ktx2 --texture-size 1024",
+      "bytes": 77960,
+      "gzip": 55145,
+      "brotli": 53713,
+      "buildMs": 2783,
+      "needs": [
+       "meshopt",
+       "ktx2"
+      ],
+      "initMs": 23.9,
+      "loadMs": 99.5,
+      "firstFrameMs": 2417.2,
+      "frameMs": 10.7,
+      "n": 1,
+      "range": {
+       "initMs": [
+        23.9,
+        23.9
+       ],
+       "loadMs": [
+        99.5,
+        99.5
+       ],
+       "firstFrameMs": [
+        2417.2,
+        2417.2
+       ],
+       "frameMs": [
+        10.7,
+        10.7
+       ]
+      },
+      "samples": {
+       "initMs": [
+        23.9
+       ],
+       "loadMs": [
+        99.5
+       ],
+       "firstFrameMs": [
+        2417.2
+       ],
+       "frameMs": [
+        10.7
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 486,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 1,
+      "maxTexture": 1024,
+      "textureAllocBytes": 1398128,
+      "textureAllocFormats": {
+       "0x8e8d": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 1398128,
+      "geometryGpuBytes": 10596,
+      "instances": 0,
+      "diffPixels": 146,
+      "diffPctOfObject": 0.48,
+      "psnr": 28.1,
+      "model": {
+       "trianglesDrawn": 486,
+       "drawCalls": 1,
+       "textureGpuBytes": 1398101,
+       "geometryBytesStoredShare": 9,
+       "geometryGpuBytes": 9828,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization",
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 38721,
+       "geometryBytesStored": 6684,
+       "animationBytesStored": 8557,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [],
+       "ok": true,
+       "imageFormats": [
+        "ktx2/etc1s"
+       ]
+      },
+      "errors": []
+     },
+     "optimize 1k avif draco": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress draco --texture-compress avif --texture-size 1024",
+      "bytes": 64380,
+      "gzip": 43399,
+      "brotli": 41905,
+      "buildMs": 2472,
+      "needs": [
+       "draco"
+      ],
+      "initMs": 13.2,
+      "loadMs": 31.9,
+      "firstFrameMs": 2563.6,
+      "frameMs": 12.8,
+      "n": 1,
+      "range": {
+       "initMs": [
+        13.2,
+        13.2
+       ],
+       "loadMs": [
+        31.9,
+        31.9
+       ],
+       "firstFrameMs": [
+        2563.6,
+        2563.6
+       ],
+       "frameMs": [
+        12.8,
+        12.8
+       ]
+      },
+      "samples": {
+       "initMs": [
+        13.2
+       ],
+       "loadMs": [
+        31.9
+       ],
+       "firstFrameMs": [
+        2563.6
+       ],
+       "frameMs": [
+        12.8
+       ]
+      },
+      "drawCalls": 1,
+      "triangles": 486,
+      "programs": 7,
+      "textureCount": 1,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureAllocBytes": 5592404,
+      "textureAllocFormats": {
+       "0x8c43": 1
+      },
+      "glTextures": 1,
+      "glTexturesNotAllocated": 0,
+      "textureGpuBytesFormula": 5592405,
+      "geometryGpuBytes": 22728,
+      "instances": 0,
+      "diffPixels": 135,
+      "diffPctOfObject": 0.44,
+      "psnr": 28.7,
+      "model": {
+       "trianglesDrawn": 486,
+       "drawCalls": 1,
+       "textureGpuBytes": 5592405,
+       "geometryBytesStoredShare": 7,
+       "geometryGpuBytes": 19812,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_draco_mesh_compression",
+        "EXT_texture_avif"
+       ],
+       "textureBytes": 10958,
+       "geometryBytesStored": 4712,
+       "animationBytesStored": 28196,
+       "materialsUsed": 1,
+       "instances": 0,
+       "flags": [
+        "info: Draco geometry: the page needs the Draco decoder (59 KB WASM + wrapper, brotli; 81 KB JS fallback) and a worker, against 7 KB for meshopt"
+       ],
+       "ok": true,
+       "imageFormats": [
+        "avif"
+       ]
+      },
+      "errors": []
+     }
+    }
+   },
+   "ABeautifulGame": {
+    "kind": "scene of many meshes (chess set: 33 nodes, shared meshes, transmission)",
+    "licence": "CC-BY-4.0",
+    "frame": {
+     "center": [
+      0,
+      0.08449789705936794,
+      0
+     ],
+     "size": [
+      0.7054161429405212,
+      0.16899590545764198,
+      0.7054161429405212
+     ]
+    },
+    "variants": {
+     "original": {
+      "commands": "gltf-transform copy in.glb out.glb",
+      "bytes": 42970672,
+      "gzip": 32087993,
+      "brotli": 24477678,
+      "buildMs": 687,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 2294.7,
+      "firstFrameMs": 12043.6,
+      "frameMs": 3092.2,
+      "n": 5,
+      "drawCalls": 82,
+      "triangles": 2962816,
+      "programs": 9,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 738197493,
+      "geometryGpuBytes": 84067584,
+      "instances": 0,
+      "diffPixels": 0,
+      "diffPctOfObject": 0,
+      "psnr": null,
+      "model": {
+       "trianglesDrawn": 2962816,
+       "drawCalls": 82,
+       "textureGpuBytes": 738197493,
+       "geometryGpuBytes": 24015552,
+       "maxTexture": 2048,
+       "compression": [],
+       "textureBytes": 18930095,
+       "geometryBytesStored": 24015552,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 0,
+       "flags": [
+        "over: transfer 42.97 MB > 8.00 MB",
+        "advice: geometry stored uncompressed (24.02 MB)",
+        "over: 2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)",
+        "advice: 34 nodes reuse a mesh without GPU instancing",
+        "over: texture GPU memory ~738.20 MB > 256.00 MB",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "clean": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb",
+      "bytes": 42949648,
+      "gzip": 32225767,
+      "brotli": 24610638,
+      "buildMs": 7664,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 3424.4,
+      "firstFrameMs": 13093.9,
+      "frameMs": 3579.9,
+      "n": 5,
+      "drawCalls": 82,
+      "triangles": 2962816,
+      "programs": 9,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 738197493,
+      "geometryGpuBytes": 83983488,
+      "instances": 0,
+      "diffPixels": 0,
+      "diffPctOfObject": 0,
+      "psnr": null,
+      "model": {
+       "trianglesDrawn": 2962816,
+       "drawCalls": 82,
+       "textureGpuBytes": 738197493,
+       "geometryGpuBytes": 23994528,
+       "maxTexture": 2048,
+       "compression": [],
+       "textureBytes": 18930095,
+       "geometryBytesStored": 23994528,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 0,
+       "flags": [
+        "over: transfer 42.95 MB > 8.00 MB",
+        "advice: geometry stored uncompressed (23.99 MB)",
+        "over: 2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)",
+        "advice: 34 nodes reuse a mesh without GPU instancing",
+        "over: texture GPU memory ~738.20 MB > 256.00 MB",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "quantize": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform quantize in.glb out.glb",
+      "bytes": 28948488,
+      "gzip": 22324432,
+      "brotli": 21310188,
+      "buildMs": 8555,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 2642.1,
+      "firstFrameMs": 13494.1,
+      "frameMs": 4310.9,
+      "n": 5,
+      "drawCalls": 82,
+      "triangles": 2962816,
+      "programs": 9,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 738197493,
+      "geometryGpuBytes": 32309424,
+      "instances": 0,
+      "diffPixels": 20,
+      "diffPctOfObject": 0.03,
+      "psnr": 39.9,
+      "model": {
+       "trianglesDrawn": 2962816,
+       "drawCalls": 82,
+       "textureGpuBytes": 738197493,
+       "geometryGpuBytes": 8929848,
+       "maxTexture": 2048,
+       "compression": [
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 18930095,
+       "geometryBytesStored": 9992556,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 0,
+       "flags": [
+        "over: transfer 28.95 MB > 8.00 MB — textures are 65 % of it: start there",
+        "advice: geometry stored uncompressed (9.99 MB)",
+        "over: 2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)",
+        "advice: 34 nodes reuse a mesh without GPU instancing",
+        "over: texture GPU memory ~738.20 MB > 256.00 MB",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "draco": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform draco in.glb out.glb",
+      "bytes": 21080296,
+      "gzip": 19756114,
+      "brotli": 18649835,
+      "buildMs": 9581,
+      "needs": [
+       "draco"
+      ],
+      "initMs": 28.2,
+      "loadMs": 4512.9,
+      "firstFrameMs": 16646.3,
+      "frameMs": 4650.1,
+      "n": 5,
+      "drawCalls": 82,
+      "triangles": 2962816,
+      "programs": 9,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 738197493,
+      "geometryGpuBytes": 27018624,
+      "instances": 0,
+      "diffPixels": 22,
+      "diffPctOfObject": 0.04,
+      "psnr": 40.8,
+      "model": {
+       "trianglesDrawn": 2962816,
+       "drawCalls": 82,
+       "textureGpuBytes": 738197493,
+       "geometryGpuBytes": 24129408,
+       "maxTexture": 2048,
+       "compression": [
+        "KHR_draco_mesh_compression"
+       ],
+       "textureBytes": 18930095,
+       "geometryBytesStored": 2126187,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 0,
+       "flags": [
+        "over: transfer 21.08 MB > 8.00 MB — textures are 90 % of it: start there",
+        "over: 2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)",
+        "advice: 34 nodes reuse a mesh without GPU instancing",
+        "over: texture GPU memory ~738.20 MB > 256.00 MB",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass",
+        "info: Draco geometry: the decoder is a separate 59 KB (WASM, brotli) or 81 KB (JS fallback) download plus worker start-up; measured decode slower than meshopt"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "meshopt": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform meshopt in.glb out.glb --level high",
+      "bytes": 21358852,
+      "gzip": 19037418,
+      "brotli": 18769004,
+      "buildMs": 7005,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0,
+      "loadMs": 3832.9,
+      "firstFrameMs": 18906.1,
+      "frameMs": 4190.8,
+      "n": 5,
+      "drawCalls": 82,
+      "triangles": 2962816,
+      "programs": 9,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 738197493,
+      "geometryGpuBytes": 7867140,
+      "instances": 0,
+      "diffPixels": 21,
+      "diffPctOfObject": 0.04,
+      "psnr": 39.6,
+      "model": {
+       "trianglesDrawn": 2962816,
+       "drawCalls": 82,
+       "textureGpuBytes": 738197493,
+       "geometryGpuBytes": 7070109,
+       "maxTexture": 2048,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 18930095,
+       "geometryBytesStored": 2395328,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 0,
+       "flags": [
+        "over: transfer 21.36 MB > 8.00 MB — textures are 89 % of it: start there",
+        "over: 2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)",
+        "advice: 34 nodes reuse a mesh without GPU instancing",
+        "over: texture GPU memory ~738.20 MB > 256.00 MB",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "simplify50+meshopt": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform simplify in.glb out.glb --ratio 0.5 --error 0.001 && gltf-transform meshopt in.glb out.glb --level high",
+      "bytes": 20547764,
+      "gzip": 18820590,
+      "brotli": 18559580,
+      "buildMs": 9717,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0.1,
+      "loadMs": 3116.4,
+      "firstFrameMs": 13755,
+      "frameMs": 2480,
+      "n": 5,
+      "drawCalls": 82,
+      "triangles": 1495680,
+      "programs": 9,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 738197493,
+      "geometryGpuBytes": 4871672,
+      "instances": 0,
+      "diffPixels": 518,
+      "diffPctOfObject": 0.88,
+      "psnr": 31.7,
+      "model": {
+       "trianglesDrawn": 1495680,
+       "drawCalls": 82,
+       "textureGpuBytes": 738197493,
+       "geometryGpuBytes": 4333244,
+       "maxTexture": 2048,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization"
+       ],
+       "textureBytes": 18930095,
+       "geometryBytesStored": 1584268,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 0,
+       "flags": [
+        "over: transfer 20.55 MB > 8.00 MB — textures are 92 % of it: start there",
+        "over: 1,495,680 triangles drawn > 1,000,000 (incl. 731,872 redrawn for the transmission pass)",
+        "advice: 34 nodes reuse a mesh without GPU instancing",
+        "over: texture GPU memory ~738.20 MB > 256.00 MB",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-webp": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform webp in.glb out.glb",
+      "bytes": 25817952,
+      "gzip": 16179782,
+      "brotli": 8809684,
+      "buildMs": 16011,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 723.9,
+      "firstFrameMs": 11133.6,
+      "frameMs": 4316.5,
+      "n": 5,
+      "drawCalls": 82,
+      "triangles": 2962816,
+      "programs": 9,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 184549365,
+      "geometryGpuBytes": 83983488,
+      "instances": 0,
+      "diffPixels": 6,
+      "diffPctOfObject": 0.01,
+      "psnr": 42.8,
+      "model": {
+       "trianglesDrawn": 2962816,
+       "drawCalls": 82,
+       "textureGpuBytes": 184549365,
+       "geometryGpuBytes": 23994528,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 1797200,
+       "geometryBytesStored": 23994528,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 0,
+       "flags": [
+        "over: transfer 25.82 MB > 8.00 MB",
+        "advice: geometry stored uncompressed (23.99 MB)",
+        "over: 2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)",
+        "advice: 34 nodes reuse a mesh without GPU instancing",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-avif": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform avif in.glb out.glb",
+      "bytes": 25267008,
+      "gzip": 15628010,
+      "brotli": 8254925,
+      "buildMs": 133549,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 1038.2,
+      "firstFrameMs": 11595.1,
+      "frameMs": 4104,
+      "n": 5,
+      "drawCalls": 82,
+      "triangles": 2962816,
+      "programs": 9,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 184549365,
+      "geometryGpuBytes": 83983488,
+      "instances": 0,
+      "diffPixels": 1,
+      "diffPctOfObject": 0,
+      "psnr": 45.4,
+      "model": {
+       "trianglesDrawn": 2962816,
+       "drawCalls": 82,
+       "textureGpuBytes": 184549365,
+       "geometryGpuBytes": 23994528,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_texture_avif"
+       ],
+       "textureBytes": 1246258,
+       "geometryBytesStored": 23994528,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 0,
+       "flags": [
+        "over: transfer 25.27 MB > 8.00 MB",
+        "advice: geometry stored uncompressed (23.99 MB)",
+        "over: 2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)",
+        "advice: 34 nodes reuse a mesh without GPU instancing",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "avif"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-ktx2": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform uastc in.glb out.glb --slots '{normalTexture,occlusionTexture,metallicRoughnessTexture}' --level 2 --rdo --rdo-lambda 4 --zstd 18 && gltf-transform etc1s in.glb out.glb --quality 255",
+      "bytes": 37398884,
+      "gzip": 27733346,
+      "brotli": 20322535,
+      "buildMs": 221999,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 32.1,
+      "loadMs": 1663.1,
+      "firstFrameMs": 12837.7,
+      "frameMs": 3949.1,
+      "n": 5,
+      "drawCalls": 82,
+      "triangles": 2962816,
+      "programs": 9,
+      "textureCount": 33,
+      "compressedTextures": 33,
+      "maxTexture": 1024,
+      "textureGpuBytes": 46138224,
+      "geometryGpuBytes": 83983488,
+      "instances": 0,
+      "diffPixels": 10,
+      "diffPctOfObject": 0.02,
+      "psnr": 36.8,
+      "model": {
+       "trianglesDrawn": 2962816,
+       "drawCalls": 82,
+       "textureGpuBytes": 46137333,
+       "geometryGpuBytes": 23994528,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 13377985,
+       "geometryBytesStored": 23994528,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 0,
+       "flags": [
+        "over: transfer 37.40 MB > 8.00 MB",
+        "advice: geometry stored uncompressed (23.99 MB)",
+        "over: 2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)",
+        "advice: 34 nodes reuse a mesh without GPU instancing",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "ktx2/etc1s",
+        "ktx2/uastc"
+       ]
+      },
+      "errors": []
+     },
+     "optimize (defaults, webp)": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress meshopt --texture-compress webp",
+      "bytes": 8952512,
+      "gzip": 7861749,
+      "brotli": 7752596,
+      "buildMs": 23400,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0.1,
+      "loadMs": 2023.1,
+      "firstFrameMs": 14402.4,
+      "frameMs": 3298,
+      "n": 5,
+      "drawCalls": 28,
+      "triangles": 1928128,
+      "programs": 11,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 738197493,
+      "geometryGpuBytes": 8759196,
+      "instances": 32,
+      "diffPixels": 1465,
+      "diffPctOfObject": 2.5,
+      "psnr": 26.4,
+      "model": {
+       "trianglesDrawn": 1928128,
+       "drawCalls": 28,
+       "textureGpuBytes": 738197493,
+       "geometryGpuBytes": 7807635,
+       "maxTexture": 2048,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization",
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 5910724,
+       "geometryBytesStored": 3007584,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 32,
+       "flags": [
+        "advice: 2 GPU-instanced node(s) with transmission/volume materials (instance scale compressed; probably non-unit after quantization): three.js ignores instance scale for glass thickness, so the glass renders too thick or too thin",
+        "over: transfer 8.95 MB > 8.00 MB — textures are 66 % of it: start there",
+        "over: 1,928,128 triangles drawn > 1,000,000 (incl. 946,400 redrawn for the transmission pass)",
+        "over: texture GPU memory ~738.20 MB > 256.00 MB",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "optimize 1k webp": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress meshopt --texture-compress webp --texture-size 1024",
+      "bytes": 4849872,
+      "gzip": 3781118,
+      "brotli": 3649911,
+      "buildMs": 13313,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0,
+      "loadMs": 516,
+      "firstFrameMs": 9678.3,
+      "frameMs": 3011,
+      "n": 5,
+      "drawCalls": 28,
+      "triangles": 1928128,
+      "programs": 11,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 184549365,
+      "geometryGpuBytes": 8759196,
+      "instances": 32,
+      "diffPixels": 1472,
+      "diffPctOfObject": 2.51,
+      "psnr": 26.4,
+      "model": {
+       "trianglesDrawn": 1928128,
+       "drawCalls": 28,
+       "textureGpuBytes": 184549365,
+       "geometryGpuBytes": 7807635,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization",
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 1808112,
+       "geometryBytesStored": 3007584,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 32,
+       "flags": [
+        "advice: 2 GPU-instanced node(s) with transmission/volume materials (instance scale compressed; probably non-unit after quantization): three.js ignores instance scale for glass thickness, so the glass renders too thick or too thin",
+        "over: 1,928,128 triangles drawn > 1,000,000 (incl. 946,400 redrawn for the transmission pass)",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "optimize 1k avif draco": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress draco --texture-compress avif --texture-size 1024",
+      "bytes": 3436528,
+      "gzip": 3316897,
+      "brotli": 2882379,
+      "buildMs": 163235,
+      "needs": [
+       "draco"
+      ],
+      "initMs": 17.5,
+      "loadMs": 1131.9,
+      "firstFrameMs": 9714.6,
+      "frameMs": 2767.8,
+      "n": 5,
+      "drawCalls": 28,
+      "triangles": 1928128,
+      "programs": 11,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 184549365,
+      "geometryGpuBytes": 23542032,
+      "instances": 32,
+      "diffPixels": 443,
+      "diffPctOfObject": 0.76,
+      "psnr": 31.1,
+      "model": {
+       "trianglesDrawn": 1928128,
+       "drawCalls": 28,
+       "textureGpuBytes": 184549365,
+       "geometryGpuBytes": 21159300,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_draco_mesh_compression",
+        "EXT_texture_avif"
+       ],
+       "textureBytes": 1167338,
+       "geometryBytesStored": 2247269,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 32,
+       "flags": [
+        "over: 1,928,128 triangles drawn > 1,000,000 (incl. 946,400 redrawn for the transmission pass)",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass",
+        "info: Draco geometry: the decoder is a separate 59 KB (WASM, brotli) or 81 KB (JS fallback) download plus worker start-up; measured decode slower than meshopt"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "avif"
+       ]
+      },
+      "errors": []
+     },
+     "instance": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform instance in.glb out.glb --min 2",
+      "bytes": 42947588,
+      "gzip": 32225115,
+      "brotli": 24611140,
+      "buildMs": 8673,
+      "needs": [],
+      "initMs": 0,
+      "loadMs": 3310.6,
+      "firstFrameMs": 14835.2,
+      "frameMs": 3734.1,
+      "n": 5,
+      "drawCalls": 28,
+      "triangles": 2962816,
+      "programs": 11,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 2048,
+      "textureGpuBytes": 738197493,
+      "geometryGpuBytes": 83983488,
+      "instances": 44,
+      "diffPixels": 0,
+      "diffPctOfObject": 0,
+      "psnr": 84.2,
+      "model": {
+       "trianglesDrawn": 2962816,
+       "drawCalls": 28,
+       "textureGpuBytes": 738197493,
+       "geometryGpuBytes": 23994528,
+       "maxTexture": 2048,
+       "compression": [],
+       "textureBytes": 18930095,
+       "geometryBytesStored": 23995088,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 44,
+       "flags": [
+        "over: transfer 42.95 MB > 8.00 MB",
+        "advice: geometry stored uncompressed (24.00 MB)",
+        "over: 2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)",
+        "over: texture GPU memory ~738.20 MB > 256.00 MB",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "jpeg"
+       ]
+      },
+      "errors": []
+     },
+     "optimize 1k webp, no join/flatten": {
+      "commands": "gltf-transform optimize in.glb out.glb --compress meshopt --texture-compress webp --texture-size 1024 --join false --flatten false --instance-min 2",
+      "bytes": 3696984,
+      "gzip": 2954802,
+      "brotli": 2932189,
+      "buildMs": 12662,
+      "needs": [
+       "meshopt"
+      ],
+      "initMs": 0.1,
+      "loadMs": 694.6,
+      "firstFrameMs": 10369.8,
+      "frameMs": 3332.2,
+      "n": 5,
+      "drawCalls": 28,
+      "triangles": 2122772,
+      "programs": 11,
+      "textureCount": 33,
+      "compressedTextures": 0,
+      "maxTexture": 1024,
+      "textureGpuBytes": 184549365,
+      "geometryGpuBytes": 5618992,
+      "instances": 44,
+      "diffPixels": 1325,
+      "diffPctOfObject": 2.26,
+      "psnr": 26.8,
+      "model": {
+       "trianglesDrawn": 2122772,
+       "drawCalls": 28,
+       "textureGpuBytes": 184549365,
+       "geometryGpuBytes": 5009587,
+       "maxTexture": 1024,
+       "compression": [
+        "EXT_meshopt_compression",
+        "KHR_mesh_quantization",
+        "EXT_texture_webp"
+       ],
+       "textureBytes": 1808112,
+       "geometryBytesStored": 1854055,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 44,
+       "flags": [
+        "advice: 2 GPU-instanced node(s) with transmission/volume materials (instance scale compressed; probably non-unit after quantization): three.js ignores instance scale for glass thickness, so the glass renders too thick or too thin",
+        "over: 2,122,772 triangles drawn > 1,000,000 (incl. 1,043,722 redrawn for the transmission pass)",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "webp"
+       ]
+      },
+      "errors": []
+     },
+     "tex1k-ktx2-etc1s": {
+      "commands": "gltf-transform dedup in.glb out.glb && gltf-transform prune in.glb out.glb && gltf-transform weld in.glb out.glb && gltf-transform resize in.glb out.glb --width 1024 --height 1024 && gltf-transform etc1s in.glb out.glb --quality 255",
+      "bytes": 29051040,
+      "gzip": 19380919,
+      "brotli": 11996694,
+      "buildMs": 18409,
+      "needs": [
+       "ktx2"
+      ],
+      "initMs": 25.8,
+      "loadMs": 769.6,
+      "firstFrameMs": 8326.5,
+      "frameMs": 2914.1,
+      "n": 5,
+      "drawCalls": 82,
+      "triangles": 2962816,
+      "programs": 9,
+      "textureCount": 33,
+      "compressedTextures": 33,
+      "maxTexture": 1024,
+      "textureGpuBytes": 46138224,
+      "geometryGpuBytes": 83983488,
+      "instances": 0,
+      "diffPixels": 400,
+      "diffPctOfObject": 0.68,
+      "psnr": 32.5,
+      "model": {
+       "trianglesDrawn": 2962816,
+       "drawCalls": 82,
+       "textureGpuBytes": 46137333,
+       "geometryGpuBytes": 23994528,
+       "maxTexture": 1024,
+       "compression": [
+        "KHR_texture_basisu"
+       ],
+       "textureBytes": 5030168,
+       "geometryBytesStored": 23994528,
+       "animationBytesStored": 0,
+       "materialsUsed": 15,
+       "instances": 0,
+       "flags": [
+        "over: transfer 29.05 MB > 8.00 MB",
+        "advice: geometry stored uncompressed (23.99 MB)",
+        "over: 2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)",
+        "advice: 34 nodes reuse a mesh without GPU instancing",
+        "advice: KHR_materials_transmission, KHR_materials_volume: three.js renders an extra transmission pass"
+       ],
+       "ok": false,
+       "imageFormats": [
+        "ktx2/etc1s"
+       ]
+      },
+      "errors": []
+     }
+    }
+   }
+  },
+  "env": {
+   "protocol": "per model: every built variant measured in one session, runs interleaved with the order rotated each run; samples kept",
+   "chromium": "141.0.7390.37",
+   "gpu": "SwiftShader (CPU): frame times are pessimistic and only comparable among themselves",
+   "three": "0.186.1",
+   "gltfTransform": "4.5.1",
+   "ktxSoftware": "4.4.2",
+   "webgl": {
+    "WEBGL_multisampled_render_to_texture": false,
+    "EXT_texture_compression_bptc": true
+   }
+  },
+  "decoders": {
+   "draco (draco_wasm_wrapper.js + draco_decoder.wasm)": [
+    {
+     "bytes": 58456,
+     "gzip": 11667,
+     "brotli": 9994
+    },
+    {
+     "bytes": 192420,
+     "gzip": 63395,
+     "brotli": 48729
+    }
+   ],
+   "draco JS fallback (draco_decoder.js)": [
+    {
+     "bytes": 512465,
+     "gzip": 107175,
+     "brotli": 81392
+    }
+   ],
+   "meshopt (meshopt_decoder.module.js)": [
+    {
+     "bytes": 29256,
+     "gzip": 7804,
+     "brotli": 6928
+    }
+   ],
+   "basis (basis_transcoder.js + .wasm)": [
+    {
+     "bytes": 57529,
+     "gzip": 15143,
+     "brotli": 13699
+    },
+    {
+     "bytes": 527333,
+     "gzip": 247535,
+     "brotli": 203605
+    }
+   ]
+  },
+  "modelScriptCheck": {
+   "DamagedHelmet / original": {
+    "triangles": [
+     15452,
+     15452,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     111848105,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / clean": {
+    "triangles": [
+     15452,
+     15452,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     111848105,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / quantize": {
+    "triangles": [
+     15452,
+     15452,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     111848105,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / draco": {
+    "triangles": [
+     15452,
+     15452,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     111848105,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / meshopt": {
+    "triangles": [
+     15452,
+     15452,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     111848105,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / simplify50+meshopt": {
+    "triangles": [
+     12378,
+     12378,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     111848105,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / tex1k-webp": {
+    "triangles": [
+     15452,
+     15452,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     27962025,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / tex1k-avif": {
+    "triangles": [
+     15452,
+     15452,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     27962025,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / tex1k-ktx2": {
+    "triangles": [
+     15452,
+     15452,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     6990505,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / optimize (defaults, webp)": {
+    "triangles": [
+     15188,
+     15188,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     111848105,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / optimize 1k webp": {
+    "triangles": [
+     15188,
+     15188,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     27962025,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / optimize 1k avif draco": {
+    "triangles": [
+     15188,
+     15188,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     27962025,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / tex2k-ktx2": {
+    "triangles": [
+     15452,
+     15452,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     27962025,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / tex1k-ktx2-etc1s": {
+    "triangles": [
+     15452,
+     15452,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     6990505,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / tex1k-ktx2-wasm": {
+    "triangles": [
+     15452,
+     15452,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     6990505,
+     null,
+     null
+    ]
+   },
+   "DamagedHelmet / tex1k-ktx2-wasm-readme": {
+    "triangles": [
+     15452,
+     15452,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     6990505,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / original": {
+    "triangles": [
+     188708,
+     188708,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     285212667,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / clean": {
+    "triangles": [
+     188708,
+     188708,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     285212667,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / quantize": {
+    "triangles": [
+     188708,
+     188708,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     285212667,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / draco": {
+    "triangles": [
+     188708,
+     188708,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     285212667,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / meshopt": {
+    "triangles": [
+     188708,
+     188708,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     285212667,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / simplify50+meshopt": {
+    "triangles": [
+     105634,
+     105634,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     285212667,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / tex1k-webp": {
+    "triangles": [
+     188708,
+     188708,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     83886075,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / tex1k-avif": {
+    "triangles": [
+     188708,
+     188708,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     83886075,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / tex1k-ktx2": {
+    "triangles": [
+     188708,
+     188708,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     20971515,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / optimize (defaults, webp)": {
+    "triangles": [
+     175778,
+     175778,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     285212667,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / optimize 1k webp": {
+    "triangles": [
+     175778,
+     175778,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     83886075,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / optimize 1k avif draco": {
+    "triangles": [
+     175778,
+     175778,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     83886075,
+     null,
+     null
+    ]
+   },
+   "FlightHelmet / tex1k-ktx2-etc1s": {
+    "triangles": [
+     188708,
+     188708,
+     1
+    ],
+    "drawCalls": [
+     11,
+     11,
+     1
+    ],
+    "textureGpuBytes": [
+     20971515,
+     null,
+     null
+    ]
+   },
+   "Fox / original": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     5592405,
+     5592404,
+     1
+    ]
+   },
+   "Fox / clean": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     5592405,
+     5592404,
+     1
+    ]
+   },
+   "Fox / quantize": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     5592405,
+     5592404,
+     1
+    ]
+   },
+   "Fox / draco": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     5592405,
+     5592404,
+     1
+    ]
+   },
+   "Fox / meshopt": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     5592405,
+     5592404,
+     1
+    ]
+   },
+   "Fox / simplify50+meshopt": {
+    "triangles": [
+     438,
+     438,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     5592405,
+     5592404,
+     1
+    ]
+   },
+   "Fox / tex1k-webp": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     5592405,
+     5592404,
+     1
+    ]
+   },
+   "Fox / tex1k-avif": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     5592405,
+     5592404,
+     1
+    ]
+   },
+   "Fox / tex1k-ktx2": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     1398101,
+     1398128,
+     1
+    ]
+   },
+   "Fox / tex1k-ktx2-etc1s": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     1398101,
+     1398128,
+     1
+    ]
+   },
+   "Fox / tex1k-ktx2-wasm": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     1398101,
+     1398128,
+     1
+    ]
+   },
+   "Fox / tex1k-ktx2-wasm-readme": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     1398101,
+     1398128,
+     1
+    ]
+   },
+   "Fox / geo-only": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     0,
+     0,
+     null
+    ]
+   },
+   "Fox / geo-only draco": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     0,
+     0,
+     null
+    ]
+   },
+   "Fox / geo-only meshopt": {
+    "triangles": [
+     576,
+     576,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     0,
+     0,
+     null
+    ]
+   },
+   "Fox / optimize (defaults, webp)": {
+    "triangles": [
+     486,
+     486,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     5592405,
+     5592404,
+     1
+    ]
+   },
+   "Fox / optimize 1k webp": {
+    "triangles": [
+     486,
+     486,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     5592405,
+     5592404,
+     1
+    ]
+   },
+   "Fox / optimize 1k ktx2": {
+    "triangles": [
+     486,
+     486,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     1398101,
+     1398128,
+     1
+    ]
+   },
+   "Fox / optimize 1k avif draco": {
+    "triangles": [
+     486,
+     486,
+     1
+    ],
+    "drawCalls": [
+     1,
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     5592405,
+     5592404,
+     1
+    ]
+   },
+   "ABeautifulGame / original": {
+    "triangles": [
+     2962816,
+     2962816,
+     1
+    ],
+    "drawCalls": [
+     82,
+     82,
+     1
+    ],
+    "textureGpuBytes": [
+     738197493,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / clean": {
+    "triangles": [
+     2962816,
+     2962816,
+     1
+    ],
+    "drawCalls": [
+     82,
+     82,
+     1
+    ],
+    "textureGpuBytes": [
+     738197493,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / quantize": {
+    "triangles": [
+     2962816,
+     2962816,
+     1
+    ],
+    "drawCalls": [
+     82,
+     82,
+     1
+    ],
+    "textureGpuBytes": [
+     738197493,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / draco": {
+    "triangles": [
+     2962816,
+     2962816,
+     1
+    ],
+    "drawCalls": [
+     82,
+     82,
+     1
+    ],
+    "textureGpuBytes": [
+     738197493,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / meshopt": {
+    "triangles": [
+     2962816,
+     2962816,
+     1
+    ],
+    "drawCalls": [
+     82,
+     82,
+     1
+    ],
+    "textureGpuBytes": [
+     738197493,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / simplify50+meshopt": {
+    "triangles": [
+     1495680,
+     1495680,
+     1
+    ],
+    "drawCalls": [
+     82,
+     82,
+     1
+    ],
+    "textureGpuBytes": [
+     738197493,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / tex1k-webp": {
+    "triangles": [
+     2962816,
+     2962816,
+     1
+    ],
+    "drawCalls": [
+     82,
+     82,
+     1
+    ],
+    "textureGpuBytes": [
+     184549365,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / tex1k-avif": {
+    "triangles": [
+     2962816,
+     2962816,
+     1
+    ],
+    "drawCalls": [
+     82,
+     82,
+     1
+    ],
+    "textureGpuBytes": [
+     184549365,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / tex1k-ktx2": {
+    "triangles": [
+     2962816,
+     2962816,
+     1
+    ],
+    "drawCalls": [
+     82,
+     82,
+     1
+    ],
+    "textureGpuBytes": [
+     46137333,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / optimize (defaults, webp)": {
+    "triangles": [
+     1928128,
+     1928128,
+     1
+    ],
+    "drawCalls": [
+     28,
+     28,
+     1
+    ],
+    "textureGpuBytes": [
+     738197493,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / optimize 1k webp": {
+    "triangles": [
+     1928128,
+     1928128,
+     1
+    ],
+    "drawCalls": [
+     28,
+     28,
+     1
+    ],
+    "textureGpuBytes": [
+     184549365,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / optimize 1k avif draco": {
+    "triangles": [
+     1928128,
+     1928128,
+     1
+    ],
+    "drawCalls": [
+     28,
+     28,
+     1
+    ],
+    "textureGpuBytes": [
+     184549365,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / instance": {
+    "triangles": [
+     2962816,
+     2962816,
+     1
+    ],
+    "drawCalls": [
+     28,
+     28,
+     1
+    ],
+    "textureGpuBytes": [
+     738197493,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / optimize 1k webp, no join/flatten": {
+    "triangles": [
+     2122772,
+     2122772,
+     1
+    ],
+    "drawCalls": [
+     28,
+     28,
+     1
+    ],
+    "textureGpuBytes": [
+     184549365,
+     null,
+     null
+    ]
+   },
+   "ABeautifulGame / tex1k-ktx2-etc1s": {
+    "triangles": [
+     2962816,
+     2962816,
+     1
+    ],
+    "drawCalls": [
+     82,
+     82,
+     1
+    ],
+    "textureGpuBytes": [
+     46137333,
+     null,
+     null
+    ]
+   }
+  },
+  "measuredAt": "2026-09-29T05:29:12.361Z",
+  "host": {
+   "cpus": 4,
+   "node": "v22.22.2"
+  },
+  "modelRefreshedAt": "2026-09-29T04:22:12.176Z"
+ },
+ "turntable": {
+  "frames": 36,
+  "frameSize": "480x360",
+  "individual": {
+   "webp": {
+    "bytes": 242524,
+    "requests": 36
+   },
+   "avif": {
+    "bytes": 180348,
+    "requests": 36
+   },
+   "jpeg": {
+    "bytes": 316162,
+    "requests": 36
+   }
+  },
+  "sheet": {
+   "webp": {
+    "bytes": 233768,
+    "requests": 1,
+    "dims": "2880x2160",
+    "decodedRGBA": 24883200
+   },
+   "avif": {
+    "bytes": 160303,
+    "requests": 1,
+    "dims": "2880x2160",
+    "decodedRGBA": 24883200
+   },
+   "jpeg": {
+    "bytes": 299287,
+    "requests": 1,
+    "dims": "2880x2160",
+    "decodedRGBA": 24883200
+   }
+  },
+  "live": {
+   "threeViewerJs": {
+    "min": 665667,
+    "gzip": 168757
+   },
+   "glb": {
+    "optimize_1k_webp": {
+     "bytes": 2017284,
+     "gzip": 1819389
+    },
+    "optimize_defaults_webp_": {
+     "bytes": 4774492,
+     "gzip": 4576155
+    },
+    "tex1k_ktx2": {
+     "bytes": 11164772,
+     "gzip": 10449317
+    },
+    "tex1k_avif": {
+     "bytes": 4001316,
+     "gzip": 3294277
+    },
+    "original": {
+     "bytes": 48382996,
+     "gzip": 47627079
+    }
+   },
+   "note": "plus GPU texture memory: see gltf results for FlightHelmet"
+  },
+  "model": "FlightHelmet",
+  "sprite360Js": "a drag-to-rotate image sequence needs ~1 KB of script (pointer x → frame index); a scroll-scrubbed one can be CSS only (a scroll-driven animation of transform: translate with steps() on an image strip — not background-position, which repaints every frame: see sprites.cssSprite)",
+  "measuredAt": "2026-09-29T03:53:13.269Z",
+  "host": {
+   "cpus": 4,
+   "node": "v22.22.2"
+  },
+  "individual2x": {
+   "frameSize": "960x720",
+   "webp": {
+    "bytes": 669444,
+    "requests": 36,
+    "decodedRGBA": 99532800
+   },
+   "avif": {
+    "bytes": 466136,
+    "requests": 36,
+    "decodedRGBA": 99532800
+   },
+   "jpeg": {
+    "bytes": 884347,
+    "requests": 36,
+    "decodedRGBA": 99532800
+   }
+  }
+ },
+ "blender": {
+  "blender": "4.5.14 LTS",
+  "exports": {
+   "cups-copies": {
+    "ms": 65,
+    "bytes": 168128,
+    "settings": {
+     "export_gpu_instances": false
+    }
+   },
+   "cups-linked": {
+    "ms": 8,
+    "bytes": 10320,
+    "settings": {
+     "export_gpu_instances": false
+    }
+   },
+   "cups-gpu-instances": {
+    "ms": 9,
+    "bytes": 9996,
+    "settings": {
+     "export_gpu_instances": true
+    }
+   },
+   "product-plain": {
+    "ms": 15,
+    "bytes": 232472,
+    "settings": {
+     "use_selection": true
+    }
+   },
+   "product-lod-50": {
+    "ms": 36,
+    "bytes": 125492,
+    "settings": {
+     "use_selection": true
+    }
+   },
+   "product-lod-20": {
+    "ms": 50,
+    "bytes": 54068,
+    "settings": {
+     "use_selection": true
+    }
+   },
+   "product-draco": {
+    "ms": 16,
+    "bytes": 31516,
+    "settings": {
+     "use_selection": true,
+     "export_draco_mesh_compression_enable": true
+    }
+   },
+   "product-ao-png": {
+    "ms": 14,
+    "bytes": 879444,
+    "settings": {
+     "use_selection": true,
+     "export_image_format": "AUTO"
+    }
+   },
+   "product-ao-webp": {
+    "ms": 130,
+    "bytes": 366120,
+    "settings": {
+     "use_selection": true,
+     "export_image_format": "WEBP",
+     "export_image_quality": 85
+    }
+   },
+   "product-ao-jpeg": {
+    "ms": 46,
+    "bytes": 398428,
+    "settings": {
+     "use_selection": true,
+     "export_image_format": "JPEG",
+     "export_image_quality": 85
+    }
+   },
+   "scene-camera-anim": {
+    "ms": 25,
+    "bytes": 884056,
+    "settings": {
+     "export_cameras": true,
+     "export_lights": true,
+     "export_animations": true,
+     "export_optimize_animation_size": true
+    }
+   },
+   "product-baked-unlit": {
+    "ms": 133,
+    "bytes": 337828,
+    "settings": {
+     "use_selection": true,
+     "export_image_format": "WEBP",
+     "export_image_quality": 85
+    }
+   }
+  },
+  "bakes": {
+   "ao": {
+    "ms": 18388,
+    "size": 1024,
+    "samples": 32
+   },
+   "lighting": {
+    "ms": 36844,
+    "size": 1024,
+    "samples": 32
+   }
+  },
+  "inspect": {
+   "cups-copies": {
+    "bytes": 168128,
+    "meshes": 24,
+    "nodes": 24,
+    "drawCalls": 24,
+    "instances": 0,
+    "triangles": 4512,
+    "extensions": [],
+    "images": [],
+    "animations": [],
+    "cameras": 0,
+    "lights": 0
+   },
+   "cups-linked": {
+    "bytes": 10320,
+    "meshes": 1,
+    "nodes": 24,
+    "drawCalls": 24,
+    "instances": 0,
+    "triangles": 4512,
+    "extensions": [],
+    "images": [],
+    "animations": [],
+    "cameras": 0,
+    "lights": 0
+   },
+   "cups-gpu-instances": {
+    "bytes": 9996,
+    "meshes": 1,
+    "nodes": 1,
+    "drawCalls": 1,
+    "instances": 24,
+    "triangles": 4512,
+    "extensions": [
+     "EXT_mesh_gpu_instancing"
+    ],
+    "images": [],
+    "animations": [],
+    "cameras": 0,
+    "lights": 0
+   },
+   "product-plain": {
+    "bytes": 232472,
+    "meshes": 1,
+    "nodes": 1,
+    "drawCalls": 1,
+    "instances": 0,
+    "triangles": 8876,
+    "extensions": [],
+    "images": [],
+    "animations": [],
+    "cameras": 0,
+    "lights": 0
+   },
+   "product-lod-50": {
+    "bytes": 125492,
+    "meshes": 1,
+    "nodes": 1,
+    "drawCalls": 1,
+    "instances": 0,
+    "triangles": 4438,
+    "extensions": [],
+    "images": [],
+    "animations": [],
+    "cameras": 0,
+    "lights": 0
+   },
+   "product-lod-20": {
+    "bytes": 54068,
+    "meshes": 1,
+    "nodes": 1,
+    "drawCalls": 1,
+    "instances": 0,
+    "triangles": 1774,
+    "extensions": [],
+    "images": [],
+    "animations": [],
+    "cameras": 0,
+    "lights": 0
+   },
+   "product-draco": {
+    "bytes": 31516,
+    "meshes": 1,
+    "nodes": 1,
+    "drawCalls": 1,
+    "instances": 0,
+    "triangles": 8876,
+    "extensions": [
+     "KHR_draco_mesh_compression"
+    ],
+    "images": [],
+    "animations": [],
+    "cameras": 0,
+    "lights": 0
+   },
+   "product-ao-png": {
+    "bytes": 879444,
+    "meshes": 1,
+    "nodes": 1,
+    "drawCalls": 1,
+    "instances": 0,
+    "triangles": 8876,
+    "extensions": [],
+    "images": [
+     "png 1024² → occlusionTexture"
+    ],
+    "animations": [],
+    "cameras": 0,
+    "lights": 0
+   },
+   "product-ao-webp": {
+    "bytes": 366120,
+    "meshes": 1,
+    "nodes": 1,
+    "drawCalls": 1,
+    "instances": 0,
+    "triangles": 8876,
+    "extensions": [
+     "EXT_texture_webp"
+    ],
+    "images": [
+     "webp 1024² → occlusionTexture"
+    ],
+    "animations": [],
+    "cameras": 0,
+    "lights": 0
+   },
+   "product-ao-jpeg": {
+    "bytes": 398428,
+    "meshes": 1,
+    "nodes": 1,
+    "drawCalls": 1,
+    "instances": 0,
+    "triangles": 8876,
+    "extensions": [],
+    "images": [
+     "jpeg 1024² → occlusionTexture"
+    ],
+    "animations": [],
+    "cameras": 0,
+    "lights": 0
+   },
+   "scene-camera-anim": {
+    "bytes": 884056,
+    "meshes": 2,
+    "nodes": 5,
+    "drawCalls": 2,
+    "instances": 0,
+    "triangles": 8878,
+    "extensions": [
+     "KHR_lights_punctual"
+    ],
+    "images": [
+     "png 1024² → occlusionTexture"
+    ],
+    "animations": [
+     {
+      "name": "CameraPivotAction",
+      "channels": 1,
+      "keyframes": 121,
+      "duration": 5.04
+     }
+    ],
+    "cameras": 1,
+    "lights": 1,
+    "animationBytesStored": 2420
+   },
+   "product-baked-unlit": {
+    "bytes": 337828,
+    "meshes": 1,
+    "nodes": 1,
+    "drawCalls": 1,
+    "instances": 0,
+    "triangles": 8876,
+    "extensions": [
+     "KHR_materials_unlit",
+     "EXT_texture_webp"
+    ],
+    "images": [
+     "webp 1024² → baseColorTexture"
+    ],
+    "animations": [],
+    "cameras": 0,
+    "lights": 0
+   },
+   "scene-camera-anim → gltf-transform resample": {
+    "bytes": 881564,
+    "animations": [
+     {
+      "name": "CameraPivotAction",
+      "channels": 1,
+      "keyframes": 5,
+      "duration": 5.04
+     }
+    ],
+    "animationBytesStored": 100
+   },
+   "product-plain → gltf-transform meshopt": {
+    "bytes": 58456,
+    "triangles": 8876,
+    "extensions": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ],
+    "images": []
+   },
+   "product-plain → gltf-transform draco": {
+    "bytes": 26720,
+    "triangles": 8876,
+    "extensions": [
+     "KHR_draco_mesh_compression"
+    ],
+    "images": []
+   },
+   "product-ao-png → gltf-transform optimize webp": {
+    "bytes": 157860,
+    "triangles": 8876,
+    "extensions": [
+     "EXT_meshopt_compression",
+     "EXT_texture_webp",
+     "KHR_mesh_quantization"
+    ],
+    "images": [
+     "webp 1024²"
+    ]
+   }
+  },
+  "measuredAt": "2026-09-29T03:28:23.168Z",
+  "host": {
+   "cpus": 4,
+   "node": "v22.22.2"
+  }
+ },
+ "closeup": {
+  "zoom": 2.5,
+  "models": {
+   "DamagedHelmet": {
+    "original": {
+     "diffPct": 0,
+     "psnr": null
+    },
+    "clean": {
+     "diffPct": 0,
+     "psnr": null
+    },
+    "quantize": {
+     "diffPct": 0.05,
+     "psnr": 39.9
+    },
+    "draco": {
+     "diffPct": 0.11,
+     "psnr": 38
+    },
+    "meshopt": {
+     "diffPct": 0.29,
+     "psnr": 36.7
+    },
+    "simplify50+meshopt": {
+     "diffPct": 1.4,
+     "psnr": 29.3
+    },
+    "tex1k-webp": {
+     "diffPct": 1.99,
+     "psnr": 29.2
+    },
+    "tex1k-avif": {
+     "diffPct": 1.57,
+     "psnr": 30
+    },
+    "tex1k-ktx2": {
+     "diffPct": 1.57,
+     "psnr": 30
+    },
+    "tex1k-ktx2-etc1s": {
+     "diffPct": 3.3,
+     "psnr": 26.8
+    },
+    "tex1k-ktx2-wasm": {
+     "diffPct": 1.71,
+     "psnr": 29.6
+    },
+    "optimize (defaults, webp)": {
+     "diffPct": 0.99,
+     "psnr": 31.5
+    },
+    "optimize 1k webp": {
+     "diffPct": 2.14,
+     "psnr": 28.7
+    },
+    "optimize 1k avif draco": {
+     "diffPct": 1.46,
+     "psnr": 30.1
+    },
+    "tex2k-ktx2": {
+     "diffPct": 0.14,
+     "psnr": 35.6
+    },
+    "tex1k-ktx2-wasm-readme": {
+     "diffPct": 43.28,
+     "psnr": 13.9
+    }
+   },
+   "Fox": {
+    "original": {
+     "diffPct": 0,
+     "psnr": null
+    },
+    "clean": {
+     "diffPct": 0.01,
+     "psnr": 49.9
+    },
+    "quantize": {
+     "diffPct": 0.02,
+     "psnr": 44.2
+    },
+    "draco": {
+     "diffPct": 0.02,
+     "psnr": 44.4
+    },
+    "meshopt": {
+     "diffPct": 0.02,
+     "psnr": 44.5
+    },
+    "simplify50+meshopt": {
+     "diffPct": 0.26,
+     "psnr": 31.6
+    },
+    "tex1k-webp": {
+     "diffPct": 0.01,
+     "psnr": 43.5
+    },
+    "tex1k-avif": {
+     "diffPct": 0.01,
+     "psnr": 44.1
+    },
+    "tex1k-ktx2": {
+     "diffPct": 0.02,
+     "psnr": 42.5
+    },
+    "tex1k-ktx2-etc1s": {
+     "diffPct": 0.02,
+     "psnr": 42.5
+    },
+    "tex1k-ktx2-wasm": {
+     "diffPct": 0.02,
+     "psnr": 42.5
+    },
+    "optimize (defaults, webp)": {
+     "diffPct": 0.24,
+     "psnr": 32.6
+    },
+    "optimize 1k webp": {
+     "diffPct": 0.24,
+     "psnr": 32.6
+    },
+    "optimize 1k ktx2": {
+     "diffPct": 0.24,
+     "psnr": 32.5
+    },
+    "optimize 1k avif draco": {
+     "diffPct": 0.23,
+     "psnr": 32.6
+    },
+    "tex1k-ktx2-wasm-readme": {
+     "diffPct": 0.02,
+     "psnr": 42.5
+    }
+   },
+   "FlightHelmet": {
+    "original": {
+     "diffPct": 0,
+     "psnr": null
+    },
+    "clean": {
+     "diffPct": 0,
+     "psnr": 69.7
+    },
+    "quantize": {
+     "diffPct": 0.02,
+     "psnr": 44.4
+    },
+    "draco": {
+     "diffPct": 0.02,
+     "psnr": 43.7
+    },
+    "meshopt": {
+     "diffPct": 0.02,
+     "psnr": 44.1
+    },
+    "simplify50+meshopt": {
+     "diffPct": 0.5,
+     "psnr": 32.1
+    },
+    "tex1k-webp": {
+     "diffPct": 0.24,
+     "psnr": 37.2
+    },
+    "tex1k-avif": {
+     "diffPct": 0.1,
+     "psnr": 39.2
+    },
+    "tex1k-ktx2": {
+     "diffPct": 0.07,
+     "psnr": 39.3
+    },
+    "tex1k-ktx2-etc1s": {
+     "diffPct": 0.55,
+     "psnr": 34.2
+    },
+    "optimize (defaults, webp)": {
+     "diffPct": 0.13,
+     "psnr": 38.6
+    },
+    "optimize 1k webp": {
+     "diffPct": 0.31,
+     "psnr": 36.1
+    },
+    "optimize 1k avif draco": {
+     "diffPct": 0.17,
+     "psnr": 37.5
+    }
+   },
+   "ABeautifulGame": {
+    "original": {
+     "diffPct": 0,
+     "psnr": null
+    },
+    "clean": {
+     "diffPct": 0,
+     "psnr": null
+    },
+    "quantize": {
+     "diffPct": 0.02,
+     "psnr": 46.1
+    },
+    "draco": {
+     "diffPct": 0.02,
+     "psnr": 46.3
+    },
+    "meshopt": {
+     "diffPct": 0.02,
+     "psnr": 45.2
+    },
+    "simplify50+meshopt": {
+     "diffPct": 0.51,
+     "psnr": 34.5
+    },
+    "tex1k-webp": {
+     "diffPct": 0.13,
+     "psnr": 39.2
+    },
+    "tex1k-avif": {
+     "diffPct": 0.03,
+     "psnr": 41.5
+    },
+    "tex1k-ktx2": {
+     "diffPct": 0.03,
+     "psnr": 39.2
+    },
+    "tex1k-ktx2-etc1s": {
+     "diffPct": 0.36,
+     "psnr": 34.8
+    },
+    "optimize (defaults, webp)": {
+     "diffPct": 1.21,
+     "psnr": 31.1
+    },
+    "optimize 1k webp": {
+     "diffPct": 1.35,
+     "psnr": 30.7
+    },
+    "optimize 1k avif draco": {
+     "diffPct": 0.51,
+     "psnr": 34
+    },
+    "instance": {
+     "diffPct": 0,
+     "psnr": 65.5
+    },
+    "optimize 1k webp, no join/flatten": {
+     "diffPct": 1.24,
+     "psnr": 31.2
+    }
+   }
+  },
+  "measuredAt": "2026-09-29T04:07:01.939Z",
+  "host": {
+   "cpus": 4,
+   "node": "v22.22.2"
+  }
+ },
+ "isolate": {
+  "model": "ABeautifulGame",
+  "variants": {
+   "optimize (textures untouched)": {
+    "command": "gltf-transform optimize in.glb out.glb --texture-compress false",
+    "bytes": 21970756,
+    "trianglesDrawn": 1928128,
+    "drawCalls": 28,
+    "instances": 32,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ],
+    "diffPctOfView": 0.307,
+    "psnrView": 35.6
+   },
+   "no simplify": {
+    "command": "gltf-transform optimize in.glb out.glb --texture-compress false --simplify false",
+    "bytes": 22581296,
+    "trianglesDrawn": 2962816,
+    "drawCalls": 28,
+    "instances": 32,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ],
+    "diffPctOfView": 0.219,
+    "psnrView": 37.1
+   },
+   "compress quantize (no meshopt)": {
+    "command": "gltf-transform optimize in.glb out.glb --texture-compress false --compress quantize",
+    "bytes": 30248660,
+    "trianglesDrawn": 1928128,
+    "drawCalls": 28,
+    "instances": 32,
+    "compression": [
+     "KHR_mesh_quantization"
+    ],
+    "diffPctOfView": 0.309,
+    "psnrView": 35.6
+   },
+   "compress draco": {
+    "command": "gltf-transform optimize in.glb out.glb --texture-compress false --compress draco",
+    "bytes": 21198124,
+    "trianglesDrawn": 1928128,
+    "drawCalls": 28,
+    "instances": 32,
+    "compression": [
+     "KHR_draco_mesh_compression"
+    ],
+    "diffPctOfView": 0.093,
+    "psnrView": 40.3
+   },
+   "compress false": {
+    "command": "gltf-transform optimize in.glb out.glb --texture-compress false --compress false",
+    "bytes": 39909180,
+    "trianglesDrawn": 1928128,
+    "drawCalls": 28,
+    "instances": 32,
+    "compression": [],
+    "diffPctOfView": 0.091,
+    "psnrView": 40.8
+   },
+   "no join/flatten": {
+    "command": "gltf-transform optimize in.glb out.glb --texture-compress false --join false --flatten false",
+    "bytes": 20812504,
+    "trianglesDrawn": 2122772,
+    "drawCalls": 40,
+    "instances": 32,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ],
+    "diffPctOfView": 0.276,
+    "psnrView": 36
+   },
+   "no palette": {
+    "command": "gltf-transform optimize in.glb out.glb --texture-compress false --palette false",
+    "bytes": 21970756,
+    "trianglesDrawn": 1928128,
+    "drawCalls": 28,
+    "instances": 32,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ],
+    "diffPctOfView": 0.307,
+    "psnrView": 35.6
+   },
+   "no instancing": {
+    "command": "gltf-transform optimize in.glb out.glb --texture-compress false --instance false",
+    "bytes": 22822456,
+    "trianglesDrawn": 1067220,
+    "drawCalls": 42,
+    "instances": 0,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ],
+    "diffPctOfView": 0.11,
+    "psnrView": 39.8
+   },
+   "no instancing, no simplify": {
+    "command": "gltf-transform optimize in.glb out.glb --texture-compress false --instance false --simplify false",
+    "bytes": 25105592,
+    "trianglesDrawn": 2962816,
+    "drawCalls": 42,
+    "instances": 0,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ],
+    "diffPctOfView": 0.008,
+    "psnrView": 48.2
+   },
+   "no simplify, no join/flatten, instance-min 2": {
+    "command": "gltf-transform optimize in.glb out.glb --texture-compress false --simplify false --join false --flatten false --instance-min 2",
+    "bytes": 21361620,
+    "trianglesDrawn": 2962816,
+    "drawCalls": 28,
+    "instances": 44,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization"
+    ],
+    "diffPctOfView": 0.218,
+    "psnrView": 37.1
+   }
+  },
+  "measuredAt": "2026-09-29T04:11:56.328Z",
+  "host": {
+   "cpus": 4,
+   "node": "v22.22.2"
+  }
+ },
+ "modelcheck": {
+  "DamagedHelmet": {
+   "pipeline": "gltf-transform optimize DamagedHelmet.glb DamagedHelmet.opt.glb --compress meshopt --texture-compress webp --texture-size 1024 --simplify false",
+   "before": {
+    "bytes": 3773916,
+    "geometryBytesStored": 558504,
+    "textureBytes": 3213224,
+    "trianglesDrawn": 15452,
+    "drawCalls": 1,
+    "textureGpuBytes": 111848105,
+    "maxTexture": 2048,
+    "compression": [],
+    "over": [
+     "transfer 3.77 MB > 1.50 MB",
+     "texture 2048px > 1024px",
+     "texture GPU memory ~111.85 MB > 48.00 MB"
+    ],
+    "ok": false,
+    "brotli": 3348878
+   },
+   "after": {
+    "bytes": 547236,
+    "geometryBytesStored": 181707,
+    "textureBytes": 362262,
+    "trianglesDrawn": 15452,
+    "drawCalls": 1,
+    "textureGpuBytes": 27962025,
+    "maxTexture": 1024,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "EXT_texture_webp"
+    ],
+    "over": [],
+    "ok": true,
+    "brotli": 504592
+   },
+   "ms": 1259,
+   "error": null,
+   "otherCodec": {
+    "pipeline": "gltf-transform optimize DamagedHelmet.glb DamagedHelmet.opt.glb --compress draco --texture-compress webp --texture-size 1024 --simplify false",
+    "bytes": 442772,
+    "geometryBytesStored": 78304,
+    "textureBytes": 362262,
+    "trianglesDrawn": 15452,
+    "drawCalls": 1,
+    "textureGpuBytes": 27962025,
+    "maxTexture": 1024,
+    "compression": [
+     "KHR_draco_mesh_compression",
+     "EXT_texture_webp"
+    ],
+    "over": [],
+    "ok": true,
+    "brotli": 437223
+   }
+  },
+  "FlightHelmet": {
+   "pipeline": "gltf-transform optimize FlightHelmet.gltf FlightHelmet.opt.glb --compress meshopt --texture-compress webp --texture-size 512",
+   "before": {
+    "bytes": 48392569,
+    "geometryBytesStored": 3227148,
+    "textureBytes": 45146723,
+    "trianglesDrawn": 188708,
+    "drawCalls": 11,
+    "textureGpuBytes": 285212667,
+    "maxTexture": 2048,
+    "compression": [],
+    "over": [
+     "transfer 48.39 MB > 1.50 MB",
+     "188,708 triangles drawn > 100,000 (incl. 93,986 redrawn for the transmission pass)",
+     "texture 2048px > 1024px",
+     "texture GPU memory ~285.21 MB > 48.00 MB"
+    ],
+    "ok": false,
+    "brotli": null
+   },
+   "after": {
+    "bytes": 1114644,
+    "geometryBytesStored": 660051,
+    "textureBytes": 438664,
+    "trianglesDrawn": 175778,
+    "drawCalls": 11,
+    "textureGpuBytes": 20971515,
+    "maxTexture": 512,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "EXT_texture_webp"
+    ],
+    "over": [
+     "175,778 triangles drawn > 100,000 (incl. 87,554 redrawn for the transmission pass)"
+    ],
+    "ok": false,
+    "brotli": 911767
+   },
+   "ms": 2389,
+   "error": null,
+   "otherCodec": {
+    "pipeline": "gltf-transform optimize FlightHelmet.gltf FlightHelmet.opt.glb --compress draco --texture-compress webp --texture-size 512",
+    "bytes": 968352,
+    "geometryBytesStored": 520567,
+    "textureBytes": 438664,
+    "trianglesDrawn": 175778,
+    "drawCalls": 11,
+    "textureGpuBytes": 20971515,
+    "maxTexture": 512,
+    "compression": [
+     "KHR_draco_mesh_compression",
+     "EXT_texture_webp"
+    ],
+    "over": [
+     "175,778 triangles drawn > 100,000 (incl. 87,554 redrawn for the transmission pass)"
+    ],
+    "ok": false,
+    "brotli": 935796
+   }
+  },
+  "FlightHelmet --ktx2": {
+   "pipeline": "gltf-transform resize FlightHelmet.gltf FlightHelmet.opt.glb --width 1024 --height 1024 && gltf-transform uastc FlightHelmet.opt.glb FlightHelmet.opt.glb --slots '{normalTexture,occlusionTexture,metallicRoughnessTexture}' --level 2 --rdo --zstd 18 && gltf-transform etc1s FlightHelmet.opt.glb FlightHelmet.opt.glb --quality 255 && gltf-transform optimize FlightHelmet.opt.glb FlightHelmet.opt.glb --compress meshopt --texture-compress false",
+   "before": {
+    "bytes": 48392569,
+    "geometryBytesStored": 3227148,
+    "textureBytes": 45146723,
+    "trianglesDrawn": 188708,
+    "drawCalls": 11,
+    "textureGpuBytes": 285212667,
+    "maxTexture": 2048,
+    "compression": [],
+    "over": [
+     "transfer 48.39 MB > 1.50 MB",
+     "188,708 triangles drawn > 100,000 (incl. 93,986 redrawn for the transmission pass)",
+     "texture 2048px > 1024px",
+     "texture GPU memory ~285.21 MB > 48.00 MB"
+    ],
+    "ok": false,
+    "brotli": null
+   },
+   "after": {
+    "bytes": 9437140,
+    "geometryBytesStored": 660051,
+    "textureBytes": 8761065,
+    "trianglesDrawn": 175778,
+    "drawCalls": 11,
+    "textureGpuBytes": 20971515,
+    "maxTexture": 1024,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "KHR_texture_basisu"
+    ],
+    "over": [
+     "transfer 9.44 MB > 1.50 MB",
+     "175,778 triangles drawn > 100,000 (incl. 87,554 redrawn for the transmission pass)"
+    ],
+    "ok": false,
+    "brotli": 9241830
+   },
+   "ms": 53955,
+   "error": null,
+   "otherCodec": {
+    "pipeline": "gltf-transform resize FlightHelmet.gltf FlightHelmet.opt.glb --width 1024 --height 1024 && gltf-transform uastc FlightHelmet.opt.glb FlightHelmet.opt.glb --slots '{normalTexture,occlusionTexture,metallicRoughnessTexture}' --level 2 --rdo --zstd 18 && gltf-transform etc1s FlightHelmet.opt.glb FlightHelmet.opt.glb --quality 255 && gltf-transform optimize FlightHelmet.opt.glb FlightHelmet.opt.glb --compress draco --texture-compress false",
+    "bytes": 9290836,
+    "geometryBytesStored": 520567,
+    "textureBytes": 8761065,
+    "trianglesDrawn": 175778,
+    "drawCalls": 11,
+    "textureGpuBytes": 20971515,
+    "maxTexture": 1024,
+    "compression": [
+     "KHR_draco_mesh_compression",
+     "KHR_texture_basisu"
+    ],
+    "over": [
+     "transfer 9.29 MB > 1.50 MB",
+     "175,778 triangles drawn > 100,000 (incl. 87,554 redrawn for the transmission pass)"
+    ],
+    "ok": false,
+    "brotli": 9263613
+   }
+  },
+  "Fox": {
+   "pipeline": null,
+   "note": "within budget: model.mjs prints no pipeline",
+   "before": {
+    "bytes": 162852,
+    "geometryBytesStored": 77568,
+    "textureBytes": 26764,
+    "trianglesDrawn": 576,
+    "drawCalls": 1,
+    "textureGpuBytes": 5592405,
+    "maxTexture": 1024,
+    "compression": [],
+    "over": [],
+    "ok": true
+   }
+  },
+  "ABeautifulGame --tier scene": {
+   "pipeline": "gltf-transform optimize ABeautifulGame.glb ABeautifulGame.opt.glb --compress meshopt --texture-compress webp --texture-size 1024 --instance false",
+   "before": {
+    "bytes": 42977928,
+    "geometryBytesStored": 24015552,
+    "textureBytes": 18930095,
+    "trianglesDrawn": 2962816,
+    "drawCalls": 82,
+    "textureGpuBytes": 738197493,
+    "maxTexture": 2048,
+    "compression": [],
+    "over": [
+     "transfer 42.98 MB > 8.00 MB",
+     "2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)",
+     "texture GPU memory ~738.20 MB > 256.00 MB"
+    ],
+    "ok": false,
+    "brotli": 24651028
+   },
+   "after": {
+    "bytes": 5701576,
+    "geometryBytesStored": 3858282,
+    "textureBytes": 1808112,
+    "trianglesDrawn": 1067220,
+    "drawCalls": 42,
+    "textureGpuBytes": 184549365,
+    "maxTexture": 1024,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "EXT_texture_webp"
+    ],
+    "over": [
+     "1,067,220 triangles drawn > 1,000,000 (incl. 515,946 redrawn for the transmission pass)"
+    ],
+    "ok": false,
+    "brotli": 4234949
+   },
+   "ms": 5874,
+   "error": null,
+   "otherCodec": {
+    "pipeline": "gltf-transform optimize ABeautifulGame.glb ABeautifulGame.opt.glb --compress draco --texture-compress webp --texture-size 1024 --instance false",
+    "bytes": 4624284,
+    "geometryBytesStored": 2793313,
+    "textureBytes": 1808112,
+    "trianglesDrawn": 1067220,
+    "drawCalls": 42,
+    "textureGpuBytes": 184549365,
+    "maxTexture": 1024,
+    "compression": [
+     "KHR_draco_mesh_compression",
+     "EXT_texture_webp"
+    ],
+    "over": [
+     "1,067,220 triangles drawn > 1,000,000 (incl. 515,946 redrawn for the transmission pass)"
+    ],
+    "ok": false,
+    "brotli": 4210442
+   }
+  },
+  "ABeautifulGame --tier scene --interactive": {
+   "pipeline": "gltf-transform optimize ABeautifulGame.glb ABeautifulGame.opt.glb --compress meshopt --texture-compress webp --texture-size 1024 --instance false --join false --flatten false --palette false",
+   "before": {
+    "bytes": 42977928,
+    "geometryBytesStored": 24015552,
+    "textureBytes": 18930095,
+    "trianglesDrawn": 2962816,
+    "drawCalls": 82,
+    "textureGpuBytes": 738197493,
+    "maxTexture": 2048,
+    "compression": [],
+    "over": [
+     "transfer 42.98 MB > 8.00 MB",
+     "2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)",
+     "texture GPU memory ~738.20 MB > 256.00 MB"
+    ],
+    "ok": false,
+    "brotli": 24651028
+   },
+   "after": {
+    "bytes": 3694244,
+    "geometryBytesStored": 1851608,
+    "textureBytes": 1808112,
+    "trianglesDrawn": 2122772,
+    "drawCalls": 82,
+    "textureGpuBytes": 184549365,
+    "maxTexture": 1024,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "EXT_texture_webp"
+    ],
+    "over": [
+     "2,122,772 triangles drawn > 1,000,000 (incl. 1,043,722 redrawn for the transmission pass)"
+    ],
+    "ok": false,
+    "brotli": 2932545
+   },
+   "ms": 4063,
+   "error": null,
+   "otherCodec": {
+    "pipeline": "gltf-transform optimize ABeautifulGame.glb ABeautifulGame.opt.glb --compress draco --texture-compress webp --texture-size 1024 --instance false --join false --flatten false --palette false",
+    "bytes": 3687592,
+    "geometryBytesStored": 1854236,
+    "textureBytes": 1808112,
+    "trianglesDrawn": 2122772,
+    "drawCalls": 82,
+    "textureGpuBytes": 184549365,
+    "maxTexture": 1024,
+    "compression": [
+     "KHR_draco_mesh_compression",
+     "EXT_texture_webp"
+    ],
+    "over": [
+     "2,122,772 triangles drawn > 1,000,000 (incl. 1,043,722 redrawn for the transmission pass)"
+    ],
+    "ok": false,
+    "brotli": 2763776
+   }
+  },
+  "measuredAt": "2026-09-29T05:16:05.397Z",
+  "host": {
+   "cpus": 4,
+   "node": "v22.22.2"
+  },
+  "ABeautifulGame-KTX2-Draco --tier scene": {
+   "pipeline": "gltf-transform optimize ABeautifulGame.glb ABeautifulGame.opt.glb --compress draco --texture-compress false --instance false",
+   "before": {
+    "bytes": 12105252,
+    "geometryBytesStored": 733549,
+    "textureBytes": 11349423,
+    "trianglesDrawn": 2962816,
+    "drawCalls": 82,
+    "textureGpuBytes": 184549365,
+    "maxTexture": 2048,
+    "compression": [
+     "KHR_draco_mesh_compression",
+     "KHR_texture_basisu"
+    ],
+    "over": [
+     "transfer 12.11 MB > 8.00 MB",
+     "2,962,816 triangles drawn > 1,000,000 (incl. 1,463,744 redrawn for the transmission pass)"
+    ],
+    "ok": false,
+    "brotli": 11927742
+   },
+   "after": {
+    "bytes": 12878484,
+    "geometryBytesStored": 1506373,
+    "textureBytes": 11349423,
+    "trianglesDrawn": 940204,
+    "drawCalls": 42,
+    "textureGpuBytes": 184549365,
+    "maxTexture": 2048,
+    "compression": [
+     "KHR_draco_mesh_compression",
+     "KHR_texture_basisu"
+    ],
+    "over": [
+     "transfer 12.88 MB > 8.00 MB"
+    ],
+    "ok": false,
+    "brotli": 12626853
+   },
+   "ms": 3337,
+   "error": null,
+   "otherCodec": {
+    "pipeline": "gltf-transform optimize ABeautifulGame.glb ABeautifulGame.opt.glb --compress meshopt --texture-compress false --instance false",
+    "bytes": 13787624,
+    "geometryBytesStored": 2406550,
+    "textureBytes": 11349423,
+    "trianglesDrawn": 940204,
+    "drawCalls": 42,
+    "textureGpuBytes": 184549365,
+    "maxTexture": 2048,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "KHR_texture_basisu"
+    ],
+    "over": [
+     "transfer 13.79 MB > 8.00 MB"
+    ],
+    "ok": false,
+    "brotli": 13014007
+   }
+  },
+  "SpecGlossVsMetalRough": {
+   "pipeline": "gltf-transform metalrough SpecGlossVsMetalRough.glb SpecGlossVsMetalRough.opt.glb && gltf-transform optimize SpecGlossVsMetalRough.opt.glb SpecGlossVsMetalRough.opt.glb --compress meshopt --texture-compress webp --texture-size 1024 --simplify false",
+   "before": {
+    "bytes": 9984544,
+    "geometryBytesStored": 149948,
+    "textureBytes": 9829259,
+    "trianglesDrawn": 9028,
+    "drawCalls": 4,
+    "textureGpuBytes": 112197630,
+    "maxTexture": 2048,
+    "compression": [],
+    "over": [
+     "transfer 9.98 MB > 1.50 MB",
+     "texture 2048px > 1024px",
+     "texture GPU memory ~112.20 MB > 48.00 MB",
+     "spec/gloss materials (KHR_materials_pbrSpecularGlossiness): three.js GLTFLoader (r147+) ignores the extension, so they render with their metal/rough fallback or untextured (2 image(s) never uploaded; not counted above)"
+    ],
+    "ok": false,
+    "brotli": 9866098
+   },
+   "after": {
+    "bytes": 170912,
+    "geometryBytesStored": 33210,
+    "textureBytes": 130104,
+    "trianglesDrawn": 9028,
+    "drawCalls": 4,
+    "textureGpuBytes": 45088765,
+    "maxTexture": 1024,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "EXT_texture_webp"
+    ],
+    "over": [],
+    "ok": true,
+    "brotli": 148987
+   },
+   "ms": 2786,
+   "error": null,
+   "otherCodec": {
+    "pipeline": "gltf-transform metalrough SpecGlossVsMetalRough.glb SpecGlossVsMetalRough.opt.glb && gltf-transform optimize SpecGlossVsMetalRough.opt.glb SpecGlossVsMetalRough.opt.glb --compress draco --texture-compress webp --texture-size 1024 --simplify false",
+    "bytes": 181612,
+    "geometryBytesStored": 45666,
+    "textureBytes": 130104,
+    "trianglesDrawn": 9028,
+    "drawCalls": 4,
+    "textureGpuBytes": 45088765,
+    "maxTexture": 1024,
+    "compression": [
+     "KHR_draco_mesh_compression",
+     "EXT_texture_webp"
+    ],
+    "over": [],
+    "ok": true,
+    "brotli": 148859
+   }
+  }
+ },
+ "modelscript": {
+  "env": {
+   "chromium": "141.0.7390.37"
+  },
+  "models": {
+   "AlphaBlendModeTest": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 2978812,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 2,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     65,
+     65
+    ],
+    "drawCalls": [
+     11,
+     11
+    ],
+    "textureGpuBytes": [
+     72701268,
+     72701264
+    ],
+    "glTextures": 4,
+    "imagesCounted": 4,
+    "allocFormats": {
+     "0x8c43": 2,
+     "0x8058": 2
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "GlassHurricaneCandleHolder": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 2705400,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     5820,
+     5820
+    ],
+    "drawCalls": [
+     3,
+     3
+    ],
+    "textureGpuBytes": [
+     67108863,
+     67108860
+    ],
+    "glTextures": 3,
+    "imagesCounted": 3,
+    "allocFormats": {
+     "0x8c43": 1,
+     "0x8058": 2
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "MorphStressTest": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 575900,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     2412,
+     2412
+    ],
+    "drawCalls": [
+     2,
+     2
+    ],
+    "textureGpuBytes": [
+     5636095,
+     5636092
+    ],
+    "glTextures": 3,
+    "imagesCounted": 3,
+    "allocFormats": {
+     "0x8c43": 2,
+     "0x8058": 1
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "SimpleInstancing": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 7356,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     1500,
+     1500
+    ],
+    "drawCalls": [
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     0,
+     0
+    ],
+    "glTextures": 0,
+    "imagesCounted": 0,
+    "allocFormats": {},
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "SpecGlossVsMetalRough": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 9984544,
+    "compression": [],
+    "specGloss": true,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     9028,
+     9028
+    ],
+    "drawCalls": [
+     4,
+     4
+    ],
+    "textureGpuBytes": [
+     112197630,
+     112197632
+    ],
+    "glTextures": 6,
+    "imagesCounted": 6,
+    "allocFormats": {
+     "0x8058": 3,
+     "0x8c43": 3
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "ToyCar": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 5422412,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     215378,
+     215378
+    ],
+    "drawCalls": [
+     5,
+     5
+    ],
+    "textureGpuBytes": [
+     36350632,
+     36350624
+    ],
+    "glTextures": 8,
+    "imagesCounted": 8,
+    "allocFormats": {
+     "0x8c43": 3,
+     "0x8058": 5
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "TransmissionRoughnessTest": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 393808,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     90784,
+     90784
+    ],
+    "drawCalls": [
+     13,
+     13
+    ],
+    "textureGpuBytes": [
+     2140841,
+     2140836
+    ],
+    "glTextures": 5,
+    "imagesCounted": 5,
+    "allocFormats": {
+     "0x8c43": 3,
+     "0x8058": 2
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "TransmissionTest": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 1473792,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 12,
+    "triangles": [
+     257550,
+     257550
+    ],
+    "drawCalls": [
+     44,
+     44
+    ],
+    "textureGpuBytes": [
+     25165821,
+     25165812
+    ],
+    "glTextures": 9,
+    "imagesCounted": 9,
+    "allocFormats": {
+     "0x8c43": 4,
+     "0x8058": 5
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "MeshPrimitiveModes": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 4374,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     16,
+     16
+    ],
+    "drawCalls": [
+     7,
+     7
+    ],
+    "textureGpuBytes": [
+     0,
+     0
+    ],
+    "glTextures": 0,
+    "imagesCounted": 0,
+    "allocFormats": {},
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "SimpleSparseAccessor": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 1683,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     12,
+     12
+    ],
+    "drawCalls": [
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     0,
+     0
+    ],
+    "glTextures": 0,
+    "imagesCounted": 0,
+    "allocFormats": {},
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "SciFiHelmet": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 30286979,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     23358,
+     23358
+    ],
+    "drawCalls": [
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     89478484,
+     89478480
+    ],
+    "glTextures": 4,
+    "imagesCounted": 4,
+    "allocFormats": {
+     "0x8c43": 1,
+     "0x8058": 3
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "BrainStem": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 3194848,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     61666,
+     61666
+    ],
+    "drawCalls": [
+     59,
+     59
+    ],
+    "textureGpuBytes": [
+     0,
+     0
+    ],
+    "glTextures": 0,
+    "imagesCounted": 0,
+    "allocFormats": {},
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "BrainStem-meshopt": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 409991,
+    "compression": [
+     "KHR_meshopt_compression",
+     "KHR_mesh_quantization"
+    ],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     61666,
+     61666
+    ],
+    "drawCalls": [
+     49,
+     49
+    ],
+    "textureGpuBytes": [
+     0,
+     0
+    ],
+    "glTextures": 0,
+    "imagesCounted": 0,
+    "allocFormats": {},
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "CesiumMan": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 438044,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     4672,
+     4672
+    ],
+    "drawCalls": [
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     5592405,
+     5592404
+    ],
+    "glTextures": 1,
+    "imagesCounted": 1,
+    "allocFormats": {
+     "0x8c43": 1
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "ABeautifulGame-KTX2-Draco": {
+    "set": "Khronos, not used to build model.mjs",
+    "bytes": 12105252,
+    "compression": [
+     "KHR_draco_mesh_compression",
+     "KHR_texture_basisu"
+    ],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     2962816,
+     2962816
+    ],
+    "drawCalls": [
+     82,
+     82
+    ],
+    "textureGpuBytes": [
+     184549365,
+     184550256
+    ],
+    "glTextures": 33,
+    "imagesCounted": 33,
+    "allocFormats": {
+     "0x8e8d": 13,
+     "0x8e8c": 20
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "DragonAttenuation": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 6401616,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     178774,
+     178774
+    ],
+    "drawCalls": [
+     3,
+     3
+    ],
+    "textureGpuBytes": [
+     44739242,
+     44739240
+    ],
+    "glTextures": 2,
+    "imagesCounted": 2,
+    "allocFormats": {
+     "0x8c43": 1,
+     "0x8058": 1
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "MosquitoInAmber": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 24229904,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     26846,
+     26846
+    ],
+    "drawCalls": [
+     5,
+     5
+    ],
+    "textureGpuBytes": [
+     246065833,
+     246065828
+    ],
+    "glTextures": 5,
+    "imagesCounted": 5,
+    "allocFormats": {
+     "0x8c43": 2,
+     "0x8058": 3
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "IridescenceLamp": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 4083912,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     32100,
+     32100
+    ],
+    "drawCalls": [
+     5,
+     5
+    ],
+    "textureGpuBytes": [
+     67108863,
+     67108860
+    ],
+    "glTextures": 3,
+    "imagesCounted": 3,
+    "allocFormats": {
+     "0x8c43": 1,
+     "0x8058": 2
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "SheenChair": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 4125648,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     39936,
+     39936
+    ],
+    "drawCalls": [
+     4,
+     4
+    ],
+    "textureGpuBytes": [
+     13981012,
+     13981008
+    ],
+    "glTextures": 6,
+    "imagesCounted": 6,
+    "allocFormats": {
+     "0x8c43": 3,
+     "0x8058": 3
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "ClearCoatCarPaint": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 116948,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     3072,
+     3072
+    ],
+    "drawCalls": [
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     87381,
+     87380
+    ],
+    "glTextures": 1,
+    "imagesCounted": 1,
+    "allocFormats": {
+     "0x8058": 1
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "UnlitTest": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 3992,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     88,
+     88
+    ],
+    "drawCalls": [
+     2,
+     2
+    ],
+    "textureGpuBytes": [
+     0,
+     0
+    ],
+    "glTextures": 0,
+    "imagesCounted": 0,
+    "allocFormats": {},
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "TextureTransformMultiTest": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 388264,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     3956,
+     3956
+    ],
+    "drawCalls": [
+     29,
+     29
+    ],
+    "textureGpuBytes": [
+     5592404,
+     5592400
+    ],
+    "glTextures": 4,
+    "imagesCounted": 4,
+    "allocFormats": {
+     "0x8c43": 2,
+     "0x8058": 2
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "CompareAlphaCoverage": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 3872604,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 1,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     70,
+     70
+    ],
+    "drawCalls": [
+     7,
+     7
+    ],
+    "textureGpuBytes": [
+     20971518,
+     20971512
+    ],
+    "glTextures": 6,
+    "imagesCounted": 6,
+    "allocFormats": {
+     "0x8c43": 3,
+     "0x8058": 3
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "DiffuseTransmissionTeacup": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 4795028,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     28184,
+     28184
+    ],
+    "drawCalls": [
+     2,
+     2
+    ],
+    "textureGpuBytes": [
+     50331648,
+     50331648
+    ],
+    "glTextures": 6,
+    "imagesCounted": 6,
+    "allocFormats": {
+     "0x8c43": 2,
+     "0x8058": 4
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "EmissiveStrengthTest": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 10668,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     90,
+     90
+    ],
+    "drawCalls": [
+     6,
+     6
+    ],
+    "textureGpuBytes": [
+     349525,
+     349524
+    ],
+    "glTextures": 1,
+    "imagesCounted": 1,
+    "allocFormats": {
+     "0x8c43": 1
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "GlassBrokenWindow": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 1076624,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 1,
+    "triangles": [
+     1974,
+     1974
+    ],
+    "drawCalls": [
+     6,
+     6
+    ],
+    "textureGpuBytes": [
+     22719145,
+     22719140
+    ],
+    "glTextures": 5,
+    "imagesCounted": 5,
+    "allocFormats": {
+     "0x8058": 4,
+     "0x8c43": 1
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "GlassVaseFlowers": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 1819824,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     21672,
+     21672
+    ],
+    "drawCalls": [
+     6,
+     6
+    ],
+    "textureGpuBytes": [
+     22369620,
+     22369616
+    ],
+    "glTextures": 4,
+    "imagesCounted": 4,
+    "allocFormats": {
+     "0x8c43": 1,
+     "0x8058": 3
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "AttenuationTest": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 57532,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 5,
+    "triangles": [
+     344,
+     344
+    ],
+    "drawCalls": [
+     30,
+     30
+    ],
+    "textureGpuBytes": [
+     2097151,
+     2097148
+    ],
+    "glTextures": 3,
+    "imagesCounted": 3,
+    "allocFormats": {
+     "0x8c43": 2,
+     "0x8058": 1
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "TransmissionOrderTest": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 2312512,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 3,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     95268,
+     95268
+    ],
+    "drawCalls": [
+     31,
+     31
+    ],
+    "textureGpuBytes": [
+     23068671,
+     23068668
+    ],
+    "glTextures": 3,
+    "imagesCounted": 3,
+    "allocFormats": {
+     "0x8c43": 3
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "SunglassesKhronos": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 371188,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     23848,
+     23848
+    ],
+    "drawCalls": [
+     13,
+     13
+    ],
+    "textureGpuBytes": [
+     699051,
+     699068
+    ],
+    "glTextures": 1,
+    "imagesCounted": 1,
+    "allocFormats": {
+     "0x8c43": 1
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "DispersionTest": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 2310944,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     95654,
+     95654
+    ],
+    "drawCalls": [
+     29,
+     29
+    ],
+    "textureGpuBytes": [
+     1747626,
+     1747624
+    ],
+    "glTextures": 2,
+    "imagesCounted": 2,
+    "allocFormats": {
+     "0x8c43": 2
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "NegativeScaleTest": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 62568,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     7724,
+     7724
+    ],
+    "drawCalls": [
+     11,
+     11
+    ],
+    "textureGpuBytes": [
+     2796202,
+     2796200
+    ],
+    "glTextures": 2,
+    "imagesCounted": 2,
+    "allocFormats": {
+     "0x8c43": 2
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "MultiUVTest": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 43004,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     12,
+     12
+    ],
+    "drawCalls": [
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     11184810,
+     11184808
+    ],
+    "glTextures": 2,
+    "imagesCounted": 2,
+    "allocFormats": {
+     "0x8c43": 2
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "IridescentDishWithOlives": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 5742828,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     43264,
+     43264
+    ],
+    "drawCalls": [
+     6,
+     6
+    ],
+    "textureGpuBytes": [
+     93672791,
+     93672796
+    ],
+    "glTextures": 11,
+    "imagesCounted": 11,
+    "allocFormats": {
+     "0x8058": 9,
+     "0x8c43": 2
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "CommercialRefrigerator": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 10131180,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 1,
+    "triangles": [
+     417358,
+     417358
+    ],
+    "drawCalls": [
+     16,
+     16
+    ],
+    "textureGpuBytes": [
+     109139282,
+     109139272
+    ],
+    "glTextures": 10,
+    "imagesCounted": 10,
+    "allocFormats": {
+     "0x8c43": 4,
+     "0x8058": 6
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "Corset": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 13491364,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     18324,
+     18324
+    ],
+    "drawCalls": [
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     67108863,
+     67108860
+    ],
+    "glTextures": 3,
+    "imagesCounted": 3,
+    "allocFormats": {
+     "0x8c43": 1,
+     "0x8058": 2
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "BoomBox": {
+    "set": "held out: chosen after the rules were fixed",
+    "bytes": 10614184,
+    "compression": [],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     6036,
+     6036
+    ],
+    "drawCalls": [
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     89478484,
+     89478480
+    ],
+    "glTextures": 4,
+    "imagesCounted": 4,
+    "allocFormats": {
+     "0x8c43": 2,
+     "0x8058": 2
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "ABeautifulGame-KTX2-Draco_tierscene → pipeline output": {
+    "set": "model.mjs pipeline outputs (run-modelcheck)",
+    "bytes": 12878484,
+    "compression": [
+     "KHR_draco_mesh_compression",
+     "KHR_texture_basisu"
+    ],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     940204,
+     940204
+    ],
+    "drawCalls": [
+     42,
+     42
+    ],
+    "textureGpuBytes": [
+     184549365,
+     184550256
+    ],
+    "glTextures": 33,
+    "imagesCounted": 33,
+    "allocFormats": {
+     "0x8e8d": 13,
+     "0x8e8c": 20
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "ABeautifulGame_tierscene → pipeline output": {
+    "set": "model.mjs pipeline outputs (run-modelcheck)",
+    "bytes": 5701576,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "EXT_texture_webp"
+    ],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     1067220,
+     1067220
+    ],
+    "drawCalls": [
+     42,
+     42
+    ],
+    "textureGpuBytes": [
+     184549365,
+     184549332
+    ],
+    "glTextures": 33,
+    "imagesCounted": 33,
+    "allocFormats": {
+     "0x8c43": 13,
+     "0x8058": 20
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "ABeautifulGame_tierscene_interactive → pipeline output": {
+    "set": "model.mjs pipeline outputs (run-modelcheck)",
+    "bytes": 3694244,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "EXT_texture_webp"
+    ],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     2122772,
+     2122772
+    ],
+    "drawCalls": [
+     82,
+     82
+    ],
+    "textureGpuBytes": [
+     184549365,
+     184549332
+    ],
+    "glTextures": 33,
+    "imagesCounted": 33,
+    "allocFormats": {
+     "0x8c43": 13,
+     "0x8058": 20
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "DamagedHelmet → pipeline output": {
+    "set": "model.mjs pipeline outputs (run-modelcheck)",
+    "bytes": 547236,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "EXT_texture_webp"
+    ],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     15452,
+     15452
+    ],
+    "drawCalls": [
+     1,
+     1
+    ],
+    "textureGpuBytes": [
+     27962025,
+     27962020
+    ],
+    "glTextures": 5,
+    "imagesCounted": 5,
+    "allocFormats": {
+     "0x8c43": 2,
+     "0x8058": 3
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "FlightHelmet → pipeline output": {
+    "set": "model.mjs pipeline outputs (run-modelcheck)",
+    "bytes": 1114644,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "EXT_texture_webp"
+    ],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     175778,
+     175778
+    ],
+    "drawCalls": [
+     11,
+     11
+    ],
+    "textureGpuBytes": [
+     20971515,
+     20971500
+    ],
+    "glTextures": 15,
+    "imagesCounted": 15,
+    "allocFormats": {
+     "0x8c43": 5,
+     "0x8058": 10
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "FlightHelmet_ktx2 → pipeline output": {
+    "set": "model.mjs pipeline outputs (run-modelcheck)",
+    "bytes": 9437140,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "KHR_texture_basisu"
+    ],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     175778,
+     175778
+    ],
+    "drawCalls": [
+     11,
+     11
+    ],
+    "textureGpuBytes": [
+     20971515,
+     20971920
+    ],
+    "glTextures": 15,
+    "imagesCounted": 15,
+    "allocFormats": {
+     "0x8e8d": 5,
+     "0x8e8c": 10
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   },
+   "SpecGlossVsMetalRough → pipeline output": {
+    "set": "model.mjs pipeline outputs (run-modelcheck)",
+    "bytes": 170912,
+    "compression": [
+     "EXT_meshopt_compression",
+     "KHR_mesh_quantization",
+     "EXT_texture_webp"
+    ],
+    "specGloss": false,
+    "doubleSidedBlend": 0,
+    "transmissionBackfaceDraws": 0,
+    "triangles": [
+     9028,
+     9028
+    ],
+    "drawCalls": [
+     4,
+     4
+    ],
+    "textureGpuBytes": [
+     45088765,
+     45088764
+    ],
+    "glTextures": 9,
+    "imagesCounted": 9,
+    "allocFormats": {
+     "0x8c43": 5,
+     "0x8058": 4
+    },
+    "msrtt": false,
+    "bptc": true,
+    "match": {
+     "triangles": true,
+     "drawCalls": true,
+     "textureGpuBytes": true
+    },
+    "allMatch": true
+   }
+  },
+  "summary": {
+   "models": 44,
+   "allThreeMatch": 44,
+   "bySet": {
+    "Khronos, not used to build model.mjs": {
+     "models": 15,
+     "allThreeMatch": 15
+    },
+    "held out: chosen after the rules were fixed": {
+     "models": 22,
+     "allThreeMatch": 22
+    },
+    "model.mjs pipeline outputs (run-modelcheck)": {
+     "models": 7,
+     "allThreeMatch": 7
+    }
+   }
+  },
+  "measuredAt": "2026-09-29T05:27:08.080Z",
   "host": {
    "cpus": 4,
    "node": "v22.22.2"

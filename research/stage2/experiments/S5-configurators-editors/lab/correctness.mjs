@@ -68,6 +68,10 @@ function unit(S) {
   return r;
 }
 
+// Each M case is ONE scripted scenario (n = 1): it shows what a strategy does by construction, or what this lab's
+// implementation of it does. M3 is run twice: as benchmarked, and with the one-line "skip a record that no longer
+// exists" guard (skipMissing) where the strategy can take one; snapshots and the event log cannot (whole-state restore,
+// replay from a checkpoint that does not contain the remote change).
 function multiUser(S) {
   const r = {};
   const scene = () => initialScene(20, 3);
@@ -88,6 +92,12 @@ function multiUser(S) {
   s.applyRemote({ t: 'remove', ids: ['i2'] });
   try { s.undo(); const it = itemOf(s, 'i2'); r.M3_undoOnDeleted = !it ? 'no-op (stays deleted)' : it[K.fill] === undefined || it[1] === undefined ? 'resurrected a partial record' : 'resurrected the item'; }
   catch (e) { r.M3_undoOnDeleted = `throws (${e.constructor.name})`; }
+  if (['Command', 'ImmerPatches', 'RecordDiff'].includes(S.name)) {
+    s = new S(scene(), { skipMissing: true });
+    s.beginGesture(['i2']); for (let k = 1; k <= 10; k++) s.dragUpdate(0, k * 5); s.endGesture('i2');
+    s.applyRemote({ t: 'remove', ids: ['i2'] });
+    try { s.undo(); r.M3_withSkipMissingGuard = itemOf(s, 'i2') ? 'resurrected the item' : 'no-op (stays deleted)'; } catch (e) { r.M3_withSkipMissingGuard = `throws (${e.constructor.name})`; }
+  } else r.M3_withSkipMissingGuard = S.name === 'PropDiff' ? 'guard built in (as benchmarked)' : S.name === 'Yjs' ? 'n/a (CRDT: never overwrites remote changes)' : 'n/a (whole-state restore or replay: no per-record guard)';
   return r;
 }
 

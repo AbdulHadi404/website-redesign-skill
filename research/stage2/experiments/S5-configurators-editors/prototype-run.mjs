@@ -24,7 +24,7 @@ const R = await import(pathToFileURL(path.join(proto, 'render.js')).href);
 function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 
 // ------------------------------------------------------------------------------------------------ 1. the model
-export function modelTests() {
+export async function modelTests() {
   const rnd = rng(2026);
   const universe = M.PRESETS.map((p) => structuredClone(p.config));
   const msgs = [['none', ''], ['piped', 'Happy 30th Maya'], ['plaque', 'Congratulations'], ['piped', 'Hi']];
@@ -36,7 +36,8 @@ export function modelTests() {
   const invalidUniverse = universe.filter((c) => M.violations(c).length).length;
   // every single change a person can make from every configuration
   const values = { people: M.PEOPLE.map((p) => p.id), tiers: [1, 2, 3], shape: M.SHAPES.map((o) => o.id), sponge: M.SPONGES.map((o) => o.id), filling: M.FILLINGS.map((o) => o.id), finish: M.FINISHES.map((o) => o.id), colour: M.COLOURS.map((o) => o.id), ganache: M.GANACHE.map((o) => o.id), drip: M.DRIPS.map((o) => o.id), message: M.MESSAGES.map((o) => o.id) };
-  let transitions = 0, repaired = 0, hinted = 0, invalidAfter = 0, overrodeChoice = 0, blocked = 0; const byRule = {};
+  let transitions = 0, repaired = 0, hinted = 0, invalidAfter = 0, overrodeChoice = 0, blocked = 0; const byRule = {}, blockedBy = {};
+  let needChangedByTaste = 0, needChangedAsSideEffect = 0; const needExamples = [];
   for (const c of universe) {
     const moves = [];
     for (const [k, vs] of Object.entries(values)) for (const v of vs) if (!M.same(c[k], v)) moves.push([k, v]);
@@ -44,11 +45,15 @@ export function modelTests() {
     for (const [k, v] of moves) {
       if (k === 'tiers' && !M.allowedTiers(c.people).includes(v)) continue; // not offered (disclosure follows the dependency graph)
       const added = k === 'decorations' ? v.find((x) => !c.decorations.includes(x)) : v;
-      if (M.unavailableReason(c, k, added)) { blocked++; continue; } // inactive + explained, not chosen
+      const why = M.unavailableReason(c, k, added);
+      if (why) { blocked++; const r = why.replace(/\d+/g, 'N'); blockedBy[r] = (blockedBy[r] ?? 0) + 1; continue; } // inactive + explained, not chosen
       transitions++;
       const { config, adjustments } = M.resolve({ ...c, [k]: v }, [k]);
       if (M.violations(config).length) invalidAfter++;
       if (!M.same(config[k], v)) overrodeChoice++;
+      // needs (people, message, its words) change only when the person changes them: never as a repair
+      const sideNeeds = M.NEEDS.filter((n) => n !== k && !M.same(config[n], c[n]));
+      if (sideNeeds.length) { needChangedAsSideEffect++; if (!M.NEEDS.includes(k)) needChangedByTaste++; if (needExamples.length < 5) needExamples.push({ from: { people: c.people, tiers: c.tiers, shape: c.shape, message: c.message }, chose: [k, v], changed: sideNeeds }); }
       if (adjustments.length) { repaired++; if (M.sideEffectHint(c, k, v)) hinted++; for (const a of adjustments) byRule[a.reason] = (byRule[a.reason] ?? 0) + 1; }
     }
   }
@@ -60,20 +65,39 @@ export function modelTests() {
     if (x.people === c.people && x.message === c.message && x.text === c.text) rKept++;
     distinct.add(M.encode(x));
   }
-  // links: round trip, and hostile or stale links still open a valid cake
-  let roundTrip = 0, maxLen = 0;
-  for (const c of universe) { const e = M.encode(c); maxLen = Math.max(maxLen, e.length); if (M.same(M.decode(e), c)) roundTrip++; }
+  // links: round trip (everything but the words, which never go in a URL), and hostile or stale links open a valid cake
+  let roundTrip = 0, maxLen = 0, wordsInQuery = 0, withWords = 0;
+  for (const c of universe) {
+    const e = M.encode(c); maxLen = Math.max(maxLen, e.length);
+    if (M.same(M.decode(e), { ...c, text: '' })) roundTrip++;
+    if (c.text) { withWords++; const q = decodeURIComponent(e.replace(/\+/g, ' ')); if (q.includes(c.text)) wordsInQuery++; }
+  }
   const junk = ['p=999&t=9&sh=x', 'p=8&t=3&sh=heart&fn=fondant&d=drip.drip.flowers.goldleaf.sprinkles.macarons&m=piped&tx=' + 'x'.repeat(80), 'p=50&t=1&sh=heart&m=piped&tx=hi', 'p=12&fp=abc&h=-40'];
   const junkValid = junk.map((q) => { const c = M.decode(q); return !!c && M.violations(c).length === 0; });
   // render cost in Node (string building only)
   const times = [], sizes = [];
   for (const c of universe) { const t = performance.now(); const s = R.renderCake(c); times.push(performance.now() - t); sizes.push(s.length); }
+  // the same two checks on the rule set as first reviewed (lab/fixtures/model-v1-as-reviewed.js)
+  const v1 = await import(pathToFileURL(path.join(here, 'lab/fixtures/model-v1-as-reviewed.js')).href);
+  let v1NeedChanged = 0, v1ByTaste = 0, v1Transitions = 0, v1WordsInQuery = 0; const v1Examples = [];
+  for (const c of universe) {
+    for (const [k, vs] of Object.entries(values)) for (const v of vs) {
+      if (M.same(c[k], v) || (k === 'tiers' && !v1.allowedTiers(c.people).includes(v)) || v1.unavailableReason(c, k, v)) continue;
+      v1Transitions++;
+      const { config } = v1.resolve({ ...c, [k]: v }, [k]);
+      const side = M.NEEDS.filter((n) => n !== k && !M.same(config[n], c[n]));
+      if (side.length) { v1NeedChanged++; if (!M.NEEDS.includes(k)) v1ByTaste++; if (v1Examples.length < 3) v1Examples.push({ from: { people: c.people, tiers: c.tiers, message: c.message }, chose: [k, v], changed: side.map((n) => `${n}: ${c[n]} → ${config[n]}`) }); }
+    }
+    if (c.text && decodeURIComponent(v1.encode(c).replace(/\+/g, ' ')).includes(c.text)) v1WordsInQuery++;
+  }
   return {
+    firstRuleSetAsReviewed: { singleChangeTransitionsExcludingDecorations: v1Transitions, transitionsWhereARepairChangedANeed: v1NeedChanged, ofWhichTriggeredByATasteChoice: v1ByTaste, examples: v1Examples, configsWhoseWordsWereInTheQuery: v1WordsInQuery },
     configsTested: universe.length, invalidConfigs: invalidUniverse,
     singleChangeTransitions: transitions, blockedAsInactive: blocked, transitionsNeedingRepair: repaired, repairShare: r2(repaired / transitions), repairsAnnouncedOnTheOptionBeforehand: hinted,
-    invalidAfterRepair: invalidAfter, repairOverrodeTheChoice: overrodeChoice, repairsByReason: byRule,
+    invalidAfterRepair: invalidAfter, repairOverrodeTheChoice: overrodeChoice, repairsByReason: byRule, inactiveByReason: blockedBy,
+    needs: { keys: M.NEEDS, transitionsWhereARepairChangedANeed: needChangedAsSideEffect, ofWhichTriggeredByATasteChoice: needChangedByTaste, examples: needExamples },
     randomise: { runs: 2000, invalid: rInvalid, keptPeopleAndMessage: rKept, distinct: distinct.size },
-    links: { roundTripExact: `${roundTrip}/${universe.length}`, longestQueryChars: maxLen, hostileLinksOpenValidCake: junkValid },
+    links: { roundTripExactExceptWords: `${roundTrip}/${universe.length}`, configsWithWords: withWords, wordsFoundInQuery: wordsInQuery, longestQueryChars: maxLen, hostileLinksOpenValidCake: junkValid },
     renderNode: { medianMs: r2(median(times)), p95Ms: r2(pct(times, 0.95)), svgBytesMedian: median(sizes), svgBytesMax: Math.max(...sizes) },
   };
 }
@@ -84,33 +108,58 @@ export async function behaviour(url) {
   const { browser } = await launch();
   const out = { consoleErrors: [] };
   const state = (page) => page.evaluate(() => ({ c: window.__cake.hist.present, undo: window.__cake.hist.past.length, redo: window.__cake.hist.future.length }));
+  // Every URL the page had, and the URL at each analytics event: what GA4's default page_view (page_location, also
+  // sent on history changes) or a server log would receive. Free text must appear in none of them.
+  const urlProbe = () => {
+    window.__urls = [location.href];
+    for (const m of ['pushState', 'replaceState']) { const o = history[m].bind(history); history[m] = (st, t, u) => { const r = o(st, t, u); window.__urls.push(location.href); return r; }; }
+    const dl = []; const push = dl.push.bind(dl); dl.push = (...a) => { window.__urls.push(location.href); return push(...a); }; window.dataLayer = dl;
+  };
+  const leaks = (page, word) => page.evaluate((w) => {
+    const dec = (u) => { try { return decodeURIComponent(u.replace(/\+/g, ' ')); } catch { return u; } };
+    return { inAnalytics: JSON.stringify(window.dataLayer).includes(w), inAnyPageUrl: window.__urls.some((u) => dec(u).includes(w)), urlsChecked: window.__urls.length };
+  }, word);
+  const liveRegion = (page) => page.evaluate(() => {
+    const regions = [...document.querySelectorAll('[aria-live], [role=status], [role=alert], [role=log]')];
+    return { text: document.querySelector('#notice-text')?.textContent.trim(), buttonsInsideLiveRegions: regions.reduce((n, r) => n + r.querySelectorAll('button, a[href], input').length, 0) };
+  });
   const newPage = async (opts = {}) => {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'en-GB', ...opts });
+    await ctx.addInitScript(urlProbe);
     const page = await ctx.newPage();
     page.on('console', (m) => { if (m.type() === 'error') out.consoleErrors.push(m.text()); });
     page.on('pageerror', (e) => out.consoleErrors.push(String(e)));
     return { ctx, page };
   };
   try {
-    // ---- constraint repair: one step, one undo, said in words
+    // ---- constraint repair: one step, one undo, said in words; the buttons sit outside the live region
     {
       const { ctx, page } = await newPage();
       await page.goto(url); await page.waitForSelector('#tab-size');
-      await page.click('#tab-size'); await page.click("[data-key=people] label.opt[data-value='30']");
+      await page.click('#tab-size'); await page.click("[data-key=people] label.opt[data-value='20']"); await page.click("[data-key=tiers] label.opt[data-value='2']");
       const before = await state(page);
+      const hintBefore = (await page.textContent("[data-key=shape] label.opt[data-value='heart'] .opt-why")).trim();
       await page.click("[data-key=shape] label.opt[data-value='heart']");
       const after = await state(page);
-      const noticeText = (await page.textContent('#notice')).trim();
+      const lr = await liveRegion(page);
       await page.click('#notice [data-undo]');
       const undone = await state(page);
-      out.repair = { afterPeople30: { people: before.c.people, tiers: before.c.tiers }, afterHeart: { people: after.c.people, tiers: after.c.tiers, shape: after.c.shape }, steps: after.undo - before.undo, notice: noticeText, oneUndoRestores: JSON.stringify(undone.c) === JSON.stringify(before.c), announced: await page.textContent('#announcer') };
+      await page.waitForTimeout(50);
+      out.repair = { before: { people: before.c.people, tiers: before.c.tiers }, afterHeart: { people: after.c.people, tiers: after.c.tiers, shape: after.c.shape }, hintOnTheOptionBeforehand: hintBefore, steps: after.undo - before.undo, liveRegionText: lr.text, buttonsInsideLiveRegions: lr.buttonsInsideLiveRegions, oneUndoRestores: JSON.stringify(undone.c) === JSON.stringify(before.c), announced: await page.textContent('#announcer') };
+      // a taste option that would change a need (heart at 30 people) is inactive with its reason, and changes nothing
+      await page.click("[data-key=people] label.opt[data-value='30']");
+      const h0 = await state(page);
+      const whyShown = (await page.textContent("[data-key=shape] label.opt[data-value='heart'] .opt-why")).trim();
+      await page.click("[data-key=shape] label.opt[data-value='heart']", { force: true }); // aria-disabled: Playwright's click would wait for "enabled"
+      const h1 = await state(page);
+      out.needProtected = { people: [h0.c.people, h1.c.people], shape: [h0.c.shape, h1.c.shape], steps: h1.undo - h0.undo, reasonBesideOption: whyShown, notice: (await liveRegion(page)).text, trackedAsUnmetDemand: await page.evaluate(() => window.dataLayer.some((e) => e.event === 'inactive_option_tapped' && e.value === 'heart')) };
       // an option that is not available says why, and changes nothing
       await page.click('#tab-decorate');
       await page.click("[data-key=decorations] label.opt[data-value='sprinkles']"); // third decoration
       const s3 = await state(page);
       await page.click("[data-key=decorations] label.opt[data-value='macarons']", { force: true }); // a fourth: inactive (aria-disabled; Playwright would wait for it to become enabled)
       const s4 = await state(page);
-      out.inactiveOption = { decorations: s4.c.decorations, changed: s4.undo !== s3.undo, notice: (await page.textContent('#notice')).trim() };
+      out.inactiveOption = { decorations: s4.c.decorations, changed: s4.undo !== s3.undo, notice: (await liveRegion(page)).text };
       // a no-op (choosing the chosen option) records nothing
       await page.click('#tab-flavour'); const n0 = await state(page);
       await page.click(`[data-key=sponge] label.opt[data-value='${n0.c.sponge}']`); const n1 = await state(page);
@@ -124,8 +173,10 @@ export async function behaviour(url) {
       const t0 = await state(page);
       await page.click('#text'); await page.keyboard.type('Happy 30th Maya', { delay: 30 });
       const t1 = await state(page);
-      const leaked = await page.evaluate(() => JSON.stringify(window.dataLayer).includes('Maya'));
-      out.text = { typedChars: 15, steps: t1.undo - t0.undo, textInAnalytics: leaked, previewText: await page.locator('#cake [data-part=message] text').textContent() };
+      const previewText = await page.locator('#cake [data-part=message] text').textContent();
+      await page.click('#tab-size'); await page.click('#undo'); await page.click('#redo'); await page.waitForTimeout(400); // undo/redo of the text step, then the debounced URL write
+      const leak = await leaks(page, 'Maya');
+      out.text = { typedChars: 15, steps: t1.undo - t0.undo, textInAnalytics: leak.inAnalytics, textInAnyPageUrl: leak.inAnyPageUrl, pageUrlsChecked: leak.urlsChecked, previewText };
       await ctx.close();
     }
     // ---- sliders: a pointer drag is one step; keyboard nudges on one slider merge; Escape cancels
@@ -191,19 +242,25 @@ export async function behaviour(url) {
       await page.goto(url); await page.waitForSelector('#tab-flavour');
       await page.click('#tab-flavour'); await page.click("[data-key=sponge] label.opt[data-value='chocolate']");
       await page.click('#tab-outside'); await page.click("[data-key=finish] label.opt[data-value='ganache']");
+      await page.click('#tab-decorate'); await page.click("[data-key=message] label.opt[data-value='plaque']"); await page.fill('#text', 'Happy 30th Maya');
       await page.waitForTimeout(400);
       const s = await state(page); const search = await page.evaluate(() => location.search);
       await page.click('#share'); await page.waitForTimeout(100);
       const clip = await page.evaluate(() => navigator.clipboard.readText()).catch((e) => `error: ${e.message}`);
-      const other = await browser.newContext({ viewport: { width: 390, height: 844 } }); const p2 = await other.newPage();
+      const other = await browser.newContext({ viewport: { width: 390, height: 844 } }); await other.addInitScript(urlProbe); const p2 = await other.newPage();
       await p2.goto(url + search); await p2.waitForSelector('#tab-size');
       const fromLink = await p2.evaluate(() => window.__cake.hist.present);
       const entryLink = await p2.evaluate(() => window.dataLayer.find((e) => e.event === 'configurator_viewed')?.entry);
       await other.close();
       await page.reload(); await page.waitForSelector('#tab-size'); const afterReload = await state(page);
       await page.goto(url); await page.waitForSelector('#tab-size'); await page.waitForTimeout(100);
-      const resumed = await state(page); const resumeNotice = (await page.textContent('#notice')).trim();
-      out.persistence = { queryChars: search.length, linkOpensSameCake: JSON.stringify(fromLink) === JSON.stringify(s.c), entryFromLink: entryLink, reloadKeepsCake: JSON.stringify(afterReload.c) === JSON.stringify(s.c), bareUrlResumes: JSON.stringify(resumed.c) === JSON.stringify(s.c), resumeNotice, historyAfterReload: afterReload.undo, clipboardHasLink: clip.includes(search.slice(1)) };
+      const resumed = await state(page); const resumeNotice = (await liveRegion(page)).text;
+      const dec = (u) => decodeURIComponent(u.replace(/\+/g, ' '));
+      out.persistence = {
+        queryChars: search.length, wordsInQuery: dec(search).includes('Maya'), wordsInCopiedLink: dec(clip).includes('Maya'),
+        linkOpensSameDesign: JSON.stringify({ ...fromLink, text: '' }) === JSON.stringify({ ...s.c, text: '' }), wordsFromSomeoneElsesLink: fromLink.text, entryFromLink: entryLink,
+        reloadKeepsCakeAndWords: JSON.stringify(afterReload.c) === JSON.stringify(s.c), bareUrlResumes: JSON.stringify(resumed.c) === JSON.stringify(s.c), resumeNotice, historyAfterReload: afterReload.undo, clipboardHasLink: clip.includes(search.slice(1)),
+      };
       await ctx.close();
     }
     // ---- keyboard only, from load to "Request sent"
@@ -244,15 +301,16 @@ export async function behaviour(url) {
       out.analytics = await page.evaluate(() => { const c = {}; for (const e of window.dataLayer) c[e.event] = (c[e.event] ?? 0) + 1; return { counts: c, sample: window.dataLayer.filter((e) => ['first_change', 'review_opened', 'request_submitted', 'validation_failed'].includes(e.event)) }; });
       await ctx.close();
     }
-    // ---- render cost in the page (commit → full SVG re-render), unthrottled and at a 4× CPU slowdown
-    {
+    // ---- render cost in the page (commit → full SVG re-render), unthrottled and at a 4× CPU slowdown.
+    // Five runs, each in a fresh page; every figure is the median of the five runs' values, with its range.
+    const costRuns = { cpu1x: [], cpu4x: [] };
+    for (let run = 0; run < 5; run++) {
       const { ctx, page } = await newPage();
       await page.goto(url); await page.waitForSelector('#tab-start');
       const cdp = await ctx.newCDPSession(page);
-      out.renderCost = {};
       for (const rate of [1, 4]) {
         await cdp.send('Emulation.setCPUThrottlingRate', { rate });
-        out.renderCost[`cpu${rate}x`] = await page.evaluate(() => {
+        costRuns[`cpu${rate}x`].push(await page.evaluate(() => {
           const { hist, M } = window.__cake; let a = 7; const rnd = () => { a = (a * 16807) % 2147483647; return a / 2147483647; };
           const commit = [], preview = [];
           for (let i = 0; i < 120; i++) { const next = M.randomise({ ...hist.present, people: M.PEOPLE[i % 5].id }, rnd); const t = performance.now(); hist.commit(next, { label: 'bench' }); commit.push(performance.now() - t); }
@@ -265,9 +323,14 @@ export async function behaviour(url) {
           hist.end({ label: 'bench' });
           const q = (xs, p) => { const v = [...xs].sort((x, y) => x - y); return Math.round(v[Math.min(v.length - 1, Math.floor(p * v.length))] * 100) / 100; };
           return { commitMedianMs: q(commit, 0.5), commitP95Ms: q(commit, 0.95), dragPreviewMedianMs: q(preview, 0.5), dragPreviewP95Ms: q(preview, 0.95), dragFullRenderMedianMs: q(full, 0.5), dragFullRenderP95Ms: q(full, 0.95), svgNodes: document.querySelectorAll('#cake *').length };
-        });
+        }));
       }
       await ctx.close();
+    }
+    out.renderCost = { runs: 5 };
+    for (const [rate, rs] of Object.entries(costRuns)) {
+      out.renderCost[rate] = {};
+      for (const k of Object.keys(rs[0])) { const v = rs.map((x) => x[k]); out.renderCost[rate][k] = median(v); if (k !== 'svgNodes') out.renderCost[rate][`${k}Range`] = [Math.min(...v), Math.max(...v)]; }
     }
     // ---- phone: layout of the shell, a finger drag and a finger tap on the preview
     {
@@ -305,6 +368,48 @@ async function runScript(name, args, timeout = 600000) {
 }
 const lines = (txt, re) => txt.split('\n').filter((l) => re.test(l)).map((l) => l.trim().slice(0, 400));
 
+// audit.mjs's "chart(s) with no text" signal on this page: which elements it counts, and what a fix would count.
+// The predicate is copied from skills/website-redesign/scripts/lib/inventory.mjs (the `visible` helper near line 64
+// and the `charts` filter near line 827, read 2026-09-29); the copy's count is checked against audit.mjs's own signal.
+export async function chartProbe(url) {
+  const { launch } = await import(pathToFileURL(path.join(scripts, 'lib/env.mjs')).href);
+  const { browser } = await launch();
+  const out = {};
+  try {
+    for (const [w, h] of [[1440, 900], [390, 844]]) {
+      const page = await browser.newPage({ viewport: { width: w, height: h } });
+      await page.goto(url); await page.waitForSelector('#cake [data-part]'); await page.waitForTimeout(300);
+      out[w] = await page.evaluate(() => {
+        const visible = (el) => {
+          const r = el.getBoundingClientRect();
+          if (r.width < 1 || r.height < 1) return false;
+          if (el.checkVisibility && !el.checkVisibility({ checkVisibilityCSS: false })) return false;
+          for (let e = el; e && e !== document.documentElement; e = e.parentElement) {
+            const cs = getComputedStyle(e);
+            if (cs.display === 'none' || cs.visibility === 'hidden' || cs.visibility === 'collapse' || parseFloat(cs.opacity) < 0.05) return false;
+            if (e.getAttribute('aria-hidden') === 'true' && e !== el) return false;
+          }
+          return true;
+        };
+        const candidates = [...document.querySelectorAll('svg, canvas')].filter((g) => {
+          const r = g.getBoundingClientRect();
+          if (r.width < 60 || r.height < 24 || !visible(g)) return false;
+          return (g.tagName === 'svg' && g.querySelector('path, rect, polyline, circle')) || g.tagName === 'CANVAS';
+        });
+        const labelledNow = (g) => g.querySelector?.('text') || g.getAttribute('aria-label') || g.querySelector?.('title') || (g.parentElement && /\d/.test([...g.parentElement.querySelectorAll('[class*=axis], [class*=tick], [class*=legend]')].map((x) => x.textContent).join('')));
+        const byIds = (g) => (g.getAttribute('aria-labelledby') || '').split(/\s+/).filter(Boolean).map((id) => document.getElementById(id)?.textContent.trim() ?? '').join(' ').trim();
+        const flagged = candidates.filter((g) => !labelledNow(g));
+        // proposed: an SVG hidden from assistive technology is decoration, not a chart; aria-labelledby with text names it
+        const flaggedAfterFix = flagged.filter((g) => g.getAttribute('aria-hidden') !== 'true' && !byIds(g));
+        const who = (g) => ({ el: `${g.tagName.toLowerCase()}${g.id ? `#${g.id}` : ''}${g.classList.length ? `.${[...g.classList].join('.')}` : ''}`, role: g.getAttribute('role'), ariaHidden: g.getAttribute('aria-hidden'), ariaLabelledbyText: byIds(g).slice(0, 60) || null, size: (({ width, height }) => `${Math.round(width)}×${Math.round(height)}`)(g.getBoundingClientRect()) });
+        return { flaggedByAuditPredicate: flagged.length, flagged: flagged.map(who), flaggedAfterProposedFix: flaggedAfterFix.length };
+      });
+      await page.close();
+    }
+  } finally { await browser.close(); }
+  return out;
+}
+
 export async function skillScripts(url) {
   const res = {};
   await rm(caps, { recursive: true, force: true }); await mkdir(caps, { recursive: true });
@@ -312,6 +417,7 @@ export async function skillScripts(url) {
   res.capture = { code: cap.code, seconds: cap.s, files: existsSync(path.join(caps, 'capture')) ? (await readdir(path.join(caps, 'capture'))).filter((f) => f.endsWith('.png')) : [], warnings: lines(cap.stdout + cap.stderr, /overflow|warn|flat|renderer|✗|⚠/i) };
   const au = await runScript('audit.mjs', ['--base', url, '--paths', '/', '--kind', 'app', '--widths', '1440,390', '--out', path.join(caps, 'audit')]);
   res.audit = { code: au.code, seconds: au.s, fails: lines(au.stdout, /^- ✗/), warnings: lines(au.stdout, /^- (?!✗)/).length, signals: lines(au.stdout, /^- ◆/), axe: lines(au.stdout, /violation/i) };
+  res.auditChartSignalProbe = await chartProbe(url);
   for (const [label, extra] of [['a11y1280', []], ['a11y390', ['--width', '390', '--height', '844']]]) {
     const a = await runScript('a11y.mjs', [`${url}/`, '--out', path.join(caps, label), '--tabs', '80', ...extra]);
     const head = a.stdout.match(/(\d+) FAIL, (\d+) WARN, (\d+) INFO/);
@@ -347,7 +453,7 @@ for f in sorted(glob.glob(os.path.join(cap, '*-fold.png'))):
     w = int(f.split('-')[-2]) if f.split('-')[-2].isdigit() else 0
     save(Image.open(f), f'prototype-{w}.jpg', 1200 if w > 800 else (768 if w > 400 else 390))
 st = os.path.join(caps, 'states')
-names = ['start','size','flavour','outside-custom','decorate','repair-notice','review-errors','sent']
+names = ['start','size','outside-custom','decorate','repair-notice','inactive-need','review-errors','sent']
 ims = [Image.open(p) for n in names for p in glob.glob(os.path.join(st, f'{n}-phone*.png'))[:1]]
 if ims:
     tw = 300; th = max(int(i.height * tw / i.width) for i in ims); th = min(th, 650)
@@ -380,7 +486,7 @@ export async function prototypeLab() {
     try { await pexec(process.execPath, [path.join(here, 'fetch-fonts.mjs')], { env: { ...process.env, NODE_USE_ENV_PROXY: '1' } }); res.fonts = 'fetched'; }
     catch (e) { res.fonts = `not fetched (${e.message.split('\n')[0]}): captures use fallback faces`; }
   } else res.fonts = 'present';
-  console.log('== prototype: model'); res.model = modelTests();
+  console.log('== prototype: model'); res.model = await modelTests();
   const srv = await serve(proto);
   console.log('== prototype: behaviour'); res.behaviour = await behaviour(srv.url);
   console.log('== prototype: skill scripts'); res.scripts = await skillScripts(srv.url);

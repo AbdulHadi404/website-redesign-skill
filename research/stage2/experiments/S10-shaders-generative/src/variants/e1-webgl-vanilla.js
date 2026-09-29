@@ -8,7 +8,9 @@ export default function start(bg) {
     kind: 'webgl',
     init(canvas) {
       // powerPreference low-power: a background never needs the discrete GPU; no depth/stencil/AA for a flat quad.
-      gl = canvas.getContext('webgl', { antialias: false, depth: false, stencil: false, alpha: false, powerPreference: 'low-power', premultipliedAlpha: false });
+      // ?gl2: the same GLSL ES 1.0 shader in a WebGL2 context, so the wrapper can time frame 1 with a fence.
+      const opts = { antialias: false, depth: false, stencil: false, alpha: false, powerPreference: 'low-power', premultipliedAlpha: false };
+      gl = (new URLSearchParams(location.search).has('gl2') && canvas.getContext('webgl2', opts)) || canvas.getContext('webgl', opts);
       if (!gl) throw new Error('no WebGL');
       const sh = (type, src) => {
         const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);

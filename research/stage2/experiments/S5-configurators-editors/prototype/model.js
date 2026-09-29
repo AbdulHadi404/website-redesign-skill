@@ -100,8 +100,14 @@ export const hueName = (h) => { const names = [[15, 'red'], [40, 'orange'], [65,
 
 // ---------------------------------------------------------------------------------------------------------
 // The dependency rules, in dependency order (people → tiers → shape → finish → decorations → message).
-// A rule is repaired by changing the OTHER option, never the one the person just chose; every repair is reported
-// in words, and the caller records the choice and its repairs as ONE history step (one undo reverts both).
+// NEEDS are facts the person gave us: how many people, and the message (whether there is one, how it is written,
+// its words). Everything else is taste. Two rules follow, and the exhaustive test in prototype-run.mjs checks both:
+//  - a repair changes only TASTE, never a need: a taste option that would change a need is shown inactive with
+//    its reason (unavailableReason) instead of being offered with a repair (the first version turned "heart" at
+//    30 people into a cake for 20, cheaper and too small: caught in review);
+//  - a repair never changes the option just chosen.
+// Every repair is reported in words, and the caller records the choice and its repairs as ONE history step.
+export const NEEDS = ['people', 'message', 'text'];
 export function violations(c) {
   const v = [];
   if (!allowedTiers(c.people).includes(c.tiers)) v.push('tiers-for-people');
@@ -112,24 +118,21 @@ export function violations(c) {
   if (c.text.length > MAX_TEXT) v.push('text-length');
   return v;
 }
+const topOf = (people, tiers) => { const s = byId(PEOPLE, people).tiers[tiers]; return s ? s[s.length - 1] : 0; };
+const nearest = (list, x) => list.reduce((a, b) => (Math.abs(b - x) < Math.abs(a - x) ? b : a));
 
 export function resolve(next, changed) {
   const c = { ...next, decorations: [...next.decorations] };
   const adj = [];
   const set = (key, to, reason) => { if (c[key] !== to) { adj.push({ key, from: c[key], to, reason }); c[key] = to; } };
   const ch = new Set(changed);
-  // tiers must suit the number of people
+  // tiers must suit the number of people (tiers that do not suit are not offered, so this repairs tiers, not people)
   const allowed = allowedTiers(c.people);
-  if (!allowed.includes(c.tiers)) {
-    if (ch.has('tiers')) { const p = PEOPLE.find((x) => x.tiers[c.tiers]); set('people', p.id, `${c.tiers} tiers start at ${p.id} people`); }
-    else { const t = allowed.reduce((a, b) => (Math.abs(b - c.tiers) < Math.abs(a - c.tiers) ? b : a)); set('tiers', t, `${c.people} people need ${allowed.join(' or ')} ${allowed.length > 1 || allowed[0] > 1 ? 'tiers' : 'tier'}`); }
-  }
-  // a heart is one tier (so up to 20 people)
+  if (!allowed.includes(c.tiers)) set('tiers', nearest(allowed, c.tiers), `${c.people} people need ${allowed.join(' or ')} ${allowed.length > 1 || allowed[0] > 1 ? 'tiers' : 'tier'}`);
+  // a heart is one tier (heart is inactive above 20 people, so choosing it only ever changes the tiers)
   if (c.shape === 'heart' && c.tiers !== 1) {
-    if (ch.has('shape')) {
-      if (c.people > 20) set('people', 20, 'heart cakes are one tier, up to 20 people');
-      set('tiers', 1, 'heart cakes are one tier, up to 20 people');
-    } else set('shape', 'round', 'heart cakes are one tier, up to 20 people');
+    if (ch.has('shape') && allowedTiers(c.people).includes(1)) set('tiers', 1, 'heart cakes are one tier');
+    else set('shape', 'round', 'heart cakes are one tier, up to 20 people');
   }
   // a drip slides off fondant
   if (c.decorations.includes('drip') && c.finish === 'fondant') {
@@ -137,16 +140,23 @@ export function resolve(next, changed) {
     else { adj.push({ key: 'decorations', from: [...c.decorations], to: c.decorations.filter((d) => d !== 'drip'), reason: 'a drip slides off fondant' }); c.decorations = c.decorations.filter((d) => d !== 'drip'); }
   }
   if (c.decorations.length > MAX_DECORATIONS) c.decorations = c.decorations.slice(-MAX_DECORATIONS);
-  // piping needs room on the top tier
-  if (c.message === 'piped' && topTierInches(c) < 6) set('message', 'plaque', `the ${topTierInches(c)}-inch top tier is too small to pipe on`);
+  // piping needs room on the top tier: keep the message as asked and change the tiers (taste) when a count allows it
+  if (c.message === 'piped' && topTierInches(c) < 6) {
+    const fit = allowedTiers(c.people).filter((t) => topOf(c.people, t) >= 6 && (c.shape !== 'heart' || t === 1));
+    if (!ch.has('tiers') && fit.length) set('tiers', nearest(fit, c.tiers), 'piped writing needs a top tier of 6 inches or more');
+    else set('message', 'plaque', `the ${topTierInches(c)}-inch top tier is too small to pipe on`);
+  }
   if (c.text.length > MAX_TEXT) c.text = c.text.slice(0, MAX_TEXT);
   return { config: c, adjustments: adj };
 }
 
 // Why an option is unavailable right now (shown beside it, never only a greyed-out control). null = available.
+// A taste option that would change a need is unavailable, with the reason and what would unlock it.
 export function unavailableReason(c, key, value) {
   if (key === 'decorations' && !c.decorations.includes(value) && c.decorations.length >= MAX_DECORATIONS) return 'Up to three decorations';
   if (key === 'message' && value === 'piped' && topTierInches(c) < 6) return `The ${topTierInches(c)}-inch top tier is too small to pipe on`;
+  if (key === 'shape' && value === 'heart' && !allowedTiers(c.people).includes(1)) return 'Heart cakes serve up to 20 people';
+  if (key === 'tiers' && c.message === 'piped' && topOf(c.people, value) && topOf(c.people, value) < 6) return `${value} tiers leave a ${topOf(c.people, value)}-inch top tier, too small to pipe your message on`;
   return null;
 }
 // Options that are allowed but will change another choice say so BEFORE they are chosen. The hint is computed by
@@ -190,7 +200,10 @@ export const leadDays = (c) => BASE_LEAD_DAYS[c.tiers] + byId(FINISHES, c.finish
 
 // ---------------------------------------------------------------------------------------------------------
 // URL state: short keys, validated on the way in (a bad or old link falls back per field, then resolves).
-const KEYS = { people: 'p', tiers: 't', shape: 'sh', sponge: 'sp', filling: 'fi', finish: 'fn', colour: 'co', hue: 'h', ganache: 'ga', decorations: 'd', drip: 'dr', flowerPos: 'fp', message: 'm', text: 'tx' };
+// Free text (the message's words) is NEVER written to the URL: the query string reaches analytics page views
+// (page_location), server logs and shared links. The words stay in the local draft and travel with the request.
+// (The first version wrote them as tx=, so "Happy 30th Maya" sat in every page URL: caught in review.)
+const KEYS = { people: 'p', tiers: 't', shape: 'sh', sponge: 'sp', filling: 'fi', finish: 'fn', colour: 'co', hue: 'h', ganache: 'ga', decorations: 'd', drip: 'dr', flowerPos: 'fp', message: 'm' };
 export function encode(c) {
   const q = new URLSearchParams();
   for (const [k, s] of Object.entries(KEYS)) {
@@ -212,7 +225,7 @@ export function decode(str, fallback = DEFAULT) {
     ganache: pick(GANACHE, q.get('ga'), fallback.ganache),
     decorations: [...new Set((q.get('d') || '').split('.').filter((d) => DECORATIONS.some((o) => o.id === d)))],
     drip: pick(DRIPS, q.get('dr'), fallback.drip), flowerPos: num(q.get('fp'), -100, 100, fallback.flowerPos * 100) / 100,
-    message: pick(MESSAGES, q.get('m'), fallback.message), text: (q.get('tx') || '').slice(0, MAX_TEXT),
+    message: pick(MESSAGES, q.get('m'), fallback.message), text: '',
   };
   return resolve(c, []).config;
 }

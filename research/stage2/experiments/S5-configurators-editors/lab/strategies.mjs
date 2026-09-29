@@ -2,9 +2,17 @@
 //   act(action) · beginGesture(ids) · dragUpdate(dx, dy) · endGesture(id) · cancelGesture()
 //   undo() · redo() · canUndo() · canRedo() · depth() · canon() · serialize() · static restore(json, from)
 //   applyRemote(action)   (a change that arrived from another user: never recorded in this user's history)
-// Every strategy restores the selection that was current before an undone step (and after a redone one),
-// and a selection-only change neither creates a step nor clears the redo stack (excalidraw History.record,
-// tldraw setSelectedShapes with history: 'record-preserveRedoStack').
+// Every strategy restores the selection that was current before an undone step (and after a redone one).
+// Selection model used here (a design choice, not what the two editors read do): a selection-only change neither
+// creates a step nor clears the redo stack. excalidraw and tldraw DO record a selection-only change as an undo step
+// that keeps redo: excalidraw History.record pushes every non-empty delta, appState-only ones included, and clears
+// redo only when elements changed (packages/excalidraw/history.ts ~117-131; tests/history.test.tsx ~889 walks the
+// selection back one Ctrl+Z at a time); tldraw marks a stopping point before setSelectedShapes, which records with
+// 'record-preserveRedoStack' (SelectTool/childStates/PointingShape.ts; Editor.setSelectedShapes).
+//
+// Option { skipMissing: true } (Command, ImmerPatches, RecordDiff): undo/redo skip changes to records that no longer
+// exist (deleted by a collaborator). PropDiff has this guard always on, as benchmarked. The benchmark runs the other
+// three WITHOUT it (the default), exactly as first measured; correctness.mjs runs the multi-user cases both ways.
 
 import { produce, produceWithPatches, applyPatches, enablePatches, setAutoFreeze } from 'immer';
 import { Map as IMap } from 'immutable';
@@ -47,9 +55,16 @@ const CMD = {
   move: { do: (m, c) => c.moves.forEach(([id, , , tx, ty]) => { const it = m.get(id); it.x = tx; it.y = ty; }),
     undo: (m, c) => c.moves.forEach(([id, fx, fy]) => { const it = m.get(id); it.x = fx; it.y = fy; }) },
 };
+// the parts of a command whose targets still exist (skipMissing)
+const liveCmd = (m, c) => {
+  if (c.k === 'move') return { ...c, moves: c.moves.filter(([id]) => m.has(id)) };
+  if (c.k === 'recolour') { const keep = c.ids.map((id, i) => [id, c.from[i]]).filter(([id]) => m.has(id)); return { ...c, ids: keep.map((x) => x[0]), from: keep.map((x) => x[1]) }; }
+  if (c.k === 'group') return { ...c, ids: c.ids.filter((id) => m.has(id)) };
+  return c;
+};
 export class Command {
   static label = 'Command pattern';
-  constructor(items, { history = true } = {}) { this.m = new Map(Object.entries(structuredClone(items))); this.selection = []; this.history = history; this.undos = []; this.redos = []; }
+  constructor(items, { history = true, skipMissing = false } = {}) { this.m = new Map(Object.entries(structuredClone(items))); this.selection = []; this.history = history; this.skipMissing = skipMissing; this.undos = []; this.redos = []; }
   toCommand(a) {
     switch (a.t) {
       case 'add': return { k: 'add', item: { ...a.item } };
@@ -74,8 +89,8 @@ export class Command {
     this.g = null;
   }
   cancelGesture() { this.dragUpdate(0, 0); this.g = null; }
-  undo() { const c = this.undos.pop(); if (!c) return false; CMD[c.k].undo(this.m, c); this.selection = c.sb; this.redos.push(c); return true; }
-  redo() { const c = this.redos.pop(); if (!c) return false; CMD[c.k].do(this.m, c); this.selection = c.sa; this.undos.push(c); return true; }
+  undo() { const c = this.undos.pop(); if (!c) return false; CMD[c.k].undo(this.m, this.skipMissing ? liveCmd(this.m, c) : c); this.selection = c.sb; this.redos.push(c); return true; }
+  redo() { const c = this.redos.pop(); if (!c) return false; CMD[c.k].do(this.m, this.skipMissing ? liveCmd(this.m, c) : c); this.selection = c.sa; this.undos.push(c); return true; }
   canUndo() { return this.undos.length > 0; } canRedo() { return this.redos.length > 0; }
   depth() { return { undo: this.undos.length, redo: this.redos.length }; }
   canon() { return canon(Object.fromEntries(this.m), this.selection); }
@@ -164,9 +179,11 @@ const immerRecipe = (a) => (d) => {
     case 'sync': for (const id of a.remove) delete d.items[id]; for (const it of a.put) d.items[it.id] = { ...it }; break;
   }
 };
+// patches that address a property of an item that no longer exists are dropped (skipMissing)
+const livePatches = (doc, ps) => ps.filter((q) => q.path[0] !== 'items' || q.path.length <= 2 || doc.items[q.path[1]] !== undefined);
 export class ImmerPatches {
   static label = 'Patches (immer)';
-  constructor(items, { history = true } = {}) { this.doc = produce({ items: structuredClone(items) }, () => {}); this.selection = []; this.history = history; this.undos = []; this.redos = []; }
+  constructor(items, { history = true, skipMissing = false } = {}) { this.doc = produce({ items: structuredClone(items) }, () => {}); this.selection = []; this.history = history; this.skipMissing = skipMissing; this.undos = []; this.redos = []; }
   act(a) {
     if (a.t === 'select') { this.selection = [...a.ids]; return; }
     const sb = this.selection;
@@ -192,8 +209,8 @@ export class ImmerPatches {
     this.selection = [id]; this.g = null;
   }
   cancelGesture() { this.dragUpdate(0, 0); this.g = null; }
-  undo() { const e = this.undos.pop(); if (!e) return false; this.doc = applyPatches(this.doc, e.i); this.selection = e.sb; this.redos.push(e); return true; }
-  redo() { const e = this.redos.pop(); if (!e) return false; this.doc = applyPatches(this.doc, e.p); this.selection = e.sa; this.undos.push(e); return true; }
+  undo() { const e = this.undos.pop(); if (!e) return false; this.doc = applyPatches(this.doc, this.skipMissing ? livePatches(this.doc, e.i) : e.i); this.selection = e.sb; this.redos.push(e); return true; }
+  redo() { const e = this.redos.pop(); if (!e) return false; this.doc = applyPatches(this.doc, this.skipMissing ? livePatches(this.doc, e.p) : e.p); this.selection = e.sa; this.undos.push(e); return true; }
   canUndo() { return this.undos.length > 0; } canRedo() { return this.redos.length > 0; }
   depth() { return { undo: this.undos.length, redo: this.redos.length }; }
   canon() { return canon(this.doc.items, this.selection); }
@@ -207,7 +224,7 @@ export class ImmerPatches {
 // ------------------------------------------------------------------ 3b. record diffs squashed between marks (tldraw HistoryManager / excalidraw deltas)
 export class RecordDiff {
   static label = 'Record diffs (tldraw-style)';
-  constructor(items, { history = true } = {}) { this.m = new Map(Object.entries(structuredClone(items))); this.selection = []; this.history = history; this.undos = []; this.redos = []; this.pending = RecordDiff.empty(); }
+  constructor(items, { history = true, skipMissing = false } = {}) { this.m = new Map(Object.entries(structuredClone(items))); this.selection = []; this.history = history; this.skipMissing = skipMissing; this.undos = []; this.redos = []; this.pending = RecordDiff.empty(); }
   static empty() { return { added: {}, updated: {}, removed: {} }; }
   put(next) { // records are immutable: every change replaces the record
     const id = next.id, prev = this.m.get(id); this.m.set(id, next);
@@ -254,7 +271,7 @@ export class RecordDiff {
     const added = reverse ? d.removed : d.added, removed = reverse ? d.added : d.removed;
     for (const id in removed) this.m.delete(id);
     for (const id in added) this.m.set(id, added[id]);
-    for (const id in d.updated) this.m.set(id, d.updated[id][reverse ? 0 : 1]);
+    for (const id in d.updated) if (!this.skipMissing || this.m.has(id)) this.m.set(id, d.updated[id][reverse ? 0 : 1]);
   }
   undo() { const e = this.undos.pop(); if (!e) return false; this.applyDiff(e.d, true); this.selection = e.sb; this.redos.push(e); return true; }
   redo() { const e = this.redos.pop(); if (!e) return false; this.applyDiff(e.d, false); this.selection = e.sa; this.undos.push(e); return true; }

@@ -1,6 +1,6 @@
 {
  "env": {
-  "date": "2026-09-29T00:12:24.810Z",
+  "date": "2026-09-29T05:02:00.947Z",
   "node": "v22.22.2",
   "cpus": 4,
   "platform": "linux",
@@ -25,11 +25,11 @@
   "sizes": {
    "css": {
     "label": "CSS + WAAPI",
-    "jsMin": 2393,
-    "jsGz": 1131,
-    "cssGz": 793,
+    "jsMin": 2602,
+    "jsGz": 1215,
+    "cssGz": 804,
     "withReactGz": null,
-    "loc": 72,
+    "loc": 76,
     "locRm": 9
    },
    "motion": {
@@ -105,13 +105,14 @@
      "kind": "continuous",
      "jump": false,
      "momentumFrames": 0,
-     "settleMs": 55,
+     "settleMs": 54,
      "finalOk": true,
      "errors": [],
      "kinds": {
-      "continuous": 5
+      "continuous": 6,
+      "jump": 1
      },
-     "runs": 5,
+     "runs": 7,
      "discPctMedian": 12.7,
      "settleMsMedian": 55
     },
@@ -122,33 +123,33 @@
      "kind": "continuous",
      "jump": false,
      "momentumFrames": 0,
-     "settleMs": 201,
+     "settleMs": 203,
      "finalOk": true,
      "errors": [],
      "kinds": {
-      "continuous": 5
+      "continuous": 7
      },
-     "runs": 5,
+     "runs": 7,
      "discPctMedian": 0.2,
-     "settleMsMedian": 202
+     "settleMsMedian": 203
     },
     "sheet": {
-     "reachedPct": 87,
+     "reachedPct": 86,
      "discPct": 0.7,
-     "maxPreStepPct": 5.6,
+     "maxPreStepPct": 10.3,
      "kind": "continuous",
      "jump": false,
      "momentumFrames": 0,
-     "settleMs": 214,
+     "settleMs": 224,
      "finalOk": true,
      "opacityDip": false,
      "errors": [],
      "kinds": {
-      "continuous": 5
+      "continuous": 7
      },
-     "runs": 5,
+     "runs": 7,
      "discPctMedian": 0.7,
-     "settleMsMedian": 214
+     "settleMsMedian": 215
     },
     "view": {
      "kind": "input-swallowed",
@@ -157,37 +158,37 @@
      "jump": false,
      "errors": [],
      "kinds": {
-      "input-swallowed": 5
+      "input-swallowed": 7
      },
-     "runs": 5,
+     "runs": 7,
      "discPctMedian": null,
      "settleMsMedian": null
     },
     "ticker": {
      "reachedPct": 77,
      "discPct": 0,
-     "maxPreStepPct": 2.2,
+     "maxPreStepPct": 11.3,
      "kind": "continuous",
      "jump": false,
      "momentumFrames": 0,
-     "settleMs": 631,
+     "settleMs": 630,
      "finalOk": true,
      "errors": [],
      "kinds": {
-      "continuous": 5
+      "continuous": 7
      },
-     "runs": 5,
+     "runs": 7,
      "discPctMedian": 0,
-     "settleMsMedian": 631
+     "settleMsMedian": 636
     },
     "grid": {
-     "reachedPct": 93,
+     "reachedPct": 94,
      "discPct": 1,
-     "maxPreStepPct": 6.9,
+     "maxPreStepPct": 10.9,
      "kind": "continuous",
      "jump": false,
      "momentumFrames": 0,
-     "settleMs": 185,
+     "settleMs": 211,
      "finalOk": true,
      "last": {
       "reachedPct": 0,
@@ -201,9 +202,9 @@
      },
      "errors": [],
      "kinds": {
-      "continuous": 5
+      "continuous": 7
      },
-     "runs": 5,
+     "runs": 7,
      "discPctMedian": 1,
      "settleMsMedian": 185
     }
@@ -216,9 +217,9 @@
      "jump": false,
      "errors": [],
      "kinds": {
-      "input-swallowed": 5
+      "input-swallowed": 7
      },
-     "runs": 5,
+     "runs": 7,
      "discPctMedian": null,
      "settleMsMedian": null
     }
@@ -231,34 +232,34 @@
      "kind": "continuous",
      "jump": false,
      "momentumFrames": 0,
-     "settleMs": 59,
+     "settleMs": 58,
      "finalOk": true,
      "errors": [],
      "kinds": {
-      "continuous": 5
+      "continuous": 7
      },
-     "runs": 5,
+     "runs": 7,
      "discPctMedian": 0.1,
-     "settleMsMedian": 65
+     "settleMsMedian": 61
     }
    },
    "css-vtpe": {
     "view": {
      "reachedPct": 74,
      "discPct": 25.6,
-     "maxPreStepPct": 14.1,
+     "maxPreStepPct": 4.2,
      "kind": "jumps-to-old",
      "jump": true,
      "momentumFrames": 1,
-     "settleMs": 342,
+     "settleMs": 352,
      "finalOk": true,
      "errors": [],
      "kinds": {
-      "jumps-to-old": 5
+      "jumps-to-old": 7
      },
-     "runs": 5,
+     "runs": 7,
      "discPctMedian": 25.6,
-     "settleMsMedian": 339
+     "settleMsMedian": 348
     }
    },
    "motion": {
@@ -374,9 +375,9 @@
    },
    "motion-hw": {
     "press": {
-     "reachedPct": 837,
-     "discPct": 128,
-     "maxPreStepPct": 3291.3,
+     "reachedPct": 841,
+     "discPct": 124,
+     "maxPreStepPct": 3293,
      "kind": "continuous",
      "jump": false,
      "momentumFrames": 25,
@@ -384,16 +385,16 @@
      "finalOk": true,
      "errors": [],
      "kinds": {
-      "continuous": 5
+      "continuous": 7
      },
-     "runs": 5,
-     "discPctMedian": 128,
+     "runs": 7,
+     "discPctMedian": 124,
      "settleMsMedian": 96
     },
     "list": {
      "reachedPct": 88,
-     "discPct": 0.6,
-     "maxPreStepPct": 6.9,
+     "discPct": 0.7,
+     "maxPreStepPct": 8.8,
      "kind": "continuous",
      "jump": false,
      "momentumFrames": 1,
@@ -401,29 +402,30 @@
      "finalOk": true,
      "errors": [],
      "kinds": {
-      "continuous": 5
+      "continuous": 7
      },
-     "runs": 5,
-     "discPctMedian": 0.6,
-     "settleMsMedian": 202
+     "runs": 7,
+     "discPctMedian": 0.7,
+     "settleMsMedian": 201
     },
     "sheet": {
      "reachedPct": 88,
-     "discPct": 12.1,
+     "discPct": 12.3,
      "maxPreStepPct": 5.6,
      "kind": "jumps-to-old",
      "jump": true,
      "momentumFrames": 1,
-     "settleMs": 253,
+     "settleMs": 252,
      "finalOk": true,
      "opacityDip": false,
      "errors": [],
      "kinds": {
+      "continuous": 2,
       "jumps-to-old": 5
      },
-     "runs": 5,
-     "discPctMedian": 12.1,
-     "settleMsMedian": 254
+     "runs": 7,
+     "discPctMedian": 12.3,
+     "settleMsMedian": 253
     }
    },
    "motion-react": {
@@ -913,14 +915,13 @@
      "kind": "continuous",
      "jump": false,
      "momentumFrames": 1,
-     "settleMs": 213,
+     "settleMs": 207,
      "finalOk": true,
      "errors": [],
      "kinds": {
-      "jumps-to-old": 1,
-      "continuous": 4
+      "continuous": 7
      },
-     "runs": 5,
+     "runs": 7,
      "discPctMedian": 12,
      "settleMsMedian": 207
     },
@@ -931,14 +932,14 @@
      "kind": "continuous",
      "jump": false,
      "momentumFrames": 0,
-     "settleMs": 308,
+     "settleMs": 302,
      "finalOk": true,
      "opacityDip": true,
      "errors": [],
      "kinds": {
-      "continuous": 5
+      "continuous": 7
      },
-     "runs": 5,
+     "runs": 7,
      "discPctMedian": 0,
      "settleMsMedian": 306
     },
@@ -949,7 +950,7 @@
      "kind": "jumps-to-old",
      "jump": true,
      "momentumFrames": 0,
-     "settleMs": 225,
+     "settleMs": 228,
      "finalOk": true,
      "last": {
       "reachedPct": 0,
@@ -958,16 +959,16 @@
       "kind": "jumps-to-old",
       "jump": true,
       "momentumFrames": 0,
-      "settleMs": 225,
+      "settleMs": 228,
       "finalOk": true
      },
      "errors": [],
      "kinds": {
-      "jumps-to-old": 5
+      "jumps-to-old": 7
      },
-     "runs": 5,
+     "runs": 7,
      "discPctMedian": 100,
-     "settleMsMedian": 228
+     "settleMsMedian": 229
     }
    },
    "theatre": {
@@ -1030,14 +1031,14 @@
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 260,
+      "doneMs": 371,
       "state": "moves"
      },
      "reduce-default": {
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 264,
+      "doneMs": 254,
       "state": "moves"
      },
      "reduce-guard": {
@@ -1053,21 +1054,21 @@
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 307,
+      "doneMs": 300,
       "state": "moves"
      },
      "reduce-default": {
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 302,
+      "doneMs": 310,
       "state": "moves"
      },
      "reduce-guard": {
       "moves": false,
       "fades": true,
       "final": true,
-      "doneMs": 165,
+      "doneMs": 156,
       "state": "fades"
      }
     },
@@ -1076,21 +1077,21 @@
       "moves": true,
       "fades": true,
       "final": true,
-      "doneMs": 462,
+      "doneMs": 546,
       "state": "moves"
      },
      "reduce-default": {
       "moves": true,
       "fades": true,
       "final": true,
-      "doneMs": 473,
+      "doneMs": 468,
       "state": "moves"
      },
      "reduce-guard": {
       "moves": false,
       "fades": true,
       "final": true,
-      "doneMs": 176,
+      "doneMs": 167,
       "state": "fades"
      }
     },
@@ -1101,7 +1102,7 @@
       "final": true,
       "progressErrMean": 0,
       "progressErrMax": 0,
-      "doneMs": 501,
+      "doneMs": 500,
       "state": "moves"
      },
      "reduce-default": {
@@ -1109,8 +1110,8 @@
       "fades": true,
       "final": true,
       "progressErrMean": 0,
-      "progressErrMax": 0.0001,
-      "doneMs": 500,
+      "progressErrMax": 0,
+      "doneMs": 518,
       "state": "moves"
      },
      "reduce-guard": {
@@ -1118,8 +1119,8 @@
       "fades": false,
       "final": true,
       "progressErrMean": 0,
-      "progressErrMax": 0.0001,
-      "doneMs": 503,
+      "progressErrMax": 0,
+      "doneMs": 500,
       "state": "instant"
      }
     },
@@ -1128,22 +1129,40 @@
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 796,
-      "state": "moves"
+      "doneMs": 788,
+      "state": "moves",
+      "text": {
+       "rendered": "1000",
+       "dom": "1000",
+       "aria": "- status: \"1000\""
+      },
+      "textOk": true
      },
      "reduce-default": {
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 781,
-      "state": "moves"
+      "doneMs": 796,
+      "state": "moves",
+      "text": {
+       "rendered": "1000",
+       "dom": "1000",
+       "aria": "- status: \"1000\""
+      },
+      "textOk": true
      },
      "reduce-guard": {
       "moves": false,
       "fades": false,
       "final": true,
       "doneMs": 0,
-      "state": "instant"
+      "state": "instant",
+      "text": {
+       "rendered": "1000",
+       "dom": "1000",
+       "aria": "- status: \"1000\""
+      },
+      "textOk": true
      }
     },
     "grid": {
@@ -1151,21 +1170,21 @@
       "moves": true,
       "fades": true,
       "final": true,
-      "doneMs": 694,
+      "doneMs": 690,
       "state": "moves"
      },
      "reduce-default": {
       "moves": true,
       "fades": true,
       "final": true,
-      "doneMs": 692,
+      "doneMs": 697,
       "state": "moves"
      },
      "reduce-guard": {
       "moves": false,
       "fades": true,
       "final": true,
-      "doneMs": 166,
+      "doneMs": 150,
       "state": "fades"
      }
     }
@@ -1176,14 +1195,14 @@
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 463,
+      "doneMs": 513,
       "state": "moves"
      },
      "reduce-default": {
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 481,
+      "doneMs": 460,
       "state": "moves"
      },
      "reduce-guard": {
@@ -1201,14 +1220,14 @@
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 470,
+      "doneMs": 577,
       "state": "moves"
      },
      "reduce-default": {
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 468,
+      "doneMs": 454,
       "state": "moves"
      },
      "reduce-guard": {
@@ -1226,21 +1245,21 @@
       "moves": true,
       "fades": true,
       "final": true,
-      "doneMs": 478,
+      "doneMs": 470,
       "state": "moves"
      },
      "reduce-default": {
       "moves": true,
       "fades": true,
       "final": true,
-      "doneMs": 449,
+      "doneMs": 461,
       "state": "moves"
      },
      "reduce-guard": {
       "moves": false,
       "fades": true,
       "final": true,
-      "doneMs": 172,
+      "doneMs": 185,
       "state": "fades"
      }
     }
@@ -1420,21 +1439,21 @@
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 362,
+      "doneMs": 391,
       "state": "moves"
      },
      "reduce-default": {
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 363,
+      "doneMs": 500,
       "state": "moves"
      },
      "reduce-guard": {
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 348,
+      "doneMs": 376,
       "state": "moves"
      }
     },
@@ -1443,21 +1462,21 @@
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 239,
+      "doneMs": 290,
       "state": "moves"
      },
      "reduce-default": {
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 244,
+      "doneMs": 248,
       "state": "moves"
      },
      "reduce-guard": {
       "moves": false,
       "fades": false,
       "final": true,
-      "doneMs": 0,
+      "doneMs": 32,
       "state": "instant"
      }
     },
@@ -1466,21 +1485,21 @@
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 318,
+      "doneMs": 312,
       "state": "moves"
      },
      "reduce-default": {
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 315,
+      "doneMs": 303,
       "state": "moves"
      },
      "reduce-guard": {
       "moves": false,
       "fades": true,
       "final": true,
-      "doneMs": 154,
+      "doneMs": 152,
       "state": "fades"
      }
     }
@@ -2192,7 +2211,7 @@
       "moves": true,
       "fades": false,
       "final": true,
-      "doneMs": 256,
+      "doneMs": 264,
       "state": "moves"
      },
      "reduce-default": {
@@ -2212,11 +2231,11 @@
     },
     "sheet": {
      "normal": {
-      "moves": true,
+      "moves": false,
       "fades": true,
       "final": true,
       "doneMs": 465,
-      "state": "moves"
+      "state": "fades"
      },
      "reduce-default": {
       "moves": false,
@@ -2238,7 +2257,7 @@
       "moves": false,
       "fades": true,
       "final": true,
-      "doneMs": 372,
+      "doneMs": 382,
       "state": "fades"
      },
      "reduce-default": {
@@ -2285,16 +2304,34 @@
   },
   "compositor": {
    "css": {
-    "movedPx": 224,
-    "framesInBlock": 13
+    "movedPx": 223,
+    "framesInBlock": 7,
+    "runs": [
+     224,
+     224,
+     270,
+     221,
+     211,
+     179,
+     223
+    ]
    },
    "motion": {
     "movedPx": 0,
     "framesInBlock": 0
    },
    "motion-hw": {
-    "movedPx": 224,
-    "framesInBlock": 15
+    "movedPx": 185,
+    "framesInBlock": 8,
+    "runs": [
+     173,
+     33,
+     218,
+     177,
+     185,
+     185,
+     206
+    ]
    },
    "motion-react": {
     "movedPx": 0,
@@ -2314,126 +2351,289 @@
    },
    "autoanimate": {
     "movedPx": 0,
-    "framesInBlock": 2
+    "framesInBlock": 5,
+    "runs": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
    }
   },
   "cost": {
    "css": {
-    "task": 485.6,
-    "script": 5.9,
-    "layout": 40.4,
-    "style": 49.9,
-    "restTaskPerS": 0.5,
-    "restRafPerS": 0
+    "task": 515.7,
+    "script": 8.4,
+    "layout": 31.7,
+    "style": 44.9,
+    "restTaskPerS": 0.2,
+    "restRafPerS": 0,
+    "scriptMin": 5.8,
+    "scriptMax": 11.2,
+    "scriptRuns": [
+     5.8,
+     10.5,
+     7,
+     8.2,
+     8.4,
+     11.2,
+     9.1
+    ]
    },
    "css-vt-list": {
-    "task": 174.8,
-    "script": 1.6,
-    "layout": 2.4,
-    "style": 42,
+    "task": 178.3,
+    "script": 1.8,
+    "layout": 1.9,
+    "style": 35,
     "restTaskPerS": 0.1,
-    "restRafPerS": 0
+    "restRafPerS": 0,
+    "scriptMin": 0.4,
+    "scriptMax": 3.4,
+    "scriptRuns": [
+     0.4,
+     1.8,
+     3.4,
+     1.8,
+     0.4,
+     1,
+     2.6
+    ]
    },
    "css-vt-list-pe": {
-    "task": 157.4,
-    "script": 2.3,
+    "task": 178.2,
+    "script": 1.2,
     "layout": 2,
-    "style": 34.2,
-    "restTaskPerS": 0.1,
-    "restRafPerS": 0
+    "style": 29.9,
+    "restTaskPerS": 0.2,
+    "restRafPerS": 0,
+    "scriptMin": 0.4,
+    "scriptMax": 2.3,
+    "scriptRuns": [
+     0.7,
+     0.7,
+     0.4,
+     1.8,
+     2.3,
+     1.2,
+     2.1
+    ]
    },
    "css-vtpe": {
-    "task": 151.9,
+    "task": 112.2,
     "script": 1.5,
-    "layout": 2.6,
-    "style": 20.8,
+    "layout": 1.9,
+    "style": 14.4,
     "restTaskPerS": 0.1,
-    "restRafPerS": 0
+    "restRafPerS": 0,
+    "scriptMin": 0.7,
+    "scriptMax": 1.8,
+    "scriptRuns": [
+     0.7,
+     1.5,
+     1.1,
+     1.7,
+     1.7,
+     0.9,
+     1.8
+    ]
    },
    "motion": {
-    "task": 729,
-    "script": 181,
-    "layout": 26.1,
-    "style": 45.4,
-    "restTaskPerS": 28.2,
-    "restRafPerS": 59
+    "task": 698.7,
+    "script": 136.3,
+    "layout": 30.8,
+    "style": 49.3,
+    "restTaskPerS": 46,
+    "restRafPerS": 54.5,
+    "scriptMin": 108.9,
+    "scriptMax": 161.8,
+    "scriptRuns": [
+     136.3,
+     159.7,
+     161.8,
+     131.3,
+     117.1,
+     152.8,
+     108.9
+    ]
    },
    "motion-hw": {
-    "task": 391.1,
-    "script": 104.9,
-    "layout": 2.6,
-    "style": 14.7,
-    "restTaskPerS": 30.2,
-    "restRafPerS": 59
+    "task": 329,
+    "script": 91.7,
+    "layout": 1.9,
+    "style": 14.8,
+    "restTaskPerS": 39.2,
+    "restRafPerS": 59,
+    "scriptMin": 65.8,
+    "scriptMax": 101.7,
+    "scriptRuns": [
+     91.7,
+     69.7,
+     99.8,
+     95.3,
+     101.7,
+     78.7,
+     65.8
+    ]
    },
    "motion-react": {
-    "task": 682.5,
-    "script": 208.6,
-    "layout": 30.2,
-    "style": 44,
-    "restTaskPerS": 0.2,
-    "restRafPerS": 0
+    "task": 739.4,
+    "script": 220,
+    "layout": 40.3,
+    "style": 34.9,
+    "restTaskPerS": 0.3,
+    "restRafPerS": 0,
+    "scriptMin": 170.9,
+    "scriptMax": 306.1,
+    "scriptRuns": [
+     222.2,
+     196.3,
+     306.1,
+     220,
+     216.3,
+     170.9,
+     236.7
+    ]
    },
    "motion-react-vt": {
-    "task": 147.8,
-    "script": 52,
-    "layout": 4.4,
-    "style": 17.4,
-    "restTaskPerS": 0.2,
-    "restRafPerS": 0
+    "task": 151.8,
+    "script": 44.8,
+    "layout": 3.2,
+    "style": 14.9,
+    "restTaskPerS": 0.3,
+    "restRafPerS": 0,
+    "scriptMin": 23.1,
+    "scriptMax": 59.1,
+    "scriptRuns": [
+     59.1,
+     46.9,
+     32.7,
+     50.7,
+     23.1,
+     36.3,
+     44.8
+    ]
    },
    "gsap": {
-    "task": 588.6,
-    "script": 146.3,
-    "layout": 29.7,
-    "style": 24.6,
-    "restTaskPerS": 45.9,
-    "restRafPerS": 103.5
+    "task": 616.5,
+    "script": 152.3,
+    "layout": 25.2,
+    "style": 27,
+    "restTaskPerS": 27.6,
+    "restRafPerS": 97.5,
+    "scriptMin": 97.8,
+    "scriptMax": 447.1,
+    "scriptRuns": [
+     235.6,
+     97.8,
+     447.1,
+     118.2,
+     175.9,
+     152.3,
+     150.5
+    ]
    },
    "anime": {
-    "task": 785.1,
-    "script": 181.3,
-    "layout": 22.8,
-    "style": 35.2,
-    "restTaskPerS": 41.3,
-    "restRafPerS": 56.5
+    "task": 651.7,
+    "script": 131.8,
+    "layout": 24.7,
+    "style": 20.7,
+    "restTaskPerS": 32.4,
+    "restRafPerS": 58,
+    "scriptMin": 92.8,
+    "scriptMax": 210.1,
+    "scriptRuns": [
+     131.8,
+     92.8,
+     210.1,
+     196.2,
+     152,
+     129.4,
+     122.6
+    ]
    },
    "spring": {
-    "task": 978.8,
-    "script": 397.5,
-    "layout": 21.8,
-    "style": 31.5,
-    "restTaskPerS": 98.8,
-    "restRafPerS": 57.5
+    "task": 958.2,
+    "script": 352.6,
+    "layout": 17.9,
+    "style": 26.7,
+    "restTaskPerS": 66.1,
+    "restRafPerS": 57.5,
+    "scriptMin": 272.8,
+    "scriptMax": 630.8,
+    "scriptRuns": [
+     353.5,
+     272.8,
+     344.3,
+     630.8,
+     352.6,
+     341.5,
+     379.2
+    ]
    },
    "autoanimate": {
-    "task": 244.7,
-    "script": 22.6,
-    "layout": 22.8,
-    "style": 13.8,
-    "restTaskPerS": 10.4,
-    "restRafPerS": 0
+    "task": 225.7,
+    "script": 17.5,
+    "layout": 12.5,
+    "style": 14.4,
+    "restTaskPerS": 8.3,
+    "restRafPerS": 0,
+    "scriptMin": 13.5,
+    "scriptMax": 109.2,
+    "scriptRuns": [
+     109.2,
+     20.8,
+     16.9,
+     13.5,
+     35.8,
+     17.5,
+     16.7
+    ]
    },
    "theatre": {
-    "task": 277.8,
-    "script": 96.8,
+    "task": 217.3,
+    "script": 91.3,
     "layout": 0,
-    "style": 5.6,
-    "restTaskPerS": 33.6,
-    "restRafPerS": 54
+    "style": 4.8,
+    "restTaskPerS": 30.1,
+    "restRafPerS": 59,
+    "scriptMin": 81.2,
+    "scriptMax": 148.5,
+    "scriptRuns": [
+     88,
+     87.8,
+     91.3,
+     148.5,
+     105,
+     114.9,
+     81.2
+    ]
    },
    "idleBaseline": {
-    "task": 3,
+    "task": 1.9,
     "script": 0,
     "layout": 0,
     "style": 0,
     "restTaskPerS": 0.1,
-    "restRafPerS": 0
+    "restRafPerS": 0,
+    "scriptMin": 0,
+    "scriptMax": 0,
+    "scriptRuns": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
    }
   },
   "env": {
    "browser": "141.0.7390.37",
-   "runs": 5,
+   "runs": 7,
    "viewport": {
     "width": 1000,
     "height": 800
@@ -2490,6 +2690,86 @@
      "final": 0.8
     }
    }
+  },
+  "costOrder": {
+   "css<css-vt-list": "0/7",
+   "css<css-vt-list-pe": "0/7",
+   "css<css-vtpe": "0/7",
+   "css<motion": "7/7",
+   "css<motion-hw": "7/7",
+   "css<motion-react": "7/7",
+   "css<motion-react-vt": "7/7",
+   "css<gsap": "7/7",
+   "css<spring": "7/7",
+   "css<theatre": "7/7",
+   "css-vt-list<css-vt-list-pe": "3/7",
+   "css-vt-list<css-vtpe": "2/7",
+   "css-vt-list<motion": "7/7",
+   "css-vt-list<motion-hw": "7/7",
+   "css-vt-list<motion-react": "7/7",
+   "css-vt-list<motion-react-vt": "7/7",
+   "css-vt-list<gsap": "7/7",
+   "css-vt-list<spring": "7/7",
+   "css-vt-list<theatre": "7/7",
+   "css-vt-list-pe<css-vtpe": "3/7",
+   "css-vt-list-pe<motion": "7/7",
+   "css-vt-list-pe<motion-hw": "7/7",
+   "css-vt-list-pe<motion-react": "7/7",
+   "css-vt-list-pe<motion-react-vt": "7/7",
+   "css-vt-list-pe<gsap": "7/7",
+   "css-vt-list-pe<spring": "7/7",
+   "css-vt-list-pe<theatre": "7/7",
+   "css-vtpe<motion": "7/7",
+   "css-vtpe<motion-hw": "7/7",
+   "css-vtpe<motion-react": "7/7",
+   "css-vtpe<motion-react-vt": "7/7",
+   "css-vtpe<gsap": "7/7",
+   "css-vtpe<spring": "7/7",
+   "css-vtpe<theatre": "7/7",
+   "motion<motion-hw": "0/7",
+   "motion<motion-react": "7/7",
+   "motion<motion-react-vt": "0/7",
+   "motion<spring": "7/7",
+   "motion<theatre": "1/7",
+   "motion-hw<motion-react": "7/7",
+   "motion-hw<motion-react-vt": "0/7",
+   "motion-hw<spring": "7/7",
+   "motion-hw<theatre": "5/7",
+   "motion-react<motion-react-vt": "0/7",
+   "motion-react<spring": "7/7",
+   "motion-react<theatre": "0/7",
+   "motion-react-vt<spring": "7/7",
+   "motion-react-vt<theatre": "7/7",
+   "gsap<motion": "3/7",
+   "gsap<motion-hw": "0/7",
+   "gsap<motion-react": "5/7",
+   "gsap<motion-react-vt": "0/7",
+   "gsap<spring": "6/7",
+   "gsap<theatre": "1/7",
+   "anime<css": "0/7",
+   "anime<css-vt-list": "0/7",
+   "anime<css-vt-list-pe": "0/7",
+   "anime<css-vtpe": "0/7",
+   "anime<motion": "3/7",
+   "anime<motion-hw": "0/7",
+   "anime<motion-react": "7/7",
+   "anime<motion-react-vt": "0/7",
+   "anime<gsap": "6/7",
+   "anime<spring": "7/7",
+   "anime<autoanimate": "0/7",
+   "anime<theatre": "0/7",
+   "spring<theatre": "0/7",
+   "autoanimate<css": "0/7",
+   "autoanimate<css-vt-list": "0/7",
+   "autoanimate<css-vt-list-pe": "0/7",
+   "autoanimate<css-vtpe": "0/7",
+   "autoanimate<motion": "7/7",
+   "autoanimate<motion-hw": "6/7",
+   "autoanimate<motion-react": "7/7",
+   "autoanimate<motion-react-vt": "5/7",
+   "autoanimate<gsap": "7/7",
+   "autoanimate<spring": "7/7",
+   "autoanimate<theatre": "6/7"
   }
  },
  "b": {
@@ -3182,7 +3462,7 @@
  "c": {
   "pages": {
    "static": {
-    "exit": 1,
+    "exit": null,
     "seconds": 81,
     "specPass": "0/9",
     "spec": {
@@ -3238,11 +3518,58 @@
      "stat-count": "nothing changes",
      "hero-in": "nothing changes",
      "panel-swap": "nothing changes"
+    },
+    "filmstrips": {
+     "cta-press": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "cta-hover": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "plan-hover": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "sheet-open": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "toast": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1178
+     },
+     "features-reveal": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "stat-count": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1539
+     },
+     "hero-in": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "panel-swap": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     }
     }
    },
    "good": {
-    "exit": 0,
-    "seconds": 88,
+    "exit": null,
+    "seconds": 86,
     "specPass": "9/9",
     "spec": {
      "tp": 0,
@@ -3277,11 +3604,58 @@
      "stat-count": "nothing changes",
      "hero-in": "substituted (fade/colour)",
      "panel-swap": "substituted (fade/colour)"
+    },
+    "filmstrips": {
+     "cta-press": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "cta-hover": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "plan-hover": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "sheet-open": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "toast": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1178
+     },
+     "features-reveal": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "stat-count": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1539
+     },
+     "hero-in": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "panel-swap": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     }
     }
    },
    "over": {
-    "exit": 1,
-    "seconds": 89,
+    "exit": null,
+    "seconds": 90,
     "specPass": "0/9",
     "spec": {
      "tp": 31,
@@ -3333,7 +3707,7 @@
       "reduced motion: still moves — spec says static"
      ],
      "stat-count": [
-      "duration ~2494–2515ms (sampled: last visible change – fitted) outside 800ms",
+      "duration ~2482–2503ms (sampled: last visible change – fitted) outside 800ms",
       "sampled curve fits linear better than out (rms 0.072 vs 0.002)",
       "reduced motion: still animates (text or custom property) — spec says instant"
      ],
@@ -3359,10 +3733,57 @@
      "stat-count": "still animates (text or custom property)",
      "hero-in": "still moves",
      "panel-swap": "still moves"
+    },
+    "filmstrips": {
+     "cta-press": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "cta-hover": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "plan-hover": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "sheet-open": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "toast": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1178
+     },
+     "features-reveal": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "stat-count": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1539
+     },
+     "hero-in": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "panel-swap": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     }
     }
    },
    "gsap": {
-    "exit": 0,
+    "exit": null,
     "seconds": 88,
     "specPass": "9/9",
     "spec": {
@@ -3398,6 +3819,53 @@
      "stat-count": "nothing changes",
      "hero-in": "substituted (fade/colour)",
      "panel-swap": "substituted (fade/colour)"
+    },
+    "filmstrips": {
+     "cta-press": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "cta-hover": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "plan-hover": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "sheet-open": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "toast": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1178
+     },
+     "features-reveal": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "stat-count": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1539
+     },
+     "hero-in": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     },
+     "panel-swap": {
+      "frames": 16,
+      "allInside": true,
+      "width": 1542
+     }
     }
    }
   },
@@ -3416,12 +3884,3966 @@
     "fp": [],
     "fn": []
    },
-   "entryVerdicts": "36/36"
+   "entryVerdicts": "36/36",
+   "filmstripsFit": true
   },
-  "heldout": {
-   "agreementNormal": "42/42",
-   "agreementReduce": "42/42",
-   "disagreements": []
+  "partAPages": {
+   "unguarded": {
+    "agreementNormal": "42/42",
+    "agreementReduce": "42/42",
+    "referenceReduceStates": {
+     "moves": 41,
+     "fades": 1
+    },
+    "verdicts": "41/41",
+    "truthFailing": 35,
+    "truthPassing": 6,
+    "findings": {
+     "tp": 36,
+     "fp": [],
+     "fn": [],
+     "precision": 1,
+     "recall": 1
+    },
+    "excluded": [
+     "spring|list"
+    ],
+    "disagreements": [],
+    "wrongVerdicts": []
+   },
+   "guarded": {
+    "agreementNormal": "42/42",
+    "agreementReduce": "42/42",
+    "referenceReduceStates": {
+     "moves": 5,
+     "instant": 18,
+     "fades": 19
+    },
+    "verdicts": "41/41",
+    "truthFailing": 4,
+    "truthPassing": 37,
+    "findings": {
+     "tp": 4,
+     "fp": [],
+     "fn": [],
+     "precision": 1,
+     "recall": 1
+    },
+    "excluded": [
+     "spring|list"
+    ],
+    "disagreements": [],
+    "wrongVerdicts": []
+   }
+  },
+  "pages2": {
+   "motionMjs": "ebfb3d45faed",
+   "dev": {
+    "flagScore": {
+     "flags": 77,
+     "tp": 74,
+     "fp": 0,
+     "debatable": 3,
+     "unlabelled": 0,
+     "precision": 1,
+     "precisionDebatableAsFp": 0.961,
+     "byKind": {
+      "transition-all": {
+       "tp": 1,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "off-token": {
+       "tp": 0,
+       "fp": 0,
+       "debatable": 2,
+       "unlabelled": 0
+      },
+      "long": {
+       "tp": 1,
+       "fp": 0,
+       "debatable": 1,
+       "unlabelled": 0
+      },
+      "no-reduced-motion": {
+       "tp": 4,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "hover-none": {
+       "tp": 30,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "focus-none": {
+       "tp": 14,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "no-active": {
+       "tp": 19,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "infinite": {
+       "tp": 2,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "moves-under-reduce": {
+       "tp": 2,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "reduce-kills-all": {
+       "tp": 1,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      }
+     },
+     "fpList": [],
+     "unlabelledList": []
+    },
+    "pages": {
+     "hblind-fixture": {
+      "file": "850baf034326",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "transition-all",
+        "sel": "#features div.card.reveal",
+        "level": "warn",
+        "detail": "transition: all 800ms — name the properties"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#features div.card.reveal",
+        "level": "warn",
+        "detail": "transition all 800ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#features div.card.reveal",
+        "level": "warn",
+        "detail": "transition all 800ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "no-reduced-motion",
+        "sel": "page",
+        "level": "warn",
+        "detail": "no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript, and 6 thing(s) move (#features div.card.reveal…)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.brand",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.cta",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.btn.primary",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.btn.ghost",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#visit-form button",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a.brand",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a.cta",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a.btn.primary",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a.btn.ghost",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#visit-form button",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.cta",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.btn.primary",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.btn.ghost",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#visit-form button",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": [
+       {
+        "id": "features-reveal",
+        "pass": false,
+        "cats": [
+         "duration",
+         "easing",
+         "reduced"
+        ],
+        "problems": [
+         "duration 800ms outside medium (240ms)",
+         "easing ease is not out (cubic-bezier(0.2, 0, 0, 1))",
+         "reduced motion: still moves — spec says static"
+        ],
+        "reduced": "still moves",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       }
+      ]
+     },
+     "a11y-flawed": {
+      "file": "60ab93e7a5b6",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "infinite",
+        "sel": "span",
+        "level": "info",
+        "detail": "@keyframes scroll loops forever (8000ms) — pause control or stop within 5 s (WCAG 2.2.2), off under reduce"
+       },
+       {
+        "kind": "no-reduced-motion",
+        "sel": "page",
+        "level": "warn",
+        "detail": "no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript, and 3 thing(s) move (span, #content span.spin…)"
+       },
+       {
+        "kind": "moves-under-reduce",
+        "sel": "span",
+        "level": "warn",
+        "detail": "animation scroll (transform, 8000ms, infinite) still runs at load under reduce"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "button.btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content div.card",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content button.iconbtn.bg",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content button.iconbtn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content span.active",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content span",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content button.btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a.skip",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#content a",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#content button.iconbtn.bg",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#content button.iconbtn",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#content select",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#n1",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#n2",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#content div.card",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#content button.iconbtn.bg",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#content button.iconbtn",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": []
+     },
+     "a11y-fixed": {
+      "file": "01c4ab7a4e44",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "reduce-kills-all",
+        "sel": "page",
+        "level": "warn",
+        "detail": "under reduce a universal rule removes every animation and transition, press and focus feedback included: *, ::before, ::after { animation-duration: 0.01ms !impo"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.logo",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.icon-link",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "button.icon-btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "button.btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#news-toggle",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#main summary",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#invoices button",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#invoices button.icon-btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#invite-open",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#export",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#adv-toggle",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#tab-d",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#tab-w",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#tab-m",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#settings button.btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "button.icon-btn",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "button.btn",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#news-toggle",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#invoices button",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#invoices button.icon-btn",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#invite-open",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#export",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#adv-toggle",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#tab-d",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#tab-w",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#tab-m",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#settings button.btn",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": []
+     },
+     "a11y-wizard": {
+      "file": "ee8da8c3c38d",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "infinite",
+        "sel": "span.draft",
+        "level": "info",
+        "detail": "@keyframes blink loops forever (1500ms) — pause control or stop within 5 s (WCAG 2.2.2), off under reduce"
+       },
+       {
+        "kind": "no-reduced-motion",
+        "sel": "page",
+        "level": "warn",
+        "detail": "no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript, and 4 thing(s) move (span.draft, #step-details span.spin, #main span.spi"
+       },
+       {
+        "kind": "moves-under-reduce",
+        "sel": "span.draft",
+        "level": "warn",
+        "detail": "animation blink (visibility, 1500ms, infinite) still runs at load under reduce"
+       }
+      ],
+      "spec": []
+     },
+     "govuk": {
+      "file": "5bedebe4d4f6",
+      "exit": null,
+      "seconds": null,
+      "flags": [],
+      "spec": []
+     },
+     "lab-ticker-bug": {
+      "file": "1a208ceccb27",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "off-token",
+        "sel": "#ticker",
+        "level": "warn",
+        "detail": "transition --n 800ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#ticker",
+        "level": "warn",
+        "detail": "transition --n 800ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "no-reduced-motion",
+        "sel": "page",
+        "level": "warn",
+        "detail": "no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript, and 1 thing(s) move (#ticker…)"
+       }
+      ],
+      "spec": [
+       {
+        "id": "ticker",
+        "pass": false,
+        "cats": [
+         "text",
+         "reduced"
+        ],
+        "problems": [
+         "text on screen \"01000\" is not the DOM text \"0\" when it settles: CSS generated content (counter()) cannot be selected, found, translated or reliably announced; put the final value in the DOM text",
+         "reduced motion: still animates (text or custom property) — spec says instant"
+        ],
+        "reduced": "still animates (text or custom property)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       }
+      ]
+     }
+    }
+   },
+   "devBefore": {
+    "flagScore": {
+     "flags": 97,
+     "tp": 74,
+     "fp": 20,
+     "debatable": 3,
+     "unlabelled": 0,
+     "precision": 0.787,
+     "precisionDebatableAsFp": 0.763,
+     "byKind": {
+      "transition-all": {
+       "tp": 1,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "off-token": {
+       "tp": 0,
+       "fp": 0,
+       "debatable": 2,
+       "unlabelled": 0
+      },
+      "long": {
+       "tp": 1,
+       "fp": 0,
+       "debatable": 1,
+       "unlabelled": 0
+      },
+      "no-reduced-motion": {
+       "tp": 4,
+       "fp": 1,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "hover-none": {
+       "tp": 30,
+       "fp": 12,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "focus-none": {
+       "tp": 14,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "no-active": {
+       "tp": 19,
+       "fp": 1,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "infinite": {
+       "tp": 2,
+       "fp": 4,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "moves-under-reduce": {
+       "tp": 2,
+       "fp": 2,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "reduce-kills-all": {
+       "tp": 1,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      }
+     },
+     "fpList": [
+      "a11y-flawed: infinite #content span.spin",
+      "a11y-flawed: moves-under-reduce #content span.spin",
+      "a11y-flawed: hover-none #content select",
+      "a11y-flawed: hover-none #n1",
+      "a11y-flawed: hover-none #n2",
+      "a11y-fixed: infinite #main span.spinner",
+      "a11y-fixed: hover-none #pw-show",
+      "a11y-fixed: hover-none #billing",
+      "a11y-fixed: hover-none #settings input",
+      "a11y-wizard: infinite #step-details span.spin",
+      "a11y-wizard: infinite #main span.spin",
+      "a11y-wizard: moves-under-reduce #main span.spin",
+      "a11y-wizard: hover-none #street",
+      "a11y-wizard: hover-none #cor-town",
+      "a11y-wizard: hover-none #cor-country",
+      "govuk: no-reduced-motion page",
+      "govuk: hover-none a.govuk-header__homepage-link",
+      "govuk: hover-none a.govuk-back-link",
+      "lab-ticker-bug: hover-none #hi",
+      "lab-ticker-bug: no-active #hi"
+     ],
+     "unlabelledList": []
+    },
+    "pages": {
+     "hblind-fixture": {
+      "file": "850baf034326",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "transition-all",
+        "sel": "#features div.card.reveal",
+        "level": "warn",
+        "detail": "transition: all 800ms — name the properties"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#features div.card.reveal",
+        "level": "warn",
+        "detail": "transition all 800ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#features div.card.reveal",
+        "level": "warn",
+        "detail": "transition all 800ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "no-reduced-motion",
+        "sel": "page",
+        "level": "warn",
+        "detail": "no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.brand",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.cta",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.btn.primary",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.btn.ghost",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#visit-form button",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a.brand",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a.cta",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a.btn.primary",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a.btn.ghost",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#visit-form button",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.cta",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.btn.primary",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.btn.ghost",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#visit-form button",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": [
+       {
+        "id": "features-reveal",
+        "pass": false,
+        "cats": [
+         "duration",
+         "easing",
+         "reduced"
+        ],
+        "problems": [
+         "duration 800ms outside medium (240ms)",
+         "easing ease is not out (cubic-bezier(0.2, 0, 0, 1))",
+         "reduced motion: still moves — spec says static"
+        ],
+        "reduced": "still moves",
+        "normal": "animates"
+       }
+      ]
+     },
+     "a11y-flawed": {
+      "file": "60ab93e7a5b6",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "infinite",
+        "sel": "span",
+        "level": "info",
+        "detail": "@keyframes scroll loops forever (8000ms) — pause control or stop within 5 s (WCAG 2.2.2), off under reduce"
+       },
+       {
+        "kind": "infinite",
+        "sel": "#content span.spin",
+        "level": "info",
+        "detail": "@keyframes sp loops forever (1000ms) — pause control or stop within 5 s (WCAG 2.2.2), off under reduce"
+       },
+       {
+        "kind": "no-reduced-motion",
+        "sel": "page",
+        "level": "warn",
+        "detail": "no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript"
+       },
+       {
+        "kind": "moves-under-reduce",
+        "sel": "span",
+        "level": "warn",
+        "detail": "animation scroll (transform, 8000ms, infinite) still runs at load under reduce"
+       },
+       {
+        "kind": "moves-under-reduce",
+        "sel": "#content span.spin",
+        "level": "warn",
+        "detail": "animation sp (transform, 1000ms, infinite) still runs at load under reduce"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "button.btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content div.card",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content button.iconbtn.bg",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content button.iconbtn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content span.active",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content span",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content button.btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#content select",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#n1",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#n2",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a.skip",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#content a",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#content button.iconbtn.bg",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#content button.iconbtn",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#content select",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#n1",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "focus-none",
+        "sel": "#n2",
+        "level": "warn",
+        "detail": "keyboard focus changes nothing visible (audit.mjs and a11y.mjs check focus rings in depth)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#content div.card",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#content button.iconbtn.bg",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#content button.iconbtn",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": []
+     },
+     "a11y-fixed": {
+      "file": "01c4ab7a4e44",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "infinite",
+        "sel": "#main span.spinner",
+        "level": "info",
+        "detail": "@keyframes sp loops forever (1000ms) — pause control or stop within 5 s (WCAG 2.2.2), off under reduce"
+       },
+       {
+        "kind": "reduce-kills-all",
+        "sel": "page",
+        "level": "warn",
+        "detail": "under reduce a universal rule removes every animation and transition, press and focus feedback included: *, ::before, ::after { animation-duration: 0.01ms !impo"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.logo",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.icon-link",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "button.icon-btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "button.btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#news-toggle",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#main summary",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#invoices button",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#invoices button.icon-btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#invite-open",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#export",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#adv-toggle",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#tab-d",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#tab-w",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#tab-m",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#pw-show",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#billing",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#settings input",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#settings button.btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "button.icon-btn",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "button.btn",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#news-toggle",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#invoices button",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#invoices button.icon-btn",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#invite-open",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#export",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#adv-toggle",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#tab-d",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#tab-w",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#tab-m",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#settings button.btn",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": []
+     },
+     "a11y-wizard": {
+      "file": "ee8da8c3c38d",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "infinite",
+        "sel": "span.draft",
+        "level": "info",
+        "detail": "@keyframes blink loops forever (1500ms) — pause control or stop within 5 s (WCAG 2.2.2), off under reduce"
+       },
+       {
+        "kind": "infinite",
+        "sel": "#step-details span.spin",
+        "level": "info",
+        "detail": "@keyframes spin loops forever (1000ms) — pause control or stop within 5 s (WCAG 2.2.2), off under reduce"
+       },
+       {
+        "kind": "infinite",
+        "sel": "#main span.spin",
+        "level": "info",
+        "detail": "@keyframes spin loops forever (1000ms) — pause control or stop within 5 s (WCAG 2.2.2), off under reduce"
+       },
+       {
+        "kind": "no-reduced-motion",
+        "sel": "page",
+        "level": "warn",
+        "detail": "no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript"
+       },
+       {
+        "kind": "moves-under-reduce",
+        "sel": "span.draft",
+        "level": "warn",
+        "detail": "animation blink (visibility, 1500ms, infinite) still runs at load under reduce"
+       },
+       {
+        "kind": "moves-under-reduce",
+        "sel": "#main span.spin",
+        "level": "warn",
+        "detail": "animation spin (transform, 1000ms, infinite) still runs at load under reduce"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#street",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#cor-town",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#cor-country",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": []
+     },
+     "govuk": {
+      "file": "5bedebe4d4f6",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "no-reduced-motion",
+        "sel": "page",
+        "level": "warn",
+        "detail": "no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.govuk-header__homepage-link",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.govuk-back-link",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": []
+     },
+     "lab-ticker-bug": {
+      "file": "1a208ceccb27",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "off-token",
+        "sel": "#ticker",
+        "level": "warn",
+        "detail": "transition --n 800ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#ticker",
+        "level": "warn",
+        "detail": "transition --n 800ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "no-reduced-motion",
+        "sel": "page",
+        "level": "warn",
+        "detail": "no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#hi",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#hi",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": [
+       {
+        "id": "ticker",
+        "pass": false,
+        "cats": [
+         "props",
+         "reduced"
+        ],
+        "problems": [
+         "spec'd properties that did not change: text",
+         "reduced motion: still animates (text or custom property) — spec says instant"
+        ],
+        "reduced": "still animates (text or custom property)",
+        "normal": "animates"
+       }
+      ]
+     }
+    }
+   },
+   "heldout": {
+    "flagScore": {
+     "flags": 123,
+     "tp": 79,
+     "fp": 1,
+     "debatable": 43,
+     "unlabelled": 0,
+     "precision": 0.988,
+     "precisionDebatableAsFp": 0.642,
+     "byKind": {
+      "hover-none": {
+       "tp": 18,
+       "fp": 1,
+       "debatable": 10,
+       "unlabelled": 0
+      },
+      "off-token": {
+       "tp": 0,
+       "fp": 0,
+       "debatable": 33,
+       "unlabelled": 0
+      },
+      "long": {
+       "tp": 11,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "no-active": {
+       "tp": 13,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "transition-all": {
+       "tp": 21,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "layout-transition": {
+       "tp": 13,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "layout-keyframes": {
+       "tp": 2,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "no-reduced-motion": {
+       "tp": 1,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      }
+     },
+     "fpList": [
+      "bs-tab: hover-none #list-home-list"
+     ],
+     "unlabelledList": []
+    },
+    "pages": {
+     "bs-button": {
+      "file": "47815697b36d",
+      "exit": null,
+      "seconds": null,
+      "flags": [],
+      "spec": [
+       {
+        "id": "toggle-hover",
+        "pass": false,
+        "cats": [
+         "easing",
+         "reduced"
+        ],
+        "problems": [
+         "easing ease-in-out is not out (cubic-bezier(0.2, 0, 0, 1))",
+         "reduced motion removed essential feedback (stops (instant))"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       },
+       {
+        "id": "toggle-press",
+        "pass": false,
+        "cats": [
+         "easing",
+         "reduced"
+        ],
+        "problems": [
+         "easing ease-in-out is not out (cubic-bezier(0.2, 0, 0, 1))",
+         "reduced motion removed essential feedback (stops (instant))"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       }
+      ]
+     },
+     "bs-collapse": {
+      "file": "3d59c815f715",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "hover-none",
+        "sel": "#headingOne",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#headingTwo",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#headingThree",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#headingFour",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": [
+       {
+        "id": "collapse-open",
+        "pass": false,
+        "cats": [
+         "easing"
+        ],
+        "problems": [
+         "easing ease is not out (cubic-bezier(0.2, 0, 0, 1))"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       }
+      ]
+     },
+     "bs-modal": {
+      "file": "9e0c2bdffe57",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "off-token",
+        "sel": "#slowModal",
+        "level": "warn",
+        "detail": "transition opacity 5000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#slowModal",
+        "level": "warn",
+        "detail": "transition opacity 5000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#slowModal div.modal-dialog",
+        "level": "warn",
+        "detail": "transition transform 5000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#slowModal div.modal-dialog",
+        "level": "warn",
+        "detail": "transition transform 5000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#navbarResponsive a.navbar-brand",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#navbarResponsive a.nav-link.active",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": [
+       {
+        "id": "modal-open",
+        "pass": false,
+        "cats": [
+         "easing"
+        ],
+        "problems": [
+         "easing ease-out is not out (cubic-bezier(0.2, 0, 0, 1))"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       },
+       {
+        "id": "launch-hover",
+        "pass": false,
+        "cats": [
+         "easing",
+         "reduced"
+        ],
+        "problems": [
+         "easing ease-in-out is not out (cubic-bezier(0.2, 0, 0, 1))",
+         "reduced motion removed essential feedback (stops (instant))"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       }
+      ]
+     },
+     "bs-toast": {
+      "file": "ae62068af57a",
+      "exit": null,
+      "seconds": null,
+      "flags": [],
+      "spec": [
+       {
+        "id": "toast-show",
+        "pass": false,
+        "cats": [
+         "easing"
+        ],
+        "problems": [
+         "easing linear is not out (cubic-bezier(0.2, 0, 0, 1))"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       }
+      ]
+     },
+     "bs-tab": {
+      "file": "2ce58c9253d0",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "hover-none",
+        "sel": "button.nav-link.active",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#nav-tab a.nav-link.nav-item",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#list-home-list",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "button.nav-link.active",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "button.nav-link",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#list-home-list",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": [
+       {
+        "id": "tab-switch",
+        "pass": false,
+        "cats": [
+         "static"
+        ],
+        "problems": [
+         "static: changed in one frame (no animation)"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "instant",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       }
+      ]
+     },
+     "bs-carousel": {
+      "file": "59ccc7025a2f",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "off-token",
+        "sel": "#carousel-example-generic button.active",
+        "level": "warn",
+        "detail": "transition opacity 600ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#carousel-example-generic button",
+        "level": "warn",
+        "detail": "transition opacity 600ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#carousel-example-generic div.carousel-item.active",
+        "level": "warn",
+        "detail": "transition transform 2000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#carousel-example-generic div.carousel-item.active",
+        "level": "warn",
+        "detail": "transition transform 2000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#carousel-example-generic div.carousel-item",
+        "level": "warn",
+        "detail": "transition transform 2000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#carousel-example-generic div.carousel-item",
+        "level": "warn",
+        "detail": "transition transform 2000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#carousel-example-generic button.active",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#carousel-example-generic button",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#carousel-example-generic button.active",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#carousel-example-generic button",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#carousel-example-generic button.carousel-control-prev",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#carousel-example-generic button.carousel-control-next",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": []
+     },
+     "bs-alert": {
+      "file": "d7b7f8211995",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "off-token",
+        "sel": "div.alert.alert-warning",
+        "level": "warn",
+        "detail": "transition opacity 5000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "div.alert.alert-warning",
+        "level": "warn",
+        "detail": "transition opacity 5000ms is longer than the largest token (700ms)"
+       }
+      ],
+      "spec": []
+     },
+     "bs-dropdown": {
+      "file": "e4239e5f7522",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "hover-none",
+        "sel": "a.navbar-brand",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#navbarResponsive a.nav-link.active",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.nav-link.active",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#navbarResponsive a.nav-link.dropdown-toggle",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.nav-link.dropdown-toggle",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": []
+     },
+     "animate-docs": {
+      "file": "28a22e83cb3d",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "off-token",
+        "sel": "h1.callout-title.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInDown 1000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "h1.callout-title.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInDown 1000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "h2.callout-subtitle.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInDown 1000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "h2.callout-subtitle.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInDown 1000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "p.callout-showList.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInUp 1000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "p.callout-showList.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInUp 1000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "section.animation-list.animate__animated",
+        "level": "warn",
+        "detail": "transition transform 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "section.animation-list.animate__animated",
+        "level": "warn",
+        "detail": "animation fadeInRight 1000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "span.night-light-ball",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#documentation span.hamburger",
+        "level": "warn",
+        "detail": "transition transform 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#documentation aside.sidebar",
+        "level": "warn",
+        "detail": "transition transform 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#documentation a.icon-github",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": []
+     },
+     "hover-demo": {
+      "file": "81b3aba8bd17",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "transition-all",
+        "sel": "#forkongithub a",
+        "level": "warn",
+        "detail": "transition: all 500ms — name the properties"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#forkongithub a",
+        "level": "warn",
+        "detail": "transition all 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-bounce-in",
+        "level": "warn",
+        "detail": "transition: all 500ms — name the properties"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-in",
+        "level": "warn",
+        "detail": "transition all 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-bounce-out",
+        "level": "warn",
+        "detail": "transition: all 500ms — name the properties"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-out",
+        "level": "warn",
+        "detail": "transition all 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-back-pulse",
+        "level": "warn",
+        "detail": "transition color 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-right",
+        "level": "warn",
+        "detail": "transition color 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-right::before",
+        "level": "warn",
+        "detail": "transition transform 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-left",
+        "level": "warn",
+        "detail": "transition color 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-left::before",
+        "level": "warn",
+        "detail": "transition transform 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-bottom",
+        "level": "warn",
+        "detail": "transition color 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-bottom::before",
+        "level": "warn",
+        "detail": "transition transform 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-top",
+        "level": "warn",
+        "detail": "transition color 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-top::before",
+        "level": "warn",
+        "detail": "transition transform 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-back",
+        "level": "warn",
+        "detail": "transition: all 100ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-forward",
+        "level": "warn",
+        "detail": "transition: all 100ms — name the properties"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects i.fa.fa-refresh",
+        "level": "warn",
+        "detail": "transition transform 1000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#effects i.fa.fa-refresh",
+        "level": "warn",
+        "detail": "transition transform 1000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects i.fa.fa-check",
+        "level": "warn",
+        "detail": "transition color 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-grow",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-shrink",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-push",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-pop",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-bounce",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-rotate",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-grow-rotate",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-float",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-sink",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-bob",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-hang",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-wobble-horizontal",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-wobble-vertical",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-buzz",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-buzz-out",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-outline-out::before",
+        "level": "warn",
+        "detail": "transition on top (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-outline-in::before",
+        "level": "warn",
+        "detail": "transition on top (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-underline-from-left::before",
+        "level": "warn",
+        "detail": "transition on right (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-underline-from-center::before",
+        "level": "warn",
+        "detail": "transition on left (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-underline-from-right::before",
+        "level": "warn",
+        "detail": "transition on left (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-reveal::before",
+        "level": "warn",
+        "detail": "transition on border-width (100ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-overline-from-left::before",
+        "level": "warn",
+        "detail": "transition on right (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-overline-from-center::before",
+        "level": "warn",
+        "detail": "transition on left (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-overline-from-right::before",
+        "level": "warn",
+        "detail": "transition on left (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-curl-top-left::before",
+        "level": "warn",
+        "detail": "transition on width (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-curl-top-right::before",
+        "level": "warn",
+        "detail": "transition on width (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-curl-bottom-right::before",
+        "level": "warn",
+        "detail": "transition on width (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-curl-bottom-left::before",
+        "level": "warn",
+        "detail": "transition on width (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "a.ild-ident",
+        "level": "warn",
+        "detail": "transition color 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "a.icon__twitter",
+        "level": "warn",
+        "detail": "transition color 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "a.icon__github",
+        "level": "warn",
+        "detail": "transition color 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "a",
+        "level": "warn",
+        "detail": "transition color 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "a.twitter-follow-button",
+        "level": "warn",
+        "detail": "transition color 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "layout-keyframes",
+        "sel": "@keyframes hvr-ripple-out",
+        "level": "warn",
+        "detail": "@keyframes hvr-ripple-out animates top, right, bottom, left (not running at load)"
+       },
+       {
+        "kind": "layout-keyframes",
+        "sel": "@keyframes hvr-ripple-in",
+        "level": "warn",
+        "detail": "@keyframes hvr-ripple-in animates top, right, bottom, left (not running at load)"
+       },
+       {
+        "kind": "no-reduced-motion",
+        "sel": "page",
+        "level": "warn",
+        "detail": "no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript, and 88 thing(s) move (#forkongithub a, a.button.cta, a.button.cta::befor"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.button.cta",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.twitter-share-button",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": []
+     },
+     "g-slop-landing": {
+      "file": "623791ada051",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.rounded-full.bg-gradient-to-r",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": []
+     },
+     "g-primer-issues": {
+      "file": "7a61ab248a04",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "hover-none",
+        "sel": "a.UnderlineNav-item",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.UnderlineNav-item.selected",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "summary.btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.subnav-item",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": []
+     },
+     "g-carbon-table": {
+      "file": "a669bc9fe462",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "hover-none",
+        "sel": "a.cds--header__name",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.cds--header__menu-item",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.cds--link",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": []
+     },
+     "hallam": {
+      "file": "41c362e5fc2f",
+      "exit": null,
+      "seconds": null,
+      "flags": [],
+      "spec": []
+     },
+     "stemwren": {
+      "file": "c3845c40fd6a",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "off-token",
+        "sel": "div.testimonial.active",
+        "level": "warn",
+        "detail": "animation fade 1000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "div.testimonial.active",
+        "level": "warn",
+        "detail": "animation fade 1000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.cta",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.cta",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.btn",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": []
+     }
+    },
+    "specScore": {
+     "rows": 7,
+     "verdicts": "7/7",
+     "tp": 10,
+     "fp": [],
+     "fn": [],
+     "precision": 1,
+     "recall": 1,
+     "detail": [
+      "bs-button/toggle-hover: truth [easing,reduced] got [easing,reduced] easing ease-in-out is not out (cubic-bezier(0.2, 0, 0, 1)); reduced motion removed essential feedback (stops (instant))",
+      "bs-button/toggle-press: truth [easing,reduced] got [easing,reduced] easing ease-in-out is not out (cubic-bezier(0.2, 0, 0, 1)); reduced motion removed essential feedback (stops (instant))",
+      "bs-collapse/collapse-open: truth [easing] got [easing] easing ease is not out (cubic-bezier(0.2, 0, 0, 1))",
+      "bs-modal/modal-open: truth [easing] got [easing] easing ease-out is not out (cubic-bezier(0.2, 0, 0, 1))",
+      "bs-modal/launch-hover: truth [easing,reduced] got [easing,reduced] easing ease-in-out is not out (cubic-bezier(0.2, 0, 0, 1)); reduced motion removed essential feedback (stops (instant))",
+      "bs-toast/toast-show: truth [easing] got [easing] easing linear is not out (cubic-bezier(0.2, 0, 0, 1))",
+      "bs-tab/tab-switch: truth [static] got [static] static: changed in one frame (no animation)"
+     ]
+    }
+   },
+   "heldoutFrozen": {
+    "flagScore": {
+     "flags": 147,
+     "tp": 79,
+     "fp": 24,
+     "debatable": 44,
+     "unlabelled": 0,
+     "precision": 0.767,
+     "precisionDebatableAsFp": 0.537,
+     "byKind": {
+      "scale-zero": {
+       "tp": 0,
+       "fp": 8,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "hover-none": {
+       "tp": 18,
+       "fp": 15,
+       "debatable": 11,
+       "unlabelled": 0
+      },
+      "off-token": {
+       "tp": 0,
+       "fp": 0,
+       "debatable": 33,
+       "unlabelled": 0
+      },
+      "long": {
+       "tp": 11,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "no-active": {
+       "tp": 13,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "transition-all": {
+       "tp": 21,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "moves-under-reduce": {
+       "tp": 0,
+       "fp": 1,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "layout-transition": {
+       "tp": 13,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "layout-keyframes": {
+       "tp": 2,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      },
+      "no-reduced-motion": {
+       "tp": 1,
+       "fp": 0,
+       "debatable": 0,
+       "unlabelled": 0
+      }
+     },
+     "fpList": [
+      "bs-button: scale-zero @keyframes spinner-grow",
+      "bs-collapse: scale-zero @keyframes spinner-grow",
+      "bs-modal: scale-zero @keyframes spinner-grow",
+      "bs-toast: scale-zero @keyframes spinner-grow",
+      "bs-tab: scale-zero @keyframes spinner-grow",
+      "bs-tab: hover-none #list-home-list",
+      "bs-carousel: scale-zero @keyframes spinner-grow",
+      "bs-alert: scale-zero @keyframes spinner-grow",
+      "bs-dropdown: scale-zero @keyframes spinner-grow",
+      "animate-docs: moves-under-reduce h2.callout-subtitle.animate__animated",
+      "hover-demo: hover-none #effects a.hvr-pulse",
+      "hover-demo: hover-none #effects a.hvr-pulse-grow",
+      "hover-demo: hover-none #effects a.hvr-pulse-shrink",
+      "hover-demo: hover-none #effects a.hvr-push",
+      "hover-demo: hover-none #effects a.hvr-pop",
+      "hover-demo: hover-none #effects a.hvr-wobble-horizontal",
+      "hover-demo: hover-none #effects a.hvr-wobble-vertical",
+      "hover-demo: hover-none #effects a.hvr-wobble-to-bottom-right",
+      "hover-demo: hover-none #effects a.hvr-wobble-to-top-right",
+      "hover-demo: hover-none #effects a.hvr-wobble-top",
+      "hover-demo: hover-none #effects a.hvr-wobble-bottom",
+      "hover-demo: hover-none #effects a.hvr-wobble-skew",
+      "hover-demo: hover-none #effects a.hvr-buzz",
+      "hover-demo: hover-none #effects a.hvr-buzz-out"
+     ],
+     "unlabelledList": []
+    },
+    "pages": {
+     "bs-button": {
+      "file": "47815697b36d",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "scale-zero",
+        "sel": "@keyframes spinner-grow",
+        "level": "warn",
+        "detail": "@keyframes spinner-grow enters from scale(0) — start at 0.9–0.97 with opacity 0 (not running at load)"
+       }
+      ],
+      "spec": [
+       {
+        "id": "toggle-hover",
+        "pass": false,
+        "cats": [
+         "easing",
+         "reduced"
+        ],
+        "problems": [
+         "easing ease-in-out is not out (cubic-bezier(0.2, 0, 0, 1))",
+         "reduced motion removed essential feedback (stops (instant))"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       },
+       {
+        "id": "toggle-press",
+        "pass": false,
+        "cats": [
+         "easing",
+         "reduced"
+        ],
+        "problems": [
+         "easing ease-in-out is not out (cubic-bezier(0.2, 0, 0, 1))",
+         "reduced motion removed essential feedback (stops (instant))"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       }
+      ]
+     },
+     "bs-collapse": {
+      "file": "3d59c815f715",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "scale-zero",
+        "sel": "@keyframes spinner-grow",
+        "level": "warn",
+        "detail": "@keyframes spinner-grow enters from scale(0) — start at 0.9–0.97 with opacity 0 (not running at load)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#headingOne",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#headingTwo",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#headingThree",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#headingFour",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": [
+       {
+        "id": "collapse-open",
+        "pass": false,
+        "cats": [
+         "easing"
+        ],
+        "problems": [
+         "easing ease is not out (cubic-bezier(0.2, 0, 0, 1))"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       }
+      ]
+     },
+     "bs-modal": {
+      "file": "9e0c2bdffe57",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "off-token",
+        "sel": "#slowModal",
+        "level": "warn",
+        "detail": "transition opacity 5000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#slowModal",
+        "level": "warn",
+        "detail": "transition opacity 5000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#slowModal div.modal-dialog",
+        "level": "warn",
+        "detail": "transition transform 5000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#slowModal div.modal-dialog",
+        "level": "warn",
+        "detail": "transition transform 5000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "scale-zero",
+        "sel": "@keyframes spinner-grow",
+        "level": "warn",
+        "detail": "@keyframes spinner-grow enters from scale(0) — start at 0.9–0.97 with opacity 0 (not running at load)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#navbarResponsive a.navbar-brand",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#navbarResponsive a.nav-link.active",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": [
+       {
+        "id": "modal-open",
+        "pass": false,
+        "cats": [
+         "props",
+         "easing"
+        ],
+        "problems": [
+         "layout jumps in one frame (width, height, left/margin, top/margin): a layout property changed without transitioning",
+         "easing ease-out is not out (cubic-bezier(0.2, 0, 0, 1))"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       },
+       {
+        "id": "launch-hover",
+        "pass": false,
+        "cats": [
+         "easing",
+         "reduced"
+        ],
+        "problems": [
+         "easing ease-in-out is not out (cubic-bezier(0.2, 0, 0, 1))",
+         "reduced motion removed essential feedback (stops (instant))"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       }
+      ]
+     },
+     "bs-toast": {
+      "file": "ae62068af57a",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "scale-zero",
+        "sel": "@keyframes spinner-grow",
+        "level": "warn",
+        "detail": "@keyframes spinner-grow enters from scale(0) — start at 0.9–0.97 with opacity 0 (not running at load)"
+       }
+      ],
+      "spec": [
+       {
+        "id": "toast-show",
+        "pass": false,
+        "cats": [
+         "easing"
+        ],
+        "problems": [
+         "easing linear is not out (cubic-bezier(0.2, 0, 0, 1))"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "animates",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       }
+      ]
+     },
+     "bs-tab": {
+      "file": "2ce58c9253d0",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "scale-zero",
+        "sel": "@keyframes spinner-grow",
+        "level": "warn",
+        "detail": "@keyframes spinner-grow enters from scale(0) — start at 0.9–0.97 with opacity 0 (not running at load)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "button.nav-link.active",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#nav-tab a.nav-link.nav-item",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#list-home-list",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "button.nav-link.active",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "button.nav-link",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#list-home-list",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": [
+       {
+        "id": "tab-switch",
+        "pass": false,
+        "cats": [
+         "static"
+        ],
+        "problems": [
+         "static: changed in one frame (no animation)"
+        ],
+        "reduced": "stops (instant)",
+        "normal": "instant",
+        "filmstripFit": {
+         "frames": 16,
+         "allInside": true,
+         "width": 1542
+        }
+       }
+      ]
+     },
+     "bs-carousel": {
+      "file": "59ccc7025a2f",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "off-token",
+        "sel": "#carousel-example-generic button.active",
+        "level": "warn",
+        "detail": "transition opacity 600ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#carousel-example-generic button",
+        "level": "warn",
+        "detail": "transition opacity 600ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#carousel-example-generic div.carousel-item.active",
+        "level": "warn",
+        "detail": "transition transform 2000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#carousel-example-generic div.carousel-item.active",
+        "level": "warn",
+        "detail": "transition transform 2000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#carousel-example-generic div.carousel-item",
+        "level": "warn",
+        "detail": "transition transform 2000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#carousel-example-generic div.carousel-item",
+        "level": "warn",
+        "detail": "transition transform 2000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "scale-zero",
+        "sel": "@keyframes spinner-grow",
+        "level": "warn",
+        "detail": "@keyframes spinner-grow enters from scale(0) — start at 0.9–0.97 with opacity 0 (not running at load)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#carousel-example-generic button.active",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#carousel-example-generic button",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#carousel-example-generic button.active",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#carousel-example-generic button",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#carousel-example-generic button.carousel-control-prev",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#carousel-example-generic button.carousel-control-next",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": []
+     },
+     "bs-alert": {
+      "file": "d7b7f8211995",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "off-token",
+        "sel": "div.alert.alert-warning",
+        "level": "warn",
+        "detail": "transition opacity 5000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "div.alert.alert-warning",
+        "level": "warn",
+        "detail": "transition opacity 5000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "scale-zero",
+        "sel": "@keyframes spinner-grow",
+        "level": "warn",
+        "detail": "@keyframes spinner-grow enters from scale(0) — start at 0.9–0.97 with opacity 0 (not running at load)"
+       }
+      ],
+      "spec": []
+     },
+     "bs-dropdown": {
+      "file": "e4239e5f7522",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "scale-zero",
+        "sel": "@keyframes spinner-grow",
+        "level": "warn",
+        "detail": "@keyframes spinner-grow enters from scale(0) — start at 0.9–0.97 with opacity 0 (not running at load)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.navbar-brand",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#navbarResponsive a.nav-link.active",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.nav-link.active",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "#navbarResponsive a.nav-link.dropdown-toggle",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.nav-link.dropdown-toggle",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": []
+     },
+     "animate-docs": {
+      "file": "28a22e83cb3d",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "off-token",
+        "sel": "h1.callout-title.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInDown 1000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "h1.callout-title.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInDown 1000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "h2.callout-subtitle.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInDown 1000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "h2.callout-subtitle.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInDown 1000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "p.callout-showList.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInUp 1000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "p.callout-showList.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInUp 1000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "section.animation-list.animate__animated",
+        "level": "warn",
+        "detail": "transition transform 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "section.animation-list.animate__animated",
+        "level": "warn",
+        "detail": "animation fadeInRight 1000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "span.night-light-ball",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#documentation span.hamburger",
+        "level": "warn",
+        "detail": "transition transform 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#documentation aside.sidebar",
+        "level": "warn",
+        "detail": "transition transform 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "moves-under-reduce",
+        "sel": "h2.callout-subtitle.animate__animated",
+        "level": "warn",
+        "detail": "animation zoomInDown (opacity, transform, 1ms) still runs at load under reduce"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#documentation a.icon-github",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": []
+     },
+     "hover-demo": {
+      "file": "81b3aba8bd17",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "transition-all",
+        "sel": "#forkongithub a",
+        "level": "warn",
+        "detail": "transition: all 500ms — name the properties"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#forkongithub a",
+        "level": "warn",
+        "detail": "transition all 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-bounce-in",
+        "level": "warn",
+        "detail": "transition: all 500ms — name the properties"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-in",
+        "level": "warn",
+        "detail": "transition all 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-bounce-out",
+        "level": "warn",
+        "detail": "transition: all 500ms — name the properties"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-out",
+        "level": "warn",
+        "detail": "transition all 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-back-pulse",
+        "level": "warn",
+        "detail": "transition color 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-right",
+        "level": "warn",
+        "detail": "transition color 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-right::before",
+        "level": "warn",
+        "detail": "transition transform 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-left",
+        "level": "warn",
+        "detail": "transition color 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-left::before",
+        "level": "warn",
+        "detail": "transition transform 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-bottom",
+        "level": "warn",
+        "detail": "transition color 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-bottom::before",
+        "level": "warn",
+        "detail": "transition transform 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-top",
+        "level": "warn",
+        "detail": "transition color 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects a.hvr-bounce-to-top::before",
+        "level": "warn",
+        "detail": "transition transform 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-back",
+        "level": "warn",
+        "detail": "transition: all 100ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-forward",
+        "level": "warn",
+        "detail": "transition: all 100ms — name the properties"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects i.fa.fa-refresh",
+        "level": "warn",
+        "detail": "transition transform 1000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "#effects i.fa.fa-refresh",
+        "level": "warn",
+        "detail": "transition transform 1000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "#effects i.fa.fa-check",
+        "level": "warn",
+        "detail": "transition color 500ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-grow",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-shrink",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-push",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-pop",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-bounce",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-rotate",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-grow-rotate",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-float",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-sink",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-bob",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-hang",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-wobble-horizontal",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-wobble-vertical",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-buzz",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "transition-all",
+        "sel": "#effects a.hvr-icon-buzz-out",
+        "level": "warn",
+        "detail": "transition: all 300ms — name the properties"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-outline-out::before",
+        "level": "warn",
+        "detail": "transition on top (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-outline-in::before",
+        "level": "warn",
+        "detail": "transition on top (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-underline-from-left::before",
+        "level": "warn",
+        "detail": "transition on right (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-underline-from-center::before",
+        "level": "warn",
+        "detail": "transition on left (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-underline-from-right::before",
+        "level": "warn",
+        "detail": "transition on left (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-reveal::before",
+        "level": "warn",
+        "detail": "transition on border-width (100ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-overline-from-left::before",
+        "level": "warn",
+        "detail": "transition on right (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-overline-from-center::before",
+        "level": "warn",
+        "detail": "transition on left (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-overline-from-right::before",
+        "level": "warn",
+        "detail": "transition on left (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-curl-top-left::before",
+        "level": "warn",
+        "detail": "transition on width (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-curl-top-right::before",
+        "level": "warn",
+        "detail": "transition on width (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-curl-bottom-right::before",
+        "level": "warn",
+        "detail": "transition on width (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "layout-transition",
+        "sel": "#effects a.hvr-curl-bottom-left::before",
+        "level": "warn",
+        "detail": "transition on width (300ms) — re-lays-out every frame; animate transform/opacity (grid-template-rows 0fr→1fr for accordions)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "a.ild-ident",
+        "level": "warn",
+        "detail": "transition color 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "a.icon__twitter",
+        "level": "warn",
+        "detail": "transition color 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "a.icon__github",
+        "level": "warn",
+        "detail": "transition color 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "a",
+        "level": "warn",
+        "detail": "transition color 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "off-token",
+        "sel": "a.twitter-follow-button",
+        "level": "warn",
+        "detail": "transition color 200ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "layout-keyframes",
+        "sel": "@keyframes hvr-ripple-out",
+        "level": "warn",
+        "detail": "@keyframes hvr-ripple-out animates top, right, bottom, left (not running at load)"
+       },
+       {
+        "kind": "layout-keyframes",
+        "sel": "@keyframes hvr-ripple-in",
+        "level": "warn",
+        "detail": "@keyframes hvr-ripple-in animates top, right, bottom, left (not running at load)"
+       },
+       {
+        "kind": "no-reduced-motion",
+        "sel": "page",
+        "level": "warn",
+        "detail": "no prefers-reduced-motion rule in readable CSS and no matchMedia query from JavaScript, and 88 thing(s) move (#forkongithub a, a.button.cta, a.button.cta::befor"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-pulse",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-pulse-grow",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-pulse-shrink",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-push",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-pop",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-wobble-horizontal",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-wobble-vertical",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-wobble-to-bottom-right",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-wobble-to-top-right",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-wobble-top",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-wobble-bottom",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-wobble-skew",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-buzz",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-buzz-out",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "#effects a.hvr-icon-down",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.button.cta",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.twitter-share-button",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": []
+     },
+     "g-slop-landing": {
+      "file": "623791ada051",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.rounded-full.bg-gradient-to-r",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": []
+     },
+     "g-primer-issues": {
+      "file": "7a61ab248a04",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "hover-none",
+        "sel": "a.UnderlineNav-item",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.UnderlineNav-item.selected",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "summary.btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.subnav-item",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": []
+     },
+     "g-carbon-table": {
+      "file": "a669bc9fe462",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "hover-none",
+        "sel": "a.cds--header__name",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.cds--header__menu-item",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.cds--link",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       }
+      ],
+      "spec": []
+     },
+     "hallam": {
+      "file": "41c362e5fc2f",
+      "exit": null,
+      "seconds": null,
+      "flags": [],
+      "spec": []
+     },
+     "stemwren": {
+      "file": "c3845c40fd6a",
+      "exit": null,
+      "seconds": null,
+      "flags": [
+       {
+        "kind": "off-token",
+        "sel": "div.testimonial.active",
+        "level": "warn",
+        "detail": "animation fade 1000ms is not a token (100/150/240/300/400/700)"
+       },
+       {
+        "kind": "long",
+        "sel": "div.testimonial.active",
+        "level": "warn",
+        "detail": "animation fade 1000ms is longer than the largest token (700ms)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.cta",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "hover-none",
+        "sel": "a.btn",
+        "level": "warn",
+        "detail": "hover changes nothing visible (colour, background, border, shadow, underline, opacity, transform)"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.cta",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       },
+       {
+        "kind": "no-active",
+        "sel": "a.btn",
+        "level": "warn",
+        "detail": "no :active (press) feedback — scale(0.97) or a darker fill for 100 ms tells the user the press registered"
+       }
+      ],
+      "spec": []
+     }
+    },
+    "specScore": {
+     "rows": 7,
+     "verdicts": "7/7",
+     "tp": 10,
+     "fp": [
+      "bs-modal|modal-open|props"
+     ],
+     "fn": [],
+     "precision": 0.909,
+     "recall": 1,
+     "detail": [
+      "bs-button/toggle-hover: truth [easing,reduced] got [easing,reduced] easing ease-in-out is not out (cubic-bezier(0.2, 0, 0, 1)); reduced motion removed essential feedback (stops (instant))",
+      "bs-button/toggle-press: truth [easing,reduced] got [easing,reduced] easing ease-in-out is not out (cubic-bezier(0.2, 0, 0, 1)); reduced motion removed essential feedback (stops (instant))",
+      "bs-collapse/collapse-open: truth [easing] got [easing] easing ease is not out (cubic-bezier(0.2, 0, 0, 1))",
+      "bs-modal/modal-open: truth [easing] got [props,easing] layout jumps in one frame (width, height, left/margin, top/margin): a layout property changed without transitioning; easing ease-out is not out (cubic-bezier(0.2, 0, 0, 1))",
+      "bs-modal/launch-hover: truth [easing,reduced] got [easing,reduced] easing ease-in-out is not out (cubic-bezier(0.2, 0, 0, 1)); reduced motion removed essential feedback (stops (instant))",
+      "bs-toast/toast-show: truth [easing] got [easing] easing linear is not out (cubic-bezier(0.2, 0, 0, 1))",
+      "bs-tab/tab-switch: truth [static] got [static] static: changed in one frame (no animation)"
+     ]
+    }
+   }
+  },
+  "stress": {
+   "45/60": {
+    "block": 45,
+    "every": 60,
+    "runs": 5,
+    "load": [
+     10.2,
+     11.7,
+     11.4
+    ],
+    "current": [
+     {
+      "pass": true,
+      "state": "animates",
+      "retries": 0,
+      "problems": []
+     },
+     {
+      "pass": true,
+      "state": "animates",
+      "retries": 0,
+      "problems": []
+     },
+     {
+      "pass": true,
+      "state": "animates",
+      "retries": 0,
+      "problems": []
+     },
+     {
+      "pass": true,
+      "state": "animates",
+      "retries": 0,
+      "problems": []
+     },
+     {
+      "pass": true,
+      "state": "animates",
+      "retries": 0,
+      "problems": []
+     }
+    ],
+    "before": [
+     {
+      "pass": true,
+      "state": "animates",
+      "retries": null,
+      "problems": []
+     },
+     {
+      "pass": false,
+      "state": "animates",
+      "retries": null,
+      "problems": [
+       "sampled curve fits --ease-emphasized better than out (rms 0.138 vs 0.087)"
+      ]
+     },
+     {
+      "pass": false,
+      "state": "animates",
+      "retries": null,
+      "problems": [
+       "reduced motion removed essential feedback (stops (instant))"
+      ]
+     },
+     {
+      "pass": false,
+      "state": "animates",
+      "retries": null,
+      "problems": [
+       "sampled curve fits --ease-emphasized better than out (rms 0.104 vs 0.04)"
+      ]
+     },
+     {
+      "pass": false,
+      "state": "animates",
+      "retries": null,
+      "problems": [
+       "sampled curve fits --ease-emphasized better than out (rms 0.118 vs 0.055)"
+      ]
+     }
+    ],
+    "loadAfter": [
+     16.8,
+     13.3,
+     12
+    ],
+    "summary": {
+     "current": "5/5 read as animating",
+     "before": "5/5 read as animating"
+    }
+   },
+   "70/80": {
+    "block": 70,
+    "every": 80,
+    "runs": 5,
+    "load": [
+     16.8,
+     13.3,
+     12
+    ],
+    "current": [
+     {
+      "pass": false,
+      "state": "instant",
+      "retries": 2,
+      "problems": [
+       "static: changed in one frame (no animation) — frames were dropped across the change even after 2 retries (a busy machine?): re-run before trusting this"
+      ]
+     },
+     {
+      "pass": true,
+      "state": "animates",
+      "retries": 0,
+      "problems": []
+     },
+     {
+      "pass": true,
+      "state": "animates",
+      "retries": 0,
+      "problems": []
+     },
+     {
+      "pass": true,
+      "state": "animates",
+      "retries": 1,
+      "problems": []
+     },
+     {
+      "pass": true,
+      "state": "animates",
+      "retries": 1,
+      "problems": []
+     }
+    ],
+    "before": [
+     {
+      "pass": false,
+      "state": "instant",
+      "retries": null,
+      "problems": [
+       "static: changed in one frame (no animation)",
+       "reduced motion removed essential feedback (stops (instant))"
+      ]
+     },
+     {
+      "pass": false,
+      "state": "instant",
+      "retries": null,
+      "problems": [
+       "static: changed in one frame (no animation)",
+       "reduced motion removed essential feedback (stops (instant))"
+      ]
+     },
+     {
+      "pass": false,
+      "state": "instant",
+      "retries": null,
+      "problems": [
+       "static: changed in one frame (no animation)",
+       "reduced motion removed essential feedback (stops (instant))"
+      ]
+     },
+     {
+      "pass": false,
+      "state": "instant",
+      "retries": null,
+      "problems": [
+       "static: changed in one frame (no animation)",
+       "reduced motion removed essential feedback (stops (instant))"
+      ]
+     },
+     {
+      "pass": false,
+      "state": "instant",
+      "retries": null,
+      "problems": [
+       "static: changed in one frame (no animation)",
+       "reduced motion removed essential feedback (stops (instant))"
+      ]
+     }
+    ],
+    "loadAfter": [
+     13,
+     13.3,
+     12.2
+    ],
+    "summary": {
+     "current": "4/5 read as animating",
+     "before": "0/5 read as animating"
+    }
+   }
   }
  }
 }

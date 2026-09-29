@@ -116,6 +116,9 @@ if (!process.argv.includes('--no-play')) {
   const { browser } = await launch();
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   await ctx.route((u) => !u.hostname.match(/^127\.0\.0\.1$|^localhost$/), (r) => r.abort());
+  // A Dark Room draws random events and drops with Math.random: seed it (mulberry32) so that every run
+  // plays the same game. Unseeded, two full runs disagreed by up to 2 simulated minutes.
+  await ctx.addInitScript(() => { let a = 0x5eed5; Math.random = () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; });
   const page = await ctx.newPage();
   await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
   await page.goto(`${srv.base}/index.html?lang=en`, { waitUntil: 'domcontentloaded' });
@@ -172,7 +175,7 @@ if (!process.argv.includes('--no-play')) {
     await page.clock.runFor(STEP * 1000);
   }
   out.adarkroomPlay = {
-    method: `greedy script, ${MINUTES} simulated minutes at ${STEP} s steps, fake clock; presses visible controls in the current place, stokes only below a roaring fire, walks to the next place every 20 s, answers events with the first safe choice (sound: disable), never embarks to the world map`,
+    method: `greedy script, ${MINUTES} simulated minutes at ${STEP} s steps, fake clock, Math.random seeded; presses visible controls in the current place, stokes only below a roaring fire, walks to the next place every 20 s, answers events with the first safe choice (sound: disable), never embarks to the world map`,
     controlsFirstSeen: Object.values(seen).sort((a, b) => a.firstSeenMin - b.firstSeenMin),
     placesFirstSeen: places,
     timeline,

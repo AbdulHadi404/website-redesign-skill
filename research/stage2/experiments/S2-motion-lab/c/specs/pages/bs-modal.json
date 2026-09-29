@@ -1,0 +1,5 @@
+{ "_note": "Held-out spec, written as a designer's intent (house tokens = motion.md defaults, easing out) before motion.mjs ever ran on this page.",
+  "motion": [
+  { "id": "modal-open", "trigger": "click", "on": "button[data-bs-target=\"#myModal\"]", "target": "#myModal .modal-dialog", "properties": ["transform"], "duration": "large", "easing": "out", "reduced": "fade" },
+  { "id": "launch-hover", "trigger": "hover", "on": "button[data-bs-target=\"#myModal\"]", "target": "button[data-bs-target=\"#myModal\"]", "properties": ["background-color"], "duration": "small", "easing": "out", "reduced": "keep" }
+] }

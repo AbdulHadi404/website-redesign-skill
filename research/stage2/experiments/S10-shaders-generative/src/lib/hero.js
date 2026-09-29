@@ -7,7 +7,8 @@
 // What it does, in order of importance:
 //   1. never runs under prefers-reduced-motion (the page bootstrap does not even import this module) and
 //      stops at once if the preference flips while running;
-//   2. keeps the poster until the first real frame is on screen, then crossfades (no flash, no LCP change);
+//   2. keeps the poster until the GPU has finished the first frame (WebGL2 fence), then crossfades (no flash,
+//      no pop-in, no LCP change);
 //   3. renders only while the hero is on screen, the tab is visible and the visitor has not paused it:
 //      zero requestAnimationFrame callbacks otherwise;
 //   4. time-based animation with a clamped dt, and time that does not advance while paused
@@ -15,16 +16,25 @@
 //   5. device-pixel-ratio cap and an optional render scale (a soft gradient does not need native resolution);
 //   6. WebGL context loss: show the poster, stop, rebuild on restore;
 //   7. any failure (no WebGL, shader compile error, exception) leaves the poster — never a blank hero;
-//   8. optional settle (opts.settle or ?settle=N): play N seconds, ease to a stop over 1.5 s, then render
-//      nothing — "a moment, not a loop" (WCAG 2.2.2 needs no control for motion that stops within 5 s);
+//   8. optional settle (opts.settle or ?settle=N): N seconds of motion IN TOTAL, wall-clock (performance.now()),
+//      counted from the first animated frame and excluding time paused; the last min(1.5 s, N/3) of it eases to
+//      a stop, and the loop ends before a frame would start past N. Keep N ≤ 4 so the last frame is presented
+//      within WCAG 2.2.2's 5 s even on a slow device (GPU lag ≈ one frame). The pause control stays anyway;
+//      pressing Play after the settle replays the moment;
 //   9. optional frame-time governor (opts.governor or ?gov): after a 1 s warm-up, judge the median frame
-//      interval over 45 continuous frames; too slow → halve the render scale (down to 0.25); still under
-//      ~30 fps at the floor → stop and keep the poster. It only steps down, never up.
+//      interval over 45 continuous frames or 2 s, whichever comes first; too slow → halve the render scale
+//      (down to 0.25); still under ~30 fps at the floor → stop and keep the poster. Only steps down.
 //
-// Lab-only query flags: ?nopause (ignore viewport/visibility), ?dpr=N (cap, default 2), ?scale=F, ?fps=N, ?settle=N.
+//  10. the visitor's control is a plain button whose label says what it will do ("Pause background animation" /
+//      "Play background animation"), with no aria-pressed: a toggle whose label changes must not also announce a
+//      pressed state (WAI-ARIA APG button pattern).
+//
+// Lab-only query flags: ?nopause (ignore viewport/visibility), ?dpr=N (cap, default 2), ?scale=F, ?fps=N, ?settle=N,
+// ?syncfirst (block on the GPU after the first draw to time when the first frame is really finished).
 
 const q = new URLSearchParams(location.search);
 const lab = (window.__lab ||= {});
+export const LABEL = { pause: 'Pause background animation', play: 'Play background animation' };
 lab.draws = 0;
 lab.jsTimes = [];
 
@@ -37,16 +47,21 @@ export function run(bg, effect, opts = {}) {
   const fpsCap = Number(q.get('fps') || opts.fps || 0);
   const noPause = q.has('nopause');
   const settleAt = Number(q.get('settle') || opts.settle || 0);
-  let runTime = 0, settled = false;
+  const easeFor = Math.min(1.5, settleAt / 3);
+  let runWall = 0, lastInterval = 0, settled = false;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const toggle = document.querySelector('.bg-toggle');
   let canvas, handle, raf = 0, last = 0, t = Number(q.get('t0') || 0), inView = true, visible = !document.hidden;
-  let paused = false, lost = false, started = false, failed = false, lastDraw = 0;
+  let paused = false, lost = false, started = false, failed = false, lastDraw = 0, ready = false;
 
   const still = q.has('still');   // lab: draw one deterministic frame (poster capture), never loop
-  const want = () => !still && !failed && !lost && !paused && (!reduce.matches || lab.optIn) && (noPause || (inView && visible));
-  const schedule = () => { if (!raf && want()) { last = performance.now(); gov.since = last; gov.intervals.length = 0; raf = requestAnimationFrame(tick); } };
+  const want = () => ready && !still && !failed && !lost && !paused && (!reduce.matches || lab.optIn) && (noPause || (inView && visible));
+  const schedule = () => { if (!raf && want()) { last = performance.now(); gov.since = last; gov.intervals.length = 0; gov.sum = 0; raf = requestAnimationFrame(tick); } };
   const stop = () => { if (raf) cancelAnimationFrame(raf); raf = 0; };
+
+  // Not moving because of the visitor (or their reduced-motion preference), as opposed to off-screen or hidden.
+  function halted() { return paused || settled || (reduce.matches && !lab.optIn); }
+  function syncLabel() { if (toggle) toggle.textContent = halted() ? LABEL.play : LABEL.pause; }
 
   function fail(why) {
     failed = true; stop();
@@ -76,9 +91,15 @@ export function run(bg, effect, opts = {}) {
     if (fpsCap && elapsed < 1000 / fpsCap - 2) { raf = requestAnimationFrame(tick); return; }
     last = now;
     const dt = Math.min(elapsed / 1000, 1 / 20);    // clamp: a long pause never becomes one huge step
-    runTime += Math.min(elapsed / 1000, 0.25);      // settle counts wall time: a slow device still stops on time
-    let speed = 1;
-    if (settleAt && !settled) { const k = Math.max(0, 1 - (runTime - settleAt) / 1.5); speed = runTime < settleAt ? 1 : k * k; }
+    // settle counts real wall time (unclamped; `last` is reset on resume, so paused time is excluded)
+    if (lab.motionStart == null) lab.motionStart = now;
+    runWall += elapsed / 1000; lastInterval = elapsed / 1000;
+    let speed = 1, lastFrame = false;
+    if (settleAt && !settled) {
+      const left = settleAt - runWall;
+      speed = left >= easeFor ? 1 : Math.max(0, left / easeFor) ** 2;
+      lastFrame = runWall + Math.max(lastInterval, 1 / 60) >= settleAt;   // the next frame would start too late
+    }
     t += dt * speed;
     const t0 = performance.now();
     try { effect.frame(t, dt); } catch (e) { return fail(e.message); }
@@ -87,7 +108,9 @@ export function run(bg, effect, opts = {}) {
     if (!started) firstFrame();
     if (governor && now - gov.since > 1000) {
       gov.intervals.push(elapsed);
-      if (gov.intervals.length >= 45) {
+      gov.sum = (gov.sum || 0) + elapsed;
+      if (gov.intervals.length >= 45 || (gov.sum >= 2000 && gov.intervals.length >= 5)) {
+        gov.sum = 0;
         const s = [...gov.intervals].sort((a, b) => a - b), med = s[s.length >> 1];
         gov.intervals.length = 0; gov.since = now;
         const target = fpsCap ? 1000 / fpsCap : 1000 / 60;
@@ -97,20 +120,35 @@ export function run(bg, effect, opts = {}) {
         }
       }
     }
-    if (settleAt && !settled && speed === 0) {        // settled: the last frame stays on screen, the loop ends
-      settled = true; paused = true; lab.settled = performance.now();
-      if (toggle) { toggle.setAttribute('aria-pressed', 'true'); toggle.textContent = 'Play background'; }
+    if (lastFrame) {                                    // settled: the last frame stays on screen, the loop ends
+      settled = true; paused = true; lab.settled = performance.now(); lab.settledRunWall = runWall;
+      syncLabel();
       return;
     }
     raf = requestAnimationFrame(tick);
   }
 
+  // Crossfade over the poster, and start the loop, only once the GPU has really finished the first frame. The draw
+  // call returns long before that (shader compilation can take seconds on a weak GPU): a CSS crossfade started at
+  // the draw call is over before the frame exists (the effect pops in), and frames queued behind a compiling GPU
+  // block the main thread. WebGL2: a fence polled once per animation frame (never blocks). WebGL1 has no fence:
+  // reveal on the next animation frame and start at once.
   function firstFrame() {
     started = true;
-    requestAnimationFrame(() => {
-      lab.ttff = performance.now();
-      canvas.style.opacity = '1';               // crossfade over the poster (CSS transition on .fx)
-    });
+    lab.drawIssued ??= performance.now();
+    const gl = handle?.gl, cv = canvas;
+    const reveal = () => { lab.ttff = performance.now(); cv.style.opacity = '1'; ready = true; schedule(); };   // CSS transition on .fx
+    if (!(typeof WebGL2RenderingContext !== 'undefined' && gl instanceof WebGL2RenderingContext) || q.has('nofence')) { ready = true; requestAnimationFrame(() => { lab.ttff = performance.now(); cv.style.opacity = '1'; }); return; }
+    const sync = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
+    gl.flush();
+    const t0 = performance.now();
+    const poll = () => {
+      if (gl.isContextLost() || cv !== canvas) return;
+      if (gl.getSyncParameter(sync, gl.SYNC_STATUS) === gl.SIGNALED || performance.now() - t0 > 10000) {
+        gl.deleteSync(sync); lab.fenceMs = performance.now() - t0; reveal();
+      } else requestAnimationFrame(poll);
+    };
+    requestAnimationFrame(poll);
   }
 
   function build() {
@@ -118,9 +156,11 @@ export function run(bg, effect, opts = {}) {
     canvas.className = 'fx';
     canvas.setAttribute('aria-hidden', 'true');
     bg.append(canvas);
+    const ti = performance.now();
     try {
       handle = effect.init(canvas) || {};
     } catch (e) { return fail(e.message); }
+    lab.initMs ??= performance.now() - ti;       // lab: context + shader/program setup, synchronous on the main thread
     lab.info = handle.info || lab.info;
     if (effect.kind === 'webgl') {
       canvas.addEventListener('webglcontextlost', (e) => {
@@ -129,14 +169,23 @@ export function run(bg, effect, opts = {}) {
       });
       canvas.addEventListener('webglcontextrestored', () => {
         try { effect.dispose?.(); } catch { /* the old context is gone anyway */ }
-        const old = canvas; started = false; lost = false;
+        const old = canvas; started = false; lost = false; ready = false;
         build(); old.remove();                  // rebuild on a fresh canvas: simplest correct restore for any library
         lab.contextRestored = (lab.contextRestored || 0) + 1;
       });
     }
     sizeCanvas();
     // Mark the first frame even when rendering starts paused (reduced motion flipped, or off-screen at load).
-    drawOnce(); firstFrame();
+    const td = performance.now();
+    drawOnce();
+    lab.firstDrawMs ??= performance.now() - td;  // lab: the first frame's JS, including any GL call that waits on the GPU
+    if (q.has('syncfirst') && handle.gl && lab.gpuFirst == null) {   // lab: wait for the GPU to finish frame 1
+      const gl = handle.gl;
+      gl.finish();
+      try { if (!gl.getParameter(gl.FRAMEBUFFER_BINDING)) gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(4)); } catch {}
+      lab.gpuFirst = performance.now();
+    }
+    firstFrame();
     schedule();
   }
 
@@ -147,14 +196,18 @@ export function run(bg, effect, opts = {}) {
   new ResizeObserver(() => canvas && sizeCanvas()).observe(bg);
   new IntersectionObserver(([e]) => { inView = e.isIntersecting; want() ? schedule() : stop(); }).observe(bg.closest('.hero') || bg);
   document.addEventListener('visibilitychange', () => { visible = !document.hidden; want() ? schedule() : stop(); });
-  reduce.addEventListener('change', () => (reduce.matches && !lab.optIn ? stop() : schedule()));
+  reduce.addEventListener('change', () => { reduce.matches && !lab.optIn ? stop() : schedule(); syncLabel(); });
   if (toggle) {
     toggle.hidden = false;
+    toggle.removeAttribute('aria-pressed');
+    syncLabel();
     toggle.addEventListener('click', () => {
-      paused = !paused;
-      toggle.setAttribute('aria-pressed', String(paused));
-      toggle.textContent = paused ? 'Play background' : 'Pause background';
-      paused ? stop() : schedule();
+      if (halted()) {                               // play: also the reduced-motion opt-in, and a replay after settling
+        paused = false; lab.optIn = true;
+        if (settled) { settled = false; runWall = 0; }
+        schedule();
+      } else { paused = true; stop(); }
+      syncLabel();
     });
   }
   lab.pause = () => { paused = true; stop(); };

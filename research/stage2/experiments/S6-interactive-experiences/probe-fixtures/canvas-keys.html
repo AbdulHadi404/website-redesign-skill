@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Game canvas that takes keys itself</title>
+<!-- A focusable canvas moved with arrow keys and by clicking: keyboard works, but there are no objects for a
+     screen reader and nothing is narrated. Expected: WARN. -->
+<style>body{margin:0;padding:20px}canvas{display:block}canvas:focus-visible{outline:3px solid #1f5fd1}</style></head>
+<body><main><h1>Move the ship</h1><canvas id="c" width="480" height="320" tabindex="0" aria-label="Game"></canvas></main>
+<script>const c=document.getElementById('c'),x=c.getContext('2d');let sx=240;function d(){x.fillStyle='#0b1020';x.fillRect(0,0,480,320);x.fillStyle='#f5d547';x.fillRect(sx-15,260,30,20)}d();
+c.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){sx+=20;d();e.preventDefault()}if(e.key==='ArrowLeft'){sx-=20;d();e.preventDefault()}});
+c.addEventListener('pointerdown',e=>{sx=e.offsetX;d()});</script></body></html>

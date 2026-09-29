@@ -6,6 +6,8 @@
  *   node run.mjs --stage singles  # only the single-move captures, measures, probe and blind sheets
  *   node run.mjs --stage stacks   # only the stacks (needs judgements.json)
  *   node run.mjs --stage checks   # only the small lab checks (focus ring vs corner-shape; what pixelmatch sees)
+ *   node run.mjs --stage nofocus  # every move again without the forced focus on the primary action (after review)
+ *   node run.mjs --stage outside  # the polish probe (v1 and v2) on eleven pages it was not built on (outside.mjs)
  *   node run.mjs --no-capture     # reuse the captures already in captures/pages
  *
  * Steps: fetch fonts (fetch-assets.mjs) -> serve page/ with each variant's move classes -> render the phone image
@@ -23,7 +25,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { MOVES, REAL, WINDOWS } from './lib/moves.mjs';
 import { serve } from './lib/serve.mjs';
 import { readPng, crop, upscale, measure, hotWindow, toJpeg, writePng } from './lib/img.mjs';
-import { probePage, focusRing } from './lib/probe.mjs';
+import { probePage, focusChecks } from './lib/probe.mjs';
+import { probeOutside } from './outside.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const SCRIPTS = path.resolve(ROOT, '../../../../skills/website-redesign/scripts');
@@ -47,6 +50,9 @@ const STACKS = judgements?.stacks || null; // { 'stack-top5': [...], ... } writt
 const variants = { base: [], base2: [] };
 for (const m of MOVES) variants[m.id] = [m.id];
 if (STACKS) Object.assign(variants, STACKS);
+// the same variants without the forced focus on the primary action (the page's script skips it under m-nofocus)
+const NF = ['base', ...MOVES.map((m) => m.id)];
+for (const v of NF) variants[`nf-${v}`] = [...variants[v], 'nofocus'];
 
 // ---------------------------------------------------------------- helpers
 function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
@@ -91,7 +97,7 @@ async function boxes(browser, list) {
     for (const v of list) {
       const p = await ctx.newPage();
       await p.goto(`${server.base}/v/${v}/`); await p.evaluate(() => document.fonts.ready);
-      (out[v] ||= {})[w] = await p.evaluate((sels) => Object.fromEntries(sels.map((s) => { const e = document.querySelector(s); const r = e.getBoundingClientRect(); return [s, { top: r.top + scrollY, height: r.height }]; })), WINDOWS);
+      (out[v] ||= {})[w] = await p.evaluate((sels) => Object.fromEntries(sels.map((s) => { const e = document.querySelector(s); const r = e.getBoundingClientRect(); return [s, { top: r.top + scrollY, height: r.height, left: r.left, width: r.width }]; })), [...WINDOWS, '.hero .btn-primary', '.btn-publish']);
       await p.close();
     }
     await ctx.close();
@@ -107,9 +113,9 @@ async function probeAll(browser, list) {
     for (const v of list) {
       const p = await ctx.newPage();
       await p.goto(`${server.base}/v/${v}/`); await p.evaluate(() => document.fonts.ready);
-      const r = await p.evaluate(probePage);
-      if (!mobile) r.focusRing = await focusRing(p);
-      (out[v] ||= {})[w] = Object.fromEntries(Object.entries(r).map(([k, x]) => [k, { flag: x.flag, value: x.value }]));
+      const r = await p.evaluate(probePage, {});
+      if (!mobile) Object.assign(r, await focusChecks(p));
+      (out[v] ||= {})[w] = Object.fromEntries(Object.entries(r).map(([k, x]) => [k, { kind: x.kind, flag: x.flag, value: x.value, ...(v === 'base' || v === 'stack-all' ? { detail: x.detail } : {}) }]));
       await p.close();
     }
     await ctx.close();
@@ -194,6 +200,37 @@ async function contact(conv, panels, out, { cols = 5, width = 360, title = '', f
   const buf = await g.screenshot({ type: 'jpeg', quality: 80 });
   await writeFile(out, buf);
   await ctx.close();
+}
+
+// First viewport only (the forced focus is on the hero's primary action, so the rest of the page is unaffected).
+async function measureFold(v, ref) {
+  const r = {};
+  for (const w of WIDTHS) {
+    const { diff, ...m } = measure(await readPng(capFile(ref, w, true)), await readPng(capFile(v, w, true)));
+    r[w] = { fold: m };
+  }
+  return r;
+}
+
+// Value structure as numbers: the first viewport in greyscale, blurred 12 px (the 4 px blur of the 1/3-scale sheet),
+// and the mean grey (0 black, 1 white) inside each named box grown by 8 px, against the whole viewport's median.
+async function valueMasses(conv, file, boxes) {
+  const b64 = (await readFile(file)).toString('base64');
+  return conv.evaluate(async ([b64, boxes]) => {
+    const img = new Image(); img.src = `data:image/png;base64,${b64}`; await img.decode();
+    const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight;
+    const x = c.getContext('2d', { willReadFrequently: true }); x.filter = 'grayscale(1) blur(12px)'; x.drawImage(img, 0, 0);
+    const d = x.getImageData(0, 0, c.width, c.height).data;
+    const hist = new Uint32Array(256); for (let i = 0; i < d.length; i += 4) hist[d[i]]++;
+    let acc = 0, med = 0; const half = d.length / 8; for (let v = 0; v < 256; v++) { acc += hist[v]; if (acc >= half) { med = v; break; } }
+    const out = { ground: +(med / 255).toFixed(3) };
+    for (const [k, b] of Object.entries(boxes)) {
+      const x0 = Math.max(0, Math.floor(b.left - 8)), x1 = Math.min(c.width, Math.ceil(b.left + b.width + 8)), y0 = Math.max(0, Math.floor(b.top - 8)), y1 = Math.min(c.height, Math.ceil(b.top + b.height + 8));
+      let s = 0, n = 0, min = 255; for (let y = y0; y < y1; y++) for (let xx = x0; xx < x1; xx++) { const v = d[(y * c.width + xx) * 4]; s += v; n++; if (v < min) min = v; }
+      out[k] = { mean: +(s / n / 255).toFixed(3), min: +(min / 255).toFixed(3) };
+    }
+    return out;
+  }, [b64, boxes]);
 }
 
 // ---------------------------------------------------------------- main
@@ -309,7 +346,7 @@ try {
       for (const v of ['base', 'radius']) {
         const j = JSON.parse(await readFile(path.join(out, `v-${v}-1440.json`), 'utf8').catch(() => 'null'));
         const find = (x) => { if (!x || typeof x !== 'object') return undefined; if (Array.isArray(x.radiusMismatch)) return x.radiusMismatch; for (const y of Object.values(x)) { const r = find(y); if (r) return r; } return undefined; };
-        lab.auditConcentric[v] = { audit: find(j) ?? null, probe: results.singles?.probe?.[v]?.[1440]?.concentric?.value ?? null };
+        lab.auditConcentric[v] = { audit: find(j) ?? null, probe: results.singles?.probe?.[v]?.[1440]?.concentric?.value ?? null, probeDetail: results.singles?.probe?.[v]?.[1440]?.concentric?.detail ?? null };
       }
     }
     results.labChecks = lab;
@@ -346,6 +383,32 @@ try {
     }
     // the value-structure (notan) view: greyscale and blurred, where the eye lands before it reads
     await contact(conv, ['base', ...names].map((v) => ({ file: capFile(v, 1440, true), caption: v === 'base' ? 'Baseline' : `${v} (${STACKS[v].length} moves)` })), path.join(SHOTS, 'value-structure-1440.jpg'), { cols: names.length + 1, width: 480, filter: 'grayscale(1) blur(4px)', title: 'First viewport at 1440, greyscale and blurred 4 px (at 1/3 scale): the value masses the eye meets first.' });
+  }
+
+  if (stage === 'all' || stage === 'nofocus') {
+    // After review: every capture above shows the primary action keyboard-focused (the page focuses it on load so
+    // the focus-ring move has a ring to show). Pointer users never see that state on arrival. Here every move is
+    // captured again without it, and measured against the unfocused baseline.
+    const list = NF.map((v) => `nf-${v}`);
+    log('nofocus: capture');
+    if (!noCapture) await capture(list);
+    const measures = {};
+    for (const v of NF.filter((x) => x !== 'base')) measures[v] = await measureFold(`nf-${v}`, 'nf-base');
+    const ringOnly = await measureFold('nf-base', 'base'); // what the forced focus alone changes on the baseline
+    const bx = await boxes(browser, ['base', 'nf-base', 'accent', 'nf-accent', ...(STACKS ? ['stack-bottom5'] : [])]);
+    const masses = {};
+    for (const v of Object.keys(bx)) {
+      if (!(await exists(capFile(v, 1440, true)))) continue;
+      const b = bx[v][1440];
+      masses[v] = await valueMasses(conv, capFile(v, 1440, true), { heroCta: b['.hero .btn-primary'], publish: b['.btn-publish'] });
+    }
+    results.nofocus = { note: 'nf-<move> against nf-base, first viewport only; ringOnly = nf-base against the focused base', measures, ringOnly, valueMasses: masses };
+    await contact(conv, [['base', 'Baseline (primary action focused, as judged)'], ['nf-base', 'Baseline, not focused'], ['accent', 'Accent restraint (focused)'], ['nf-accent', 'Accent restraint, not focused']].map(([v, caption]) => ({ file: capFile(v, 1440, true), caption })), path.join(SHOTS, 'value-structure-focus-1440.jpg'), { cols: 4, width: 420, filter: 'grayscale(1) blur(4px)', title: 'Value structure at 1440 with and without the forced focus state (greyscale, blurred 4 px at under 1/3 scale).' });
+  }
+
+  if (stage === 'all' || stage === 'outside') {
+    log('outside: the probe on pages it was not built on');
+    results.outside = await probeOutside(browser);
   }
 } finally {
   await browser.close();

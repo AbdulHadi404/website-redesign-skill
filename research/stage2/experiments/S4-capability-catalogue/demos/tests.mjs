@@ -327,6 +327,93 @@ const excalidraw = {
   },
 };
 
+// ── Gantt ────────────────────────────────────────────────────────────────────────────────────────
+// SVAR React Gantt with its defaults: what a keyboard and screen-reader user can do with five tasks.
+async function axSummary(page) {
+  const cdp = await page.context().newCDPSession(page);
+  const { nodes } = await cdp.send('Accessibility.getFullAXTree');
+  await cdp.detach();
+  const live = nodes.filter((n) => !n.ignored);
+  const roles = {};
+  for (const n of live) { const r = n.role?.value; if (r) roles[r] = (roles[r] || 0) + 1; }
+  const named = (re) => live.filter((n) => re.test(n.name?.value || '')).map((n) => `${n.role?.value}: ${n.name?.value}`.slice(0, 80));
+  return { roles, taskNames: named(/^(Brief|Wireframes|Visual design|Build|Launch)$/) };
+}
+const gantt = {
+  library: '@svar-ui/react-gantt (defaults)',
+  async run(page, { shot }) {
+    const c = {}, d = {};
+    await page.waitForSelector('.wx-bar, [data-id]', { timeout: 8000 }).catch(() => {});
+    await wait(page, 600);
+    await shoot(page, shot);
+    d.ax = await axSummary(page);
+    c.gridRolesExposed = !!(d.ax.roles.grid || d.ax.roles.treegrid || d.ax.roles.table) && !!(d.ax.roles.row);
+    c.taskNamesInTree = d.ax.taskNames.length >= 5;
+    // Bars in the chart: focusable? named?
+    d.bars = await page.evaluate(() => [...document.querySelectorAll('.wx-bar')].map((b) => ({ tabindex: b.getAttribute('tabindex'), role: b.getAttribute('role'), label: b.getAttribute('aria-label'), text: (b.innerText || '').trim().slice(0, 30) })));
+    c.barsFocusable = d.bars.length > 0 && d.bars.every((b) => b.tabindex !== null && +b.tabindex >= 0);
+    c.barsNamed = d.bars.length > 0 && d.bars.every((b) => !!b.label || !!b.text);
+    // Tab through the widget: record each stop until focus leaves it.
+    await page.focus('#before');
+    d.tabStops = [];
+    for (let i = 0; i < 25; i++) {
+      await page.keyboard.press('Tab');
+      const f = await focusInfo(page);
+      const inside = await page.evaluate(() => !!document.activeElement?.closest('#root'));
+      if (!inside) { d.leftAfter = i; d.leftTo = f; break; }
+      d.tabStops.push(`${f.tag}${f.role ? '[' + f.role + ']' : ''} ${f.label || f.text || ''}`.slice(0, 60));
+    }
+    c.tabReachesWidget = d.tabStops.length > 0;
+    // Focus the first grid row (or cell) and try the grid's keys.
+    await page.focus('#before');
+    let inGrid = false;
+    for (let i = 0; i < 10 && !inGrid; i++) { await page.keyboard.press('Tab'); inGrid = await page.evaluate(() => !!document.activeElement?.closest('.wx-grid, [role=grid], [role=treegrid], [role=table]')); }
+    c.tabReachesTaskList = inGrid;
+    d.gridFocus = await focusInfo(page);
+    d.selected0 = await body(page, 'selected');
+    await press(page, ['ArrowDown'], 300);
+    d.selected1 = await body(page, 'selected');
+    d.focusAfterDown = await focusInfo(page);
+    await press(page, ['ArrowDown'], 300);
+    d.selected2 = await body(page, 'selected');
+    c.arrowKeysMoveInTaskList = d.selected1 !== d.selected2 || JSON.stringify(d.gridFocus) !== JSON.stringify(d.focusAfterDown);
+    d.ariaSelected = await page.evaluate(() => [...document.querySelectorAll('[aria-selected=true]')].map((e) => (e.innerText || '').trim().slice(0, 30)));
+    c.selectionExposedToAT = d.ariaSelected.length > 0;
+    // The keyboard alternative to dragging a bar: edit the duration cell in the task list (Enter, type, Enter).
+    const barW = () => page.evaluate(() => [...document.querySelectorAll('.wx-bar')].map((b) => b.style.width).join(','));
+    d.widthsBefore = await barW();
+    await press(page, ['ArrowRight', 'ArrowRight'], 200);
+    d.cellBeforeEdit = await focusInfo(page);
+    await press(page, ['Enter'], 400);
+    d.editorFocus = await focusInfo(page);
+    c.enterOpensCellEditor = d.editorFocus.tag === 'input' || d.editorFocus.tag === 'textarea';
+    if (c.enterOpensCellEditor) { await page.keyboard.press('Control+a'); await page.keyboard.type('6'); await press(page, ['Enter'], 500); }
+    d.widthsAfter = await barW();
+    c.keyboardEditsDuration = d.widthsBefore !== d.widthsAfter;
+    d.focusAfterEdit = await focusInfo(page);
+    await press(page, ['ArrowLeft', 'ArrowLeft'], 200);
+    // Keyboard date edit: is there any key that moves the selected task in time?
+    const barPos = () => page.evaluate(() => [...document.querySelectorAll('.wx-bar')].map((b) => b.style.left).join(','));
+    d.barsBefore = await barPos();
+    await press(page, ['ArrowRight', 'ArrowRight'], 250);
+    d.barsAfterArrows = await barPos();
+    c.keyboardMovesTaskDates = d.barsBefore !== d.barsAfterArrows;
+    // Delete from the keyboard (grid-store hotkey) and where focus goes.
+    const count = () => page.locator('.wx-bar').count();
+    d.barCount0 = await count();
+    await press(page, ['Delete'], 500);
+    d.barCountAfterDeleteKey = await count();
+    c.deleteKeyRemovesTask = d.barCountAfterDeleteKey === d.barCount0 - 1;
+    await press(page, ['Backspace'], 500); // SVAR binds backspace (not delete) for "delete task"
+    d.barCount1 = await count();
+    c.backspaceRemovesTask = d.barCount1 === d.barCountAfterDeleteKey - 1;
+    d.focusAfterDelete = await focusInfo(page);
+    c.focusSurvivesDelete = d.focusAfterDelete.tag !== 'body';
+    d.dialogsAfterDelete = await page.locator('[role=dialog],[role=alertdialog]').count();
+    return { checks: c, detail: d };
+  },
+};
+
 export const scenarios = {
   'palette-cmdk': palette('cmdk'),
   'palette-rac': palette('react-aria-components Autocomplete + Menu'),
@@ -352,4 +439,5 @@ export const scenarios = {
   'canvas-konva-a11y': canvasA11y,
   'canvas-tldraw': tldraw,
   'canvas-excalidraw': excalidraw,
+  'gantt-svar': gantt,
 };

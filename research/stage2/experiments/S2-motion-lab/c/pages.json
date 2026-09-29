@@ -1,0 +1,98 @@
+{
+ "_note": "Pages for motion.mjs beyond its four development fixtures. 'dev': the five pages the stage-2 reviewer ran; their false positives were used to fix motion.mjs, so they are development pages now. 'heldout': frozen on 2026-09-29 before any of those fixes and never used to tune motion.mjs; flags are labelled after the run in c/labels.json (true / false / debatable, with the reason read from the page source). Paths are relative to the repository root; ext/ pages are fetched by c/fetch-ext.mjs into captures/ext/ at pinned commits.",
+ "dev": [
+  {
+   "name": "hblind-fixture",
+   "path": "research/experiments/H-blind-eval/fixture/index.html",
+   "spec": "c/specs/pages/hblind-fixture.json"
+  },
+  {
+   "name": "a11y-flawed",
+   "path": "research/experiments/a11y-lab/pages/flawed.html"
+  },
+  {
+   "name": "a11y-fixed",
+   "path": "research/experiments/a11y-lab/pages/fixed.html"
+  },
+  {
+   "name": "a11y-wizard",
+   "path": "tools/regress/fixtures/a11y-wizard.html"
+  },
+  {
+   "name": "govuk",
+   "path": "tools/regress/fixtures/govuk.html"
+  },
+  {
+   "name": "lab-ticker-bug",
+   "path": "research/stage2/experiments/S2-motion-lab/c/fixtures/ticker-bug.html",
+   "spec": "c/specs/pages/ticker-bug.json"
+  }
+ ],
+ "heldout": [
+  {
+   "name": "bs-button",
+   "path": "ext/bootstrap/js/tests/visual/button.html",
+   "spec": "c/specs/pages/bs-button.json"
+  },
+  {
+   "name": "bs-collapse",
+   "path": "ext/bootstrap/js/tests/visual/collapse.html",
+   "spec": "c/specs/pages/bs-collapse.json"
+  },
+  {
+   "name": "bs-modal",
+   "path": "ext/bootstrap/js/tests/visual/modal.html",
+   "spec": "c/specs/pages/bs-modal.json"
+  },
+  {
+   "name": "bs-toast",
+   "path": "ext/bootstrap/js/tests/visual/toast.html",
+   "spec": "c/specs/pages/bs-toast.json"
+  },
+  {
+   "name": "bs-tab",
+   "path": "ext/bootstrap/js/tests/visual/tab.html",
+   "spec": "c/specs/pages/bs-tab.json"
+  },
+  {
+   "name": "bs-carousel",
+   "path": "ext/bootstrap/js/tests/visual/carousel.html"
+  },
+  {
+   "name": "bs-alert",
+   "path": "ext/bootstrap/js/tests/visual/alert.html"
+  },
+  {
+   "name": "bs-dropdown",
+   "path": "ext/bootstrap/js/tests/visual/dropdown.html"
+  },
+  {
+   "name": "animate-docs",
+   "path": "ext/animate.css/docs/index.html"
+  },
+  {
+   "name": "hover-demo",
+   "path": "ext/Hover/index.html"
+  },
+  {
+   "name": "g-slop-landing",
+   "path": "research/experiments/G-product-lab/pages/slop-landing.html"
+  },
+  {
+   "name": "g-primer-issues",
+   "path": "research/experiments/G-product-lab/pages/primer-issues.html"
+  },
+  {
+   "name": "g-carbon-table",
+   "path": "research/experiments/G-product-lab/pages/carbon-table.html"
+  },
+  {
+   "name": "hallam",
+   "path": "research/experiments/H-blind-eval/hallam/fixture/index.html"
+  },
+  {
+   "name": "stemwren",
+   "path": "research/experiments/H-blind-eval/stemwren/fixture/index.html"
+  }
+ ]
+}

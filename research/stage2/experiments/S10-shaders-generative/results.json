@@ -4,8 +4,7 @@
   "node": "v22.22.2",
   "cpus": 4,
   "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
-  "runs": 5,
-  "chromium": "141.0.7390.37"
+  "runs": 5
  },
  "sources": {
   "fluid": {
@@ -14,18 +13,23 @@
    "dir": "/tmp/s2-S10/fluid",
    "licence": "MIT (LICENSE: \"Copyright (c) 2017 Pavel Dobryakov\")",
    "head": "a2d292931f19d9b3b9f564e23e6c32729d2121c3"
-  }
+  },
+  "ffmpeg": "/tmp/s2-S10/pip/x/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2"
  },
  "build": {
+  "_wrapper": {
+   "min": 5071,
+   "gzip": 2388
+  },
   "a-static": {
    "id": "a-static",
    "label": "a · static poster (AVIF)",
    "kind": "static",
    "poster": "shader",
    "html": {
-    "raw": 5337,
-    "gzip": 2296,
-    "brotli": 1800
+    "raw": 5400,
+    "gzip": 2359,
+    "brotli": 1854
    }
   },
   "b1-css-blobs": {
@@ -34,9 +38,9 @@
    "kind": "css",
    "poster": null,
    "html": {
-    "raw": 7695,
-    "gzip": 3048,
-    "brotli": 2436
+    "raw": 7729,
+    "gzip": 3109,
+    "brotli": 2506
    }
   },
   "b2-css-property": {
@@ -45,9 +49,9 @@
    "kind": "css",
    "poster": null,
    "html": {
-    "raw": 7090,
-    "gzip": 2939,
-    "brotli": 2351
+    "raw": 7124,
+    "gzip": 3002,
+    "brotli": 2422
    }
   },
   "c1-svg-turbulence": {
@@ -56,9 +60,9 @@
    "kind": "css",
    "poster": null,
    "html": {
-    "raw": 7268,
-    "gzip": 3034,
-    "brotli": 2453
+    "raw": 7302,
+    "gzip": 3102,
+    "brotli": 2510
    }
   },
   "c2-css-grain": {
@@ -67,9 +71,9 @@
    "kind": "css",
    "poster": "shader",
    "html": {
-    "raw": 7496,
-    "gzip": 3125,
-    "brotli": 2509
+    "raw": 7530,
+    "gzip": 3189,
+    "brotli": 2575
    }
   },
   "d-canvas2d": {
@@ -78,18 +82,18 @@
    "kind": "script",
    "poster": "canvas2d",
    "effect": {
-    "raw": 4319,
-    "gzip": 2142,
-    "brotli": 1887
+    "raw": 6155,
+    "gzip": 2964,
+    "brotli": 2638
    },
    "inputs": {
-    "lib": 2947,
-    "variants": 1350
+    "lib": 4781,
+    "variants": 1351
    },
    "html": {
-    "raw": 6578,
-    "gzip": 2868,
-    "brotli": 2255
+    "raw": 6717,
+    "gzip": 2967,
+    "brotli": 2345
    }
   },
   "e1-webgl-vanilla": {
@@ -98,18 +102,18 @@
    "kind": "script",
    "poster": "shader",
    "effect": {
-    "raw": 7637,
-    "gzip": 3563,
-    "brotli": 3137
+    "raw": 9566,
+    "gzip": 4368,
+    "brotli": 3867
    },
    "inputs": {
-    "lib": 6507,
-    "variants": 1108
+    "lib": 8348,
+    "variants": 1195
    },
    "html": {
-    "raw": 6571,
-    "gzip": 2868,
-    "brotli": 2258
+    "raw": 6710,
+    "gzip": 2967,
+    "brotli": 2347
    }
   },
   "e2-ogl": {
@@ -118,19 +122,19 @@
    "kind": "script",
    "poster": "shader",
    "effect": {
-    "raw": 51432,
-    "gzip": 15989,
-    "brotli": 13564
+    "raw": 53297,
+    "gzip": 16810,
+    "brotli": 14316
    },
    "inputs": {
-    "ogl": 44304,
-    "lib": 6444,
+    "ogl": 44314,
+    "lib": 8299,
     "variants": 661
    },
    "html": {
-    "raw": 6565,
-    "gzip": 2864,
-    "brotli": 2256
+    "raw": 6704,
+    "gzip": 2963,
+    "brotli": 2344
    }
   },
   "e3-regl": {
@@ -139,19 +143,19 @@
    "kind": "script",
    "poster": "shader",
    "effect": {
-    "raw": 130420,
-    "gzip": 44759,
-    "brotli": 39139
+    "raw": 132396,
+    "gzip": 45571,
+    "brotli": 39860
    },
    "inputs": {
     "regl": 122521,
     "variants": 501,
-    "lib": 6795
+    "lib": 8771
    },
    "html": {
-    "raw": 6566,
-    "gzip": 2863,
-    "brotli": 2256
+    "raw": 6705,
+    "gzip": 2962,
+    "brotli": 2345
    }
   },
   "e4-twgl": {
@@ -160,19 +164,19 @@
    "kind": "script",
    "poster": "shader",
    "effect": {
-    "raw": 38122,
-    "gzip": 13775,
-    "brotli": 12091
+    "raw": 40001,
+    "gzip": 14586,
+    "brotli": 12846
    },
    "inputs": {
-    "twgl.js": 31087,
-    "lib": 6525,
+    "twgl.js": 31104,
+    "lib": 8387,
     "variants": 487
    },
    "html": {
-    "raw": 6569,
-    "gzip": 2866,
-    "brotli": 2253
+    "raw": 6708,
+    "gzip": 2965,
+    "brotli": 2346
    }
   },
   "e5-three": {
@@ -181,19 +185,19 @@
    "kind": "script",
    "poster": "shader",
    "effect": {
-    "raw": 536020,
-    "gzip": 135715,
-    "brotli": 111870
+    "raw": 537949,
+    "gzip": 136494,
+    "brotli": 112706
    },
    "inputs": {
-    "three": 528888,
-    "lib": 6570,
+    "three": 528876,
+    "lib": 8511,
     "variants": 539
    },
    "html": {
-    "raw": 6570,
-    "gzip": 2866,
-    "brotli": 2260
+    "raw": 6709,
+    "gzip": 2965,
+    "brotli": 2342
    }
   },
   "e6-paper": {
@@ -202,18 +206,18 @@
    "kind": "script",
    "poster": "paper",
    "effect": {
-    "raw": 23304,
-    "gzip": 7382,
-    "brotli": 6596
+    "raw": 23379,
+    "gzip": 7409,
+    "brotli": 6636
    },
    "inputs": {
     "@paper-design/shaders": 21798,
-    "variants": 1320
+    "variants": 1395
    },
    "html": {
-    "raw": 6576,
-    "gzip": 2873,
-    "brotli": 2267
+    "raw": 6715,
+    "gzip": 2974,
+    "brotli": 2352
    }
   },
   "f-three-particles": {
@@ -222,19 +226,19 @@
    "kind": "script",
    "poster": "particles",
    "effect": {
-    "raw": 540027,
-    "gzip": 136810,
-    "brotli": 112895
+    "raw": 542017,
+    "gzip": 137621,
+    "brotli": 113672
    },
    "inputs": {
-    "three": 531038,
-    "lib": 6482,
-    "variants": 2451
+    "three": 531026,
+    "lib": 8423,
+    "variants": 2512
    },
    "html": {
-    "raw": 6585,
-    "gzip": 2870,
-    "brotli": 2256
+    "raw": 6724,
+    "gzip": 2969,
+    "brotli": 2338
    }
   },
   "h-post": {
@@ -243,20 +247,20 @@
    "kind": "script",
    "poster": "post",
    "effect": {
-    "raw": 697034,
-    "gzip": 209436,
-    "brotli": 180212
+    "raw": 699106,
+    "gzip": 210300,
+    "brotli": 180990
    },
    "inputs": {
-    "three": 531159,
+    "three": 531147,
     "postprocessing": 156280,
-    "lib": 6482,
-    "variants": 3090
+    "lib": 8423,
+    "variants": 3233
    },
    "html": {
-    "raw": 6559,
-    "gzip": 2864,
-    "brotli": 2254
+    "raw": 6698,
+    "gzip": 2966,
+    "brotli": 2348
    }
   },
   "g-fluid-demo": {
@@ -270,9 +274,9 @@
     "brotli": 22333
    },
    "html": {
-    "raw": 5485,
-    "gzip": 2364,
-    "brotli": 1856
+    "raw": 5757,
+    "gzip": 2514,
+    "brotli": 1978
    }
   },
   "g-fluid-wrapped": {
@@ -281,19 +285,35 @@
    "kind": "script",
    "poster": "fluid",
    "effect": {
-    "raw": 34752,
-    "gzip": 9996,
-    "brotli": 8879
+    "raw": 36626,
+    "gzip": 10770,
+    "brotli": 9562
    },
    "inputs": {
-    "dist": 31024,
-    "lib": 3225,
+    "dist": 31030,
+    "lib": 5093,
     "variants": 480
    },
    "html": {
-    "raw": 6568,
-    "gzip": 2866,
-    "brotli": 2254
+    "raw": 6707,
+    "gzip": 2964,
+    "brotli": 2344
+   }
+  },
+  "i-video": {
+   "id": "i-video",
+   "label": "i · e1 pre-rendered to an 8 s AV1/VP9 loop",
+   "kind": "video",
+   "poster": "video",
+   "video": {
+    "loop-av1.webm": 96732,
+    "loop-vp9.webm": 120603,
+    "loop-h264.mp4": 469440
+   },
+   "html": {
+    "raw": 8230,
+    "gzip": 3559,
+    "brotli": 2889
    }
   }
  },
@@ -315,17 +335,17 @@
   },
   "canvas2d": {
    "800": {
-    "avif": 8643,
-    "webp": 12272
+    "avif": 8914,
+    "webp": 12826
    },
    "1600": {
-    "avif": 28979,
-    "webp": 39666
+    "avif": 29551,
+    "webp": 41842
    },
    "from": "d-canvas2d",
    "query": "",
    "bppAt1280x720": {
-    "avif1600": 0.2516
+    "avif1600": 0.2565
    }
   },
   "paper": {
@@ -345,47 +365,47 @@
   },
   "particles": {
    "800": {
-    "avif": 804,
-    "webp": 1982
+    "avif": 769,
+    "webp": 2048
    },
    "1600": {
-    "avif": 13597,
-    "webp": 20858
+    "avif": 13850,
+    "webp": 21040
    },
    "from": "f-three-particles",
    "query": "still&t0=0",
    "bppAt1280x720": {
-    "avif1600": 0.118
+    "avif1600": 0.1202
    }
   },
   "post": {
    "800": {
-    "avif": 2022,
-    "webp": 4848
+    "avif": 6450,
+    "webp": 8744
    },
    "1600": {
-    "avif": 21475,
-    "webp": 43676
+    "avif": 44826,
+    "webp": 49652
    },
    "from": "h-post",
    "query": "still&t0=0&fx=all",
    "bppAt1280x720": {
-    "avif1600": 0.1864
+    "avif1600": 0.3891
    }
   },
   "fluid": {
    "800": {
-    "avif": 7049,
-    "webp": 11260
+    "avif": 5586,
+    "webp": 8714
    },
    "1600": {
-    "avif": 14048,
-    "webp": 60600
+    "avif": 11952,
+    "webp": 53964
    },
    "from": "g-fluid-wrapped",
    "query": "",
    "bppAt1280x720": {
-    "avif1600": 0.12190000000000001
+    "avif1600": 0.1038
    }
   }
  },
@@ -3144,111 +3164,114 @@
    "id": "f-three-particles",
    "throttle": 1,
    "runs": 5,
-   "ttff": 173.8,
-   "fcp": 88,
-   "lcp": 88,
+   "ttff": 139,
+   "fcp": 108,
+   "lcp": 108,
    "lcpEl": "H1",
-   "bootBlock": 533,
-   "tbt": 179,
-   "longest": 178,
-   "fps": 21.7,
-   "frameMedian": 49.9,
-   "frameP95": 50.1,
-   "over25Pct": 97.5,
-   "effectFps": 22.1,
-   "rafPerSec": 22.1,
-   "busyPct": 96.7,
-   "scriptPct": 0.7,
-   "gpuMsPerFrame": 42.6,
-   "gpuMsPerDisplayFrame": 43.1,
-   "jsMs": 0.2,
-   "cpuRenderer": 4.5,
-   "cpuGpu": 95,
+   "bootBlock": 382,
+   "tbt": 132,
+   "longest": 151,
+   "fps": 25,
+   "frameMedian": 33.4,
+   "frameP95": 66.6,
+   "over25Pct": 91.3,
+   "effectFps": 25.4,
+   "rafPerSec": 25.4,
+   "busyPct": 98.3,
+   "scriptPct": 1.2,
+   "gpuMsPerFrame": 48,
+   "gpuMsPerDisplayFrame": 48.5,
+   "jsMs": 0.1,
+   "cpuRenderer": 5.2,
+   "cpuGpu": 124.4,
    "cpuBrowser": 0,
-   "cpuTotal": 99.8,
+   "cpuTotal": 130,
    "payload": {
     "html": 2870,
-    "poster": 13597,
-    "js": 136810,
+    "poster": 13850,
+    "js": 137182,
+    "video": 0,
     "other": 0,
-    "total": 153277
+    "total": 153902
    },
    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
    "canvas": [
     1280,
     720
    ],
-   "errors": [],
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ],
    "raw": [
     {
-     "ttff": 181.9000000001397,
-     "fps": 23.5,
+     "ttff": 207,
+     "fps": 25,
+     "cpu": {
+      "browser": 0,
+      "renderer": 5.2,
+      "GPU": 124.4,
+      "network.mojom.NetworkService": 0.4,
+      "storage.mojom.StorageService": 0,
+      "total": 130
+     },
+     "busyPct": 97.7,
+     "effectFps": 25.4
+    },
+    {
+     "ttff": 139,
+     "fps": 26.2,
      "cpu": {
       "browser": 0.2,
-      "renderer": 4.5,
-      "GPU": 101.2,
+      "renderer": 5.3,
+      "GPU": 126.8,
       "network.mojom.NetworkService": 0,
       "storage.mojom.StorageService": 0,
-      "total": 105.9
+      "total": 132.3
      },
-     "busyPct": 94.9,
-     "effectFps": 23.9
+     "busyPct": 98.7,
+     "effectFps": 26.4
     },
     {
-     "ttff": 173.80000000004657,
-     "fps": 21.7,
+     "ttff": 145.30000000074506,
+     "fps": 26.9,
      "cpu": {
       "browser": 0,
-      "renderer": 4.8,
-      "GPU": 95,
+      "renderer": 5.4,
+      "GPU": 135.5,
       "network.mojom.NetworkService": 0,
       "storage.mojom.StorageService": 0,
-      "total": 99.8
+      "total": 140.9
      },
-     "busyPct": 98.5,
-     "effectFps": 22.1
+     "busyPct": 98.8,
+     "effectFps": 27.3
     },
     {
-     "ttff": 201.10000000009313,
-     "fps": 19.7,
-     "cpu": {
-      "browser": 0,
-      "renderer": 4.4,
-      "GPU": 89,
-      "network.mojom.NetworkService": 0.2,
-      "storage.mojom.StorageService": 0,
-      "total": 93.6
-     },
-     "busyPct": 96.7,
-     "effectFps": 20.5
-    },
-    {
-     "ttff": 157.39999999990687,
-     "fps": 21.5,
+     "ttff": 130.5,
+     "fps": 23.6,
      "cpu": {
       "browser": 0.2,
-      "renderer": 4.4,
-      "GPU": 92,
-      "network.mojom.NetworkService": 0.2,
+      "renderer": 5,
+      "GPU": 114.4,
+      "network.mojom.NetworkService": 0,
       "storage.mojom.StorageService": 0,
-      "total": 96.8
+      "total": 119.6
      },
-     "busyPct": 96.7,
-     "effectFps": 21.6
+     "busyPct": 98.3,
+     "effectFps": 24.1
     },
     {
-     "ttff": 134.80000000004657,
-     "fps": 24.3,
+     "ttff": 136.09999999962747,
+     "fps": 22.1,
      "cpu": {
       "browser": 0,
-      "renderer": 4.8,
-      "GPU": 103.3,
-      "network.mojom.NetworkService": 0,
-      "storage.mojom.StorageService": 0.2,
-      "total": 108.3
+      "renderer": 4.3,
+      "GPU": 91.5,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 96
      },
-     "busyPct": 97.6,
-     "effectFps": 24.7
+     "busyPct": 92.9,
+     "effectFps": 22.5
     }
    ]
   },
@@ -3256,34 +3279,35 @@
    "id": "f-three-particles",
    "throttle": 4,
    "runs": 5,
-   "ttff": 379.9,
-   "fcp": 168,
-   "lcp": 168,
+   "ttff": 395.6,
+   "fcp": 172,
+   "lcp": 172,
    "lcpEl": "H1",
-   "bootBlock": 623,
-   "tbt": 373,
-   "longest": 234,
-   "fps": 13.9,
+   "bootBlock": 681,
+   "tbt": 381,
+   "longest": 207,
+   "fps": 13.7,
    "frameMedian": 66.6,
-   "frameP95": 150,
+   "frameP95": 166.6,
    "over25Pct": 100,
-   "effectFps": 14.3,
-   "rafPerSec": 14.3,
-   "busyPct": 99.3,
-   "scriptPct": 1.7,
-   "gpuMsPerFrame": 44.9,
-   "gpuMsPerDisplayFrame": 46.1,
-   "jsMs": 0.5,
-   "cpuRenderer": 61,
-   "cpuGpu": 66,
+   "effectFps": 14.1,
+   "rafPerSec": 14.1,
+   "busyPct": 99.2,
+   "scriptPct": 1.5,
+   "gpuMsPerFrame": 47.1,
+   "gpuMsPerDisplayFrame": 48.3,
+   "jsMs": 0.35,
+   "cpuRenderer": 60,
+   "cpuGpu": 66.4,
    "cpuBrowser": 0,
-   "cpuTotal": 123.7,
+   "cpuTotal": 124.4,
    "payload": {
     "html": 2870,
-    "poster": 13597,
-    "js": 136810,
+    "poster": 13850,
+    "js": 137182,
+    "video": 0,
     "other": 0,
-    "total": 153277
+    "total": 153902
    },
    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
    "canvas": [
@@ -3293,74 +3317,74 @@
    "errors": [],
    "raw": [
     {
-     "ttff": 379.89999999990687,
-     "fps": 12.6,
+     "ttff": 304,
+     "fps": 14,
      "cpu": {
       "browser": 0,
-      "renderer": 63.4,
-      "GPU": 57.7,
-      "network.mojom.NetworkService": 0.2,
+      "renderer": 58,
+      "GPU": 66.4,
+      "network.mojom.NetworkService": 0,
       "storage.mojom.StorageService": 0,
-      "total": 121.3
+      "total": 124.4
      },
-     "busyPct": 99.5,
-     "effectFps": 13
+     "busyPct": 99.2,
+     "effectFps": 14.1
     },
     {
-     "ttff": 330.3000000002794,
-     "fps": 13.3,
+     "ttff": 418.90000000037253,
+     "fps": 12.8,
      "cpu": {
       "browser": 0,
-      "renderer": 58.9,
-      "GPU": 63.7,
+      "renderer": 59.7,
+      "GPU": 63.5,
       "network.mojom.NetworkService": 0,
       "storage.mojom.StorageService": 0,
-      "total": 122.6
-     },
-     "busyPct": 99.3,
-     "effectFps": 13.5
-    },
-    {
-     "ttff": 439.79999999981374,
-     "fps": 13.9,
-     "cpu": {
-      "browser": 0.2,
-      "renderer": 63,
-      "GPU": 66.1,
-      "network.mojom.NetworkService": 0,
-      "storage.mojom.StorageService": 0,
-      "total": 129.3
+      "total": 123.2
      },
      "busyPct": 98.9,
-     "effectFps": 14.3
+     "effectFps": 13.1
     },
     {
-     "ttff": 326.20000000018626,
-     "fps": 14.8,
+     "ttff": 478.5,
+     "fps": 10.9,
      "cpu": {
-      "browser": 0,
-      "renderer": 57.7,
-      "GPU": 66,
+      "browser": 0.2,
+      "renderer": 60,
+      "GPU": 52.7,
       "network.mojom.NetworkService": 0,
       "storage.mojom.StorageService": 0,
-      "total": 123.7
+      "total": 112.9
      },
-     "busyPct": 96.5,
-     "effectFps": 15.1
+     "busyPct": 98,
+     "effectFps": 11.3
     },
     {
-     "ttff": 479.60000000009313,
+     "ttff": 395.59999999962747,
      "fps": 14.6,
      "cpu": {
       "browser": 0,
-      "renderer": 61,
-      "GPU": 67.3,
-      "network.mojom.NetworkService": 0,
+      "renderer": 66.4,
+      "GPU": 66.4,
+      "network.mojom.NetworkService": 0.2,
       "storage.mojom.StorageService": 0,
-      "total": 128.3
+      "total": 133
      },
-     "busyPct": 99.6,
-     "effectFps": 15
+     "busyPct": 99.4,
+     "effectFps": 14.8
+    },
+    {
+     "ttff": 342.19999999925494,
+     "fps": 13.7,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 66.5,
+      "GPU": 66.5,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 133.4
+     },
+     "busyPct": 99.5,
+     "effectFps": 14.1
     }
    ]
   },
@@ -3368,34 +3392,35 @@
    "id": "h-post",
    "throttle": 1,
    "runs": 5,
-   "ttff": 209.2,
-   "fcp": 88,
-   "lcp": 88,
-   "lcpEl": null,
-   "bootBlock": 1167,
-   "tbt": 1067,
-   "longest": 1034,
-   "fps": 2.9,
-   "frameMedian": 333.3,
-   "frameP95": 566.7,
+   "ttff": 249.2,
+   "fcp": 124,
+   "lcp": 100,
+   "lcpEl": "H1",
+   "bootBlock": 1180,
+   "tbt": 1080,
+   "longest": 1049,
+   "fps": 2.7,
+   "frameMedian": 333.4,
+   "frameP95": 533.3,
    "over25Pct": 100,
-   "effectFps": 3.3,
-   "rafPerSec": 3.3,
-   "busyPct": 99.9,
-   "scriptPct": 0.7,
-   "gpuMsPerFrame": 356.3,
-   "gpuMsPerDisplayFrame": 402.3,
-   "jsMs": 1,
-   "cpuRenderer": 1.5,
-   "cpuGpu": 115.1,
+   "effectFps": 3,
+   "rafPerSec": 3,
+   "busyPct": 100,
+   "scriptPct": 0.6,
+   "gpuMsPerFrame": 374.4,
+   "gpuMsPerDisplayFrame": 405.2,
+   "jsMs": 0.9,
+   "cpuRenderer": 1.3,
+   "cpuGpu": 105.9,
    "cpuBrowser": 0,
-   "cpuTotal": 116.7,
+   "cpuTotal": 107.2,
    "payload": {
     "html": 2864,
-    "poster": 21475,
-    "js": 209436,
+    "poster": 44826,
+    "js": 209846,
+    "video": 0,
     "other": 0,
-    "total": 233775
+    "total": 257536
    },
    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
    "canvas": [
@@ -3405,74 +3430,853 @@
    "errors": [],
    "raw": [
     {
-     "ttff": 242.5,
-     "fps": 2.4,
+     "ttff": 286.80000000074506,
+     "fps": 2.6,
      "cpu": {
       "browser": 0,
-      "renderer": 1.5,
-      "GPU": 96.9,
-      "network.mojom.NetworkService": 0.2,
+      "renderer": 1.2,
+      "GPU": 104.9,
+      "network.mojom.NetworkService": 0,
       "storage.mojom.StorageService": 0,
-      "total": 98.6
+      "total": 106.1
+     },
+     "busyPct": 100,
+     "effectFps": 3
+    },
+    {
+     "ttff": 258.3999999985099,
+     "fps": 3.4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.3,
+      "GPU": 140.9,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 142.2
+     },
+     "busyPct": 99.9,
+     "effectFps": 3.8
+    },
+    {
+     "ttff": 213.5,
+     "fps": 2.7,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.3,
+      "GPU": 105.9,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 107.2
+     },
+     "busyPct": 100,
+     "effectFps": 2.8
+    },
+    {
+     "ttff": 249.19999999925494,
+     "fps": 2.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1.3,
+      "GPU": 101.3,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 102.6
+     },
+     "busyPct": 99.9,
+     "effectFps": 2.7
+    },
+    {
+     "ttff": 189.09999999962747,
+     "fps": 3.5,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 1.4,
+      "GPU": 146,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 147.6
+     },
+     "busyPct": 100,
+     "effectFps": 3.9
+    }
+   ]
+  },
+  "h-post@4x": {
+   "id": "h-post",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": 522.1,
+   "fcp": 132,
+   "lcp": 132,
+   "lcpEl": "H1",
+   "bootBlock": 1620,
+   "tbt": 1520,
+   "longest": 1281,
+   "fps": 2.2,
+   "frameMedian": 441.6,
+   "frameP95": 633.2,
+   "over25Pct": 100,
+   "effectFps": 2.3,
+   "rafPerSec": 2.3,
+   "busyPct": 99.9,
+   "scriptPct": 1,
+   "gpuMsPerFrame": 362.8,
+   "gpuMsPerDisplayFrame": 402,
+   "jsMs": 2.65,
+   "cpuRenderer": 55.6,
+   "cpuGpu": 85.8,
+   "cpuBrowser": 0.2,
+   "cpuTotal": 141.8,
+   "payload": {
+    "html": 2864,
+    "poster": 44826,
+    "js": 209846,
+    "video": 0,
+    "other": 0,
+    "total": 257536
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 514,
+     "fps": 2.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 58.9,
+      "GPU": 100.5,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 159.4
      },
      "busyPct": 99.8,
      "effectFps": 2.8
     },
     {
-     "ttff": 173.10000000009313,
-     "fps": 2.9,
+     "ttff": 348.5,
+     "fps": 2.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 62.5,
+      "GPU": 105.2,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 167.7
+     },
+     "busyPct": 99.9,
+     "effectFps": 2.9
+    },
+    {
+     "ttff": 574.0999999996275,
+     "fps": 2.2,
+     "cpu": {
+      "browser": 0.4,
+      "renderer": 55.6,
+      "GPU": 85.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 141.8
+     },
+     "busyPct": 99.7,
+     "effectFps": 2.3
+    },
+    {
+     "ttff": 739,
+     "fps": 1.4,
      "cpu": {
       "browser": 0.2,
-      "renderer": 1.4,
-      "GPU": 115.1,
+      "renderer": 49.6,
+      "GPU": 54.1,
       "network.mojom.NetworkService": 0,
       "storage.mojom.StorageService": 0,
-      "total": 116.7
+      "total": 103.9
      },
      "busyPct": 100,
-     "effectFps": 3.3
+     "effectFps": 1.3
     },
     {
-     "ttff": 211.5,
-     "fps": 2.7,
+     "ttff": 522.1000000014901,
+     "fps": 1.1,
      "cpu": {
-      "browser": 0,
-      "renderer": 1.2,
-      "GPU": 105.5,
+      "browser": 0.9,
+      "renderer": 53.6,
+      "GPU": 46.7,
       "network.mojom.NetworkService": 0,
       "storage.mojom.StorageService": 0,
-      "total": 106.7
+      "total": 101.2
      },
      "busyPct": 99.9,
-     "effectFps": 2.8
-    },
+     "effectFps": 1.3
+    }
+   ]
+  },
+  "g-fluid-demo@1x": {
+   "id": "g-fluid-demo",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": 4508.3,
+   "fcp": 152,
+   "lcp": 152,
+   "lcpEl": "H1",
+   "bootBlock": 5143,
+   "tbt": 4943,
+   "longest": 3697,
+   "fps": 1.8,
+   "frameMedian": 558.3,
+   "frameP95": 750,
+   "over25Pct": 100,
+   "effectFps": null,
+   "rafPerSec": 4.4,
+   "busyPct": 99.9,
+   "scriptPct": 0.2,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 536.5,
+   "jsMs": null,
+   "cpuRenderer": 0.8,
+   "cpuGpu": 96.2,
+   "cpuBrowser": 0,
+   "cpuTotal": 96.9,
+   "payload": {
+    "html": 2364,
+    "poster": 0,
+    "js": 25776,
+    "other": 7115,
+    "total": 35255
+   },
+   "errors": [],
+   "raw": [
     {
-     "ttff": 201.29999999981374,
-     "fps": 3.1,
+     "ttff": 4508.299999999814,
+     "fps": 1.7,
      "cpu": {
       "browser": 0,
-      "renderer": 1.6,
-      "GPU": 127.4,
+      "renderer": 0.7,
+      "GPU": 91,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 91.7
+     },
+     "busyPct": 98.8,
+     "effectFps": null
+    },
+    {
+     "ttff": 3846.2000000001863,
+     "fps": 1,
+     "cpu": {
+      "browser": 0,
+      "renderer": 0.8,
+      "GPU": 54.5,
       "network.mojom.NetworkService": 0.2,
       "storage.mojom.StorageService": 0,
-      "total": 129.2
+      "total": 55.5
      },
-     "busyPct": 99.9,
-     "effectFps": 3.5
+     "busyPct": 99.1,
+     "effectFps": null
     },
     {
-     "ttff": 209.20000000018626,
-     "fps": 3.1,
+     "ttff": 5888.399999999907,
+     "fps": 2.3,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 0.9,
+      "GPU": 123.4,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 124.7
+     },
+     "busyPct": 99.9,
+     "effectFps": null
+    },
+    {
+     "ttff": 4519.600000000093,
+     "fps": 2.3,
      "cpu": {
       "browser": 0,
-      "renderer": 1.5,
-      "GPU": 124.7,
+      "renderer": 1,
+      "GPU": 127.8,
       "network.mojom.NetworkService": 0,
       "storage.mojom.StorageService": 0,
-      "total": 126.2
+      "total": 128.8
      },
-     "busyPct": 99.4,
-     "effectFps": 3.5
+     "busyPct": 100,
+     "effectFps": null
+    },
+    {
+     "ttff": 3127.7000000001863,
+     "fps": 1.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 0.7,
+      "GPU": 96.2,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 96.9
+     },
+     "busyPct": 100,
+     "effectFps": null
+    }
+   ]
+  },
+  "g-fluid-demo@4x": {
+   "id": "g-fluid-demo",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": 6388.7,
+   "fcp": 124,
+   "lcp": 124,
+   "lcpEl": "H1",
+   "bootBlock": 7239,
+   "tbt": 7039,
+   "longest": 5484,
+   "fps": 0.9,
+   "frameMedian": 1075,
+   "frameP95": 1516.6,
+   "over25Pct": 100,
+   "effectFps": null,
+   "rafPerSec": 2.5,
+   "busyPct": 99.9,
+   "scriptPct": 0.3,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 576.4,
+   "jsMs": null,
+   "cpuRenderer": 58.5,
+   "cpuGpu": 53.1,
+   "cpuBrowser": 0,
+   "cpuTotal": 111.8,
+   "payload": {
+    "html": 2364,
+    "poster": 0,
+    "js": 25776,
+    "other": 7115,
+    "total": 35255
+   },
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 6388.700000000186,
+     "fps": 1.1,
+     "cpu": {
+      "browser": 0,
+      "renderer": 52.3,
+      "GPU": 63.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 115.7
+     },
+     "busyPct": 99.9,
+     "effectFps": null
+    },
+    {
+     "ttff": 8308.5,
+     "fps": 1,
+     "cpu": {
+      "browser": 0,
+      "renderer": 58.6,
+      "GPU": 59,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 117.6
+     },
+     "busyPct": 100,
+     "effectFps": null
+    },
+    {
+     "ttff": 5368.899999999907,
+     "fps": 0.9,
+     "cpu": {
+      "browser": 0,
+      "renderer": 58.5,
+      "GPU": 53.1,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 111.8
+     },
+     "busyPct": 100,
+     "effectFps": null
+    },
+    {
+     "ttff": 5408.399999999907,
+     "fps": 0.7,
+     "cpu": {
+      "browser": 0,
+      "renderer": 39.3,
+      "GPU": 39.6,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 79.1
+     },
+     "busyPct": 99.9,
+     "effectFps": null
+    },
+    {
+     "ttff": 8445.100000000093,
+     "fps": 0.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 64.2,
+      "GPU": 45,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 109.2
+     },
+     "busyPct": 99.9,
+     "effectFps": null
+    }
+   ]
+  },
+  "g-fluid-wrapped@1x": {
+   "id": "g-fluid-wrapped",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": 144.2,
+   "fcp": 108,
+   "lcp": 108,
+   "lcpEl": "H1",
+   "bootBlock": 3474,
+   "tbt": 3424,
+   "longest": 3474,
+   "fps": 1.4,
+   "frameMedian": 683.3,
+   "frameP95": 850,
+   "over25Pct": 100,
+   "effectFps": 1.7,
+   "rafPerSec": 1.7,
+   "busyPct": 99.9,
+   "scriptPct": 0.3,
+   "gpuMsPerFrame": 466.5,
+   "gpuMsPerDisplayFrame": 584.7,
+   "jsMs": 0.35,
+   "cpuRenderer": 0.8,
+   "cpuGpu": 80.9,
+   "cpuBrowser": 0,
+   "cpuTotal": 81.8,
+   "payload": {
+    "html": 2866,
+    "poster": 14048,
+    "js": 9996,
+    "other": 7115,
+    "total": 34025
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 144.1999999997206,
+     "fps": 1.3,
+     "cpu": {
+      "browser": 0,
+      "renderer": 0.8,
+      "GPU": 79.3,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 80.1
+     },
+     "busyPct": 100,
+     "effectFps": 1.7
+    },
+    {
+     "ttff": 338.1999999997206,
+     "fps": 1.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 0.6,
+      "GPU": 95,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 95.6
+     },
+     "busyPct": 99.9,
+     "effectFps": 1.9
+    },
+    {
+     "ttff": 175.89999999990687,
+     "fps": 1.4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 0.9,
+      "GPU": 80.9,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 81.8
+     },
+     "busyPct": 100,
+     "effectFps": 1.6
+    },
+    {
+     "ttff": 101.89999999990687,
+     "fps": 1.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 1,
+      "GPU": 87.7,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 88.7
+     },
+     "busyPct": 99.9,
+     "effectFps": 1.9
+    },
+    {
+     "ttff": 124.70000000018626,
+     "fps": 1.4,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 0.8,
+      "GPU": 78.2,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 79.2
+     },
+     "busyPct": 99.9,
+     "effectFps": 1.7
+    }
+   ]
+  },
+  "g-fluid-wrapped@4x": {
+   "id": "g-fluid-wrapped",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": 251.2,
+   "fcp": 164,
+   "lcp": 164,
+   "lcpEl": "H1",
+   "bootBlock": 6278,
+   "tbt": 6178,
+   "longest": 6124,
+   "fps": 0.8,
+   "frameMedian": 1266.7,
+   "frameP95": 1466.5,
+   "over25Pct": 100,
+   "effectFps": 1.2,
+   "rafPerSec": 1.2,
+   "busyPct": 100,
+   "scriptPct": 0.1,
+   "gpuMsPerFrame": 399.1,
+   "gpuMsPerDisplayFrame": 592.5,
+   "jsMs": 0.6,
+   "cpuRenderer": 62.1,
+   "cpuGpu": 47.4,
+   "cpuBrowser": 0,
+   "cpuTotal": 110.7,
+   "payload": {
+    "html": 2866,
+    "poster": 14048,
+    "js": 9996,
+    "other": 7115,
+    "total": 34025
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 251.1999999997206,
+     "fps": 0.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 64.1,
+      "GPU": 48.2,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 112.3
+     },
+     "busyPct": 100,
+     "effectFps": 1.2
+    },
+    {
+     "ttff": 263.1999999997206,
+     "fps": 1.1,
+     "cpu": {
+      "browser": 0,
+      "renderer": 59.9,
+      "GPU": 63.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 123.5
+     },
+     "busyPct": 100,
+     "effectFps": 1.5
+    },
+    {
+     "ttff": 234.39999999990687,
+     "fps": 0.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 60.5,
+      "GPU": 43.9,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 104.4
+     },
+     "busyPct": 100,
+     "effectFps": 1.1
+    },
+    {
+     "ttff": 239.09999999962747,
+     "fps": 0.5,
+     "cpu": {
+      "browser": 0,
+      "renderer": 62.1,
+      "GPU": 31.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 93.5
+     },
+     "busyPct": 100,
+     "effectFps": 0.9
+    },
+    {
+     "ttff": 305.79999999981374,
+     "fps": 0.8,
+     "cpu": {
+      "browser": 0,
+      "renderer": 63.3,
+      "GPU": 47.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 110.7
+     },
+     "busyPct": 100,
+     "effectFps": 1.2
+    }
+   ]
+  },
+  "i-video@1x": {
+   "id": "i-video",
+   "throttle": 1,
+   "runs": 5,
+   "ttff": 231.1,
+   "fcp": 160,
+   "lcp": 160,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 57.6,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 2.1,
+   "effectFps": 22.2,
+   "rafPerSec": 0,
+   "busyPct": 1.2,
+   "scriptPct": 0.2,
+   "gpuMsPerFrame": 1.9,
+   "gpuMsPerDisplayFrame": 0.7,
+   "jsMs": null,
+   "cpuRenderer": 10,
+   "cpuGpu": 4.4,
+   "cpuBrowser": 0.2,
+   "cpuTotal": 14.4,
+   "payload": {
+    "html": 3529,
+    "poster": 3444,
+    "js": 0,
+    "video": 96732,
+    "other": 0,
+    "total": 103705
+   },
+   "renderer": "video",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ],
+   "raw": [
+    {
+     "ttff": 264,
+     "fps": 58.4,
+     "cpu": {
+      "browser": 0.8,
+      "renderer": 10,
+      "GPU": 4.4,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 15.4
+     },
+     "busyPct": 1.2,
+     "effectFps": 23.8
+    },
+    {
+     "ttff": 231.1000000005588,
+     "fps": 59.2,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 10.2,
+      "GPU": 4.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 14.8
+     },
+     "busyPct": 1.9,
+     "effectFps": 23.4
+    },
+    {
+     "ttff": 450.80000000074506,
+     "fps": 57.6,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 8.9,
+      "GPU": 4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 13.1
+     },
+     "busyPct": 1.4,
+     "effectFps": 20.6
+    },
+    {
+     "ttff": 123.40000000037253,
+     "fps": 57,
+     "cpu": {
+      "browser": 0,
+      "renderer": 9.4,
+      "GPU": 3.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 13.2
+     },
+     "busyPct": 0.8,
+     "effectFps": 20.6
+    },
+    {
+     "ttff": 156.8999999994412,
+     "fps": 57.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 10,
+      "GPU": 4.4,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 14.4
+     },
+     "busyPct": 1.2,
+     "effectFps": 22.2
+    }
+   ]
+  },
+  "i-video@4x": {
+   "id": "i-video",
+   "throttle": 4,
+   "runs": 5,
+   "ttff": 348.7,
+   "fcp": 208,
+   "lcp": 208,
+   "lcpEl": "H1",
+   "bootBlock": 61,
+   "tbt": 11,
+   "longest": 61,
+   "fps": 54.4,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 4.5,
+   "effectFps": 20.8,
+   "rafPerSec": 0,
+   "busyPct": 6.7,
+   "scriptPct": 1.6,
+   "gpuMsPerFrame": 2.1,
+   "gpuMsPerDisplayFrame": 0.8,
+   "jsMs": null,
+   "cpuRenderer": 63.3,
+   "cpuGpu": 4.6,
+   "cpuBrowser": 0,
+   "cpuTotal": 67.9,
+   "payload": {
+    "html": 3529,
+    "poster": 3444,
+    "js": 0,
+    "video": 96732,
+    "other": 0,
+    "total": 103705
+   },
+   "renderer": "video",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "raw": [
+    {
+     "ttff": 534.1999999992549,
+     "fps": 53.4,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 63.5,
+      "GPU": 4.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 68.3
+     },
+     "busyPct": 6.7,
+     "effectFps": 20.1
+    },
+    {
+     "ttff": 505.80000000074506,
+     "fps": 57.4,
+     "cpu": {
+      "browser": 0,
+      "renderer": 72.3,
+      "GPU": 4.8,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 77.1
+     },
+     "busyPct": 4.1,
+     "effectFps": 22.4
+    },
+    {
+     "ttff": 333.5,
+     "fps": 51.9,
+     "cpu": {
+      "browser": 0,
+      "renderer": 63.3,
+      "GPU": 4.6,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 67.9
+     },
+     "busyPct": 5.2,
+     "effectFps": 20.8
+    },
+    {
+     "ttff": 348.70000000018626,
+     "fps": 54.4,
+     "cpu": {
+      "browser": 0.2,
+      "renderer": 61.3,
+      "GPU": 4.1,
+      "network.mojom.NetworkService": 0,
+      "storage.mojom.StorageService": 0,
+      "total": 65.6
+     },
+     "busyPct": 6.8,
+     "effectFps": 20.2
+    },
+    {
+     "ttff": 296.5,
+     "fps": 57.6,
+     "cpu": {
+      "browser": 0,
+      "renderer": 61.7,
+      "GPU": 4.2,
+      "network.mojom.NetworkService": 0.2,
+      "storage.mojom.StorageService": 0,
+      "total": 66.1
+     },
+     "busyPct": 6.7,
+     "effectFps": 23.2
     }
    ]
   }
@@ -3480,72 +4284,80 @@
  "phaseMeta": {
   "build": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
+   "at": "2026-09-29T06:09:28.083Z",
    "only": null,
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    11.8,
+    12.9,
+    10.3
    ]
   },
   "settle": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
+   "at": "2026-09-29T06:01:13.396Z",
    "only": null,
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    9.2,
+    7.5,
+    7.4
    ]
   },
   "inp": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
-   "only": null,
+   "at": "2026-09-29T03:12:34.172Z",
+   "only": [
+    "i-video"
+   ],
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    13,
+    14.7,
+    15.1
    ]
   },
   "offscreen": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
-   "only": null,
+   "at": "2026-09-29T03:12:34.172Z",
+   "only": [
+    "i-video"
+   ],
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    13,
+    14.7,
+    15.1
    ]
   },
   "hidden": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
-   "only": null,
+   "at": "2026-09-29T03:12:34.172Z",
+   "only": [
+    "i-video"
+   ],
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    13,
+    14.7,
+    15.1
    ]
   },
   "reduced": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
+   "at": "2026-09-29T06:01:13.396Z",
    "only": null,
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    9.2,
+    7.5,
+    7.4
    ]
   },
   "nowebgl": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
-   "only": null,
+   "at": "2026-09-29T03:12:34.172Z",
+   "only": [
+    "i-video"
+   ],
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    13,
+    14.7,
+    15.1
    ]
   },
   "contextloss": {
@@ -3560,22 +4372,22 @@
   },
   "fetch": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
+   "at": "2026-09-29T02:47:38.128Z",
    "only": null,
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    15.2,
+    14.7,
+    15
    ]
   },
   "posters": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
+   "at": "2026-09-29T03:20:21.115Z",
    "only": null,
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    11.2,
+    13.8,
+    14.7
    ]
   },
   "bundles": {
@@ -3590,22 +4402,27 @@
   },
   "main": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
-   "only": null,
+   "at": "2026-09-29T03:22:31.284Z",
+   "only": [
+    "h-post",
+    "f-three-particles"
+   ],
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    16.2,
+    14.6,
+    14.9
    ]
   },
   "contrast": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
-   "only": null,
+   "at": "2026-09-29T03:37:49.855Z",
+   "only": [
+    "h-post"
+   ],
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    11.7,
+    10.7,
+    12.2
    ]
   },
   "fill": {
@@ -3630,110 +4447,426 @@
   },
   "post": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
+   "at": "2026-09-29T03:25:37.367Z",
    "only": null,
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    16.9,
+    14.9,
+    14.9
    ]
   },
   "shots": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
+   "at": "2026-09-29T03:33:07.781Z",
    "only": null,
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    9.1,
+    10.2,
+    12.8
    ]
   },
   "summary": {
    "runs": 5,
-   "at": "2026-09-29T01:16:32.470Z",
+   "at": "2026-09-29T03:38:13.719Z",
    "only": null,
    "loadavg": [
-    7.2,
-    6.3,
-    3.5
+    11.7,
+    10.7,
+    12.2
+   ]
+  },
+  "video": {
+   "runs": 5,
+   "at": "2026-09-29T03:05:33.071Z",
+   "only": null,
+   "loadavg": [
+    13.8,
+    14.9,
+    15.1
+   ]
+  },
+  "licences": {
+   "runs": 5,
+   "at": "2026-09-29T02:47:38.128Z",
+   "only": null,
+   "loadavg": [
+    15.2,
+    14.7,
+    15
+   ]
+  },
+  "lcp": {
+   "runs": 5,
+   "at": "2026-09-29T06:01:13.396Z",
+   "only": null,
+   "loadavg": [
+    9.2,
+    7.5,
+    7.4
+   ]
+  },
+  "governor": {
+   "runs": 5,
+   "at": "2026-09-29T03:05:33.071Z",
+   "only": null,
+   "loadavg": [
+    13.8,
+    14.9,
+    15.1
+   ]
+  },
+  "blacklevel": {
+   "runs": 5,
+   "at": "2026-09-29T03:20:21.115Z",
+   "only": null,
+   "loadavg": [
+    11.2,
+    13.8,
+    14.7
+   ]
+  },
+  "videocolour": {
+   "runs": 5,
+   "at": "2026-09-29T03:19:42.554Z",
+   "only": null,
+   "loadavg": [
+    11.7,
+    14.3,
+    14.9
+   ]
+  },
+  "census": {
+   "runs": 5,
+   "at": "2026-09-29T03:37:13.741Z",
+   "only": null,
+   "loadavg": [
+    11.5,
+    10.5,
+    12.2
+   ]
+  },
+  "caveat": {
+   "runs": 5,
+   "at": "2026-09-29T03:36:41.676Z",
+   "only": null,
+   "loadavg": [
+    9.8,
+    10.1,
+    12.2
+   ]
+  },
+  "firstframe": {
+   "runs": 5,
+   "at": "2026-09-29T06:01:13.396Z",
+   "only": null,
+   "loadavg": [
+    9.2,
+    7.5,
+    7.4
+   ]
+  },
+  "specs": {
+   "runs": 5,
+   "at": "2026-09-29T06:01:13.396Z",
+   "only": null,
+   "loadavg": [
+    9.2,
+    7.5,
+    7.4
    ]
   }
  },
  "settle": {
-  "e1-webgl-vanilla:settle=4": {
+  "e1-webgl-vanilla:settle=4@1x": {
    "id": "e1-webgl-vanilla",
    "query": "settle=4",
-   "duringRaf": 11.2,
-   "duringCpu": 257.4,
+   "throttle": 1,
+   "runs": 1,
+   "wrapperMotionMs": {
+    "median": 3983,
+    "min": 3983,
+    "max": 3983,
+    "n": 1
+   },
+   "screenMotionMs": {
+    "median": 2958,
+    "min": 2958,
+    "max": 2958,
+    "n": 1
+   },
+   "motionStartMs": {
+    "median": 126.4,
+    "min": 126.4,
+    "max": 126.4,
+    "n": 1
+   },
+   "settledAtMs": {
+    "median": 4109.5,
+    "min": 4109.5,
+    "max": 4109.5,
+    "n": 1
+   },
+   "firstVisibleMs": {
+    "median": 617,
+    "min": 617,
+    "max": 617,
+    "n": 1
+   },
+   "lastChangeMs": {
+    "median": 3575,
+    "min": 3575,
+    "max": 3575,
+    "n": 1
+   },
    "afterRaf": 0,
    "afterCpu": 1.6,
-   "afterBusy": 0,
-   "settledAt": 5627,
-   "toggle": "Play background",
-   "state": {
-    "running": false,
-    "inView": true,
-    "visible": true,
-    "paused": true,
-    "lost": false,
-    "failed": false,
-    "settled": true,
-    "t": 2.11,
-    "canvas": [
-     1280,
-     720
-    ]
-   }
+   "labelAfter": "Play background animation",
+   "failed": []
   },
-  "e1-webgl-vanilla:loop": {
+  "e1-webgl-vanilla:settle=4@4x": {
    "id": "e1-webgl-vanilla",
-   "query": "",
-   "duringRaf": 10,
-   "duringCpu": 236.1,
-   "afterRaf": 11.3,
-   "afterCpu": 270.6,
-   "afterBusy": 99.9,
-   "settledAt": null,
-   "toggle": "Pause background",
-   "state": {
-    "running": true,
-    "inView": true,
-    "visible": true,
-    "paused": false,
-    "lost": false,
-    "failed": false,
-    "settled": false,
-    "t": 5.35,
-    "canvas": [
-     1280,
-     720
-    ]
-   }
+   "query": "settle=4",
+   "throttle": 4,
+   "runs": 1,
+   "wrapperMotionMs": {
+    "median": 4143,
+    "min": 4143,
+    "max": 4143,
+    "n": 1
+   },
+   "screenMotionMs": {
+    "median": 2788,
+    "min": 2788,
+    "max": 2788,
+    "n": 1
+   },
+   "motionStartMs": {
+    "median": 201.8,
+    "min": 201.8,
+    "max": 201.8,
+    "n": 1
+   },
+   "settledAtMs": {
+    "median": 4344.4,
+    "min": 4344.4,
+    "max": 4344.4,
+    "n": 1
+   },
+   "firstVisibleMs": {
+    "median": 769,
+    "min": 769,
+    "max": 769,
+    "n": 1
+   },
+   "lastChangeMs": {
+    "median": 3557,
+    "min": 3557,
+    "max": 3557,
+    "n": 1
+   },
+   "afterRaf": 0,
+   "afterCpu": 66.7,
+   "labelAfter": "Play background animation",
+   "failed": []
   }
  },
  "inp": {
   "a-static": {
    "id": "a-static",
+   "query": "",
    "interactionMedian": 16,
-   "inp": 16,
+   "inp": 56,
    "reportedOver16": [
-    2
+    4,
+    8,
+    3
    ]
   },
   "d-canvas2d": {
    "id": "d-canvas2d",
-   "interactionMedian": 28,
-   "inp": 40,
+   "query": "",
+   "interactionMedian": 36,
+   "inp": 144,
    "reportedOver16": [
+    12,
+    12,
     12
    ]
   },
   "e1-webgl-vanilla": {
    "id": "e1-webgl-vanilla",
-   "interactionMedian": 372,
-   "inp": 640,
+   "query": "",
+   "interactionMedian": 752,
+   "inp": 1432,
    "reportedOver16": [
+    12,
+    12,
+    11
+   ]
+  },
+  "b1-css-blobs": {
+   "id": "b1-css-blobs",
+   "query": "",
+   "interactionMedian": 68,
+   "inp": 160,
+   "reportedOver16": [
+    12,
+    12,
     12
+   ]
+  },
+  "b2-css-property": {
+   "id": "b2-css-property",
+   "query": "",
+   "interactionMedian": 188,
+   "inp": 336,
+   "reportedOver16": [
+    12,
+    12,
+    12
+   ]
+  },
+  "c1-svg-turbulence": {
+   "id": "c1-svg-turbulence",
+   "query": "",
+   "interactionMedian": 320,
+   "inp": 736,
+   "reportedOver16": [
+    12,
+    12,
+    12
+   ]
+  },
+  "e1-webgl-vanilla:scale=0.5": {
+   "id": "e1-webgl-vanilla",
+   "query": "scale=0.5",
+   "interactionMedian": 288,
+   "inp": 736,
+   "reportedOver16": [
+    11,
+    12,
+    12
+   ]
+  },
+  "e1-webgl-vanilla:scale=0.5&fps=30": {
+   "id": "e1-webgl-vanilla",
+   "query": "scale=0.5&fps=30",
+   "interactionMedian": 236,
+   "inp": 1168,
+   "reportedOver16": [
+    12,
+    12,
+    12
+   ]
+  },
+  "e1-webgl-vanilla:scale=0.25": {
+   "id": "e1-webgl-vanilla",
+   "query": "scale=0.25",
+   "interactionMedian": 56,
+   "inp": 376,
+   "reportedOver16": [
+    12,
+    12,
+    12
+   ]
+  },
+  "e5-three": {
+   "id": "e5-three",
+   "query": "",
+   "interactionMedian": 832,
+   "inp": 1928,
+   "reportedOver16": [
+    11,
+    12,
+    11
+   ]
+  },
+  "e6-paper": {
+   "id": "e6-paper",
+   "query": "",
+   "interactionMedian": 3492,
+   "inp": 5656,
+   "reportedOver16": [
+    10,
+    10,
+    10
+   ]
+  },
+  "e6-paper:paperdpr=1": {
+   "id": "e6-paper",
+   "query": "paperdpr=1",
+   "interactionMedian": 728,
+   "inp": 1648,
+   "reportedOver16": [
+    11,
+    11,
+    11
+   ]
+  },
+  "f-three-particles": {
+   "id": "f-three-particles",
+   "query": "",
+   "interactionMedian": 148,
+   "inp": 440,
+   "reportedOver16": [
+    12,
+    12,
+    12
+   ]
+  },
+  "h-post": {
+   "id": "h-post",
+   "query": "",
+   "interactionMedian": 1472,
+   "inp": 2320,
+   "reportedOver16": [
+    11,
+    10,
+    10
+   ]
+  },
+  "g-fluid-demo": {
+   "id": "g-fluid-demo",
+   "query": "",
+   "interactionMedian": 2272,
+   "inp": 3280,
+   "reportedOver16": [
+    10,
+    10,
+    10
+   ]
+  },
+  "g-fluid-wrapped": {
+   "id": "g-fluid-wrapped",
+   "query": "",
+   "interactionMedian": 1972,
+   "inp": 2656,
+   "reportedOver16": [
+    11,
+    10,
+    10
+   ]
+  },
+  "g-fluid-wrapped:lite": {
+   "id": "g-fluid-wrapped",
+   "query": "lite",
+   "interactionMedian": 596,
+   "inp": 896,
+   "reportedOver16": [
+    11,
+    11,
+    11
+   ]
+  },
+  "i-video": {
+   "id": "i-video",
+   "query": "",
+   "interactionMedian": 16,
+   "inp": 128,
+   "reportedOver16": [
+    9,
+    9,
+    8
    ]
   }
  },
@@ -3744,7 +4877,7 @@
    "rafPerSec": 0,
    "effectFps": null,
    "busyPct": 0,
-   "cpuTotal": 1.3,
+   "cpuTotal": 0,
    "cpuGpu": 0,
    "cpuRenderer": 0
   },
@@ -3754,9 +4887,9 @@
    "rafPerSec": 0,
    "effectFps": null,
    "busyPct": 1.3,
-   "cpuTotal": 4.3,
-   "cpuGpu": 1,
-   "cpuRenderer": 3
+   "cpuTotal": 3,
+   "cpuGpu": 0.7,
+   "cpuRenderer": 2.3
   },
   "e1-webgl-vanilla:pause": {
    "id": "e1-webgl-vanilla",
@@ -3764,161 +4897,619 @@
    "rafPerSec": 0,
    "effectFps": 0,
    "busyPct": 0,
-   "cpuTotal": 0.3,
+   "cpuTotal": 0,
    "cpuGpu": 0,
    "cpuRenderer": 0
   },
   "e1-webgl-vanilla:nopause": {
    "id": "e1-webgl-vanilla",
    "mode": "nopause",
-   "rafPerSec": 0,
-   "effectFps": 0,
-   "busyPct": 0,
-   "cpuTotal": 0.3,
-   "cpuGpu": 0,
-   "cpuRenderer": 0.3
+   "rafPerSec": 4,
+   "effectFps": 4,
+   "busyPct": 100,
+   "cpuTotal": 89.3,
+   "cpuGpu": 88.1,
+   "cpuRenderer": 1.2
   },
   "e6-paper:pause": {
    "id": "e6-paper",
    "mode": "pause",
-   "rafPerSec": 0,
+   "rafPerSec": 0.3,
    "effectFps": null,
    "busyPct": 0,
-   "cpuTotal": 0.3,
+   "cpuTotal": 0,
    "cpuGpu": 0,
    "cpuRenderer": 0
   },
   "e6-paper:nopause": {
    "id": "e6-paper",
    "mode": "nopause",
-   "rafPerSec": 0,
+   "rafPerSec": 0.3,
    "effectFps": null,
-   "busyPct": 0,
-   "cpuTotal": 0.9,
+   "busyPct": 0.1,
+   "cpuTotal": 0.3,
    "cpuGpu": 0,
-   "cpuRenderer": 0.3
+   "cpuRenderer": 0
   },
   "g-fluid-demo:as-built": {
    "id": "g-fluid-demo",
    "mode": "as-built",
-   "rafPerSec": 12.3,
+   "rafPerSec": 3.4,
    "effectFps": null,
    "busyPct": 100,
-   "cpuTotal": 312.2,
-   "cpuGpu": 309.4,
-   "cpuRenderer": 1.9
+   "cpuTotal": 64.9,
+   "cpuGpu": 64.3,
+   "cpuRenderer": 0.6
   },
   "g-fluid-wrapped:pause": {
    "id": "g-fluid-wrapped",
    "mode": "pause",
    "rafPerSec": 0,
    "effectFps": 0,
-   "busyPct": 0,
+   "busyPct": 0.1,
    "cpuTotal": 0.3,
-   "cpuGpu": 0.3,
+   "cpuGpu": 0,
    "cpuRenderer": 0
   },
   "g-fluid-wrapped:nopause": {
    "id": "g-fluid-wrapped",
    "mode": "nopause",
+   "rafPerSec": 1.7,
+   "effectFps": 1.7,
+   "busyPct": 99.9,
+   "cpuTotal": 70.7,
+   "cpuGpu": 70,
+   "cpuRenderer": 0.7
+  },
+  "a-static:as-built": {
+   "id": "a-static",
+   "mode": "as-built",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "busyPct": 0,
+   "cpuTotal": 0.3,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  },
+  "b1-css-blobs:pause": {
+   "id": "b1-css-blobs",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "busyPct": 0,
+   "cpuTotal": 0.3,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  },
+  "b1-css-blobs:nopause": {
+   "id": "b1-css-blobs",
+   "mode": "nopause",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "busyPct": 0,
+   "cpuTotal": 2,
+   "cpuGpu": 0.7,
+   "cpuRenderer": 1
+  },
+  "b2-css-property:pause": {
+   "id": "b2-css-property",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "busyPct": 0,
+   "cpuTotal": 0,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  },
+  "b2-css-property:nopause": {
+   "id": "b2-css-property",
+   "mode": "nopause",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "busyPct": 2.4,
+   "cpuTotal": 4.3,
+   "cpuGpu": 0.7,
+   "cpuRenderer": 3.3
+  },
+  "c2-css-grain:pause": {
+   "id": "c2-css-grain",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "busyPct": 0,
+   "cpuTotal": 0.3,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  },
+  "c2-css-grain:nopause": {
+   "id": "c2-css-grain",
+   "mode": "nopause",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "busyPct": 0,
+   "cpuTotal": 2.6,
+   "cpuGpu": 1,
+   "cpuRenderer": 1.3
+  },
+  "d-canvas2d:pause": {
+   "id": "d-canvas2d",
+   "mode": "pause",
    "rafPerSec": 0,
    "effectFps": 0,
    "busyPct": 0,
    "cpuTotal": 0.3,
    "cpuGpu": 0,
    "cpuRenderer": 0
+  },
+  "d-canvas2d:nopause": {
+   "id": "d-canvas2d",
+   "mode": "nopause",
+   "rafPerSec": 58.6,
+   "effectFps": 58.6,
+   "busyPct": 19.7,
+   "cpuTotal": 19.2,
+   "cpuGpu": 0.3,
+   "cpuRenderer": 18.6
+  },
+  "e2-ogl:pause": {
+   "id": "e2-ogl",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "busyPct": 0,
+   "cpuTotal": 0,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  },
+  "e2-ogl:nopause": {
+   "id": "e2-ogl",
+   "mode": "nopause",
+   "rafPerSec": 4,
+   "effectFps": 4,
+   "busyPct": 100,
+   "cpuTotal": 91.6,
+   "cpuGpu": 90.3,
+   "cpuRenderer": 0.9
+  },
+  "e3-regl:pause": {
+   "id": "e3-regl",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "busyPct": 0,
+   "cpuTotal": 0,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  },
+  "e3-regl:nopause": {
+   "id": "e3-regl",
+   "mode": "nopause",
+   "rafPerSec": 4.4,
+   "effectFps": 4.4,
+   "busyPct": 99.9,
+   "cpuTotal": 101.3,
+   "cpuGpu": 100,
+   "cpuRenderer": 1.3
+  },
+  "e4-twgl:pause": {
+   "id": "e4-twgl",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "busyPct": 0,
+   "cpuTotal": 0,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  },
+  "e4-twgl:nopause": {
+   "id": "e4-twgl",
+   "mode": "nopause",
+   "rafPerSec": 4.4,
+   "effectFps": 4.4,
+   "busyPct": 99.9,
+   "cpuTotal": 98,
+   "cpuGpu": 97,
+   "cpuRenderer": 1.3
+  },
+  "e5-three:pause": {
+   "id": "e5-three",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "busyPct": 0.1,
+   "cpuTotal": 0.3,
+   "cpuGpu": 0,
+   "cpuRenderer": 0.3
+  },
+  "e5-three:nopause": {
+   "id": "e5-three",
+   "mode": "nopause",
+   "rafPerSec": 4.2,
+   "effectFps": 4.2,
+   "busyPct": 100,
+   "cpuTotal": 91.3,
+   "cpuGpu": 89.4,
+   "cpuRenderer": 1.3
+  },
+  "f-three-particles:pause": {
+   "id": "f-three-particles",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "busyPct": 0,
+   "cpuTotal": 0.3,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  },
+  "f-three-particles:nopause": {
+   "id": "f-three-particles",
+   "mode": "nopause",
+   "rafPerSec": 25.5,
+   "effectFps": 25.5,
+   "busyPct": 99.7,
+   "cpuTotal": 107.2,
+   "cpuGpu": 102.2,
+   "cpuRenderer": 5
+  },
+  "h-post:pause": {
+   "id": "h-post",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "busyPct": 0,
+   "cpuTotal": 0.3,
+   "cpuGpu": 0,
+   "cpuRenderer": 0.3
+  },
+  "h-post:nopause": {
+   "id": "h-post",
+   "mode": "nopause",
+   "rafPerSec": 2.3,
+   "effectFps": 2.3,
+   "busyPct": 100,
+   "cpuTotal": 76.9,
+   "cpuGpu": 76,
+   "cpuRenderer": 0.9
+  },
+  "i-video:pause": {
+   "id": "i-video",
+   "mode": "pause",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "busyPct": 0,
+   "cpuTotal": 0,
+   "cpuGpu": 0,
+   "cpuRenderer": 0
+  },
+  "i-video:nopause": {
+   "id": "i-video",
+   "mode": "nopause",
+   "rafPerSec": 0,
+   "effectFps": 22.3,
+   "busyPct": 1.1,
+   "cpuTotal": 8.3,
+   "cpuGpu": 0.7,
+   "cpuRenderer": 7.3
   }
  },
  "hidden": {
   "c1-svg-turbulence": {
    "id": "c1-svg-turbulence",
-   "visibilityState": "visible",
+   "method": "simulated visibilitychange",
    "rafPerSec": 0,
    "effectFps": null,
-   "cpuTotal": 5.9,
-   "busyPct": 0.1,
-   "resumed": {
-    "vis": "visible",
-    "state": null
-   }
+   "cpuTotal": 0.6,
+   "busyPct": 0,
+   "resumedRafPerSec": 0,
+   "resumedCpu": 96.6,
+   "state": null
   },
   "e1-webgl-vanilla": {
    "id": "e1-webgl-vanilla",
-   "visibilityState": "visible",
-   "rafPerSec": 1,
-   "effectFps": 1,
-   "cpuTotal": 25.2,
-   "busyPct": 9.6,
-   "resumed": {
-    "vis": "visible",
-    "state": {
-     "running": true,
-     "inView": true,
-     "visible": true,
-     "paused": false,
-     "lost": false,
-     "failed": false,
-     "settled": false,
-     "t": 1.45,
-     "canvas": [
-      1280,
-      720
-     ]
-    }
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "cpuTotal": 0,
+   "busyPct": 0,
+   "resumedRafPerSec": 3.1,
+   "resumedCpu": 54.9,
+   "state": {
+    "running": true,
+    "inView": true,
+    "visible": true,
+    "paused": false,
+    "lost": false,
+    "failed": false,
+    "settled": false,
+    "t": 0.95,
+    "canvas": [
+     1280,
+     720
+    ]
    }
   },
   "e6-paper": {
    "id": "e6-paper",
-   "visibilityState": "visible",
-   "rafPerSec": 1.3,
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
    "effectFps": null,
-   "cpuTotal": 104.9,
-   "busyPct": 38.4,
-   "resumed": {
-    "vis": "visible",
-    "state": {
-     "canvas": [
-      2560,
-      1440
-     ]
-    }
+   "cpuTotal": 0.6,
+   "busyPct": 0,
+   "resumedRafPerSec": 1.6,
+   "resumedCpu": 81.5,
+   "state": {
+    "canvas": [
+     2560,
+     1440
+    ]
    }
   },
   "g-fluid-demo": {
    "id": "g-fluid-demo",
-   "visibilityState": "visible",
-   "rafPerSec": 2.6,
+   "method": "simulated visibilitychange",
+   "rafPerSec": 3.6,
    "effectFps": null,
-   "cpuTotal": 59.7,
-   "busyPct": 19.8,
-   "resumed": {
-    "vis": "visible",
-    "state": null
-   }
+   "cpuTotal": 72,
+   "busyPct": 99.9,
+   "resumedRafPerSec": 4.7,
+   "resumedCpu": 80.1,
+   "state": null
   },
   "g-fluid-wrapped": {
    "id": "g-fluid-wrapped",
-   "visibilityState": "visible",
-   "rafPerSec": 1,
-   "effectFps": 1,
-   "cpuTotal": 56.7,
-   "busyPct": 31.9,
-   "resumed": {
-    "vis": "visible",
-    "state": {
-     "running": true,
-     "inView": true,
-     "visible": true,
-     "paused": false,
-     "lost": false,
-     "failed": false,
-     "settled": false,
-     "t": 0.95,
-     "canvas": [
-      1280,
-      720
-     ]
-    }
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "cpuTotal": 0.6,
+   "busyPct": 0,
+   "resumedRafPerSec": 2.3,
+   "resumedCpu": 68.2,
+   "state": {
+    "running": true,
+    "inView": true,
+    "visible": true,
+    "paused": false,
+    "lost": false,
+    "failed": false,
+    "settled": false,
+    "t": 0.5,
+    "canvas": [
+     1280,
+     720
+    ]
+   }
+  },
+  "a-static": {
+   "id": "a-static",
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "cpuTotal": 1.3,
+   "busyPct": 0,
+   "resumedRafPerSec": 0,
+   "resumedCpu": 0.7,
+   "state": null
+  },
+  "b1-css-blobs": {
+   "id": "b1-css-blobs",
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "cpuTotal": 1,
+   "busyPct": 0,
+   "resumedRafPerSec": 0,
+   "resumedCpu": 41.3,
+   "state": null
+  },
+  "b2-css-property": {
+   "id": "b2-css-property",
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "cpuTotal": 0,
+   "busyPct": 0,
+   "resumedRafPerSec": 0,
+   "resumedCpu": 79.7,
+   "state": null
+  },
+  "c2-css-grain": {
+   "id": "c2-css-grain",
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": null,
+   "cpuTotal": 0.3,
+   "busyPct": 0,
+   "resumedRafPerSec": 0,
+   "resumedCpu": 46.6,
+   "state": null
+  },
+  "d-canvas2d": {
+   "id": "d-canvas2d",
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "cpuTotal": 0.3,
+   "busyPct": 0,
+   "resumedRafPerSec": 55.2,
+   "resumedCpu": 24.7,
+   "state": {
+    "running": true,
+    "inView": true,
+    "visible": true,
+    "paused": false,
+    "lost": false,
+    "failed": false,
+    "settled": false,
+    "t": 3.98,
+    "canvas": [
+     1280,
+     720
+    ]
+   }
+  },
+  "e2-ogl": {
+   "id": "e2-ogl",
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "cpuTotal": 0.3,
+   "busyPct": 0,
+   "resumedRafPerSec": 3.3,
+   "resumedCpu": 50.2,
+   "state": {
+    "running": true,
+    "inView": true,
+    "visible": true,
+    "paused": false,
+    "lost": false,
+    "failed": false,
+    "settled": false,
+    "t": 0.65,
+    "canvas": [
+     1280,
+     720
+    ]
+   }
+  },
+  "e3-regl": {
+   "id": "e3-regl",
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "cpuTotal": 0.6,
+   "busyPct": 0,
+   "resumedRafPerSec": 4.3,
+   "resumedCpu": 78.5,
+   "state": {
+    "running": true,
+    "inView": true,
+    "visible": true,
+    "paused": false,
+    "lost": false,
+    "failed": false,
+    "settled": false,
+    "t": 0.9,
+    "canvas": [
+     1280,
+     720
+    ]
+   }
+  },
+  "e4-twgl": {
+   "id": "e4-twgl",
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "cpuTotal": 0.3,
+   "busyPct": 0,
+   "resumedRafPerSec": 4.8,
+   "resumedCpu": 89,
+   "state": {
+    "running": true,
+    "inView": true,
+    "visible": true,
+    "paused": false,
+    "lost": false,
+    "failed": false,
+    "settled": false,
+    "t": 0.8,
+    "canvas": [
+     1280,
+     720
+    ]
+   }
+  },
+  "e5-three": {
+   "id": "e5-three",
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "cpuTotal": 0.3,
+   "busyPct": 0,
+   "resumedRafPerSec": 4.9,
+   "resumedCpu": 94,
+   "state": {
+    "running": true,
+    "inView": true,
+    "visible": true,
+    "paused": false,
+    "lost": false,
+    "failed": false,
+    "settled": false,
+    "t": 0.8,
+    "canvas": [
+     1280,
+     720
+    ]
+   }
+  },
+  "f-three-particles": {
+   "id": "f-three-particles",
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "cpuTotal": 0,
+   "busyPct": 0,
+   "resumedRafPerSec": 26.8,
+   "resumedCpu": 133.4,
+   "state": {
+    "running": true,
+    "inView": true,
+    "visible": true,
+    "paused": false,
+    "lost": false,
+    "failed": false,
+    "settled": false,
+    "t": 3.43,
+    "canvas": [
+     1280,
+     720
+    ]
+   }
+  },
+  "h-post": {
+   "id": "h-post",
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "cpuTotal": 0.6,
+   "busyPct": 0,
+   "resumedRafPerSec": 3.3,
+   "resumedCpu": 86.9,
+   "state": {
+    "running": true,
+    "inView": true,
+    "visible": true,
+    "paused": false,
+    "lost": false,
+    "failed": false,
+    "settled": false,
+    "t": 0.55,
+    "canvas": [
+     1280,
+     720
+    ]
+   }
+  },
+  "i-video": {
+   "id": "i-video",
+   "method": "simulated visibilitychange",
+   "rafPerSec": 0,
+   "effectFps": 0,
+   "cpuTotal": 1.9,
+   "busyPct": 0,
+   "resumedRafPerSec": 0,
+   "resumedCpu": 13.3,
+   "state": {
+    "running": true,
+    "inView": true,
+    "visible": true,
+    "paused": false,
+    "canvas": [
+     1280,
+     720
+    ],
+    "src": "loop-av1.webm"
    }
   }
  },
@@ -3926,20 +5517,18 @@
   "c1-svg-turbulence": {
    "id": "c1-svg-turbulence",
    "rafPerSec": 0,
-   "cpuTotal": 1.6,
+   "cpuTotal": 0.3,
    "busyPct": 0,
    "effectLoaded": false,
    "lcp": {
-    "t": 92,
+    "t": 208,
     "tag": "H1",
     "id": "h1",
     "url": "",
     "size": 112949
    },
    "button": "Play background (aria-pressed=true)",
-   "errors": [
-    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
-   ]
+   "errors": []
   },
   "e1-webgl-vanilla": {
    "id": "e1-webgl-vanilla",
@@ -3948,7 +5537,7 @@
    "busyPct": 0,
    "effectLoaded": false,
    "lcp": {
-    "t": 120,
+    "t": 156,
     "tag": "H1",
     "id": "h1",
     "url": "",
@@ -3960,11 +5549,11 @@
   "e6-paper": {
    "id": "e6-paper",
    "rafPerSec": 0,
-   "cpuTotal": 0.3,
+   "cpuTotal": 0,
    "busyPct": 0,
    "effectLoaded": false,
    "lcp": {
-    "t": 56,
+    "t": 280,
     "tag": "H1",
     "id": "h1",
     "url": "",
@@ -3975,12 +5564,12 @@
   },
   "g-fluid-demo": {
    "id": "g-fluid-demo",
-   "rafPerSec": 6.4,
-   "cpuTotal": 147.1,
+   "rafPerSec": 4.7,
+   "cpuTotal": 99.1,
    "busyPct": 99.9,
    "effectLoaded": true,
    "lcp": {
-    "t": 56,
+    "t": 96,
     "tag": "H1",
     "id": "h1",
     "url": "",
@@ -3992,7 +5581,41 @@
   "g-fluid-wrapped": {
    "id": "g-fluid-wrapped",
    "rafPerSec": 0,
-   "cpuTotal": 0.3,
+   "cpuTotal": 0,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 92,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  },
+  "a-static": {
+   "id": "a-static",
+   "rafPerSec": 0,
+   "cpuTotal": 0,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 64,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": null,
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ]
+  },
+  "b1-css-blobs": {
+   "id": "b1-css-blobs",
+   "rafPerSec": 0,
+   "cpuTotal": 0,
    "busyPct": 0,
    "effectLoaded": false,
    "lcp": {
@@ -4004,6 +5627,168 @@
    },
    "button": "Play background (aria-pressed=true)",
    "errors": []
+  },
+  "b2-css-property": {
+   "id": "b2-css-property",
+   "rafPerSec": 0,
+   "cpuTotal": 0.3,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 132,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  },
+  "c2-css-grain": {
+   "id": "c2-css-grain",
+   "rafPerSec": 0,
+   "cpuTotal": 0,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 188,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  },
+  "d-canvas2d": {
+   "id": "d-canvas2d",
+   "rafPerSec": 0,
+   "cpuTotal": 0,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 72,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  },
+  "e2-ogl": {
+   "id": "e2-ogl",
+   "rafPerSec": 0,
+   "cpuTotal": 0,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 196,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  },
+  "e3-regl": {
+   "id": "e3-regl",
+   "rafPerSec": 0,
+   "cpuTotal": 0,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 220,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  },
+  "e4-twgl": {
+   "id": "e4-twgl",
+   "rafPerSec": 0,
+   "cpuTotal": 0,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 160,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  },
+  "e5-three": {
+   "id": "e5-three",
+   "rafPerSec": 0,
+   "cpuTotal": 0,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 144,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  },
+  "f-three-particles": {
+   "id": "f-three-particles",
+   "rafPerSec": 0,
+   "cpuTotal": 0.3,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 80,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  },
+  "h-post": {
+   "id": "h-post",
+   "rafPerSec": 0,
+   "cpuTotal": 0,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 56,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": []
+  },
+  "i-video": {
+   "id": "i-video",
+   "rafPerSec": 0,
+   "cpuTotal": 0.6,
+   "busyPct": 0,
+   "effectLoaded": false,
+   "lcp": {
+    "t": 72,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "button": "Play background (aria-pressed=true)",
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ]
   }
  },
  "nowebgl": {
@@ -4014,15 +5799,13 @@
    "posterVisible": false,
    "toggleVisible": true,
    "lcp": {
-    "t": 100,
+    "t": 88,
     "tag": "H1",
     "id": "h1",
     "url": "",
     "size": 112949
    },
-   "errors": [
-    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
-   ]
+   "errors": []
   },
   "e1-webgl-vanilla": {
    "id": "e1-webgl-vanilla",
@@ -4031,7 +5814,7 @@
    "posterVisible": true,
    "toggleVisible": false,
    "lcp": {
-    "t": 52,
+    "t": 72,
     "tag": "H1",
     "id": "h1",
     "url": "",
@@ -4046,7 +5829,7 @@
    "posterVisible": true,
    "toggleVisible": false,
    "lcp": {
-    "t": 80,
+    "t": 224,
     "tag": "H1",
     "id": "h1",
     "url": "",
@@ -4061,7 +5844,7 @@
    "posterVisible": false,
    "toggleVisible": false,
    "lcp": {
-    "t": 52,
+    "t": 108,
     "tag": "H1",
     "id": "h1",
     "url": "",
@@ -4078,13 +5861,211 @@
    "posterVisible": true,
    "toggleVisible": false,
    "lcp": {
-    "t": 84,
+    "t": 148,
     "tag": "H1",
     "id": "h1",
     "url": "",
     "size": 112949
    },
    "errors": []
+  },
+  "a-static": {
+   "id": "a-static",
+   "fallback": null,
+   "reason": null,
+   "posterVisible": true,
+   "toggleVisible": false,
+   "lcp": {
+    "t": 72,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ]
+  },
+  "b1-css-blobs": {
+   "id": "b1-css-blobs",
+   "fallback": null,
+   "reason": null,
+   "posterVisible": false,
+   "toggleVisible": true,
+   "lcp": {
+    "t": 104,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": []
+  },
+  "b2-css-property": {
+   "id": "b2-css-property",
+   "fallback": null,
+   "reason": null,
+   "posterVisible": false,
+   "toggleVisible": true,
+   "lcp": {
+    "t": 72,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": []
+  },
+  "c2-css-grain": {
+   "id": "c2-css-grain",
+   "fallback": null,
+   "reason": null,
+   "posterVisible": true,
+   "toggleVisible": true,
+   "lcp": {
+    "t": 168,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": []
+  },
+  "d-canvas2d": {
+   "id": "d-canvas2d",
+   "fallback": null,
+   "reason": null,
+   "posterVisible": true,
+   "toggleVisible": true,
+   "lcp": {
+    "t": 100,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": []
+  },
+  "e2-ogl": {
+   "id": "e2-ogl",
+   "fallback": "poster",
+   "reason": "Cannot set properties of null (setting 'renderer')",
+   "posterVisible": true,
+   "toggleVisible": false,
+   "lcp": {
+    "t": 64,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": [
+    "console: unable to create webgl context"
+   ]
+  },
+  "e3-regl": {
+   "id": "e3-regl",
+   "fallback": "poster",
+   "reason": "no WebGL",
+   "posterVisible": true,
+   "toggleVisible": false,
+   "lcp": {
+    "t": 60,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": []
+  },
+  "e4-twgl": {
+   "id": "e4-twgl",
+   "fallback": "poster",
+   "reason": "no WebGL",
+   "posterVisible": true,
+   "toggleVisible": false,
+   "lcp": {
+    "t": 132,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": []
+  },
+  "e5-three": {
+   "id": "e5-three",
+   "fallback": "poster",
+   "reason": "THREE.WebGLRenderer: Error creating WebGL context.",
+   "posterVisible": true,
+   "toggleVisible": false,
+   "lcp": {
+    "t": 72,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": [
+    "console: THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+    "console: THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+    "console: THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context."
+   ]
+  },
+  "f-three-particles": {
+   "id": "f-three-particles",
+   "fallback": "poster",
+   "reason": "THREE.WebGLRenderer: Error creating WebGL context.",
+   "posterVisible": true,
+   "toggleVisible": false,
+   "lcp": {
+    "t": 132,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": [
+    "console: THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+    "console: THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+    "console: THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context."
+   ]
+  },
+  "h-post": {
+   "id": "h-post",
+   "fallback": "poster",
+   "reason": "THREE.WebGLRenderer: Error creating WebGL context.",
+   "posterVisible": true,
+   "toggleVisible": false,
+   "lcp": {
+    "t": 132,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": [
+    "console: THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+    "console: THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+    "console: THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context."
+   ]
+  },
+  "i-video": {
+   "id": "i-video",
+   "fallback": null,
+   "reason": null,
+   "posterVisible": true,
+   "toggleVisible": true,
+   "lcp": {
+    "t": 96,
+    "tag": "H1",
+    "id": "h1",
+    "url": "",
+    "size": 112949
+   },
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ]
   }
  },
  "contextloss": {
@@ -4093,7 +6074,7 @@
    "lose": "lost",
    "during": {
     "canvasOpacity": "0",
-    "draws": 13,
+    "draws": 8,
     "state": {
      "running": false,
      "inView": true,
@@ -4102,7 +6083,7 @@
      "lost": true,
      "failed": false,
      "settled": false,
-     "t": 0.55,
+     "t": 0.3,
      "canvas": [
       1280,
       720
@@ -4111,7 +6092,7 @@
    },
    "after": {
     "canvasOpacity": "1",
-    "draws": 27,
+    "draws": 18,
     "restored": 1,
     "state": {
      "running": true,
@@ -4121,7 +6102,7 @@
      "lost": false,
      "failed": false,
      "settled": false,
-     "t": 1.15,
+     "t": 0.71,
      "canvas": [
       1280,
       720
@@ -4176,6 +6157,174 @@
   },
   "g-fluid-wrapped": {
    "id": "g-fluid-wrapped",
+   "lose": "lost",
+   "during": {
+    "canvasOpacity": "0",
+    "draws": 5,
+    "state": {
+     "running": false,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": true,
+     "failed": false,
+     "settled": false,
+     "t": 0.15,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "after": {
+    "canvasOpacity": "1",
+    "draws": 11,
+    "restored": 1,
+    "state": {
+     "running": true,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": false,
+     "failed": false,
+     "settled": false,
+     "t": 0.35,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "errors": []
+  },
+  "e2-ogl": {
+   "id": "e2-ogl",
+   "lose": "lost",
+   "during": {
+    "canvasOpacity": "0",
+    "draws": 9,
+    "state": {
+     "running": false,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": true,
+     "failed": false,
+     "settled": false,
+     "t": 0.35,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "after": {
+    "canvasOpacity": "1",
+    "draws": 17,
+    "restored": 1,
+    "state": {
+     "running": true,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": false,
+     "failed": false,
+     "settled": false,
+     "t": 0.65,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "errors": []
+  },
+  "e3-regl": {
+   "id": "e3-regl",
+   "lose": "lost",
+   "during": {
+    "canvasOpacity": "0",
+    "draws": 9,
+    "state": {
+     "running": false,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": true,
+     "failed": false,
+     "settled": false,
+     "t": 0.35,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "after": {
+    "canvasOpacity": "1",
+    "draws": 16,
+    "restored": 1,
+    "state": {
+     "running": true,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": false,
+     "failed": false,
+     "settled": false,
+     "t": 0.6,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "errors": []
+  },
+  "e4-twgl": {
+   "id": "e4-twgl",
+   "lose": "lost",
+   "during": {
+    "canvasOpacity": "0",
+    "draws": 9,
+    "state": {
+     "running": false,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": true,
+     "failed": false,
+     "settled": false,
+     "t": 0.35,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "after": {
+    "canvasOpacity": "1",
+    "draws": 19,
+    "restored": 1,
+    "state": {
+     "running": true,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": false,
+     "failed": false,
+     "settled": false,
+     "t": 0.75,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "errors": []
+  },
+  "e5-three": {
+   "id": "e5-three",
    "lose": "lost",
    "during": {
     "canvasOpacity": "0",
@@ -4196,8 +6345,8 @@
     }
    },
    "after": {
-    "canvasOpacity": "0",
-    "draws": 8,
+    "canvasOpacity": "1",
+    "draws": 16,
     "restored": 1,
     "state": {
      "running": true,
@@ -4207,7 +6356,7 @@
      "lost": false,
      "failed": false,
      "settled": false,
-     "t": 0.2,
+     "t": 0.6,
      "canvas": [
       1280,
       720
@@ -4215,6 +6364,4435 @@
     }
    },
    "errors": []
+  },
+  "f-three-particles": {
+   "id": "f-three-particles",
+   "lose": "lost",
+   "during": {
+    "canvasOpacity": "0",
+    "draws": 26,
+    "state": {
+     "running": false,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": true,
+     "failed": false,
+     "settled": false,
+     "t": 1.03,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "after": {
+    "canvasOpacity": "1",
+    "draws": 69,
+    "restored": 1,
+    "state": {
+     "running": true,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": false,
+     "failed": false,
+     "settled": false,
+     "t": 2.75,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "errors": []
+  },
+  "h-post": {
+   "id": "h-post",
+   "lose": "lost",
+   "during": {
+    "canvasOpacity": "0",
+    "draws": 7,
+    "state": {
+     "running": false,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": true,
+     "failed": false,
+     "settled": false,
+     "t": 0.25,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "after": {
+    "canvasOpacity": "1",
+    "draws": 13,
+    "restored": 1,
+    "state": {
+     "running": true,
+     "inView": true,
+     "visible": true,
+     "paused": false,
+     "lost": false,
+     "failed": false,
+     "settled": false,
+     "t": 0.45,
+     "canvas": [
+      1280,
+      720
+     ]
+    }
+   },
+   "errors": []
+  }
+ },
+ "contrast": {
+  "a-static": {
+   "id": "a-static",
+   "h1WorstP95": 14.79,
+   "ledeWorstP95": 16.034000000000002,
+   "h1WorstMax": 12.247
+  },
+  "b1-css-blobs": {
+   "id": "b1-css-blobs",
+   "h1WorstP95": 11.392999999999999,
+   "ledeWorstP95": 12.335,
+   "h1WorstMax": 10.796
+  },
+  "b2-css-property": {
+   "id": "b2-css-property",
+   "h1WorstP95": 8.463,
+   "ledeWorstP95": 10.616,
+   "h1WorstMax": 6.662999999999999
+  },
+  "c1-svg-turbulence": {
+   "id": "c1-svg-turbulence",
+   "h1WorstP95": 6.864,
+   "ledeWorstP95": 8.35,
+   "h1WorstMax": 5.992000000000001
+  },
+  "c2-css-grain": {
+   "id": "c2-css-grain",
+   "h1WorstP95": 14.456,
+   "ledeWorstP95": 15.857000000000001,
+   "h1WorstMax": 11.658
+  },
+  "d-canvas2d": {
+   "id": "d-canvas2d",
+   "h1WorstP95": 17.105999999999998,
+   "ledeWorstP95": 17.363,
+   "h1WorstMax": 4.752
+  },
+  "e1-webgl-vanilla": {
+   "id": "e1-webgl-vanilla",
+   "h1WorstP95": 15.714,
+   "ledeWorstP95": 17.297,
+   "h1WorstMax": 14.434000000000001
+  },
+  "e2-ogl": {
+   "id": "e2-ogl",
+   "h1WorstP95": 15.819,
+   "ledeWorstP95": 17.312,
+   "h1WorstMax": 14.607999999999999
+  },
+  "e3-regl": {
+   "id": "e3-regl",
+   "h1WorstP95": 15.819,
+   "ledeWorstP95": 17.297,
+   "h1WorstMax": 14.283
+  },
+  "e4-twgl": {
+   "id": "e4-twgl",
+   "h1WorstP95": 15.714,
+   "ledeWorstP95": 17.212,
+   "h1WorstMax": 14.27
+  },
+  "e5-three": {
+   "id": "e5-three",
+   "h1WorstP95": 15.714,
+   "ledeWorstP95": 17.297,
+   "h1WorstMax": 14.434000000000001
+  },
+  "e6-paper": {
+   "id": "e6-paper",
+   "h1WorstP95": 3.91,
+   "ledeWorstP95": 5.313,
+   "h1WorstMax": 3.719
+  },
+  "f-three-particles": {
+   "id": "f-three-particles",
+   "h1WorstP95": 16.250999999999998,
+   "ledeWorstP95": 18.602999999999998,
+   "h1WorstMax": 2.861
+  },
+  "h-post": {
+   "id": "h-post",
+   "h1WorstP95": 10.617,
+   "ledeWorstP95": 18.117,
+   "h1WorstMax": 1.913
+  },
+  "g-fluid-demo": {
+   "id": "g-fluid-demo",
+   "h1WorstP95": 3.432,
+   "ledeWorstP95": 3.8489999999999998,
+   "h1WorstMax": 2.735
+  },
+  "g-fluid-wrapped": {
+   "id": "g-fluid-wrapped",
+   "h1WorstP95": 10.508,
+   "ledeWorstP95": 12.684000000000001,
+   "h1WorstMax": 1.8130000000000002
+  },
+  "i-video": {
+   "id": "i-video",
+   "h1WorstP95": 14.687000000000001,
+   "ledeWorstP95": 16.012,
+   "h1WorstMax": 13.645
+  }
+ },
+ "fill": {
+  "e1-webgl-vanilla:scale 1 (1280×720 px)": {
+   "id": "e1-webgl-vanilla",
+   "label": "scale 1 (1280×720 px)",
+   "query": "",
+   "dsf": 1,
+   "runs": 3,
+   "ttff": 124.2,
+   "fcp": 132,
+   "lcp": 132,
+   "lcpEl": "H1",
+   "bootBlock": 733,
+   "tbt": 683,
+   "longest": 733,
+   "fps": 4.2,
+   "frameMedian": 216.7,
+   "frameP95": 433.3,
+   "over25Pct": 100,
+   "effectFps": 4.7,
+   "rafPerSec": 4.7,
+   "busyPct": 99.8,
+   "scriptPct": 0.1,
+   "gpuMsPerFrame": 224.5,
+   "gpuMsPerDisplayFrame": 252.3,
+   "jsMs": 0,
+   "cpuRenderer": 1.2,
+   "cpuGpu": 105.5,
+   "cpuBrowser": 0,
+   "cpuTotal": 106.9,
+   "payload": {
+    "html": 2868,
+    "poster": 3414,
+    "js": 3563,
+    "other": 0,
+    "total": 9845
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ]
+  },
+  "e1-webgl-vanilla:scale 0.5": {
+   "id": "e1-webgl-vanilla",
+   "label": "scale 0.5",
+   "query": "scale=0.5",
+   "dsf": 1,
+   "runs": 3,
+   "ttff": 192.2,
+   "fcp": 116,
+   "lcp": 116,
+   "lcpEl": "H1",
+   "bootBlock": 612,
+   "tbt": 321,
+   "longest": 179,
+   "fps": 13.1,
+   "frameMedian": 66.6,
+   "frameP95": 200,
+   "over25Pct": 100,
+   "effectFps": 13.7,
+   "rafPerSec": 13.7,
+   "busyPct": 97.8,
+   "scriptPct": 0.3,
+   "gpuMsPerFrame": 63.4,
+   "gpuMsPerDisplayFrame": 64.5,
+   "jsMs": 0,
+   "cpuRenderer": 1.7,
+   "cpuGpu": 86.8,
+   "cpuBrowser": 0,
+   "cpuTotal": 88.7,
+   "payload": {
+    "html": 2868,
+    "poster": 3414,
+    "js": 3563,
+    "other": 0,
+    "total": 9845
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    640,
+    360
+   ],
+   "errors": []
+  },
+  "e1-webgl-vanilla:scale 0.25": {
+   "id": "e1-webgl-vanilla",
+   "label": "scale 0.25",
+   "query": "scale=0.25",
+   "dsf": 1,
+   "runs": 3,
+   "ttff": 98.1,
+   "fcp": 140,
+   "lcp": 140,
+   "lcpEl": "H1",
+   "bootBlock": 133,
+   "tbt": 83,
+   "longest": 133,
+   "fps": 46.2,
+   "frameMedian": 16.7,
+   "frameP95": 33.5,
+   "over25Pct": 20.3,
+   "effectFps": 46.5,
+   "rafPerSec": 46.5,
+   "busyPct": 90.3,
+   "scriptPct": 0.8,
+   "gpuMsPerFrame": 19.7,
+   "gpuMsPerDisplayFrame": 19.8,
+   "jsMs": 0,
+   "cpuRenderer": 3,
+   "cpuGpu": 91.6,
+   "cpuBrowser": 0,
+   "cpuTotal": 94.8,
+   "payload": {
+    "html": 2868,
+    "poster": 3414,
+    "js": 3563,
+    "other": 0,
+    "total": 9845
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    320,
+    180
+   ],
+   "errors": []
+  },
+  "e1-webgl-vanilla:scale 0.5, 30 fps cap": {
+   "id": "e1-webgl-vanilla",
+   "label": "scale 0.5, 30 fps cap",
+   "query": "scale=0.5&fps=30",
+   "dsf": 1,
+   "runs": 3,
+   "ttff": 107.5,
+   "fcp": 100,
+   "lcp": 100,
+   "lcpEl": "H1",
+   "bootBlock": 608,
+   "tbt": 408,
+   "longest": 237,
+   "fps": 14,
+   "frameMedian": 66.6,
+   "frameP95": 133.3,
+   "over25Pct": 100,
+   "effectFps": 14.5,
+   "rafPerSec": 14.5,
+   "busyPct": 99.7,
+   "scriptPct": 0.4,
+   "gpuMsPerFrame": 63.4,
+   "gpuMsPerDisplayFrame": 65.6,
+   "jsMs": 0,
+   "cpuRenderer": 1.7,
+   "cpuGpu": 91.9,
+   "cpuBrowser": 0,
+   "cpuTotal": 93.9,
+   "payload": {
+    "html": 2868,
+    "poster": 3414,
+    "js": 3563,
+    "other": 0,
+    "total": 9845
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    640,
+    360
+   ],
+   "errors": []
+  },
+  "e1-webgl-vanilla:DPR 2 screen, cap 2 (2560×1440 px)": {
+   "id": "e1-webgl-vanilla",
+   "label": "DPR 2 screen, cap 2 (2560×1440 px)",
+   "query": "",
+   "dsf": 2,
+   "runs": 3,
+   "ttff": 72.1,
+   "fcp": 60,
+   "lcp": 60,
+   "lcpEl": "H1",
+   "bootBlock": 1633,
+   "tbt": 1583,
+   "longest": 1633,
+   "fps": 1.2,
+   "frameMedian": 883.3,
+   "frameP95": 1083.3,
+   "over25Pct": 100,
+   "effectFps": 1.6,
+   "rafPerSec": 1.6,
+   "busyPct": 100,
+   "scriptPct": 0,
+   "gpuMsPerFrame": 718.1,
+   "gpuMsPerDisplayFrame": 972.5,
+   "jsMs": 0,
+   "cpuRenderer": 0.9,
+   "cpuGpu": 114.9,
+   "cpuBrowser": 0,
+   "cpuTotal": 116.3,
+   "payload": {
+    "html": 2868,
+    "poster": 3414,
+    "js": 3563,
+    "other": 0,
+    "total": 9845
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    2560,
+    1440
+   ],
+   "errors": []
+  },
+  "e1-webgl-vanilla:DPR 2 screen, cap 1": {
+   "id": "e1-webgl-vanilla",
+   "label": "DPR 2 screen, cap 1",
+   "query": "dpr=1",
+   "dsf": 2,
+   "runs": 3,
+   "ttff": 109.9,
+   "fcp": 88,
+   "lcp": 88,
+   "lcpEl": "H1",
+   "bootBlock": 602,
+   "tbt": 551,
+   "longest": 601,
+   "fps": 4.6,
+   "frameMedian": 200,
+   "frameP95": 466.7,
+   "over25Pct": 100,
+   "effectFps": 5,
+   "rafPerSec": 5,
+   "busyPct": 99.7,
+   "scriptPct": 0.1,
+   "gpuMsPerFrame": 220.2,
+   "gpuMsPerDisplayFrame": 243.1,
+   "jsMs": 0,
+   "cpuRenderer": 1.2,
+   "cpuGpu": 111.1,
+   "cpuBrowser": 0,
+   "cpuTotal": 112.5,
+   "payload": {
+    "html": 2868,
+    "poster": 3414,
+    "js": 3563,
+    "other": 0,
+    "total": 9845
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": []
+  },
+  "e6-paper:library default (minPixelRatio 2 → 2560×1440 px)": {
+   "id": "e6-paper",
+   "label": "library default (minPixelRatio 2 → 2560×1440 px)",
+   "query": "",
+   "dsf": 1,
+   "runs": 3,
+   "ttff": 141.4,
+   "fcp": 96,
+   "lcp": 96,
+   "lcpEl": "H1",
+   "bootBlock": 1975,
+   "tbt": 1925,
+   "longest": 1975,
+   "fps": 1.1,
+   "frameMedian": 933.3,
+   "frameP95": 1183.3,
+   "over25Pct": 100,
+   "effectFps": null,
+   "rafPerSec": 1.3,
+   "busyPct": 100,
+   "scriptPct": 0,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 976.4,
+   "jsMs": null,
+   "cpuRenderer": 1.1,
+   "cpuGpu": 107.4,
+   "cpuBrowser": 0,
+   "cpuTotal": 109.4,
+   "payload": {
+    "html": 2873,
+    "poster": 1630,
+    "js": 7382,
+    "other": 0,
+    "total": 11885
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    2560,
+    1440
+   ],
+   "errors": []
+  },
+  "e6-paper:minPixelRatio 1": {
+   "id": "e6-paper",
+   "label": "minPixelRatio 1",
+   "query": "paperdpr=1",
+   "dsf": 1,
+   "runs": 3,
+   "ttff": 131.9,
+   "fcp": 108,
+   "lcp": 108,
+   "lcpEl": "H1",
+   "bootBlock": 614,
+   "tbt": 564,
+   "longest": 614,
+   "fps": 4,
+   "frameMedian": 216.7,
+   "frameP95": 516.7,
+   "over25Pct": 100,
+   "effectFps": null,
+   "rafPerSec": 4.5,
+   "busyPct": 99.5,
+   "scriptPct": 0.2,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 251.9,
+   "jsMs": null,
+   "cpuRenderer": 1,
+   "cpuGpu": 99.5,
+   "cpuBrowser": 0,
+   "cpuTotal": 100.5,
+   "payload": {
+    "html": 2873,
+    "poster": 1630,
+    "js": 7382,
+    "other": 0,
+    "total": 11885
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": []
+  },
+  "g-fluid-wrapped:demo quality (dye 1024, bloom, sunrays)": {
+   "id": "g-fluid-wrapped",
+   "label": "demo quality (dye 1024, bloom, sunrays)",
+   "query": "",
+   "dsf": 1,
+   "runs": 3,
+   "ttff": 137.9,
+   "fcp": 96,
+   "lcp": 140,
+   "lcpEl": "H1",
+   "bootBlock": 3844,
+   "tbt": 3794,
+   "longest": 3844,
+   "fps": 1.6,
+   "frameMedian": 583.4,
+   "frameP95": 899.9,
+   "over25Pct": 100,
+   "effectFps": 2,
+   "rafPerSec": 2,
+   "busyPct": 99.9,
+   "scriptPct": 0.2,
+   "gpuMsPerFrame": 482,
+   "gpuMsPerDisplayFrame": 602.5,
+   "jsMs": 0.4,
+   "cpuRenderer": 0.9,
+   "cpuGpu": 96.4,
+   "cpuBrowser": 0,
+   "cpuTotal": 97.3,
+   "payload": {
+    "html": 2866,
+    "poster": 14048,
+    "js": 9996,
+    "other": 7115,
+    "total": 34025
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": []
+  },
+  "g-fluid-wrapped:lite tier (dye 512, no bloom/sunrays)": {
+   "id": "g-fluid-wrapped",
+   "label": "lite tier (dye 512, no bloom/sunrays)",
+   "query": "lite",
+   "dsf": 1,
+   "runs": 3,
+   "ttff": 137.4,
+   "fcp": 124,
+   "lcp": 124,
+   "lcpEl": "H1",
+   "bootBlock": 1967,
+   "tbt": 1917,
+   "longest": 1967,
+   "fps": 3.5,
+   "frameMedian": 250,
+   "frameP95": 500,
+   "over25Pct": 100,
+   "effectFps": 3.8,
+   "rafPerSec": 3.8,
+   "busyPct": 99.8,
+   "scriptPct": 0.6,
+   "gpuMsPerFrame": 201.1,
+   "gpuMsPerDisplayFrame": 222.6,
+   "jsMs": 0.3,
+   "cpuRenderer": 1.2,
+   "cpuGpu": 82.7,
+   "cpuBrowser": 0,
+   "cpuTotal": 84.3,
+   "payload": {
+    "html": 2866,
+    "poster": 14048,
+    "js": 9996,
+    "other": 7115,
+    "total": 34025
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": []
+  },
+  "d-canvas2d:DPR 1": {
+   "id": "d-canvas2d",
+   "label": "DPR 1",
+   "query": "",
+   "dsf": 1,
+   "runs": 3,
+   "ttff": 116,
+   "fcp": 64,
+   "lcp": 64,
+   "lcpEl": "H1",
+   "bootBlock": 78,
+   "tbt": 28,
+   "longest": 78,
+   "fps": 57,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 3.6,
+   "effectFps": 57,
+   "rafPerSec": 57,
+   "busyPct": 23.1,
+   "scriptPct": 1.9,
+   "gpuMsPerFrame": 1.2,
+   "gpuMsPerDisplayFrame": 1.2,
+   "jsMs": 0.2,
+   "cpuRenderer": 18,
+   "cpuGpu": 6.7,
+   "cpuBrowser": 0,
+   "cpuTotal": 24.7,
+   "payload": {
+    "html": 2868,
+    "poster": 28979,
+    "js": 2142,
+    "other": 0,
+    "total": 33989
+   },
+   "renderer": "canvas2d",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": []
+  },
+  "d-canvas2d:DPR 2 screen": {
+   "id": "d-canvas2d",
+   "label": "DPR 2 screen",
+   "query": "",
+   "dsf": 2,
+   "runs": 3,
+   "ttff": 260.6,
+   "fcp": 124,
+   "lcp": 124,
+   "lcpEl": "H1",
+   "bootBlock": 64,
+   "tbt": 14,
+   "longest": 64,
+   "fps": 47.7,
+   "frameMedian": 16.7,
+   "frameP95": 50,
+   "over25Pct": 11.1,
+   "effectFps": 48,
+   "rafPerSec": 48,
+   "busyPct": 60.6,
+   "scriptPct": 2.9,
+   "gpuMsPerFrame": 4,
+   "gpuMsPerDisplayFrame": 4,
+   "jsMs": 0.2,
+   "cpuRenderer": 32.3,
+   "cpuGpu": 18.9,
+   "cpuBrowser": 0,
+   "cpuTotal": 51.2,
+   "payload": {
+    "html": 2868,
+    "poster": 28979,
+    "js": 2142,
+    "other": 0,
+    "total": 33989
+   },
+   "renderer": "canvas2d",
+   "canvas": [
+    2560,
+    1440
+   ],
+   "errors": []
+  },
+  "b1-css-blobs:no filter": {
+   "id": "b1-css-blobs",
+   "label": "no filter",
+   "query": "",
+   "dsf": 1,
+   "runs": 3,
+   "ttff": null,
+   "fcp": 168,
+   "lcp": 168,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 54.2,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 4.5,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 2.6,
+   "scriptPct": 0.1,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 7.3,
+   "jsMs": null,
+   "cpuRenderer": 3.2,
+   "cpuGpu": 39.5,
+   "cpuBrowser": 0,
+   "cpuTotal": 43,
+   "payload": {
+    "html": 3048,
+    "poster": 0,
+    "js": 0,
+    "other": 0,
+    "total": 3048
+   },
+   "errors": []
+  },
+  "b1-css-blobs:filter: blur(60px) on each blob": {
+   "id": "b1-css-blobs",
+   "label": "filter: blur(60px) on each blob",
+   "query": "blur",
+   "dsf": 1,
+   "runs": 3,
+   "ttff": null,
+   "fcp": 176,
+   "lcp": 176,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 10.3,
+   "frameMedian": 83.4,
+   "frameP95": 200.1,
+   "over25Pct": 94.9,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 0.9,
+   "scriptPct": 0,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 88.3,
+   "jsMs": null,
+   "cpuRenderer": 1,
+   "cpuGpu": 88.1,
+   "cpuBrowser": 0.2,
+   "cpuTotal": 89.5,
+   "payload": {
+    "html": 3048,
+    "poster": 0,
+    "js": 0,
+    "other": 0,
+    "total": 3048
+   },
+   "errors": []
+  }
+ },
+ "libs": {
+  "e1-webgl-vanilla": {
+   "id": "e1-webgl-vanilla",
+   "query": "scale=0.25",
+   "runs": 5,
+   "ttff": 206.5,
+   "fcp": 164,
+   "lcp": 164,
+   "lcpEl": "H1",
+   "bootBlock": 323,
+   "tbt": 207,
+   "longest": 185,
+   "fps": 24.1,
+   "frameMedian": 33.3,
+   "frameP95": 99.9,
+   "over25Pct": 68.8,
+   "effectFps": 24.6,
+   "rafPerSec": 24.6,
+   "busyPct": 97.1,
+   "scriptPct": 1.1,
+   "gpuMsPerFrame": 19.5,
+   "gpuMsPerDisplayFrame": 19.8,
+   "jsMs": 0,
+   "cpuRenderer": 55,
+   "cpuGpu": 47.3,
+   "cpuBrowser": 0.2,
+   "cpuTotal": 105.2,
+   "payload": {
+    "html": 2868,
+    "poster": 3414,
+    "js": 3563,
+    "other": 0,
+    "total": 9845
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    320,
+    180
+   ],
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ]
+  },
+  "e2-ogl": {
+   "id": "e2-ogl",
+   "query": "scale=0.25",
+   "runs": 5,
+   "ttff": 389.3,
+   "fcp": 180,
+   "lcp": 180,
+   "lcpEl": "H1",
+   "bootBlock": 446,
+   "tbt": 246,
+   "longest": 246,
+   "fps": 22.4,
+   "frameMedian": 33.3,
+   "frameP95": 100,
+   "over25Pct": 66,
+   "effectFps": 23.1,
+   "rafPerSec": 23.1,
+   "busyPct": 98,
+   "scriptPct": 1.8,
+   "gpuMsPerFrame": 19.6,
+   "gpuMsPerDisplayFrame": 20,
+   "jsMs": 0.1,
+   "cpuRenderer": 51.5,
+   "cpuGpu": 45,
+   "cpuBrowser": 0,
+   "cpuTotal": 102.7,
+   "payload": {
+    "html": 2864,
+    "poster": 3414,
+    "js": 15989,
+    "other": 0,
+    "total": 22267
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    320,
+    180
+   ],
+   "errors": []
+  },
+  "e3-regl": {
+   "id": "e3-regl",
+   "query": "scale=0.25",
+   "runs": 5,
+   "ttff": 316.8,
+   "fcp": 180,
+   "lcp": 180,
+   "lcpEl": "H1",
+   "bootBlock": 534,
+   "tbt": 357,
+   "longest": 245,
+   "fps": 30.7,
+   "frameMedian": 33.3,
+   "frameP95": 83.3,
+   "over25Pct": 55.3,
+   "effectFps": 32.7,
+   "rafPerSec": 32.7,
+   "busyPct": 96.1,
+   "scriptPct": 1.3,
+   "gpuMsPerFrame": 19.8,
+   "gpuMsPerDisplayFrame": 20.2,
+   "jsMs": 0,
+   "cpuRenderer": 54.7,
+   "cpuGpu": 62.4,
+   "cpuBrowser": 0,
+   "cpuTotal": 115.6,
+   "payload": {
+    "html": 2863,
+    "poster": 3414,
+    "js": 44759,
+    "other": 0,
+    "total": 51036
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    320,
+    180
+   ],
+   "errors": []
+  },
+  "e4-twgl": {
+   "id": "e4-twgl",
+   "query": "scale=0.25",
+   "runs": 5,
+   "ttff": 269.9,
+   "fcp": 220,
+   "lcp": 220,
+   "lcpEl": "H1",
+   "bootBlock": 668,
+   "tbt": 468,
+   "longest": 301,
+   "fps": 25,
+   "frameMedian": 33.3,
+   "frameP95": 100,
+   "over25Pct": 64.5,
+   "effectFps": 26,
+   "rafPerSec": 26,
+   "busyPct": 96.9,
+   "scriptPct": 0.8,
+   "gpuMsPerFrame": 19.5,
+   "gpuMsPerDisplayFrame": 20.2,
+   "jsMs": 0,
+   "cpuRenderer": 48.6,
+   "cpuGpu": 50.8,
+   "cpuBrowser": 0,
+   "cpuTotal": 99.4,
+   "payload": {
+    "html": 2866,
+    "poster": 3414,
+    "js": 13775,
+    "other": 0,
+    "total": 20055
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    320,
+    180
+   ],
+   "errors": []
+  },
+  "e5-three": {
+   "id": "e5-three",
+   "query": "scale=0.25",
+   "runs": 5,
+   "ttff": 383.8,
+   "fcp": 204,
+   "lcp": 204,
+   "lcpEl": "H1",
+   "bootBlock": 471,
+   "tbt": 321,
+   "longest": 208,
+   "fps": 25.3,
+   "frameMedian": 33.3,
+   "frameP95": 83.4,
+   "over25Pct": 69.5,
+   "effectFps": 26.1,
+   "rafPerSec": 26.1,
+   "busyPct": 97.4,
+   "scriptPct": 4.4,
+   "gpuMsPerFrame": 20.6,
+   "gpuMsPerDisplayFrame": 21.2,
+   "jsMs": 0.2,
+   "cpuRenderer": 49.2,
+   "cpuGpu": 53,
+   "cpuBrowser": 0,
+   "cpuTotal": 103.6,
+   "payload": {
+    "html": 2866,
+    "poster": 3414,
+    "js": 135715,
+    "other": 0,
+    "total": 141995
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    320,
+    180
+   ],
+   "errors": []
+  },
+  "e6-paper": {
+   "id": "e6-paper",
+   "query": "paperdpr=1",
+   "runs": 5,
+   "ttff": 337.9,
+   "fcp": 124,
+   "lcp": 124,
+   "lcpEl": "H1",
+   "bootBlock": 622,
+   "tbt": 335,
+   "longest": 202,
+   "fps": 16.8,
+   "frameMedian": 50,
+   "frameP95": 133.4,
+   "over25Pct": 96.9,
+   "effectFps": null,
+   "rafPerSec": 17.3,
+   "busyPct": 98.9,
+   "scriptPct": 0.5,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 35.2,
+   "jsMs": null,
+   "cpuRenderer": 55.1,
+   "cpuGpu": 59.1,
+   "cpuBrowser": 0,
+   "cpuTotal": 116.2,
+   "payload": {
+    "html": 2873,
+    "poster": 997,
+    "js": 7382,
+    "other": 0,
+    "total": 11252
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    320,
+    405
+   ],
+   "errors": []
+  }
+ },
+ "post": {
+  "f-three-particles:f baseline (no composer)": {
+   "id": "f-three-particles",
+   "label": "f baseline (no composer)",
+   "query": "",
+   "runs": 5,
+   "ttff": 257.6,
+   "fcp": 80,
+   "lcp": 80,
+   "lcpEl": "H1",
+   "bootBlock": 528,
+   "tbt": 228,
+   "longest": 150,
+   "fps": 20.5,
+   "frameMedian": 50,
+   "frameP95": 66.7,
+   "over25Pct": 98.8,
+   "effectFps": 20.8,
+   "rafPerSec": 20.8,
+   "busyPct": 96.6,
+   "scriptPct": 1.5,
+   "gpuMsPerFrame": 43.5,
+   "gpuMsPerDisplayFrame": 44.6,
+   "jsMs": 0.1,
+   "cpuRenderer": 4.2,
+   "cpuGpu": 92.3,
+   "cpuBrowser": 0,
+   "cpuTotal": 96.9,
+   "payload": {
+    "html": 2870,
+    "poster": 13850,
+    "js": 137182,
+    "video": 0,
+    "other": 0,
+    "total": 153902
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ],
+   "failReason": null
+  },
+  "h-post:composer, no effects": {
+   "id": "h-post",
+   "label": "composer, no effects",
+   "query": "fx=none",
+   "runs": 5,
+   "ttff": 258.2,
+   "fcp": 116,
+   "lcp": 116,
+   "lcpEl": "H1",
+   "bootBlock": 467,
+   "tbt": 274,
+   "longest": 178,
+   "fps": 24.5,
+   "frameMedian": 33.4,
+   "frameP95": 66.6,
+   "over25Pct": 92.9,
+   "effectFps": 25,
+   "rafPerSec": 25,
+   "busyPct": 98.5,
+   "scriptPct": 1,
+   "gpuMsPerFrame": 46.7,
+   "gpuMsPerDisplayFrame": 47.8,
+   "jsMs": 0.2,
+   "cpuRenderer": 4.9,
+   "cpuGpu": 120.9,
+   "cpuBrowser": 0,
+   "cpuTotal": 125.8,
+   "payload": {
+    "html": 2864,
+    "poster": 44826,
+    "js": 209846,
+    "video": 0,
+    "other": 0,
+    "total": 257536
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "failReason": null
+  },
+  "h-post:bloom": {
+   "id": "h-post",
+   "label": "bloom",
+   "query": "fx=bloom",
+   "runs": 5,
+   "ttff": 204.8,
+   "fcp": 92,
+   "lcp": 92,
+   "lcpEl": "H1",
+   "bootBlock": 771,
+   "tbt": 671,
+   "longest": 606,
+   "fps": 4.1,
+   "frameMedian": 233.4,
+   "frameP95": 316.7,
+   "over25Pct": 100,
+   "effectFps": 4.2,
+   "rafPerSec": 4.2,
+   "busyPct": 99.9,
+   "scriptPct": 1.1,
+   "gpuMsPerFrame": 328.5,
+   "gpuMsPerDisplayFrame": 358.9,
+   "jsMs": 0.9,
+   "cpuRenderer": 1.9,
+   "cpuGpu": 146.6,
+   "cpuBrowser": 0,
+   "cpuTotal": 148.5,
+   "payload": {
+    "html": 2864,
+    "poster": 44826,
+    "js": 209846,
+    "video": 0,
+    "other": 0,
+    "total": 257536
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "failReason": null
+  },
+  "h-post:grain (NoiseEffect)": {
+   "id": "h-post",
+   "label": "grain (NoiseEffect)",
+   "query": "fx=grain",
+   "runs": 5,
+   "ttff": 176.6,
+   "fcp": 120,
+   "lcp": 120,
+   "lcpEl": "H1",
+   "bootBlock": 609,
+   "tbt": 406,
+   "longest": 336,
+   "fps": 11,
+   "frameMedian": 83.4,
+   "frameP95": 133.4,
+   "over25Pct": 100,
+   "effectFps": 11.4,
+   "rafPerSec": 11.4,
+   "busyPct": 99.5,
+   "scriptPct": 0.9,
+   "gpuMsPerFrame": 123.5,
+   "gpuMsPerDisplayFrame": 129,
+   "jsMs": 0.3,
+   "cpuRenderer": 3.2,
+   "cpuGpu": 140.9,
+   "cpuBrowser": 0,
+   "cpuTotal": 144.1,
+   "payload": {
+    "html": 2864,
+    "poster": 44826,
+    "js": 209846,
+    "video": 0,
+    "other": 0,
+    "total": 257536
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "failReason": null
+  },
+  "h-post:chromatic aberration": {
+   "id": "h-post",
+   "label": "chromatic aberration",
+   "query": "fx=ca",
+   "runs": 5,
+   "ttff": 164.2,
+   "fcp": 72,
+   "lcp": 72,
+   "lcpEl": "H1",
+   "bootBlock": 627,
+   "tbt": 427,
+   "longest": 314,
+   "fps": 11.7,
+   "frameMedian": 83.3,
+   "frameP95": 133.4,
+   "over25Pct": 100,
+   "effectFps": 12.2,
+   "rafPerSec": 12.2,
+   "busyPct": 99.8,
+   "scriptPct": 0.7,
+   "gpuMsPerFrame": 158.3,
+   "gpuMsPerDisplayFrame": 172.1,
+   "jsMs": 0.3,
+   "cpuRenderer": 3.3,
+   "cpuGpu": 200.8,
+   "cpuBrowser": 0,
+   "cpuTotal": 204.1,
+   "payload": {
+    "html": 2864,
+    "poster": 44826,
+    "js": 209846,
+    "video": 0,
+    "other": 0,
+    "total": 257536
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "failReason": null
+  },
+  "h-post:vignette": {
+   "id": "h-post",
+   "label": "vignette",
+   "query": "fx=vignette",
+   "runs": 5,
+   "ttff": 145.9,
+   "fcp": 72,
+   "lcp": 72,
+   "lcpEl": "H1",
+   "bootBlock": 390,
+   "tbt": 140,
+   "longest": 150,
+   "fps": 19.5,
+   "frameMedian": 50,
+   "frameP95": 83.4,
+   "over25Pct": 100,
+   "effectFps": 20,
+   "rafPerSec": 20,
+   "busyPct": 99.8,
+   "scriptPct": 1,
+   "gpuMsPerFrame": 125.3,
+   "gpuMsPerDisplayFrame": 127.6,
+   "jsMs": 0.3,
+   "cpuRenderer": 4.9,
+   "cpuGpu": 246.2,
+   "cpuBrowser": 0,
+   "cpuTotal": 251.1,
+   "payload": {
+    "html": 2864,
+    "poster": 44826,
+    "js": 209846,
+    "video": 0,
+    "other": 0,
+    "total": 257536
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "failReason": null
+  },
+  "h-post:all four, one EffectPass": {
+   "id": "h-post",
+   "label": "all four, one EffectPass",
+   "query": "fx=all",
+   "runs": 5,
+   "ttff": 214.6,
+   "fcp": 88,
+   "lcp": 88,
+   "lcpEl": "H1",
+   "bootBlock": 768,
+   "tbt": 568,
+   "longest": 512,
+   "fps": 4,
+   "frameMedian": 250,
+   "frameP95": 383.3,
+   "over25Pct": 100,
+   "effectFps": 4.2,
+   "rafPerSec": 4.2,
+   "busyPct": 99.9,
+   "scriptPct": 0.9,
+   "gpuMsPerFrame": 389.4,
+   "gpuMsPerDisplayFrame": 420.8,
+   "jsMs": 0.9,
+   "cpuRenderer": 2,
+   "cpuGpu": 175.7,
+   "cpuBrowser": 0,
+   "cpuTotal": 177.9,
+   "payload": {
+    "html": 2864,
+    "poster": 44826,
+    "js": 209846,
+    "video": 0,
+    "other": 0,
+    "total": 257536
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "failReason": null
+  },
+  "a-static:static poster (reference)": {
+   "id": "a-static",
+   "label": "static poster (reference)",
+   "query": "",
+   "runs": 5,
+   "ttff": null,
+   "fcp": 68,
+   "lcp": 68,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 59.8,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 0.4,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 0.6,
+   "scriptPct": 0.1,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 0.1,
+   "jsMs": null,
+   "cpuRenderer": 1.2,
+   "cpuGpu": 0.5,
+   "cpuBrowser": 0,
+   "cpuTotal": 1.9,
+   "payload": {
+    "html": 2296,
+    "poster": 3414,
+    "js": 0,
+    "video": 0,
+    "other": 0,
+    "total": 5710
+   },
+   "errors": [],
+   "failReason": null
+  },
+  "c2-css-grain:CSS grain overlay on the poster": {
+   "id": "c2-css-grain",
+   "label": "CSS grain overlay on the poster",
+   "query": "",
+   "runs": 5,
+   "ttff": null,
+   "fcp": 108,
+   "lcp": 108,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 59.8,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 0.4,
+   "effectFps": null,
+   "rafPerSec": 0,
+   "busyPct": 1.1,
+   "scriptPct": 0.2,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 7.2,
+   "jsMs": null,
+   "cpuRenderer": 2.7,
+   "cpuGpu": 42.5,
+   "cpuBrowser": 0,
+   "cpuTotal": 45,
+   "payload": {
+    "html": 3125,
+    "poster": 3414,
+    "js": 0,
+    "video": 0,
+    "other": 0,
+    "total": 6539
+   },
+   "errors": [],
+   "failReason": null
+  },
+  "h-post:all four + SMAA (second EffectPass)": {
+   "id": "h-post",
+   "label": "all four + SMAA (second EffectPass)",
+   "query": "fx=allsmaa",
+   "runs": 5,
+   "ttff": 236.5,
+   "fcp": 96,
+   "lcp": 90,
+   "lcpEl": "H1",
+   "bootBlock": 921,
+   "tbt": 821,
+   "longest": 757,
+   "fps": 3.1,
+   "frameMedian": 333.3,
+   "frameP95": 433.3,
+   "over25Pct": 100,
+   "effectFps": 3.4,
+   "rafPerSec": 3.4,
+   "busyPct": 100,
+   "scriptPct": 0.7,
+   "gpuMsPerFrame": 578.5,
+   "gpuMsPerDisplayFrame": 665.2,
+   "jsMs": 1.1,
+   "cpuRenderer": 1.6,
+   "cpuGpu": 206.2,
+   "cpuBrowser": 0,
+   "cpuTotal": 208.4,
+   "payload": {
+    "html": 2864,
+    "poster": 44826,
+    "js": 209846,
+    "video": 0,
+    "other": 0,
+    "total": 257536
+   },
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1280,
+    720
+   ],
+   "errors": [],
+   "failReason": null
+  },
+  "h-post:all four + SMAA merged into one pass (throws → poster)": {
+   "id": "h-post",
+   "label": "all four + SMAA merged into one pass (throws → poster)",
+   "query": "fx=allsmaa1",
+   "runs": 5,
+   "ttff": null,
+   "fcp": 92,
+   "lcp": 92,
+   "lcpEl": "H1",
+   "bootBlock": 0,
+   "tbt": 0,
+   "longest": 0,
+   "fps": 60,
+   "frameMedian": 16.7,
+   "frameP95": 16.8,
+   "over25Pct": 0,
+   "effectFps": 0,
+   "rafPerSec": 0,
+   "busyPct": 0.7,
+   "scriptPct": 0.1,
+   "gpuMsPerFrame": null,
+   "gpuMsPerDisplayFrame": 0.1,
+   "jsMs": null,
+   "cpuRenderer": 1.2,
+   "cpuGpu": 0.5,
+   "cpuBrowser": 0,
+   "cpuTotal": 1.7,
+   "payload": {
+    "html": 2864,
+    "poster": 44826,
+    "js": 209846,
+    "video": 0,
+    "other": 0,
+    "total": 257536
+   },
+   "errors": [],
+   "failReason": "Convolution effects cannot be merged (ChromaticAberrationEffect)"
+  }
+ },
+ "shots": {
+  "phoneCanvas": {
+   "a-static": null,
+   "b1-css-blobs": null,
+   "e1-webgl-vanilla": [
+    780,
+    1688
+   ],
+   "f-three-particles": [
+    780,
+    1688
+   ]
+  }
+ },
+ "summary": [
+  {
+   "id": "a-static",
+   "label": "a · static poster (AVIF)",
+   "payloadKB": {
+    "total": 5.6,
+    "js": 0,
+    "poster": 3.3,
+    "html": 2.2,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 88,
+   "lcp4x": 152,
+   "lcpEl": "H1",
+   "ttff1x": null,
+   "ttff4x": null,
+   "bootBlock4x": 0,
+   "fps1x": 59.6,
+   "fps4x": 60,
+   "effectFps1x": null,
+   "effectFps4x": null,
+   "over25Pct4x": 0,
+   "busy1x": 0.8,
+   "busy4x": 2.1,
+   "cpuTotal1x": 2.4,
+   "cpuGpu1x": 0.6,
+   "cpuRenderer1x": 1.2,
+   "jsMs1x": null,
+   "jsMs4x": null,
+   "gpuMsPerFrame1x": null,
+   "gpuMsPerDisplayFrame1x": 0.1,
+   "offscreenCpu": 0.3,
+   "offscreenRaf": 0,
+   "reduced": {
+    "cpu": 0,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": null,
+    "errors": 1
+   },
+   "contrast": 14.79,
+   "inp4x": 56,
+   "buildKB": {
+    "html": 2.2,
+    "js": 0,
+    "poster": 3.3,
+    "video": 0,
+    "total": 5.6
+   }
+  },
+  {
+   "id": "b1-css-blobs",
+   "label": "b1 · CSS gradient blobs, transform-animated",
+   "payloadKB": {
+    "total": 3,
+    "js": 0,
+    "poster": 0,
+    "html": 3,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 104,
+   "lcp4x": 188,
+   "lcpEl": "H1",
+   "ttff1x": null,
+   "ttff4x": null,
+   "bootBlock4x": 0,
+   "fps1x": 58.8,
+   "fps4x": 57,
+   "effectFps1x": null,
+   "effectFps4x": null,
+   "over25Pct4x": 4.2,
+   "busy1x": 2.1,
+   "busy4x": 11.1,
+   "cpuTotal1x": 48,
+   "cpuGpu1x": 43.6,
+   "cpuRenderer1x": 4,
+   "jsMs1x": null,
+   "jsMs4x": null,
+   "gpuMsPerFrame1x": null,
+   "gpuMsPerDisplayFrame1x": 7.5,
+   "offscreenCpu": 0.3,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 2,
+   "offscreenRafNoPause": 0,
+   "reduced": {
+    "cpu": 0,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": null,
+    "errors": 0
+   },
+   "contrast": 11.392999999999999,
+   "inp4x": 160,
+   "buildKB": {
+    "html": 3,
+    "js": 0,
+    "poster": 0,
+    "video": 0,
+    "total": 3
+   }
+  },
+  {
+   "id": "b2-css-property",
+   "label": "b2 · CSS mesh gradient, @property-animated",
+   "payloadKB": {
+    "total": 2.9,
+    "js": 0,
+    "poster": 0,
+    "html": 2.9,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 76,
+   "lcp4x": 160,
+   "lcpEl": "H1",
+   "ttff1x": null,
+   "ttff4x": null,
+   "bootBlock4x": 70,
+   "fps1x": 57.2,
+   "fps4x": 39.9,
+   "effectFps1x": null,
+   "effectFps4x": null,
+   "over25Pct4x": 31.2,
+   "busy1x": 15.8,
+   "busy4x": 58.4,
+   "cpuTotal1x": 99.3,
+   "cpuGpu1x": 7.8,
+   "cpuRenderer1x": 91.1,
+   "jsMs1x": null,
+   "jsMs4x": null,
+   "gpuMsPerFrame1x": null,
+   "gpuMsPerDisplayFrame1x": 1.3,
+   "offscreenCpu": 0,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 4.3,
+   "offscreenRafNoPause": 0,
+   "reduced": {
+    "cpu": 0.3,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": null,
+    "errors": 0
+   },
+   "contrast": 8.463,
+   "inp4x": 336,
+   "buildKB": {
+    "html": 2.9,
+    "js": 0,
+    "poster": 0,
+    "video": 0,
+    "total": 2.9
+   }
+  },
+  {
+   "id": "c1-svg-turbulence",
+   "label": "c1 · SVG feTurbulence, SMIL-animated",
+   "payloadKB": {
+    "total": 3,
+    "js": 0,
+    "poster": 0,
+    "html": 3,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 116,
+   "lcp4x": 236,
+   "lcpEl": "H1",
+   "ttff1x": null,
+   "ttff4x": null,
+   "bootBlock4x": 0,
+   "fps1x": 28.5,
+   "fps4x": 16.9,
+   "effectFps1x": null,
+   "effectFps4x": null,
+   "over25Pct4x": 94,
+   "busy1x": 78.1,
+   "busy4x": 88.6,
+   "cpuTotal1x": 99,
+   "cpuGpu1x": 4.5,
+   "cpuRenderer1x": 94.5,
+   "jsMs1x": null,
+   "jsMs4x": null,
+   "gpuMsPerFrame1x": null,
+   "gpuMsPerDisplayFrame1x": 1.5,
+   "offscreenCpu": 0,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 3,
+   "offscreenRafNoPause": 0,
+   "reduced": {
+    "cpu": 0.3,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": null,
+    "errors": 0
+   },
+   "contrast": 6.864,
+   "inp4x": 736,
+   "buildKB": {
+    "html": 3,
+    "js": 0,
+    "poster": 0,
+    "video": 0,
+    "total": 3
+   }
+  },
+  {
+   "id": "c2-css-grain",
+   "label": "c2 · static poster + CSS grain overlay",
+   "payloadKB": {
+    "total": 6.4,
+    "js": 0,
+    "poster": 3.3,
+    "html": 3.1,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 148,
+   "lcp4x": 228,
+   "lcpEl": "H1",
+   "ttff1x": null,
+   "ttff4x": null,
+   "bootBlock4x": 52,
+   "fps1x": 58.6,
+   "fps4x": 53,
+   "effectFps1x": null,
+   "effectFps4x": null,
+   "over25Pct4x": 11.8,
+   "busy1x": 1.3,
+   "busy4x": 5.1,
+   "cpuTotal1x": 48.4,
+   "cpuGpu1x": 45.6,
+   "cpuRenderer1x": 2.8,
+   "jsMs1x": null,
+   "jsMs4x": null,
+   "gpuMsPerFrame1x": null,
+   "gpuMsPerDisplayFrame1x": 7.8,
+   "offscreenCpu": 0.3,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 2.6,
+   "offscreenRafNoPause": 0,
+   "reduced": {
+    "cpu": 0,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": null,
+    "errors": 0
+   },
+   "contrast": 14.456,
+   "inp4x": null,
+   "buildKB": {
+    "html": 3.1,
+    "js": 0,
+    "poster": 3.3,
+    "video": 0,
+    "total": 6.4
+   }
+  },
+  {
+   "id": "d-canvas2d",
+   "label": "d · Canvas 2D flow particles",
+   "payloadKB": {
+    "total": 33.2,
+    "js": 2.1,
+    "poster": 28.3,
+    "html": 2.8,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 96,
+   "lcp4x": 160,
+   "lcpEl": "H1",
+   "ttff1x": 104,
+   "ttff4x": 270.2,
+   "bootBlock4x": 0,
+   "fps1x": 59.4,
+   "fps4x": 58.6,
+   "effectFps1x": 59.4,
+   "effectFps4x": 58.7,
+   "over25Pct4x": 2.4,
+   "busy1x": 24.8,
+   "busy4x": 70,
+   "cpuTotal1x": 27.6,
+   "cpuGpu1x": 7.6,
+   "cpuRenderer1x": 19.8,
+   "jsMs1x": 0.2,
+   "jsMs4x": 0.6,
+   "gpuMsPerFrame1x": 1.3,
+   "gpuMsPerDisplayFrame1x": 1.3,
+   "offscreenCpu": 0.3,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 19.2,
+   "offscreenRafNoPause": 58.6,
+   "reduced": {
+    "cpu": 0,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": null,
+    "errors": 0
+   },
+   "contrast": 17.105999999999998,
+   "inp4x": 144,
+   "buildKB": {
+    "html": 2.8,
+    "js": 2.4,
+    "poster": 28.9,
+    "video": 0,
+    "total": 34.1
+   }
+  },
+  {
+   "id": "e1-webgl-vanilla",
+   "label": "e1 · fragment shader, raw WebGL",
+   "payloadKB": {
+    "total": 9.6,
+    "js": 3.5,
+    "poster": 3.3,
+    "html": 2.8,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 208,
+   "lcp4x": 256,
+   "lcpEl": "H1",
+   "ttff1x": 87.4,
+   "ttff4x": 255.9,
+   "bootBlock4x": 745,
+   "fps1x": 4.2,
+   "fps4x": 3,
+   "effectFps1x": 4.6,
+   "effectFps4x": 3.3,
+   "over25Pct4x": 100,
+   "busy1x": 99.5,
+   "busy4x": 99.8,
+   "cpuTotal1x": 106.1,
+   "cpuGpu1x": 104.8,
+   "cpuRenderer1x": 1.3,
+   "jsMs1x": 0,
+   "jsMs4x": 0,
+   "gpuMsPerFrame1x": 227.8,
+   "gpuMsPerDisplayFrame1x": 246.1,
+   "offscreenCpu": 0,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 89.3,
+   "offscreenRafNoPause": 4,
+   "reduced": {
+    "cpu": 0.3,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": "poster",
+    "errors": 0
+   },
+   "contrast": 15.714,
+   "inp4x": 1432,
+   "buildKB": {
+    "html": 2.8,
+    "js": 3.8,
+    "poster": 3.3,
+    "video": 0,
+    "total": 9.9
+   }
+  },
+  {
+   "id": "e2-ogl",
+   "label": "e2 · fragment shader, OGL",
+   "payloadKB": {
+    "total": 21.7,
+    "js": 15.6,
+    "poster": 3.3,
+    "html": 2.8,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 100,
+   "lcp4x": 140,
+   "lcpEl": "H1",
+   "ttff1x": 144.1,
+   "ttff4x": 244.2,
+   "bootBlock4x": 780,
+   "fps1x": 4.5,
+   "fps4x": 3.9,
+   "effectFps1x": 4.9,
+   "effectFps4x": 4.3,
+   "over25Pct4x": 100,
+   "busy1x": 99.3,
+   "busy4x": 99.9,
+   "cpuTotal1x": 111,
+   "cpuGpu1x": 109.4,
+   "cpuRenderer1x": 1.2,
+   "jsMs1x": 0.1,
+   "jsMs4x": 0.1,
+   "gpuMsPerFrame1x": 222.3,
+   "gpuMsPerDisplayFrame1x": 243.1,
+   "offscreenCpu": 0,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 91.6,
+   "offscreenRafNoPause": 4,
+   "reduced": {
+    "cpu": 0,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": "poster",
+    "errors": 1
+   },
+   "contrast": 15.819,
+   "inp4x": null,
+   "buildKB": {
+    "html": 2.8,
+    "js": 15.9,
+    "poster": 3.3,
+    "video": 0,
+    "total": 22.1
+   }
+  },
+  {
+   "id": "e3-regl",
+   "label": "e3 · fragment shader, regl",
+   "payloadKB": {
+    "total": 49.8,
+    "js": 43.7,
+    "poster": 3.3,
+    "html": 2.8,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 116,
+   "lcp4x": 168,
+   "lcpEl": "H1",
+   "ttff1x": 129.9,
+   "ttff4x": 331.9,
+   "bootBlock4x": 769,
+   "fps1x": 5,
+   "fps4x": 3.1,
+   "effectFps1x": 5.4,
+   "effectFps4x": 3.4,
+   "over25Pct4x": 100,
+   "busy1x": 99.8,
+   "busy4x": 99.8,
+   "cpuTotal1x": 125.1,
+   "cpuGpu1x": 123.5,
+   "cpuRenderer1x": 1.4,
+   "jsMs1x": 0.1,
+   "jsMs4x": 0.1,
+   "gpuMsPerFrame1x": 228.7,
+   "gpuMsPerDisplayFrame1x": 247,
+   "offscreenCpu": 0,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 101.3,
+   "offscreenRafNoPause": 4.4,
+   "reduced": {
+    "cpu": 0,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": "poster",
+    "errors": 0
+   },
+   "contrast": 15.819,
+   "inp4x": null,
+   "buildKB": {
+    "html": 2.8,
+    "js": 44.1,
+    "poster": 3.3,
+    "video": 0,
+    "total": 50.2
+   }
+  },
+  {
+   "id": "e4-twgl",
+   "label": "e4 · fragment shader, twgl.js",
+   "payloadKB": {
+    "total": 19.6,
+    "js": 13.5,
+    "poster": 3.3,
+    "html": 2.8,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 88,
+   "lcp4x": 216,
+   "lcpEl": "H1",
+   "ttff1x": 125.8,
+   "ttff4x": 372.4,
+   "bootBlock4x": 868,
+   "fps1x": 4,
+   "fps4x": 3.2,
+   "effectFps1x": 4.4,
+   "effectFps4x": 3.6,
+   "over25Pct4x": 100,
+   "busy1x": 99.8,
+   "busy4x": 99.8,
+   "cpuTotal1x": 97.4,
+   "cpuGpu1x": 96.4,
+   "cpuRenderer1x": 1,
+   "jsMs1x": 0,
+   "jsMs4x": 0.1,
+   "gpuMsPerFrame1x": 223.6,
+   "gpuMsPerDisplayFrame1x": 241,
+   "offscreenCpu": 0,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 98,
+   "offscreenRafNoPause": 4.4,
+   "reduced": {
+    "cpu": 0,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": "poster",
+    "errors": 0
+   },
+   "contrast": 15.714,
+   "inp4x": null,
+   "buildKB": {
+    "html": 2.8,
+    "js": 13.8,
+    "poster": 3.3,
+    "video": 0,
+    "total": 19.9
+   }
+  },
+  {
+   "id": "e5-three",
+   "label": "e5 · fragment shader, three.js",
+   "payloadKB": {
+    "total": 138.7,
+    "js": 132.5,
+    "poster": 3.3,
+    "html": 2.8,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 152,
+   "lcp4x": 132,
+   "lcpEl": "H1",
+   "ttff1x": 114.8,
+   "ttff4x": 308.8,
+   "bootBlock4x": 731,
+   "fps1x": 4.2,
+   "fps4x": 3.5,
+   "effectFps1x": 4.6,
+   "effectFps4x": 3.9,
+   "over25Pct4x": 100,
+   "busy1x": 99.7,
+   "busy4x": 99.7,
+   "cpuTotal1x": 103.6,
+   "cpuGpu1x": 102.4,
+   "cpuRenderer1x": 1.2,
+   "jsMs1x": 0.2,
+   "jsMs4x": 0.35,
+   "gpuMsPerFrame1x": 218.7,
+   "gpuMsPerDisplayFrame1x": 238,
+   "offscreenCpu": 0.3,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 91.3,
+   "offscreenRafNoPause": 4.2,
+   "reduced": {
+    "cpu": 0,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": "poster",
+    "errors": 3
+   },
+   "contrast": 15.714,
+   "inp4x": 1928,
+   "buildKB": {
+    "html": 2.8,
+    "js": 132.9,
+    "poster": 3.3,
+    "video": 0,
+    "total": 139
+   }
+  },
+  {
+   "id": "e6-paper",
+   "label": "e6 · Paper Shaders MeshGradient (library)",
+   "payloadKB": {
+    "total": 11.6,
+    "js": 7.2,
+    "poster": 1.6,
+    "html": 2.8,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 120,
+   "lcp4x": 212,
+   "lcpEl": "H1",
+   "ttff1x": 163.7,
+   "ttff4x": 460,
+   "bootBlock4x": 2904,
+   "fps1x": 0.8,
+   "fps4x": 0.7,
+   "effectFps1x": null,
+   "effectFps4x": null,
+   "over25Pct4x": 100,
+   "busy1x": 99.9,
+   "busy4x": 99.9,
+   "cpuTotal1x": 76.5,
+   "cpuGpu1x": 75.4,
+   "cpuRenderer1x": 0.7,
+   "jsMs1x": null,
+   "jsMs4x": null,
+   "gpuMsPerFrame1x": null,
+   "gpuMsPerDisplayFrame1x": 945.8,
+   "offscreenCpu": 0,
+   "offscreenRaf": 0.3,
+   "offscreenCpuNoPause": 0.3,
+   "offscreenRafNoPause": 0.3,
+   "reduced": {
+    "cpu": 0,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": "poster",
+    "errors": 0
+   },
+   "contrast": 3.91,
+   "inp4x": 5656,
+   "buildKB": {
+    "html": 2.8,
+    "js": 7.2,
+    "poster": 1.6,
+    "video": 0,
+    "total": 11.6
+   }
+  },
+  {
+   "id": "f-three-particles",
+   "label": "f · three.js 40k GPU particles",
+   "payloadKB": {
+    "total": 150.3,
+    "js": 134,
+    "poster": 13.5,
+    "html": 2.8,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 108,
+   "lcp4x": 172,
+   "lcpEl": "H1",
+   "ttff1x": 139,
+   "ttff4x": 395.6,
+   "bootBlock4x": 681,
+   "fps1x": 25,
+   "fps4x": 13.7,
+   "effectFps1x": 25.4,
+   "effectFps4x": 14.1,
+   "over25Pct4x": 100,
+   "busy1x": 98.3,
+   "busy4x": 99.2,
+   "cpuTotal1x": 130,
+   "cpuGpu1x": 124.4,
+   "cpuRenderer1x": 5.2,
+   "jsMs1x": 0.1,
+   "jsMs4x": 0.35,
+   "gpuMsPerFrame1x": 48,
+   "gpuMsPerDisplayFrame1x": 48.5,
+   "offscreenCpu": 0.3,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 107.2,
+   "offscreenRafNoPause": 25.5,
+   "reduced": {
+    "cpu": 0.3,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": "poster",
+    "errors": 3
+   },
+   "contrast": 16.250999999999998,
+   "inp4x": 440,
+   "buildKB": {
+    "html": 2.8,
+    "js": 134,
+    "poster": 13.5,
+    "video": 0,
+    "total": 150.3
+   }
+  },
+  {
+   "id": "h-post",
+   "label": "h · f + postprocessing (?fx=)",
+   "payloadKB": {
+    "total": 251.5,
+    "js": 204.9,
+    "poster": 43.8,
+    "html": 2.8,
+    "video": 0,
+    "other": 0
+   },
+   "lcp1x": 100,
+   "lcp4x": 132,
+   "lcpEl": "H1",
+   "ttff1x": 249.2,
+   "ttff4x": 522.1,
+   "bootBlock4x": 1620,
+   "fps1x": 2.7,
+   "fps4x": 2.2,
+   "effectFps1x": 3,
+   "effectFps4x": 2.3,
+   "over25Pct4x": 100,
+   "busy1x": 100,
+   "busy4x": 99.9,
+   "cpuTotal1x": 107.2,
+   "cpuGpu1x": 105.9,
+   "cpuRenderer1x": 1.3,
+   "jsMs1x": 0.9,
+   "jsMs4x": 2.65,
+   "gpuMsPerFrame1x": 374.4,
+   "gpuMsPerDisplayFrame1x": 405.2,
+   "offscreenCpu": 0.3,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 76.9,
+   "offscreenRafNoPause": 2.3,
+   "reduced": {
+    "cpu": 0,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": "poster",
+    "errors": 3
+   },
+   "contrast": 10.617,
+   "inp4x": 2320,
+   "buildKB": {
+    "html": 2.8,
+    "js": 204.9,
+    "poster": 43.8,
+    "video": 0,
+    "total": 251.5
+   }
+  },
+  {
+   "id": "g-fluid-demo",
+   "label": "g · fluid sim, demo as published",
+   "payloadKB": {
+    "total": 34.4,
+    "js": 25.2,
+    "poster": 0,
+    "html": 2.3,
+    "video": 0,
+    "other": 6.9
+   },
+   "lcp1x": 152,
+   "lcp4x": 124,
+   "lcpEl": "H1",
+   "ttff1x": 4508.3,
+   "ttff4x": 6388.7,
+   "bootBlock4x": 7239,
+   "fps1x": 1.8,
+   "fps4x": 0.9,
+   "effectFps1x": null,
+   "effectFps4x": null,
+   "over25Pct4x": 100,
+   "busy1x": 99.9,
+   "busy4x": 99.9,
+   "cpuTotal1x": 96.9,
+   "cpuGpu1x": 96.2,
+   "cpuRenderer1x": 0.8,
+   "jsMs1x": null,
+   "jsMs4x": null,
+   "gpuMsPerFrame1x": null,
+   "gpuMsPerDisplayFrame1x": 536.5,
+   "offscreenCpu": 64.9,
+   "offscreenRaf": 3.4,
+   "reduced": {
+    "cpu": 99.1,
+    "raf": 4.7,
+    "effectLoaded": true
+   },
+   "nowebgl": {
+    "fallback": null,
+    "errors": 1
+   },
+   "contrast": 3.432,
+   "inp4x": 3280,
+   "buildKB": {
+    "html": 2.3,
+    "js": 25.2,
+    "poster": 0,
+    "video": 0,
+    "total": 27.5
+   }
+  },
+  {
+   "id": "g-fluid-wrapped",
+   "label": "g · fluid sim, production-wrapped",
+   "payloadKB": {
+    "total": 33.2,
+    "js": 9.8,
+    "poster": 13.7,
+    "html": 2.8,
+    "video": 0,
+    "other": 6.9
+   },
+   "lcp1x": 108,
+   "lcp4x": 164,
+   "lcpEl": "H1",
+   "ttff1x": 144.2,
+   "ttff4x": 251.2,
+   "bootBlock4x": 6278,
+   "fps1x": 1.4,
+   "fps4x": 0.8,
+   "effectFps1x": 1.7,
+   "effectFps4x": 1.2,
+   "over25Pct4x": 100,
+   "busy1x": 99.9,
+   "busy4x": 100,
+   "cpuTotal1x": 81.8,
+   "cpuGpu1x": 80.9,
+   "cpuRenderer1x": 0.8,
+   "jsMs1x": 0.35,
+   "jsMs4x": 0.6,
+   "gpuMsPerFrame1x": 466.5,
+   "gpuMsPerDisplayFrame1x": 584.7,
+   "offscreenCpu": 0.3,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 70.7,
+   "offscreenRafNoPause": 1.7,
+   "reduced": {
+    "cpu": 0,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": "poster",
+    "errors": 0
+   },
+   "contrast": 10.508,
+   "inp4x": 2656,
+   "buildKB": {
+    "html": 2.8,
+    "js": 10.1,
+    "poster": 11.7,
+    "video": 0,
+    "total": 24.6
+   }
+  },
+  {
+   "id": "i-video",
+   "label": "i · e1 pre-rendered to an 8 s AV1/VP9 loop",
+   "payloadKB": {
+    "total": 101.3,
+    "js": 0,
+    "poster": 3.4,
+    "html": 3.4,
+    "video": 94.5,
+    "other": 0
+   },
+   "lcp1x": 160,
+   "lcp4x": 208,
+   "lcpEl": "H1",
+   "ttff1x": 231.1,
+   "ttff4x": 348.7,
+   "bootBlock4x": 61,
+   "fps1x": 57.6,
+   "fps4x": 54.4,
+   "effectFps1x": 22.2,
+   "effectFps4x": 20.8,
+   "over25Pct4x": 4.5,
+   "busy1x": 1.2,
+   "busy4x": 6.7,
+   "cpuTotal1x": 14.4,
+   "cpuGpu1x": 4.4,
+   "cpuRenderer1x": 10,
+   "jsMs1x": null,
+   "jsMs4x": null,
+   "gpuMsPerFrame1x": 1.9,
+   "gpuMsPerDisplayFrame1x": 0.7,
+   "offscreenCpu": 0,
+   "offscreenRaf": 0,
+   "offscreenCpuNoPause": 8.3,
+   "offscreenRafNoPause": 0,
+   "reduced": {
+    "cpu": 0.6,
+    "raf": 0,
+    "effectLoaded": false
+   },
+   "nowebgl": {
+    "fallback": null,
+    "errors": 1
+   },
+   "contrast": 14.687000000000001,
+   "inp4x": 128,
+   "buildKB": {
+    "html": 3.4,
+    "js": 0,
+    "poster": 3.4,
+    "video": 94.5,
+    "total": 101.3
+   }
+  }
+ ],
+ "video": {
+  "loop": {
+   "fps": 24,
+   "seconds": 8,
+   "crossfade": 1,
+   "width": 1280,
+   "height": 720
+  },
+  "frames": 192,
+  "rendered": 216,
+  "renderMs": 205967,
+  "encodings": {
+   "loop-av1.webm": {
+    "bytes": 96732,
+    "encodeMs": 46252,
+    "args": "-c:v libaom-av1 -crf 38 -b:v 0 -cpu-used 6 -row-mt 1 -tiles 2x2 -pix_fmt yuv420p -an"
+   },
+   "loop-vp9.webm": {
+    "bytes": 120603,
+    "encodeMs": 13438,
+    "args": "-c:v libvpx-vp9 -crf 38 -b:v 0 -deadline good -cpu-used 4 -row-mt 1 -pix_fmt yuv420p -an"
+   },
+   "loop-h264.mp4": {
+    "bytes": 469440,
+    "encodeMs": 16021,
+    "args": "-c:v libx264 -crf 26 -preset slow -pix_fmt yuv420p -movflags +faststart -an"
+   }
+  },
+  "poster": {
+   "800": {
+    "avif": 1844
+   },
+   "1600": {
+    "avif": 3444
+   }
+  },
+  "ffmpeg": "ffmpeg-linux-x86_64-v7.0.2",
+  "reused": true
+ },
+ "licences": {
+  "mrdoob/three.js": {
+   "repo": "mrdoob/three.js",
+   "why": "three.js and its examples folder",
+   "commit": "ec28dfc233171c29a0c95a75ecebf23bf0de5794",
+   "file": "LICENSE",
+   "licence": "MIT",
+   "firstLines": "The MIT License | Copyright © 2010-2026 three.js authors",
+   "sha256": "8b378ebe60e2fe50"
+  },
+  "pmndrs/postprocessing": {
+   "repo": "pmndrs/postprocessing",
+   "why": "bloom, grain, CA, vignette for three.js",
+   "commit": "9cf03cff26615636a564d8bfddf765edb8917441",
+   "file": "LICENSE.md",
+   "licence": "Zlib",
+   "firstLines": "Copyright © 2015 Raoul van Rüschen | This software is provided 'as-is', without any express or implied warranty. In",
+   "sha256": "b7650918449bd5fb"
+  },
+  "stegu/webgl-noise": {
+   "repo": "stegu/webgl-noise",
+   "why": "the simplex/classic noise most shaders paste",
+   "commit": "22434e04d7753f7e949e8d724ab3da2864c17a0f",
+   "file": "LICENSE",
+   "licence": "MIT",
+   "firstLines": "Copyright (C) 2011 by Ashima Arts (Simplex noise) | Copyright (C) 2011-2016 by Stefan Gustavson (Classic noise and others)",
+   "sha256": "bdafce1bb01517c9"
+  },
+  "patriciogonzalezvivo/lygia": {
+   "repo": "patriciogonzalezvivo/lygia",
+   "why": "large GLSL/WGSL function library",
+   "commit": "ce08fe351478b6c14297d103a8ce98d8e787d4d2",
+   "file": "LICENSE.md",
+   "licence": "Prosperity-3.0.0 (noncommercial; 30-day commercial trial)",
+   "firstLines": "# The Prosperity Public License 3.0.0 | Contributor: Patricio Gonzalez Vivo ( patriciogonzalezvivo.com )",
+   "sha256": "07011ea2ef9819e2",
+   "readme": "it. For that it is dual-licensed under the [Prosperity License](https://prosperitylicense.com/versions/3.0.0) and the [Patron License](https://lygia.xyz/license) for [sponsors](https://github.com/sponsors/patriciogonzalezvivo) and [contributors](https://github.com/patriciogonzalezvivo/lygia/graphs/contributors). [Sponsors](https://githu"
+  },
+  "patriciogonzalezvivo/thebookofshaders": {
+   "repo": "patriciogonzalezvivo/thebookofshaders",
+   "why": "the standard shader tutorial and its examples",
+   "commit": "5a537e76d7367dbbcda537723394b5dc03114449",
+   "file": "LICENSE",
+   "licence": "All rights reserved (no use in any product or website)",
+   "firstLines": "Copyright (c) 2025 Patricio Gonzalez Vivo - http://patriciogonzalezvivo.com/ | All rights reserved.",
+   "sha256": "34082a07e6a452f4"
+  },
+  "PavelDoGreat/WebGL-Fluid-Simulation": {
+   "repo": "PavelDoGreat/WebGL-Fluid-Simulation",
+   "why": "the fluid demo used as variant g",
+   "commit": "a2d292931f19d9b3b9f564e23e6c32729d2121c3",
+   "file": "LICENSE",
+   "licence": "MIT",
+   "firstLines": "MIT License | Copyright (c) 2017 Pavel Dobryakov",
+   "sha256": "1be448ae1212de2b"
+  },
+  "paper-design/shaders": {
+   "repo": "paper-design/shaders",
+   "why": "Paper Shaders (mesh gradient and others)",
+   "commit": "43cd68db79fa0b1759f72ffc941b3238e2a3954c",
+   "file": "LICENSE",
+   "licence": "Apache-2.0",
+   "firstLines": "Apache License | Version 2.0, January 2004",
+   "sha256": "c71d239df91726fc"
+  },
+  "FireCMSco/neat": {
+   "repo": "FireCMSco/neat",
+   "why": "NEAT gradients",
+   "commit": "b8532fc248ae247706c16dc1406d3640d25c4958",
+   "file": "LICENSE",
+   "licence": "MIT + Commons Clause (not open source: no selling)",
+   "firstLines": "The MIT License (MIT) | Copyright (c) 2024-present FireCMS",
+   "sha256": "7e193ea51a26d223"
+  },
+  "ruucm/shadergradient": {
+   "repo": "ruucm/shadergradient",
+   "why": "ShaderGradient",
+   "commit": "68bdd740037a11c639f8b91fd775949c71d718d0",
+   "licence": "no licence file at the repository root",
+   "readme": "Support # License MIT © [ruucm](https://github.com/ruucm), [stone-skipper](https://github.com/stone-skipper)"
+  },
+  "jordienr/whatamesh": {
+   "repo": "jordienr/whatamesh",
+   "why": "\"mesh gradients like Stripe\"",
+   "commit": "3dd627dfd1897e23df3cbef95bfe4bbd5ffc913b",
+   "licence": "no licence file at the repository root",
+   "readme": "mesh gradients like Stripe. This project wouldn't be possible without stripe and https://kevinhufnagl.com/ ## Live Demo [https://whatamesh.vercel.app/](https://whatamesh.vercel.app/) ## Getting started ### Creating your first gradient ```html <canvas id=\"gradient-canvas\"></canvas> ``` ```js import { Gradient } from \"whatamesh\"; c"
+  },
+  "tengbao/vanta": {
+   "repo": "tengbao/vanta",
+   "why": "Vanta.js backgrounds",
+   "commit": "f8b351906688b56f0fc744e53bde81fc3c56f150",
+   "file": "LICENSE.md",
+   "licence": "MIT",
+   "firstLines": "Copyright 2020 Teng Bao | Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software wit",
+   "sha256": "65df69dccc2a06fc"
+  },
+  "processing/p5.js": {
+   "repo": "processing/p5.js",
+   "why": "p5.js",
+   "commit": "2ce359a4b776bd89caa197feb89636b0d1f31449",
+   "file": "license.txt",
+   "licence": "LGPL-2.1",
+   "firstLines": "GNU LESSER GENERAL PUBLIC LICENSE | Version 2.1, February 1999",
+   "sha256": "eb2f25f8f165d5f2"
+  },
+  "oframe/ogl": {
+   "repo": "oframe/ogl",
+   "why": "OGL",
+   "commit": "385ce65c352c70734a36dc98c787fdd1d30ddb3b",
+   "licence": "no licence file at the repository root",
+   "readme": "le to advanced. ## Unlicense This is free and unencumbered software released into the public domain. Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either in source code form or as a compiled binary, for any purpose, commercial or non-commercial, and by any means. In jurisdictions that recogn"
+  },
+  "regl-project/regl": {
+   "repo": "regl-project/regl",
+   "why": "regl",
+   "commit": "581f8071182a8127d37a0cd1d3b035d7e5fef074",
+   "file": "LICENSE",
+   "licence": "MIT",
+   "firstLines": "The MIT License (MIT) | Copyright (c) 2016 Mikola Lysenko",
+   "sha256": "42d997d1f47c9222"
+  },
+  "greggman/twgl.js": {
+   "repo": "greggman/twgl.js",
+   "why": "twgl.js",
+   "commit": "aa33c0aa5b095e57b9a5cde0cf241e66a6c95f2e",
+   "file": "LICENSE.md",
+   "licence": "MIT",
+   "firstLines": "Copyright 2019 Gregg Tavares | Permission is hereby granted, free of charge, to any person obtaining a",
+   "sha256": "87a5a44b12faff12"
+  },
+  "matteobruni/tsparticles": {
+   "repo": "matteobruni/tsparticles",
+   "why": "tsParticles",
+   "commit": "d92ba4b96524f57921cdfbd3d4a60d31c897a149",
+   "file": "LICENSE",
+   "licence": "MIT",
+   "firstLines": "MIT License | Copyright (c) 2020 Matteo Bruni",
+   "sha256": "c5c18dbc27f490f2"
+  },
+  "codrops/RainEffect": {
+   "repo": "codrops/RainEffect",
+   "why": "a classic Codrops WebGL demo",
+   "commit": "5270be663903883ae585858216b656120d8d4cd5",
+   "licence": "no licence file at the repository root",
+   "readme": "nt/RainEffect/) ## License Integrate or build upon it for free in your personal or commercial projects. Don't republish, redistribute or sell \"as-is\". Read more here: [License](http://tympanus.net/codrops/licensing/) ## Misc Follow Lucas: [Twitter](http://twitter.com/lucasbebber), [Dribbble](https://dribbble.com/lbebber), [Flickr](h"
+  },
+  "codrops/ImageTrailEffects": {
+   "repo": "codrops/ImageTrailEffects",
+   "why": "a Codrops demo",
+   "commit": "5722f59a1ffb4c26292c86470aa80c1056f893ed",
+   "licence": "no licence file at the repository root",
+   "readme": "unsplash.com/) ## License This resource can be used freely if integrated or build upon in personal or commercial projects such as websites, web apps and web templates intended for sale. It is not allowed to take the resource \"as-is\" and sell it, redistribute, re-publish it, or sell \"pluginized\" versions of it. Free plugins built using t"
+  },
+  "guilanier/codrops-sdf-lensblur": {
+   "repo": "guilanier/codrops-sdf-lensblur",
+   "why": "a recent Codrops tutorial repo (guest author)",
+   "commit": "963065fff2b7a0b58617bb1ebf84f930758a539a",
+   "file": "LICENSE",
+   "licence": "MIT",
+   "firstLines": "MIT License | Copyright (c) 2009 - 2024 [Codrops](https://tympanus.net/codrops)",
+   "sha256": "a5ad4d98a7970bd0"
+  },
+  "jothyrangan/codrops-cinematic-scroll-animations": {
+   "repo": "jothyrangan/codrops-cinematic-scroll-animations",
+   "why": "a recent Codrops tutorial repo (guest author)",
+   "commit": "8e179cbecdae629339871d01b5249de64455f2fe",
+   "licence": "no licence file at the repository root",
+   "readme": "ub.com/codrops) ## License [MIT](LICENSE)"
+  }
+ },
+ "lcp": {
+  "a-static|1280x720|100svh": {
+   "id": "a-static",
+   "viewport": "1280x720",
+   "hero": "100svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 120,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 921600,
+    "viewportArea": 921600,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.03
+   }
+  },
+  "a-static|1280x720|110svh": {
+   "id": "a-static",
+   "viewport": "1280x720",
+   "hero": "110svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 60,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 921600,
+    "viewportArea": 921600,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.033
+   }
+  },
+  "a-static|1280x720|calc(100svh - 64px) under a 64px header": {
+   "id": "a-static",
+   "viewport": "1280x720",
+   "hero": "calc(100svh - 64px) under a 64px header",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 80,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 839680,
+    "viewportArea": 921600,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.033
+   }
+  },
+  "a-static|1280x720|min(100svh, 56rem)": {
+   "id": "a-static",
+   "viewport": "1280x720",
+   "hero": "min(100svh, 56rem)",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 148,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 921600,
+    "viewportArea": 921600,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.03
+   }
+  },
+  "a-static|1280x720|80vh": {
+   "id": "a-static",
+   "viewport": "1280x720",
+   "hero": "80vh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 84,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 737280,
+    "viewportArea": 921600,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.037
+   }
+  },
+  "a-static|1280x1100|100svh": {
+   "id": "a-static",
+   "viewport": "1280x1100",
+   "hero": "100svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 72,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 1408000,
+    "viewportArea": 1408000,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.03
+   }
+  },
+  "a-static|1280x1100|110svh": {
+   "id": "a-static",
+   "viewport": "1280x1100",
+   "hero": "110svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 104,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 1408000,
+    "viewportArea": 1408000,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.033
+   }
+  },
+  "a-static|1280x1100|calc(100svh - 64px) under a 64px header": {
+   "id": "a-static",
+   "viewport": "1280x1100",
+   "hero": "calc(100svh - 64px) under a 64px header",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 172,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 1326080,
+    "viewportArea": 1408000,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.03
+   }
+  },
+  "a-static|1280x1100|min(100svh, 56rem)": {
+   "id": "a-static",
+   "viewport": "1280x1100",
+   "hero": "min(100svh, 56rem)",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 96,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 1146880,
+    "viewportArea": 1408000,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.03
+   }
+  },
+  "a-static|1280x1100|80vh": {
+   "id": "a-static",
+   "viewport": "1280x1100",
+   "hero": "80vh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 76,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 1126400,
+    "viewportArea": 1408000,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.03
+   }
+  },
+  "a-static|390x844@3|100svh": {
+   "id": "a-static",
+   "viewport": "390x844@3",
+   "hero": "100svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 68,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 329160,
+    "viewportArea": 329160,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.32
+   }
+  },
+  "a-static|390x844@3|110svh": {
+   "id": "a-static",
+   "viewport": "390x844@3",
+   "hero": "110svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 44,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 329160,
+    "viewportArea": 329160,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.352
+   }
+  },
+  "a-static|390x844@3|calc(100svh - 64px) under a 64px header": {
+   "id": "a-static",
+   "viewport": "390x844@3",
+   "hero": "calc(100svh - 64px) under a 64px header",
+   "lcpTag": "IMG",
+   "lcpUrl": "shader-1600.avif",
+   "lcpTime": 192,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 304200,
+    "viewportArea": 329160,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.32
+   }
+  },
+  "a-static|390x844@3|min(100svh, 56rem)": {
+   "id": "a-static",
+   "viewport": "390x844@3",
+   "hero": "min(100svh, 56rem)",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 60,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 329160,
+    "viewportArea": 329160,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.32
+   }
+  },
+  "a-static|390x844@3|80vh": {
+   "id": "a-static",
+   "viewport": "390x844@3",
+   "hero": "80vh",
+   "lcpTag": "IMG",
+   "lcpUrl": "shader-1600.avif",
+   "lcpTime": 100,
+   "poster": {
+    "file": "shader-1600.avif",
+    "bytes": 3414,
+    "visibleArea": 263323,
+    "viewportArea": 329160,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.32
+   }
+  },
+  "d-canvas2d|1280x720|100svh": {
+   "id": "d-canvas2d",
+   "viewport": "1280x720",
+   "hero": "100svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 156,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 921600,
+    "viewportArea": 921600,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.257
+   }
+  },
+  "d-canvas2d|1280x720|110svh": {
+   "id": "d-canvas2d",
+   "viewport": "1280x720",
+   "hero": "110svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 68,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 921600,
+    "viewportArea": 921600,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.282
+   }
+  },
+  "d-canvas2d|1280x720|calc(100svh - 64px) under a 64px header": {
+   "id": "d-canvas2d",
+   "viewport": "1280x720",
+   "hero": "calc(100svh - 64px) under a 64px header",
+   "lcpTag": "IMG",
+   "lcpUrl": "canvas2d-1600.avif",
+   "lcpTime": 216,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 839680,
+    "viewportArea": 921600,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.282
+   }
+  },
+  "d-canvas2d|1280x720|min(100svh, 56rem)": {
+   "id": "d-canvas2d",
+   "viewport": "1280x720",
+   "hero": "min(100svh, 56rem)",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 216,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 921600,
+    "viewportArea": 921600,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.257
+   }
+  },
+  "d-canvas2d|1280x720|80vh": {
+   "id": "d-canvas2d",
+   "viewport": "1280x720",
+   "hero": "80vh",
+   "lcpTag": "IMG",
+   "lcpUrl": "canvas2d-1600.avif",
+   "lcpTime": 224,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 737280,
+    "viewportArea": 921600,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.321
+   }
+  },
+  "d-canvas2d|1280x1100|100svh": {
+   "id": "d-canvas2d",
+   "viewport": "1280x1100",
+   "hero": "100svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 164,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 1408000,
+    "viewportArea": 1408000,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.257
+   }
+  },
+  "d-canvas2d|1280x1100|110svh": {
+   "id": "d-canvas2d",
+   "viewport": "1280x1100",
+   "hero": "110svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 168,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 1408000,
+    "viewportArea": 1408000,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.282
+   }
+  },
+  "d-canvas2d|1280x1100|calc(100svh - 64px) under a 64px header": {
+   "id": "d-canvas2d",
+   "viewport": "1280x1100",
+   "hero": "calc(100svh - 64px) under a 64px header",
+   "lcpTag": "IMG",
+   "lcpUrl": "canvas2d-1600.avif",
+   "lcpTime": 152,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 1326080,
+    "viewportArea": 1408000,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.257
+   }
+  },
+  "d-canvas2d|1280x1100|min(100svh, 56rem)": {
+   "id": "d-canvas2d",
+   "viewport": "1280x1100",
+   "hero": "min(100svh, 56rem)",
+   "lcpTag": "IMG",
+   "lcpUrl": "canvas2d-1600.avif",
+   "lcpTime": 164,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 1146880,
+    "viewportArea": 1408000,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.257
+   }
+  },
+  "d-canvas2d|1280x1100|80vh": {
+   "id": "d-canvas2d",
+   "viewport": "1280x1100",
+   "hero": "80vh",
+   "lcpTag": "IMG",
+   "lcpUrl": "canvas2d-1600.avif",
+   "lcpTime": 240,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 1126400,
+    "viewportArea": 1408000,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.257
+   }
+  },
+  "d-canvas2d|390x844@3|100svh": {
+   "id": "d-canvas2d",
+   "viewport": "390x844@3",
+   "hero": "100svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 104,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 329160,
+    "viewportArea": 329160,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 2.768
+   }
+  },
+  "d-canvas2d|390x844@3|110svh": {
+   "id": "d-canvas2d",
+   "viewport": "390x844@3",
+   "hero": "110svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 80,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 329160,
+    "viewportArea": 329160,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 3.045
+   }
+  },
+  "d-canvas2d|390x844@3|calc(100svh - 64px) under a 64px header": {
+   "id": "d-canvas2d",
+   "viewport": "390x844@3",
+   "hero": "calc(100svh - 64px) under a 64px header",
+   "lcpTag": "IMG",
+   "lcpUrl": "canvas2d-1600.avif",
+   "lcpTime": 132,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 304200,
+    "viewportArea": 329160,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 2.768
+   }
+  },
+  "d-canvas2d|390x844@3|min(100svh, 56rem)": {
+   "id": "d-canvas2d",
+   "viewport": "390x844@3",
+   "hero": "min(100svh, 56rem)",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 36,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 329160,
+    "viewportArea": 329160,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 2.768
+   }
+  },
+  "d-canvas2d|390x844@3|80vh": {
+   "id": "d-canvas2d",
+   "viewport": "390x844@3",
+   "hero": "80vh",
+   "lcpTag": "IMG",
+   "lcpUrl": "canvas2d-1600.avif",
+   "lcpTime": 116,
+   "poster": {
+    "file": "canvas2d-1600.avif",
+    "bytes": 29551,
+    "visibleArea": 263323,
+    "viewportArea": 329160,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 2.768
+   }
+  },
+  "f-three-particles|1280x720|100svh": {
+   "id": "f-three-particles",
+   "viewport": "1280x720",
+   "hero": "100svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 92,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 921600,
+    "viewportArea": 921600,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.12
+   }
+  },
+  "f-three-particles|1280x720|110svh": {
+   "id": "f-three-particles",
+   "viewport": "1280x720",
+   "hero": "110svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 156,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 921600,
+    "viewportArea": 921600,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.132
+   }
+  },
+  "f-three-particles|1280x720|calc(100svh - 64px) under a 64px header": {
+   "id": "f-three-particles",
+   "viewport": "1280x720",
+   "hero": "calc(100svh - 64px) under a 64px header",
+   "lcpTag": "IMG",
+   "lcpUrl": "particles-1600.avif",
+   "lcpTime": 76,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 839680,
+    "viewportArea": 921600,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.132
+   }
+  },
+  "f-three-particles|1280x720|min(100svh, 56rem)": {
+   "id": "f-three-particles",
+   "viewport": "1280x720",
+   "hero": "min(100svh, 56rem)",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 84,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 921600,
+    "viewportArea": 921600,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.12
+   }
+  },
+  "f-three-particles|1280x720|80vh": {
+   "id": "f-three-particles",
+   "viewport": "1280x720",
+   "hero": "80vh",
+   "lcpTag": "IMG",
+   "lcpUrl": "particles-1600.avif",
+   "lcpTime": 80,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 737280,
+    "viewportArea": 921600,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.15
+   }
+  },
+  "f-three-particles|1280x1100|100svh": {
+   "id": "f-three-particles",
+   "viewport": "1280x1100",
+   "hero": "100svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 72,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 1408000,
+    "viewportArea": 1408000,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.12
+   }
+  },
+  "f-three-particles|1280x1100|110svh": {
+   "id": "f-three-particles",
+   "viewport": "1280x1100",
+   "hero": "110svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 244,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 1408000,
+    "viewportArea": 1408000,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.132
+   }
+  },
+  "f-three-particles|1280x1100|calc(100svh - 64px) under a 64px header": {
+   "id": "f-three-particles",
+   "viewport": "1280x1100",
+   "hero": "calc(100svh - 64px) under a 64px header",
+   "lcpTag": "IMG",
+   "lcpUrl": "particles-1600.avif",
+   "lcpTime": 108,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 1326080,
+    "viewportArea": 1408000,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.12
+   }
+  },
+  "f-three-particles|1280x1100|min(100svh, 56rem)": {
+   "id": "f-three-particles",
+   "viewport": "1280x1100",
+   "hero": "min(100svh, 56rem)",
+   "lcpTag": "IMG",
+   "lcpUrl": "particles-1600.avif",
+   "lcpTime": 216,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 1146880,
+    "viewportArea": 1408000,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.12
+   }
+  },
+  "f-three-particles|1280x1100|80vh": {
+   "id": "f-three-particles",
+   "viewport": "1280x1100",
+   "hero": "80vh",
+   "lcpTag": "IMG",
+   "lcpUrl": "particles-1600.avif",
+   "lcpTime": 148,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 1126400,
+    "viewportArea": 1408000,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.12
+   }
+  },
+  "f-three-particles|390x844@3|100svh": {
+   "id": "f-three-particles",
+   "viewport": "390x844@3",
+   "hero": "100svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 92,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 329160,
+    "viewportArea": 329160,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 1.297
+   }
+  },
+  "f-three-particles|390x844@3|110svh": {
+   "id": "f-three-particles",
+   "viewport": "390x844@3",
+   "hero": "110svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 68,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 329160,
+    "viewportArea": 329160,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 1.427
+   }
+  },
+  "f-three-particles|390x844@3|calc(100svh - 64px) under a 64px header": {
+   "id": "f-three-particles",
+   "viewport": "390x844@3",
+   "hero": "calc(100svh - 64px) under a 64px header",
+   "lcpTag": "IMG",
+   "lcpUrl": "particles-1600.avif",
+   "lcpTime": 112,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 304200,
+    "viewportArea": 329160,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 1.297
+   }
+  },
+  "f-three-particles|390x844@3|min(100svh, 56rem)": {
+   "id": "f-three-particles",
+   "viewport": "390x844@3",
+   "hero": "min(100svh, 56rem)",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 192,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 329160,
+    "viewportArea": 329160,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 1.297
+   }
+  },
+  "f-three-particles|390x844@3|80vh": {
+   "id": "f-three-particles",
+   "viewport": "390x844@3",
+   "hero": "80vh",
+   "lcpTag": "IMG",
+   "lcpUrl": "particles-1600.avif",
+   "lcpTime": 60,
+   "poster": {
+    "file": "particles-1600.avif",
+    "bytes": 13850,
+    "visibleArea": 263323,
+    "viewportArea": 329160,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 1.297
+   }
+  },
+  "h-post|1280x720|100svh": {
+   "id": "h-post",
+   "viewport": "1280x720",
+   "hero": "100svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 156,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 921600,
+    "viewportArea": 921600,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.389
+   }
+  },
+  "h-post|1280x720|110svh": {
+   "id": "h-post",
+   "viewport": "1280x720",
+   "hero": "110svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 216,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 921600,
+    "viewportArea": 921600,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.428
+   }
+  },
+  "h-post|1280x720|calc(100svh - 64px) under a 64px header": {
+   "id": "h-post",
+   "viewport": "1280x720",
+   "hero": "calc(100svh - 64px) under a 64px header",
+   "lcpTag": "IMG",
+   "lcpUrl": "post-1600.avif",
+   "lcpTime": 180,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 839680,
+    "viewportArea": 921600,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.427
+   }
+  },
+  "h-post|1280x720|min(100svh, 56rem)": {
+   "id": "h-post",
+   "viewport": "1280x720",
+   "hero": "min(100svh, 56rem)",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 132,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 921600,
+    "viewportArea": 921600,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.389
+   }
+  },
+  "h-post|1280x720|80vh": {
+   "id": "h-post",
+   "viewport": "1280x720",
+   "hero": "80vh",
+   "lcpTag": "IMG",
+   "lcpUrl": "post-1600.avif",
+   "lcpTime": 152,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 737280,
+    "viewportArea": 921600,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.486
+   }
+  },
+  "h-post|1280x1100|100svh": {
+   "id": "h-post",
+   "viewport": "1280x1100",
+   "hero": "100svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 280,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 1408000,
+    "viewportArea": 1408000,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.389
+   }
+  },
+  "h-post|1280x1100|110svh": {
+   "id": "h-post",
+   "viewport": "1280x1100",
+   "hero": "110svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 132,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 1408000,
+    "viewportArea": 1408000,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 0.428
+   }
+  },
+  "h-post|1280x1100|calc(100svh - 64px) under a 64px header": {
+   "id": "h-post",
+   "viewport": "1280x1100",
+   "hero": "calc(100svh - 64px) under a 64px header",
+   "lcpTag": "IMG",
+   "lcpUrl": "post-1600.avif",
+   "lcpTime": 84,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 1326080,
+    "viewportArea": 1408000,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.389
+   }
+  },
+  "h-post|1280x1100|min(100svh, 56rem)": {
+   "id": "h-post",
+   "viewport": "1280x1100",
+   "hero": "min(100svh, 56rem)",
+   "lcpTag": "IMG",
+   "lcpUrl": "post-1600.avif",
+   "lcpTime": 252,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 1146880,
+    "viewportArea": 1408000,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.389
+   }
+  },
+  "h-post|1280x1100|80vh": {
+   "id": "h-post",
+   "viewport": "1280x1100",
+   "hero": "80vh",
+   "lcpTag": "IMG",
+   "lcpUrl": "post-1600.avif",
+   "lcpTime": 76,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 1126400,
+    "viewportArea": 1408000,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 0.389
+   }
+  },
+  "h-post|390x844@3|100svh": {
+   "id": "h-post",
+   "viewport": "390x844@3",
+   "hero": "100svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 60,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 329160,
+    "viewportArea": 329160,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 4.199
+   }
+  },
+  "h-post|390x844@3|110svh": {
+   "id": "h-post",
+   "viewport": "390x844@3",
+   "hero": "110svh",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 76,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 329160,
+    "viewportArea": 329160,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 4.618
+   }
+  },
+  "h-post|390x844@3|calc(100svh - 64px) under a 64px header": {
+   "id": "h-post",
+   "viewport": "390x844@3",
+   "hero": "calc(100svh - 64px) under a 64px header",
+   "lcpTag": "IMG",
+   "lcpUrl": "post-1600.avif",
+   "lcpTime": 72,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 304200,
+    "viewportArea": 329160,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 4.199
+   }
+  },
+  "h-post|390x844@3|min(100svh, 56rem)": {
+   "id": "h-post",
+   "viewport": "390x844@3",
+   "hero": "min(100svh, 56rem)",
+   "lcpTag": "H1",
+   "lcpUrl": null,
+   "lcpTime": 152,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 329160,
+    "viewportArea": 329160,
+    "coversViewport": true,
+    "bitsPerVisiblePx": 4.199
+   }
+  },
+  "h-post|390x844@3|80vh": {
+   "id": "h-post",
+   "viewport": "390x844@3",
+   "hero": "80vh",
+   "lcpTag": "IMG",
+   "lcpUrl": "post-1600.avif",
+   "lcpTime": 72,
+   "poster": {
+    "file": "post-1600.avif",
+    "bytes": 44826,
+    "visibleArea": 263323,
+    "viewportArea": 329160,
+    "coversViewport": false,
+    "bitsPerVisiblePx": 4.199
+   }
+  }
+ },
+ "governor": {
+  "e1-webgl-vanilla": {
+   "id": "e1-webgl-vanilla",
+   "beforeEffectFps": 13,
+   "beforeCpu": 95.6,
+   "beforeProbeFps": 11.5,
+   "afterEffectFps": 32.7,
+   "afterCpu": 65.3,
+   "afterProbeFps": 30.6,
+   "outcomes": [
+    "scale 0.25, canvas 320×180",
+    "scale 0.25, canvas 320×180",
+    "scale 0.25, canvas 320×180"
+   ],
+   "steps": [
+    {
+     "at": 3004,
+     "medianMs": 283.3,
+     "scale": 0.5
+    },
+    {
+     "at": 5971,
+     "medianMs": 83.3,
+     "scale": 0.25
+    }
+   ]
+  },
+  "f-three-particles": {
+   "id": "f-three-particles",
+   "beforeEffectFps": 23.9,
+   "beforeCpu": 121.9,
+   "beforeProbeFps": 22.6,
+   "afterEffectFps": 27.2,
+   "afterCpu": 102.7,
+   "afterProbeFps": 26.6,
+   "outcomes": [
+    "scale 0.25, canvas 320×180",
+    "scale 0.25, canvas 320×180",
+    "scale 0.25, canvas 320×180"
+   ],
+   "steps": [
+    {
+     "at": 3134,
+     "medianMs": 49.9,
+     "scale": 0.5
+    },
+    {
+     "at": 5984,
+     "medianMs": 33.4,
+     "scale": 0.25
+    }
+   ]
+  },
+  "h-post": {
+   "id": "h-post",
+   "beforeEffectFps": 6.1,
+   "beforeCpu": 94,
+   "beforeProbeFps": 4.3,
+   "afterEffectFps": 0,
+   "afterCpu": 1.6,
+   "afterProbeFps": 58,
+   "outcomes": [
+    "poster (3 steps)",
+    "poster (3 steps)",
+    "poster (3 steps)"
+   ],
+   "steps": [
+    {
+     "at": 3766,
+     "medianMs": 566.7,
+     "scale": 0.5
+    },
+    {
+     "at": 6766,
+     "medianMs": 150,
+     "scale": 0.25
+    },
+    {
+     "at": 9749,
+     "medianMs": 66.6,
+     "gaveUp": true
+    }
+   ]
+  },
+  "g-fluid-wrapped": {
+   "id": "g-fluid-wrapped",
+   "beforeEffectFps": 0.7,
+   "beforeCpu": 7.3,
+   "beforeProbeFps": 56.7,
+   "afterEffectFps": 0,
+   "afterCpu": 1.9,
+   "afterProbeFps": 56.6,
+   "outcomes": [
+    "poster (1 steps)",
+    "poster (1 steps)",
+    "poster (1 steps)"
+   ],
+   "steps": [
+    {
+     "at": 6846,
+     "medianMs": 749.9,
+     "gaveUp": true
+    }
+   ]
+  },
+  "d-canvas2d": {
+   "id": "d-canvas2d",
+   "beforeEffectFps": 55.1,
+   "beforeCpu": 26.4,
+   "beforeProbeFps": 54.5,
+   "afterEffectFps": 54.6,
+   "afterCpu": 23.3,
+   "afterProbeFps": 54,
+   "outcomes": [
+    "scale 1, canvas 1280×720",
+    "scale 1, canvas 1280×720",
+    "scale 1, canvas 1280×720"
+   ],
+   "steps": []
+  }
+ },
+ "blacklevel": {
+  "fx=none clear colour only half": {
+   "rgb": [
+    9,
+    18,
+    42
+   ],
+   "target": [
+    9,
+    18,
+    42
+   ]
+  },
+  "fx=none clear colour only u8": {
+   "rgb": [
+    9,
+    18,
+    42
+   ],
+   "target": [
+    9,
+    18,
+    42
+   ]
+  },
+  "fx=none scene.background half": {
+   "rgb": [
+    9,
+    18,
+    42
+   ],
+   "target": [
+    9,
+    18,
+    42
+   ]
+  },
+  "fx=none scene.background u8": {
+   "rgb": [
+    9,
+    18,
+    42
+   ],
+   "target": [
+    9,
+    18,
+    42
+   ]
+  },
+  "fx=vignette clear colour only half": {
+   "rgb": [
+    49,
+    70,
+    106
+   ],
+   "target": [
+    9,
+    18,
+    42
+   ]
+  },
+  "fx=vignette clear colour only u8": {
+   "rgb": [
+    49,
+    70,
+    106
+   ],
+   "target": [
+    9,
+    18,
+    42
+   ]
+  },
+  "fx=vignette scene.background half": {
+   "rgb": [
+    8,
+    16,
+    39
+   ],
+   "target": [
+    9,
+    18,
+    42
+   ]
+  },
+  "fx=vignette scene.background u8": {
+   "rgb": [
+    8,
+    16,
+    39
+   ],
+   "target": [
+    9,
+    18,
+    42
+   ]
+  },
+  "fx=all clear colour only half": {
+   "rgb": [
+    49,
+    70,
+    106
+   ],
+   "target": [
+    9,
+    18,
+    42
+   ]
+  },
+  "fx=all clear colour only u8": {
+   "rgb": [
+    49,
+    70,
+    106
+   ],
+   "target": [
+    9,
+    18,
+    42
+   ]
+  },
+  "fx=all scene.background half": {
+   "rgb": [
+    8,
+    16,
+    39
+   ],
+   "target": [
+    9,
+    18,
+    42
+   ]
+  },
+  "fx=all scene.background u8": {
+   "rgb": [
+    8,
+    16,
+    39
+   ],
+   "target": [
+    9,
+    18,
+    42
+   ]
+  }
+ },
+ "videocolour": {
+  "source": [
+   7,
+   41.1,
+   58.4
+  ],
+  "untagged.webm": {
+   "rgb": [
+    7,
+    41.2,
+    58.2
+   ],
+   "maxDiff": 0.19999999999999574
+  },
+  "tagged.webm": {
+   "rgb": [
+    6.9,
+    41,
+    57.3
+   ],
+   "maxDiff": 1.1000000000000014
+  }
+ },
+ "census": {
+  "three.js examples": {
+   "commit": "ec28dfc233171c29a0c95a75ecebf23bf0de5794",
+   "files": 610,
+   "counts": {
+    "devicePixelRatio used": 585,
+    "raw devicePixelRatio (uncapped)": 576,
+    "DPR capped (Math.min)": 2,
+    "IntersectionObserver (off-screen pause)": 0,
+    "visibilitychange / document.hidden": 0,
+    "WebGL context loss handled": 0,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 0,
+    "failIfMajorPerformanceCaveat": 0,
+    "debug GUI (lil-gui / dat.gui)": 160,
+    "stats panel": 163
+   }
+  },
+  "codrops/RainEffect": {
+   "commit": "5270be663903883ae585858216b656120d8d4cd5",
+   "counts": {
+    "devicePixelRatio used": 10,
+    "raw devicePixelRatio (uncapped)": 0,
+    "DPR capped (Math.min)": 0,
+    "IntersectionObserver (off-screen pause)": 0,
+    "visibilitychange / document.hidden": 2,
+    "WebGL context loss handled": 0,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 0,
+    "failIfMajorPerformanceCaveat": 0,
+    "debug GUI (lil-gui / dat.gui)": 0,
+    "stats panel": 0
+   }
+  },
+  "codrops/ImageTrailEffects": {
+   "commit": "5722f59a1ffb4c26292c86470aa80c1056f893ed",
+   "counts": {
+    "devicePixelRatio used": 0,
+    "raw devicePixelRatio (uncapped)": 0,
+    "DPR capped (Math.min)": 0,
+    "IntersectionObserver (off-screen pause)": 0,
+    "visibilitychange / document.hidden": 1,
+    "WebGL context loss handled": 0,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 0,
+    "failIfMajorPerformanceCaveat": 0,
+    "debug GUI (lil-gui / dat.gui)": 0,
+    "stats panel": 0
+   }
+  },
+  "guilanier/codrops-sdf-lensblur": {
+   "commit": "963065fff2b7a0b58617bb1ebf84f930758a539a",
+   "counts": {
+    "devicePixelRatio used": 1,
+    "raw devicePixelRatio (uncapped)": 0,
+    "DPR capped (Math.min)": 1,
+    "IntersectionObserver (off-screen pause)": 0,
+    "visibilitychange / document.hidden": 0,
+    "WebGL context loss handled": 0,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 0,
+    "failIfMajorPerformanceCaveat": 0,
+    "debug GUI (lil-gui / dat.gui)": 0,
+    "stats panel": 0
+   }
+  },
+  "jothyrangan/codrops-cinematic-scroll-animations": {
+   "commit": "8e179cbecdae629339871d01b5249de64455f2fe",
+   "counts": {
+    "devicePixelRatio used": 1,
+    "raw devicePixelRatio (uncapped)": 0,
+    "DPR capped (Math.min)": 1,
+    "IntersectionObserver (off-screen pause)": 0,
+    "visibilitychange / document.hidden": 0,
+    "WebGL context loss handled": 0,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 1,
+    "failIfMajorPerformanceCaveat": 0,
+    "debug GUI (lil-gui / dat.gui)": 0,
+    "stats panel": 0
+   }
+  },
+  "vanta": {
+   "counts": {
+    "devicePixelRatio used": 3,
+    "raw devicePixelRatio (uncapped)": 0,
+    "DPR capped (Math.min)": 0,
+    "IntersectionObserver (off-screen pause)": 0,
+    "visibilitychange / document.hidden": 0,
+    "WebGL context loss handled": 0,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 0,
+    "failIfMajorPerformanceCaveat": 0,
+    "debug GUI (lil-gui / dat.gui)": 0,
+    "stats panel": 0
+   }
+  },
+  "@firecms/neat": {
+   "counts": {
+    "devicePixelRatio used": 0,
+    "raw devicePixelRatio (uncapped)": 0,
+    "DPR capped (Math.min)": 0,
+    "IntersectionObserver (off-screen pause)": 1,
+    "visibilitychange / document.hidden": 1,
+    "WebGL context loss handled": 0,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 0,
+    "failIfMajorPerformanceCaveat": 0,
+    "debug GUI (lil-gui / dat.gui)": 0,
+    "stats panel": 0
+   }
+  },
+  "@paper-design/shaders": {
+   "counts": {
+    "devicePixelRatio used": 1,
+    "raw devicePixelRatio (uncapped)": 0,
+    "DPR capped (Math.min)": 0,
+    "IntersectionObserver (off-screen pause)": 1,
+    "visibilitychange / document.hidden": 1,
+    "WebGL context loss handled": 0,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 0,
+    "failIfMajorPerformanceCaveat": 0,
+    "debug GUI (lil-gui / dat.gui)": 0,
+    "stats panel": 0
+   }
+  },
+  "@tsparticles/engine": {
+   "counts": {
+    "devicePixelRatio used": 1,
+    "raw devicePixelRatio (uncapped)": 0,
+    "DPR capped (Math.min)": 0,
+    "IntersectionObserver (off-screen pause)": 0,
+    "visibilitychange / document.hidden": 1,
+    "WebGL context loss handled": 0,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 0,
+    "failIfMajorPerformanceCaveat": 0,
+    "debug GUI (lil-gui / dat.gui)": 0,
+    "stats panel": 0
+   }
+  },
+  "granim": {
+   "counts": {
+    "devicePixelRatio used": 0,
+    "raw devicePixelRatio (uncapped)": 0,
+    "DPR capped (Math.min)": 0,
+    "IntersectionObserver (off-screen pause)": 0,
+    "visibilitychange / document.hidden": 0,
+    "WebGL context loss handled": 0,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 0,
+    "failIfMajorPerformanceCaveat": 0,
+    "debug GUI (lil-gui / dat.gui)": 0,
+    "stats panel": 0
+   }
+  },
+  "curtainsjs": {
+   "counts": {
+    "devicePixelRatio used": 1,
+    "raw devicePixelRatio (uncapped)": 0,
+    "DPR capped (Math.min)": 0,
+    "IntersectionObserver (off-screen pause)": 0,
+    "visibilitychange / document.hidden": 0,
+    "WebGL context loss handled": 1,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 0,
+    "failIfMajorPerformanceCaveat": 2,
+    "debug GUI (lil-gui / dat.gui)": 0,
+    "stats panel": 0
+   }
+  },
+  "ogl": {
+   "counts": {
+    "devicePixelRatio used": 0,
+    "raw devicePixelRatio (uncapped)": 0,
+    "DPR capped (Math.min)": 0,
+    "IntersectionObserver (off-screen pause)": 0,
+    "visibilitychange / document.hidden": 0,
+    "WebGL context loss handled": 0,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 1,
+    "failIfMajorPerformanceCaveat": 0,
+    "debug GUI (lil-gui / dat.gui)": 0,
+    "stats panel": 0
+   }
+  },
+  "WebGL-Fluid-Simulation script.js": {
+   "counts": {
+    "devicePixelRatio used": 1,
+    "raw devicePixelRatio (uncapped)": 0,
+    "DPR capped (Math.min)": 0,
+    "IntersectionObserver (off-screen pause)": 0,
+    "visibilitychange / document.hidden": 0,
+    "WebGL context loss handled": 0,
+    "prefers-reduced-motion": 0,
+    "powerPreference": 0,
+    "failIfMajorPerformanceCaveat": 0,
+    "debug GUI (lil-gui / dat.gui)": 0,
+    "stats panel": 0
+   }
+  }
+ },
+ "caveat": {
+  "webgl2": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "webgl2 + failIfMajorPerformanceCaveat": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "webgl": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "webgl + failIfMajorPerformanceCaveat": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+ },
+ "firstframe": {
+  "d-canvas2d@1x": {
+   "id": "d-canvas2d",
+   "throttle": 1,
+   "drawIssued": {
+    "median": 380.2,
+    "min": 380.2,
+    "max": 380.2,
+    "n": 1
+   },
+   "gpuFirst": null,
+   "firstVisible": {
+    "median": 5573,
+    "min": 5573,
+    "max": 5573,
+    "n": 1
+   },
+   "effectImportStart": {
+    "median": 41.3,
+    "min": 41.3,
+    "max": 41.3,
+    "n": 1
+   },
+   "blackFrames": 0,
+   "fallbacks": [],
+   "rawVisible": [
+    5573
+   ],
+   "rawGpuFirst": []
+  },
+  "d-canvas2d@4x": {
+   "id": "d-canvas2d",
+   "throttle": 4,
+   "drawIssued": {
+    "median": 264.2,
+    "min": 264.2,
+    "max": 264.2,
+    "n": 1
+   },
+   "gpuFirst": null,
+   "firstVisible": {
+    "median": 2541,
+    "min": 2541,
+    "max": 2541,
+    "n": 1
+   },
+   "effectImportStart": {
+    "median": 140.4,
+    "min": 140.4,
+    "max": 140.4,
+    "n": 1
+   },
+   "blackFrames": 0,
+   "fallbacks": [],
+   "rawVisible": [
+    2541
+   ],
+   "rawGpuFirst": []
+  },
+  "e1-webgl-vanilla@1x": {
+   "id": "e1-webgl-vanilla",
+   "throttle": 1,
+   "drawIssued": {
+    "median": 49.4,
+    "min": 49.4,
+    "max": 49.4,
+    "n": 1
+   },
+   "gpuFirst": {
+    "median": 304.7,
+    "min": 304.7,
+    "max": 304.7,
+    "n": 1
+   },
+   "firstVisible": {
+    "median": 712,
+    "min": 712,
+    "max": 712,
+    "n": 1
+   },
+   "effectImportStart": {
+    "median": 25.7,
+    "min": 25.7,
+    "max": 25.7,
+    "n": 1
+   },
+   "blackFrames": 0,
+   "fallbacks": [],
+   "rawVisible": [
+    712
+   ],
+   "rawGpuFirst": [
+    304.7
+   ]
+  },
+  "e1-webgl-vanilla@4x": {
+   "id": "e1-webgl-vanilla",
+   "throttle": 4,
+   "drawIssued": {
+    "median": 249.5,
+    "min": 249.5,
+    "max": 249.5,
+    "n": 1
+   },
+   "gpuFirst": null,
+   "firstVisible": {
+    "median": 192,
+    "min": 192,
+    "max": 192,
+    "n": 1
+   },
+   "effectImportStart": {
+    "median": 182.6,
+    "min": 182.6,
+    "max": 182.6,
+    "n": 1
+   },
+   "blackFrames": 0,
+   "fallbacks": [],
+   "rawVisible": [
+    192
+   ],
+   "rawGpuFirst": []
+  },
+  "g-fluid-demo@1x": {
+   "id": "g-fluid-demo",
+   "throttle": 1,
+   "drawIssued": {
+    "median": 4314.9,
+    "min": 4314.9,
+    "max": 4314.9,
+    "n": 1
+   },
+   "gpuFirst": {
+    "median": 1819.3,
+    "min": 1819.3,
+    "max": 1819.3,
+    "n": 1
+   },
+   "firstVisible": {
+    "median": 112,
+    "min": 112,
+    "max": 112,
+    "n": 1
+   },
+   "effectImportStart": {
+    "median": 31.7,
+    "min": 31.7,
+    "max": 31.7,
+    "n": 1
+   },
+   "blackFrames": 0,
+   "fallbacks": [],
+   "rawVisible": [
+    112
+   ],
+   "rawGpuFirst": [
+    1819.3
+   ]
+  },
+  "g-fluid-demo@4x": {
+   "id": "g-fluid-demo",
+   "throttle": 4,
+   "drawIssued": {
+    "median": 4896.4,
+    "min": 4896.4,
+    "max": 4896.4,
+    "n": 1
+   },
+   "gpuFirst": null,
+   "firstVisible": {
+    "median": 114,
+    "min": 114,
+    "max": 114,
+    "n": 1
+   },
+   "effectImportStart": {
+    "median": 37.8,
+    "min": 37.8,
+    "max": 37.8,
+    "n": 1
+   },
+   "blackFrames": 0,
+   "fallbacks": [],
+   "rawVisible": [
+    114
+   ],
+   "rawGpuFirst": []
+  },
+  "g-fluid-wrapped@1x": {
+   "id": "g-fluid-wrapped",
+   "throttle": 1,
+   "drawIssued": {
+    "median": 75.8,
+    "min": 75.8,
+    "max": 75.8,
+    "n": 1
+   },
+   "gpuFirst": {
+    "median": 1403.7,
+    "min": 1403.7,
+    "max": 1403.7,
+    "n": 1
+   },
+   "firstVisible": {
+    "median": 78,
+    "min": 78,
+    "max": 78,
+    "n": 1
+   },
+   "effectImportStart": {
+    "median": 36.1,
+    "min": 36.1,
+    "max": 36.1,
+    "n": 1
+   },
+   "blackFrames": 0,
+   "fallbacks": [],
+   "rawVisible": [
+    78
+   ],
+   "rawGpuFirst": [
+    1403.7
+   ]
+  },
+  "g-fluid-wrapped@4x": {
+   "id": "g-fluid-wrapped",
+   "throttle": 4,
+   "drawIssued": {
+    "median": 413.7,
+    "min": 413.7,
+    "max": 413.7,
+    "n": 1
+   },
+   "gpuFirst": null,
+   "firstVisible": {
+    "median": 331,
+    "min": 331,
+    "max": 331,
+    "n": 1
+   },
+   "effectImportStart": {
+    "median": 331.4,
+    "min": 331.4,
+    "max": 331.4,
+    "n": 1
+   },
+   "blackFrames": 0,
+   "fallbacks": [],
+   "rawVisible": [
+    331
+   ],
+   "rawGpuFirst": []
+  },
+  "i-video@1x": {
+   "id": "i-video",
+   "throttle": 1,
+   "drawIssued": {
+    "median": 163.8,
+    "min": 163.8,
+    "max": 163.8,
+    "n": 1
+   },
+   "gpuFirst": null,
+   "firstVisible": {
+    "median": 183,
+    "min": 183,
+    "max": 183,
+    "n": 1
+   },
+   "effectImportStart": {
+    "median": 52.2,
+    "min": 52.2,
+    "max": 52.2,
+    "n": 1
+   },
+   "blackFrames": 0,
+   "fallbacks": [],
+   "rawVisible": [
+    183
+   ],
+   "rawGpuFirst": []
+  },
+  "i-video@4x": {
+   "id": "i-video",
+   "throttle": 4,
+   "drawIssued": {
+    "median": 316.1,
+    "min": 316.1,
+    "max": 316.1,
+    "n": 1
+   },
+   "gpuFirst": null,
+   "firstVisible": {
+    "median": 248,
+    "min": 248,
+    "max": 248,
+    "n": 1
+   },
+   "effectImportStart": {
+    "median": 231,
+    "min": 231,
+    "max": 231,
+    "n": 1
+   },
+   "blackFrames": 0,
+   "fallbacks": [],
+   "rawVisible": [
+    248
+   ],
+   "rawGpuFirst": []
+  }
+ },
+ "specs": {
+  "apg-button": {
+   "repo": "w3c/aria-practices",
+   "file": "content/patterns/button/button-pattern.html",
+   "why": "toggle-button label rule (pause control of a background animation)",
+   "commit": "3f094fde1c81b25dfa69162563bf28d093f854d4",
+   "sha256": "d4cf3c946ccef12d",
+   "quotes": [
+    "it is critical the label on a toggle does not change when its state changes",
+    "if the design were to call for the button label to change from &quot;Mute&quot; to &quot;Unmute,&quot; the aria-pressed attribute would not be needed."
+   ],
+   "allFound": true
+  },
+  "wcag-2.2.2": {
+   "repo": "w3c/wcag",
+   "file": "guidelines/sc/20/pause-stop-hide.html",
+   "why": "WCAG 2.2.2 Pause, Stop, Hide: the 5 s condition",
+   "commit": "71c891a49f50f58766597a8980f6b2d2eedd5679",
+   "sha256": "fc401c6ba40694a8",
+   "quotes": [
+    "(1) starts automatically, (2) lasts more than five seconds"
+   ],
+   "allFound": true
+  },
+  "chromium-lcp": {
+   "repo": "chromium/chromium",
+   "file": "third_party/blink/renderer/core/paint/timing/largest_contentful_paint_calculator.cc",
+   "why": "which images Chrome ignores as LCP candidates (viewport-covering; under 0.05 bits per pixel)",
+   "commit": "059e8643322522e8f91d753f21c6d392e9d27914",
+   "sha256": "43eb43448e28b94b",
+   "quotes": [
+    "if (size >= viewport_area) {",
+    "is_viewport_covered = true",
+    "kMinimumEntropyForLCP = 0.05",
+    "entropy = media_timing.ContentSizeForEntropy() * 8.0 / size"
+   ],
+   "allFound": true
   }
  }
 }

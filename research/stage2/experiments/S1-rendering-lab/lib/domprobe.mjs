@@ -12,6 +12,9 @@ const MODES = {
   'css transform + rAF loop': { css: '.a{animation:bob 1600ms linear infinite}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}', raf: true },
   'waapi transform + rAF loop': { waapi: true, raf: true },
   'no animation + rAF loop': { raf: true },
+  // No rAF loop, but one element moved every 16 ms from a timer (what pointermove handlers do during a drag).
+  'css translate + moving one element (drag)': { css: '.a{animation:bob 1600ms linear infinite}@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -4px}}', drag: true },
+  'no animation + moving one element (drag)': { drag: true },
 };
 
 const page = (m, n) => `<!doctype html><meta charset="utf-8"><style>body{margin:0}.a{position:absolute;width:40px;height:40px;background:#c33;border-radius:50%}${m.css || ''}</style><body><script>
@@ -22,6 +25,7 @@ for (let i = 0; i < ${n}; i++) {
   ${m.waapi ? "d.animate([{transform:'translateY(0)'},{transform:'translateY(-4px)'},{transform:'translateY(0)'}],{duration:1600,iterations:Infinity,delay:-i*13});" : ''}
 }
 ${m.raf ? 'const f = () => requestAnimationFrame(f); f();' : ''}
+${m.drag ? "const mv = document.querySelector('.a'); mv.style.animation = 'none'; let k = 0; setInterval(() => { k++; mv.style.transform = 'translate(' + (k % 200) + 'px,' + (k % 100) + 'px)'; }, 16);" : ''}
 </script>`;
 
 export async function domProbe(browser, { runs = 3, ns = [200, 2000] } = {}) {
@@ -33,7 +37,7 @@ export async function domProbe(browser, { runs = 3, ns = [200, 2000] } = {}) {
   });
   await new Promise((r) => server.listen(0, '127.0.0.1', r));
   const base = `http://127.0.0.1:${server.address().port}`;
-  const out = { note: 'Plain 40px divs, one looping 1.6 s bob each; 2 s trace after 0.8 s; style recalcs per second and mean ms each (median of runs). "+ rAF loop" adds an empty requestAnimationFrame loop elsewhere on the page.', cells: {} };
+  const out = { note: 'Plain 40px divs, one looping 1.6 s bob each; 2 s trace after 0.8 s; style recalcs per second and mean ms each (median of runs). "+ rAF loop" adds an empty requestAnimationFrame loop elsewhere on the page; "+ moving one element (drag)" moves one (non-animated) div from a 16 ms timer, as pointermove handlers do during a drag, with no rAF loop.', cells: {} };
   for (const n of ns) {
     for (const [name, m] of Object.entries(MODES)) {
       const per = [], ms = [], busy = [];

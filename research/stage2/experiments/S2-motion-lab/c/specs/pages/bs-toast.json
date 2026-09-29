@@ -1,0 +1,4 @@
+{ "_note": "Held-out spec (designer's intent), written before motion.mjs ran on this page.",
+  "motion": [
+  { "id": "toast-show", "trigger": "click", "on": "#btnShowToast", "target": "#toastAutoHide", "properties": ["opacity"], "duration": "small", "easing": "out", "reduced": "fade" }
+] }

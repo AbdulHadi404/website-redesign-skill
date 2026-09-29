@@ -1,8 +1,11 @@
 // S2 motion lab — one runner that rebuilds and re-measures everything and writes results.json.
-//   npm install && node fetch-assets.mjs && node run.mjs [--only a|b|c|x] [--runs 5]
+//   npm install && node fetch-assets.mjs && node c/fetch-ext.mjs && node run.mjs [--only a|b|c|x] [--runs 5] [--variants css,gsap]
 // Part A: seven interactions × eight tools (a/run-a.mjs), Motion transform-string repro, rest (rAF) probes.
 // Part B: Rive / Lottie / dotLottie / SVG+CSS / sprite for one stateful toggle, plus loops (b/run-b.mjs).
-// Part C: skills/website-redesign/scripts/motion.mjs on four builds of one page, scored against c/truth.json.
+// Part C: skills/website-redesign/scripts/motion.mjs on four builds of one page (c/truth.json), the six Part A pages
+//   guarded and not (c/run-heldout.mjs, c/truth-partA.json), five dev pages before/after and 15 held-out pages
+//   (c/run-pages.mjs, c/labels.json, c/truth-pages.json; third-party pages fetched by c/fetch-ext.mjs), and a
+//   starved-page stress test (c/stress-press.mjs).
 // One benchmark browser at a time; medians of --runs (default 5). Chromium headless, SwiftShader for WebGL.
 import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
@@ -22,11 +25,18 @@ if (only.includes('a')) {
   const { runA } = await import('./a/run-a.mjs');
   const { reproMotion } = await import('./a/repro-motion-transform.mjs');
   const { restProbes } = await import('./a/rest-probes.mjs');
-  results.a = trim(await runA());
-  results.a.motionTransformRepro = await reproMotion();
-  results.a.restProbes = await restProbes();
-  const { reproMotionReduce } = await import('./a/repro-motion-reduce.mjs');
-  results.a.motionReduceRepro = await reproMotionReduce();
+  // --variants css,autoanimate re-measures only those variants and merges them into the existing results
+  // (--cost-only / --no-cost limit it further); without --variants, Part A is replaced as a whole.
+  const fresh = trim(await runA());
+  if (args.variants && results.a) { for (const k of ['sizes', 'interrupt', 'single', 'compositor', 'cost']) results.a[k] = { ...results.a[k], ...fresh[k] };
+    if (fresh.costOrder && Object.keys(fresh.costOrder).length) results.a.costOrder = fresh.costOrder; results.a.env = fresh.env; }
+  else results.a = fresh;
+  if (!args.variants) { // the repros and probes are not per-variant: they run with a full Part A only
+    results.a.motionTransformRepro = await reproMotion();
+    results.a.restProbes = await restProbes();
+    const { reproMotionReduce } = await import('./a/repro-motion-reduce.mjs');
+    results.a.motionReduceRepro = await reproMotionReduce();
+  }
 }
 if (only.includes('b')) { const { runB } = await import('./b/run-b.mjs'); const { restB } = await import('./b/rest-b.mjs'); results.b = await runB(); results.b.restCheck = await restB(); }
 // --only x: just the two small follow-up checks that a and b also run (Motion React reduced-motion repro, Part B at-rest check)

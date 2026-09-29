@@ -173,8 +173,9 @@
   </div>
 </footer>
 <script>
-  // The focus-ring move needs a focused control in every capture: focus the primary action on load (all variants).
-  document.querySelector('[data-autofocus]')?.focus({ preventScroll: true });
+  // The focus-ring move needs a focused control in every capture: focus the primary action on load (all variants),
+  // except with m-nofocus on <html> (run.mjs --stage nofocus: how much the forced focus state added to each measure).
+  if (!document.documentElement.classList.contains('m-nofocus')) document.querySelector('[data-autofocus]')?.focus({ preventScroll: true });
 </script>
 </body>
 </html>

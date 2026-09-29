@@ -55,7 +55,7 @@ export async function buildA() {
     sizes[name] = { label: im.label, jsMin: lib.min, jsGz: lib.gz, cssGz: cssText ? gzipSync(Buffer.from(cssMin), { level: 9 }).length : 0,
       withReactGz: im.react ? (await sizeOf([])).gz : null, loc: l.code + lc.code, locRm: l.rm + lc.rm };
     const head = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
-<title>${im.label}</title><link rel="icon" href="data:,"><script>if (window.__RM_GUARD) document.documentElement.classList.add('rm-guard');</script>
+<title>${im.label}</title><link rel="icon" href="data:,"><script>if (new URLSearchParams(location.search).has('guard')) window.__RM_GUARD = true; if (window.__RM_GUARD) document.documentElement.classList.add('rm-guard');</script>
 <link rel="stylesheet" href="/a/base.css">${im.css ? `<link rel="stylesheet" href="/a/impl/${im.css}">` : ''}</head>`;
     const body = im.react ? '<body><div id="root"></div>' : `<body>${markup()}`;
     await writeFile(path.join(out, `${name}.html`), `${head}${body}<script type="module" src="/captures/a/${name}.js"></script></body></html>`);

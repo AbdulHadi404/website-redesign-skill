@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-28T22:36:38.161Z",
+  "date": "2026-09-29T05:34:48.554Z",
   "chromium": "141.0.7390.37",
   "runs": 5,
   "variants": {
@@ -11,9 +11,9 @@
           "model.js",
           "canvas-view.js"
         ],
-        "bytes": 14137,
-        "gzipBytes": 5017,
-        "nonBlankLines": 272
+        "bytes": 14901,
+        "gzipBytes": 5372,
+        "nonBlankLines": 277
       },
       "axAtLoad": {
         "interactive": 0,
@@ -107,7 +107,7 @@
           "framesRendered": 25
         },
         "reduce": {
-          "distinctFrames60to540ms": 8,
+          "distinctFrames60to540ms": 9,
           "framesRendered": 25
         }
       },
@@ -145,30 +145,57 @@
       "probe": [
         {
           "index": 0,
-          "box": {
-            "w": 480,
-            "h": 530
-          },
-          "listenerTypes": [
-            "pointerdown",
-            "pointermove",
-            "pointerup",
-            "pointercancel"
+          "verdict": "FAIL",
+          "findings": [
+            {
+              "level": "FAIL",
+              "msg": "pointer-operated canvas with no keyboard path (2.1.1): no focusable control over or beside it changed it. If the pointer effect is decorative only, record that and hide the canvas from assistive technology"
+            }
           ],
-          "interactive": true,
+          "listeners": {
+            "canvas": [
+              "pointerdown",
+              "pointermove",
+              "pointerup",
+              "pointercancel"
+            ],
+            "wrapper": [],
+            "documentLevel": [],
+            "react": []
+          },
+          "operable": true,
+          "documentLevelOnly": false,
+          "hoverReactive": true,
           "exposure": {
             "ignored": false,
             "role": "Canvas",
-            "name": ""
+            "name": "",
+            "fallbackText": ""
           },
-          "liveRegions": 0,
-          "tabStops": 1,
-          "proxiesReached": 0,
-          "keyboardChangesCanvas": false,
-          "narrated": false,
-          "distinctFramesAfterChange": null,
+          "selfAnimating": false,
+          "baseline": {
+            "distinct": 1,
+            "captures": 20,
+            "ms": 726
+          },
+          "rafPerSecondAtRest": 0,
+          "walk": {
+            "tabs": 3,
+            "uniqueStops": 0,
+            "cycled": false
+          },
+          "stops": {
+            "overCanvas": 0,
+            "standIns": 0,
+            "linksOverCanvas": 0,
+            "canvasFocusable": false,
+            "widgetsBeside": 0
+          },
+          "standIns": null,
+          "keyboardPath": null,
+          "tried": [],
           "reduce": true,
-          "verdict": "FAIL: interactive canvas with no keyboard path (2.1.1)"
+          "navigatedAway": false
         }
       ],
       "skillA11y": {
@@ -193,9 +220,9 @@
           "sound.js",
           "tap-helpers.js"
         ],
-        "bytes": 24467,
-        "gzipBytes": 8287,
-        "nonBlankLines": 462
+        "bytes": 25630,
+        "gzipBytes": 8753,
+        "nonBlankLines": 469
       },
       "axAtLoad": {
         "interactive": 5,
@@ -293,7 +320,7 @@
       },
       "motion": {
         "noPreference": {
-          "distinctFrames60to540ms": 8,
+          "distinctFrames60to540ms": 9,
           "framesRendered": 25
         },
         "reduce": {
@@ -308,7 +335,10 @@
       "alignment": {
         "stand_ins": 7,
         "maxErrorPx": 10,
-        "itemTargetMinCssPx": 44
+        "itemStandInMinCssPx": 56,
+        "itemStandInPointerEvents": [
+          "none"
+        ]
       },
       "namesTrackState": {
         "strawberryNames": [
@@ -338,7 +368,10 @@
         "alignment": {
           "stand_ins": 6,
           "maxErrorPx": 7.5,
-          "itemTargetMinCssPx": 33
+          "itemStandInMinCssPx": 44,
+          "itemStandInPointerEvents": [
+            "none"
+          ]
         },
         "touchTapPlace": true,
         "touchDragPlace": true
@@ -353,30 +386,84 @@
       "probe": [
         {
           "index": 0,
-          "box": {
-            "w": 480,
-            "h": 530
-          },
-          "listenerTypes": [
-            "pointerdown",
-            "pointermove",
-            "pointerup",
-            "pointercancel"
+          "verdict": "PASS",
+          "findings": [
+            {
+              "level": "PASS",
+              "msg": "keyboard path over the canvas (Enter on button \"Strawberry\") changes it and is narrated"
+            }
           ],
-          "interactive": true,
+          "listeners": {
+            "canvas": [
+              "pointerdown",
+              "pointermove",
+              "pointerup",
+              "pointercancel"
+            ],
+            "wrapper": [],
+            "documentLevel": [],
+            "react": []
+          },
+          "operable": true,
+          "documentLevelOnly": false,
+          "hoverReactive": true,
           "exposure": {
             "ignored": true,
             "role": "none",
-            "name": ""
+            "name": "",
+            "fallbackText": ""
           },
-          "liveRegions": 1,
-          "tabStops": 3,
-          "proxiesReached": 1,
-          "keyboardChangesCanvas": true,
-          "narrated": true,
-          "distinctFramesAfterChange": 1,
+          "selfAnimating": false,
+          "baseline": {
+            "distinct": 1,
+            "captures": 20,
+            "ms": 727
+          },
+          "rafPerSecondAtRest": 0,
+          "walk": {
+            "tabs": 4,
+            "uniqueStops": 2,
+            "cycled": true
+          },
+          "stops": {
+            "overCanvas": 1,
+            "standIns": 1,
+            "linksOverCanvas": 0,
+            "canvasFocusable": false,
+            "widgetsBeside": 1
+          },
+          "standIns": {
+            "minSizePx": 80,
+            "receivePointer": 0,
+            "minPointerTargetPx": null
+          },
+          "keyboardPath": {
+            "where": "over",
+            "kind": "button",
+            "name": "Strawberry",
+            "key": "Enter",
+            "pixelsChanged": true,
+            "narrated": true,
+            "liveOrNotify": true,
+            "stateChanged": false,
+            "nameChanged": false,
+            "distinctFramesAfterChange": 1
+          },
+          "tried": [
+            {
+              "where": "over",
+              "kind": "button",
+              "name": "Strawberry",
+              "key": "Enter",
+              "pixels": true,
+              "spoken": true,
+              "stateChanged": false,
+              "nameChanged": false,
+              "focusMoved": true
+            }
+          ],
           "reduce": true,
-          "verdict": "PASS"
+          "navigatedAway": false
         }
       ],
       "skillA11y": {
@@ -406,9 +493,9 @@
           "form-view.js",
           "announce.js"
         ],
-        "bytes": 18808,
-        "gzipBytes": 6547,
-        "nonBlankLines": 350
+        "bytes": 19572,
+        "gzipBytes": 6887,
+        "nonBlankLines": 355
       },
       "axAtLoad": {
         "interactive": 14,
@@ -534,25 +621,52 @@
       "probe": [
         {
           "index": 0,
-          "box": {
-            "w": 480,
-            "h": 420
+          "verdict": "PASS",
+          "findings": [
+            {
+              "level": "PASS",
+              "msg": "static canvas with a name or fallback content"
+            }
+          ],
+          "listeners": {
+            "canvas": [],
+            "wrapper": [],
+            "documentLevel": [],
+            "react": []
           },
-          "listenerTypes": [],
-          "interactive": false,
+          "operable": false,
+          "documentLevelOnly": false,
+          "hoverReactive": false,
           "exposure": {
             "ignored": false,
             "role": "image",
-            "name": "An empty cake"
+            "name": "An empty cake",
+            "fallbackText": ""
           },
-          "liveRegions": 1,
-          "tabStops": 4,
-          "proxiesReached": 0,
-          "keyboardChangesCanvas": false,
-          "narrated": false,
-          "distinctFramesAfterChange": null,
+          "selfAnimating": false,
+          "baseline": {
+            "distinct": 1,
+            "captures": 20,
+            "ms": 715
+          },
+          "rafPerSecondAtRest": 0,
+          "walk": {
+            "tabs": 5,
+            "uniqueStops": 3,
+            "cycled": true
+          },
+          "stops": {
+            "overCanvas": 0,
+            "standIns": 0,
+            "linksOverCanvas": 0,
+            "canvasFocusable": false,
+            "widgetsBeside": 3
+          },
+          "standIns": null,
+          "keyboardPath": null,
+          "tried": [],
           "reduce": true,
-          "verdict": "PASS"
+          "navigatedAway": false
         }
       ],
       "skillA11y": {
@@ -577,9 +691,9 @@
           "sound.js",
           "tap-helpers.js"
         ],
-        "bytes": 28539,
-        "gzipBytes": 9351,
-        "nonBlankLines": 526
+        "bytes": 29702,
+        "gzipBytes": 9817,
+        "nonBlankLines": 533
       },
       "axAtLoad": {
         "interactive": 19,
@@ -712,7 +826,7 @@
       },
       "motion": {
         "noPreference": {
-          "distinctFrames60to540ms": 9,
+          "distinctFrames60to540ms": 8,
           "framesRendered": 25
         },
         "reduce": {
@@ -727,7 +841,10 @@
       "alignment": {
         "stand_ins": 7,
         "maxErrorPx": 10,
-        "itemTargetMinCssPx": 44
+        "itemStandInMinCssPx": 56,
+        "itemStandInPointerEvents": [
+          "none"
+        ]
       },
       "namesTrackState": {
         "strawberryNames": [
@@ -761,7 +878,10 @@
         "alignment": {
           "stand_ins": 6,
           "maxErrorPx": 7.5,
-          "itemTargetMinCssPx": 33
+          "itemStandInMinCssPx": 44,
+          "itemStandInPointerEvents": [
+            "none"
+          ]
         },
         "touchTapPlace": true,
         "touchDragPlace": true
@@ -776,30 +896,84 @@
       "probe": [
         {
           "index": 0,
-          "box": {
-            "w": 480,
-            "h": 530
-          },
-          "listenerTypes": [
-            "pointerdown",
-            "pointermove",
-            "pointerup",
-            "pointercancel"
+          "verdict": "PASS",
+          "findings": [
+            {
+              "level": "PASS",
+              "msg": "keyboard path over the canvas (Enter on button \"Strawberry\") changes it and is narrated"
+            }
           ],
-          "interactive": true,
+          "listeners": {
+            "canvas": [
+              "pointerdown",
+              "pointermove",
+              "pointerup",
+              "pointercancel"
+            ],
+            "wrapper": [],
+            "documentLevel": [],
+            "react": []
+          },
+          "operable": true,
+          "documentLevelOnly": false,
+          "hoverReactive": true,
           "exposure": {
             "ignored": true,
             "role": "none",
-            "name": ""
+            "name": "",
+            "fallbackText": ""
           },
-          "liveRegions": 1,
-          "tabStops": 6,
-          "proxiesReached": 1,
-          "keyboardChangesCanvas": true,
-          "narrated": true,
-          "distinctFramesAfterChange": 1,
+          "selfAnimating": false,
+          "baseline": {
+            "distinct": 1,
+            "captures": 20,
+            "ms": 718
+          },
+          "rafPerSecondAtRest": 0,
+          "walk": {
+            "tabs": 7,
+            "uniqueStops": 5,
+            "cycled": true
+          },
+          "stops": {
+            "overCanvas": 1,
+            "standIns": 1,
+            "linksOverCanvas": 0,
+            "canvasFocusable": false,
+            "widgetsBeside": 4
+          },
+          "standIns": {
+            "minSizePx": 80,
+            "receivePointer": 0,
+            "minPointerTargetPx": null
+          },
+          "keyboardPath": {
+            "where": "over",
+            "kind": "button",
+            "name": "Strawberry",
+            "key": "Enter",
+            "pixelsChanged": true,
+            "narrated": true,
+            "liveOrNotify": true,
+            "stateChanged": false,
+            "nameChanged": false,
+            "distinctFramesAfterChange": 1
+          },
+          "tried": [
+            {
+              "where": "over",
+              "kind": "button",
+              "name": "Strawberry",
+              "key": "Enter",
+              "pixels": true,
+              "spoken": true,
+              "stateChanged": false,
+              "nameChanged": false,
+              "focusMoved": true
+            }
+          ],
           "reduce": true,
-          "verdict": "PASS"
+          "navigatedAway": false
         }
       ],
       "skillA11y": {
@@ -827,9 +1001,9 @@
           "model.js",
           "pixi-view.js"
         ],
-        "bytes": 10620,
-        "gzipBytes": 4200,
-        "nonBlankLines": 204,
+        "bytes": 10907,
+        "gzipBytes": 4344,
+        "nonBlankLines": 205,
         "engine": {
           "file": "pixi.js@8.21.0 dist/pixi.min.mjs",
           "bytes": 828971,
@@ -848,7 +1022,7 @@
         "afterThenTab": 0,
         "genericNames": 0
       },
-      "idleRafPerSecond": 16,
+      "idleRafPerSecond": 54,
       "audioContextsAtLoad": 0,
       "keyboard": {
         "engine": {
@@ -924,11 +1098,11 @@
       "motion": {
         "noPreference": {
           "distinctFrames60to540ms": 1,
-          "framesRendered": 16
+          "framesRendered": 21
         },
         "reduce": {
           "distinctFrames60to540ms": 1,
-          "framesRendered": 15
+          "framesRendered": 17
         }
       },
       "seededStateFromTree": {
@@ -966,32 +1140,66 @@
       "probe": [
         {
           "index": 0,
-          "box": {
-            "w": 480,
-            "h": 530
-          },
-          "listenerTypes": [
-            "pointerdown",
-            "pointerleave",
-            "pointerover",
-            "wheel",
-            "webglcontextlost",
-            "webglcontextrestored"
+          "verdict": "FAIL",
+          "findings": [
+            {
+              "level": "FAIL",
+              "msg": "pointer-operated canvas with no keyboard path (2.1.1): no focusable control over or beside it changed it. If the pointer effect is decorative only, record that and hide the canvas from assistive technology"
+            },
+            {
+              "level": "INFO",
+              "msg": "requestAnimationFrame runs at rest (56/s): render on demand"
+            }
           ],
-          "interactive": true,
+          "listeners": {
+            "canvas": [
+              "pointerdown",
+              "pointerleave",
+              "pointerover",
+              "wheel",
+              "webglcontextlost",
+              "webglcontextrestored"
+            ],
+            "wrapper": [],
+            "documentLevel": [
+              "pointermove",
+              "pointerup"
+            ],
+            "react": []
+          },
+          "operable": true,
+          "documentLevelOnly": false,
+          "hoverReactive": true,
           "exposure": {
             "ignored": true,
             "role": "none",
-            "name": ""
+            "name": "",
+            "fallbackText": ""
           },
-          "liveRegions": 0,
-          "tabStops": 1,
-          "proxiesReached": 0,
-          "keyboardChangesCanvas": false,
-          "narrated": false,
-          "distinctFramesAfterChange": null,
+          "selfAnimating": false,
+          "baseline": {
+            "distinct": 1,
+            "captures": 6,
+            "ms": 746
+          },
+          "rafPerSecondAtRest": 56,
+          "walk": {
+            "tabs": 3,
+            "uniqueStops": 0,
+            "cycled": false
+          },
+          "stops": {
+            "overCanvas": 0,
+            "standIns": 0,
+            "linksOverCanvas": 0,
+            "canvasFocusable": false,
+            "widgetsBeside": 0
+          },
+          "standIns": null,
+          "keyboardPath": null,
+          "tried": [],
           "reduce": true,
-          "verdict": "FAIL: interactive canvas with no keyboard path (2.1.1)"
+          "navigatedAway": false
         }
       ],
       "skillA11y": {
@@ -1012,9 +1220,9 @@
           "model.js",
           "pixi-view.js"
         ],
-        "bytes": 10771,
-        "gzipBytes": 4277,
-        "nonBlankLines": 204,
+        "bytes": 11058,
+        "gzipBytes": 4419,
+        "nonBlankLines": 205,
         "engine": {
           "file": "pixi.js@8.21.0 dist/pixi.min.mjs",
           "bytes": 828971,
@@ -1033,7 +1241,7 @@
         "afterThenTab": 4,
         "genericNames": 0
       },
-      "idleRafPerSecond": 24,
+      "idleRafPerSecond": 38,
       "audioContextsAtLoad": 0,
       "keyboard": {
         "engine": {
@@ -1106,11 +1314,11 @@
       "motion": {
         "noPreference": {
           "distinctFrames60to540ms": 1,
-          "framesRendered": 15
+          "framesRendered": 21
         },
         "reduce": {
           "distinctFrames60to540ms": 1,
-          "framesRendered": 17
+          "framesRendered": 24
         }
       },
       "seededStateFromTree": {
@@ -1120,7 +1328,10 @@
       "alignment": {
         "stand_ins": 7,
         "maxErrorPx": 129.9,
-        "itemTargetMinCssPx": 12
+        "itemStandInMinCssPx": 12,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
       },
       "namesTrackState": {
         "strawberryNames": [
@@ -1149,7 +1360,10 @@
         "alignment": {
           "stand_ins": 6,
           "maxErrorPx": 143.5,
-          "itemTargetMinCssPx": 9
+          "itemStandInMinCssPx": 9,
+          "itemStandInPointerEvents": [
+            "auto"
+          ]
         },
         "touchTapPlace": true,
         "touchDragPlace": true
@@ -1162,32 +1376,94 @@
       "probe": [
         {
           "index": 0,
-          "box": {
-            "w": 480,
-            "h": 530
-          },
-          "listenerTypes": [
-            "pointerdown",
-            "pointerleave",
-            "pointerover",
-            "wheel",
-            "webglcontextlost",
-            "webglcontextrestored"
+          "verdict": "WARN",
+          "findings": [
+            {
+              "level": "WARN",
+              "msg": "the keyboard changes the canvas but nothing is narrated (4.1.3): no live region, ariaNotify or state change on the focused control"
+            },
+            {
+              "level": "WARN",
+              "msg": "no stand-ins over the canvas: the keyboard path is controls beside it; confirm every pointer verb on the canvas (drag, orbit, pick) has an equivalent"
+            },
+            {
+              "level": "INFO",
+              "msg": "requestAnimationFrame runs at rest (42/s): render on demand"
+            }
           ],
-          "interactive": true,
+          "listeners": {
+            "canvas": [
+              "pointerdown",
+              "pointerleave",
+              "pointerover",
+              "wheel",
+              "webglcontextlost",
+              "webglcontextrestored"
+            ],
+            "wrapper": [],
+            "documentLevel": [
+              "mousemove",
+              "pointermove",
+              "pointerup"
+            ],
+            "react": []
+          },
+          "operable": true,
+          "documentLevelOnly": false,
+          "hoverReactive": true,
           "exposure": {
             "ignored": true,
             "role": "none",
-            "name": ""
+            "name": "",
+            "fallbackText": ""
           },
-          "liveRegions": 0,
-          "tabStops": 5,
-          "proxiesReached": 0,
-          "keyboardChangesCanvas": false,
-          "narrated": false,
-          "distinctFramesAfterChange": null,
+          "selfAnimating": false,
+          "baseline": {
+            "distinct": 1,
+            "captures": 5,
+            "ms": 792
+          },
+          "rafPerSecondAtRest": 42,
+          "walk": {
+            "tabs": 6,
+            "uniqueStops": 4,
+            "cycled": true
+          },
+          "stops": {
+            "overCanvas": 0,
+            "standIns": 0,
+            "linksOverCanvas": 0,
+            "canvasFocusable": false,
+            "widgetsBeside": 4
+          },
+          "standIns": null,
+          "keyboardPath": {
+            "where": "beside",
+            "kind": "button",
+            "name": "Strawberry",
+            "key": "Enter",
+            "pixelsChanged": true,
+            "narrated": false,
+            "liveOrNotify": false,
+            "stateChanged": false,
+            "nameChanged": false,
+            "distinctFramesAfterChange": 1
+          },
+          "tried": [
+            {
+              "where": "beside",
+              "kind": "button",
+              "name": "Strawberry",
+              "key": "Enter",
+              "pixels": true,
+              "spoken": false,
+              "stateChanged": false,
+              "nameChanged": false,
+              "focusMoved": false
+            }
+          ],
           "reduce": true,
-          "verdict": "FAIL: interactive canvas with no keyboard path (2.1.1)"
+          "navigatedAway": false
         }
       ],
       "skillA11y": {
@@ -1210,13 +1486,297 @@
       }
     }
   },
+  "hitTargets": {
+    "b": {
+      "desktop": {
+        "pointerCoarse": false,
+        "strawberry": {
+          "right": 27,
+          "left": 27,
+          "down": 27,
+          "up": 27,
+          "widthCssPx": 54,
+          "heightCssPx": 54,
+          "smallestCssPx": 54,
+          "resolutionPx": 1
+        },
+        "candle": {
+          "right": 27,
+          "left": 27,
+          "down": 27,
+          "up": 27,
+          "widthCssPx": 54,
+          "heightCssPx": 54,
+          "smallestCssPx": 54,
+          "resolutionPx": 1
+        },
+        "standIns": [
+          {
+            "name": "Strawberry 1",
+            "w": 56,
+            "h": 56,
+            "pointerEvents": "none"
+          },
+          {
+            "name": "Candle 1",
+            "w": 56,
+            "h": 56,
+            "pointerEvents": "none"
+          }
+        ],
+        "canvasCssWidth": 480
+      },
+      "phone390": {
+        "pointerCoarse": true,
+        "strawberry": {
+          "right": 22,
+          "left": 21,
+          "down": 21,
+          "up": 22,
+          "widthCssPx": 43,
+          "heightCssPx": 43,
+          "smallestCssPx": 43,
+          "resolutionPx": 1
+        },
+        "candle": {
+          "right": 22,
+          "left": 22,
+          "down": 21,
+          "up": 22,
+          "widthCssPx": 44,
+          "heightCssPx": 43,
+          "smallestCssPx": 43,
+          "resolutionPx": 1
+        },
+        "standIns": [
+          {
+            "name": "Strawberry 1",
+            "w": 44,
+            "h": 44,
+            "pointerEvents": "none"
+          },
+          {
+            "name": "Candle 1",
+            "w": 44,
+            "h": 44,
+            "pointerEvents": "none"
+          }
+        ],
+        "canvasCssWidth": 358
+      }
+    },
+    "b-legacy (first version: fixed hit radius, 44-unit stand-ins)": {
+      "desktop": {
+        "pointerCoarse": false,
+        "strawberry": {
+          "right": 27,
+          "left": 27,
+          "down": 27,
+          "up": 27,
+          "widthCssPx": 54,
+          "heightCssPx": 54,
+          "smallestCssPx": 54,
+          "resolutionPx": 1
+        },
+        "candle": {
+          "right": 27,
+          "left": 27,
+          "down": 27,
+          "up": 27,
+          "widthCssPx": 54,
+          "heightCssPx": 54,
+          "smallestCssPx": 54,
+          "resolutionPx": 1
+        },
+        "standIns": [
+          {
+            "name": "Strawberry 1",
+            "w": 44,
+            "h": 44,
+            "pointerEvents": "none"
+          },
+          {
+            "name": "Candle 1",
+            "w": 44,
+            "h": 44,
+            "pointerEvents": "none"
+          }
+        ],
+        "canvasCssWidth": 480
+      },
+      "phone390": {
+        "pointerCoarse": true,
+        "strawberry": {
+          "right": 20,
+          "left": 20,
+          "down": 20,
+          "up": 20,
+          "widthCssPx": 40,
+          "heightCssPx": 40,
+          "smallestCssPx": 40,
+          "resolutionPx": 1
+        },
+        "candle": {
+          "right": 20,
+          "left": 20,
+          "down": 20,
+          "up": 20,
+          "widthCssPx": 40,
+          "heightCssPx": 40,
+          "smallestCssPx": 40,
+          "resolutionPx": 1
+        },
+        "standIns": [
+          {
+            "name": "Strawberry 1",
+            "w": 32.8,
+            "h": 32.8,
+            "pointerEvents": "none"
+          },
+          {
+            "name": "Candle 1",
+            "w": 32.8,
+            "h": 32.8,
+            "pointerEvents": "none"
+          }
+        ],
+        "canvasCssWidth": 358
+      }
+    },
+    "e": {
+      "desktop": {
+        "pointerCoarse": false,
+        "strawberry": {
+          "right": 13,
+          "left": 13,
+          "down": 15,
+          "up": 19,
+          "widthCssPx": 26,
+          "heightCssPx": 34,
+          "smallestCssPx": 26,
+          "resolutionPx": 1
+        },
+        "candle": {
+          "right": 5,
+          "left": 6,
+          "down": 15,
+          "up": 24,
+          "widthCssPx": 11,
+          "heightCssPx": 39,
+          "smallestCssPx": 11,
+          "resolutionPx": 1
+        },
+        "standIns": [],
+        "canvasCssWidth": 480
+      },
+      "phone390": {
+        "pointerCoarse": true,
+        "strawberry": {
+          "right": 9,
+          "left": 9,
+          "down": 11,
+          "up": 14,
+          "widthCssPx": 18,
+          "heightCssPx": 25,
+          "smallestCssPx": 18,
+          "resolutionPx": 1
+        },
+        "candle": {
+          "right": 4,
+          "left": 4,
+          "down": 11,
+          "up": 17,
+          "widthCssPx": 8,
+          "heightCssPx": 28,
+          "smallestCssPx": 8,
+          "resolutionPx": 1
+        },
+        "standIns": [],
+        "canvasCssWidth": 358
+      }
+    }
+  },
+  "pixiOverlayOffset": {
+    "positioned parent": {
+      "desktop": {
+        "stand_ins": 6,
+        "maxErrorPx": 129.9,
+        "itemStandInMinCssPx": 12,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      },
+      "phone390": {
+        "stand_ins": 6,
+        "maxErrorPx": 143.5,
+        "itemStandInMinCssPx": 9,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      }
+    },
+    "positioned parent, scrolled": {
+      "desktop": {
+        "stand_ins": 6,
+        "maxErrorPx": 1022.5,
+        "itemStandInMinCssPx": 12,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      },
+      "phone390": {
+        "stand_ins": 6,
+        "maxErrorPx": 1042.7,
+        "itemStandInMinCssPx": 9,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      }
+    },
+    "static parent": {
+      "desktop": {
+        "stand_ins": 6,
+        "maxErrorPx": 11.5,
+        "itemStandInMinCssPx": 12,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      },
+      "phone390": {
+        "stand_ins": 6,
+        "maxErrorPx": 8.6,
+        "itemStandInMinCssPx": 9,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      }
+    },
+    "static parent, scrolled": {
+      "desktop": {
+        "stand_ins": 6,
+        "maxErrorPx": 11.5,
+        "itemStandInMinCssPx": 12,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      },
+      "phone390": {
+        "stand_ins": 6,
+        "maxErrorPx": 8.6,
+        "itemStandInMinCssPx": 9,
+        "itemStandInPointerEvents": [
+          "auto"
+        ]
+      }
+    }
+  },
   "proxyBench": [
     {
       "n": 10,
       "proxies": false,
       "jsPerFrameMs": 0.2,
       "styleRecalcPerFrameMs": 0.003,
-      "layoutPerFrameMs": 0.004,
+      "layoutPerFrameMs": 0.003,
       "frameGapMs": 16.7,
       "runs": 5
     },
@@ -1224,7 +1784,7 @@
       "n": 10,
       "proxies": true,
       "jsPerFrameMs": 0.2,
-      "styleRecalcPerFrameMs": 0.212,
+      "styleRecalcPerFrameMs": 0.155,
       "layoutPerFrameMs": 0.002,
       "frameGapMs": 16.7,
       "runs": 5
@@ -1232,17 +1792,17 @@
     {
       "n": 50,
       "proxies": false,
-      "jsPerFrameMs": 0.4,
-      "styleRecalcPerFrameMs": 0.004,
-      "layoutPerFrameMs": 0.006,
+      "jsPerFrameMs": 0.3,
+      "styleRecalcPerFrameMs": 0.003,
+      "layoutPerFrameMs": 0.005,
       "frameGapMs": 16.7,
       "runs": 5
     },
     {
       "n": 50,
       "proxies": true,
-      "jsPerFrameMs": 0.5,
-      "styleRecalcPerFrameMs": 0.587,
+      "jsPerFrameMs": 0.3,
+      "styleRecalcPerFrameMs": 0.392,
       "layoutPerFrameMs": 0.004,
       "frameGapMs": 16.7,
       "runs": 5
@@ -1250,18 +1810,18 @@
     {
       "n": 200,
       "proxies": false,
-      "jsPerFrameMs": 1,
+      "jsPerFrameMs": 0.8,
       "styleRecalcPerFrameMs": 0.007,
-      "layoutPerFrameMs": 0.014,
+      "layoutPerFrameMs": 0.011,
       "frameGapMs": 16.7,
       "runs": 5
     },
     {
       "n": 200,
       "proxies": true,
-      "jsPerFrameMs": 1.2,
-      "styleRecalcPerFrameMs": 2.23,
-      "layoutPerFrameMs": 0.02,
+      "jsPerFrameMs": 1,
+      "styleRecalcPerFrameMs": 1.409,
+      "layoutPerFrameMs": 0.011,
       "frameGapMs": 16.7,
       "runs": 5
     }
