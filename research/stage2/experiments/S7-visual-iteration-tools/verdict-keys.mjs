@@ -22,7 +22,7 @@ for (const sec of which.length ? which : ['sweep', 'stress', 'rtl']) {
     for (const t of R.rtl?.targets || []) for (const e of t.extra || []) { const k = `${t.name}|${e.key}`; if (seen.has(k) || (!all && V.rtl?.[k])) continue; seen.add(k); console.log(JSON.stringify(k), '//', e.detail.slice(0, 110)); }
     continue;
   }
-  for (const holder of [R, R.holdout || {}, R.holdout2 || {}]) {
+  for (const holder of [R, R.holdout || {}, R.holdout2 || {}, R.holdout2FirstPass || {}]) {
     for (const t of holder[sec]?.targets || []) {
       for (const f of t.ranges || t.findings || []) {
         const k = sec === 'sweep' ? `${t.name}|${f.check}|${normSel(f.sel)}` : `${t.name}|${f.mutation}|${f.check}|${normSel(f.sel)}`;

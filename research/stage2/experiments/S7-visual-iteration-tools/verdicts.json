@@ -314,6 +314,209 @@
   "hallam-fees|small-target|div.wrap > div.content > p:nth-of-type(n) > a.more": {
    "v": "FP",
    "note": "a text link that fits on one line at 320 is one line tall (15 px); it is not squeezed (fixed since: a height under 24 px counts only when the label kept its line count) (held-out page)"
+  },
+  "bs-album|dead-band|main": {
+   "v": "FP",
+   "note": "the band holds the grey placeholder images: Bootstrap draws them as aria-hidden SVGs, and the probe treats aria-hidden as not there, so they count as empty (fixed after the first run: occupancy ignores aria-hidden) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album-rtl|dead-band|main": {
+   "v": "FP",
+   "note": "same: aria-hidden placeholder SVGs counted as empty (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-blog-rtl|overflow|main.container > div.row.g-5": {
+   "v": "TP",
+   "note": "Bootstrap .g-5 gutters (−1.5rem each side) are wider than the container padding: 12 px of sideways scroll on phones (held-out-2 page)"
+  },
+  "bs-blog-rtl|zoom-out|(page)": {
+   "v": "TP",
+   "note": "the same 12 px: the layout viewport widens to 332 px (held-out-2 page)"
+  },
+  "bs-blog-rtl|nav-wrap|div.container > div.nav-scroller.py-1 > nav.nav.nav-underline": {
+   "v": "TP",
+   "note": "12 section links on 4 rows at 320; as served here (the example's horizontal-scroll CSS lives in the docs bundle, not in this build) (held-out-2 page)"
+  },
+  "bs-blog-rtl|measure|div.row.g-5 > div.col-md-8 > article.blog-post:nth-of-type(n) > p:nth-of-type(n)": {
+   "v": "TP",
+   "note": "93–110 characters a line from 1200 px: over the skill's 90 limit (held-out-2 page)"
+  },
+  "bs-blog-rtl|measure|div.row.g-5 > div.col-md-8 > article.blog-post:nth-of-type(n) > p": {
+   "v": "TP",
+   "note": "93–110 characters a line from 1200 px: over the skill's 90 limit (held-out-2 page)"
+  },
+  "bs-blog-rtl|measure|div.col-md-8 > article.blog-post:nth-of-type(n) > ul > li:nth-of-type(n)": {
+   "v": "TP",
+   "note": "93–110 characters a line from 1200 px: over the skill's 90 limit (held-out-2 page)"
+  },
+  "bs-blog-rtl|label-wrap|header.border-bottom.lh-1 > div.row.flex-nowrap > div.col-4.d-flex > a.btn.btn-sm": {
+   "v": "INT",
+   "note": "the header Sign-up button wraps to two lines below 504 px: an acceptable fallback (held-out-2 page)"
+  },
+  "bs-checkout|overflow|div.container > main > div.row.g-5": {
+   "v": "TP",
+   "note": "Bootstrap .g-5 gutters wider than the container padding: 12 px sideways scroll below 976 px (held-out-2 page)"
+  },
+  "bs-checkout|zoom-out|(page)": {
+   "v": "TP",
+   "note": "the same overflow widens the phone layout viewport (held-out-2 page)"
+  },
+  "bs-checkout|order|div.container > main > div.row.g-5": {
+   "v": "INT",
+   "note": "order-md-last draws the cart summary after the form; DOM order puts it first; the example does it on purpose (held-out-2 page)"
+  },
+  "bs-checkout|wide-control|div.row.g-5 > div.col-md-7.col-lg-8 > form.needs-validation > button.btn.btn-primary": {
+   "v": "INT",
+   "note": "a full-width submit in the form column at 992–1008: a design choice (held-out-2 page)"
+  },
+  "bs-checkout-rtl|order|div.container > main > div.row.g-3": {
+   "v": "INT",
+   "note": "same as the LTR checkout (right-to-left order handled) (held-out-2 page)"
+  },
+  "bs-checkout-rtl|wide-control|div.row.g-3 > div.col-md-7.col-lg-8 > form.needs-validation > button.btn.btn-primary": {
+   "v": "INT",
+   "note": "same as the LTR checkout (held-out-2 page)"
+  },
+  "bs-pricing|protrusion|header > div.d-flex.flex-column > nav.d-inline-flex.mt-2 > a.me-3.py-2:nth-of-type(n)": {
+   "v": "TP",
+   "note": "at 320–328 the header links run 10 px past the header rule, 2 px from the screen edge (crop checked) (held-out-2 page)"
+  },
+  "bs-pricing|protrusion|header > div.d-flex.flex-column > nav.d-inline-flex.mt-2 > a.py-2.link-body-emphasis:nth-of-type(n)": {
+   "v": "TP",
+   "note": "same, on the right (held-out-2 page)"
+  },
+  "bs-pricing|fold|div.col:nth-of-type(n) > div.card.mb-4 > div.card-body > button.btn.btn-lg": {
+   "v": "INT",
+   "note": "the first plan's Sign-up button ends a few px below the 740 px fold at 320–328 only: harmless (held-out-2 page)"
+  },
+  "carbon-table|overflow|header.cds--header": {
+   "v": "FP",
+   "note": "wrong element: the fixed full-width Carbon header follows the layout viewport the table widened; the table (named second, and its own key) is the cause (held-out-2 page)",
+   "cause": "tool"
+  },
+  "carbon-table|zoom-out|(page)": {
+   "v": "TP",
+   "note": "the 8-column table has no horizontal scroller, so the phone layout viewport widens to 729 px (held-out-2 page)"
+  },
+  "carbon-table|protrusion|div.cds--data-table-container > section.cds--table-toolbar > div.cds--toolbar-content > button.cds--btn.cds--btn--ghost": {
+   "v": "TP",
+   "note": "at 320 the toolbar content is wider than the toolbar and Refresh sticks out of its left side (held-out-2 page)"
+  },
+  "carbon-table|overflow|main > div.cds--data-table-container > table.cds--data-table.cds--data-table--sm": {
+   "v": "TP",
+   "note": "the table overflows the page instead of scrolling in a container (held-out-2 page)"
+  },
+  "carbon-table|nav-wrap|main > nav.cds--breadcrumb": {
+   "v": "TP",
+   "note": "a two-item breadcrumb stacked on two rows up to 664 px (held-out-2 page)"
+  },
+  "primer-issues|zoom-out|(page)": {
+   "v": "TP",
+   "note": "the issues page is not built for phones: the header row, the filter/subnav row, the Box-header filters (Author … Sort, up to 226 px outside the box) and the repository tabs all run past the viewport below ~620 px (sheet and crops checked) (held-out-2 page)"
+  },
+  "primer-issues|protrusion|div.Box > div.Box-header.d-flex > div.d-flex.f6 > span.ml-4.color-fg-muted:nth-of-type(n)": {
+   "v": "TP",
+   "note": "the issues page is not built for phones: the header row, the filter/subnav row, the Box-header filters (Author … Sort, up to 226 px outside the box) and the repository tabs all run past the viewport below ~620 px (sheet and crops checked) (held-out-2 page)"
+  },
+  "primer-issues|protrusion|div.Box > div.Box-header.d-flex > div.d-flex.f6 > span": {
+   "v": "TP",
+   "note": "the issues page is not built for phones: the header row, the filter/subnav row, the Box-header filters (Author … Sort, up to 226 px outside the box) and the repository tabs all run past the viewport below ~620 px (sheet and crops checked) (held-out-2 page)"
+  },
+  "primer-issues|overflow|main.container-xl.px-3 > div.d-flex.flex-justify-between > div.d-flex": {
+   "v": "TP",
+   "note": "the issues page is not built for phones: the header row, the filter/subnav row, the Box-header filters (Author … Sort, up to 226 px outside the box) and the repository tabs all run past the viewport below ~620 px (sheet and crops checked) (held-out-2 page)"
+  },
+  "primer-issues|overflow|div.Header > div.Header-item.mr-0": {
+   "v": "TP",
+   "note": "the issues page is not built for phones: the header row, the filter/subnav row, the Box-header filters (Author … Sort, up to 226 px outside the box) and the repository tabs all run past the viewport below ~620 px (sheet and crops checked) (held-out-2 page)"
+  },
+  "primer-issues|overflow|div.Header > div.Header-item.Header-item--full": {
+   "v": "TP",
+   "note": "the issues page is not built for phones: the header row, the filter/subnav row, the Box-header filters (Author … Sort, up to 226 px outside the box) and the repository tabs all run past the viewport below ~620 px (sheet and crops checked) (held-out-2 page)"
+  },
+  "primer-issues|overflow|main.container-xl.px-3 > div.d-flex.flex-justify-between > div.d-flex.flex-auto": {
+   "v": "TP",
+   "note": "the issues page is not built for phones: the header row, the filter/subnav row, the Box-header filters (Author … Sort, up to 226 px outside the box) and the repository tabs all run past the viewport below ~620 px (sheet and crops checked) (held-out-2 page)"
+  },
+  "primer-issues|nav-overflow|nav.UnderlineNav.px-3 > div.UnderlineNav-body > a.UnderlineNav-item:nth-of-type(n)": {
+   "v": "TP",
+   "note": "the issues page is not built for phones: the header row, the filter/subnav row, the Box-header filters (Author … Sort, up to 226 px outside the box) and the repository tabs all run past the viewport below ~620 px (sheet and crops checked) (held-out-2 page)"
+  },
+  "primer-issues|label-wrap|div.d-flex.flex-justify-between > div.d-flex:nth-of-type(n) > nav.subnav-links.mr-2 > a.subnav-item:nth-of-type(n)": {
+   "v": "TP",
+   "note": "Labels 24 / Milestones 3 wrap their counters under the label below 656 px: the segmented control breaks (held-out-2 page)"
+  },
+  "stemwren-home|no-viewport|(page)": {
+   "v": "TP",
+   "note": "meta viewport width=1100: phones lay the page out 1100 px wide (held-out-2 page)"
+  },
+  "stemwren-order|no-viewport|(page)": {
+   "v": "TP",
+   "note": "meta viewport width=1100: phones lay the page out 1100 px wide (held-out-2 page)"
+  },
+  "stemwren-home|nav-overflow|header > nav > a.cta": {
+   "v": "TP",
+   "note": "at 200%/400% zoom the nowrap nav runs past the viewport (held-out-2 page)"
+  },
+  "stemwren-home|nav-overflow|header > nav > a:nth-of-type(n)": {
+   "v": "TP",
+   "note": "at 200%/400% zoom the nowrap nav runs past the viewport (held-out-2 page)"
+  },
+  "stemwren-home|overflow|header > nav": {
+   "v": "TP",
+   "note": "at 200%/400% zoom the nowrap nav runs past the viewport (held-out-2 page)"
+  },
+  "stemwren-order|nav-overflow|header > nav > a.cta": {
+   "v": "TP",
+   "note": "at 200%/400% zoom the nowrap nav runs past the viewport (held-out-2 page)"
+  },
+  "stemwren-order|nav-overflow|header > nav > a:nth-of-type(n)": {
+   "v": "TP",
+   "note": "at 200%/400% zoom the nowrap nav runs past the viewport (held-out-2 page)"
+  },
+  "stemwren-order|overflow|header > nav": {
+   "v": "TP",
+   "note": "at 200%/400% zoom the nowrap nav runs past the viewport (held-out-2 page)"
+  },
+  "stemwren-home|overlap|section.hero > h1": {
+   "v": "TP",
+   "note": "at 400% zoom the 100vh hero is 180 px tall and its centred content spills over the top bar and the next section (held-out-2 page)"
+  },
+  "stemwren-home|overlap|section.hero > a.btn": {
+   "v": "TP",
+   "note": "at 400% zoom the 100vh hero is 180 px tall and its centred content spills over the top bar and the next section (held-out-2 page)"
+  },
+  "stemwren-home|dead-band|section.hero": {
+   "v": "TP",
+   "note": "the 100vh gradient hero: on a phone (width=1100, zoomed out) 1,150–1,280 px of gradient with nothing in it; on desktop 432 px, which alone would be INT (held-out-2 page)"
+  },
+  "stemwren-home|measure|section.features > div.card:nth-of-type(n) > p": {
+   "v": "TP",
+   "note": "feature cards squeezed to 8–15 characters a line (phone autosizing; 768–856 on desktop) (held-out-2 page)"
+  },
+  "stemwren-home|measure|#about > p": {
+   "v": "TP",
+   "note": "one 160-character line from 1232 px (held-out-2 page)"
+  },
+  "stemwren-home|label-wrap|header > nav > a.cta": {
+   "v": "TP",
+   "note": "Order Now wraps to two lines at 768–792 and at zoom, colliding with the nav (held-out-2 page)"
+  },
+  "stemwren-order|label-wrap|header > nav > a.cta": {
+   "v": "TP",
+   "note": "Order Now wraps to two lines at 768–792 and at zoom, colliding with the nav (held-out-2 page)"
+  },
+  "stemwren-home|chrome|header": {
+   "v": "TP",
+   "note": "at 400% zoom the sticky header covers half of the 320×180 viewport (held-out-2 page)"
+  },
+  "stemwren-order|chrome|header": {
+   "v": "TP",
+   "note": "at 400% zoom the sticky header covers half of the 320×180 viewport (held-out-2 page)"
+  },
+  "stemwren-order|wide-control|#order > button.submit": {
+   "v": "INT",
+   "note": "a 680 px Place Order button: a design choice, harmless (held-out-2 page)"
   }
  },
  "stress": {
@@ -635,8 +838,9 @@
    "note": "govuk-frontend grid columns float left: the column stays on the left in RTL"
   },
   "govuk|slow|late-shift|div.govuk-grid-row": {
-   "v": "TP",
-   "note": "the content moves 49 px after first paint on a throttled load"
+   "v": "FP",
+   "cause": "tool",
+   "note": "[was TP; relabelled after the review] not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame"
   },
   "govuk|rtl|squeezed|div.govuk-error-summary__body > ul.govuk-list.govuk-error-summary__list > li > a": {
    "v": "FP",
@@ -656,8 +860,9 @@
    "cause": "tool"
   },
   "permit-home|slow|late-shift|div.cards": {
-   "v": "TP",
-   "note": "the cards move 346 px after first paint while the header and hero fill in"
+   "v": "FP",
+   "cause": "tool",
+   "note": "[was TP; relabelled after the review] not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame"
   },
   "permit-home|pseudo|overflow|div.cards > div.card": {
    "v": "TP",
@@ -691,8 +896,9 @@
    "note": "td { text-align: left }"
   },
   "permit-apply|slow|late-shift|div.wrap": {
-   "v": "TP",
-   "note": "the unsized crest pushes the form down 57 px"
+   "v": "FP",
+   "cause": "tool",
+   "note": "[was TP; relabelled after the review] not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame"
   },
   "permit-apply|errors|page-error|(page)": {
    "v": "TP",
@@ -735,8 +941,9 @@
    "note": "CLS 0.93 on a throttled load: the herd table and cards arrive and move everything"
   },
   "milkline-app|slow|late-shift|div.top": {
-   "v": "TP",
-   "note": "same load sequence"
+   "v": "FP",
+   "cause": "tool",
+   "note": "[was TP; relabelled after the review] not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame"
   },
   "milkline-app|errors|page-error|(page)": {
    "v": "TP",
@@ -1111,6 +1318,543 @@
   "hallam-fees|list-1|squeezed|div.wrap > div.content > p:nth-of-type(n) > a.more": {
    "v": "FP",
    "note": "a page without a viewport meta: phone Chrome text-autosizes it, so the link measured 595×40 in one load and 218×15 in the next, whatever the mutation (fixed since: control sizes are not compared on such pages) (held-out page)"
+  },
+  "govuk|rtl|not-mirrored|div.govuk-grid-row > div.govuk-grid-column-two-thirds > table.govuk-table > caption.govuk-table__caption.govuk-table__caption--m": {
+   "v": "TP",
+   "note": "GOV.UK Frontend sets .govuk-table__caption { text-align: left }: the caption stays left in RTL (caption joined the text-align check after the review)"
+  },
+  "milkline-app|list-500|dead-band|main": {
+   "v": "FP",
+   "cause": "tool",
+   "note": "not real: reproduced, the rows fill the band. The probe stops collecting text after 6,000 runs, and 500 cloned rows + 500 KPI tiles + 500 sidebar items pass that, so the rows past the cap count as empty (the earlier unverified Milkline list-500 dead band was the same). Fixed after the review: dead bands are looked for only above the last text run counted."
+  },
+  "stemwren-home|pseudo|overflow|section.features > div.card": {
+   "v": "TP",
+   "note": "translated (pseudo) text: long compound words widen the three-column grid and the 96 px heading, and the nav wraps (held-out-2 page)"
+  },
+  "stemwren-home|pseudo|wide-control|header > nav > a.cta": {
+   "v": "INT",
+   "note": "the Order Now pill grows with its label (held-out-2 page)"
+  },
+  "stemwren-home|long|protrusion|#occasions > div.row > div.occasion:nth-of-type(n)": {
+   "v": "FP",
+   "note": "authored category tiles, feature cards and testimonials treated as data or a list (held-out-2 page)",
+   "cause": "tool"
+  },
+  "stemwren-home|long|overlap|#occasions > div.row > div.occasion:nth-of-type(n)": {
+   "v": "FP",
+   "note": "authored category tiles, feature cards and testimonials treated as data or a list (held-out-2 page)",
+   "cause": "tool"
+  },
+  "stemwren-home|long|overflow|section.features > div.card": {
+   "v": "FP",
+   "note": "authored category tiles, feature cards and testimonials treated as data or a list (held-out-2 page)",
+   "cause": "tool"
+  },
+  "stemwren-home|no-images|unsized-image|header > img": {
+   "v": "TP",
+   "note": "the logo has no width/height: 0 px while missing, 64 px loaded (held-out-2 page)"
+  },
+  "stemwren-home|list-0|no-empty-state|section.features": {
+   "v": "FP",
+   "note": "authored category tiles, feature cards and testimonials treated as data or a list (held-out-2 page)",
+   "cause": "tool"
+  },
+  "stemwren-home|list-0|no-empty-state|section#occasions.occasions": {
+   "v": "FP",
+   "note": "authored category tiles, feature cards and testimonials treated as data or a list (held-out-2 page)",
+   "cause": "tool"
+  },
+  "stemwren-home|list-0|no-empty-state|section.testimonials": {
+   "v": "FP",
+   "note": "authored category tiles, feature cards and testimonials treated as data or a list (held-out-2 page)",
+   "cause": "tool"
+  },
+  "stemwren-home|list-500|overflow|(page)": {
+   "v": "FP",
+   "note": "authored category tiles, feature cards and testimonials treated as data or a list (held-out-2 page)",
+   "cause": "tool"
+  },
+  "stemwren-home|slow|late-shift|section.features": {
+   "v": "FP",
+   "note": "not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame (held-out-2 page)",
+   "cause": "tool"
+  },
+  "stemwren-home|pseudo|overflow|section.hero > h1": {
+   "v": "TP",
+   "note": "translated (pseudo) text: long compound words widen the three-column grid and the 96 px heading, and the nav wraps (held-out-2 page)"
+  },
+  "stemwren-home|pseudo|nav-wrap|header > nav": {
+   "v": "TP",
+   "note": "translated (pseudo) text: long compound words widen the three-column grid and the 96 px heading, and the nav wraps (held-out-2 page)"
+  },
+  "stemwren-home|long|edge-cut|#occasions > div.row > div.occasion": {
+   "v": "FP",
+   "note": "authored category tiles, feature cards and testimonials treated as data or a list (held-out-2 page)",
+   "cause": "tool"
+  },
+  "stemwren-home|empty|dead-band|#occasions": {
+   "v": "FP",
+   "note": "authored category tiles, feature cards and testimonials treated as data or a list (held-out-2 page)",
+   "cause": "tool"
+  },
+  "stemwren-order|pseudo|wide-control|header > nav > a.cta": {
+   "v": "INT",
+   "note": "the Order Now pill grows with its label (held-out-2 page)"
+  },
+  "stemwren-order|no-images|unsized-image|header > img": {
+   "v": "TP",
+   "note": "the logo has no width/height: 0 px while missing, 64 px loaded (held-out-2 page)"
+  },
+  "stemwren-order|slow|late-shift|div.form-wrap": {
+   "v": "FP",
+   "note": "not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame (held-out-2 page)",
+   "cause": "tool"
+  },
+  "stemwren-order|errors|silent-failure|div.form-wrap": {
+   "v": "TP",
+   "note": "the stems list fails silently (flowers.forEach / Failed to fetch uncaught, no message) (held-out-2 page)"
+  },
+  "stemwren-order|errors|page-error|(page)": {
+   "v": "TP",
+   "note": "the stems list fails silently (flowers.forEach / Failed to fetch uncaught, no message) (held-out-2 page)"
+  },
+  "stemwren-order|offline|silent-failure|div.form-wrap": {
+   "v": "TP",
+   "note": "the stems list fails silently (flowers.forEach / Failed to fetch uncaught, no message) (held-out-2 page)"
+  },
+  "stemwren-order|offline|page-error|(page)": {
+   "v": "TP",
+   "note": "the stems list fails silently (flowers.forEach / Failed to fetch uncaught, no message) (held-out-2 page)"
+  },
+  "stemwren-order|pseudo|nav-wrap|header > nav": {
+   "v": "TP",
+   "note": "translated (pseudo) text: long compound words widen the three-column grid and the 96 px heading, and the nav wraps (held-out-2 page)"
+  },
+  "carbon-table|pseudo|protrusion|div.cds--data-table-container > section.cds--table-toolbar > div.cds--toolbar-content > button.cds--btn.cds--btn--ghost": {
+   "v": "TP",
+   "note": "translated Refresh runs out of the toolbar (held-out-2 page)"
+  },
+  "carbon-table|rtl|nav-overflow|nav.cds--breadcrumb > ol.cds--breadcrumb > li.cds--breadcrumb-item:nth-of-type(n) > a.cds--link": {
+   "v": "FP",
+   "note": "the page already overflows (layout viewport 729 px); mirrored, its start edge sits at 729 and the check compares with the 390 px client width: the breadcrumb is where a zoomed-out phone shows it (held-out-2 page)",
+   "cause": "tool"
+  },
+  "carbon-table|list-0|no-empty-state|div.cds--data-table-container": {
+   "v": "TP",
+   "note": "an empty data table shows headers over nothing: no \"No instances\" state (held-out-2 page)"
+  },
+  "carbon-table|slow|late-shift|nav.cds--breadcrumb": {
+   "v": "FP",
+   "note": "not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame (held-out-2 page)",
+   "cause": "tool"
+  },
+  "carbon-table|pseudo|overflow|main > div.cds--data-table-container > table.cds--data-table.cds--data-table--sm": {
+   "v": "TP",
+   "note": "the data table has no horizontal scroller: longer headers, big numbers or a long name in a cell push the page wider (held-out-2 page)"
+  },
+  "carbon-table|long|overflow|header.cds--header > a.cds--header__name": {
+   "v": "FP",
+   "note": "the product name in the UI-shell header matched as data (its class holds \"name\") (held-out-2 page)",
+   "cause": "tool"
+  },
+  "carbon-table|long|wide-control|header.cds--header > a.cds--header__name": {
+   "v": "FP",
+   "note": "the product name in the UI-shell header matched as data (its class holds \"name\") (held-out-2 page)",
+   "cause": "tool"
+  },
+  "carbon-table|numbers|overflow|main > div.cds--data-table-container > table.cds--data-table.cds--data-table--sm": {
+   "v": "TP",
+   "note": "the data table has no horizontal scroller: longer headers, big numbers or a long name in a cell push the page wider (held-out-2 page)"
+  },
+  "carbon-table|long|overflow|main > div.cds--data-table-container > table.cds--data-table.cds--data-table--sm": {
+   "v": "TP",
+   "note": "the data table has no horizontal scroller: longer headers, big numbers or a long name in a cell push the page wider (held-out-2 page)"
+  },
+  "primer-issues|pseudo|protrusion|main.container-xl.px-3 > div.Box > div.Box-row.d-flex:nth-of-type(n) > div.f6.color-fg-muted": {
+   "v": "TP",
+   "note": "translated labels: the comment counts, the filter row, the tabs and the subnav no longer fit at 390–768 (held-out-2 page)"
+  },
+  "primer-issues|pseudo|overflow|div.Header > div.Header-item.Header-item--full": {
+   "v": "FP",
+   "note": "the page already overflows at 390; the mutation only renamed the first culprit, so an old fault came back as new (held-out-2 page)",
+   "cause": "tool"
+  },
+  "primer-issues|long|protrusion|div.Box > div.Box-row.d-flex:nth-of-type(n) > div.flex-auto > a.Link--primary.text-bold": {
+   "v": "TP",
+   "note": "an issue title is user data: one long word runs out of the row (no overflow-wrap) (held-out-2 page)"
+  },
+  "primer-issues|long|protrusion|main.container-xl.px-3 > div.Box > div.Box-row.d-flex:nth-of-type(n) > div.f6.color-fg-muted": {
+   "v": "FP",
+   "note": "the authored \"comments\" label took the long token (held-out-2 page)",
+   "cause": "tool"
+  },
+  "primer-issues|long|protrusion|div.Box > div.Box-row.d-flex:nth-of-type(n) > div.flex-auto > div.f6.color-fg-muted": {
+   "v": "TP",
+   "note": "the meta line holds the author's username; the token replaced \"yesterday\", but a long username (up to 39 characters, no spaces) breaks it the same way (held-out-2 page)"
+  },
+  "primer-issues|list-0|no-empty-state|div.Box": {
+   "v": "TP",
+   "note": "an empty issue list shows a bare box: no empty state (held-out-2 page)"
+  },
+  "primer-issues|slow|late-shift|div.Box": {
+   "v": "FP",
+   "note": "not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame (held-out-2 page)",
+   "cause": "tool"
+  },
+  "primer-issues|pseudo|protrusion|div.Box > div.Box-header.d-flex > div.d-flex.f6 > span.ml-4.color-fg-muted:nth-of-type(n)": {
+   "v": "TP",
+   "note": "translated labels: the comment counts, the filter row, the tabs and the subnav no longer fit at 390–768 (held-out-2 page)"
+  },
+  "primer-issues|pseudo|nav-overflow|nav.UnderlineNav.px-3 > div.UnderlineNav-body > a.UnderlineNav-item:nth-of-type(n)": {
+   "v": "TP",
+   "note": "translated labels: the comment counts, the filter row, the tabs and the subnav no longer fit at 390–768 (held-out-2 page)"
+  },
+  "primer-issues|pseudo|overflow|main.container-xl.px-3 > div.d-flex.flex-justify-between > div.d-flex": {
+   "v": "TP",
+   "note": "translated labels: the comment counts, the filter row, the tabs and the subnav no longer fit at 390–768 (held-out-2 page)"
+  },
+  "primer-issues|pseudo|label-wrap|div.d-flex.flex-justify-between > div.d-flex:nth-of-type(n) > nav.subnav-links.mr-2 > a.subnav-item:nth-of-type(n)": {
+   "v": "TP",
+   "note": "translated labels: the comment counts, the filter row, the tabs and the subnav no longer fit at 390–768 (held-out-2 page)"
+  },
+  "primer-issues|rtl|not-mirrored|div.d-flex.flex-justify-between > div.d-flex > nav.subnav-links.mr-2 > a.subnav-item": {
+   "v": "TP",
+   "note": "Primer's subnav links float left (physical): they stay put in RTL (held-out-2 page)"
+  },
+  "bs-album|long|protrusion|div.card.shadow-sm > div.card-body > div.d-flex.justify-content-between > small.text-body-secondary": {
+   "v": "FP",
+   "note": "the card footer's \"9 mins\", the View/Edit button labels and the placeholder band are authored: long, empty and numbers aimed at them as data (and the band holds aria-hidden SVGs) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album|long|overflow|… > div.card-body > div.d-flex.justify-content-between > div.btn-group": {
+   "v": "FP",
+   "note": "the card footer's \"9 mins\", the View/Edit button labels and the placeholder band are authored: long, empty and numbers aimed at them as data (and the band holds aria-hidden SVGs) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album|long|zoom-out|(page)": {
+   "v": "FP",
+   "note": "the card footer's \"9 mins\", the View/Edit button labels and the placeholder band are authored: long, empty and numbers aimed at them as data (and the band holds aria-hidden SVGs) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album|empty|squeezed|div.card-body > div.d-flex.justify-content-between > div.btn-group > button.btn.btn-sm:nth-of-type(n)": {
+   "v": "FP",
+   "note": "the card footer's \"9 mins\", the View/Edit button labels and the placeholder band are authored: long, empty and numbers aimed at them as data (and the band holds aria-hidden SVGs) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album|rtl|not-mirrored|footer.text-body-secondary.py-5 > div.container > p.float-end.mb-1": {
+   "v": "TP",
+   "note": "bootstrap.css .float-end is float: right (physical): stays right in RTL unless bootstrap.rtl.css is loaded (held-out-2 page)"
+  },
+  "bs-album|list-0|no-empty-state|div.album.py-5": {
+   "v": "TP",
+   "note": "an empty album shows a bare grey band: no empty state (held-out-2 page)"
+  },
+  "bs-album|slow|late-shift|section.py-5.text-center": {
+   "v": "FP",
+   "note": "not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album|pseudo|protrusion|div.card.shadow-sm > div.card-body > div.d-flex.justify-content-between > small.text-body-secondary": {
+   "v": "TP",
+   "note": "translated \"9 mins\" (short strings grow most) collides with the View/Edit group in the three-column grid at 768 (held-out-2 page)"
+  },
+  "bs-album|pseudo|overlap|div.card.shadow-sm > div.card-body > div.d-flex.justify-content-between > small.text-body-secondary": {
+   "v": "TP",
+   "note": "translated \"9 mins\" (short strings grow most) collides with the View/Edit group in the three-column grid at 768 (held-out-2 page)"
+  },
+  "bs-album|pseudo|overflow|… > div.card-body > div.d-flex.justify-content-between > small.text-body-secondary": {
+   "v": "TP",
+   "note": "translated \"9 mins\" (short strings grow most) collides with the View/Edit group in the three-column grid at 768 (held-out-2 page)"
+  },
+  "bs-album|long|overlap|div.card-body > div.d-flex.justify-content-between > div.btn-group > button.btn.btn-sm:nth-of-type(n)": {
+   "v": "FP",
+   "note": "the card footer's \"9 mins\", the View/Edit button labels and the placeholder band are authored: long, empty and numbers aimed at them as data (and the band holds aria-hidden SVGs) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album|long|overlap|div.card.shadow-sm > div.card-body > div.d-flex.justify-content-between > small.text-body-secondary": {
+   "v": "FP",
+   "note": "the card footer's \"9 mins\", the View/Edit button labels and the placeholder band are authored: long, empty and numbers aimed at them as data (and the band holds aria-hidden SVGs) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album|numbers|protrusion|div.card.shadow-sm > div.card-body > div.d-flex.justify-content-between > small.text-body-secondary": {
+   "v": "FP",
+   "note": "the card footer's \"9 mins\", the View/Edit button labels and the placeholder band are authored: long, empty and numbers aimed at them as data (and the band holds aria-hidden SVGs) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album|long|overflow|… > div.card-body > div.d-flex.justify-content-between > small.text-body-secondary": {
+   "v": "FP",
+   "note": "the card footer's \"9 mins\", the View/Edit button labels and the placeholder band are authored: long, empty and numbers aimed at them as data (and the band holds aria-hidden SVGs) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-pricing|pseudo|protrusion|header > div.d-flex.flex-column > nav.d-inline-flex.mt-2 > a.me-3.py-2:nth-of-type(n)": {
+   "v": "TP",
+   "note": "translated nav, footer headings and links run out of their boxes at 390; the plan button wraps to 3 lines at 768 (held-out-2 page)"
+  },
+  "bs-pricing|pseudo|protrusion|header > div.d-flex.flex-column > nav.d-inline-flex.mt-2 > a.py-2.link-body-emphasis:nth-of-type(n)": {
+   "v": "TP",
+   "note": "translated nav, footer headings and links run out of their boxes at 390; the plan button wraps to 3 lines at 768 (held-out-2 page)"
+  },
+  "bs-pricing|pseudo|protrusion|footer.pt-4.my-md-5 > div.row > div.col-6.col-md:nth-of-type(n) > h5": {
+   "v": "TP",
+   "note": "translated nav, footer headings and links run out of their boxes at 390; the plan button wraps to 3 lines at 768 (held-out-2 page)"
+  },
+  "bs-pricing|pseudo|protrusion|div.col-6.col-md:nth-of-type(n) > ul.list-unstyled > li.mb-1:nth-of-type(n) > a.link-secondary.text-decoration-none": {
+   "v": "TP",
+   "note": "translated nav, footer headings and links run out of their boxes at 390; the plan button wraps to 3 lines at 768 (held-out-2 page)"
+  },
+  "bs-pricing|pseudo|nav-overflow|header > div.d-flex.flex-column > nav.d-inline-flex.mt-2 > a.me-3.py-2:nth-of-type(n)": {
+   "v": "TP",
+   "note": "translated nav, footer headings and links run out of their boxes at 390; the plan button wraps to 3 lines at 768 (held-out-2 page)"
+  },
+  "bs-pricing|pseudo|overflow|div.container.py-3 > header > div.d-flex.flex-column > nav.d-inline-flex.mt-2": {
+   "v": "TP",
+   "note": "translated nav, footer headings and links run out of their boxes at 390; the plan button wraps to 3 lines at 768 (held-out-2 page)"
+  },
+  "bs-pricing|pseudo|zoom-out|(page)": {
+   "v": "TP",
+   "note": "translated nav, footer headings and links run out of their boxes at 390; the plan button wraps to 3 lines at 768 (held-out-2 page)"
+  },
+  "bs-pricing|rtl|not-mirrored|table.table.text-center > tbody > tr > th.text-start": {
+   "v": "TP",
+   "note": "bootstrap.css .text-start is text-align: left (physical) (held-out-2 page)"
+  },
+  "bs-pricing|list-0|no-empty-state|div.row.row-cols-1": {
+   "v": "FP",
+   "note": "the three plans and the comparison table are authored: zero plans is not a state (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-pricing|list-0|no-empty-state|div.table-responsive": {
+   "v": "FP",
+   "note": "the three plans and the comparison table are authored: zero plans is not a state (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-pricing|slow|late-shift|h2.display-6.text-center": {
+   "v": "FP",
+   "note": "not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-pricing|pseudo|nav-overflow|header > div.d-flex.flex-column > nav.d-inline-flex.mt-2 > a.py-2.link-body-emphasis:nth-of-type(n)": {
+   "v": "TP",
+   "note": "translated nav, footer headings and links run out of their boxes at 390; the plan button wraps to 3 lines at 768 (held-out-2 page)"
+  },
+  "bs-pricing|pseudo|label-wrap|div.col:nth-of-type(n) > div.card.mb-4 > div.card-body > button.btn.btn-lg": {
+   "v": "TP",
+   "note": "translated nav, footer headings and links run out of their boxes at 390; the plan button wraps to 3 lines at 768 (held-out-2 page)"
+  },
+  "bs-checkout|long|protrusion|ul.list-group.mb-3 > li.list-group-item.d-flex:nth-of-type(n) > div > h6.my-0": {
+   "v": "TP",
+   "note": "cart items are data: a long product name or description runs out of the list item and pushes the price out (held-out-2 page)"
+  },
+  "bs-checkout|long|protrusion|ul.list-group.mb-3 > li.list-group-item.d-flex:nth-of-type(n) > div > small.text-body-secondary": {
+   "v": "TP",
+   "note": "cart items are data: a long product name or description runs out of the list item and pushes the price out (held-out-2 page)"
+  },
+  "bs-checkout|long|protrusion|div.col-md-5.col-lg-4 > ul.list-group.mb-3 > li.list-group-item.d-flex:nth-of-type(n) > span.text-body-secondary": {
+   "v": "TP",
+   "note": "cart items are data: a long product name or description runs out of the list item and pushes the price out (held-out-2 page)"
+  },
+  "bs-checkout|rtl|not-mirrored|#same-address": {
+   "v": "TP",
+   "note": "bootstrap.css .form-check-input sits at margin-left: -1.5em (physical): the radio and check boxes stay left in RTL (held-out-2 page)"
+  },
+  "bs-checkout|rtl|not-mirrored|#save-info": {
+   "v": "TP",
+   "note": "bootstrap.css .form-check-input sits at margin-left: -1.5em (physical): the radio and check boxes stay left in RTL (held-out-2 page)"
+  },
+  "bs-checkout|rtl|not-mirrored|#credit": {
+   "v": "TP",
+   "note": "bootstrap.css .form-check-input sits at margin-left: -1.5em (physical): the radio and check boxes stay left in RTL (held-out-2 page)"
+  },
+  "bs-checkout|rtl|not-mirrored|#debit": {
+   "v": "TP",
+   "note": "bootstrap.css .form-check-input sits at margin-left: -1.5em (physical): the radio and check boxes stay left in RTL (held-out-2 page)"
+  },
+  "bs-checkout|rtl|not-mirrored|#paypal": {
+   "v": "TP",
+   "note": "bootstrap.css .form-check-input sits at margin-left: -1.5em (physical): the radio and check boxes stay left in RTL (held-out-2 page)"
+  },
+  "bs-checkout|slow|late-shift|div.row.g-5": {
+   "v": "FP",
+   "note": "not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-checkout|pseudo|overlap|form.needs-validation > div.row.gy-3 > div.col-md-3:nth-of-type(n) > label.form-label": {
+   "v": "TP",
+   "note": "translated \"Expiration\" label runs into the next column's label at 768 (held-out-2 page)"
+  },
+  "bs-checkout|long|overlap|div.row.g-3 > div.col-12:nth-of-type(n) > div.input-group > span.input-group-text": {
+   "v": "FP",
+   "note": "the \"@\" addon of the username field matched as an e-mail address (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-checkout|long|overflow|… > li.list-group-item.d-flex > span.text-body-secondary": {
+   "v": "TP",
+   "note": "cart items are data: a long product name or description runs out of the list item and pushes the price out (held-out-2 page)"
+  },
+  "bs-dashboard|list-0|no-empty-state|div.table-responsive.small": {
+   "v": "TP",
+   "note": "an empty data table: no empty state (held-out-2 page)"
+  },
+  "bs-dashboard|slow|blank|(page)": {
+   "v": "INT",
+   "note": "render-blocking CSS and scripts on a throttled link: a performance finding, not a layout fault (held-out-2 page)"
+  },
+  "bs-dashboard|pseudo|overflow|… > div.btn-toolbar.mb-2": {
+   "v": "TP",
+   "note": "translated toolbar labels: 3 px of sideways scroll at 768 (held-out-2 page)"
+  },
+  "bs-dashboard|pseudo|label-wrap|div.offcanvas-body.d-md-flex > ul.nav.flex-column:nth-of-type(n) > li.nav-item:nth-of-type(n) > a.nav-link.d-flex": {
+   "v": "TP",
+   "note": "a translated sidebar label wraps to 3 lines at 768 (held-out-2 page)"
+  },
+  "bs-dashboard|long|label-wrap|div.offcanvas-body.d-md-flex > ul.nav.flex-column:nth-of-type(n) > li.nav-item:nth-of-type(n) > a.nav-link.d-flex": {
+   "v": "FP",
+   "note": "authored sidebar navigation took the long token (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-dashboard|numbers|label-wrap|div.offcanvas-body.d-md-flex > ul.nav.flex-column:nth-of-type(n) > li.nav-item:nth-of-type(n) > a.nav-link.d-flex": {
+   "v": "FP",
+   "note": "the label does not change under this mutation; its extra line comes from a load-to-load difference, not the mutation (fixed after the first run: label-wrap only for mutations that change text) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-dashboard|no-images|label-wrap|div.offcanvas-body.d-md-flex > ul.nav.flex-column:nth-of-type(n) > li.nav-item:nth-of-type(n) > a.nav-link.d-flex": {
+   "v": "FP",
+   "note": "the label does not change under this mutation; its extra line comes from a load-to-load difference, not the mutation (fixed after the first run: label-wrap only for mutations that change text) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-dashboard|rtl|label-wrap|div.offcanvas-body.d-md-flex > ul.nav.flex-column:nth-of-type(n) > li.nav-item:nth-of-type(n) > a.nav-link.d-flex": {
+   "v": "FP",
+   "note": "the Arabic sample for a 17-character label is 33 characters: the wrap comes from the sample's length, not from Arabic (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-dashboard|list-500|label-wrap|div.offcanvas-body.d-md-flex > ul.nav.flex-column:nth-of-type(n) > li.nav-item:nth-of-type(n) > a.nav-link.d-flex": {
+   "v": "FP",
+   "note": "the label does not change under this mutation; its extra line comes from a load-to-load difference, not the mutation (fixed after the first run: label-wrap only for mutations that change text) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album-rtl|empty|dead-band|main": {
+   "v": "FP",
+   "note": "the card footer's \"9 mins\", the View/Edit button labels and the placeholder band are authored: long, empty and numbers aimed at them as data (and the band holds aria-hidden SVGs) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album-rtl|empty|squeezed|div.card-body > div.d-flex.justify-content-between > div.btn-group > button.btn.btn-sm:nth-of-type(n)": {
+   "v": "FP",
+   "note": "the card footer's \"9 mins\", the View/Edit button labels and the placeholder band are authored: long, empty and numbers aimed at them as data (and the band holds aria-hidden SVGs) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album-rtl|list-0|no-empty-state|div.album.py-5": {
+   "v": "TP",
+   "note": "an empty album shows a bare grey band: no empty state (held-out-2 page)"
+  },
+  "bs-album-rtl|slow|late-shift|section.py-5.text-center": {
+   "v": "FP",
+   "note": "not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-album-rtl|pseudo|protrusion|div.card.shadow-sm > div.card-body > div.d-flex.justify-content-between > small.text-body-secondary": {
+   "v": "TP",
+   "note": "translated \"9 mins\" (short strings grow most) collides with the View/Edit group in the three-column grid at 768 (held-out-2 page)"
+  },
+  "bs-album-rtl|pseudo|overlap|div.card.shadow-sm > div.card-body > div.d-flex.justify-content-between > small.text-body-secondary": {
+   "v": "TP",
+   "note": "translated \"9 mins\" (short strings grow most) collides with the View/Edit group in the three-column grid at 768 (held-out-2 page)"
+  },
+  "bs-album-rtl|pseudo|overflow|… > div.card-body > div.d-flex.justify-content-between > small.text-body-secondary": {
+   "v": "TP",
+   "note": "translated \"9 mins\" (short strings grow most) collides with the View/Edit group in the three-column grid at 768 (held-out-2 page)"
+  },
+  "bs-album-rtl|numbers|protrusion|div.card.shadow-sm > div.card-body > div.d-flex.justify-content-between > small.text-body-secondary": {
+   "v": "FP",
+   "note": "the card footer's \"9 mins\", the View/Edit button labels and the placeholder band are authored: long, empty and numbers aimed at them as data (and the band holds aria-hidden SVGs) (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-checkout-rtl|long|overflow|… > div.row.g-3 > div.col-12 > div.input-group.has-validation > span.input-group-text": {
+   "v": "FP",
+   "note": "the \"@\" addon of the username field matched as an e-mail address (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-checkout-rtl|long|zoom-out|(page)": {
+   "v": "FP",
+   "note": "caused by the \"@\" addon mis-match (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-checkout-rtl|slow|late-shift|div.row.g-3": {
+   "v": "FP",
+   "note": "not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-checkout-rtl|pseudo|overlap|form.needs-validation > div.row.gy-3 > div.col-md-3:nth-of-type(n) > label.form-label": {
+   "v": "TP",
+   "note": "translated \"Expiration\" label runs into the next column's label at 768 (held-out-2 page)"
+  },
+  "bs-checkout-rtl|long|overlap|div.row.g-3 > div.col-12:nth-of-type(n) > div.input-group > span.input-group-text": {
+   "v": "FP",
+   "note": "the \"@\" addon of the username field matched as an e-mail address (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-dashboard-rtl|list-0|no-empty-state|div.table-responsive.small": {
+   "v": "TP",
+   "note": "an empty data table: no empty state (held-out-2 page)"
+  },
+  "bs-dashboard-rtl|slow|blank|(page)": {
+   "v": "INT",
+   "note": "render-blocking CSS and scripts on a throttled link: a performance finding, not a layout fault (held-out-2 page)"
+  },
+  "bs-dashboard-rtl|pseudo|label-wrap|div.offcanvas-body.d-md-flex > ul.nav.flex-column:nth-of-type(n) > li.nav-item:nth-of-type(n) > a.nav-link.d-flex": {
+   "v": "TP",
+   "note": "a translated sidebar label wraps to 3 lines at 768 (held-out-2 page)"
+  },
+  "bs-blog-rtl|pseudo|overlap|header.border-bottom.lh-1 > div.row.flex-nowrap > div.col-4.text-center > a.blog-header-logo.text-body-emphasis": {
+   "v": "TP",
+   "note": "translated header links overlap the logo at 390; 20 px sideways scroll at 768; the section nav wraps at 1280 (held-out-2 page)"
+  },
+  "bs-blog-rtl|long|nav-overflow|div.container > div.nav-scroller.py-1 > nav.nav.nav-underline > a.nav-item.nav-link:nth-of-type(n)": {
+   "v": "FP",
+   "note": "authored section navigation took the long token (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-blog-rtl|slow|late-shift|div.row.mb-2": {
+   "v": "FP",
+   "note": "not what the screen showed: the first snapshot read the layout before the render-blocking stylesheet arrived (never painted; the filmstrip frames do not move). Fixed after the first run: snapshots wait for a painted frame (held-out-2 page)",
+   "cause": "tool"
+  },
+  "bs-blog-rtl|pseudo|overflow|(page)": {
+   "v": "TP",
+   "note": "translated header links overlap the logo at 390; 20 px sideways scroll at 768; the section nav wraps at 1280 (held-out-2 page)"
+  },
+  "bs-blog-rtl|pseudo|nav-wrap|div.container > div.nav-scroller.py-1 > nav.nav.nav-underline": {
+   "v": "TP",
+   "note": "translated header links overlap the logo at 390; 20 px sideways scroll at 768; the section nav wraps at 1280 (held-out-2 page)"
+  },
+  "permit-apply|slow|late-shift|div.footer": {
+   "v": "TP",
+   "note": "filmstrip checked: the zones table fills at 3.0 s and pushes the vehicle fields and the footer down 144 px (reported after the painted-frame fix)"
+  },
+  "milkline-app|slow|late-shift|div.row": {
+   "v": "TP",
+   "note": "filmstrip checked: the KPI tiles arrive above the herd table at 2.0 s and push it down 376 px (reported after the painted-frame fix)"
+  },
+  "stemwren-order|slow|late-shift|footer": {
+   "v": "TP",
+   "note": "filmstrip checked: the stems list arrives at 3.0 s and the form grows 1,255 → 1,450 px, pushing the delivery fields and footer down (held-out-2 page, after the fixes)"
+  },
+  "carbon-table|slow|blank|(page)": {
+   "v": "INT",
+   "note": "render-blocking CSS on a throttled link (now timed at the first painted frame): a performance finding, not a layout fault (held-out-2 page, after the fixes)"
+  },
+  "primer-issues|slow|blank|(page)": {
+   "v": "INT",
+   "note": "render-blocking CSS on a throttled link (now timed at the first painted frame): a performance finding, not a layout fault (held-out-2 page, after the fixes)"
+  },
+  "bs-blog-rtl|slow|blank|(page)": {
+   "v": "INT",
+   "note": "render-blocking CSS on a throttled link (now timed at the first painted frame): a performance finding, not a layout fault (held-out-2 page, after the fixes)"
+  },
+  "bs-checkout-rtl|long|overflow|… > div.my-3 > div.form-check > label.form-check-label": {
+   "v": "FP",
+   "cause": "tool",
+   "note": "the three payment options were read as a list and their authored labels took the long token (held-out-2 page, after the fixes)"
   }
  },
  "rtl": {

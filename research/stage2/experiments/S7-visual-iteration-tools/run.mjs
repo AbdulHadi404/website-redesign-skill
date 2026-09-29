@@ -2,9 +2,11 @@
 /**
  * Stream S7 runner: rebuilds and re-measures everything, and writes results.json.
  *
- *   npm install && ./fetch-sites.sh        once (the Astro example is the "real site"; skipped if missing)
- *   node run.mjs                           everything (about 25 min on 4 shared CPUs)
- *   node run.mjs vr | sweep | stress | sheets   one section; the others keep their last results in results.json
+ *   npm install && ./fetch-sites.sh        once (Astro portfolio, Bootstrap examples, Carbon/Primer CSS; not committed)
+ *   node run.mjs                           everything (about 95 min on 4 shared CPUs)
+ *   node run.mjs vr | sweep | stress | …   one or more sections; the others keep their last results in results.json
+ *   S7_FROZEN=1 node run.mjs holdout2      the held-out-2 first pass, with the script versions frozen before it
+ *   node verdict-keys.mjs                  findings that verdicts.json does not label yet (then: node run.mjs score)
  *
  * vr      visual-regression tools on fixtures/vr (a page + 10 variants: 6 regressions, 4 kinds of noise), at 1280 and
  *         390: image engines on the same PNG pairs (pixelmatch as compare.mjs calls it, Playwright's comparator,
@@ -43,7 +45,18 @@ import { createHash } from 'node:crypto';
 import { serve, here, repo } from './lib/server.mjs';
 import { SITES as EXT, BOOTSTRAP_LTR, BOOTSTRAP_RTL } from './lib/extra-pages.mjs';
 
-const SKILL = path.join(repo, 'skills/website-redesign/scripts');
+// S7_FROZEN=1: the sweep.mjs and stress.mjs versions frozen before the held-out-2 first pass (frozen/), run from a
+// scratch folder next to the skill's lib/ and node_modules/; holdout2 then writes results.holdout2FirstPass.
+const FROZEN = process.env.S7_FROZEN === '1';
+const SKILL = FROZEN ? await (async () => {
+  const { mkdirSync, copyFileSync, symlinkSync, rmSync } = await import('node:fs');
+  const live = path.join(repo, 'skills/website-redesign/scripts'), d = path.join(process.env.S7_SITES || '/tmp/s2-S7', 'frozen-scripts');
+  rmSync(d, { recursive: true, force: true }); mkdirSync(d, { recursive: true });
+  copyFileSync(path.join(here, 'frozen/sweep-668ca747ac00.mjs'), path.join(d, 'sweep.mjs'));
+  copyFileSync(path.join(here, 'frozen/stress-1cdd07f25219.mjs'), path.join(d, 'stress.mjs'));
+  symlinkSync(path.join(live, 'lib'), path.join(d, 'lib')); symlinkSync(path.join(live, 'node_modules'), path.join(d, 'node_modules'));
+  return d;
+})() : path.join(repo, 'skills/website-redesign/scripts');
 const CAP = path.join(here, 'captures');
 const SITES = process.env.S7_SITES || '/tmp/s2-S7';
 const ASTRO = path.join(SITES, 'portfolio/dist');
@@ -260,7 +273,9 @@ async function sectionStress(base, astro, list = targets(base, astro), dirName =
   for (const t of list.filter((x) => x.tools.includes('stress'))) {
     const dir = path.join(CAP, dirName, t.name);
     await rm(dir, { recursive: true, force: true });
-    const r = await run('node', [path.join(SKILL, 'stress.mjs'), '--url', t.url, '--out', dir], { cwd: here });
+    // --all: every mutation, the data-aimed ones included, so their precision is measured too (stress.mjs's default
+    // leaves long, empty, list-1 and list-500 out unless --targets/--list say where the data is).
+    const r = await run('node', [path.join(SKILL, 'stress.mjs'), '--url', t.url, '--out', dir, ...(FROZEN ? [] : ['--all'])], { cwd: here });
     const jf = existsSync(dir) && readdirSync(dir).find((f) => f.endsWith('-stress.json'));
     if (!jf) { out.targets.push({ name: t.name, error: (r.err || r.out).slice(-400) }); continue; }
     const j = JSON.parse(await readFile(path.join(dir, jf), 'utf8'));
@@ -315,7 +330,8 @@ async function sectionScore(results) {
   const V = await verdicts();
   for (const [sec, list, keyOf, holder] of [['sweep', 'ranges', (t, x) => `${t.name}|${x.check}|${normSel(x.sel)}`, results], ['stress', 'findings', (t, f) => `${t.name}|${f.mutation}|${f.check}|${normSel(f.sel)}`, results],
     ['sweep', 'ranges', (t, x) => `${t.name}|${x.check}|${normSel(x.sel)}`, results.holdout || {}], ['stress', 'findings', (t, f) => `${t.name}|${f.mutation}|${f.check}|${normSel(f.sel)}`, results.holdout || {}],
-    ['sweep', 'ranges', (t, x) => `${t.name}|${x.check}|${normSel(x.sel)}`, results.holdout2 || {}], ['stress', 'findings', (t, f) => `${t.name}|${f.mutation}|${f.check}|${normSel(f.sel)}`, results.holdout2 || {}]]) {
+    ['sweep', 'ranges', (t, x) => `${t.name}|${x.check}|${normSel(x.sel)}`, results.holdout2 || {}], ['stress', 'findings', (t, f) => `${t.name}|${f.mutation}|${f.check}|${normSel(f.sel)}`, results.holdout2 || {}],
+    ['sweep', 'ranges', (t, x) => `${t.name}|${x.check}|${normSel(x.sel)}`, results.holdout2FirstPass || {}], ['stress', 'findings', (t, f) => `${t.name}|${f.mutation}|${f.check}|${normSel(f.sel)}`, results.holdout2FirstPass || {}]]) {
     const R = holder[sec];
     if (!R) continue;
     const truth = JSON.parse(await readFile(path.join(here, `fixtures/${sec}-lab/truth.json`), 'utf8'));
@@ -334,17 +350,19 @@ async function sectionScore(results) {
     const count = (xs) => { const n = xs.length, TP = xs.filter((x) => x.v === 'TP').length, INT = xs.filter((x) => x.v === 'INT').length, FP = xs.filter((x) => x.v === 'FP').length;
       return { all: n, TP, INT, FP, unlabelled: n - TP - INT - FP, actionable: n ? Math.round((TP / n) * 100) : null, intShare: n ? Math.round((INT / n) * 100) : null, fpShare: n ? Math.round((FP / n) * 100) : null, fpToolCaused: xs.filter((x) => x.v === 'FP' && x.cause === 'tool').length }; };
     for (const t of R.targets.filter((x) => x[list])) for (const x of t[list]) { const k = keyOf(t, x); const e = byKey.get(k); if (e) e.cause = V[sec]?.[k]?.cause || null; }
-    R.totals.keys = { ...count(kv), unseeded: count(kv.filter((x) => x.kind !== 'seeded')), realSite: count(kv.filter((x) => /real site/.test(x.kind))), nativeRtl: count(kv.filter((x) => /native RTL/.test(x.kind))) };
+    R.totals.keys = { ...count(kv), unseeded: count(kv.filter((x) => x.kind !== 'seeded')), realSite: count(kv.filter((x) => /real site|real open-source/.test(x.kind))), nativeRtl: count(kv.filter((x) => /native RTL/.test(x.kind))) };
     if (sec === 'sweep') {
       // Keys a capture at the default widths (1440/1280/1024/768/390) would not have shown, and their verdicts.
       const off = new Map();
       for (const t of R.targets.filter((x) => x.ranges)) for (const x of t.ranges) {
-        const k = keyOf(t, x); const e = off.get(k) || { v: x.verdict?.v || null, seen5: false, zoomOnly: true };
-        if (x.pass !== 'zoom') { e.zoomOnly = false; if (CAPTURE_WIDTHS.some((w) => w >= numW(x.from) && w <= numW(x.to))) e.seen5 = true; }
+        const k = keyOf(t, x); const e = off.get(k) || { v: x.verdict?.v || null, seen5: false, seen8: false, zoomOnly: true };
+        if (x.pass !== 'zoom') { e.zoomOnly = false; if (CAPTURE_WIDTHS.some((w) => w >= numW(x.from) && w <= numW(x.to))) e.seen5 = true; if ([...CAPTURE_WIDTHS, 320, 360, 844].some((w) => w >= numW(x.from) && w <= numW(x.to))) e.seen8 = true; }
         off.set(k, e);
       }
-      const o = [...off.values()].filter((e) => !e.zoomOnly && !e.seen5);
-      R.totals.keys.notAtDefaultWidths = { all: o.length, TP: o.filter((e) => e.v === 'TP').length, INT: o.filter((e) => e.v === 'INT').length, FP: o.filter((e) => e.v === 'FP').length };
+      const o = [...off.values()].filter((e) => !e.zoomOnly && !e.seen5), o8 = [...off.values()].filter((e) => !e.zoomOnly && !e.seen8);
+      const vc = (xs) => ({ all: xs.length, TP: xs.filter((e) => e.v === 'TP').length, INT: xs.filter((e) => e.v === 'INT').length, FP: xs.filter((e) => e.v === 'FP').length });
+      R.totals.keys.notAtDefaultWidths = vc(o);
+      R.totals.keys.notAtResponsiveWidths = vc(o8);
       R.totals.keys.zoomOnly = [...off.values()].filter((e) => e.zoomOnly).length;
     }
   }
@@ -360,13 +378,10 @@ async function sectionSheets() {
   await rm(shots, { recursive: true, force: true });
   await mkdir(shots, { recursive: true });
   const pick = [
+    // Kept under the folder's ~5 MB budget: the seeded labs, the RTL controls, one held-out page, the evidence fix.
     ['sweep/sweep-lab', /-sheet\.jpg$/, 'sweep-lab-sheet.jpg'],
-    ['sweep/slop', /-sheet\.jpg$/, 'sweep-slop-sheet.jpg'],
-    ['sweep/permit-apply', /-sheet\.jpg$/, 'sweep-permit-apply-sheet.jpg'],
     ['stress/stress-lab', /-stress-sheet\.jpg$/, 'stress-lab-sheet.jpg'],
     ['stress/stress-lab', /-slow\.jpg$/, 'stress-lab-slow.jpg'],
-    ['stress/permit-apply', /-stress-sheet\.jpg$/, 'stress-permit-apply-sheet.jpg'],
-    ['stress/milkline-app', /-stress-sheet\.jpg$/, 'stress-milkline-app-sheet.jpg'],
     ['rtl/sanad-ar', /-stress-sheet\.jpg$/, 'rtl-sanad-ar-sheet.jpg'],
     ['rtl/s8-en-broken', /-stress-sheet\.jpg$/, 'rtl-s8-en-broken-sheet.jpg'],
     ['holdout2-sweep/stemwren-home', /-sheet\.jpg$/, 'holdout2-sweep-stemwren-home-sheet.jpg'],
@@ -382,11 +397,12 @@ async function sectionSheets() {
   // Evidence before/after the review fix: the same finding, legacy code vs current, three pages (JPEG).
   try {
     const ev = path.join(CAP, 'evidence');
-    const pick2 = [['fixture-rtl-overflow-320', 1, 'RTL page overflowing left, 320 px phone'], ['sanad-native-rtl-344', 2, 'Sanad (native RTL), 344 px'], ['stemwren-width-1100-autosized-344', 1, 'Stem & Wren (width=1100, text-autosized), 344 px']];
+    const pick2 = [['fixture-rtl-overflow-320', 1, 'RTL page overflowing left, 320 px phone', ['legacy', 'current']], ['sanad-native-rtl-344', 2, 'Sanad (native RTL), 344 px', ['legacy', 'current']],
+      ['stemwren-width-1100-autosized-344', 2, 'Stem & Wren (width=1100, text-autosized), 344 px', ['legacy', 'current']], ['s8-bilingual-ar-broken-native-rtl-rtl-mutation-768', 2, 'S8 bilingual ar broken, rtl mutation, 768 px', ['no-restore', 'current']]];
     const cells = [];
-    for (const [slug, i, label] of pick2) for (const impl of ['legacy', 'current']) {
+    for (const [slug, i, label, impls] of pick2) for (const impl of impls) {
       const f = path.join(ev, `${slug}-${impl}-${i}-cell.png`);
-      if (existsSync(f)) cells.push({ label: `${label} — ${impl === 'legacy' ? 'before' : 'after'} the fix (lime box = the finding; magenta = its element)`, png: await readFile(f), cellW: 300 });
+      if (existsSync(f)) cells.push({ label: `${label} — ${impl === 'current' ? 'after' : 'before'} the fix (lime box = the finding; magenta = its element)`, png: await readFile(f), cellW: 300 });
     }
     if (cells.length) {
       const { launch } = await import(path.join(SKILL, 'lib/env.mjs'));
@@ -446,11 +462,11 @@ try {
     else if (sec === 'holdout-sweep') { results.holdout = { ...(results.holdout || {}), sweep: await sectionSweep(s.base, astro?.base, holdoutTargets(s.base, astro?.base), 'holdout-sweep') }; }
     else if (sec === 'holdout-stress') { results.holdout = { ...(results.holdout || {}), stress: await sectionStress(s.base, astro?.base, holdoutTargets(s.base, astro?.base), 'holdout-stress') }; }
     else if (sec === 'motion') results.motion = await (await import('./vr/capture-motion.mjs')).captureMotion(s.base);
-    else if (sec === 'holdout2') { const H = holdout2Targets(s.base); results.holdout2 = { sweep: await sectionSweep(s.base, null, H, 'holdout2-sweep'), stress: await sectionStress(s.base, null, H, 'holdout2-stress') }; }
+    else if (sec === 'holdout2') { const H = holdout2Targets(s.base); const x = { sweep: await sectionSweep(s.base, null, H, FROZEN ? 'holdout2-first-sweep' : 'holdout2-sweep'), stress: await sectionStress(s.base, null, H, FROZEN ? 'holdout2-first-stress' : 'holdout2-stress') }; if (FROZEN) results.holdout2FirstPass = { note: results.holdout2FirstPass?.note, ...x }; else results.holdout2 = x; }
     else if (sec === 'holdout2-sweep') results.holdout2 = { ...(results.holdout2 || {}), sweep: await sectionSweep(s.base, null, holdout2Targets(s.base), 'holdout2-sweep') };
     else if (sec === 'holdout2-stress') results.holdout2 = { ...(results.holdout2 || {}), stress: await sectionStress(s.base, null, holdout2Targets(s.base), 'holdout2-stress') };
     else if (sec === 'rtl') results.rtl = await sectionRtl(s.base, s8.base);
-    else if (sec === 'evidence') { const { runEvidence } = await import('./evidence/evidence-test.mjs'); await rm(path.join(CAP, 'evidence'), { recursive: true, force: true }); const { rows, ...e } = await runEvidence(s.base, `${s.base}/repo`, path.join(CAP, 'evidence')); results.evidence = { ...e, scripts: await scriptHashes(), rows: rows.map((r) => ({ ...r, cell: r.cell && { ok: r.cell.ok, mark: r.cell.mark, aligned: r.cell.aligned, blank: r.cell.blank }, crop: r.crop && { ok: r.crop.ok, mark: r.crop.mark, aligned: r.crop.aligned, blank: r.crop.blank } })) }; }
+    else if (sec === 'evidence') { const { runEvidence } = await import('./evidence/evidence-test.mjs'); await rm(path.join(CAP, 'evidence'), { recursive: true, force: true }); const { rows, ...e } = await runEvidence(s.base, `${s.base}/repo`, path.join(CAP, 'evidence'), s8.base); results.evidence = { ...e, scripts: await scriptHashes(), rows: rows.map((r) => ({ ...r, cell: r.cell && { ok: r.cell.ok, mark: r.cell.mark, aligned: r.cell.aligned, blank: r.cell.blank }, crop: r.crop && { ok: r.crop.ok, mark: r.crop.mark, aligned: r.crop.aligned, blank: r.crop.blank } })) }; }
     else if (sec === 'guard') results.guard = await (await import('./vr/build-guard.mjs')).runGuard(s.base, path.join(CAP, 'guard'));
     else if (sec === 'control') {
       const A = astro?.base;

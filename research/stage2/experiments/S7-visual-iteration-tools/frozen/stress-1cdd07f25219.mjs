@@ -7,10 +7,7 @@
  *   node stress.mjs --url http://localhost:3000/products
  *   node stress.mjs --base http://localhost:3000 --paths / /pricing [--widths 390,768,1280] [--only pseudo,rtl] [--out stress]
  *
- * Mutations (--only / --skip-mutations take a comma list). By default the eight that need no page knowledge run:
- * pseudo, numbers, no-images, rtl, list-0, slow, errors, offline. long, empty, list-1 and list-500 aim at data
- * (names, cells, optional fields, repeated items); on authored copy they mostly report what cannot happen, so they
- * run when --targets or --list says where the data is, or when --only names them (--all runs all twelve):
+ * Mutations (--only / --skip-mutations take a comma list; default all):
  *   pseudo     pseudo-localisation: accents, [brackets], +35% length on running text and more on short labels
  *              (+100% up to 10 characters, +80% to 20, +60% to 30, +40% to 50: short strings grow most in
  *              translation), the growth put into long compound words
@@ -74,9 +71,6 @@ import { parseArgs, asList, launch, open, settle, slugFor, urlFor } from './lib/
 import { measureAt, markFindings, drawSheet, prepare, evidenceShot, evidenceCrop, browserBuild } from './sweep.mjs';
 
 export const ALL = ['pseudo', 'long', 'empty', 'numbers', 'no-images', 'rtl', 'list-0', 'list-1', 'list-500', 'slow', 'errors', 'offline'];
-// Aimed at data: in the S7 lab, 8 of 33 long findings and 0 of 9 empty/list-500 findings on held-out pages were
-// worth fixing when they ran unaimed (pseudo 38 of 42, rtl 13 of 16).
-export const DATA_AIMED = new Set(['long', 'empty', 'list-1', 'list-500']);
 const NETWORK = new Set(['slow', 'errors', 'offline']);
 const MARK = { error: '✗', warn: '△', info: '·' };
 const WEIGHT = { error: 3, warn: 1, info: 0 };
@@ -158,19 +152,18 @@ export function mutateText({ kind, scope, targets, skip, expand = 35, ar }) {
     const DATA = /^(name|username|user|author|email|mail|title|address|city|company|product|sku|customer|account|member|owner|contact|profile|file|filename|url|tag|tags)$/i;
     const parts = (e) => [e.id, typeof e.className === 'string' ? e.className : ''].join(' ').split(/[\s_-]+/).filter(Boolean);
     const dataSlot = (el) => targets || el.closest('[data-stress-item], td, dd, output, time, data, [itemprop], address, cite, figcaption, input, option') ||
-      (!el.closest('h1, h2, nav, [role=navigation], header, footer, [role=banner], [role=contentinfo]') && [el, el.parentElement, el.parentElement?.parentElement].some((e) => e && e !== document.body && parts(e).some((w) => DATA.test(w))));
-    const EMAIL_RX = /[^\s@]+@[^\s@]+\.[^\s@]+/;
+      (!el.closest('h1, h2, nav, [role=navigation]') && [el, el.parentElement, el.parentElement?.parentElement].some((e) => e && e !== document.body && parts(e).some((w) => DATA.test(w))));
     let kept = 0;
     for (const n of nodes) {
-      if (!(EMAIL_RX.test(n.data) || /https?:|www\.|\.(com|org|net|io|co|uk|de)\b/i.test(n.data)) && !dataSlot(n.parentElement)) continue;
+      if (!/@|https?:|www\.|\.(com|org|net|io|co|uk|de)\b/i.test(n.data) && !dataSlot(n.parentElement)) continue;
       kept++;
       const t = n.data;
       const words = t.split(/(\s+)/);
       let li = -1;
-      words.forEach((w, i) => { if (/[A-Za-zÀ-ÿ]/.test(w) && (li < 0 || w.length > words[li].length)) li = i; });
+      words.forEach((w, i) => { if (/[A-Za-zÀ-ÿ@]/.test(w) && (li < 0 || w.length > words[li].length)) li = i; });
       if (li < 0) continue;
       const w = words[li];
-      words[li] = EMAIL_RX.test(w) ? EMAIL : /^(https?:|www\.)|\.(com|org|net|io|co|uk|de)\b/i.test(w) ? URL_ : NAME;
+      words[li] = /@/.test(w) ? EMAIL : /^(https?:|www\.)|\.(com|org|net|io|co|uk|de)\b/i.test(w) ? URL_ : NAME;
       n.data = words.join('');
       changed++;
     }
@@ -184,8 +177,7 @@ export function mutateText({ kind, scope, targets, skip, expand = 35, ar }) {
       if (seen.has(it)) return; seen.add(it);
       const slots = [];
       const w = document.createTreeWalker(it, NodeFilter.SHOW_TEXT);
-      // Optional fields, not control labels: a button's text is not data that can be missing.
-      for (let n = w.nextNode(); n; n = w.nextNode()) if (n.data.trim() && !isSkipped(n.parentElement) && !n.parentElement.closest('button, [role=button], .btn, a[class*=btn], label')) slots.push(n);
+      for (let n = w.nextNode(); n; n = w.nextNode()) if (n.data.trim() && !isSkipped(n.parentElement)) slots.push(n);
       if (!slots.length) return;
       const n = targets ? slots[0] : slots[i % slots.length];
       if (targets) slots.forEach((s) => { s.data = ''; }); else n.data = '';
@@ -390,18 +382,8 @@ export function alignCheck({ side = 'left', dir = 'RTL', max = 10 }) {
  */
 export function pageDirection() {
   const d = (e) => (e ? getComputedStyle(e).direction : null);
-  // data-stress-dir keeps the original dir attribute ("-" when there was none), for restoreDirection.
-  for (const e of [document.documentElement, document.body, ...[...document.body.children].filter((e) => e.hasAttribute('dir') && e.getBoundingClientRect().width >= innerWidth * 0.5)]) e.setAttribute('data-stress-dir', e.getAttribute('dir') ?? '-');
+  for (const e of [document.documentElement, document.body, ...[...document.body.children].filter((e) => e.hasAttribute('dir') && e.getBoundingClientRect().width >= innerWidth * 0.5)]) e.setAttribute('data-stress-dir', '');
   return d(document.documentElement) === 'rtl' || d(document.body) === 'rtl' ? 'rtl' : 'ltr';
-}
-/** Undo flipDirection: the original dir attributes back, the inline direction gone. */
-export function restoreDirection() {
-  for (const e of document.querySelectorAll('[data-stress-dir]')) {
-    const d = e.getAttribute('data-stress-dir');
-    if (d === '-') e.removeAttribute('dir'); else e.setAttribute('dir', d);
-    e.style.removeProperty('direction');
-  }
-  return getComputedStyle(document.documentElement).direction;
 }
 /** Flip the elements pageDirection marked to `to`; returns whether it took. */
 export function flipDirection({ to }) {
@@ -496,14 +478,8 @@ export function imageFallback() {
   return { unreadable: out, broken: imgs };
 }
 
-/**
- * Loading-state snapshot during a throttled load, taken at the next painted frame: while a render-blocking stylesheet
- * is still on its way, script can read an unstyled layout that is never shown (a late-shift measured against it is
- * not real). painted: false when no frame came within 2.5 s.
- */
-export async function loadingSnapshot() {
-  let painted = false;
-  await new Promise((res) => { requestAnimationFrame(() => { painted = true; res(); }); setTimeout(res, 2500); });
+/** Loading-state snapshot during a throttled load. */
+export function loadingSnapshot() {
   const txt = (document.body?.innerText || '').replace(/\s+/g, ' ').trim();
   const vis = (e) => { const r = e.getBoundingClientRect(); return r.width > 2 && r.height > 2 && (!e.checkVisibility || e.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true })); };
   const main = document.querySelector('main, [role=main]') || document.body;
@@ -514,7 +490,6 @@ export async function loadingSnapshot() {
   const h1 = document.querySelector('h1');
   const hr = h1 && h1.getBoundingClientRect();
   return {
-    painted,
     chars: txt.length,
     loadingText: /\b(loading|chargement|laden|cargando)\b/i.test(txt),
     indicators: ind.slice(0, 5).map((e) => e.tagName.toLowerCase() + [...e.classList].slice(0, 2).map((c) => '.' + c).join('')),
@@ -561,7 +536,7 @@ async function measure(page, mobile) {
 }
 
 /** Mutation-specific comparisons with the unmutated page: controls squeezed or wrapping, regions emptied. */
-function compareControls(base, now, mobile, mutation) {
+function compareControls(base, now, mobile) {
   // Without a device-width viewport, phone Chrome lays the page out 980 px wide and boosts font sizes by how much text
   // each block holds (text autosizing), so a control's size moves from load to load: nothing to compare.
   if (mobile && !/width\s*=\s*device-width/i.test(base.viewportMeta || '')) return [];
@@ -572,9 +547,6 @@ function compareControls(base, now, mobile, mutation) {
     if (!p) continue;
     // Squeezed: narrower than 24 px, or shorter than 24 px without having lost a line of its label.
     if ((c.w < 24 && p.w >= 24) || (c.h < 24 && p.h >= 24 && c.lines >= p.lines)) out.push({ check: 'squeezed', sev: 'warn', sel: c.sel, detail: `"${c.label}" ${p.w}×${p.h} → ${c.w}×${c.h}px`, box: c.box });
-    // A label wraps because its text (or a neighbour's) changed: only under mutations that change text, and a label
-    // that numbers left alone did not change (a line gained between two loads is not the mutation's doing).
-    else if (!['pseudo', 'long', 'rtl', 'numbers'].includes(mutation) || (mutation === 'numbers' && c.label === p.label)) continue;
     else if (c.buttonLike && c.lines >= 3 && p.lines === 1) out.push({ check: 'label-wrap', sev: 'warn', sel: c.sel, detail: `"${c.label}" now wraps to ${c.lines} lines (${c.w}×${c.h}px)`, box: c.box });
     else if (/nav|tab|menu/i.test(c.sel) && c.lines >= 2 && p.lines === 1) out.push({ check: 'label-wrap', sev: 'warn', sel: c.sel, detail: `navigation item "${c.label}" now wraps (${c.lines} lines)`, box: c.box });
   }
@@ -624,8 +596,8 @@ async function slowLoad(ctx, url, { times = [500, 1000, 2000, 3000, 5000, 8000],
     const wait = t - (Date.now() - t0);
     if (wait > 0) await page.waitForTimeout(wait);
     await nav;
+    const at = Date.now() - t0;
     const snap = await page.evaluate(loadingSnapshot).catch(() => null);
-    const at = Date.now() - t0; // when the frame the snapshot read was painted
     const png = await page.screenshot({ timeout: 10000 }).catch(() => null);
     frames.push({ t: at, ...(snap || {}), png });
     if (loaded && Date.now() - t0 > loaded + 1500 && t >= 2000) break;
@@ -650,8 +622,7 @@ async function stressPage(browser, url, a, outDir) {
   const widths = asList(a.widths, ['390', '768', '1280']).map(Number).filter(Boolean);
   const only = a.only ? new Set(asList(a.only)) : null;
   const skipM = new Set(asList(a['skip-mutations']));
-  const aimed = (a.targets && a.targets !== true) || (a.list && a.list !== true) || a.all;
-  const muts = ALL.filter((m) => (only ? only.has(m) : aimed || !DATA_AIMED.has(m)) && !skipM.has(m));
+  const muts = ALL.filter((m) => (!only || only.has(m)) && !skipM.has(m));
   const skip = [ALWAYS_SKIP, a.skip].filter((x) => x && x !== true).join(',');
   const scope = a.scope && a.scope !== true ? a.scope : null;
   const targets = a.targets && a.targets !== true ? asList(a.targets).join(', ') : null;
@@ -698,7 +669,7 @@ async function stressPage(browser, url, a, outDir) {
       const res = { mutation: m, width, applied: '', new: [], ms: 0 };
       if (m === 'slow') {
         const s = await slowLoad(ctx, url, { net });
-        const first = s.frames.find((f) => f.painted && f.chars > 20);
+        const first = s.frames.find((f) => f.chars > 20);
         const src = new Map();
         for (const x of s.cls?.sources || []) { const e = src.get(x.name) || { name: x.name, value: 0, dy: 0, n: 0 }; e.value += x.value; e.n++; if (Math.abs(x.dy) > Math.abs(e.dy)) e.dy = x.dy; src.set(x.name, e); }
         const top = [...src.values()].sort((p, q) => q.value - p.value).slice(0, 4);
@@ -711,7 +682,7 @@ async function stressPage(browser, url, a, outDir) {
         // skeleton shorter than its content, an image without dimensions). CLS misses it below the fold.
         const fin = new Map((s.final?.regions || []).map((x) => [x.key, x]));
         const firstSeen = new Map();
-        for (const f of s.frames.filter((f) => f.painted)) for (const x of f.regions || []) if (x.h > 0 && !firstSeen.has(x.key)) firstSeen.set(x.key, { ...x, t: f.t });
+        for (const f of s.frames) for (const x of f.regions || []) if (x.h > 0 && !firstSeen.has(x.key)) firstSeen.set(x.key, { ...x, t: f.t });
         const moved = [...firstSeen.values()].map((x) => ({ x, f: fin.get(x.key) })).filter(({ x, f }) => f && Math.abs(f.top - x.top) > 40);
         if (moved.length) {
           const { x, f } = moved[0];
@@ -761,13 +732,10 @@ async function stressPage(browser, url, a, outDir) {
           const took = rtlSheet ? false : await p.evaluate(flipDirection, { to });
           await p.waitForTimeout(150);
           const after = took ? [...await p.evaluate(mirrorCheck, { to }), ...await p.evaluate(alignCheck, { side: to === 'rtl' ? 'left' : 'right', dir: to.toUpperCase() })] : [];
-          // A right-to-left page goes back to its own direction for the evidence: its own findings were measured there,
-          // and what stayed put when flipped sits in the same place either way.
-          if (native && !rtlSheet) { await p.evaluate(restoreDirection); await p.waitForTimeout(150); }
           extra = [...own, ...after].map((f) => ({ ...f, sev: 'warn' }));
           const r = native ? { changed: 0 } : await p.evaluate(mutateText, { kind: 'rtl-text', scope, targets, skip, ar: AR });
           res.applied = native
-            ? `the page is already right-to-left: physical text-align checked as it is${rtlSheet ? `; it loads a right-to-left stylesheet (${rtlSheet.split('/').pop()}), so its LTR locale uses another: not flipped (run --only rtl on the LTR page)` : `, then flipped to dir=ltr (its other locale)${took ? `; ${n} element(s) checked for mirroring; shown back in RTL` : '; the flip did not take (direction set !important?): mirroring not checked'}`}; text left as it is`
+            ? `the page is already right-to-left: physical text-align checked as it is${rtlSheet ? `; it loads a right-to-left stylesheet (${rtlSheet.split('/').pop()}), so its LTR locale uses another: not flipped (run --only rtl on the LTR page)` : `, then flipped to dir=ltr (its other locale)${took ? `; ${n} element(s) checked for mirroring` : '; the flip did not take (direction set !important?): mirroring not checked'}`}; text left as it is`
             : `dir=rtl lang=ar${took ? `; ${n} element(s) checked for mirroring` : '; the flip did not take (direction set !important?): mirroring not checked'}; ${r.changed} text(s) in Arabic`;
         } else if (m.startsWith('list-')) {
           const r = await p.evaluate(mutateLists, { count: Number(m.slice(5)) });
@@ -792,7 +760,7 @@ async function stressPage(browser, url, a, outDir) {
         }
         const regions = ['errors', 'offline', 'list-0', 'no-images'].includes(m) ? compareRegions(base.rt, now.rt, m) : [];
         const errNote = errs.length ? [{ check: 'page-error', sev: 'warn', sel: '(page)', detail: `${errs.length} uncaught error(s): ${errs[0]}`, box: null }] : [];
-        res.new = directionOnly ? [...junk, ...extra] : [...fresh, ...junk, ...img, ...extra, ...compareControls(base, now, mobile, m), ...regions, ...(['errors', 'offline'].includes(m) ? errNote : [])];
+        res.new = directionOnly ? [...junk, ...extra] : [...fresh, ...junk, ...img, ...extra, ...compareControls(base, now, mobile), ...regions, ...(['errors', 'offline'].includes(m) ? errNote : [])];
         // Group repeats of one element kind: 40 cards clipped read as one line, "×40".
         const g = new Map();
         for (const f of res.new) { const k = key(f); const e = g.get(k); if (e) e.count++; else g.set(k, { ...f, count: 1 }); }

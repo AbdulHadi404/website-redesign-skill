@@ -15,6 +15,11 @@ const SPECS = [
     quote: [/\(1\) starts automatically, \(2\)\s+lasts more than five seconds/i],
   },
   {
+    key: 'webgl2-sync', repo: 'KhronosGroup/WebGL', file: 'specs/latest/2.0/index.html',
+    why: 'a fence polled once per animation frame cannot signal inside the task that created it (the wrapper polls in rAF)',
+    quote: [/sync objects may only transition to the signaled state when the user agent's event loop is not executing a task/i],
+  },
+  {
     key: 'chromium-lcp', repo: 'chromium/chromium', file: 'third_party/blink/renderer/core/paint/timing/largest_contentful_paint_calculator.cc',
     why: 'which images Chrome ignores as LCP candidates (viewport-covering; under 0.05 bits per pixel)',
     quote: [/if \(size >= viewport_area\) \{/, /is_viewport_covered = true/, /kMinimumEntropyForLCP = 0\.05/, /entropy = media_timing\.ContentSizeForEntropy\(\) \* 8\.0 \/ size/],
@@ -30,7 +35,8 @@ export async function specs() {
     const t = r?.ok ? await r.text() : null;
     if (!t) { rec.error = 'not fetched'; out[s.key] = rec; continue; }
     rec.sha256 = crypto.createHash('sha256').update(t).digest('hex').slice(0, 16);
-    rec.quotes = s.quote.map((re) => { const m = t.match(re); return m ? m[0].replace(/\s+/g, ' ') : null; });
+    const plain = t.replace(/<[^>]*>/g, '').replace(/&#39;|&rsquo;|&#x27;/g, "'").replace(/\s+/g, ' ');   // HTML specs wrap and tag their prose
+    rec.quotes = s.quote.map((re) => { const m = t.match(re) || plain.match(re); return m ? m[0].replace(/\s+/g, ' ') : null; });
     rec.allFound = rec.quotes.every(Boolean);
     out[s.key] = rec;
   }

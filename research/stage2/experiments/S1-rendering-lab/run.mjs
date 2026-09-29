@@ -5,13 +5,19 @@
 //   node run.mjs --runs 1              # one run per cell (≈ 25 min), for a quick look
 //   node run.mjs --phase main --only pixi,three --n 2000 --throttle 4
 //
-// Phases: build, shots, main, sweep, instancing, worker, present, domprobe, a11y, contextloss, reduced, nowebgl, survey, report (default: all, in that order).
+// Phases: build, shots, throttleprobe, main, sweep, sweepload, instancing, worker, present, domprobe, a11y, a11ywebgl, contextloss, reduced, nowebgl, survey, report (default: all, in that order).
 // Results merge into results.json by key, so a partial run replaces only the cells it measured.
+//
+// CPU throttle: `--throttle 4` is CDP Emulation.setCPUThrottlingRate, which slows ONLY the page's main
+// thread. Compositor, raster threads, the GPU process and Workers run at full speed (the throttleprobe
+// phase measures this). So "4×" means "main thread 4× slower", not "a phone"; and Worker variants are
+// never run above 1×, because a full-speed Worker against a 4×-slowed main thread is not a comparison.
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import os from 'node:os';
+import { spawn } from 'node:child_process';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
 import { buildAll, DIST, MAIN, A11Y, EXTRA, VARIANTS } from './lib/build.mjs';
@@ -21,25 +27,42 @@ import { contactSheet } from './lib/sheet.mjs';
 import { runSurvey } from './lib/survey.mjs';
 import { writeReport } from './lib/report.mjs';
 import { domProbe } from './lib/domprobe.mjs';
+import { throttleProbe } from './lib/throttleprobe.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
 const arg = (k, d) => { const i = argv.indexOf(`--${k}`); return i < 0 ? d : argv[i + 1]; };
 const list = (k, d) => (arg(k) ? arg(k).split(',') : d);
 const RUNS = Number(arg('runs', 5));
-const PHASES = list('phase', ['build', 'shots', 'main', 'sweep', 'instancing', 'worker', 'present', 'domprobe', 'a11y', 'contextloss', 'reduced', 'nowebgl', 'survey', 'report']);
+const PHASES = list('phase', ['build', 'shots', 'throttleprobe', 'main', 'sweep', 'sweepload', 'instancing', 'worker', 'present', 'domprobe', 'a11y', 'a11ywebgl', 'contextloss', 'reduced', 'nowebgl', 'survey', 'report']);
+// sweepload: part of the 1× sweep again with BURN busy-looping processes running, to show how much the
+// object-count limits depend on what else the machine is doing.
+const BURN = Number(arg('burn', 3));
 const ONLY = arg('only') ? arg('only').split(',') : null;
 const NS = list('n', ['20', '200', '2000']).map(Number);
 const THROTTLES = list('throttle', ['1', '4']).map(Number);
-// Object counts for the CPU renderers from 200 to 2000, to locate where each one stops holding the frame
-// rate. Measured as its own round-robin set (200 and 2000 again), so every cell of the sweep table shares
-// the same background load.
-const SWEEP_NS = list('sweepn', ['200', '400', '700', '1000', '1400', '2000']).map(Number);
+// Object counts for the CPU renderers, to locate where each one stops holding the frame rate. Measured as
+// its own round-robin set per throttle, so every cell of one sweep table shares the same background load.
+// Steps are dense around each crossover, so a limit is a bracket between two tested counts.
+const SWEEP_NS = {
+  1: list('sweepn', ['200', '300', '400', '550', '700', '1000', '1400', '1700', '2000']).map(Number),
+  4: list('sweepn', ['100', '200', '300', '400', '500', '700', '1000']).map(Number),
+};
 const pick = (names) => (ONLY ? names.filter((n) => ONLY.includes(n)) : names);
+// CDP throttling does not reach Workers (see throttleprobe), so Worker variants run at 1× only.
+const WORKER_VARIANTS = ['canvas2d-worker'];
+const throttleOk = (variant, throttle) => throttle === 1 || !WORKER_VARIANTS.includes(variant);
+const partialRun = () => !!(ONLY || arg('n') || arg('throttle') || arg('sweepn'));
 
 const RESULTS = path.join(here, 'results.json');
 const results = existsSync(RESULTS) ? JSON.parse(await readFile(RESULTS, 'utf8')) : {};
+const WORKER_VARIANTS_ = ['canvas2d-worker'];
 const save = async () => { await writeFile(RESULTS, JSON.stringify(results, null, 1)); };
+// Earlier versions of this runner measured the Worker variant at 4×. CDP throttling never reached the
+// Worker, so those cells compared a full-speed Worker with a 4×-slowed main thread: drop them.
+for (const sec of ['main', 'sweep', 'worker']) for (const [k, v] of Object.entries(results[sec] || {})) if (WORKER_VARIANTS_.includes(v.cell?.variant) && v.cell.throttle > 1) delete results[sec][k];
+// PixiJS rows of a11yPerf measured under SwiftShader (2–3 fps) moved to a11yPerfWebgl / a11yPerfCanvas.
+for (const [k, v] of Object.entries(results.a11yPerf || {})) if (/^pixi/.test(v.cell?.variant)) delete results.a11yPerf[k];
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
 
 // Median of each numeric leaf across runs (for the summary rows).
@@ -52,6 +75,9 @@ function summarise(runs) {
     ttff: get((r) => r.ttff),
     fps: get((r) => r.steady.fps), frameMedian: get((r) => r.steady.median), frameP95: get((r) => r.steady.p95),
     over25: get((r) => r.steady.over25), longShare: get((r) => r.steady.longShare),
+    missedPct: get((r) => r.steady.missedPct ?? (r.steady.frames ? (100 * r.steady.over25) / r.steady.frames : null)),
+    // how many runs had at most 10 % of frames missing a vsync (the "holds" criterion), of how many
+    holdsRuns: ok.filter((r) => (r.steady.missedPct ?? (100 * r.steady.over25) / r.steady.frames) <= 10).length,
     mainFps: get((r) => r.steady.main?.fps), mainP95: get((r) => r.steady.main?.p95),
     busyPct: get((r) => r.steady.busyPct), scriptPct: get((r) => r.steady.scriptPct),
     rendererCpu: get((r) => r.steady.cpuPct?.renderer), gpuCpu: get((r) => r.steady.cpuPct?.GPU), browserCpu: get((r) => r.steady.cpuPct?.browser),
@@ -62,6 +88,9 @@ function summarise(runs) {
     moveToFrame: get((r) => r.drag?.moveToFrame.median), moveToFrameP95: get((r) => r.drag?.moveToFrame.p95),
     moveDelay: get((r) => r.drag?.moveDelay.median), moveDelayP95: get((r) => r.drag?.moveDelay.p95),
     dragFps: get((r) => r.drag?.frames.fps),
+    dragBusyPct: get((r) => r.drag?.window?.busyPct), dragStylePct: get((r) => r.drag?.window?.stylePct), dragLayoutPct: get((r) => r.drag?.window?.layoutPct),
+    dragMainMsPerMove: get((r) => r.drag?.window?.mainMsPerMove), dragRendererMsPerMove: get((r) => r.drag?.window?.rendererMsPerMove),
+    dragStyleLayoutMsPerMove: get((r) => r.drag?.window?.styleLayoutMsPerMove),
     eventTimingMax: get((r) => (typeof r.drag?.eventTimingMax === 'number' ? r.drag.eventTimingMax : 0)),
     dragOk: ok.every((r) => !r.drag || (r.drag.picked && r.drag.dropped === 1 && Math.abs(r.drag.moved[0]) > 60)),
     heapMB: get((r) => r.heapMB), domNodes: get((r) => r.domNodes),
@@ -146,6 +175,7 @@ async function shots(browser, base) {
 // Accessibility: what the tree exposes, whether the keyboard layer works, what it costs.
 async function a11y(browser, base) {
   results.a11y ??= { tree: {}, keyboard: {} };
+  const focusShots = [];
   for (const v of pick([...MAIN, ...A11Y])) {
     const ctx = await browser.newContext({ viewport: { width: 860, height: 720 } });
     const page = await ctx.newPage();
@@ -201,11 +231,163 @@ async function a11y(browser, base) {
     }
     log('a11y', v, JSON.stringify(results.a11y.tree[v].focused), results.a11y.tree[v].buttons, 'buttons', JSON.stringify(results.a11y.keyboard[v] ?? null));
     await ctx.close();
+    if (A11Y.includes(v) && v !== 'pixi-pixia11y') {
+      results.a11y.tapToPlace ??= {}; results.a11y.overlaySync ??= {}; results.a11y.focusRing ??= {};
+      results.a11y.tapToPlace[v] = await tapToPlaceTest(browser, base, v);
+      results.a11y.overlaySync[v] = await overlaySyncTest(browser, base, v);
+      if (v === 'pixi-a11y') results.a11y.overlaySync['pixi-a11y ?nosync (earlier bug)'] = await overlaySyncTest(browser, base, v, '&nosync');
+      const shot = path.join(os.tmpdir(), 's2-S1-shots', `focus-${v}.png`);
+      await mkdir(path.dirname(shot), { recursive: true });
+      results.a11y.focusRing[v] = await focusRingTest(browser, base, v, shot);
+      focusShots.push({ file: shot, label: `${v}: ring ${results.a11y.focusRing[v].indicatorBox} by ${results.a11y.focusRing[v].drawnBy}` });
+      if (v === 'svg-a11y') {
+        // What the first Tab into the stage focuses, with the focusin listener on the HTML stage vs on an SVG <g>.
+        results.a11y.firstTab = { 'svg-a11y': await firstTabTest(browser, base, v), 'svg-a11y ?focusonsvg': await firstTabTest(browser, base, v, '&focusonsvg') };
+        log('a11y first Tab', JSON.stringify(results.a11y.firstTab));
+        // The same SVG build with a CSS outline instead of the ring shape.
+        const shot2 = path.join(os.tmpdir(), 's2-S1-shots', 'focus-svg-a11y-outline.png');
+        results.a11y.focusRing['svg-a11y ?outline'] = await focusRingTest(browser, base, v, shot2, '&outline');
+        focusShots.push({ file: shot2, label: `svg-a11y with CSS outline: ring ${results.a11y.focusRing['svg-a11y ?outline'].indicatorBox}` });
+      }
+      log('a11y tap-to-place', v, JSON.stringify(results.a11y.tapToPlace[v]), 'overlay sync', JSON.stringify(results.a11y.overlaySync[v]), 'focus', JSON.stringify(results.a11y.focusRing[v]));
+    }
     await save();
   }
+  // Rebuild the sheet from every focus capture on disk (a partial run re-captures only some of them).
+  if (focusShots.length) {
+    const dir = path.join(os.tmpdir(), 's2-S1-shots');
+    const all = ['dom-a11y', 'svg-a11y', 'svg-a11y ?outline', 'pixi-a11y'].map((k) => {
+      const t = results.a11y.focusRing?.[k];
+      const file = path.join(dir, k === 'svg-a11y ?outline' ? 'focus-svg-a11y-outline.png' : `focus-${k}.png`);
+      return t && existsSync(file) ? { file, label: `${k}: ring ${t.indicatorBox} by ${t.drawnBy}` } : null;
+    }).filter(Boolean);
+    await contactSheet(all, path.join(here, 'shots', 'focus-ring.jpg'));
+  }
+  // Cost of the layer. DOM and SVG do not use WebGL. The PixiJS builds are measured with WebGL disabled,
+  // on PixiJS's own Canvas 2D renderer: under SwiftShader they ran at 2–3 fps, where frame time, busy %
+  // and drag latency cannot show a small cost.
   const cells = [];
-  for (const v of pick(['dom', 'dom-a11y', 'svg', 'svg-a11y', 'pixi', 'pixi-a11y', 'pixi-pixia11y'])) for (const n of [200, 2000]) cells.push({ variant: v, n, throttle: 1 });
-  await matrix(browser, base, 'a11yPerf', cells);
+  for (const v of pick(['dom', 'dom-a11y', 'svg', 'svg-a11y'])) for (const n of [200, 2000]) cells.push({ variant: v, n, throttle: 1 });
+  if (!ONLY) results.a11yPerf = {};
+  browser = await matrix(browser, base, 'a11yPerf', cells);
+  const pc = [];
+  for (const throttle of THROTTLES) for (const n of [200, 2000]) {
+    for (const v of pick(['pixi', 'pixi-a11y', 'pixi-pixia11y'])) pc.push({ variant: v, n, throttle });
+    // The same keyboard build without the per-move sync, to isolate what the sync costs during a drag,
+    // and with the sync writing left/top instead of transform.
+    if (pick(['pixi-a11y']).length) {
+      pc.push({ variant: 'pixi-a11y', label: 'pixi-a11y ?nosync', extra: 'nosync', n, throttle });
+      pc.push({ variant: 'pixi-a11y', label: 'pixi-a11y ?lefttop', extra: 'lefttop', n, throttle });
+    }
+  }
+  if (pc.length) {
+    const nb = await launchBrowser(['--disable-webgl', '--disable-3d-apis']);
+    if (!partialRun()) results.a11yPerfCanvas = {};
+    await matrix(nb, base, 'a11yPerfCanvas', pc);
+    await nb.close();
+  }
+  return browser;
+}
+
+const stagePos = (page, id) => page.evaluate((k) => {
+  const s = document.getElementById('stage').getBoundingClientRect();
+  const it = window.__lab.getItem(k);
+  const b = document.querySelector(`[data-kb="${k}"]`)?.getBoundingClientRect();
+  return { item: it, stage: { x: s.x, y: s.y }, control: b ? { x: b.x + b.width / 2 - s.x, y: b.y + b.height / 2 - s.y } : null };
+}, id);
+
+// WCAG 2.5.7 single-pointer alternative: tap a decoration (no movement), then tap a spot to place it.
+async function tapToPlaceTest(browser, base, v) {
+  const ctx = await browser.newContext({ viewport: { width: 860, height: 720 } });
+  const page = await ctx.newPage();
+  await page.goto(`${base}/${v}/?n=20`);
+  await page.waitForFunction(() => window.__lab?.ttff != null, null, { timeout: 60000 });
+  await page.waitForTimeout(300);
+  const id = await page.evaluate(() => window.__lab.topId());
+  const p0 = await stagePos(page, id);
+  const count0 = await page.evaluate(() => document.getElementById('count').textContent);
+  await page.mouse.click(p0.stage.x + p0.item.x, p0.stage.y + p0.item.y);
+  await page.waitForTimeout(250);
+  const mid = await page.evaluate(() => document.getElementById('live').textContent);
+  const target = { x: p0.item.x < 400 ? p0.item.x + 160 : p0.item.x - 160, y: p0.item.y < 300 ? p0.item.y + 90 : p0.item.y - 90 };
+  await page.mouse.click(p0.stage.x + target.x, p0.stage.y + target.y);
+  await page.waitForTimeout(400);
+  const p1 = await stagePos(page, id);
+  const after = await page.evaluate(() => ({ count: document.getElementById('count').textContent, live: document.getElementById('live').textContent }));
+  await ctx.close();
+  const err = Math.hypot(p1.item.x - target.x, p1.item.y - target.y);
+  return {
+    item: id, target, landed: [p1.item.x, p1.item.y], offPx: Math.round(err * 10) / 10,
+    afterFirstTap: mid, afterSecondTap: after.live, counter: `${count0} → ${after.count}`,
+    pass: err <= 1 && Number(after.count) === Number(count0) + 1 && /^Picked up/.test(mid) && /^Placed/.test(after.live),
+  };
+}
+
+// After a MOUSE drag, is the keyboard control (and so its focus ring and the screen reader's focus
+// rectangle) still over the object?
+async function overlaySyncTest(browser, base, v, extra = '') {
+  const ctx = await browser.newContext({ viewport: { width: 860, height: 720 } });
+  const page = await ctx.newPage();
+  await page.goto(`${base}/${v}/?n=20${extra}`);
+  await page.waitForFunction(() => window.__lab?.ttff != null, null, { timeout: 60000 });
+  await page.waitForTimeout(300);
+  // Native builds (DOM, SVG): the focusable element is the object itself, so there is nothing to sync.
+  if (!(await page.evaluate(() => !!document.querySelector('.kb-layer')))) { await ctx.close(); return { native: true, pass: 'n/a (the control is the object)' }; }
+  const id = await page.evaluate(() => window.__lab.topId());
+  const p0 = await stagePos(page, id);
+  const ax = p0.stage.x + p0.item.x, ay = p0.stage.y + p0.item.y;
+  await page.mouse.move(ax, ay);
+  await page.mouse.down();
+  for (let i = 1; i <= 10; i++) { await page.mouse.move(ax + i * 10, ay + i * 6); await page.waitForTimeout(16); }
+  await page.mouse.up();
+  await page.waitForTimeout(400);
+  const p1 = await stagePos(page, id);
+  await ctx.close();
+  // Drift = how far the control's box moved relative to the object (0 when the layer is synced).
+  const drift = p0.control && p1.control ? Math.hypot((p1.control.x - p1.item.x) - (p0.control.x - p0.item.x), (p1.control.y - p1.item.y) - (p0.control.y - p0.item.y)) : null;
+  return { item: id, moved: [p1.item.x - p0.item.x, p1.item.y - p0.item.y], object: [p1.item.x, p1.item.y], control: p1.control && [Math.round(p1.control.x), Math.round(p1.control.y)], driftPx: drift == null ? null : Math.round(drift * 10) / 10, pass: drift != null && drift <= 6 };
+}
+
+async function firstTabTest(browser, base, v, extra = '') {
+  const ctx = await browser.newContext({ viewport: { width: 860, height: 720 } });
+  const page = await ctx.newPage();
+  await page.goto(`${base}/${v}/?n=20${extra}`);
+  await page.waitForFunction(() => window.__lab?.ttff != null, null, { timeout: 60000 });
+  await page.waitForTimeout(300);
+  let first = null;
+  for (let i = 0; i < 6 && !first; i++) {
+    await page.keyboard.press('Tab');
+    first = await page.evaluate(() => { const a = document.activeElement; return document.getElementById('stage').contains(a) && a.id !== 'stage' ? `<${a.tagName.toLowerCase()}${a.getAttribute('role') ? ` role=${a.getAttribute('role')}` : ''}> "${a.getAttribute('aria-label') ?? ''}"` : null; });
+  }
+  await ctx.close();
+  return { firstFocus: first, pass: !!first && !/role=group/.test(first) };
+}
+
+// Where is the focus indicator drawn? Tab into the set, move focus twice, then measure the focused
+// element's box and the box of what actually draws the ring, and keep a screenshot.
+async function focusRingTest(browser, base, v, shotFile, extra = '') {
+  const ctx = await browser.newContext({ viewport: { width: 860, height: 720 } });
+  const page = await ctx.newPage();
+  await page.goto(`${base}/${v}/?n=20&freeze${extra}`);
+  await page.waitForFunction(() => window.__lab?.ttff != null, null, { timeout: 60000 });
+  await page.waitForTimeout(300);
+  for (let i = 0; i < 6; i++) { await page.keyboard.press('Tab'); if (await page.evaluate(() => document.getElementById('stage').contains(document.activeElement))) break; }
+  await page.keyboard.press('ArrowLeft'); await page.keyboard.press('ArrowLeft');
+  await page.waitForTimeout(200);
+  const r = await page.evaluate(() => {
+    const s = document.getElementById('stage').getBoundingClientRect();
+    const a = document.activeElement; const id = Number(a.dataset.kb);
+    const it = window.__lab.getItem(id);
+    const box = (e) => { const b = e.getBoundingClientRect(); return { cx: b.x + b.width / 2 - s.x, cy: b.y + b.height / 2 - s.y, w: Math.round(b.width), h: Math.round(b.height) }; };
+    const el = box(a);
+    const rings = [...a.querySelectorAll('.focus')].filter((e) => getComputedStyle(e).display !== 'none');
+    const ind = rings.length ? box(rings[rings.length - 1]) : el;   // otherwise the outline is drawn around the element's box
+    return { id, item: it, element: el, indicator: ind, drawnBy: rings.length ? 'explicit ring shape' : 'CSS outline on the element box' };
+  });
+  await page.locator('#stage').screenshot({ path: shotFile });
+  await ctx.close();
+  const off = Math.hypot(r.indicator.cx - r.item.x, r.indicator.cy - r.item.y);
+  return { ...r, elementBox: `${r.element.w}×${r.element.h}`, indicatorBox: `${r.indicator.w}×${r.indicator.h}`, indicatorOffPx: Math.round(off), pass: off <= 6 && r.indicator.w <= 80 && r.indicator.h <= 80 };
 }
 
 async function nowebgl(base) {
@@ -331,11 +513,11 @@ async function main() {
   results.meta = {
     ...(results.meta || {}),
     date: new Date().toISOString(), node: process.version, cpus: os.cpus().length, cpuModel: os.cpus()[0]?.model, platform: `${os.platform()} ${os.release()}`,
-    method: 'Fresh browser context per run; viewport 860×720 at DPR 1; stage 800×600. Warm-up 1 s after the first frame, then a 5 s window (rAF deltas, CDP Performance.getMetrics TaskDuration, SystemInfo.getProcessInfo CPU per process type), then a scripted drag of the top item (30 pointer moves 16 ms apart) while everything animates, then heap after GC. CPU throttle with Emulation.setCPUThrottlingRate (renderer main thread). Medians across runs.',
+    method: 'Fresh browser context per run; viewport 860×720 at DPR 1; stage 800×600. Warm-up 1 s after the first frame, then a 5 s window (rAF deltas, CDP Performance.getMetrics TaskDuration, SystemInfo.getProcessInfo CPU per process type), then a scripted drag of the top item (30 pointer moves 16 ms apart) while everything animates, then heap after GC. CPU throttle with CDP Emulation.setCPUThrottlingRate, which slows only the page\'s main thread: the compositor, raster threads, GPU process and Workers stay at full speed (throttleprobe), so "4×" = "main thread 4× slower", not a phone, and Worker variants run at 1× only. Medians across runs.',
   };
   if (PHASES.includes('build')) { results.build = { ...(results.build || {}), ...(await buildAll()) }; await save(); log('built'); }
   const { server, base } = await serve(DIST);
-  const needBrowser = PHASES.some((p) => ['shots', 'main', 'sweep', 'instancing', 'worker', 'present', 'domprobe', 'a11y', 'contextloss', 'reduced'].includes(p));
+  const needBrowser = PHASES.some((p) => ['shots', 'throttleprobe', 'main', 'sweep', 'sweepload', 'instancing', 'worker', 'present', 'domprobe', 'a11y', 'a11ywebgl', 'contextloss', 'reduced'].includes(p));
   let browser = needBrowser ? await launchBrowser() : null;
   if (browser) {
     const probe = await browser.newPage();
@@ -351,14 +533,25 @@ async function main() {
   if (PHASES.includes('shots')) await shots(browser, base);
   if (PHASES.includes('main')) {
     const cells = [];
-    for (const n of NS) for (const throttle of THROTTLES) for (const variant of pick(MAIN)) cells.push({ variant, n, throttle });
+    for (const n of NS) for (const throttle of THROTTLES) for (const variant of pick(MAIN)) if (throttleOk(variant, throttle)) cells.push({ variant, n, throttle });
     browser = await matrix(browser, base, 'main', cells);
   }
   if (PHASES.includes('sweep')) {
     const cells = [];
     // One round-robin group per throttle across every N and variant, so drifting load hits every N alike.
-    for (const throttle of THROTTLES) for (const n of SWEEP_NS) for (const variant of pick(['dom', 'svg', 'canvas2d', 'canvas2d-worker'])) cells.push({ variant, n, throttle, group: `sweep|${throttle}` });
+    for (const throttle of THROTTLES) for (const n of SWEEP_NS[throttle] ?? SWEEP_NS[1]) for (const variant of pick(['dom', 'svg', 'canvas2d', 'canvas2d-worker'])) if (throttleOk(variant, throttle)) cells.push({ variant, n, throttle, group: `sweep|${throttle}` });
+    if (!partialRun()) results.sweep = {};   // a full sweep replaces the old one (no stale cells from other step sets)
     browser = await matrix(browser, base, 'sweep', cells);
+  }
+  if (PHASES.includes('sweepload')) {
+    const cells = [];
+    for (const n of [400, 700, 1000, 1400]) for (const variant of pick(['dom', 'svg', 'canvas2d', 'canvas2d-worker'])) cells.push({ variant, n, throttle: 1, group: 'sweepload', runs: Math.min(RUNS, 3) });
+    const burners = Array.from({ length: BURN }, () => spawn(process.execPath, ['-e', 'for(;;){}'], { stdio: 'ignore' }));
+    try {
+      if (!partialRun()) results.sweepLoad = {};
+      results.sweepLoadMeta = { burners: BURN, note: `${BURN} extra processes each spinning one CPU core for the whole phase, on top of whatever else the machine runs; compare with the same cells of the 1× sweep.` };
+      browser = await matrix(browser, base, 'sweepLoad', cells);
+    } finally { for (const b of burners) b.kill('SIGKILL'); }
   }
   if (PHASES.includes('instancing')) {
     // One mesh per item vs one InstancedMesh, in vanilla three.js and in React Three Fiber, as one set.
@@ -388,14 +581,25 @@ async function main() {
     await save();
   }
   if (PHASES.includes('worker')) {
-    // Main-thread Canvas 2D vs the same drawing in a Worker, with 50 ms of other main-thread work every 100 ms.
+    // Main-thread Canvas 2D vs the same drawing in a Worker, with 50 ms of other main-thread work every
+    // 100 ms. 1× only: CDP throttling slows the main thread but not the Worker (throttleprobe).
     const cells = [];
-    for (const throttle of THROTTLES) for (const n of [200, 2000]) for (const variant of pick(['canvas2d', 'canvas2d-worker', 'pixi', 'dom'])) cells.push({ variant, n, throttle, load: 50 });
+    for (const n of (arg('n') ? NS : [200, 700, 2000])) for (const variant of pick(['canvas2d', 'canvas2d-worker', 'dom'])) cells.push({ variant, n, throttle: 1, load: 50 });
+    if (!partialRun()) results.worker = {};
     browser = await matrix(browser, base, 'worker', cells);
   }
   if (PHASES.includes('present')) await presented(browser, base);
-  if (PHASES.includes('domprobe')) { results.domProbe = await domProbe(browser, { runs: Math.min(RUNS, 3) }); await save(); }
-  if (PHASES.includes('a11y')) await a11y(browser, base);
+  if (PHASES.includes('throttleprobe')) { results.throttleProbe = await throttleProbe(browser, { runs: RUNS }); await save(); }
+  if (PHASES.includes('domprobe')) { results.domProbe = await domProbe(browser, { runs: RUNS }); await save(); }
+  if (PHASES.includes('a11y')) browser = await a11y(browser, base);
+  if (PHASES.includes('a11ywebgl')) {
+    // PixiJS's built-in AccessibilitySystem is registered only for the WebGL and WebGPU renderers, so its
+    // per-frame cost can only be measured on WebGL (SwiftShader here): read JS ms/frame, not fps.
+    const cells = [];
+    for (const v of pick(['pixi', 'pixi-a11y', 'pixi-pixia11y'])) cells.push({ variant: v, n: 2000, throttle: 1 });
+    if (!partialRun()) results.a11yPerfWebgl = {};
+    browser = await matrix(browser, base, 'a11yPerfWebgl', cells);
+  }
   if (PHASES.includes('contextloss')) await contextLoss(browser, base);
   if (PHASES.includes('reduced')) {
     // prefers-reduced-motion: no bob, no particles, render on demand; idle cost with no harness loop.

@@ -49,7 +49,7 @@ if (!want || want === 'sprites') {
         ['frames: run cycle packed (AVIF q60)', KB(sp.frameAtlas.bytes.avif), ''],
       ]));
     }
-    if (S.runtimes) out('2D animation runtimes: minified ESM bundle of the import a project writes (+ WASM)', table(['runtime', 'JS gzip', 'JS brotli', 'WASM brotli'], Object.entries(S.runtimes).filter(([k]) => !k.startsWith('sample')).map(([k, v]) => [k, KB(v.js?.gzip), KB(v.js?.brotli), v.wasm ? KB(v.wasm.brotli) : '–'])));
+    if (S.runtimes) out('2D animation runtimes: minified ESM bundle of the import a project writes (+ WASM)', table(['runtime', 'JS gzip -9', 'WASM gzip -9', 'JS brotli', 'WASM brotli'], Object.entries(S.runtimes).filter(([k]) => !k.startsWith('sample')).map(([k, v]) => [k, KB(v.js?.gzip), v.wasm ? KB(v.wasm.gzip) : '–', KB(v.js?.brotli), v.wasm ? KB(v.wasm.brotli) : '–'])));
   }
 }
 

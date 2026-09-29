@@ -16,7 +16,7 @@ import path from 'node:path';
 import { PNG } from 'pngjs';
 import { launch, open, settle } from '../../../../../skills/website-redesign/scripts/lib/env.mjs';
 import { measureAt, prepare, resizeTo, markFindings, evidenceShot, evidenceCrop } from '../../../../../skills/website-redesign/scripts/sweep.mjs';
-import { mirrorRecord, mirrorCheck, pageDirection, flipDirection } from '../../../../../skills/website-redesign/scripts/stress.mjs';
+import { mirrorRecord, mirrorCheck, alignCheck, pageDirection, flipDirection, restoreDirection } from '../../../../../skills/website-redesign/scripts/stress.mjs';
 
 /* ---------------- legacy (before the review): copied from the pre-fix sweep.mjs ---------------- */
 async function legacyMark(page, marks) {
@@ -94,7 +94,9 @@ function paint(f) {
     try { all = [...document.querySelectorAll(f.sel.replace(/ \(\d+×\)$/, '').replace(/^… > /, ''))]; } catch { all = []; }
     const d = (e) => { const r = e.getBoundingClientRect(); return Math.abs(r.left + scrollX - f.box.x) + Math.abs(r.top + scrollY - f.box.y) + Math.abs(r.width - f.box.w) + Math.abs(r.height - f.box.h); };
     el = all.sort((a, b) => d(a) - d(b))[0] || null;
-    if (el && d(el) > 8) el = null;
+    // The box picks one of several matches; a single match is the element wherever it is now (a shot of a page whose
+    // layout moved since the finding was measured must fail on alignment, not be skipped).
+    if (el && all.length > 1 && d(el) > 8) el = null;
   }
   if (!el) return { found: false, visible: 0 };
   // Visible area: the box cut by every clipping ancestor.
@@ -115,7 +117,7 @@ function paint(f) {
 const limeFirst = () => { const b = document.querySelector('#__sw_marks > div'); if (b) b.style.setProperty('outline-color', '#00ff00'); };
 
 /* ---------------- cases ---------------- */
-export function cases(base, R) {
+export function cases(base, R, s8) {
   const E = `${base}/fixtures/evidence`;
   const sanad = `${R}/research/experiments/H-blind-eval/sanad/fixture/`, stem = `${R}/research/experiments/H-blind-eval/stemwren/fixture/`;
   const wiz = `${R}/tools/regress/fixtures/a11y-wizard.html`;
@@ -133,10 +135,24 @@ export function cases(base, R) {
     { name: 'a11y-wizard flipped to RTL', url: wiz, width: 390, mobile: true, flip: true },
     { name: 'a11y-wizard flipped to RTL', url: wiz, width: 768, mobile: false, flip: true },
     { name: 'a11y-wizard flipped to RTL', url: wiz, width: 1280, mobile: false, flip: true },
+    // stress.mjs --only rtl on a page that is already RTL: its own text-align check, then the flip to LTR. The
+    // evidence must show the page in its own direction (the first version after the review shot it flipped).
+    ...(s8 ? [390, 768, 1280].map((width) => ({ name: 'S8 bilingual ar broken (native RTL, rtl mutation)', url: `${s8}/fixtures/bilingual.html?lang=ar&variant=broken`, width, mobile: width < 768, nativeFlip: true })) : []),
+    { name: 'Sanad (native RTL, rtl mutation)', url: sanad, width: 1280, mobile: false, nativeFlip: true },
   ];
 }
 
-async function findingsFor(page, c) {
+async function findingsFor(page, c, impl) {
+  if (c.nativeFlip) {
+    await page.evaluate(pageDirection);
+    const own = await page.evaluate(alignCheck, { side: 'left', dir: 'this RTL page' });
+    await page.evaluate(mirrorRecord, {});
+    await page.evaluate(flipDirection, { to: 'ltr' });
+    await page.waitForTimeout(150);
+    const after = [...await page.evaluate(mirrorCheck, { to: 'ltr' }), ...await page.evaluate(alignCheck, { side: 'right', dir: 'LTR' })];
+    if (impl === 'current') { await page.evaluate(restoreDirection); await page.waitForTimeout(150); }
+    return [...own, ...after].map((f) => ({ ...f, sev: 'warn' }));
+  }
   if (c.target) return page.evaluate((sel) => { const r = document.querySelector(sel).getBoundingClientRect(); return [{ check: 'target', sev: 'error', sel, box: { x: Math.round(r.left + scrollX), y: Math.round(r.top + scrollY), w: Math.round(r.width), h: Math.round(r.height) } }]; }, c.target);
   if (c.flip) {
     await page.evaluate(pageDirection);
@@ -149,19 +165,20 @@ async function findingsFor(page, c) {
   return r.findings.filter((f) => f.sev !== 'info' && f.box && f.box.w > 0 && f.box.h > 0);
 }
 
-export async function runEvidence(base, R, outDir) {
+export async function runEvidence(base, R, outDir, s8) {
   await mkdir(outDir, { recursive: true });
   const { browser } = await launch({});
   const rows = [];
   try {
-    for (const c of cases(base, R)) {
-      for (const impl of ['legacy', 'current']) {
+    for (const c of cases(base, R, s8)) {
+      // Native-RTL cases compare the flip without and with the flip back; their marks and shots are current in both.
+      for (const impl of c.nativeFlip ? ['no-restore', 'current'] : ['legacy', 'current']) {
         const height = c.mobile ? 740 : 800, dpr = c.mobile ? 2 : 1;
         const ctx = await browser.newContext({ viewport: { width: c.width, height }, deviceScaleFactor: dpr, isMobile: c.mobile, hasTouch: c.mobile });
         const page = await ctx.newPage();
         await open(page, c.url); await settle(page); await prepare(page);
         await resizeTo(page, c.width, height);
-        const all = (await findingsFor(page, c)).slice(0, 8);
+        const all = (await findingsFor(page, c, impl)).slice(0, 8);
         const mark = impl === 'legacy' ? legacyMark : markFindings;
         for (const [i, f] of all.slice(0, 4).entries()) {
           const t = await page.evaluate(paint, f);
@@ -191,6 +208,13 @@ export async function runEvidence(base, R, outDir) {
   const judged = rows.filter((x) => !x.skipped && x.visible >= 16);
   const sum = (impl, k) => { const r = judged.filter((x) => x.impl === impl); return { images: r.length, ok: r.filter((x) => x[k].ok).length, blank: r.filter((x) => x[k].blank).length, markMissing: r.filter((x) => !x[k].mark).length, misaligned: r.filter((x) => x[k].mark && !x[k].aligned).length }; };
   const byCase = {};
-  for (const r of judged) { const k = `${r.case} @ ${r.width}`; const e = (byCase[k] ||= { legacy: { n: 0, cellOk: 0, cropOk: 0 }, current: { n: 0, cellOk: 0, cropOk: 0 } })[r.impl]; e.n++; if (r.cell.ok) e.cellOk++; if (r.crop.ok) e.cropOk++; }
-  return { summary: { legacy: { cell: sum('legacy', 'cell'), crop: sum('legacy', 'crop') }, current: { cell: sum('current', 'cell'), crop: sum('current', 'crop') }, notJudged: rows.length - judged.length }, byCase, rows };
+  for (const r of judged) { const k = `${r.case} @ ${r.width}`; const e = ((byCase[k] ||= {})[r.impl] ||= { n: 0, cellOk: 0, cropOk: 0 }); e.n++; if (r.cell.ok) e.cellOk++; if (r.crop.ok) e.cropOk++; }
+  const cur = (k) => { const r = judged.filter((x) => x.impl === 'current'); return { images: r.length, ok: r.filter((x) => x[k].ok).length, blank: r.filter((x) => x[k].blank).length, markMissing: r.filter((x) => !x[k].mark).length, misaligned: r.filter((x) => x[k].mark && !x[k].aligned).length }; };
+  const nat = judged.filter((x) => /native RTL, rtl mutation/.test(x.case));
+  const natSum = (impl, k) => { const r = nat.filter((x) => x.impl === impl); return { images: r.length, ok: r.filter((x) => x[k].ok).length, misaligned: r.filter((x) => x[k].mark && !x[k].aligned).length }; };
+  const leg = judged.filter((x) => !/native RTL, rtl mutation/.test(x.case));
+  const legSum = (impl, k) => { const r = leg.filter((x) => x.impl === impl); return { images: r.length, ok: r.filter((x) => x[k].ok).length, blank: r.filter((x) => x[k].blank).length, markMissing: r.filter((x) => !x[k].mark).length, misaligned: r.filter((x) => x[k].mark && !x[k].aligned).length }; };
+  return { summary: { legacyVsCurrent: { legacy: { cell: legSum('legacy', 'cell'), crop: legSum('legacy', 'crop') }, current: { cell: legSum('current', 'cell'), crop: legSum('current', 'crop') } },
+    nativeRtlFlip: { noRestore: { cell: natSum('no-restore', 'cell'), crop: natSum('no-restore', 'crop') }, current: { cell: natSum('current', 'cell'), crop: natSum('current', 'crop') } },
+    allCurrent: { cell: cur('cell'), crop: cur('crop') }, notJudged: rows.length - judged.length }, byCase, rows };
 }

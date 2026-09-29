@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-29T06:06:37.146Z",
+  "generated": "2026-09-29T06:46:02.551Z",
   "runner": "node run.mjs",
   "status": {
     "toy": {
       "exit": 0,
-      "seconds": 810
+      "seconds": 863
     },
     "audio": {
       "exit": 0,
@@ -12,15 +12,15 @@
     },
     "sources": {
       "exit": 0,
-      "seconds": 790
+      "seconds": 801
     },
     "probe": {
       "exit": 0,
-      "seconds": 305
+      "seconds": 257
     }
   },
   "toy": {
-    "date": "2026-09-29T05:34:48.554Z",
+    "date": "2026-09-29T06:13:58.157Z",
     "chromium": "141.0.7390.37",
     "runs": 5,
     "variants": {
@@ -196,8 +196,8 @@
             "selfAnimating": false,
             "baseline": {
               "distinct": 1,
-              "captures": 20,
-              "ms": 726
+              "captures": 16,
+              "ms": 727
             },
             "rafPerSecondAtRest": 0,
             "walk": {
@@ -438,7 +438,7 @@
             "baseline": {
               "distinct": 1,
               "captures": 20,
-              "ms": 727
+              "ms": 706
             },
             "rafPerSecondAtRest": 0,
             "walk": {
@@ -667,8 +667,8 @@
             "selfAnimating": false,
             "baseline": {
               "distinct": 1,
-              "captures": 20,
-              "ms": 715
+              "captures": 13,
+              "ms": 703
             },
             "rafPerSecondAtRest": 0,
             "walk": {
@@ -847,7 +847,7 @@
         },
         "motion": {
           "noPreference": {
-            "distinctFrames60to540ms": 8,
+            "distinctFrames60to540ms": 9,
             "framesRendered": 25
           },
           "reduce": {
@@ -947,8 +947,8 @@
             "selfAnimating": false,
             "baseline": {
               "distinct": 1,
-              "captures": 20,
-              "ms": 718
+              "captures": 13,
+              "ms": 703
             },
             "rafPerSecondAtRest": 0,
             "walk": {
@@ -1043,7 +1043,7 @@
           "afterThenTab": 0,
           "genericNames": 0
         },
-        "idleRafPerSecond": 54,
+        "idleRafPerSecond": 46,
         "audioContextsAtLoad": 0,
         "keyboard": {
           "engine": {
@@ -1119,11 +1119,11 @@
         "motion": {
           "noPreference": {
             "distinctFrames60to540ms": 1,
-            "framesRendered": 21
+            "framesRendered": 25
           },
           "reduce": {
             "distinctFrames60to540ms": 1,
-            "framesRendered": 17
+            "framesRendered": 23
           }
         },
         "seededStateFromTree": {
@@ -1169,7 +1169,7 @@
               },
               {
                 "level": "INFO",
-                "msg": "requestAnimationFrame runs at rest (56/s): render on demand"
+                "msg": "requestAnimationFrame runs at rest (28/s): render on demand"
               }
             ],
             "listeners": {
@@ -1200,10 +1200,10 @@
             "selfAnimating": false,
             "baseline": {
               "distinct": 1,
-              "captures": 6,
-              "ms": 746
+              "captures": 5,
+              "ms": 1440
             },
-            "rafPerSecondAtRest": 56,
+            "rafPerSecondAtRest": 28,
             "walk": {
               "tabs": 3,
               "uniqueStops": 0,
@@ -1262,7 +1262,7 @@
           "afterThenTab": 4,
           "genericNames": 0
         },
-        "idleRafPerSecond": 38,
+        "idleRafPerSecond": 44,
         "audioContextsAtLoad": 0,
         "keyboard": {
           "engine": {
@@ -1335,7 +1335,7 @@
         "motion": {
           "noPreference": {
             "distinctFrames60to540ms": 1,
-            "framesRendered": 21
+            "framesRendered": 27
           },
           "reduce": {
             "distinctFrames60to540ms": 1,
@@ -1409,7 +1409,7 @@
               },
               {
                 "level": "INFO",
-                "msg": "requestAnimationFrame runs at rest (42/s): render on demand"
+                "msg": "requestAnimationFrame runs at rest (32/s): render on demand"
               }
             ],
             "listeners": {
@@ -1442,9 +1442,9 @@
             "baseline": {
               "distinct": 1,
               "captures": 5,
-              "ms": 792
+              "ms": 1503
             },
-            "rafPerSecondAtRest": 42,
+            "rafPerSecondAtRest": 32,
             "walk": {
               "tabs": 6,
               "uniqueStops": 4,
@@ -1795,7 +1795,7 @@
       {
         "n": 10,
         "proxies": false,
-        "jsPerFrameMs": 0.2,
+        "jsPerFrameMs": 0.1,
         "styleRecalcPerFrameMs": 0.003,
         "layoutPerFrameMs": 0.003,
         "frameGapMs": 16.7,
@@ -1805,7 +1805,7 @@
         "n": 10,
         "proxies": true,
         "jsPerFrameMs": 0.2,
-        "styleRecalcPerFrameMs": 0.155,
+        "styleRecalcPerFrameMs": 0.138,
         "layoutPerFrameMs": 0.002,
         "frameGapMs": 16.7,
         "runs": 5
@@ -1814,16 +1814,16 @@
         "n": 50,
         "proxies": false,
         "jsPerFrameMs": 0.3,
-        "styleRecalcPerFrameMs": 0.003,
-        "layoutPerFrameMs": 0.005,
+        "styleRecalcPerFrameMs": 0.004,
+        "layoutPerFrameMs": 0.006,
         "frameGapMs": 16.7,
         "runs": 5
       },
       {
         "n": 50,
         "proxies": true,
-        "jsPerFrameMs": 0.3,
-        "styleRecalcPerFrameMs": 0.392,
+        "jsPerFrameMs": 0.4,
+        "styleRecalcPerFrameMs": 0.398,
         "layoutPerFrameMs": 0.004,
         "frameGapMs": 16.7,
         "runs": 5
@@ -1841,15 +1841,15 @@
         "n": 200,
         "proxies": true,
         "jsPerFrameMs": 1,
-        "styleRecalcPerFrameMs": 1.409,
-        "layoutPerFrameMs": 0.011,
+        "styleRecalcPerFrameMs": 1.342,
+        "layoutPerFrameMs": 0.012,
         "frameGapMs": 16.7,
         "runs": 5
       }
     ]
   },
   "audio": {
-    "date": "2026-09-29T05:48:17.911Z",
+    "date": "2026-09-29T06:28:19.801Z",
     "payload": [
       {
         "name": "raw Web Audio (the toy's sound.js: two synthesised blips, toggle, gesture gate)",
@@ -2391,7 +2391,7 @@
     ]
   },
   "sources": {
-    "date": "2026-09-29T05:48:22.460Z",
+    "date": "2026-09-29T06:28:24.974Z",
     "sources": "/tmp/s2-S6",
     "repos": {
       "2048": {
@@ -2685,7 +2685,7 @@
       }
     },
     "adarkroomPlay": {
-      "method": "greedy script, 40 simulated minutes at 2 s steps, fake clock; presses visible controls in the current place, stokes only below a roaring fire, walks to the next place every 20 s, answers events with the first safe choice (sound: disable), never embarks to the world map",
+      "method": "greedy script, 40 simulated minutes at 2 s steps, fake clock, Math.random seeded; presses visible controls in the current place, stokes only below a roaring fire, walks to the next place every 20 s, answers events with the first safe choice (sound: disable), never embarks to the world map",
       "controlsFirstSeen": [
         {
           "text": "light fire",
@@ -2718,13 +2718,27 @@
         {
           "text": "lodge",
           "firstSeenMin": 13.5
+        },
+        {
+          "text": "trading post",
+          "firstSeenMin": 22.5
+        },
+        {
+          "text": "tannery",
+          "firstSeenMin": 30.5
+        },
+        {
+          "text": "smokehouse",
+          "firstSeenMin": 33.5
         }
       ],
       "placesFirstSeen": {
         "A Dark Room": 0,
         "A Firelit Room": 0.5,
         "A Silent Forest": 1,
-        "A Lonely Hut": 37.5
+        "A Lonely Hut": 17.5,
+        "A Tiny Village": 20.5,
+        "A Modest Village": 33.5
       },
       "timeline": [
         {
@@ -2743,49 +2757,49 @@
           "minute": 10,
           "controls": 6,
           "places": 2,
-          "storeRows": 4
+          "storeRows": 8
         },
         {
           "minute": 15,
           "controls": 7,
           "places": 2,
-          "storeRows": 7
+          "storeRows": 8
         },
         {
           "minute": 20,
           "controls": 7,
           "places": 2,
-          "storeRows": 7
+          "storeRows": 8
         },
         {
           "minute": 25,
-          "controls": 7,
+          "controls": 8,
           "places": 2,
-          "storeRows": 7
+          "storeRows": 8
         },
         {
           "minute": 30,
-          "controls": 7,
+          "controls": 8,
           "places": 2,
-          "storeRows": 7
+          "storeRows": 8
         },
         {
           "minute": 35,
-          "controls": 7,
+          "controls": 10,
           "places": 2,
-          "storeRows": 7
+          "storeRows": 8
         },
         {
           "minute": 40,
-          "controls": 7,
+          "controls": 10,
           "places": 2,
-          "storeRows": 7
+          "storeRows": 8
         }
       ]
     }
   },
   "probe": {
-    "date": "2026-09-29T06:01:33.397Z",
+    "date": "2026-09-29T06:41:47.590Z",
     "chromium": "141.0.7390.37",
     "cases": [
       {
@@ -2828,8 +2842,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 15,
-                "ms": 729
+                "captures": 16,
+                "ms": 700
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -2886,8 +2900,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 14,
-                "ms": 737
+                "captures": 21,
+                "ms": 743
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -2950,8 +2964,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 18,
-                "ms": 702
+                "captures": 19,
+                "ms": 731
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -3023,8 +3037,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 13,
-                "ms": 734
+                "captures": 17,
+                "ms": 735
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -3054,7 +3068,7 @@
                 "liveOrNotify": true,
                 "stateChanged": false,
                 "nameChanged": false,
-                "distinctFramesAfterChange": 9
+                "distinctFramesAfterChange": 5
               },
               "tried": 1
             }
@@ -3097,8 +3111,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 19,
-                "ms": 717
+                "captures": 21,
+                "ms": 733
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -3150,8 +3164,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 20,
-                "ms": 726
+                "captures": 19,
+                "ms": 727
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -3214,8 +3228,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 19,
-                "ms": 700
+                "captures": 18,
+                "ms": 727
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -3245,7 +3259,7 @@
                 "liveOrNotify": true,
                 "stateChanged": false,
                 "nameChanged": false,
-                "distinctFramesAfterChange": 2
+                "distinctFramesAfterChange": 1
               },
               "tried": 1
             }
@@ -3287,8 +3301,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 20,
-                "ms": 709
+                "captures": 14,
+                "ms": 820
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -3335,14 +3349,14 @@
           "verdict": "FAIL",
           "expected": "FAIL",
           "agree": true,
-          "seconds": 7,
+          "seconds": 6,
           "finalPathSame": true,
           "canvases": [
             {
               "verdict": "FAIL",
               "findings": [
                 "FAIL: pointer-operated canvas with no keyboard path (2.1.1): no focusable control over or beside it changed it. If the pointer effect is decorative only, record that and hide the canvas from assistive technology",
-                "INFO: requestAnimationFrame runs at rest (44/s): render on demand"
+                "INFO: requestAnimationFrame runs at rest (36/s): render on demand"
               ],
               "operable": true,
               "documentLevelOnly": false,
@@ -3373,9 +3387,9 @@
               "baseline": {
                 "distinct": 1,
                 "captures": 5,
-                "ms": 1106
+                "ms": 1031
               },
-              "rafPerSecondAtRest": 44,
+              "rafPerSecondAtRest": 36,
               "walk": {
                 "tabs": 3,
                 "uniqueStops": 0,
@@ -3399,14 +3413,14 @@
           "verdict": "FAIL",
           "expected": "FAIL",
           "agree": true,
-          "seconds": 5,
+          "seconds": 7,
           "finalPathSame": true,
           "canvases": [
             {
               "verdict": "FAIL",
               "findings": [
                 "FAIL: pointer-operated canvas with no keyboard path (2.1.1): no focusable control over or beside it changed it. If the pointer effect is decorative only, record that and hide the canvas from assistive technology",
-                "INFO: requestAnimationFrame runs at rest (44/s): render on demand"
+                "INFO: requestAnimationFrame runs at rest (36/s): render on demand"
               ],
               "operable": true,
               "documentLevelOnly": false,
@@ -3437,9 +3451,9 @@
               "baseline": {
                 "distinct": 1,
                 "captures": 5,
-                "ms": 994
+                "ms": 1531
               },
-              "rafPerSecondAtRest": 44,
+              "rafPerSecondAtRest": 36,
               "walk": {
                 "tabs": 3,
                 "uniqueStops": 0,
@@ -3477,7 +3491,7 @@
               "findings": [
                 "WARN: the keyboard changes the canvas but nothing is narrated (4.1.3): no live region, ariaNotify or state change on the focused control",
                 "WARN: no stand-ins over the canvas: the keyboard path is controls beside it; confirm every pointer verb on the canvas (drag, orbit, pick) has an equivalent",
-                "INFO: requestAnimationFrame runs at rest (56/s): render on demand"
+                "INFO: requestAnimationFrame runs at rest (34/s): render on demand"
               ],
               "operable": true,
               "documentLevelOnly": false,
@@ -3509,9 +3523,9 @@
               "baseline": {
                 "distinct": 1,
                 "captures": 5,
-                "ms": 1116
+                "ms": 1294
               },
-              "rafPerSecondAtRest": 56,
+              "rafPerSecondAtRest": 34,
               "walk": {
                 "tabs": 6,
                 "uniqueStops": 4,
@@ -3546,7 +3560,7 @@
           "verdict": "WARN",
           "expected": "WARN",
           "agree": true,
-          "seconds": 10,
+          "seconds": 9,
           "finalPathSame": true,
           "canvases": [
             {
@@ -3554,7 +3568,7 @@
               "findings": [
                 "WARN: the keyboard changes the canvas but nothing is narrated (4.1.3): no live region, ariaNotify or state change on the focused control",
                 "WARN: no stand-ins over the canvas: the keyboard path is controls beside it; confirm every pointer verb on the canvas (drag, orbit, pick) has an equivalent",
-                "INFO: requestAnimationFrame runs at rest (22/s): render on demand"
+                "INFO: requestAnimationFrame runs at rest (38/s): render on demand"
               ],
               "operable": true,
               "documentLevelOnly": false,
@@ -3586,9 +3600,9 @@
               "baseline": {
                 "distinct": 1,
                 "captures": 5,
-                "ms": 1524
+                "ms": 1172
               },
-              "rafPerSecondAtRest": 22,
+              "rafPerSecondAtRest": 38,
               "walk": {
                 "tabs": 6,
                 "uniqueStops": 4,
@@ -3660,8 +3674,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 19,
-                "ms": 724
+                "captures": 16,
+                "ms": 709
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -3733,8 +3747,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 18,
-                "ms": 728
+                "captures": 20,
+                "ms": 742
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -3764,7 +3778,7 @@
                 "liveOrNotify": true,
                 "stateChanged": false,
                 "nameChanged": false,
-                "distinctFramesAfterChange": 7
+                "distinctFramesAfterChange": 8
               },
               "tried": 1
             }
@@ -3812,8 +3826,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 21,
-                "ms": 720
+                "captures": 13,
+                "ms": 700
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -3885,8 +3899,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 17,
-                "ms": 718
+                "captures": 16,
+                "ms": 712
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -3916,7 +3930,7 @@
                 "liveOrNotify": true,
                 "stateChanged": false,
                 "nameChanged": false,
-                "distinctFramesAfterChange": 6
+                "distinctFramesAfterChange": 7
               },
               "tried": 1
             }
@@ -3940,7 +3954,7 @@
               "verdict": "WARN",
               "findings": [
                 "PASS: keyboard path over the canvas (Enter on button \"Strawberry\") changes it and is narrated",
-                "WARN: still animating after a change under reduced motion: 7 distinct frames in the 0.6 s after it (2.3.3)"
+                "WARN: still animating after a change under reduced motion: 6 distinct frames in the 0.6 s after it (2.3.3)"
               ],
               "operable": true,
               "documentLevelOnly": false,
@@ -3965,8 +3979,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 16,
-                "ms": 710
+                "captures": 20,
+                "ms": 725
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -3996,7 +4010,7 @@
                 "liveOrNotify": true,
                 "stateChanged": false,
                 "nameChanged": false,
-                "distinctFramesAfterChange": 7
+                "distinctFramesAfterChange": 6
               },
               "tried": 1
             }
@@ -4038,8 +4052,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 15,
-                "ms": 703
+                "captures": 20,
+                "ms": 732
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -4069,7 +4083,7 @@
                 "liveOrNotify": true,
                 "stateChanged": false,
                 "nameChanged": false,
-                "distinctFramesAfterChange": 7
+                "distinctFramesAfterChange": 8
               },
               "tried": 1
             }
@@ -4115,7 +4129,7 @@
               "baseline": {
                 "distinct": 1,
                 "captures": 19,
-                "ms": 706
+                "ms": 726
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -4184,8 +4198,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 20,
-                "ms": 703
+                "captures": 21,
+                "ms": 713
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -4260,8 +4274,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 20,
-                "ms": 718
+                "captures": 21,
+                "ms": 723
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -4330,8 +4344,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 20,
-                "ms": 718
+                "captures": 22,
+                "ms": 727
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -4406,8 +4420,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 17,
-                "ms": 726
+                "captures": 19,
+                "ms": 757
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -4461,8 +4475,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 20,
-                "ms": 701
+                "captures": 21,
+                "ms": 727
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -4522,11 +4536,11 @@
               },
               "selfAnimating": true,
               "baseline": {
-                "distinct": 15,
-                "captures": 15,
-                "ms": 706
+                "distinct": 14,
+                "captures": 14,
+                "ms": 729
               },
-              "rafPerSecondAtRest": 59,
+              "rafPerSecondAtRest": 60,
               "walk": {
                 "tabs": 3,
                 "uniqueStops": 1,
@@ -4577,11 +4591,11 @@
               },
               "selfAnimating": true,
               "baseline": {
-                "distinct": 9,
-                "captures": 9,
-                "ms": 737
+                "distinct": 14,
+                "captures": 14,
+                "ms": 709
               },
-              "rafPerSecondAtRest": 55,
+              "rafPerSecondAtRest": 56,
               "walk": {
                 "tabs": 3,
                 "uniqueStops": 1,
@@ -4640,8 +4654,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 14,
-                "ms": 741
+                "captures": 12,
+                "ms": 756
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -4695,9 +4709,9 @@
               },
               "selfAnimating": true,
               "baseline": {
-                "distinct": 15,
-                "captures": 15,
-                "ms": 738
+                "distinct": 10,
+                "captures": 10,
+                "ms": 788
               },
               "rafPerSecondAtRest": 60,
               "walk": {
@@ -4760,8 +4774,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 18,
-                "ms": 731
+                "captures": 19,
+                "ms": 704
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -4818,8 +4832,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 21,
-                "ms": 730
+                "captures": 20,
+                "ms": 724
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -4879,8 +4893,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 18,
-                "ms": 746
+                "captures": 22,
+                "ms": 732
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -4934,8 +4948,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 22,
-                "ms": 728
+                "captures": 19,
+                "ms": 702
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -4995,8 +5009,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 21,
-                "ms": 700
+                "captures": 19,
+                "ms": 735
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -5064,11 +5078,11 @@
               },
               "selfAnimating": true,
               "baseline": {
-                "distinct": 18,
-                "captures": 18,
-                "ms": 715
+                "distinct": 22,
+                "captures": 22,
+                "ms": 726
               },
-              "rafPerSecondAtRest": 59,
+              "rafPerSecondAtRest": 60,
               "walk": {
                 "tabs": 3,
                 "uniqueStops": 1,
@@ -5143,8 +5157,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 20,
-                "ms": 718
+                "captures": 22,
+                "ms": 733
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -5211,8 +5225,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 16,
-                "ms": 700
+                "captures": 20,
+                "ms": 720
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -5286,8 +5300,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 13,
-                "ms": 713
+                "captures": 20,
+                "ms": 700
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -5355,8 +5369,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 17,
-                "ms": 732
+                "captures": 21,
+                "ms": 702
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -5425,8 +5439,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 18,
-                "ms": 735
+                "captures": 19,
+                "ms": 703
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -5478,8 +5492,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 21,
-                "ms": 706
+                "captures": 22,
+                "ms": 726
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -5537,8 +5551,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 16,
-                "ms": 716
+                "captures": 21,
+                "ms": 724
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -5591,7 +5605,7 @@
               "baseline": {
                 "distinct": 1,
                 "captures": 17,
-                "ms": 729
+                "ms": 721
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -5660,8 +5674,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 7,
-                "ms": 701
+                "captures": 21,
+                "ms": 761
               },
               "rafPerSecondAtRest": 60,
               "walk": {
@@ -5694,7 +5708,7 @@
               "verdict": "FAIL",
               "findings": [
                 "FAIL: pointer-operated canvas with no keyboard path (2.1.1): no focusable control over or beside it changed it. If the pointer effect is decorative only, record that and hide the canvas from assistive technology",
-                "INFO: requestAnimationFrame runs at rest (61/s): render on demand"
+                "INFO: requestAnimationFrame runs at rest (58/s): render on demand"
               ],
               "operable": true,
               "documentLevelOnly": false,
@@ -5724,10 +5738,10 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 12,
-                "ms": 701
+                "captures": 19,
+                "ms": 733
               },
-              "rafPerSecondAtRest": 61,
+              "rafPerSecondAtRest": 58,
               "walk": {
                 "tabs": 3,
                 "uniqueStops": 0,
@@ -5754,6 +5768,77 @@
         "why": "S2: keyboardToggles false",
         "external": true,
         "reduce": {
+          "verdict": "FAIL",
+          "expected": "FAIL",
+          "agree": true,
+          "seconds": 9,
+          "finalPathSame": true,
+          "canvases": [
+            {
+              "verdict": "FAIL",
+              "findings": [
+                "FAIL: pointer-operated canvas with no keyboard path (2.1.1): no focusable control over or beside it changed it. If the pointer effect is decorative only, record that and hide the canvas from assistive technology",
+                "INFO: requestAnimationFrame runs at rest (60/s): render on demand"
+              ],
+              "operable": true,
+              "documentLevelOnly": false,
+              "hover": true,
+              "listeners": {
+                "canvas": [
+                  "mouseover",
+                  "mouseout",
+                  "mousemove",
+                  "mousedown",
+                  "mouseup",
+                  "touchmove",
+                  "touchstart",
+                  "touchend",
+                  "touchcancel",
+                  "focus",
+                  "blur",
+                  "keydown"
+                ],
+                "wrapper": [],
+                "documentLevel": [],
+                "react": []
+              },
+              "exposure": {
+                "ignored": false,
+                "role": "Canvas",
+                "name": "",
+                "fallbackText": ""
+              },
+              "selfAnimating": false,
+              "baseline": {
+                "distinct": 1,
+                "captures": 21,
+                "ms": 706
+              },
+              "rafPerSecondAtRest": 60,
+              "walk": {
+                "tabs": 3,
+                "uniqueStops": 2,
+                "cycled": true
+              },
+              "stops": {
+                "overCanvas": 2,
+                "standIns": 1,
+                "linksOverCanvas": 0,
+                "canvasFocusable": true,
+                "widgetsBeside": 0
+              },
+              "standIns": {
+                "minSizePx": 10,
+                "receivePointer": 0,
+                "minPointerTargetPx": null
+              },
+              "keyboardPath": null,
+              "tried": 7
+            }
+          ],
+          "pageErrors": []
+        },
+        "noPreference": {
           "verdict": "FAIL",
           "expected": "FAIL",
           "agree": true,
@@ -5797,8 +5882,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 21,
-                "ms": 713
+                "captures": 17,
+                "ms": 731
               },
               "rafPerSecondAtRest": 60,
               "walk": {
@@ -5819,77 +5904,6 @@
             }
           ],
           "pageErrors": []
-        },
-        "noPreference": {
-          "verdict": "FAIL",
-          "expected": "FAIL",
-          "agree": true,
-          "seconds": 13,
-          "finalPathSame": true,
-          "canvases": [
-            {
-              "verdict": "FAIL",
-              "findings": [
-                "FAIL: pointer-operated canvas with no keyboard path (2.1.1): no focusable control over or beside it changed it. If the pointer effect is decorative only, record that and hide the canvas from assistive technology",
-                "INFO: requestAnimationFrame runs at rest (60/s): render on demand"
-              ],
-              "operable": true,
-              "documentLevelOnly": false,
-              "hover": true,
-              "listeners": {
-                "canvas": [
-                  "mouseover",
-                  "mouseout",
-                  "mousemove",
-                  "mousedown",
-                  "mouseup",
-                  "touchmove",
-                  "touchstart",
-                  "touchend",
-                  "touchcancel",
-                  "focus",
-                  "blur",
-                  "keydown"
-                ],
-                "wrapper": [],
-                "documentLevel": [],
-                "react": []
-              },
-              "exposure": {
-                "ignored": false,
-                "role": "Canvas",
-                "name": "",
-                "fallbackText": ""
-              },
-              "selfAnimating": false,
-              "baseline": {
-                "distinct": 1,
-                "captures": 18,
-                "ms": 731
-              },
-              "rafPerSecondAtRest": 60,
-              "walk": {
-                "tabs": 4,
-                "uniqueStops": 3,
-                "cycled": true
-              },
-              "stops": {
-                "overCanvas": 3,
-                "standIns": 2,
-                "linksOverCanvas": 0,
-                "canvasFocusable": true,
-                "widgetsBeside": 0
-              },
-              "standIns": {
-                "minSizePx": 10,
-                "receivePointer": 0,
-                "minPointerTargetPx": null
-              },
-              "keyboardPath": null,
-              "tried": 10
-            }
-          ],
-          "pageErrors": []
         }
       },
       {
@@ -5901,7 +5915,7 @@
           "verdict": "FAIL",
           "expected": "FAIL",
           "agree": true,
-          "seconds": 48,
+          "seconds": 30,
           "finalPathSame": true,
           "canvases": [
             {
@@ -5937,9 +5951,9 @@
               "baseline": {
                 "distinct": 5,
                 "captures": 5,
-                "ms": 8340
+                "ms": 8065
               },
-              "rafPerSecondAtRest": 2,
+              "rafPerSecondAtRest": 3,
               "walk": {
                 "tabs": 6,
                 "uniqueStops": 4,
@@ -5963,7 +5977,7 @@
           "verdict": "FAIL",
           "expected": "FAIL",
           "agree": true,
-          "seconds": 45,
+          "seconds": 21,
           "finalPathSame": true,
           "canvases": [
             {
@@ -5998,9 +6012,9 @@
               "baseline": {
                 "distinct": 5,
                 "captures": 5,
-                "ms": 13284
+                "ms": 5334
               },
-              "rafPerSecondAtRest": 2,
+              "rafPerSecondAtRest": 5,
               "walk": {
                 "tabs": 6,
                 "uniqueStops": 4,
@@ -6030,7 +6044,7 @@
           "verdict": "PASS",
           "expected": "PASS",
           "agree": true,
-          "seconds": 5,
+          "seconds": 3,
           "finalPathSame": true,
           "canvases": [
             {
@@ -6056,8 +6070,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 17,
-                "ms": 707
+                "captures": 22,
+                "ms": 731
               },
               "rafPerSecondAtRest": 0,
               "walk": {
@@ -6109,8 +6123,8 @@
               "selfAnimating": false,
               "baseline": {
                 "distinct": 1,
-                "captures": 18,
-                "ms": 706
+                "captures": 21,
+                "ms": 721
               },
               "rafPerSecondAtRest": 0,
               "walk": {

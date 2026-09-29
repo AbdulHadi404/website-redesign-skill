@@ -1,28 +1,41 @@
 # S1 rendering lab — results
 
-Generated 2026-09-29T03:21 · Chromium 141.0.7390.37 headless · 4 × Intel(R) Xeon(R) Processor @ 2.10GHz (shared) · WebGL: ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)
+Generated 2026-09-29T09:07 · Chromium 141.0.7390.37 headless · 4 × Intel(R) Xeon(R) Processor @ 2.10GHz (shared) · WebGL: ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)
 
 **Every GPU-bound number here is CPU-emulated.** WebGL runs on SwiftShader and the display compositor runs in software (`SoftwareRenderer`), so frame rates of the WebGL variants — and, less so, of DOM/SVG compositing — are pessimistic and comparable only with each other. `JS ms/frame` (the scene's own update + render call) and `renderer ms/frame` (renderer-process CPU per displayed frame) are the GPU-independent columns. `busy %` (CDP TaskDuration) counts a main thread blocked waiting for the emulated GPU as busy, so it overstates WebGL main-thread load.
 
-Fresh browser context per run; viewport 860×720 at DPR 1; stage 800×600. Warm-up 1 s after the first frame, then a 5 s window (rAF deltas, CDP Performance.getMetrics TaskDuration, SystemInfo.getProcessInfo CPU per process type), then a scripted drag of the top item (30 pointer moves 16 ms apart) while everything animates, then heap after GC. CPU throttle with Emulation.setCPUThrottlingRate (renderer main thread). Medians across runs.
+**"4×" is not a phone.** CDP `Emulation.setCPUThrottlingRate` slows only the page's main thread; the compositor, raster threads, GPU process and Workers run at full speed (see "What CPU throttling reaches" below). A 4× column therefore means "main thread 4× slower, everything else unchanged", which favours DOM/SVG (whose compositing and raster happen off the main thread) over Canvas 2D (which draws on the main thread), and would favour a Worker over everything, so Worker variants are measured at 1× only. Read 4× results as relative positions, not as object counts for a phone.
+
+Fresh browser context per run; viewport 860×720 at DPR 1; stage 800×600. Warm-up 1 s after the first frame, then a 5 s window (rAF deltas, CDP Performance.getMetrics TaskDuration, SystemInfo.getProcessInfo CPU per process type), then a scripted drag of the top item (30 pointer moves 16 ms apart) while everything animates, then heap after GC. CPU throttle with CDP Emulation.setCPUThrottlingRate, which slows only the page's main thread: the compositor, raster threads, GPU process and Workers stay at full speed (throttleprobe), so "4×" = "main thread 4× slower", not a phone, and Worker variants run at 1× only. Medians across runs.
+
+## What CPU throttling reaches
+
+The same integer loop (4e+7 iterations) timed with performance.now() on the page's main thread and inside a dedicated Worker, with Emulation.setCPUThrottlingRate 1 and 4 sent to the page's CDP session. min and median of 5 runs each, alternating main/Worker. Then the throttling command sent directly to the Worker's DevTools target (Target.attachToTarget, non-flattened session).
+
+| throttle | main thread min / median ms | Worker min / median ms |
+| --- | --- | --- |
+| 1× | 277 / 297 | 277 / 287 |
+| 4× | 1229 / 1235 | 279 / 288 |
+
+Emulation.setCPUThrottlingRate sent to the Worker's own target: error "Operation is only supported for pages, not workers".
 
 ## Production bundles (esbuild, minified; KB)
 
 | variant | total min | total gzip | total br | runtime min | app min | app gzip | JS fetched at run time (gzip, per file) | chunks |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| dom | 6.6 | 3.0 | 2.7 | 0.0 | 6.6 | 3.0 | 3.0 | 1 |
-| svg | 6.5 | 3.0 | 2.7 | 0.0 | 6.5 | 3.0 | 3.0 | 1 |
+| dom | 6.7 | 3.0 | 2.7 | 0.0 | 6.7 | 3.0 | 3.0 | 1 |
+| svg | 6.8 | 3.1 | 2.8 | 0.0 | 6.8 | 3.1 | 3.1 | 1 |
 | canvas2d | 6.2 | 2.9 | 2.6 | 0.0 | 6.2 | 2.9 | 2.9 | 1 |
 | canvas2d-worker | 3.6 | 1.7 | 1.5 | 0.0 | 3.6 | 1.7 | 3.7 | 2 |
-| pixi | 562.0 | 165.5 | 136.5 | 547.6 | 6.9 | 3.2 | 171.6 | 23 |
+| pixi | 562.1 | 165.6 | 136.8 | 547.6 | 7.1 | 3.2 | 171.7 | 23 |
 | phaser | 1362.9 | 364.1 | 291.7 | 1356.0 | 6.9 | 3.0 | 364.1 | 1 |
 | three | 527.1 | 133.8 | 110.6 | 519.2 | 7.8 | 3.6 | 133.8 | 1 |
 | three-instanced | 530.6 | 134.8 | 111.2 | 522.3 | 8.3 | 3.9 | 134.8 | 1 |
 | r3f | 1126.3 | 312.7 | 250.7 | 1118.4 | 7.2 | 3.5 | 312.7 | 1 |
-| dom-a11y | 9.6 | 4.1 | 3.7 | 0.0 | 9.5 | 4.1 | 4.1 | 1 |
-| svg-a11y | 9.5 | 4.2 | 3.8 | 0.0 | 9.5 | 4.2 | 4.2 | 1 |
-| pixi-a11y | 564.8 | 166.6 | 137.7 | 547.6 | 9.8 | 4.4 | 172.9 | 23 |
-| pixi-pixia11y | 563.7 | 165.7 | 136.9 | 547.4 | 7.3 | 3.3 | 173.7 | 28 |
+| dom-a11y | 10.2 | 4.4 | 3.9 | 0.0 | 10.2 | 4.4 | 4.4 | 1 |
+| svg-a11y | 10.6 | 4.6 | 4.2 | 0.0 | 10.6 | 4.6 | 4.6 | 1 |
+| pixi-a11y | 565.7 | 167.0 | 138.0 | 547.6 | 10.7 | 4.8 | — | 23 |
+| pixi-pixia11y | 563.9 | 165.8 | 137.1 | 547.4 | 7.5 | 3.4 | — | 28 |
 | r3f-instanced | 1128.8 | 313.7 | 251.6 | 1118.4 | 9.7 | 4.5 | — | 1 |
 
 Runtime packages (min KB): pixi: pixi.js 524.3, @pixi/colord 9.0, earcut 7.1, eventemitter3 2.8; phaser: phaser 1356.0; three: three 519.2; three-instanced: three 522.3; r3f: three 726.5, react-dom 205.1, @react-three/fiber 166.3, react 8.3; pixi-a11y: pixi.js 524.3, @pixi/colord 9.0, earcut 7.1, eventemitter3 2.8; pixi-pixia11y: pixi.js 524.1, @pixi/colord 9.0, earcut 7.1, eventemitter3 2.8; r3f-instanced: three 726.5, react-dom 205.1, @react-three/fiber 166.3, react 8.3
@@ -71,42 +84,39 @@ Runtime packages (min KB): pixi: pixi.js 524.3, @pixi/colord 9.0, earcut 7.1, ev
 | three-instanced | three-instanced-webgl2 | 194 | 1.8 | 558.4 / 650.0 | 0.60 / 3.80 | 4.4 | 111 | 100 | 1292.0 / 1772.7 | 872 | 3.9 | 44 | 2 | 5 |
 | r3f | r3f-webgl2 | 1351 | 1.6 | 583.3 / 899.9 | 8.25 / 14.60 | 18.6 | 106 | 100 | 1214.7 / 1923.4 | 1080 | 14.3 | 48 | — | 5 |
 
-### N=20, 4× CPU
+### N=20, 4× CPU (main thread only)
 
 | variant | renderer | first frame ms | fps | frame p50/p95 ms | JS ms/frame p50/p95 | renderer ms/frame | GPU-proc CPU % | busy % | drag move→frame p50/p95 ms | Event Timing max ms | heap MB | DOM nodes | draw calls | runs |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | dom | dom | 125 | 59.8 | 16.7 / 16.8 | — / — | 12.2 | 5 | 15 | 13.1 / 22.1 | 56 | 2.0 | 106 | — | 5 |
 | svg | svg | 116 | 59.4 | 16.7 / 16.8 | — / — | 13.6 | 3 | 17 | 12.4 / 20.4 | 40 | 2.0 | 194 | — | 5 |
 | canvas2d | canvas2d | 165 | 59.0 | 16.7 / 16.8 | 0.10 / 0.70 | 12.9 | 5 | 30 | 13.1 / 33.0 | 40 | 1.9 | 44 | — | 5 |
-| canvas2d-worker | canvas2d-offscreen-worker | 193 | 59.6 | 16.7 / 16.7 | 0.10 / 0.20 | 12.8 | 6 | 3 | 25.7 / 31.3 | 16 | 1.8 | 42 | — | 5 |
 | pixi | pixi-webgl | 716 | 21.1 | 49.9 / 83.4 | 0.80 / 3.30 | 25.9 | 118 | 99 | 90.0 / 202.2 | 88 | 3.9 | 44 | — | 5 |
 | phaser | phaser-webgl | 797 | 19.5 | 50.0 / 100.0 | 0.90 / 3.60 | 27.3 | 98 | 99 | 90.2 / 176.0 | 104 | 5.5 | 49 | — | 5 |
 | three | three-webgl2 | 446 | 20.9 | 50.0 / 83.4 | 1.00 / 3.90 | 29.6 | 130 | 99 | 91.4 / 227.2 | 120 | 3.8 | 44 | 21 | 5 |
 | three-instanced | three-instanced-webgl2 | 390 | 16.7 | 50.0 / 116.6 | 0.90 / 4.30 | 30.6 | 100 | 98 | 80.9 / 165.5 | 144 | 3.7 | 44 | 2 | 5 |
 | r3f | r3f-webgl2 | 1064 | 23.3 | 33.4 / 83.4 | 1.00 / 4.10 | 27.4 | 136 | 99 | 77.2 / 149.9 | 144 | 5.7 | 48 | — | 5 |
 
-### N=200, 4× CPU
+### N=200, 4× CPU (main thread only)
 
 | variant | renderer | first frame ms | fps | frame p50/p95 ms | JS ms/frame p50/p95 | renderer ms/frame | GPU-proc CPU % | busy % | drag move→frame p50/p95 ms | Event Timing max ms | heap MB | DOM nodes | draw calls | runs |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | dom | dom | 135 | 53.6 | 16.7 / 33.3 | — / — | 14.1 | 19 | 65 | 28.3 / 85.4 | 104 | 2.0 | 646 | — | 5 |
 | svg | svg | 197 | 47.2 | 16.7 / 49.9 | — / — | 18.0 | 3 | 71 | 21.8 / 63.8 | 56 | 2.1 | 1274 | — | 5 |
 | canvas2d | canvas2d | 211 | 55.6 | 16.7 / 33.3 | 0.70 / 3.30 | 15.1 | 5 | 75 | 25.1 / 85.6 | 32 | 1.9 | 44 | — | 5 |
-| canvas2d-worker | canvas2d-offscreen-worker | 221 | 58.8 | 16.7 / 16.8 | 0.30 / 1.00 | 13.5 | 5 | 4 | 25.4 / 33.2 | 0 | 1.8 | 42 | — | 5 |
 | pixi | pixi-webgl | 880 | 11.3 | 83.4 / 183.3 | 1.00 / 3.40 | 46.1 | 106 | 99 | 162.8 / 313.2 | 192 | 4.2 | 44 | — | 5 |
 | phaser | phaser-webgl | 847 | 10.0 | 83.4 / 233.3 | 1.20 / 4.70 | 51.0 | 104 | 99 | 213.9 / 465.2 | 296 | 5.8 | 49 | — | 5 |
 | three | three-webgl2 | 388 | 9.3 | 100.0 / 233.4 | 2.45 / 7.50 | 62.5 | 107 | 99 | 196.3 / 488.3 | 256 | 4.1 | 44 | 201 | 5 |
 | three-instanced | three-instanced-webgl2 | 369 | 10.2 | 83.3 / 233.4 | 1.10 / 3.70 | 58.8 | 113 | 100 | 180.4 / 358.0 | 256 | 3.7 | 44 | 2 | 5 |
 | r3f | r3f-webgl2 | 1124 | 11.4 | 83.3 / 166.7 | 2.90 / 7.40 | 51.9 | 129 | 99 | 163.7 / 389.4 | 184 | 6.6 | 48 | — | 5 |
 
-### N=2000, 4× CPU
+### N=2000, 4× CPU (main thread only)
 
 | variant | renderer | first frame ms | fps | frame p50/p95 ms | JS ms/frame p50/p95 | renderer ms/frame | GPU-proc CPU % | busy % | drag move→frame p50/p95 ms | Event Timing max ms | heap MB | DOM nodes | draw calls | runs |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | dom | dom | 226 | 3.3 | 258.3 / 699.9 | — / — | 247.6 | 41 | 83 | 447.3 / 1035.5 | 584 | 2.2 | 6074 | — | 5 |
 | svg | svg | 318 | 7.0 | 133.4 / 233.4 | — / — | 161.3 | 1 | 99 | 303.2 / 661.2 | 528 | 2.3 | 12074 | — | 5 |
 | canvas2d | canvas2d | 195 | 9.3 | 100.0 / 183.3 | 7.60 / 14.70 | 89.6 | 2 | 99 | 205.3 / 315.7 | 232 | 2.1 | 44 | — | 5 |
-| canvas2d-worker | canvas2d-offscreen-worker | 286 | 19.9 | 33.4 / 116.7 | 2.40 / 10.20 | 42.4 | 3 | 5 | 33.2 / 92.1 | 16 | 1.8 | 42 | — | 5 |
 | pixi | pixi-webgl | 953 | 1.8 | 466.7 / 899.9 | 3.95 / 9.60 | 257.2 | 89 | 100 | 1144.1 / 2469.4 | 688 | 6.9 | 44 | — | 5 |
 | phaser | phaser-webgl | 862 | 1.5 | 616.7 / 1249.9 | 6.25 / 14.30 | 368.3 | 105 | 100 | 1318.1 / 2097.6 | 1168 | 8.6 | 49 | — | 5 |
 | three | three-webgl2 | 478 | 1.9 | 525.1 / 799.9 | 18.15 / 33.50 | 349.0 | 126 | 100 | 1283.3 / 2062.8 | 1360 | 6.9 | 44 | 2001 | 5 |
@@ -115,25 +125,68 @@ Runtime packages (min KB): pixi: pixi.js 524.3, @pixi/colord 9.0, earcut 7.1, ev
 
 ## Where the CPU renderers stop holding the frame rate (object-count sweep)
 
-Same scene and method as the main matrix, measured as its own round-robin set (so N = 200 and 2000 repeat the main matrix under this run's background load). Each cell: fps · frame p95 ms · main-thread busy % (for the Worker variant, fps is the Worker's and busy % is the page's main thread). The CPU renderers' raster and compositing run in software here, so absolute fps is pessimistic; use the crossover points relative to each other.
+Same scene and method as the main matrix, measured as its own round-robin set per throttle. Each cell: fps · % of frames that missed a vsync (rAF delta > 25 ms) · frame p95 ms, medians of runs. **Holds** = at most 10 % of frames miss a vsync (median of runs); the limit is given as a bracket between the last count that holds and the first that does not, with how many runs held at each end. p95 is shown but not used: rAF deltas come in whole vsyncs (17 / 33 / 50 ms), so p95 flips on a single frame. For the Worker variant, fps is the Worker's. The CPU renderers' raster and compositing run in software here, so absolute fps is pessimistic; use the crossover points relative to each other.
 
 ### 1× CPU
 
-| variant | N=200 | N=400 | N=700 | N=1000 | N=1400 | N=2000 |
-| --- | --- | --- | --- | --- | --- | --- |
-| dom | 58.8 · 17 · 20% | 57.0 · 17 · 39% | 42.7 · 50 · 69% | 16.0 · 133 · 67% | 9.6 · 250 · 72% | 7.6 · 250 · 74% |
-| svg | 51.8 · 33 · 26% | 55.4 · 33 · 37% | 45.3 · 50 · 78% | 29.9 · 83 · 95% | 18.8 · 117 · 97% | 14.5 · 167 · 96% |
-| canvas2d | 57.5 · 17 · 22% | 59.6 · 17 · 38% | 58.4 · 17 · 56% | 55.6 · 17 · 77% | 53.6 · 17 · 96% | 34.7 · 50 · 99% |
-| canvas2d-worker | 57.4 · 17 · 1% | 59.0 · 17 · 1% | 58.6 · 17 · 2% | 55.2 · 33 · 1% | 50.2 · 33 · 1% | 38.6 · 33 · 1% |
+1-minute load average during these runs: median 2.0, range 0.7–4.8 on 4 CPUs.
 
-### 4× CPU
+| variant | N=200 | N=300 | N=400 | N=550 | N=700 | N=1000 | N=1400 | N=1700 | N=2000 | holds up to (bracket) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| dom | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 57.4 · 4% · 17 | 25.4 · 99% · 50 | 22.0 · 100% · 67 | 19.8 · 100% · 67 | 1000 (4/5) – 1400 (0/5) |
+| svg | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 58.6 · 2% · 17 | 46.0 · 28% · 33 | 41.5 · 41% · 33 | 35.1 · 63% · 50 | 1000 (4/5) – 1400 (0/5) |
+| canvas2d | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 58.8 · 2% · 17 | 53.0 · 13% · 33 | 44.9 · 34% · 33 | 1400 (5/5) – 1700 (2/5) |
+| canvas2d-worker | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 59.4 · 1% · 17 | 57.8 · 4% · 17 | 48.8 · 23% · 33 | 43.9 · 37% · 33 | 1400 (4/5) – 1700 (0/5) |
 
-| variant | N=200 | N=400 | N=700 | N=1000 | N=1400 | N=2000 |
-| --- | --- | --- | --- | --- | --- | --- |
-| dom | 49.0 · 33 · 70% | 26.3 · 83 · 90% | 12.1 · 167 · 84% | 7.0 · 383 · 85% | 4.2 · 417 · 80% | 3.3 · 867 · 81% |
-| svg | 49.0 · 33 · 70% | 39.3 · 50 · 84% | 21.3 · 83 · 96% | 13.5 · 167 · 98% | 8.4 · 217 · 99% | 6.2 · 283 · 100% |
-| canvas2d | 50.8 · 33 · 76% | 42.3 · 33 · 91% | 31.0 · 50 · 98% | 20.0 · 83 · 99% | 15.3 · 100 · 99% | 10.9 · 150 · 100% |
-| canvas2d-worker | 56.4 · 17 · 8% | 52.0 · 33 · 7% | 51.0 · 33 · 8% | 37.6 · 50 · 9% | 36.7 · 50 · 5% | 26.9 · 83 · 7% |
+GPU-process CPU % (software display compositor) and main-thread busy % at 1×:
+
+| variant | N=200 | N=300 | N=400 | N=550 | N=700 | N=1000 | N=1400 | N=1700 | N=2000 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| dom | GPU 19 · main 14 | GPU 29 · main 23 | GPU 36 · main 28 | GPU 50 · main 43 | GPU 61 · main 52 | GPU 88 · main 69 | GPU 72 · main 62 | GPU 73 · main 61 | GPU 66 · main 69 |
+| svg | GPU 4 · main 17 | GPU 4 · main 21 | GPU 4 · main 26 | GPU 4 · main 38 | GPU 4 · main 48 | GPU 4 · main 69 | GPU 3 · main 98 | GPU 3 · main 98 | GPU 3 · main 99 |
+| canvas2d | GPU 6 · main 18 | GPU 6 · main 25 | GPU 6 · main 31 | GPU 6 · main 43 | GPU 6 · main 51 | GPU 6 · main 72 | GPU 6 · main 97 | GPU 5 · main 100 | GPU 5 · main 100 |
+| canvas2d-worker | GPU 6 · main 1 | GPU 6 · main 1 | GPU 6 · main 1 | GPU 6 · main 1 | GPU 6 · main 1 | GPU 7 · main 1 | GPU 6 · main 1 | GPU 6 · main 1 | GPU 5 · main 1 |
+
+### 4× CPU (main thread only; compositor, raster and GPU process unthrottled)
+
+1-minute load average during these runs: median 2.0, range 1.5–3.0 on 4 CPUs.
+
+| variant | N=100 | N=200 | N=300 | N=400 | N=500 | N=700 | N=1000 | holds up to (bracket) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| dom | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 59.2 · 1% · 17 | 53.2 · 13% · 33 | 41.3 · 45% · 33 | 24.3 · 97% · 50 | 14.7 · 100% · 100 | 300 (5/5) – 400 (0/5) |
+| svg | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 59.2 · 1% · 17 | 55.4 · 8% · 33 | 41.7 · 44% · 33 | 32.0 · 83% · 34 | 16.9 · 100% · 67 | 400 (4/5) – 500 (0/5) |
+| canvas2d | 60.0 · 0% · 17 | 60.0 · 0% · 17 | 58.8 · 2% · 17 | 44.1 · 36% · 33 | 37.7 · 59% · 33 | 26.7 · 98% · 50 | 19.0 · 100% · 67 | 300 (5/5) – 400 (0/5) |
+
+GPU-process CPU % (software display compositor) and main-thread busy % at 4×:
+
+| variant | N=100 | N=200 | N=300 | N=400 | N=500 | N=700 | N=1000 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| dom | GPU 11 · main 31 | GPU 19 · main 58 | GPU 27 · main 83 | GPU 35 · main 96 | GPU 43 · main 96 | GPU 60 · main 97 | GPU 84 · main 92 |
+| svg | GPU 3 · main 36 | GPU 3 · main 67 | GPU 3 · main 77 | GPU 3 · main 94 | GPU 3 · main 97 | GPU 3 · main 99 | GPU 2 · main 100 |
+| canvas2d | GPU 5 · main 44 | GPU 5 · main 75 | GPU 5 · main 96 | GPU 5 · main 99 | GPU 4 · main 99 | GPU 4 · main 100 | GPU 3 · main 100 |
+
+### The same 1× cells with the machine busier
+
+3 extra processes each spinning one CPU core for the whole phase, on top of whatever else the machine runs; compare with the same cells of the 1× sweep.
+
+| variant | N | quiet sweep: fps · missed % | with burners: fps · missed % | load average (sweep / burners) |
+| --- | --- | --- | --- | --- |
+| dom | 400 | 60.0 · 0% | 59.0 · 1% | 1.4 / 5.6 |
+| svg | 400 | 60.0 · 0% | 59.6 · 1% | 1.4 / 5.7 |
+| canvas2d | 400 | 60.0 · 0% | 59.8 · 0% | 1.4 / 5.5 |
+| canvas2d-worker | 400 | 60.0 · 0% | 60.0 · 0% | 1.4 / 5.4 |
+| dom | 700 | 60.0 · 0% | 34.1 · 63% | 1.6 / 5.5 |
+| svg | 700 | 60.0 · 0% | 47.6 · 24% | 1.6 / 5.7 |
+| canvas2d | 700 | 60.0 · 0% | 59.8 · 0% | 1.4 / 5.7 |
+| canvas2d-worker | 700 | 60.0 · 0% | 59.4 · 0% | 1.3 / 5.7 |
+| dom | 1000 | 57.4 · 4% | 17.9 · 98% | 1.9 / 5.7 |
+| svg | 1000 | 58.6 · 2% | 34.8 · 57% | 2.0 / 5.9 |
+| canvas2d | 1000 | 60.0 · 0% | 59.8 · 0% | 2.0 / 5.5 |
+| canvas2d-worker | 1000 | 59.4 · 1% | 59.6 · 1% | 2.0 / 5.3 |
+| dom | 1400 | 25.4 · 99% | 12.5 · 100% | 2.3 / 5.6 |
+| svg | 1400 | 46.0 · 28% | 25.9 · 78% | 2.7 / 6.1 |
+| canvas2d | 1400 | 58.8 · 2% | 56.6 · 6% | 2.6 / 6.0 |
+| canvas2d-worker | 1400 | 57.8 · 4% | 54.4 · 10% | 2.4 / 5.8 |
 
 ## One mesh per item vs one InstancedMesh, vanilla three.js vs React Three Fiber
 
@@ -160,28 +213,21 @@ Measured as one set (its own round-robin groups), so compare within this table. 
 
 WebGL disabled: **r3f** renderer none, poster visible no, canvases 0, error "THREE.WebGLRenderer: Error creating WebGL context."; **r3f-instanced** renderer poster, poster visible yes, canvases 0.
 
-## Main thread under load (50 ms busy every 100 ms): Canvas 2D on the main thread vs in a Worker
+## Main thread under load (50 ms busy every 100 ms): Canvas 2D on the main thread vs in a Worker (1× only)
 
-| variant | N | CPU | scene fps | scene frame p95 | main-thread fps | drag move→frame p50/p95 ms | move event delay p50/p95 ms | busy % | runs |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| canvas2d | 200 | 1× | 47.0 | 33.4 | 47.0 | 16.4 / 68.6 | 12.1 / 57.1 | 67 | 5 |
-| canvas2d-worker | 200 | 1× | 59.0 | 16.8 | 49.4 | 26.0 / 63.4 | 10.6 / 60.2 | 52 | 5 |
-| pixi | 200 | 1× | 10.1 | 166.6 | 10.1 | 183.2 / 273.4 | 91.8 / 162.9 | 100 | 5 |
-| dom | 200 | 1× | 42.8 | 50.0 | 42.8 | 15.9 / 71.5 | 10.8 / 58.4 | 68 | 5 |
-| canvas2d | 2000 | 1× | 17.3 | 100.0 | 17.3 | 97.1 / 165.6 | 70.1 / 85.0 | 100 | 5 |
-| canvas2d-worker | 2000 | 1× | 33.4 | 50.1 | 47.6 | 42.7 / 90.5 | 14.4 / 63.9 | 53 | 5 |
-| pixi | 2000 | 1× | 4.2 | 433.3 | 4.2 | 454.9 / 1026.9 | 233.7 / 567.0 | 100 | 5 |
-| dom | 2000 | 1× | 8.3 | 200.0 | 8.3 | 182.1 / 425.7 | 85.6 / 213.9 | 96 | 5 |
-| canvas2d | 200 | 4× | 37.9 | 50.1 | 37.9 | 50.5 / 121.1 | 13.6 / 63.0 | 96 | 5 |
-| canvas2d-worker | 200 | 4× | 60.0 | 16.8 | 49.8 | 24.9 / 60.0 | 9.8 / 50.0 | 53 | 5 |
-| pixi | 200 | 4× | 10.2 | 133.4 | 10.2 | 186.3 / 262.3 | 95.8 / 137.1 | 100 | 5 |
-| dom | 200 | 4× | 38.8 | 50.1 | 38.8 | 32.5 / 95.4 | 13.5 / 66.5 | 89 | 5 |
-| canvas2d | 2000 | 4× | 7.5 | 183.3 | 7.5 | 254.1 / 330.4 | 128.0 / 172.7 | 100 | 5 |
-| canvas2d-worker | 2000 | 4× | 37.5 | 33.4 | 48.5 | 34.7 / 82.5 | 10.2 / 60.5 | 53 | 5 |
-| pixi | 2000 | 4× | 2.5 | 700.0 | 2.5 | 706.5 / 1069.5 | 345.8 / 590.3 | 100 | 5 |
-| dom | 2000 | 4× | 4.2 | 316.7 | 4.2 | 370.8 / 611.6 | 98.3 / 329.3 | 99 | 5 |
+| variant | N | CPU | scene fps | missed vsyncs % | scene frame p95 | main-thread fps | drag move→frame p50/p95 ms | move event delay p50/p95 ms | busy % | runs |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| canvas2d | 200 | 1× | 49.9 | 20 | 33.4 | 49.9 | 15.9 / 60.7 | 12.3 / 53.5 | 66 | 5 |
+| canvas2d-worker | 200 | 1× | 60.0 | 0 | 16.7 | 50.0 | 29.4 / 33.3 | 12.6 / 16.4 | 51 | 5 |
+| dom | 200 | 1× | 49.7 | 20 | 33.4 | 49.7 | 13.5 / 57.2 | 9.8 / 49.8 | 64 | 5 |
+| canvas2d | 700 | 1× | 40.0 | 25 | 50.0 | 40.0 | 15.0 / 69.2 | 6.7 / 51.1 | 84 | 5 |
+| canvas2d-worker | 700 | 1× | 60.0 | 0 | 16.7 | 50.0 | 29.0 / 33.4 | 11.5 / 16.0 | 51 | 5 |
+| dom | 700 | 1× | 39.7 | 26 | 50.0 | 39.7 | 24.0 / 76.2 | 11.5 / 58.5 | 88 | 5 |
+| canvas2d | 2000 | 1× | 23.1 | 61 | 83.4 | 23.1 | 93.0 / 101.9 | 70.9 / 74.1 | 100 | 5 |
+| canvas2d-worker | 2000 | 1× | 44.2 | 36 | 33.4 | 50.0 | 35.8 / 69.8 | 14.1 / 55.8 | 51 | 5 |
+| dom | 2000 | 1× | 12.4 | 100 | 116.7 | 12.4 | 102.6 / 147.6 | 53.5 / 99.0 | 91 | 5 |
 
-For the Worker variant, "scene fps" is the Worker's own rAF cadence and move→frame is measured in the Worker (event timestamp → the Worker finished drawing the frame that used it); "main-thread fps" is the page's rAF.
+For the Worker variant, "scene fps" is the Worker's own rAF cadence and move→frame is measured in the Worker (event timestamp → the Worker finished drawing the frame that used it); "main-thread fps" is the page's rAF. Measured at 1× only, because CDP throttling does not slow the Worker.
 
 ## Frames that reached the screen (compositor), with and without main-thread load
 
@@ -202,28 +248,28 @@ viz Display::DrawAndSwap events per second over a 3 s trace, after 1.5 s warm-up
 
 ## Compositor-driven CSS animations and the main thread (plain divs)
 
-Plain 40px divs, one looping 1.6 s bob each; 2 s trace after 0.8 s; style recalcs per second and mean ms each (median of runs). "+ rAF loop" adds an empty requestAnimationFrame loop elsewhere on the page; "+ moving one element (drag)" moves one (non-animated) div from a 16 ms timer, as pointermove handlers do during a drag, with no rAF loop.
+Plain 40px divs, one looping 1.6 s bob each; 2 s trace after 0.8 s; style recalcs per second, mean ms each, and total style ms per second (median of runs). "+ rAF loop" adds an empty requestAnimationFrame loop elsewhere on the page; "+ moving one element (drag)" moves one (non-animated) div from a 16 ms timer, as pointermove handlers do during a drag, with no rAF loop.
 
-| mode | N | style recalcs / s | ms each | main busy % |
-| --- | --- | --- | --- | --- |
-| css translate | 200 | 0.0 | 0.00 | 0.3 |
-| css transform | 200 | 0.0 | 0.00 | 0.1 |
-| waapi transform | 200 | 0.0 | 0.00 | 0.1 |
-| css translate + rAF loop | 200 | 59.0 | 0.75 | 14.7 |
-| css transform + rAF loop | 200 | 60.0 | 0.78 | 10.9 |
-| waapi transform + rAF loop | 200 | 60.0 | 0.86 | 13.6 |
-| no animation + rAF loop | 200 | 0.0 | 0.00 | 0.8 |
-| css translate + moving one element (drag) | 200 | 53.5 | 1.17 | 19.1 |
-| no animation + moving one element (drag) | 200 | 56.0 | 0.09 | 2.8 |
-| css translate | 2000 | 0.0 | 0.00 | 4.2 |
-| css transform | 2000 | 0.5 | 10.95 | 1.1 |
-| waapi transform | 2000 | 0.0 | 0.00 | 0.3 |
-| css translate + rAF loop | 2000 | 13.5 | 24.90 | 62.3 |
-| css transform + rAF loop | 2000 | 13.0 | 23.45 | 55.1 |
-| waapi transform + rAF loop | 2000 | 15.5 | 19.63 | 49.0 |
-| no animation + rAF loop | 2000 | 0.0 | 0.00 | 0.8 |
-| css translate + moving one element (drag) | 2000 | 10.0 | 28.58 | 69.3 |
-| no animation + moving one element (drag) | 2000 | 56.5 | 0.17 | 5.7 |
+| mode | N | style recalcs / s | ms each | style ms per s | main busy % | runs: style ms per s |
+| --- | --- | --- | --- | --- | --- | --- |
+| css translate | 200 | 0.0 | 0.00 | 0 | 0.1 | 0, 0, 0, 0, 0 |
+| css transform | 200 | 0.0 | 0.00 | 0 | 0.1 | 0, 0, 0, 0, 0 |
+| waapi transform | 200 | 0.0 | 0.00 | 0 | 0.1 | 0, 0, 0, 0, 0 |
+| css translate + rAF loop | 200 | 60.0 | 0.78 | 47 | 10.0 | 47, 47, 45, 48, 47 |
+| css transform + rAF loop | 200 | 60.0 | 0.71 | 42 | 8.5 | 43, 42, 41, 45, 42 |
+| waapi transform + rAF loop | 200 | 60.0 | 0.66 | 40 | 7.8 | 41, 39, 38, 40, 40 |
+| no animation + rAF loop | 200 | 0.0 | 0.00 | 0 | 0.9 | 0, 0, 0, 0, 0 |
+| css translate + moving one element (drag) | 200 | 60.0 | 0.87 | 52 | 13.7 | 51, 52, 55, 52, 53 |
+| no animation + moving one element (drag) | 200 | 60.5 | 0.07 | 4 | 2.0 | 4, 4, 4, 4, 4 |
+| css translate | 2000 | 0.5 | 11.57 | 6 | 1.4 | 6, 6, 6, 6, 6 |
+| css transform | 2000 | 0.5 | 12.07 | 6 | 1.4 | 6, 5, 7, 6, 6 |
+| waapi transform | 2000 | 0.5 | 10.50 | 5 | 1.2 | 4, 5, 6, 5, 5 |
+| css translate + rAF loop | 2000 | 26.0 | 10.23 | 266 | 52.6 | 266, 248, 268, 270, 246 |
+| css transform + rAF loop | 2000 | 26.5 | 10.38 | 273 | 48.3 | 275, 287, 273, 266, 268 |
+| waapi transform + rAF loop | 2000 | 28.0 | 9.09 | 250 | 43.0 | 259, 242, 266, 250, 250 |
+| no animation + rAF loop | 2000 | 0.0 | 0.00 | 0 | 0.9 | 0, 0, 0, 0, 0 |
+| css translate + moving one element (drag) | 2000 | 25.0 | 9.26 | 243 | 60.7 | 241, 274, 243, 232, 248 |
+| no animation + moving one element (drag) | 2000 | 60.0 | 0.16 | 10 | 3.7 | 10, 10, 9, 10, 9 |
 
 ## Accessibility
 
@@ -243,24 +289,85 @@ Plain 40px divs, one looping 1.6 s bob each; 2 s trace after 0.8 s; style recalc
 | pixi-a11y | yes | 1 | 20 | button "Candle 20 of 20" | pass (moved 24,16, counter 1, live "Placed Candle 20 of 20.") | `- group "Decorations on the cake": /   - button "Candle 1 of 20"` |
 | pixi-pixia11y | yes | 20 | 20 | button "Candle 1 of 20" | no: Enter selects true, arrows move false | `- button "Candle 1 of 20" / - button "Strawberry 2 of 20"` |
 
-### Cost of the keyboard/screen-reader layer (1× CPU)
+### Single-pointer alternative (tap to pick up, tap a spot to place; WCAG 2.5.7)
 
-| variant | N | first frame ms | fps | frame p95 | JS ms/frame | renderer ms/frame | busy % | drag move→frame p50/p95 | DOM nodes | heap MB | app gzip KB |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| dom | 200 | 65 | 60.0 | 16.7 | — | 3.6 | 16 | 13.9 / 18.9 | 646 | 2.0 | 3.0 |
-| dom-a11y | 200 | 55 | 60.0 | 16.8 | — | 3.7 | 15 | 14.7 / 19.9 | 650 | 2.0 | 4.1 |
-| svg | 200 | 46 | 60.0 | 16.7 | — | 7.8 | 18 | 14.2 / 19.5 | 1274 | 2.1 | 3.0 |
-| svg-a11y | 200 | 65 | 60.0 | 16.8 | — | 7.8 | 19 | 13.3 / 19.1 | 1276 | 2.1 | 4.2 |
-| pixi | 200 | 246 | 24.8 | 66.8 | 0.30 | 2.0 | 100 | 90.0 / 130.1 | 44 | 4.3 | 3.2 |
-| pixi-a11y | 200 | 286 | 23.3 | 83.3 | 0.20 | 1.9 | 100 | 87.6 / 154.0 | 249 | 4.3 | 4.4 |
-| pixi-pixia11y | 200 | 258 | 24.0 | 66.7 | 0.70 | 4.8 | 100 | 88.9 / 142.8 | 245 | 4.4 | 3.3 |
-| dom | 2000 | 95 | 6.7 | 383.3 | — | 78.8 | 72 | 227.3 / 504.8 | 6046 | 2.2 | 3.0 |
-| dom-a11y | 2000 | 85 | 5.8 | 333.4 | — | 84.7 | 71 | 231.5 / 400.5 | 6050 | 2.2 | 4.1 |
-| svg | 2000 | 107 | 12.5 | 183.3 | — | 65.4 | 98 | 89.6 / 225.6 | 12074 | 2.3 | 3.0 |
-| svg-a11y | 2000 | 92 | 16.2 | 133.3 | — | 66.5 | 97 | 83.7 / 223.1 | 12076 | 2.4 | 4.2 |
-| pixi | 2000 | 357 | 2.8 | 483.3 | 0.90 | 5.0 | 100 | 800.9 / 1270.7 | 44 | 6.9 | 3.2 |
-| pixi-a11y | 2000 | 396 | 2.3 | 566.5 | 0.90 | 5.8 | 100 | 784.1 / 1156.0 | 2049 | 7.0 | 4.4 |
-| pixi-pixia11y | 2000 | 415 | 2.4 | 600.0 | 7.20 | 31.8 | 100 | 888.7 / 1195.4 | 2045 | 8.0 | 3.3 |
+| variant | pass | landed vs target (px off) | counter | announced after 1st / 2nd tap |
+| --- | --- | --- | --- | --- |
+| dom-a11y | yes | 456,223 vs 456,223 (0) | 0 → 1 | "Picked up Candle 20 of 20. Tap where it should go, or tap it again to put it down." / "Placed Candle 20 of 20." |
+| svg-a11y | yes | 456,223 vs 456,223 (0) | 0 → 1 | "Picked up Candle 20 of 20. Tap where it should go, or tap it again to put it down." / "Placed Candle 20 of 20." |
+| pixi-a11y | yes | 456,223 vs 456,223 (0) | 0 → 1 | "Picked up Candle 20 of 20. Tap where it should go, or tap it again to put it down." / "Placed Candle 20 of 20." |
+
+### Is the keyboard control still over the object after a mouse drag?
+
+| variant | result | object after drag | control centre | drift px |
+| --- | --- | --- | --- | --- |
+| dom-a11y | n/a (the control is the object) | — | — | — |
+| svg-a11y | n/a (the control is the object) | — | — | — |
+| pixi-a11y | yes | 716,373 | 716,373 | 0.0 |
+| pixi-a11y ?nosync (earlier bug) | NO | 716,373 | 616,313 | 116.6 |
+
+### Where the focus ring is drawn (`shots/focus-ring.jpg`)
+
+| variant | pass | focused element box | ring box | drawn by | ring centre off object px |
+| --- | --- | --- | --- | --- | --- |
+| dom-a11y | yes | 48×48 | 48×48 | CSS outline on the element box | 0 |
+| svg-a11y | yes | 512×74 | 60×60 | explicit ring shape | 0 |
+| svg-a11y ?outline | NO | 512×72 | 512×72 | CSS outline on the element box | 134 |
+| pixi-a11y | yes | 48×48 | 48×48 | CSS outline on the element box | 0 |
+
+In SVG, a `<use>` of a `<symbol>` whose viewBox crops a sprite atlas reports the whole atlas strip as its box, so a CSS outline (and anything else that reads the element box) frames the wrong area; the keyboard build draws an explicit ring shape instead.
+
+First Tab into the stage: **svg-a11y** → <g role=button> "Candle 20 of 20" (ok); **svg-a11y ?focusonsvg** → <g role=group> "Decorations on the cake" (wrong stop). In Chromium an SVG element with a focus/focusin listener becomes a Tab stop, so the listener belongs on an HTML ancestor.
+
+### Cost of the keyboard/screen-reader layer: DOM and SVG (1× CPU)
+
+| variant | N | CPU | first frame ms | fps | missed % | JS ms/frame | renderer ms/frame | busy % | drag: move→frame p50/p95 | drag: style+layout ms per move | drag: main ms per move | DOM nodes | heap MB | app gzip KB | runs |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| dom | 200 | 1× | 42 | 60.0 | 0 | — | 3.8 | 15 | 14.6 / 18.7 | 3.16 | 8.1 | 646 | 2.0 | 3.0 | 5 |
+| dom-a11y | 200 | 1× | 58 | 60.0 | 0 | — | 3.8 | 15 | 14.7 / 19.2 | 3.30 | 8.3 | 650 | 2.0 | 4.4 | 5 |
+| svg | 200 | 1× | 53 | 60.0 | 0 | — | 9.5 | 21 | 13.8 / 19.8 | 2.76 | 9.8 | 1274 | 2.1 | 3.1 | 5 |
+| svg-a11y | 200 | 1× | 48 | 60.0 | 0 | — | 9.7 | 22 | 13.8 / 19.7 | 3.02 | 10.4 | 1279 | 2.1 | 4.6 | 5 |
+| dom | 2000 | 1× | 49 | 20.0 | 100 | — | 56.1 | 69 | 98.3 / 144.6 | 44.58 | 107.6 | 6046 | 2.2 | 3.0 | 5 |
+| dom-a11y | 2000 | 1× | 70 | 20.1 | 100 | — | 57.5 | 70 | 94.7 / 129.0 | 43.35 | 105.0 | 6050 | 2.2 | 4.4 | 5 |
+| svg | 2000 | 1× | 67 | 27.0 | 91 | — | 80.2 | 95 | 65.5 / 81.8 | 44.41 | 114.0 | 12074 | 2.2 | 3.1 | 5 |
+| svg-a11y | 2000 | 1× | 73 | 26.6 | 94 | — | 80.8 | 95 | 63.6 / 82.5 | 42.37 | 109.5 | 12079 | 2.4 | 4.6 | 5 |
+
+### Cost of the keyboard/screen-reader layer: PixiJS on WebGL (SwiftShader; read JS and renderer ms/frame only)
+
+PixiJS's built-in AccessibilitySystem registers only for the WebGL and WebGPU renderers, so its cost can only be measured here. Frame rate, busy % and drag latency are SwiftShader-bound and say nothing about the layer.
+
+| variant | N | CPU | first frame ms | fps | missed % | JS ms/frame | renderer ms/frame | busy % | drag: move→frame p50/p95 | drag: style+layout ms per move | drag: main ms per move | DOM nodes | heap MB | app gzip KB | runs |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| pixi | 2000 | 1× | 243 | 6.3 | 100 | 0.90 | 4.9 | 100 | 296.3 / 421.7 | 0.01 | 504.9 | 44 | 6.9 | 3.2 | 5 |
+| pixi-a11y | 2000 | 1× | 263 | 6.0 | 100 | 0.90 | 5.5 | 100 | 315.8 / 413.4 | 0.43 | 519.3 | 2049 | 7.0 | 4.8 | 5 |
+| pixi-pixia11y | 2000 | 1× | 269 | 5.6 | 100 | 5.30 | 32.7 | 100 | 354.1 / 540.5 | 42.50 | 607.4 | 2045 | 8.0 | 3.4 | 5 |
+
+### Cost of the keyboard/screen-reader layer: PixiJS on its Canvas 2D renderer (WebGL disabled)
+
+WebGL is disabled so PixiJS runs on its own Canvas 2D renderer at a measurable frame rate (under SwiftShader it ran at 2–3 fps, where frame time, busy % and drag latency cannot show a small cost). `?nosync` = the keyboard build without the per-move overlay sync (the earlier bug); `?lefttop` = the sync writing left/top instead of transform. `pixi-pixia11y` is inert here: PixiJS registers its AccessibilitySystem only for WebGL and WebGPU, so on its Canvas fallback no accessibility DOM exists (compare DOM nodes). "drag: style+layout ms per move" is main-thread style recalc + layout time while the pointer is down, divided by the 30 moves.
+
+| variant | N | CPU | first frame ms | fps | missed % | JS ms/frame | renderer ms/frame | busy % | drag: move→frame p50/p95 | drag: style+layout ms per move | drag: main ms per move | DOM nodes | heap MB | app gzip KB | runs |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| pixi | 200 | 1× | 155 | 60.0 | 0 | 0.50 | 4.3 | 22 | 14.5 / 20.4 | 0.01 | 10.8 | 43 | 4.1 | 3.2 | 5 |
+| pixi-a11y | 200 | 1× | 153 | 60.0 | 0 | 0.50 | 4.1 | 22 | 14.7 / 19.7 | 0.14 | 10.3 | 248 | 4.2 | 4.8 | 5 |
+| pixi-pixia11y | 200 | 1× | 156 | 60.0 | 0 | 0.50 | 4.2 | 21 | 14.8 / 20.4 | 0.01 | 10.4 | 43 | 4.2 | 3.4 | 5 |
+| pixi-a11y ?nosync | 200 | 1× | 152 | 60.0 | 0 | 0.50 | 4.2 | 22 | 14.7 / 20.0 | 0.01 | 10.8 | 248 | 4.2 | 4.8 | 5 |
+| pixi-a11y ?lefttop | 200 | 1× | 160 | 60.0 | 0 | 0.50 | 4.1 | 21 | 14.5 / 20.0 | 0.30 | 11.1 | 248 | 4.2 | 4.8 | 5 |
+| pixi | 2000 | 1× | 199 | 39.7 | 51 | 3.90 | 25.8 | 100 | 51.2 / 71.5 | 0.01 | 92.0 | 43 | 6.8 | 3.2 | 5 |
+| pixi-a11y | 2000 | 1× | 226 | 40.3 | 49 | 3.80 | 25.8 | 100 | 55.1 / 63.6 | 0.38 | 92.9 | 2048 | 6.9 | 4.8 | 5 |
+| pixi-pixia11y | 2000 | 1× | 226 | 39.9 | 51 | 3.90 | 25.6 | 100 | 51.6 / 64.1 | 0.01 | 91.6 | 43 | 7.1 | 3.4 | 5 |
+| pixi-a11y ?nosync | 2000 | 1× | 206 | 39.9 | 50 | 3.80 | 26.0 | 100 | 52.5 / 61.8 | 0.01 | 91.8 | 2048 | 6.8 | 4.8 | 5 |
+| pixi-a11y ?lefttop | 2000 | 1× | 205 | 41.3 | 45 | 3.60 | 25.1 | 100 | 54.6 / 66.4 | 1.64 | 98.2 | 2048 | 6.8 | 4.8 | 5 |
+| pixi | 200 | 4× | 503 | 59.4 | 1 | 2.40 | 18.8 | 95 | 35.8 / 51.8 | 0.05 | 80.4 | 43 | 4.1 | 3.2 | 5 |
+| pixi-a11y | 200 | 4× | 536 | 59.0 | 2 | 2.40 | 18.8 | 94 | 37.6 / 50.1 | 0.74 | 83.1 | 248 | 4.2 | 4.8 | 5 |
+| pixi-pixia11y | 200 | 4× | 541 | 59.4 | 1 | 2.40 | 18.7 | 94 | 34.0 / 48.9 | 0.04 | 78.4 | 43 | 4.2 | 3.4 | 5 |
+| pixi-a11y ?nosync | 200 | 4× | 527 | 59.6 | 1 | 2.40 | 18.6 | 94 | 35.2 / 50.8 | 0.03 | 80.3 | 248 | 4.2 | 4.8 | 5 |
+| pixi-a11y ?lefttop | 200 | 4× | 516 | 59.0 | 2 | 2.40 | 18.8 | 93 | 37.9 / 52.7 | 1.44 | 82.9 | 248 | 4.2 | 4.8 | 5 |
+| pixi | 2000 | 4× | 630 | 8.3 | 100 | 20.00 | 132.8 | 100 | 251.2 / 295.1 | 0.04 | 409.9 | 43 | 7.1 | 3.2 | 5 |
+| pixi-a11y | 2000 | 4× | 703 | 8.2 | 100 | 20.40 | 132.7 | 100 | 272.6 / 333.2 | 1.76 | 437.2 | 2048 | 7.3 | 4.8 | 5 |
+| pixi-pixia11y | 2000 | 4× | 654 | 7.9 | 100 | 20.65 | 139.7 | 100 | 253.0 / 298.8 | 0.05 | 413.6 | 43 | 7.5 | 3.4 | 5 |
+| pixi-a11y ?nosync | 2000 | 4× | 709 | 8.2 | 100 | 20.40 | 134.5 | 100 | 256.0 / 294.4 | 0.04 | 412.7 | 2048 | 7.3 | 4.8 | 5 |
+| pixi-a11y ?lefttop | 2000 | 4× | 707 | 8.1 | 100 | 20.10 | 135.2 | 100 | 269.6 / 307.6 | 7.15 | 432.9 | 2048 | 7.2 | 4.8 | 5 |
 
 ## prefers-reduced-motion: reduce, at rest (N=200, 1×; no harness rAF loop)
 
@@ -268,12 +375,12 @@ Plain 40px divs, one looping 1.6 s bob each; 2 s trace after 0.8 s; style recalc
 | --- | --- | --- | --- | --- | --- | --- |
 | dom | 0 | 0.0 | 0.0 | 0.0 | yes | 3 |
 | svg | 0 | 0.0 | 0.0 | 0.0 | yes | 3 |
-| canvas2d | 0 | 0.0 | 0.0 | 0.0 | yes | 3 |
-| canvas2d-worker | 0 | 0.0 | 0.0 | 0.0 | yes | 3 |
-| pixi | 300 | 0.9 | 1.2 | 0.6 | yes | 3 |
+| canvas2d | 0 | 0.0 | 0.2 | 0.0 | yes | 3 |
+| canvas2d-worker | 0 | 0.0 | 0.0 | 0.2 | yes | 3 |
+| pixi | 300 | 1.2 | 2.8 | 1.0 | yes | 3 |
 | phaser | 0 | 0.0 | 0.0 | 0.0 | yes | 3 |
 | three | 0 | 0.0 | 0.0 | 0.0 | yes | 3 |
-| three-instanced | 0 | 0.0 | 0.0 | 0.0 | yes | 3 |
+| three-instanced | 0 | 0.0 | 0.2 | 0.0 | yes | 3 |
 | r3f | 0 | 0.0 | 0.0 | 0.0 | yes | 3 |
 | pixi+Ticker.system.stop() | 0 | 0.0 | 0.0 | 0.0 | yes | 3 |
 
@@ -281,12 +388,12 @@ Plain 40px divs, one looping 1.6 s bob each; 2 s trace after 0.8 s; style recalc
 
 | variant | renderer chosen | first frame | fps | drag works | errors |
 | --- | --- | --- | --- | --- | --- |
-| dom | dom | 222 ms | 59.5 | yes |  |
-| svg | svg | 358 ms | 59.5 | yes |  |
-| canvas2d | canvas2d | 78 ms | 60.0 | yes |  |
-| canvas2d-worker | canvas2d-offscreen-worker | 289 ms | 60.0 | yes |  |
-| pixi | pixi-canvas | 346 ms | 60.0 | yes |  |
-| phaser | phaser-canvas | 176 ms | 60.0 | yes |  |
+| dom | dom | 33 ms | 60.0 | yes |  |
+| svg | svg | 67 ms | 60.0 | yes |  |
+| canvas2d | canvas2d | 47 ms | 60.0 | yes |  |
+| canvas2d-worker | canvas2d-offscreen-worker | 66 ms | 60.0 | yes |  |
+| pixi | pixi-canvas | 181 ms | 60.0 | yes |  |
+| phaser | phaser-canvas | 157 ms | 60.0 | yes |  |
 | three | none | none | — | no | THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch; THREE.WebGLRenderer |
 | three-instanced | none | none | — | no | THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch; THREE.WebGLRenderer |
 | r3f | — | none | — | no | THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch; THREE.WebGLRenderer |
@@ -297,22 +404,22 @@ WEBGL_lose_context.loseContext(), 500 ms, restoreContext(), 1.5 s; pixel differe
 
 | variant | recovered | lost / restored events | scene frames in 1 s after | % px differ vs before | errors |
 | --- | --- | --- | --- | --- | --- |
-| pixi | yes | 1 / 1 | 19 | 4.56 | [.WebGL-0x393c00160e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels; [.WebGL-0x393c00160e00] |
-| phaser | yes | 1 / 1 | 17 | 7.00 | WebGL Context lost. Renderer disabled; WebGL Context restored. Renderer running again. |
-| three | yes | 1 / 1 | 20 | 6.81 |  |
-| three-instanced | yes | 1 / 1 | 8 | 6.66 |  |
-| r3f | yes | 1 / 1 | 29 | 7.76 | THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. |
+| pixi | yes | 1 / 1 | 35 | 6.98 |  |
+| phaser | yes | 1 / 1 | 30 | 8.17 | WebGL Context lost. Renderer disabled; WebGL Context restored. Renderer running again. |
+| three | yes | 1 / 1 | 29 | 7.89 |  |
+| three-instanced | yes | 1 / 1 | 29 | 7.70 |  |
+| r3f | yes | 1 / 1 | 30 | 7.93 | THREE.Clock: This module has been deprecated. Please use THREE.Timer instead. |
 
 ### Engines on their Canvas 2D fallback vs vanilla Canvas 2D (WebGL disabled, 1× CPU)
 
 | variant | N | renderer | fps | frame p95 | JS ms/frame p50/p95 | renderer ms/frame | busy % | drag move→frame p50/p95 | heap MB | runs |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| canvas2d | 200 | canvas2d | 59.6 | 16.8 | 0.20 / 0.30 | 3.2 | 19 | 14.6 / 19.0 | 1.9 | 3 |
-| pixi | 200 | pixi-canvas | 60.0 | 16.8 | 0.50 / 0.70 | 3.4 | 20 | 15.1 / 19.5 | 4.1 | 3 |
-| phaser | 200 | phaser-canvas | 60.0 | 16.7 | 0.40 / 0.70 | 3.9 | 24 | 14.7 / 23.1 | 5.5 | 3 |
-| canvas2d | 2000 | canvas2d | 41.9 | 33.4 | 1.60 / 2.50 | 22.6 | 99 | 46.2 / 57.5 | 2.1 | 3 |
-| pixi | 2000 | pixi-canvas | 42.2 | 33.4 | 3.50 / 4.70 | 22.7 | 100 | 47.0 / 57.7 | 6.8 | 3 |
-| phaser | 2000 | phaser-canvas | 38.3 | 33.4 | 3.00 / 4.80 | 26.0 | 99 | 47.3 / 82.2 | 7.5 | 3 |
+| canvas2d | 200 | canvas2d | 60.0 | 16.8 | 0.30 / 0.40 | 4.3 | 22 | 14.4 / 19.3 | 1.9 | 3 |
+| pixi | 200 | pixi-canvas | 60.0 | 16.8 | 0.60 / 0.80 | 4.8 | 24 | 13.9 / 20.5 | 4.1 | 3 |
+| phaser | 200 | phaser-canvas | 60.0 | 16.7 | 0.50 / 0.90 | 5.0 | 27 | 14.2 / 20.2 | 5.5 | 3 |
+| canvas2d | 2000 | canvas2d | 37.2 | 33.4 | 1.90 / 2.70 | 27.6 | 100 | 49.8 / 78.3 | 2.1 | 3 |
+| pixi | 2000 | pixi-canvas | 38.7 | 33.4 | 4.10 / 4.70 | 26.6 | 100 | 51.2 / 61.8 | 6.8 | 3 |
+| phaser | 2000 | phaser-canvas | 35.3 | 33.4 | 3.50 / 5.10 | 29.8 | 100 | 57.8 / 66.4 | 7.5 | 3 |
 
 ## Visual parity
 

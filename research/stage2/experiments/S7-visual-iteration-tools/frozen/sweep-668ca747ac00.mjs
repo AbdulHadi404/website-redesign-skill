@@ -352,16 +352,13 @@ export function layoutProbe(opts = {}) {
   }
 
   // ---- dead bands ----
-  // Only when every text run was counted: past the 6,000-run cap (a list grown to 500 items) uncounted text would
-  // read as empty space.
-  if (runs.length < 6000) {
+  {
     const STEP = 8, docH = Math.max(doc.scrollHeight, body.scrollHeight);
     const occ = new Uint8Array(Math.ceil(docH / STEP) + 1);
     const fill = (t, b) => { for (let y = Math.max(0, Math.floor((t + sy) / STEP)); y <= Math.min(occ.length - 1, Math.floor((b + sy) / STEP)); y++) occ[y] = 1; };
     for (const r of runs) for (const q of r.rects) fill(q.top, q.bottom);
     for (const el of body.querySelectorAll('img, svg, video, canvas, iframe, picture, object, embed, input, select, textarea, button, [style*="background-image"]')) {
-      // aria-hidden hides from assistive tech, not from the eye: a decorative SVG placeholder fills the band.
-      if (el.closest('[hidden], [inert], dialog:not([open]), template') || !visible(el)) continue;
+      if (hiddenAnc(el) || !visible(el)) continue;
       const q = el.getBoundingClientRect(); if (q.width >= 8 && q.height >= 8) fill(q.top, q.bottom);
     }
     for (const [el] of window.__swBg || []) { if (el.isConnected && visible(el)) { const q = el.getBoundingClientRect(); if (q.width >= 8 && q.height >= 8) fill(q.top, q.bottom); } }
@@ -513,14 +510,6 @@ export async function measureAt(page, opts = {}) {
     // widened, that edge sits at innerWidth − clientWidth).
     if (o?.culprits?.length && !r.rtl) o.culprits = o.culprits.filter((c) => c.right > r.vw + 1);
     if (o && r.rtl) o.culprits = await page.evaluate(rtlCulprits, Math.max(0, r.iw - r.vw)).catch(() => []);
-    // A fixed or sticky bar as wide as the layout viewport follows the page once something else has widened it:
-    // name what widened it (when the probe found anything else).
-    if (o?.culprits?.length > 1) {
-      // The bar itself only: a nav that overflows inside a sticky header is a real culprit.
-      const follows = await page.evaluate((sels) => sels.map((s) => { let e = null; try { e = document.querySelector(s.replace(/^… > /, '')); } catch { /* bad selector */ } if (!e) return false; const p = getComputedStyle(e).position; return (p === 'fixed' || p === 'sticky') && Math.abs(e.getBoundingClientRect().width - innerWidth) <= 2; }), o.culprits.map((c) => c.selector)).catch(() => []);
-      const rest = o.culprits.filter((c, i) => !follows[i]);
-      if (rest.length) o.culprits = rest;
-    }
     if (o?.overflow && !(o.by <= 1 && !o.culprits.length)) {
       const c = o.culprits[0];
       const where = c ? await page.evaluate(locate, c.selector).catch(() => null) : null;

@@ -17,7 +17,15 @@ export async function writeReport(R, out) {
   const m = R.meta || {};
   L.push(`Generated ${m.date?.slice(0, 16) ?? ''} · Chromium ${m.chromium ?? '?'} headless · ${m.cpus} × ${m.cpuModel ?? ''} (shared) · WebGL: ${m.webgl?.renderer ?? 'none'}`, '');
   L.push('**Every GPU-bound number here is CPU-emulated.** WebGL runs on SwiftShader and the display compositor runs in software (`SoftwareRenderer`), so frame rates of the WebGL variants — and, less so, of DOM/SVG compositing — are pessimistic and comparable only with each other. `JS ms/frame` (the scene\'s own update + render call) and `renderer ms/frame` (renderer-process CPU per displayed frame) are the GPU-independent columns. `busy %` (CDP TaskDuration) counts a main thread blocked waiting for the emulated GPU as busy, so it overstates WebGL main-thread load.', '');
+  L.push('**"4×" is not a phone.** CDP `Emulation.setCPUThrottlingRate` slows only the page\'s main thread; the compositor, raster threads, GPU process and Workers run at full speed (see "What CPU throttling reaches" below). A 4× column therefore means "main thread 4× slower, everything else unchanged", which favours DOM/SVG (whose compositing and raster happen off the main thread) over Canvas 2D (which draws on the main thread), and would favour a Worker over everything, so Worker variants are measured at 1× only. Read 4× results as relative positions, not as object counts for a phone.', '');
   L.push(m.method ?? '', '');
+  if (R.throttleProbe) {
+    L.push('## What CPU throttling reaches', '', R.throttleProbe.note, '');
+    L.push(head(['throttle', 'main thread min / median ms', 'Worker min / median ms']));
+    for (const c of Object.values(R.throttleProbe.cells)) L.push(row([`${c.rate}×`, `${c.mainMin} / ${c.mainMedian}`, `${c.workerMin} / ${c.workerMedian}`]));
+    const w = R.throttleProbe.workerTarget;
+    L.push('', `Emulation.setCPUThrottlingRate sent to the Worker\'s own target: ${w?.reply?.error ? `error "${w.reply.error}"` : JSON.stringify(w)}.`, '');
+  }
 
   // Build sizes
   if (R.build) {
@@ -35,7 +43,7 @@ export async function writeReport(R, out) {
     L.push('## Steady state and drag, per N and CPU throttle (medians of runs)', '');
     const cols = ['variant', 'renderer', 'first frame ms', 'fps', 'frame p50/p95 ms', 'JS ms/frame p50/p95', 'renderer ms/frame', 'GPU-proc CPU %', 'busy %', 'drag move→frame p50/p95 ms', 'Event Timing max ms', 'heap MB', 'DOM nodes', 'draw calls', 'runs'];
     const groups = {};
-    for (const [k, v] of Object.entries(R.main)) { const g = `N=${v.cell.n}, ${v.cell.throttle}× CPU`; (groups[g] ??= []).push([k, v]); }
+    for (const [k, v] of Object.entries(R.main)) { const g = `N=${v.cell.n}, ${v.cell.throttle}× CPU${v.cell.throttle > 1 ? ' (main thread only)' : ''}`; (groups[g] ??= []).push([k, v]); }
     for (const [g, rows] of Object.entries(groups).sort((a, b) => { const p = (s) => s.match(/N=(\d+), (\d)/).slice(1).map(Number); const [an, at] = p(a[0]); const [bn, bt] = p(b[0]); return at - bt || an - bn; })) {
       L.push(`### ${g}`, '', head(cols));
       for (const [, v] of rows) {
@@ -49,23 +57,42 @@ export async function writeReport(R, out) {
 
   if (R.sweep) {
     L.push('## Where the CPU renderers stop holding the frame rate (object-count sweep)', '');
-    L.push('Same scene and method as the main matrix, measured as its own round-robin set (so N = 200 and 2000 repeat the main matrix under this run\'s background load). Each cell: fps · frame p95 ms · main-thread busy % (for the Worker variant, fps is the Worker\'s and busy % is the page\'s main thread). The CPU renderers\' raster and compositing run in software here, so absolute fps is pessimistic; use the crossover points relative to each other.', '');
+    L.push('Same scene and method as the main matrix, measured as its own round-robin set per throttle. Each cell: fps · % of frames that missed a vsync (rAF delta > 25 ms) · frame p95 ms, medians of runs. **Holds** = at most 10 % of frames miss a vsync (median of runs); the limit is given as a bracket between the last count that holds and the first that does not, with how many runs held at each end. p95 is shown but not used: rAF deltas come in whole vsyncs (17 / 33 / 50 ms), so p95 flips on a single frame. For the Worker variant, fps is the Worker\'s. The CPU renderers\' raster and compositing run in software here, so absolute fps is pessimistic; use the crossover points relative to each other.', '');
     for (const thr of [1, 4]) {
       const ns = [...new Set(Object.values(R.sweep).filter((v) => v.cell.throttle === thr).map((v) => v.cell.n))].sort((a, b) => a - b);
       if (!ns.length) continue;
-      L.push(`### ${thr}× CPU`, '', head(['variant', ...ns.map((n) => `N=${n}`)]));
+      const loads = Object.values(R.sweep).filter((v) => v.cell.throttle === thr).flatMap((v) => v.runs.map((r) => r.loadavg?.[0])).filter((x) => x != null).sort((a, b) => a - b);
+      L.push(`### ${thr}× CPU${thr > 1 ? ' (main thread only; compositor, raster and GPU process unthrottled)' : ''}`, '', `1-minute load average during these runs: median ${f(loads[loads.length >> 1])}, range ${f(loads[0])}–${f(loads[loads.length - 1])} on ${R.meta?.cpus ?? '?'} CPUs.`, '', head(['variant', ...ns.map((n) => `N=${n}`), 'holds up to (bracket)']));
       for (const vname of ['dom', 'svg', 'canvas2d', 'canvas2d-worker']) {
-        const cells = ns.map((n) => {
-          const k = `${vname}|${n}|${thr}x`;
-          const s = R.sweep[k]?.summary;
-          return s?.runs ? `${f(s.fps)} · ${f(s.frameP95, 0)} · ${f(s.busyPct, 0)}%` : '—';
-        });
-        L.push(row([vname, ...cells]));
+        const sums = ns.map((n) => R.sweep[`${vname}|${n}|${thr}x`]?.summary);
+        if (!sums.some((x) => x?.runs)) continue;
+        const cells = sums.map((s) => (s?.runs ? `${f(s.fps)} · ${f(s.missedPct, 0)}% · ${f(s.frameP95, 0)}` : '—'));
+        let last = null, fail = null;
+        for (let i = 0; i < ns.length; i++) { const s = sums[i]; if (!s?.runs) continue; if (s.missedPct <= 10 && fail == null) last = i; else if (fail == null && s.missedPct > 10) fail = i; }
+        const br = `${last == null ? `< ${ns[0]}` : `${ns[last]} (${sums[last].holdsRuns}/${sums[last].runs})`} – ${fail == null ? `> ${ns[ns.length - 1]}` : `${ns[fail]} (${sums[fail].holdsRuns}/${sums[fail].runs})`}`;
+        L.push(row([vname, ...cells, br]));
+      }
+      L.push('');
+      L.push(`GPU-process CPU % (software display compositor) and main-thread busy % at ${thr}×:`, '');
+      L.push(head(['variant', ...ns.map((n) => `N=${n}`)]));
+      for (const vname of ['dom', 'svg', 'canvas2d', 'canvas2d-worker']) {
+        const sums = ns.map((n) => R.sweep[`${vname}|${n}|${thr}x`]?.summary);
+        if (!sums.some((x) => x?.runs)) continue;
+        L.push(row([vname, ...sums.map((s) => (s?.runs ? `GPU ${f(s.gpuCpu, 0)} · main ${f(s.busyPct, 0)}` : '—'))]));
       }
       L.push('');
     }
   }
 
+  if (R.sweepLoad && R.sweep) {
+    L.push('### The same 1× cells with the machine busier', '', R.sweepLoadMeta?.note ?? '', '');
+    L.push(head(['variant', 'N', 'quiet sweep: fps · missed %', 'with burners: fps · missed %', 'load average (sweep / burners)']));
+    for (const v of Object.values(R.sweepLoad)) {
+      const q = R.sweep[`${v.cell.variant}|${v.cell.n}|1x`]?.summary; const b = v.summary;
+      L.push(row([v.cell.variant, v.cell.n, q ? `${f(q.fps)} · ${f(q.missedPct, 0)}%` : '—', `${f(b.fps)} · ${f(b.missedPct, 0)}%`, `${f(q?.loadavg1)} / ${f(b.loadavg1)}`]));
+    }
+    L.push('');
+  }
   if (R.instancing) {
     L.push('## One mesh per item vs one InstancedMesh, vanilla three.js vs React Three Fiber', '');
     L.push('Measured as one set (its own round-robin groups), so compare within this table. `JS ms/frame` is the GPU-independent column: the scene\'s update + render call on the main thread.', '');
@@ -81,13 +108,13 @@ export async function writeReport(R, out) {
   }
 
   if (R.worker) {
-    L.push('## Main thread under load (50 ms busy every 100 ms): Canvas 2D on the main thread vs in a Worker', '');
-    L.push(head(['variant', 'N', 'CPU', 'scene fps', 'scene frame p95', 'main-thread fps', 'drag move→frame p50/p95 ms', 'move event delay p50/p95 ms', 'busy %', 'runs']));
-    for (const v of Object.values(R.worker)) {
+    L.push('## Main thread under load (50 ms busy every 100 ms): Canvas 2D on the main thread vs in a Worker (1× only)', '');
+    L.push(head(['variant', 'N', 'CPU', 'scene fps', 'missed vsyncs %', 'scene frame p95', 'main-thread fps', 'drag move→frame p50/p95 ms', 'move event delay p50/p95 ms', 'busy %', 'runs']));
+    for (const v of Object.values(R.worker).sort((a, b) => a.cell.n - b.cell.n)) {
       const s = v.summary;
-      L.push(row([v.cell.variant, v.cell.n, `${v.cell.throttle}×`, f(s.fps), f(s.frameP95), f(s.mainFps ?? s.fps), `${f(s.moveToFrame)} / ${f(s.moveToFrameP95)}`, `${f(s.moveDelay)} / ${f(s.moveDelayP95)}`, f(s.busyPct, 0), s.runs]));
+      L.push(row([v.cell.variant, v.cell.n, `${v.cell.throttle}×`, f(s.fps), f(s.missedPct, 0), f(s.frameP95), f(s.mainFps ?? s.fps), `${f(s.moveToFrame)} / ${f(s.moveToFrameP95)}`, `${f(s.moveDelay)} / ${f(s.moveDelayP95)}`, f(s.busyPct, 0), s.runs]));
     }
-    L.push('', 'For the Worker variant, "scene fps" is the Worker\'s own rAF cadence and move→frame is measured in the Worker (event timestamp → the Worker finished drawing the frame that used it); "main-thread fps" is the page\'s rAF.', '');
+    L.push('', 'For the Worker variant, "scene fps" is the Worker\'s own rAF cadence and move→frame is measured in the Worker (event timestamp → the Worker finished drawing the frame that used it); "main-thread fps" is the page\'s rAF. Measured at 1× only, because CDP throttling does not slow the Worker.', '');
   }
 
   if (R.presented) {
@@ -103,8 +130,8 @@ export async function writeReport(R, out) {
 
   if (R.domProbe) {
     L.push('## Compositor-driven CSS animations and the main thread (plain divs)', '', R.domProbe.note, '');
-    L.push(head(['mode', 'N', 'style recalcs / s', 'ms each', 'main busy %']));
-    for (const c of Object.values(R.domProbe.cells)) L.push(row([c.mode, c.n, f(c.recalcsPerSec), f(c.msEach, 2), f(c.busyPct)]));
+    L.push(head(['mode', 'N', 'style recalcs / s', 'ms each', 'style ms per s', 'main busy %', 'runs: style ms per s']));
+    for (const c of Object.values(R.domProbe.cells)) L.push(row([c.mode, c.n, f(c.recalcsPerSec), f(c.msEach, 2), f(c.styleMsPerSec ?? c.recalcsPerSec * c.msEach, 0), f(c.busyPct), (c.runsStyleMsPerSec || []).map((x) => f(x, 0)).join(', ')]));
     L.push('');
   }
 
@@ -118,13 +145,45 @@ export async function writeReport(R, out) {
     }
     L.push('');
   }
+  if (R.a11y?.tapToPlace) {
+    L.push('### Single-pointer alternative (tap to pick up, tap a spot to place; WCAG 2.5.7)', '');
+    L.push(head(['variant', 'pass', 'landed vs target (px off)', 'counter', 'announced after 1st / 2nd tap']));
+    for (const [k, t] of Object.entries(R.a11y.tapToPlace)) L.push(row([k, t.pass ? 'yes' : 'NO', `${t.landed.join(',')} vs ${t.target.x},${t.target.y} (${t.offPx})`, t.counter, `"${t.afterFirstTap}" / "${t.afterSecondTap}"`]));
+    L.push('');
+  }
+  if (R.a11y?.overlaySync) {
+    L.push('### Is the keyboard control still over the object after a mouse drag?', '');
+    L.push(head(['variant', 'result', 'object after drag', 'control centre', 'drift px']));
+    for (const [k, t] of Object.entries(R.a11y.overlaySync)) L.push(row([k, t.native ? t.pass : t.pass ? 'yes' : 'NO', t.object?.join(',') ?? '—', t.control?.join(',') ?? '—', f(t.driftPx)]));
+    L.push('');
+  }
+  if (R.a11y?.focusRing) {
+    L.push('### Where the focus ring is drawn (`shots/focus-ring.jpg`)', '');
+    L.push(head(['variant', 'pass', 'focused element box', 'ring box', 'drawn by', 'ring centre off object px']));
+    for (const [k, t] of Object.entries(R.a11y.focusRing)) L.push(row([k, t.pass ? 'yes' : 'NO', t.elementBox, t.indicatorBox, t.drawnBy, t.indicatorOffPx]));
+    L.push('', 'In SVG, a `<use>` of a `<symbol>` whose viewBox crops a sprite atlas reports the whole atlas strip as its box, so a CSS outline (and anything else that reads the element box) frames the wrong area; the keyboard build draws an explicit ring shape instead.', '');
+    if (R.a11y.firstTab) L.push('First Tab into the stage: ' + Object.entries(R.a11y.firstTab).map(([k, t]) => `**${k}** → ${t.firstFocus} (${t.pass ? 'ok' : 'wrong stop'})`).join('; ') + '. In Chromium an SVG element with a focus/focusin listener becomes a Tab stop, so the listener belongs on an HTML ancestor.', '');
+  }
+  const perfCols = ['variant', 'N', 'CPU', 'first frame ms', 'fps', 'missed %', 'JS ms/frame', 'renderer ms/frame', 'busy %', 'drag: move→frame p50/p95', 'drag: style+layout ms per move', 'drag: main ms per move', 'DOM nodes', 'heap MB', 'app gzip KB', 'runs'];
+  const perfRow = (v) => { const s = v.summary; return row([v.cell.label ?? v.cell.variant, v.cell.n, `${v.cell.throttle}×`, f(s.ttff, 0), f(s.fps), f(s.missedPct, 0), f(s.jsMs, 2), f(s.rendererMsPerFrame), f(s.busyPct, 0), `${f(s.moveToFrame)} / ${f(s.moveToFrameP95)}`, f(s.dragStyleLayoutMsPerMove, 2), f(s.dragMainMsPerMove), f(s.domNodes, 0), f(s.heapMB), kb(R.build?.[v.cell.variant]?.app.gzip), s.runs]); };
   if (R.a11yPerf) {
-    L.push('### Cost of the keyboard/screen-reader layer (1× CPU)', '');
-    L.push(head(['variant', 'N', 'first frame ms', 'fps', 'frame p95', 'JS ms/frame', 'renderer ms/frame', 'busy %', 'drag move→frame p50/p95', 'DOM nodes', 'heap MB', 'app gzip KB']));
-    for (const v of Object.values(R.a11yPerf)) {
-      const s = v.summary;
-      L.push(row([v.cell.variant, v.cell.n, f(s.ttff, 0), f(s.fps), f(s.frameP95), f(s.jsMs, 2), f(s.rendererMsPerFrame), f(s.busyPct, 0), `${f(s.moveToFrame)} / ${f(s.moveToFrameP95)}`, f(s.domNodes, 0), f(s.heapMB), kb(R.build?.[v.cell.variant]?.app.gzip)]));
-    }
+    L.push('### Cost of the keyboard/screen-reader layer: DOM and SVG (1× CPU)', '');
+    L.push(head(perfCols));
+    for (const v of Object.values(R.a11yPerf)) L.push(perfRow(v));
+    L.push('');
+  }
+  if (R.a11yPerfWebgl) {
+    L.push('### Cost of the keyboard/screen-reader layer: PixiJS on WebGL (SwiftShader; read JS and renderer ms/frame only)', '');
+    L.push('PixiJS\'s built-in AccessibilitySystem registers only for the WebGL and WebGPU renderers, so its cost can only be measured here. Frame rate, busy % and drag latency are SwiftShader-bound and say nothing about the layer.', '');
+    L.push(head(perfCols));
+    for (const v of Object.values(R.a11yPerfWebgl)) L.push(perfRow(v));
+    L.push('');
+  }
+  if (R.a11yPerfCanvas) {
+    L.push('### Cost of the keyboard/screen-reader layer: PixiJS on its Canvas 2D renderer (WebGL disabled)', '');
+    L.push('WebGL is disabled so PixiJS runs on its own Canvas 2D renderer at a measurable frame rate (under SwiftShader it ran at 2–3 fps, where frame time, busy % and drag latency cannot show a small cost). `?nosync` = the keyboard build without the per-move overlay sync (the earlier bug); `?lefttop` = the sync writing left/top instead of transform. `pixi-pixia11y` is inert here: PixiJS registers its AccessibilitySystem only for WebGL and WebGPU, so on its Canvas fallback no accessibility DOM exists (compare DOM nodes). "drag: style+layout ms per move" is main-thread style recalc + layout time while the pointer is down, divided by the 30 moves.', '');
+    L.push(head(perfCols));
+    for (const v of Object.values(R.a11yPerfCanvas).sort((a, b) => a.cell.throttle - b.cell.throttle || a.cell.n - b.cell.n)) L.push(perfRow(v));
     L.push('');
   }
 

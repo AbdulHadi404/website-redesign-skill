@@ -5,7 +5,7 @@ import {
   W, H, BOB_AMP, HOVER_SCALE, SEL_SCALE, HIT_R, P_COUNT, FREEZE, ASSETS,
   readParams, installHarness, Model, particle, clampX, clampY, itemLabel,
 } from '../shared/scene.js';
-import { attachKeyboard } from '../shared/a11y.js';
+import { attachKeyboard, TAP_SLOP } from '../shared/a11y.js';
 
 if (__PIXIA11Y__) await import('pixi.js/accessibility');
 
@@ -32,6 +32,17 @@ const fx = new Container();
 app.stage.addChild(layer, fx);
 
 const m = new Model(params.n, params.reduced);
+let kb = null;   // keyboard layer + tap-to-place (a11y build only)
+// ?nosync (keyboard build only): reproduce the earlier bug, where only keyboard moves synced the layer.
+const NOSYNC = __A11Y__ && new URLSearchParams(location.search).has('nosync');
+// The one function that moves a decoration. Pointer drag, keyboard and tap-to-place all go through it,
+// so the parallel keyboard layer (a DOM button per decoration) can never drift from the drawing.
+function moveItem(id, x, y, fromPointer = false) {
+  const it = m.items[id];
+  it.x = x; it.y = y;
+  if (__A11Y__ && !(NOSYNC && fromPointer)) kb?.sync(id);
+  invalidate();
+}
 const now = () => (params.freeze ? FREEZE.t : performance.now());
 const ring = new Sprite(sheet.textures.ring);
 ring.anchor.set(0.5); ring.visible = false; ring.eventMode = 'none';
@@ -45,8 +56,10 @@ const sprites = m.items.map((it) => {
   s.on('pointerover', () => { m.hovered = it.id; invalidate(); });
   s.on('pointerout', () => { if (m.hovered === it.id) m.hovered = -1; invalidate(); });
   s.on('pointerdown', (e) => {
+    // Tap-to-place: while another decoration is carried, a tap here places it here.
+    if (__A11Y__ && kb.carrying() >= 0 && kb.carrying() !== it.id) { e.stopPropagation(); kb.placeAt(e.global.x, e.global.y); return; }
     select(it.id);
-    m.drag = { id: it.id, ox: e.global.x - it.x, oy: e.global.y - it.y };
+    m.drag = { id: it.id, ox: e.global.x - it.x, oy: e.global.y - it.y, sx: e.global.x, sy: e.global.y };
     lab.picked.push(it.id);
     invalidate();
   });
@@ -70,14 +83,23 @@ function select(id) {
 
 app.stage.eventMode = 'static';
 app.stage.hitArea = app.screen;
-app.stage.on('pointerdown', (e) => { if (e.target === app.stage) { select(-1); invalidate(); } });
-app.stage.on('globalpointermove', (e) => {
-  if (!m.drag) return;
-  const it = m.items[m.drag.id];
-  it.x = clampX(e.global.x - m.drag.ox); it.y = clampY(e.global.y - m.drag.oy);
-  invalidate();
+app.stage.on('pointerdown', (e) => {
+  if (e.target !== app.stage) return;
+  if (__A11Y__ && kb.carrying() >= 0) { kb.placeAt(e.global.x, e.global.y); return; }
+  select(-1); invalidate();
 });
-const end = () => { if (m.up(now())) lab.drop(); invalidate(); };
+app.stage.on('globalpointermove', (e) => {
+  if (!m.drag || m.drag.kb) return;   // a keyboard/tap carry does not follow the mouse
+  moveItem(m.drag.id, clampX(e.global.x - m.drag.ox), clampY(e.global.y - m.drag.oy), true);
+});
+const end = (e) => {
+  // A press that did not move is a tap: pick up (or put down) for tap-to-place instead of dropping.
+  if (__A11Y__ && m.drag && !m.drag.kb && e?.type === 'pointerup' && Math.hypot(e.global.x - m.drag.sx, e.global.y - m.drag.sy) < TAP_SLOP) {
+    const id = m.drag.id; m.drag = null; kb.tap(id); invalidate(); return;
+  }
+  if (m.drag?.kb) return;             // the keyboard/tap path places it, not a pointerup
+  if (m.up(now())) lab.drop(); invalidate();
+};
 app.stage.on('pointerup', end);
 app.stage.on('pointerupoutside', end);
 
@@ -135,13 +157,14 @@ if (params.reduced || params.freeze) {
 }
 
 if (__A11Y__) {
-  attachKeyboard({
+  kb = attachKeyboard({
     host: stage, items: m.items, n: params.n, pos: (id) => m.items[id],
     actions: {
-      select: (id) => { select(id); m.drag = { id, ox: 0, oy: 0 }; invalidate(); },
-      move: (id, dx, dy) => { const it = m.items[id]; it.x = clampX(it.x + dx); it.y = clampY(it.y + dy); invalidate(); },
-      moveTo: (id, x, y) => { const it = m.items[id]; it.x = x; it.y = y; m.drag = null; invalidate(); },
+      select: (id) => { select(id); m.drag = { id, ox: 0, oy: 0, kb: true }; invalidate(); },
+      move: (id, dx, dy) => { const it = m.items[id]; moveItem(id, clampX(it.x + dx), clampY(it.y + dy)); },
+      moveTo: (id, x, y) => moveItem(id, x, y),
       drop: () => { if (m.up(now())) lab.drop(); invalidate(); },
+      cancel: () => { m.drag = null; invalidate(); },
     },
   });
 }

@@ -23,14 +23,16 @@
 //      pressing Play after the settle replays the moment;
 //   9. optional frame-time governor (opts.governor or ?gov): after a 1 s warm-up, judge the median frame
 //      interval over 45 continuous frames or 2 s, whichever comes first; too slow → halve the render scale
-//      (down to 0.25); still under ~30 fps at the floor → stop and keep the poster. Only steps down.
+//      (down to 0.25); a halving that saved < 15% is undone once and resolution is left alone (the effect is not
+//      fill-bound); still under ~30 fps → stop and keep the poster. Never steps back up otherwise.
 //
 //  10. the visitor's control is a plain button whose label says what it will do ("Pause background animation" /
 //      "Play background animation"), with no aria-pressed: a toggle whose label changes must not also announce a
 //      pressed state (WAI-ARIA APG button pattern).
 //
 // Lab-only query flags: ?nopause (ignore viewport/visibility), ?dpr=N (cap, default 2), ?scale=F, ?fps=N, ?settle=N,
-// ?syncfirst (block on the GPU after the first draw to time when the first frame is really finished).
+// ?syncfirst (block on the GPU after the first draw to time when the first frame is really finished), ?nofence,
+// ?burn=MS (busy-wait MS per frame: a slow effect that fewer pixels cannot speed up, for the governor test).
 
 const q = new URLSearchParams(location.search);
 const lab = (window.__lab ||= {});
@@ -46,6 +48,7 @@ export function run(bg, effect, opts = {}) {
   lab.governor = gov.steps;
   const fpsCap = Number(q.get('fps') || opts.fps || 0);
   const noPause = q.has('nopause');
+  const burnMs = Number(q.get('burn') || 0);   // lab: a fixed CPU cost per frame, i.e. an effect that is not fill-bound
   const settleAt = Number(q.get('settle') || opts.settle || 0);
   const easeFor = Math.min(1.5, settleAt / 3);
   let runWall = 0, lastInterval = 0, settled = false;
@@ -102,6 +105,7 @@ export function run(bg, effect, opts = {}) {
     }
     t += dt * speed;
     const t0 = performance.now();
+    if (burnMs) { const until = t0 + burnMs; while (performance.now() < until); }
     try { effect.frame(t, dt); } catch (e) { return fail(e.message); }
     lab.draws++;
     if (lab.recording) lab.jsTimes.push(performance.now() - t0);
@@ -114,10 +118,17 @@ export function run(bg, effect, opts = {}) {
         const s = [...gov.intervals].sort((a, b) => a - b), med = s[s.length >> 1];
         gov.intervals.length = 0; gov.since = now;
         const target = fpsCap ? 1000 / fpsCap : 1000 / 60;
+        const mark = (x) => gov.steps.push({ at: Math.round(now), medianMs: Math.round(med * 10) / 10, ...x });
         if (med > target * 1.25) {
-          if (scale > 0.25 && !effect.ownsSize) { scale = Math.max(0.25, scale / 2); gov.steps.push({ at: Math.round(now), medianMs: Math.round(med * 10) / 10, scale }); sizeCanvas(); }
-          else if (med > Math.max(target, 1000 / 30) * 1.1) { gov.steps.push({ at: Math.round(now), medianMs: Math.round(med * 10) / 10, gaveUp: true }); fail('governor: too slow at the lowest tier'); return; }
-        }
+          if (gov.pending && med > gov.pending.before * 0.85) {
+            // the last halving saved < 15%: the effect is not fill-bound (vertex, CPU or fixed cost), so fewer
+            // pixels only blur it. Undo that one step and stop lowering resolution.
+            scale = gov.pending.from; gov.pending = null; gov.fillBound = false; mark({ scale, reverted: true }); sizeCanvas();
+          } else if (scale > 0.25 && !effect.ownsSize && gov.fillBound !== false) {
+            gov.pending = { from: scale, before: med }; scale = Math.max(0.25, scale / 2); mark({ scale }); sizeCanvas();
+          } else if (med > Math.max(target, 1000 / 30) * 1.1) { gov.pending = null; mark({ gaveUp: true }); fail('governor: too slow at the lowest useful tier'); return; }
+          else gov.pending = null;
+        } else gov.pending = null;
       }
     }
     if (lastFrame) {                                    // settled: the last frame stays on screen, the loop ends

@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-29T05:34:48.554Z",
+  "date": "2026-09-29T06:13:58.157Z",
   "chromium": "141.0.7390.37",
   "runs": 5,
   "variants": {
@@ -175,8 +175,8 @@
           "selfAnimating": false,
           "baseline": {
             "distinct": 1,
-            "captures": 20,
-            "ms": 726
+            "captures": 16,
+            "ms": 727
           },
           "rafPerSecondAtRest": 0,
           "walk": {
@@ -417,7 +417,7 @@
           "baseline": {
             "distinct": 1,
             "captures": 20,
-            "ms": 727
+            "ms": 706
           },
           "rafPerSecondAtRest": 0,
           "walk": {
@@ -646,8 +646,8 @@
           "selfAnimating": false,
           "baseline": {
             "distinct": 1,
-            "captures": 20,
-            "ms": 715
+            "captures": 13,
+            "ms": 703
           },
           "rafPerSecondAtRest": 0,
           "walk": {
@@ -826,7 +826,7 @@
       },
       "motion": {
         "noPreference": {
-          "distinctFrames60to540ms": 8,
+          "distinctFrames60to540ms": 9,
           "framesRendered": 25
         },
         "reduce": {
@@ -926,8 +926,8 @@
           "selfAnimating": false,
           "baseline": {
             "distinct": 1,
-            "captures": 20,
-            "ms": 718
+            "captures": 13,
+            "ms": 703
           },
           "rafPerSecondAtRest": 0,
           "walk": {
@@ -1022,7 +1022,7 @@
         "afterThenTab": 0,
         "genericNames": 0
       },
-      "idleRafPerSecond": 54,
+      "idleRafPerSecond": 46,
       "audioContextsAtLoad": 0,
       "keyboard": {
         "engine": {
@@ -1098,11 +1098,11 @@
       "motion": {
         "noPreference": {
           "distinctFrames60to540ms": 1,
-          "framesRendered": 21
+          "framesRendered": 25
         },
         "reduce": {
           "distinctFrames60to540ms": 1,
-          "framesRendered": 17
+          "framesRendered": 23
         }
       },
       "seededStateFromTree": {
@@ -1148,7 +1148,7 @@
             },
             {
               "level": "INFO",
-              "msg": "requestAnimationFrame runs at rest (56/s): render on demand"
+              "msg": "requestAnimationFrame runs at rest (28/s): render on demand"
             }
           ],
           "listeners": {
@@ -1179,10 +1179,10 @@
           "selfAnimating": false,
           "baseline": {
             "distinct": 1,
-            "captures": 6,
-            "ms": 746
+            "captures": 5,
+            "ms": 1440
           },
-          "rafPerSecondAtRest": 56,
+          "rafPerSecondAtRest": 28,
           "walk": {
             "tabs": 3,
             "uniqueStops": 0,
@@ -1241,7 +1241,7 @@
         "afterThenTab": 4,
         "genericNames": 0
       },
-      "idleRafPerSecond": 38,
+      "idleRafPerSecond": 44,
       "audioContextsAtLoad": 0,
       "keyboard": {
         "engine": {
@@ -1314,7 +1314,7 @@
       "motion": {
         "noPreference": {
           "distinctFrames60to540ms": 1,
-          "framesRendered": 21
+          "framesRendered": 27
         },
         "reduce": {
           "distinctFrames60to540ms": 1,
@@ -1388,7 +1388,7 @@
             },
             {
               "level": "INFO",
-              "msg": "requestAnimationFrame runs at rest (42/s): render on demand"
+              "msg": "requestAnimationFrame runs at rest (32/s): render on demand"
             }
           ],
           "listeners": {
@@ -1421,9 +1421,9 @@
           "baseline": {
             "distinct": 1,
             "captures": 5,
-            "ms": 792
+            "ms": 1503
           },
-          "rafPerSecondAtRest": 42,
+          "rafPerSecondAtRest": 32,
           "walk": {
             "tabs": 6,
             "uniqueStops": 4,
@@ -1774,7 +1774,7 @@
     {
       "n": 10,
       "proxies": false,
-      "jsPerFrameMs": 0.2,
+      "jsPerFrameMs": 0.1,
       "styleRecalcPerFrameMs": 0.003,
       "layoutPerFrameMs": 0.003,
       "frameGapMs": 16.7,
@@ -1784,7 +1784,7 @@
       "n": 10,
       "proxies": true,
       "jsPerFrameMs": 0.2,
-      "styleRecalcPerFrameMs": 0.155,
+      "styleRecalcPerFrameMs": 0.138,
       "layoutPerFrameMs": 0.002,
       "frameGapMs": 16.7,
       "runs": 5
@@ -1793,16 +1793,16 @@
       "n": 50,
       "proxies": false,
       "jsPerFrameMs": 0.3,
-      "styleRecalcPerFrameMs": 0.003,
-      "layoutPerFrameMs": 0.005,
+      "styleRecalcPerFrameMs": 0.004,
+      "layoutPerFrameMs": 0.006,
       "frameGapMs": 16.7,
       "runs": 5
     },
     {
       "n": 50,
       "proxies": true,
-      "jsPerFrameMs": 0.3,
-      "styleRecalcPerFrameMs": 0.392,
+      "jsPerFrameMs": 0.4,
+      "styleRecalcPerFrameMs": 0.398,
       "layoutPerFrameMs": 0.004,
       "frameGapMs": 16.7,
       "runs": 5
@@ -1820,8 +1820,8 @@
       "n": 200,
       "proxies": true,
       "jsPerFrameMs": 1,
-      "styleRecalcPerFrameMs": 1.409,
-      "layoutPerFrameMs": 0.011,
+      "styleRecalcPerFrameMs": 1.342,
+      "layoutPerFrameMs": 0.012,
       "frameGapMs": 16.7,
       "runs": 5
     }

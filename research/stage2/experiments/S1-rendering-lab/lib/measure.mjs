@@ -45,6 +45,9 @@ export function frameStats(deltas) {
     fps: r1((deltas.length / total) * 1000),
     median: r1(median(deltas)), p95: r1(pct(deltas, 95)), max: r1(Math.max(...deltas)),
     over25: deltas.filter((d) => d > 25).length,        // frames that missed a 60 Hz deadline by half a frame or more
+    // Share of frames that missed at least one vsync (delta > 25 ms at 60 Hz): continuous, unlike p95,
+    // which moves in whole-vsync steps (17 / 33 / 50 ms) and flips on one frame either side of the 95th.
+    missedPct: r1((100 * deltas.filter((d) => d > 25).length) / deltas.length),
     longShare: r1((100 * deltas.filter((d) => d > 25).reduce((a, b) => a + b, 0)) / total),
   };
 }
@@ -113,6 +116,7 @@ export async function runOne(browser, base, o) {
     const id = await page.evaluate(() => window.__lab.topId());
     const getPos = (i) => page.evaluate((k) => (window.__lab.getItemAsync ? window.__lab.getItemAsync(k) : window.__lab.getItem(k)), i);
     const p0 = await getPos(id);
+    const d0 = await metrics(cdp); const dc0 = bcdp && (await procCpu(bcdp));
     await page.evaluate(() => window.__lab.start());
     await page.mouse.move(box.x + p0.x - 30, box.y + p0.y - 30);
     await page.mouse.move(box.x + p0.x, box.y + p0.y, { steps: 4 });
@@ -124,6 +128,7 @@ export async function runOne(browser, base, o) {
       await new Promise((r) => setTimeout(r, 16));
     }
     await page.mouse.up();
+    const d1 = await metrics(cdp); const dc1 = bcdp && (await procCpu(bcdp));
     await page.waitForTimeout(900);
     await page.evaluate(() => window.__lab.stop());
     const ds = await page.evaluate(() => window.__lab.stats());
@@ -140,6 +145,19 @@ export async function runOne(browser, base, o) {
       eventTiming: et.map((e) => ({ name: e.name, dur: r1(e.dur), delay: r1(e.delay), proc: r1(e.proc) })),
       frames: frameStats(ds.frames),
       mainLatToFrame: ds.mainLat ? r1(median(ds.mainLat.filter((l) => l.type === 'pointermove').map((l) => l.toFrame))) : undefined,
+    };
+    // CPU while the pointer is down and moving (pointerdown → pointerup, ~0.6 s): what per-move work
+    // (moving the object, syncing a keyboard overlay, style/layout) costs, which the steady window cannot see.
+    const dw = d1.Timestamp - d0.Timestamp;
+    out.drag.window = {
+      ms: r1(dw * 1000), moves: steps,
+      busyPct: r1((100 * (d1.TaskDuration - d0.TaskDuration)) / dw),
+      mainMsPerMove: r1((1000 * (d1.TaskDuration - d0.TaskDuration)) / steps),
+      stylePct: r1((100 * (d1.RecalcStyleDuration - d0.RecalcStyleDuration)) / dw),
+      layoutPct: r1((100 * (d1.LayoutDuration - d0.LayoutDuration)) / dw),
+      styleLayoutMsPerMove: Math.round((100000 * (d1.RecalcStyleDuration - d0.RecalcStyleDuration + d1.LayoutDuration - d0.LayoutDuration)) / steps) / 100,
+      rendererPct: dc0 && dc1 ? r1((100 * (dc1.renderer - dc0.renderer)) / dw) : null,
+      rendererMsPerMove: dc0 && dc1 ? r1((1000 * (dc1.renderer - dc0.renderer)) / steps) : null,
     };
   }
   try {

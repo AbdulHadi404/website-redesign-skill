@@ -5,9 +5,11 @@ import {
   W, H, CELL, RING, SPARK, BOB_AMP, BOB_PERIOD, HOVER_SCALE, SEL_SCALE, P_COUNT, P_LIFE, P_DIST, FREEZE, ASSETS,
   readParams, installHarness, makeItems, bobY, clampX, clampY, loadImage, loadAtlas,
 } from '../shared/scene.js';
-import { attachKeyboard } from '../shared/a11y.js';
+import { attachKeyboard, TAP_SLOP } from '../shared/a11y.js';
 
 const NS = 'http://www.w3.org/2000/svg';
+// ?outline (keyboard build only): draw focus with CSS outline instead of the ring shape, to show why not.
+const OUTLINE = __A11Y__ && new URLSearchParams(location.search).has('outline');
 const params = readParams();
 const lab = installHarness(__VARIANT__, params);
 lab.info.renderer = 'svg';
@@ -22,7 +24,9 @@ css.textContent = `
 .item:hover .bob,.item.hov .bob{scale:${HOVER_SCALE}}
 .item.sel .bob,.item.drag .bob{scale:${SEL_SCALE}}
 .item.drag .bob{animation:none}
-.item:focus-visible{outline:none}.item:focus-visible .spr{outline:3px solid #1a237e}
+.item:focus-visible{outline:none}
+.focus{display:none;fill:none;pointer-events:none}.item:focus-visible .focus{display:inline}
+${OUTLINE ? '.item:focus-visible .spr{outline:3px solid #1a237e}' : ''}
 @keyframes bob{
   0%{translate:0 0;animation-timing-function:cubic-bezier(.61,1,.88,1)}
   25%{translate:0 -${BOB_AMP}px;animation-timing-function:cubic-bezier(.12,0,.39,0)}
@@ -57,9 +61,22 @@ const els = items.map((it) => {
 });
 layer.append(...els);
 stage.append(svg);
+// An explicit focus ring. CSS outline on an SVG element is drawn around its bounding box, and a <use>
+// of a <symbol> that crops the sprite atlas reports the whole atlas strip as its box (512×72 here), so
+// an outline would frame half the cake. One ring for the whole set, moved into whichever item has focus
+// (one per item cost 2 nodes × N and ~13 % of the frame rate at N = 2000).
+// The focusin listener goes on the HTML stage: in Chromium an SVG element with a focus listener becomes
+// a Tab stop itself (?focusonsvg puts it on the <g> layer to show that).
+if (__A11Y__ && !OUTLINE) {
+  const focusRing = mk('g', { class: 'focus' });
+  focusRing.append(mk('circle', { r: 30, stroke: '#fff', 'stroke-width': 7 }), mk('circle', { r: 30, stroke: '#1a237e', 'stroke-width': 3 }));
+  const on = new URLSearchParams(location.search).has('focusonsvg') ? layer : stage;
+  on.addEventListener('focusin', (e) => { const g = e.target.closest?.('.item'); if (g) g.append(focusRing); });
+}
 const ring = mk('use', { href: '#f-ring', x: -RING / 2, y: -RING / 2, width: RING, height: RING });
 
 let selected = -1, drag = null, rect = null;
+let kb = null;   // keyboard layer + tap-to-place (a11y build only)
 const place = (id) => els[id].setAttribute('transform', `translate(${items[id].x} ${items[id].y})`);
 const select = (id) => {
   if (selected >= 0) els[selected].classList.remove('sel');
@@ -85,13 +102,19 @@ const drop = (id) => { burst(items[id].x, items[id].y); lab.drop(); };
 svg.addEventListener('pointerdown', (e) => {
   lab.input(e);
   const g = e.target.closest?.('.item');
+  rect = svg.getBoundingClientRect();
+  // Tap-to-place: while a decoration is carried, a tap anywhere else places it there.
+  if (__A11Y__ && kb.carrying() >= 0 && (!g || Number(g.dataset.id) !== kb.carrying())) {
+    e.preventDefault();
+    kb.placeAt(e.clientX - rect.left, e.clientY - rect.top);
+    return;
+  }
   if (!g) { select(-1); return; }
   e.preventDefault();
   const id = Number(g.dataset.id);
-  rect = svg.getBoundingClientRect();
   select(id);  // re-appends the <g> to raise it, so capture after
   lab.picked.push(id);
-  drag = { id, ox: e.clientX - rect.left - items[id].x, oy: e.clientY - rect.top - items[id].y };
+  drag = { id, ox: e.clientX - rect.left - items[id].x, oy: e.clientY - rect.top - items[id].y, sx: e.clientX, sy: e.clientY };
   g.classList.add('drag');
   g.setPointerCapture(e.pointerId);
 });
@@ -106,6 +129,10 @@ const end = (e) => {
   lab.input(e);
   if (!drag) return;
   els[drag.id].classList.remove('drag');
+  // A press that did not move is a tap: pick up (or put down) for tap-to-place instead of dropping.
+  if (__A11Y__ && e.type === 'pointerup' && Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) < TAP_SLOP) {
+    const id = drag.id; drag = null; kb.tap(id); return;
+  }
   drop(drag.id);
   drag = null;
 };
@@ -123,14 +150,16 @@ if (params.freeze) {
 }
 
 if (__A11Y__) {
-  attachKeyboard({
+  kb = attachKeyboard({
     host: layer, items, n: items.length, elements: els,
     pos: (id) => items[id],
     actions: {
-      select: (id) => { select(id); els[id].classList.add('drag'); els[id].focus(); },
+      // select() re-appends the <g> to raise it, which drops focus; restore it only if it had it.
+      select: (id) => { const had = document.activeElement === els[id]; select(id); els[id].classList.add('drag'); if (had) els[id].focus(); },
       move: (id, dx, dy) => { items[id].x = clampX(items[id].x + dx); items[id].y = clampY(items[id].y + dy); place(id); },
-      moveTo: (id, x, y) => { items[id].x = x; items[id].y = y; place(id); els[id].classList.remove('drag'); },
+      moveTo: (id, x, y) => { items[id].x = x; items[id].y = y; place(id); },
       drop: (id) => { els[id].classList.remove('drag'); drop(id); },
+      cancel: (id) => { els[id].classList.remove('drag'); },
     },
   });
 }

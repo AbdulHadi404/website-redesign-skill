@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // S10 lab: build every hero-background variant, capture posters, measure everything, write results.json.
 //
-//   npm install && node run.mjs                      # everything (≈ 2 h on 4 shared CPUs)
+//   npm install && node run.mjs                      # everything (≈ 3 h on 4 shared CPUs)
 //   node run.mjs --runs 1                            # one run per cell, for a quick look
 //   node run.mjs --phase main,post --only e1-webgl-vanilla,h-post
 //   node run.mjs --phase post --label SMAA           # post-processing rows whose label contains "SMAA"
@@ -15,7 +15,10 @@
 // fetch clones the fluid demo (pinned) and downloads ffmpeg (imageio-ffmpeg wheel, PyPI) into /tmp/s2-S10.
 // Results merge into results.json by phase and key, so a partial run replaces only what it measured.
 // Environment: headless Chromium 141 (playwright-core from the skill's scripts), WebGL through SwiftShader:
-// GPU work is CPU-emulated, so WebGL numbers compare only with each other.
+// GPU work is CPU-emulated, so WebGL numbers compare only with each other — and so is compositing (CSS layers,
+// filters, blending): ratios between different kinds of work (fill vs vertex vs compositing) do not transfer to a
+// real GPU either. Process CPU % is meaningful at 1x only: CDP CPU throttling itself keeps the renderer ~64% busy
+// (main phase, a-static@4x). Machine load changes magnitudes (INP 2.5-3.5x between two sessions); see phaseMeta.
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -370,12 +373,14 @@ if (PHASES.includes('settle')) await withServer((srv) => withBrowser([], async (
       await r.ctx.close();
       runs.push({ ...r, page: undefined, ctx: undefined, cdp: undefined,
         wrapperMotionMs: r.settled != null && r.motionStart != null ? Math.round(r.settled - r.motionStart) : null,
-        screenMotionMs: r.lastChange != null && r.firstVisible != null ? r.lastChange - r.firstVisible : null,
+        screenMotionMs: r.lastVisibleChange != null && r.firstVisible != null ? r.lastVisibleChange - r.firstVisible : null,
         afterRaf: after.rafPerSec, afterCpu: after.cpu?.total, afterBusy: after.busyPct });
     }
     const ok = runs.filter((r) => !r.failed);
     const s = { id, query, throttle, runs: ok.length, wrapperMotionMs: spread(ok.map((r) => r.wrapperMotionMs)), screenMotionMs: spread(ok.map((r) => r.screenMotionMs)),
-      motionStartMs: spread(ok.map((r) => r.motionStart)), settledAtMs: spread(ok.map((r) => r.settled)), firstVisibleMs: spread(ok.map((r) => r.firstVisible)), lastChangeMs: spread(ok.map((r) => r.lastChange)),
+      motionStartMs: spread(ok.map((r) => r.motionStart)), settledAtMs: spread(ok.map((r) => r.settled)), firstVisibleMs: spread(ok.map((r) => r.firstVisible)), lastChangeMs: spread(ok.map((r) => r.lastChange)), lastVisibleChangeMs: spread(ok.map((r) => r.lastVisibleChange)),
+      // WCAG 2.2.2 clock on screen: from the first presented frame of the effect to its last presented change
+      screenFirstToLastMs: spread(ok.map((r) => (r.lastChange != null && r.firstVisible != null ? r.lastChange - r.firstVisible : null))),
       afterRaf: r1(median(ok.map((r) => r.afterRaf))), afterBusy: r1(median(ok.map((r) => r.afterBusy))),
       // process CPU only at 1x: CDP CPU throttling itself keeps the renderer ~64% busy (main phase, a-static@4x)
       afterCpu: throttle === 1 ? r1(median(ok.map((r) => r.afterCpu))) : null, labelAfter: ok[0]?.label, failed: runs.filter((r) => r.failed).map((r) => r.failed) };
@@ -390,12 +395,15 @@ if (PHASES.includes('settle')) await withServer((srv) => withBrowser([], async (
 // ---------- governor: the wrapper steps render scale down, then gives up to the poster, when frames are slow ----------
 // SwiftShader stands in for a weak or absent GPU here, which is exactly the case a governor exists for.
 if (PHASES.includes('governor')) await withServer((srv) => withBrowser([], async (browser) => {
-  for (const id of ['e1-webgl-vanilla', 'f-three-particles', 'h-post', 'g-fluid-wrapped', 'd-canvas2d']) {
+  // burn=N adds a fixed N ms of CPU per frame to the cheap Canvas 2D effect: slow, but not fill-bound, so halving
+  // the resolution cannot help. The governor should undo that halving, then keep running (28 ms, ~30 fps) or
+  // give up to the poster (45 ms, ~20 fps). Deterministic, unlike SwiftShader's load-dependent speed.
+  for (const [id, extra = ''] of [['e1-webgl-vanilla'], ['f-three-particles'], ['h-post'], ['g-fluid-wrapped'], ['d-canvas2d'], ['d-canvas2d', 'burn=28'], ['d-canvas2d', 'burn=45']]) {
     if (ONLY && !ONLY.includes(id)) continue;
     const runs = [];
     for (let i = 0; i < Math.min(RUNS, 3); i++) {
       const { ctx, page, cdp } = await newPage(browser);
-      await load(page, variantUrl(srv, id, 'gov'), { kind: 'script' });
+      await load(page, variantUrl(srv, id, extra ? `gov&${extra}` : 'gov'), { kind: 'script' });
       const before = await window_(browser, page, cdp, 1500, { probe: true });
       await page.waitForTimeout(12000);
       const after = await window_(browser, page, cdp, 3000, { probe: true });
@@ -407,7 +415,7 @@ if (PHASES.includes('governor')) await withServer((srv) => withBrowser([], async
     const s = { id, beforeEffectFps: m((r) => r.before.effectFps), beforeCpu: m((r) => r.before.cpu?.total), beforeProbeFps: m((r) => r.before.fps),
       afterEffectFps: m((r) => r.after.effectFps), afterCpu: m((r) => r.after.cpu?.total), afterProbeFps: m((r) => r.after.fps),
       outcomes: runs.map((r) => (r.st.fallback ? `poster (${r.st.steps.length} steps)` : `scale ${r.st.steps.at(-1)?.scale ?? 1}, canvas ${r.st.state?.canvas?.join('×')}`)), steps: runs[0].st.steps };
-    put('governor', id, s);
+    s.query = extra; put('governor', extra ? `${id}:${extra}` : id, s);
     log('governor', id, JSON.stringify(s));
     await save();
   }
@@ -729,7 +737,7 @@ if (PHASES.includes('summary')) {
     return {
       id: v.id, label: v.label,
       payloadKB: a.payload && { total: r1(a.payload.total / 1024), js: r1(a.payload.js / 1024), poster: r1(a.payload.poster / 1024), html: r1(a.payload.html / 1024), video: r1((a.payload.video || 0) / 1024), other: r1(a.payload.other / 1024) },
-      lcp1x: a.lcp, lcp4x: b.lcp, lcpEl: a.lcpEl, ttff1x: a.ttff, ttff4x: b.ttff, bootBlock4x: b.bootBlock,
+      lcp1x: a.lcp, lcp4x: b.lcp, lcpEl: a.lcpEl, drawIssuedMain1x: a.ttff, drawIssuedMain4x: b.ttff, bootBlock4x: b.bootBlock,   // main-phase "ttff" = draw issued, not presented
       fps1x: a.fps, fps4x: b.fps, effectFps1x: a.effectFps, effectFps4x: b.effectFps, over25Pct4x: b.over25Pct,
       busy1x: a.busyPct, busy4x: b.busyPct, cpuTotal1x: a.cpuTotal, cpuGpu1x: a.cpuGpu, cpuRenderer1x: a.cpuRenderer, jsMs1x: a.jsMs, jsMs4x: b.jsMs,
       gpuMsPerFrame1x: a.gpuMsPerFrame, gpuMsPerDisplayFrame1x: a.gpuMsPerDisplayFrame,
@@ -753,6 +761,6 @@ if (PHASES.includes('summary')) {
   });
   results.summary = rows;
   await save();
-  console.table(rows.map((r) => ({ id: r.id, KB: r.payloadKB?.total, jsKB: r.payloadKB?.js, lcp4x: r.lcp4x, ttff4x: r.ttff4x, fps4x: r.fps4x, eff1x: r.effectFps1x, busy4x: r.busy4x, cpu1x: r.cpuTotal1x, gpu1x: r.cpuGpu1x, offCpu: r.offscreenCpu, offCpuNP: r.offscreenCpuNoPause })));
+  console.table(rows.map((r) => ({ id: r.id, KB: r.payloadKB?.total, jsKB: r.payloadKB?.js, lcp4x: r.lcp4x, visible1x: r.firstVisible1x, inp: r.inp4x, fps4x: r.fps4x, eff1x: r.effectFps1x, busy4x: r.busy4x, cpu1x: r.cpuTotal1x, gpu1x: r.cpuGpu1x, offCpu: r.offscreenCpu, offCpuNP: r.offscreenCpuNoPause })));
 }
 log('done');

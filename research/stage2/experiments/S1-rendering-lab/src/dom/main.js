@@ -7,7 +7,7 @@ import {
   CELL, BOB_AMP, BOB_PERIOD, HOVER_SCALE, SEL_SCALE, P_COUNT, P_LIFE, P_DIST, FREEZE, ASSETS,
   readParams, installHarness, makeItems, bobY, clampX, clampY, loadImage, loadAtlas,
 } from '../shared/scene.js';
-import { attachKeyboard } from '../shared/a11y.js';
+import { attachKeyboard, TAP_SLOP } from '../shared/a11y.js';
 
 const params = readParams();
 const lab = installHarness(__VARIANT__, params);
@@ -56,6 +56,7 @@ const els = items.map((it) => {
 stage.append(...els);
 
 let top = 0, selected = -1, drag = null, rect = null;
+let kb = null;   // keyboard layer + tap-to-place (a11y build only)
 const place = (id) => { els[id].style.transform = `translate(${items[id].x}px,${items[id].y}px)`; };
 const raise = (id) => { els[id].style.zIndex = String(++top); };
 const select = (id) => {
@@ -84,13 +85,19 @@ const drop = (id) => { burst(items[id].x, items[id].y); lab.drop(); };
 stage.addEventListener('pointerdown', (e) => {
   lab.input(e);
   const el = e.target.closest?.('.item');
+  rect = stage.getBoundingClientRect();
+  // Tap-to-place: while a decoration is carried, a tap anywhere else places it there.
+  if (__A11Y__ && kb.carrying() >= 0 && (!el || Number(el.dataset.id) !== kb.carrying())) {
+    e.preventDefault();
+    kb.placeAt(e.clientX - rect.left, e.clientY - rect.top);
+    return;
+  }
   if (!el) { select(-1); return; }
   e.preventDefault();
   const id = Number(el.dataset.id);
-  rect = stage.getBoundingClientRect();
   select(id);
   lab.picked.push(id);
-  drag = { id, ox: e.clientX - rect.left - items[id].x, oy: e.clientY - rect.top - items[id].y };
+  drag = { id, ox: e.clientX - rect.left - items[id].x, oy: e.clientY - rect.top - items[id].y, sx: e.clientX, sy: e.clientY };
   el.classList.add('drag');
   el.setPointerCapture(e.pointerId);
 });
@@ -105,6 +112,10 @@ const end = (e) => {
   lab.input(e);
   if (!drag) return;
   els[drag.id].classList.remove('drag');
+  // A press that did not move is a tap: pick up (or put down) for tap-to-place instead of dropping.
+  if (__A11Y__ && e.type === 'pointerup' && Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) < TAP_SLOP) {
+    const id = drag.id; drag = null; kb.tap(id); return;
+  }
   drop(drag.id);
   drag = null;
 };
@@ -122,14 +133,15 @@ if (params.freeze) {
 }
 
 if (__A11Y__) {
-  attachKeyboard({
+  kb = attachKeyboard({
     host: stage, items, n: items.length, elements: els,
     pos: (id) => items[id],
     actions: {
       select: (id) => { select(id); els[id].classList.add('drag'); },
       move: (id, dx, dy) => { items[id].x = clampX(items[id].x + dx); items[id].y = clampY(items[id].y + dy); place(id); },
-      moveTo: (id, x, y) => { items[id].x = x; items[id].y = y; place(id); els[id].classList.remove('drag'); },
+      moveTo: (id, x, y) => { items[id].x = x; items[id].y = y; place(id); },
       drop: (id) => { els[id].classList.remove('drag'); drop(id); },
+      cancel: (id) => { els[id].classList.remove('drag'); },
     },
   });
 }

@@ -37,10 +37,10 @@ export async function domProbe(browser, { runs = 3, ns = [200, 2000] } = {}) {
   });
   await new Promise((r) => server.listen(0, '127.0.0.1', r));
   const base = `http://127.0.0.1:${server.address().port}`;
-  const out = { note: 'Plain 40px divs, one looping 1.6 s bob each; 2 s trace after 0.8 s; style recalcs per second and mean ms each (median of runs). "+ rAF loop" adds an empty requestAnimationFrame loop elsewhere on the page; "+ moving one element (drag)" moves one (non-animated) div from a 16 ms timer, as pointermove handlers do during a drag, with no rAF loop.', cells: {} };
+  const out = { note: 'Plain 40px divs, one looping 1.6 s bob each; 2 s trace after 0.8 s; style recalcs per second, mean ms each, and total style ms per second (median of runs). "+ rAF loop" adds an empty requestAnimationFrame loop elsewhere on the page; "+ moving one element (drag)" moves one (non-animated) div from a 16 ms timer, as pointermove handlers do during a drag, with no rAF loop.', cells: {} };
   for (const n of ns) {
     for (const [name, m] of Object.entries(MODES)) {
-      const per = [], ms = [], busy = [];
+      const per = [], ms = [], busy = [], tot = [];
       for (let i = 0; i < runs; i++) {
         const ctx = await browser.newContext({ viewport: { width: 860, height: 720 } });
         const pg = await ctx.newPage();
@@ -56,11 +56,14 @@ export async function domProbe(browser, { runs = 3, ns = [200, 2000] } = {}) {
         const ult = ev.filter((e) => e.name === 'UpdateLayoutTree' && e.dur);
         per.push(ult.length / 2);
         ms.push(ult.length ? ult.reduce((a, e) => a + e.dur, 0) / ult.length / 1000 : 0);
+        // Total style time per second: the rate and the per-recalc cost trade off (a slower recalc means
+        // fewer frames), so this product is the stable number.
+        tot.push(ult.reduce((a, e) => a + e.dur, 0) / 2 / 1000);
         busy.push((100 * (m1.TaskDuration - m0.TaskDuration)) / (m1.Timestamp - m0.Timestamp));
         await ctx.close();
       }
       const r1 = (x) => Math.round(x * 10) / 10;
-      out.cells[`${name}|${n}`] = { mode: name, n, recalcsPerSec: r1(median(per)), msEach: Math.round(median(ms) * 100) / 100, busyPct: r1(median(busy)) };
+      out.cells[`${name}|${n}`] = { mode: name, n, recalcsPerSec: r1(median(per)), msEach: Math.round(median(ms) * 100) / 100, styleMsPerSec: r1(median(tot)), busyPct: r1(median(busy)), runsStyleMsPerSec: tot.map(r1), runsBusyPct: busy.map(r1) };
       console.log('domprobe', name, n, JSON.stringify(out.cells[`${name}|${n}`]));
     }
   }

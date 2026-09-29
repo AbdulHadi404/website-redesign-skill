@@ -1,6 +1,6 @@
 {
-  "url": "http://127.0.0.1:40637/e-pixi.html",
-  "date": "2026-09-29T05:39:49.883Z",
+  "url": "http://127.0.0.1:42399/e-pixi.html",
+  "date": "2026-09-29T06:19:12.665Z",
   "findings": [
     {
       "level": "FAIL",
@@ -20,7 +20,7 @@
       "level": "INFO",
       "section": "colour",
       "sc": "1.4.1",
-      "msg": "Review /tmp/s6-a11y-wPIWDQ/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
+      "msg": "Review /tmp/s6-a11y-x8wEPV/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
       "where": ""
     }
   ],
@@ -90,5 +90,5 @@
       }
     }
   },
-  "seconds": 46.8
+  "seconds": 46.4
 }

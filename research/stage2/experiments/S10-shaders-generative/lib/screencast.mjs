@@ -25,7 +25,7 @@ export async function startScreencast(cdp, { maxWidth = 256, maxHeight = 144 } =
 
 const NAVY = [9, 18, 42];
 // Per frame, on a 64×36 thumbnail: mean max-channel distance from the navy ground (flat navy measures ~1 after
-// JPEG), share of pixels more than 8 levels off navy, share near black, share near white (the blank page before
+// JPEG), share of pixels more than 8 levels off navy, share near black, share near white or paper-light (the blank page or page body before
 // navigation). A faint effect (Canvas 2D trails on navy) measured mean 7.5 / share 0.19; flat navy 1.0 / 0.
 async function classify(b64) {
   const { data, info } = await sharp(Buffer.from(b64, 'base64')).resize(64, 36, { fit: 'fill' }).removeAlpha().raw().toBuffer({ resolveWithObject: true });
@@ -36,7 +36,7 @@ async function classify(b64) {
     sum += d;
     if (d > 8) off++;
     if (data[i] < 5 && data[i + 1] < 5 && data[i + 2] < 8) black++;
-    if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) white++;
+    if (data[i] > 200 && data[i + 1] > 200 && data[i + 2] > 200) white++;   // blank page or the light page body before the hero paints
   }
   return { mean: sum / n, off: off / n, black: black / n, white: white / n, thumb: data };
 }
@@ -51,11 +51,16 @@ export async function analyse(frames, timeOrigin, { minOff = 0.02, minMean = 3 }
   const firstNavy = page.find((r) => !seen(r) && r.black < 0.5);
   const firstVisible = page.find(seen);
   const blackFrames = page.filter((r) => r.black >= 0.5).map((r) => r.t);
-  // Motion end: the last frame that still differs from the final frame (mean abs difference > 0.75 levels).
+  // Motion end, two ways. lastChange: the last presented frame whose pixels differ at all from the frame before
+  // (the screencast re-encodes identical content to identical bytes; after the loop stops nothing is sent).
+  // lastVisibleChange: the first frame from which everything stays within 0.75 levels (mean) of the final frame.
   let lastChange = null;
+  { const fr = frames.filter((f) => { const t = f.ts - timeOrigin; return t > 0 && f.cls.white < 0.5; });
+    for (let i = fr.length - 1; i > 0; i--) if (fr[i].data !== fr[i - 1].data) { lastChange = Math.round(fr[i].ts - timeOrigin); break; } }
+  let lastVisibleChange = null;
   if (page.length) {
     const fin = page.at(-1).thumb;
-    for (let i = page.length - 1; i >= 0; i--) if (diff(page[i].thumb, fin) > 0.75) { lastChange = page[Math.min(page.length - 1, i + 1)].t; break; }
+    for (let i = page.length - 1; i >= 0; i--) if (diff(page[i].thumb, fin) > 0.75) { lastVisibleChange = page[Math.min(page.length - 1, i + 1)].t; break; }
   }
-  return { frames: rows.length, firstNavy: firstNavy?.t ?? null, firstVisible: firstVisible?.t ?? null, blackFrames: blackFrames.slice(0, 5), blackCount: blackFrames.length, lastChange, lastFrame: page.at(-1)?.t ?? null };
+  return { frames: rows.length, firstNavy: firstNavy?.t ?? null, firstVisible: firstVisible?.t ?? null, blackFrames: blackFrames.slice(0, 5), blackCount: blackFrames.length, lastChange, lastVisibleChange, lastFrame: page.at(-1)?.t ?? null };
 }

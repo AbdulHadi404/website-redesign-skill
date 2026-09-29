@@ -1,6 +1,6 @@
 {
-  "url": "http://127.0.0.1:40637/d-hybrid.html",
-  "date": "2026-09-29T05:38:12.297Z",
+  "url": "http://127.0.0.1:42399/d-hybrid.html",
+  "date": "2026-09-29T06:17:29.687Z",
   "findings": [
     {
       "level": "FAIL",
@@ -62,7 +62,7 @@
       "level": "INFO",
       "section": "colour",
       "sc": "1.4.1",
-      "msg": "Review /tmp/s6-a11y-vqmhb8/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
+      "msg": "Review /tmp/s6-a11y-NrEJjT/vision-achromatopsia.png and forced-colors.png: every status, trend, series, required marker and link must still be distinguishable",
       "where": ""
     }
   ],
@@ -98,7 +98,7 @@
     ],
     "tab-forward": [
       {
-        "key": "83087402",
+        "key": "81341774",
         "where": "button.proxy.palette \"Strawberry\"",
         "tag": "button",
         "href": null,
@@ -122,7 +122,7 @@
         "aria": "button \"Strawberry\""
       },
       {
-        "key": "74125675",
+        "key": "19065962",
         "where": "button.sound \"Sound off\"",
         "tag": "button",
         "href": null,
@@ -146,7 +146,7 @@
         "aria": "button \"Sound\""
       },
       {
-        "key": "73244998",
+        "key": "44401032",
         "where": "input \"strawberry\"",
         "tag": "input",
         "href": null,
@@ -170,7 +170,7 @@
         "aria": "radio \"Strawberry\" [checked]"
       },
       {
-        "key": "28309038",
+        "key": "29105234",
         "where": "input \"centre\"",
         "tag": "input",
         "href": null,
@@ -194,7 +194,7 @@
         "aria": "radio \"Centre\" [checked]"
       },
       {
-        "key": "30407473",
+        "key": "34338956",
         "where": "button.primary \"Add to cake\"",
         "tag": "button",
         "href": null,
@@ -221,7 +221,7 @@
         "body": true
       },
       {
-        "key": "83087402",
+        "key": "81341774",
         "where": "button.proxy.palette \"Strawberry\"",
         "tag": "button",
         "href": null,
@@ -265,7 +265,7 @@
     },
     "tab-forced": [
       {
-        "key": "24468632",
+        "key": "35295569",
         "where": "button.proxy.palette \"Strawberry\"",
         "tag": "button",
         "href": null,
@@ -289,7 +289,7 @@
         "aria": "button \"Strawberry\""
       },
       {
-        "key": "75150829",
+        "key": "14209986",
         "where": "button.sound \"Sound off\"",
         "tag": "button",
         "href": null,
@@ -313,7 +313,7 @@
         "aria": "button \"Sound\""
       },
       {
-        "key": "10422729",
+        "key": "63888381",
         "where": "input \"strawberry\"",
         "tag": "input",
         "href": null,
@@ -337,7 +337,7 @@
         "aria": "radio \"Strawberry\" [checked]"
       },
       {
-        "key": "33709043",
+        "key": "69511797",
         "where": "input \"centre\"",
         "tag": "input",
         "href": null,
@@ -361,7 +361,7 @@
         "aria": "radio \"Centre\" [checked]"
       },
       {
-        "key": "20754676",
+        "key": "26763931",
         "where": "button.primary \"Add to cake\"",
         "tag": "button",
         "href": null,
@@ -388,7 +388,7 @@
         "body": true
       },
       {
-        "key": "24468632",
+        "key": "35295569",
         "where": "button.proxy.palette \"Strawberry\"",
         "tag": "button",
         "href": null,
@@ -422,5 +422,5 @@
       }
     }
   },
-  "seconds": 41.6
+  "seconds": 42
 }
