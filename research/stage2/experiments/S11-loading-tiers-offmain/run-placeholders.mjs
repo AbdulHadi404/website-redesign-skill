@@ -18,7 +18,9 @@ const srv = await serve(siteRoot);
 const { browser } = await launch();
 const out = { env: env(), built, decode: [], film: [] };
 
-const KINDS = ['color', 'blurhash', 'blurhash-6x4', 'blurhash-dataurl', 'thumbhash', 'webp', 'avif'];
+const KINDS = ['color', 'blurhash', 'blurhash-6x4', 'blurhash-dataurl', 'thumbhash', 'thumbhash-canvas', 'webp', 'avif'];
+// warm-up: one throwaway load so the first measured kind does not pay the browser's own start-up costs
+{ const { ctx, page } = await newPage(browser, {}); await page.goto(`${srv.url}/placeholders/?kind=avif`); await page.waitForFunction(() => window.__r, null, { timeout: 30000 }); await ctx.close(); }
 for (const cpu of [1, 4]) for (const kind of KINDS) for (let i = 0; i < RUNS; i++) {
   const { ctx, page } = await newPage(browser, { cpu });
   await page.goto(`${srv.url}/placeholders/?kind=${kind}`);
@@ -38,38 +40,40 @@ for (const cpu of [1, 4]) for (const kind of KINDS) for (let i = 0; i < RUNS; i+
   await ctx.close();
 }
 
-// filmstrips
+// filmstrips: screenshots polled every ~100 ms (the screencast sent too few frames headless). The viewport is taller
+// than the image: Chromium drops an image that covers the whole viewport from LCP (largest_contentful_paint_calculator.cc, spec step 7).
 async function film(k) {
   const { ctx, page, cdp } = await newPage(browser, { cpu: 4, net: NETS.slow4g, phone: false, cache: false });
-  await page.setViewportSize({ width: 800, height: 653 });
+  await page.setViewportSize({ width: 800, height: 900 });
   const frames = [];
-  cdp.on('Page.screencastFrame', async (f) => { frames.push({ t: f.metadata.timestamp, data: f.data }); cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }).catch(() => {}); });
-  await cdp.send('Page.enable');
-  await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 70, maxWidth: 400, maxHeight: 400, everyNthFrame: 1 });
-  let navT = 0;
-  cdp.on('Page.frameStartedLoading', () => { if (!navT) navT = Date.now() / 1000; });
-  const t0 = Date.now() / 1000;
-  await page.goto(`${srv.url}/placeholders/hero-${k}.html`, { waitUntil: 'load', timeout: 90000 });
-  await sleep(800);
+  const t0 = Date.now();
+  let loaded = false;
+  const nav = page.goto(`${srv.url}/placeholders/hero-${k}.html`, { waitUntil: 'load', timeout: 90000 }).then(() => { loaded = true; });
+  let after = 0;
+  while (after < 6) {
+    const s = await cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: 60, clip: { x: 0, y: 0, width: 800, height: 653, scale: 0.25 } }).catch(() => null);
+    if (s) frames.push({ t: (Date.now() - t0) / 1000, data: s.data });
+    if (loaded) after++;
+    await sleep(80);
+    if (Date.now() - t0 > 60000) break;
+  }
+  await nav;
   const lcp = await page.evaluate(() => window.__lcp);
-  await cdp.send('Page.stopScreencast');
   await ctx.close();
-  // Compare every frame with the last one over the image area: first frame with any image pixels, first at ≥ 90% similar, last change.
   const dec = await Promise.all(frames.map(async (f) => ({ t: f.t, px: await sharp(Buffer.from(f.data, 'base64')).resize(100, 82, { fit: 'fill' }).greyscale().raw().toBuffer() })));
   const final = dec[dec.length - 1].px;
-  const white = 255;
   const diff = (a) => { let s = 0; for (let i = 0; i < a.length; i++) s += Math.abs(a[i] - final[i]); return s / a.length; };
-  const blankDiff = (() => { let s = 0; for (let i = 0; i < final.length; i++) s += Math.abs(white - final[i]); return s / final.length; })();
-  const start = t0;
-  let first = null, ninety = null, done = null;
+  const blankDiff = (() => { let s = 0; for (let i = 0; i < final.length; i++) s += Math.abs(255 - final[i]); return s / final.length; })();
+  let first = null, ninety = null, done = null, steps = 0, prevShown = 0;
   for (const f of dec) {
-    const d = diff(f.px);
-    const shown = 1 - d / blankDiff; // 0 = blank page, 1 = final image
-    if (first == null && shown > 0.05) first = f.t - start;
-    if (ninety == null && shown >= 0.9) ninety = f.t - start;
+    const shown = 1 - diff(f.px) / blankDiff; // 0 = blank page, 1 = final image
+    if (first == null && shown > 0.05) first = f.t;
+    if (ninety == null && shown >= 0.9) ninety = f.t;
+    if (shown - prevShown > 0.02) steps++;
+    prevShown = shown;
   }
-  for (let i = dec.length - 1; i > 0; i--) if (diff(dec[i - 1].px) > 0.5) { done = dec[i].t - start; break; }
-  return { k, bytes: built.progressive[k], frames: dec.length, firstMs: first * 1000, ninetyMs: ninety * 1000, completeMs: done * 1000, lcp };
+  for (let i = dec.length - 1; i > 0; i--) if (diff(dec[i - 1].px) > 0.5) { done = dec[i].t; break; }
+  return { k, bytes: built.progressive[k], frames: dec.length, visibleSteps: steps, firstMs: first * 1000, ninetyMs: ninety * 1000, completeMs: (done ?? first) * 1000, lcp };
 }
 for (const k of Object.keys(built.progressive)) for (let i = 0; i < RUNS; i++) { const f = await film(k); out.film.push(f); console.log(f); }
 
@@ -78,7 +82,7 @@ await srv.close();
 const D = {};
 for (const cpu of [1, 4]) for (const kind of KINDS) { const s = out.decode.filter((x) => x.cpu === cpu && x.kind === kind); D[`${cpu}x|${kind}`] = { syncMs: r1(median(s.map((x) => x.sync))), decodedMs: r1(median(s.map((x) => x.decoded))), paintedMs: r1(median(s.map((x) => x.painted))) }; }
 const F = {};
-for (const k of Object.keys(built.progressive)) { const s = out.film.filter((x) => x.k === k); F[k] = { kb: r0(built.progressive[k] / 1024), firstMs: r0(median(s.map((x) => x.firstMs))), ninetyMs: r0(median(s.map((x) => x.ninetyMs))), completeMs: r0(median(s.map((x) => x.completeMs))), lcp: r0(median(s.map((x) => x.lcp))) }; }
+for (const k of Object.keys(built.progressive)) { const s = out.film.filter((x) => x.k === k); F[k] = { kb: r0(built.progressive[k] / 1024), visibleSteps: r0(median(s.map((x) => x.visibleSteps))), firstMs: r0(median(s.map((x) => x.firstMs))), ninetyMs: r0(median(s.map((x) => x.ninetyMs))), completeMs: r0(median(s.map((x) => x.completeMs))), lcp: r0(median(s.map((x) => x.lcp))) }; }
 out.decodeSummary = D; out.filmSummary = F; out.env.loadavgAtEnd = load();
 await saveResult('placeholders', out);
 console.table(D); console.table(F);

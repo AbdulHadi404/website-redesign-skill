@@ -1,30 +1,194 @@
 {
-  "_note": "Ground truth written from the page sources before scoring (c/pages/*.css|js). spec: the problem categories each entry really has; flags: kind|selector pairs the audit should raise. Categories: static, duration, easing, props, stagger, reduced, interrupt.",
-  "spec": {
-    "static": { "cta-press": ["static", "reduced"], "cta-hover": ["static", "reduced"], "plan-hover": ["static"], "sheet-open": ["static"], "toast": ["static"],
-      "features-reveal": ["static"], "stat-count": ["static"], "hero-in": ["static"], "panel-swap": ["static"] },
-    "good": { "cta-press": [], "cta-hover": [], "plan-hover": [], "sheet-open": [], "toast": [], "features-reveal": [], "stat-count": [], "hero-in": [], "panel-swap": [] },
-    "over": { "cta-press": ["static", "reduced"], "cta-hover": ["duration", "easing", "props"], "plan-hover": ["duration", "easing", "props", "reduced"],
-      "sheet-open": ["duration", "easing", "props", "reduced"], "toast": ["duration", "easing", "props", "reduced"], "features-reveal": ["duration", "easing", "stagger", "reduced"],
-      "stat-count": ["duration", "easing", "reduced"], "hero-in": ["duration", "easing", "reduced"], "panel-swap": ["duration", "easing", "reduced", "interrupt"] },
-    "gsap": { "cta-press": [], "cta-hover": [], "plan-hover": [], "sheet-open": [], "toast": [], "features-reveal": [], "stat-count": [], "hero-in": [], "panel-swap": [] }
+ "_note": "Ground truth written from the page sources before scoring (c/pages/*.css|js). spec: the problem categories each entry really has; flags: kind|selector pairs the audit should raise. Categories: static, duration, easing, props, stagger, reduced, interrupt. raf-at-rest added after the rest probes (Part A) showed ScrollTrigger never sleeps; the over page has a JS loop.",
+ "spec": {
+  "static": {
+   "cta-press": [
+    "static",
+    "reduced"
+   ],
+   "cta-hover": [
+    "static",
+    "reduced"
+   ],
+   "plan-hover": [
+    "static"
+   ],
+   "sheet-open": [
+    "static"
+   ],
+   "toast": [
+    "static"
+   ],
+   "features-reveal": [
+    "static"
+   ],
+   "stat-count": [
+    "static"
+   ],
+   "hero-in": [
+    "static"
+   ],
+   "panel-swap": [
+    "static"
+   ]
   },
-  "flags": {
-    "static": [
-      "transition-all|#cta", "transition-all|#open-sheet", "transition-all|#plan-basic a.btn", "transition-all|#plan-pro a.btn", "transition-all|#plan-team a.btn", "transition-all|#next", "transition-all|#save", "transition-all|#close-sheet", "transition-all|#plan-basic", "transition-all|#plan-pro", "transition-all|#plan-team",
-      "reduce-kills-all|page",
-      "hover-none|#nav a", "hover-none|#cta", "hover-none|#open-sheet", "hover-none|#plan-basic a.btn", "hover-none|#plan-pro a.btn", "hover-none|#plan-team a.btn", "hover-none|#next", "hover-none|#save",
-      "no-active|#cta", "no-active|#open-sheet", "no-active|#plan-basic a.btn", "no-active|#plan-pro a.btn", "no-active|#plan-team a.btn", "no-active|#next", "no-active|#save"
-    ],
-    "good": [],
-    "over": [
-      "transition-all|#cta", "transition-all|#open-sheet", "transition-all|#plan-basic a.btn", "transition-all|#plan-pro a.btn", "transition-all|#plan-team a.btn", "transition-all|#next", "transition-all|#save", "transition-all|#close-sheet", "transition-all|#plan-basic", "transition-all|#plan-pro", "transition-all|#plan-team", "transition-all|#features div.feature", "transition-all|#nav a", "transition-all|#toast",
-      "off-token|#cta", "off-token|#open-sheet", "off-token|#plan-basic a.btn", "off-token|#plan-pro a.btn", "off-token|#plan-team a.btn", "off-token|#next", "off-token|#save", "off-token|#close-sheet", "off-token|#plan-basic", "off-token|#plan-pro", "off-token|#plan-team", "off-token|#features div.feature", "off-token|#nav a", "off-token|#toast", "off-token|#sheet", "off-token|#hero-title",
-      "long|#sheet", "long|#hero-title",
-      "layout-transition|#sheet", "layout-keyframes|@keyframes toastin", "scale-zero|@keyframes pop", "infinite|#cta",
-      "no-active|#cta", "no-active|#open-sheet", "no-active|#plan-basic a.btn", "no-active|#plan-pro a.btn", "no-active|#plan-team a.btn", "no-active|#next", "no-active|#save",
-      "no-reduced-motion|page", "moves-under-reduce|#cta", "moves-under-reduce|#hero-title", "moves-under-reduce|#hero div.blob"
-    ],
-    "gsap": []
+  "good": {
+   "cta-press": [],
+   "cta-hover": [],
+   "plan-hover": [],
+   "sheet-open": [],
+   "toast": [],
+   "features-reveal": [],
+   "stat-count": [],
+   "hero-in": [],
+   "panel-swap": []
+  },
+  "over": {
+   "cta-press": [
+    "static",
+    "reduced"
+   ],
+   "cta-hover": [
+    "duration",
+    "easing",
+    "props"
+   ],
+   "plan-hover": [
+    "duration",
+    "easing",
+    "props",
+    "reduced"
+   ],
+   "sheet-open": [
+    "duration",
+    "easing",
+    "props",
+    "reduced"
+   ],
+   "toast": [
+    "duration",
+    "easing",
+    "props",
+    "reduced"
+   ],
+   "features-reveal": [
+    "duration",
+    "easing",
+    "stagger",
+    "reduced"
+   ],
+   "stat-count": [
+    "duration",
+    "easing",
+    "reduced"
+   ],
+   "hero-in": [
+    "duration",
+    "easing",
+    "reduced"
+   ],
+   "panel-swap": [
+    "duration",
+    "easing",
+    "reduced",
+    "interrupt"
+   ]
+  },
+  "gsap": {
+   "cta-press": [],
+   "cta-hover": [],
+   "plan-hover": [],
+   "sheet-open": [],
+   "toast": [],
+   "features-reveal": [],
+   "stat-count": [],
+   "hero-in": [],
+   "panel-swap": []
   }
+ },
+ "flags": {
+  "static": [
+   "transition-all|#cta",
+   "transition-all|#open-sheet",
+   "transition-all|#plan-basic a.btn",
+   "transition-all|#plan-pro a.btn",
+   "transition-all|#plan-team a.btn",
+   "transition-all|#next",
+   "transition-all|#save",
+   "transition-all|#close-sheet",
+   "transition-all|#plan-basic",
+   "transition-all|#plan-pro",
+   "transition-all|#plan-team",
+   "reduce-kills-all|page",
+   "hover-none|#nav a",
+   "hover-none|#cta",
+   "hover-none|#open-sheet",
+   "hover-none|#plan-basic a.btn",
+   "hover-none|#plan-pro a.btn",
+   "hover-none|#plan-team a.btn",
+   "hover-none|#next",
+   "hover-none|#save",
+   "no-active|#cta",
+   "no-active|#open-sheet",
+   "no-active|#plan-basic a.btn",
+   "no-active|#plan-pro a.btn",
+   "no-active|#plan-team a.btn",
+   "no-active|#next",
+   "no-active|#save"
+  ],
+  "good": [],
+  "over": [
+   "transition-all|#cta",
+   "transition-all|#open-sheet",
+   "transition-all|#plan-basic a.btn",
+   "transition-all|#plan-pro a.btn",
+   "transition-all|#plan-team a.btn",
+   "transition-all|#next",
+   "transition-all|#save",
+   "transition-all|#close-sheet",
+   "transition-all|#plan-basic",
+   "transition-all|#plan-pro",
+   "transition-all|#plan-team",
+   "transition-all|#features div.feature",
+   "transition-all|#nav a",
+   "transition-all|#toast",
+   "off-token|#cta",
+   "off-token|#open-sheet",
+   "off-token|#plan-basic a.btn",
+   "off-token|#plan-pro a.btn",
+   "off-token|#plan-team a.btn",
+   "off-token|#next",
+   "off-token|#save",
+   "off-token|#close-sheet",
+   "off-token|#plan-basic",
+   "off-token|#plan-pro",
+   "off-token|#plan-team",
+   "off-token|#features div.feature",
+   "off-token|#nav a",
+   "off-token|#toast",
+   "off-token|#sheet",
+   "off-token|#hero-title",
+   "long|#sheet",
+   "long|#hero-title",
+   "layout-transition|#sheet",
+   "layout-keyframes|@keyframes toastin",
+   "scale-zero|@keyframes pop",
+   "infinite|#cta",
+   "no-active|#cta",
+   "no-active|#open-sheet",
+   "no-active|#plan-basic a.btn",
+   "no-active|#plan-pro a.btn",
+   "no-active|#plan-team a.btn",
+   "no-active|#next",
+   "no-active|#save",
+   "no-reduced-motion|page",
+   "moves-under-reduce|#cta",
+   "moves-under-reduce|#hero-title",
+   "moves-under-reduce|#hero div.blob",
+   "raf-at-rest|page"
+  ],
+  "gsap": [
+   "raf-at-rest|page"
+  ]
+ }
 }

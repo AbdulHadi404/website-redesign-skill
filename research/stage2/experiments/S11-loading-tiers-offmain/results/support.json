@@ -262,9 +262,14 @@
    "safari_ios": "17.2",
    "status": "standard"
   },
-  "fetch() priority": {
-   "path": "api.RequestInit.priority",
-   "missing": true
+  "link fetchPriority": {
+   "path": "api.HTMLLinkElement.fetchPriority",
+   "chrome": "102",
+   "chrome_android": "102",
+   "firefox": "132",
+   "safari": "17.2",
+   "safari_ios": "17.2",
+   "status": "standard"
   },
   "modulepreload": {
    "path": "html.elements.link.rel.modulepreload",

@@ -625,6 +625,24 @@
    "reference": "base",
    "view": "fold-390",
    "variantSide": "A"
+  },
+  "q01": {
+   "variant": "shadow",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "B"
+  },
+  "q02": {
+   "variant": "neutrals",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "A"
+  },
+  "q03": {
+   "variant": "imgoutline",
+   "reference": "base",
+   "view": "window-1440 .statement",
+   "variantSide": "B"
   }
  },
  "sheets": {
@@ -1121,6 +1139,91 @@
   "p104": {
    "seen": false,
    "better": "="
+  },
+  "q01": {
+   "seen": true,
+   "better": "=",
+   "note": "only the shadow at the top edge differs"
+  },
+  "q02": {
+   "seen": true,
+   "better": "=",
+   "note": "only the band at the top is warmer in A"
+  },
+  "q03": {
+   "seen": true,
+   "better": "B",
+   "note": "B's phone picture has an edge; in A it dissolves into the white page"
+  },
+  "s01": {
+   "seen": true,
+   "better": "A",
+   "note": "A: neutral ticks and chip, designed focus ring, tighter headline; a stray grey shape shows at the panel's right edge"
+  },
+  "s02": {
+   "seen": true,
+   "better": "A",
+   "note": "A: larger headline, warm ground, staged panel, one accent"
+  },
+  "s03": {
+   "seen": true,
+   "better": "=",
+   "note": "only the notification's shadow differs"
+  },
+  "s04": {
+   "seen": true,
+   "better": "B",
+   "note": "B: heading on the column edge, more space around the section"
+  },
+  "s05": {
+   "seen": true,
+   "better": "B",
+   "note": "B: larger headline, warmer ground, more space"
+  },
+  "s06": {
+   "seen": true,
+   "better": "=",
+   "note": "B's cards lose their border and nearly dissolve into the page"
+  },
+  "s07": {
+   "seen": true,
+   "better": "B",
+   "note": "B: tighter display type, neutral ticks, designed ring; stray grey shape at the panel edge"
+  },
+  "s08": {
+   "seen": true,
+   "better": "A",
+   "note": "A: tighter three-line headline, staged panel, one accent; B's headline leaves 'go' alone"
+  },
+  "s09": {
+   "seen": false,
+   "better": "=",
+   "note": "only by flicking: the status chip sits a pixel lower in B"
+  },
+  "s10": {
+   "seen": true,
+   "better": "B",
+   "note": "B: one accent, staged panel, tabular totals, balanced headline"
+  },
+  "s11": {
+   "seen": true,
+   "better": "A",
+   "note": "A: tighter headline, neutral ticks, designed ring, warmer ground"
+  },
+  "s12": {
+   "seen": true,
+   "better": "A",
+   "note": "A: one icon family in ink, lighter cards, hung quotation mark"
+  },
+  "s13": {
+   "seen": true,
+   "better": "B",
+   "note": "B: larger headline set tighter, warmer ground, more space"
+  },
+  "s14": {
+   "seen": true,
+   "better": "A",
+   "note": "A: heading on the column edge, generous space, calmer cards"
   }
  },
  "stacks": {
@@ -1186,5 +1289,91 @@
    "hang"
   ]
  },
- "stackRule": "top5: seen in both first viewports (1440 at 0.6x and 390) with the largest glance measure; bottom5: moves that change the first viewport but were seen in at most one of the two first-viewport sheets, smallest glance measure first (excluded: the no-change control, font smoothing, which is a no-op off macOS, and crop and image hairline, which do not reach the first viewport); rest: every move except the top five; all: every move except the control."
+ "stackRule": "top5: seen in both first viewports (1440 at 0.6x and 390) with the largest glance measure; bottom5: moves that change the first viewport but were seen in at most one of the two first-viewport sheets, smallest glance measure first (excluded: the no-change control, font smoothing, which is a no-op off macOS, and crop and image hairline, which do not reach the first viewport); rest: every move except the top five; all: every move except the control.",
+ "stackKeySnapshot": {
+  "s01": {
+   "variant": "stack-rest",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "s02": {
+   "variant": "stack-all",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "s03": {
+   "variant": "stack-bottom5",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "s04": {
+   "variant": "stack-top5",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "B"
+  },
+  "s05": {
+   "variant": "stack-top5",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "s06": {
+   "variant": "stack-bottom5",
+   "reference": "base",
+   "view": "window-1440 .pricing",
+   "variantSide": "B"
+  },
+  "s07": {
+   "variant": "stack-all",
+   "reference": "stack-top5",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "s08": {
+   "variant": "stack-all",
+   "reference": "stack-top5",
+   "view": "fold-1440",
+   "variantSide": "A"
+  },
+  "s09": {
+   "variant": "stack-bottom5",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "s10": {
+   "variant": "stack-rest",
+   "reference": "base",
+   "view": "fold-1440",
+   "variantSide": "B"
+  },
+  "s11": {
+   "variant": "stack-all",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "A"
+  },
+  "s12": {
+   "variant": "stack-rest",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "A"
+  },
+  "s13": {
+   "variant": "stack-top5",
+   "reference": "base",
+   "view": "fold-390",
+   "variantSide": "B"
+  },
+  "s14": {
+   "variant": "stack-all",
+   "reference": "base",
+   "view": "window-1440 .how",
+   "variantSide": "A"
+  }
+ }
 }

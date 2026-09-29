@@ -39751,6 +39751,2605 @@
      ]
     }
    ]
+  },
+  "canvas2d|2000|4x|load50": {
+   "cell": {
+    "variant": "canvas2d",
+    "n": 2000,
+    "throttle": 4,
+    "load": 50
+   },
+   "summary": {
+    "runs": 5,
+    "renderer": "canvas2d",
+    "ttff": 181.7,
+    "fps": 7.5,
+    "frameMedian": 133.4,
+    "frameP95": 183.3,
+    "over25": 38,
+    "longShare": 100,
+    "mainFps": null,
+    "mainP95": null,
+    "busyPct": 99.9,
+    "scriptPct": 31.7,
+    "rendererCpu": 99.7,
+    "gpuCpu": 1.3,
+    "browserCpu": 0.2,
+    "rendererMsPerFrame": 132.9,
+    "jsMs": 8.2,
+    "jsP95": 11.8,
+    "rafCalls": 38,
+    "drawCalls": null,
+    "moveToFrame": 254.1,
+    "moveToFrameP95": 330.4,
+    "moveDelay": 128,
+    "moveDelayP95": 172.7,
+    "dragFps": 7.5,
+    "eventTimingMax": 208,
+    "dragOk": true,
+    "heapMB": 2.2,
+    "domNodes": 44,
+    "jsFiles": [
+     "app.js"
+    ],
+    "loadavg1": 10.7
+   },
+   "runs": [
+    {
+     "variant": "canvas2d",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/canvas2d/?n=2000&load=50",
+     "errors": [],
+     "ttff": 210.1,
+     "fcp": 108,
+     "info": {
+      "renderer": "canvas2d"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 37,
+      "fps": 7.2,
+      "median": 150,
+      "p95": 183.3,
+      "max": 200,
+      "over25": 37,
+      "longShare": 100,
+      "busyPct": 99.9,
+      "scriptPct": 31.6,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.4,
+       "renderer": 104.4,
+       "GPU": 1.3,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 8.3,
+       "p95": 10.7,
+       "frames": 37
+      },
+      "rafCalls": 37,
+      "rendererMsPerFrame": 145
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 267.4,
+       "p95": 330.4,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 153.5,
+       "p95": 172.7
+      },
+      "downUpToFrame": 259.9,
+      "eventTimingMax": 208,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 160,
+        "delay": 103.3,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 160,
+        "delay": 99.7,
+        "proc": 3.6
+       },
+       {
+        "name": "pointerup",
+        "dur": 208,
+        "delay": 95.5,
+        "proc": 1.4
+       },
+       {
+        "name": "mouseup",
+        "dur": 208,
+        "delay": 96.9,
+        "proc": 0
+       },
+       {
+        "name": "click",
+        "dur": 208,
+        "delay": 97.3,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 102,
+       "fps": 7.3,
+       "median": 133.4,
+       "p95": 183.2,
+       "max": 249.9,
+       "over25": 102,
+       "longShare": 100
+      }
+     },
+     "heapMB": 2.2,
+     "domNodes": 44,
+     "loadavg": [
+      7.1,
+      8.2,
+      12
+     ]
+    },
+    {
+     "variant": "canvas2d",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/canvas2d/?n=2000&load=50",
+     "errors": [],
+     "ttff": 164.1,
+     "fcp": 108,
+     "info": {
+      "renderer": "canvas2d"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 41,
+      "fps": 8,
+      "median": 133.3,
+      "p95": 183.3,
+      "max": 183.4,
+      "over25": 41,
+      "longShare": 100,
+      "busyPct": 99.9,
+      "scriptPct": 33.2,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.2,
+       "renderer": 95.4,
+       "GPU": 1.3,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 6.2,
+       "p95": 11.8,
+       "frames": 41
+      },
+      "rafCalls": 41,
+      "rendererMsPerFrame": 119.3
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 267.4,
+       "p95": 329.5,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 120.8,
+       "p95": 166.6
+      },
+      "downUpToFrame": 234.7,
+      "eventTimingMax": 184,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 136,
+        "delay": 16.7,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 136,
+        "delay": 16.2,
+        "proc": 0.5
+       },
+       {
+        "name": "pointerup",
+        "dur": 184,
+        "delay": 78.9,
+        "proc": 3.7
+       },
+       {
+        "name": "mouseup",
+        "dur": 184,
+        "delay": 82.6,
+        "proc": 0
+       },
+       {
+        "name": "click",
+        "dur": 184,
+        "delay": 82.8,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 104,
+       "fps": 7.5,
+       "median": 133.4,
+       "p95": 183.3,
+       "max": 250,
+       "over25": 104,
+       "longShare": 100
+      }
+     },
+     "heapMB": 2.1,
+     "domNodes": 44,
+     "loadavg": [
+      10,
+      9.2,
+      11.9
+     ]
+    },
+    {
+     "variant": "canvas2d",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/canvas2d/?n=2000&load=50",
+     "errors": [],
+     "ttff": 263.2,
+     "fcp": 104,
+     "info": {
+      "renderer": "canvas2d"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 38,
+      "fps": 7.5,
+      "median": 133.4,
+      "p95": 199.9,
+      "max": 200,
+      "over25": 38,
+      "longShare": 100,
+      "busyPct": 99.8,
+      "scriptPct": 31.7,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.2,
+       "renderer": 99.7,
+       "GPU": 1.3,
+       "network.mojom.NetworkService": 0.2,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 8.75,
+       "p95": 13.3,
+       "frames": 38
+      },
+      "rafCalls": 38,
+      "rendererMsPerFrame": 132.9
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 236.5,
+       "p95": 293.6,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 128,
+       "p95": 177.3
+      },
+      "downUpToFrame": 243.5,
+      "eventTimingMax": 192,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 176,
+        "delay": 65.7,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 176,
+        "delay": 65.2,
+        "proc": 0.4
+       },
+       {
+        "name": "pointerup",
+        "dur": 192,
+        "delay": 76.6,
+        "proc": 1.2
+       },
+       {
+        "name": "mouseup",
+        "dur": 192,
+        "delay": 77.8,
+        "proc": 0.9
+       },
+       {
+        "name": "click",
+        "dur": 192,
+        "delay": 80,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 99,
+       "fps": 7.9,
+       "median": 133.3,
+       "p95": 166.7,
+       "max": 183.3,
+       "over25": 99,
+       "longShare": 100
+      }
+     },
+     "heapMB": 2.2,
+     "domNodes": 44,
+     "loadavg": [
+      10.9,
+      10,
+      11.9
+     ]
+    },
+    {
+     "variant": "canvas2d",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/canvas2d/?n=2000&load=50",
+     "errors": [],
+     "ttff": 164.6,
+     "fcp": 72,
+     "info": {
+      "renderer": "canvas2d"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 40,
+      "fps": 7.8,
+      "median": 141.6,
+      "p95": 183.3,
+      "max": 200,
+      "over25": 40,
+      "longShare": 100,
+      "busyPct": 99.8,
+      "scriptPct": 31.3,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0,
+       "renderer": 95.4,
+       "GPU": 1.5,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 8.2,
+       "p95": 13.1,
+       "frames": 40
+      },
+      "rafCalls": 40,
+      "rendererMsPerFrame": 122.3
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 248,
+       "p95": 333.6,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 124.8,
+       "p95": 176.2
+      },
+      "downUpToFrame": 255.5,
+      "eventTimingMax": 208,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 128,
+        "delay": 14,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 128,
+        "delay": 11.1,
+        "proc": 2.9
+       },
+       {
+        "name": "pointerup",
+        "dur": 208,
+        "delay": 91.1,
+        "proc": 2
+       },
+       {
+        "name": "mouseup",
+        "dur": 208,
+        "delay": 93.1,
+        "proc": 0
+       },
+       {
+        "name": "click",
+        "dur": 208,
+        "delay": 93.5,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 98,
+       "fps": 7.3,
+       "median": 141.6,
+       "p95": 199.9,
+       "max": 266.6,
+       "over25": 97,
+       "longShare": 99.9
+      }
+     },
+     "heapMB": 2.1,
+     "domNodes": 44,
+     "loadavg": [
+      12,
+      10.7,
+      11.9
+     ]
+    },
+    {
+     "variant": "canvas2d",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/canvas2d/?n=2000&load=50",
+     "errors": [],
+     "ttff": 181.7,
+     "fcp": 96,
+     "info": {
+      "renderer": "canvas2d"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 37,
+      "fps": 7.4,
+      "median": 133.3,
+      "p95": 166.7,
+      "max": 166.8,
+      "over25": 37,
+      "longShare": 100,
+      "busyPct": 99.9,
+      "scriptPct": 35.8,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.4,
+       "renderer": 105.8,
+       "GPU": 1.5,
+       "network.mojom.NetworkService": 0.2,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 7.9,
+       "p95": 9.2,
+       "frames": 37
+      },
+      "rafCalls": 37,
+      "rendererMsPerFrame": 143
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 254.1,
+       "p95": 351.8,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 141.1,
+       "p95": 172.4
+      },
+      "downUpToFrame": 290.7,
+      "eventTimingMax": 240,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 112,
+        "delay": 25.7,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 112,
+        "delay": 24.5,
+        "proc": 1.2
+       },
+       {
+        "name": "pointerup",
+        "dur": 240,
+        "delay": 130.2,
+        "proc": 2.1
+       },
+       {
+        "name": "mouseup",
+        "dur": 240,
+        "delay": 132.3,
+        "proc": 0
+       },
+       {
+        "name": "click",
+        "dur": 240,
+        "delay": 133.8,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 99,
+       "fps": 7.5,
+       "median": 149.9,
+       "p95": 183.3,
+       "max": 200.1,
+       "over25": 99,
+       "longShare": 100
+      }
+     },
+     "heapMB": 2.2,
+     "domNodes": 44,
+     "loadavg": [
+      10.7,
+      10.9,
+      11.8
+     ]
+    }
+   ]
+  },
+  "canvas2d-worker|2000|4x|load50": {
+   "cell": {
+    "variant": "canvas2d-worker",
+    "n": 2000,
+    "throttle": 4,
+    "load": 50
+   },
+   "summary": {
+    "runs": 5,
+    "renderer": "canvas2d-offscreen-worker",
+    "ttff": 213.2,
+    "fps": 37.5,
+    "frameMedian": 33.3,
+    "frameP95": 33.4,
+    "over25": 101,
+    "longShare": 70,
+    "mainFps": 48.5,
+    "mainP95": 33.4,
+    "busyPct": 53.2,
+    "scriptPct": 51.5,
+    "rendererCpu": 163.7,
+    "gpuCpu": 4.4,
+    "browserCpu": 0.4,
+    "rendererMsPerFrame": 43.9,
+    "jsMs": 2.2,
+    "jsP95": 3.6,
+    "rafCalls": 0,
+    "drawCalls": null,
+    "moveToFrame": 34.7,
+    "moveToFrameP95": 82.5,
+    "moveDelay": 10.2,
+    "moveDelayP95": 60.5,
+    "dragFps": 36.9,
+    "eventTimingMax": 40,
+    "dragOk": true,
+    "heapMB": 1.9,
+    "domNodes": 42,
+    "jsFiles": [
+     "app.js",
+     "worker.js"
+    ],
+    "loadavg1": 10.6
+   },
+   "runs": [
+    {
+     "variant": "canvas2d-worker",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/canvas2d-worker/?n=2000&load=50",
+     "errors": [],
+     "ttff": 242.5,
+     "fcp": 116,
+     "info": {
+      "renderer": "canvas2d-offscreen-worker"
+     },
+     "jsFiles": [
+      "app.js",
+      "worker.js"
+     ],
+     "steady": {
+      "frames": 185,
+      "fps": 37,
+      "median": 33.2,
+      "p95": 50,
+      "max": 83.4,
+      "over25": 93,
+      "longShare": 69.3,
+      "main": {
+       "frames": 245,
+       "fps": 48.5,
+       "median": 16.7,
+       "p95": 33.4,
+       "max": 50.1,
+       "over25": 52,
+       "longShare": 36.3
+      },
+      "busyPct": 53.2,
+      "scriptPct": 51.5,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.2,
+       "renderer": 174.2,
+       "GPU": 4.1,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 2.1,
+       "p95": 3.9,
+       "frames": 185
+      },
+      "rafCalls": 0,
+      "rendererMsPerFrame": 47.1
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 34.7,
+       "p95": 95.5,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 10.3,
+       "p95": 54.4
+      },
+      "downUpToFrame": 64.9,
+      "eventTimingMax": 40,
+      "eventTiming": [
+       {
+        "name": "pointerup",
+        "dur": 40,
+        "delay": 32.7,
+        "proc": 0
+       },
+       {
+        "name": "mouseup",
+        "dur": 40,
+        "delay": 32.8,
+        "proc": 0
+       },
+       {
+        "name": "click",
+        "dur": 40,
+        "delay": 33.5,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 123,
+       "fps": 39.5,
+       "median": 16.7,
+       "p95": 33.4,
+       "max": 83.3,
+       "over25": 57,
+       "longShare": 64.7
+      },
+      "mainLatToFrame": 12.3
+     },
+     "heapMB": 1.8,
+     "domNodes": 42,
+     "loadavg": [
+      8.6,
+      8.5,
+      12
+     ]
+    },
+    {
+     "variant": "canvas2d-worker",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/canvas2d-worker/?n=2000&load=50",
+     "errors": [],
+     "ttff": 249.6,
+     "fcp": 72,
+     "info": {
+      "renderer": "canvas2d-offscreen-worker"
+     },
+     "jsFiles": [
+      "app.js",
+      "worker.js"
+     ],
+     "steady": {
+      "frames": 141,
+      "fps": 28,
+      "median": 33.3,
+      "p95": 83.3,
+      "max": 100,
+      "over25": 101,
+      "longShare": 86.8,
+      "main": {
+       "frames": 237,
+       "fps": 47.2,
+       "median": 16.7,
+       "p95": 33.4,
+       "max": 99.9,
+       "over25": 51,
+       "longShare": 38.2
+      },
+      "busyPct": 55.6,
+      "scriptPct": 53.2,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.4,
+       "renderer": 130.9,
+       "GPU": 3.5,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 2.2,
+       "p95": 6.4,
+       "frames": 141
+      },
+      "rafCalls": 0,
+      "rendererMsPerFrame": 46.8
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 45.9,
+       "p95": 82.4,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 8.5,
+       "p95": 60.8
+      },
+      "downUpToFrame": 76.1,
+      "eventTimingMax": 48,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 48,
+        "delay": 49.6,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 48,
+        "delay": 49.1,
+        "proc": 0.5
+       }
+      ],
+      "frames": {
+       "frames": 120,
+       "fps": 27.6,
+       "median": 33.3,
+       "p95": 66.7,
+       "max": 100.1,
+       "over25": 84,
+       "longShare": 86.2
+      },
+      "mainLatToFrame": 9.6
+     },
+     "heapMB": 1.9,
+     "domNodes": 42,
+     "loadavg": [
+      10.6,
+      9.3,
+      11.9
+     ]
+    },
+    {
+     "variant": "canvas2d-worker",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/canvas2d-worker/?n=2000&load=50",
+     "errors": [],
+     "ttff": 213.2,
+     "fcp": 64,
+     "info": {
+      "renderer": "canvas2d-offscreen-worker"
+     },
+     "jsFiles": [
+      "app.js",
+      "worker.js"
+     ],
+     "steady": {
+      "frames": 194,
+      "fps": 38.8,
+      "median": 33.3,
+      "p95": 33.4,
+      "max": 50,
+      "over25": 104,
+      "longShare": 70,
+      "main": {
+       "frames": 238,
+       "fps": 47.3,
+       "median": 16.7,
+       "p95": 33.4,
+       "max": 66.7,
+       "over25": 51,
+       "longShare": 38.1
+      },
+      "busyPct": 55,
+      "scriptPct": 52.4,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.4,
+       "renderer": 163,
+       "GPU": 4.4,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 2.2,
+       "p95": 3.6,
+       "frames": 194
+      },
+      "rafCalls": 0,
+      "rendererMsPerFrame": 42
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 44.9,
+       "p95": 82.5,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 13,
+       "p95": 60.5
+      },
+      "downUpToFrame": 42.2,
+      "eventTimingMax": 16,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 16,
+        "delay": 1.6,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 16,
+        "delay": 0.8,
+        "proc": 0.8
+       }
+      ],
+      "frames": {
+       "frames": 122,
+       "fps": 33.9,
+       "median": 33.3,
+       "p95": 50,
+       "max": 100.1,
+       "over25": 78,
+       "longShare": 79.6
+      },
+      "mainLatToFrame": 14
+     },
+     "heapMB": 1.9,
+     "domNodes": 42,
+     "loadavg": [
+      11.5,
+      10.2,
+      11.9
+     ]
+    },
+    {
+     "variant": "canvas2d-worker",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/canvas2d-worker/?n=2000&load=50",
+     "errors": [],
+     "ttff": 155.4,
+     "fcp": 64,
+     "info": {
+      "renderer": "canvas2d-offscreen-worker"
+     },
+     "jsFiles": [
+      "app.js",
+      "worker.js"
+     ],
+     "steady": {
+      "frames": 188,
+      "fps": 37.5,
+      "median": 33.3,
+      "p95": 33.4,
+      "max": 100,
+      "over25": 105,
+      "longShare": 72.4,
+      "main": {
+       "frames": 246,
+       "fps": 49.2,
+       "median": 16.7,
+       "p95": 33.4,
+       "max": 50.1,
+       "over25": 50,
+       "longShare": 34.7
+      },
+      "busyPct": 52.8,
+      "scriptPct": 50.9,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.2,
+       "renderer": 163.7,
+       "GPU": 4.6,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 2.2,
+       "p95": 3.3,
+       "frames": 188
+      },
+      "rafCalls": 0,
+      "rendererMsPerFrame": 43.7
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 34.1,
+       "p95": 74,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 8.7,
+       "p95": 64.1
+      },
+      "downUpToFrame": 42.6,
+      "eventTimingMax": 40,
+      "eventTiming": [
+       {
+        "name": "pointerup",
+        "dur": 40,
+        "delay": 34.9,
+        "proc": 1
+       },
+       {
+        "name": "mouseup",
+        "dur": 40,
+        "delay": 36,
+        "proc": 0
+       },
+       {
+        "name": "click",
+        "dur": 40,
+        "delay": 36,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 113,
+       "fps": 39,
+       "median": 33.2,
+       "p95": 33.4,
+       "max": 50.1,
+       "over25": 57,
+       "longShare": 67.8
+      },
+      "mainLatToFrame": 9.2
+     },
+     "heapMB": 2,
+     "domNodes": 42,
+     "loadavg": [
+      11.4,
+      10.6,
+      11.9
+     ]
+    },
+    {
+     "variant": "canvas2d-worker",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/canvas2d-worker/?n=2000&load=50",
+     "errors": [],
+     "ttff": 130.9,
+     "fcp": 60,
+     "info": {
+      "renderer": "canvas2d-offscreen-worker"
+     },
+     "jsFiles": [
+      "app.js",
+      "worker.js"
+     ],
+     "steady": {
+      "frames": 209,
+      "fps": 41.9,
+      "median": 16.7,
+      "p95": 33.4,
+      "max": 50,
+      "over25": 87,
+      "longShare": 59.2,
+      "main": {
+       "frames": 246,
+       "fps": 49.2,
+       "median": 16.7,
+       "p95": 33.3,
+       "max": 50,
+       "over25": 50,
+       "longShare": 34.6
+      },
+      "busyPct": 52,
+      "scriptPct": 50.6,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.4,
+       "renderer": 184.1,
+       "GPU": 4.6,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 2,
+       "p95": 2.7,
+       "frames": 209
+      },
+      "rafCalls": 0,
+      "rendererMsPerFrame": 43.9
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 34.1,
+       "p95": 89.3,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 10.2,
+       "p95": 52.7
+      },
+      "downUpToFrame": 17.7,
+      "eventTimingMax": 16,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 16,
+        "delay": 4.2,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 16,
+        "delay": 3.5,
+        "proc": 0.7
+       }
+      ],
+      "frames": {
+       "frames": 121,
+       "fps": 36.9,
+       "median": 33.3,
+       "p95": 50,
+       "max": 66.7,
+       "over25": 66,
+       "longShare": 72.1
+      },
+      "mainLatToFrame": 14.1
+     },
+     "heapMB": 1.9,
+     "domNodes": 42,
+     "loadavg": [
+      9.6,
+      10.6,
+      11.7
+     ]
+    }
+   ]
+  },
+  "pixi|2000|4x|load50": {
+   "cell": {
+    "variant": "pixi",
+    "n": 2000,
+    "throttle": 4,
+    "load": 50
+   },
+   "summary": {
+    "runs": 5,
+    "renderer": "pixi-webgl",
+    "ttff": 1142.7,
+    "fps": 2.5,
+    "frameMedian": 333.4,
+    "frameP95": 700,
+    "over25": 13,
+    "longShare": 100,
+    "mainFps": null,
+    "mainP95": null,
+    "busyPct": 99.9,
+    "scriptPct": 9.7,
+    "rendererCpu": 61.1,
+    "gpuCpu": 132,
+    "browserCpu": 0.2,
+    "rendererMsPerFrame": 224.6,
+    "jsMs": 4.2,
+    "jsP95": 7.8,
+    "rafCalls": 26,
+    "drawCalls": null,
+    "moveToFrame": 706.5,
+    "moveToFrameP95": 1069.5,
+    "moveDelay": 345.8,
+    "moveDelayP95": 590.3,
+    "dragFps": 2.5,
+    "eventTimingMax": 712,
+    "dragOk": true,
+    "heapMB": 7,
+    "domNodes": 44,
+    "jsFiles": [
+     "app.js",
+     "chunk-BFWAVLG6.js",
+     "chunk-QDE2PTE4.js",
+     "chunk-63ANBAIQ.js",
+     "chunk-S4EE6C2Q.js",
+     "chunk-7SUJJMFI.js",
+     "chunk-IAGZQ27J.js",
+     "chunk-MIIX5DJK.js",
+     "chunk-GYVW3WIO.js",
+     "chunk-DNLZC42D.js",
+     "chunk-WWEXYVIA.js",
+     "chunk-HZCRCU3P.js",
+     "chunk-JMOED7BD.js",
+     "chunk-UQN6DRSC.js",
+     "chunk-UPG2LXYC.js",
+     "chunk-U2RI4OOT.js",
+     "chunk-Z2BMPPKI.js",
+     "chunk-XBIZI2F6.js",
+     "chunk-FQCGX6CT.js"
+    ],
+    "loadavg1": 11.3
+   },
+   "runs": [
+    {
+     "variant": "pixi",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/pixi/?n=2000&load=50",
+     "errors": [],
+     "ttff": 1142.7,
+     "fcp": 88,
+     "info": {
+      "renderer": "pixi-webgl"
+     },
+     "jsFiles": [
+      "app.js",
+      "chunk-BFWAVLG6.js",
+      "chunk-QDE2PTE4.js",
+      "chunk-63ANBAIQ.js",
+      "chunk-S4EE6C2Q.js",
+      "chunk-7SUJJMFI.js",
+      "chunk-IAGZQ27J.js",
+      "chunk-MIIX5DJK.js",
+      "chunk-GYVW3WIO.js",
+      "chunk-DNLZC42D.js",
+      "chunk-WWEXYVIA.js",
+      "chunk-HZCRCU3P.js",
+      "chunk-JMOED7BD.js",
+      "chunk-UQN6DRSC.js",
+      "chunk-UPG2LXYC.js",
+      "chunk-U2RI4OOT.js",
+      "chunk-Z2BMPPKI.js",
+      "chunk-XBIZI2F6.js",
+      "chunk-FQCGX6CT.js"
+     ],
+     "steady": {
+      "frames": 13,
+      "fps": 2.5,
+      "median": 350,
+      "p95": 700,
+      "max": 700,
+      "over25": 13,
+      "longShare": 100,
+      "busyPct": 100,
+      "scriptPct": 9.7,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.3,
+       "renderer": 61.1,
+       "GPU": 132,
+       "network.mojom.NetworkService": 0.2,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 4.2,
+       "p95": 9.7,
+       "frames": 13
+      },
+      "rafCalls": 26,
+      "rendererMsPerFrame": 244.4
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 786.2,
+       "p95": 1431.5,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 353,
+       "p95": 761.9
+      },
+      "downUpToFrame": 656.2,
+      "eventTimingMax": 600,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 600,
+        "delay": 214.8,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 600,
+        "delay": 213.7,
+        "proc": 1
+       },
+       {
+        "name": "pointerup",
+        "dur": 600,
+        "delay": 246.1,
+        "proc": 5.8
+       },
+       {
+        "name": "mouseup",
+        "dur": 600,
+        "delay": 252,
+        "proc": 0
+       },
+       {
+        "name": "click",
+        "dur": 600,
+        "delay": 252,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 97,
+       "fps": 2.2,
+       "median": 416.7,
+       "p95": 699.9,
+       "max": 1033.2,
+       "over25": 97,
+       "longShare": 100
+      }
+     },
+     "heapMB": 7,
+     "domNodes": 44,
+     "loadavg": [
+      10.9,
+      9.1,
+      12
+     ]
+    },
+    {
+     "variant": "pixi",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/pixi/?n=2000&load=50",
+     "errors": [],
+     "ttff": 1359.2,
+     "fcp": 112,
+     "info": {
+      "renderer": "pixi-webgl"
+     },
+     "jsFiles": [
+      "app.js",
+      "chunk-BFWAVLG6.js",
+      "chunk-QDE2PTE4.js",
+      "chunk-63ANBAIQ.js",
+      "chunk-S4EE6C2Q.js",
+      "chunk-IAGZQ27J.js",
+      "chunk-7SUJJMFI.js",
+      "chunk-GYVW3WIO.js",
+      "chunk-MIIX5DJK.js",
+      "chunk-DNLZC42D.js",
+      "chunk-WWEXYVIA.js",
+      "chunk-HZCRCU3P.js",
+      "chunk-UQN6DRSC.js",
+      "chunk-JMOED7BD.js",
+      "chunk-UPG2LXYC.js",
+      "chunk-U2RI4OOT.js",
+      "chunk-Z2BMPPKI.js",
+      "chunk-XBIZI2F6.js",
+      "chunk-FQCGX6CT.js"
+     ],
+     "steady": {
+      "frames": 13,
+      "fps": 2.4,
+      "median": 333.4,
+      "p95": 700,
+      "max": 700,
+      "over25": 13,
+      "longShare": 100,
+      "busyPct": 99.9,
+      "scriptPct": 8.3,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.2,
+       "renderer": 53.9,
+       "GPU": 118.5,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 4.5,
+       "p95": 7.8,
+       "frames": 13
+      },
+      "rafCalls": 26,
+      "rendererMsPerFrame": 224.6
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 759.8,
+       "p95": 1023.5,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 377.7,
+       "p95": 574.6
+      },
+      "downUpToFrame": 748.8,
+      "eventTimingMax": 712,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 528,
+        "delay": 159.8,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 528,
+        "delay": 158.9,
+        "proc": 0.9
+       },
+       {
+        "name": "pointerup",
+        "dur": 712,
+        "delay": 318.8,
+        "proc": 0.9
+       },
+       {
+        "name": "mouseup",
+        "dur": 712,
+        "delay": 319.7,
+        "proc": 0
+       },
+       {
+        "name": "click",
+        "dur": 712,
+        "delay": 319.7,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 92,
+       "fps": 2.4,
+       "median": 383.4,
+       "p95": 600,
+       "max": 966.6,
+       "over25": 92,
+       "longShare": 100
+      }
+     },
+     "heapMB": 7,
+     "domNodes": 44,
+     "loadavg": [
+      11.5,
+      9.9,
+      11.9
+     ]
+    },
+    {
+     "variant": "pixi",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/pixi/?n=2000&load=50",
+     "errors": [],
+     "ttff": 1302.8,
+     "fcp": 80,
+     "info": {
+      "renderer": "pixi-webgl"
+     },
+     "jsFiles": [
+      "app.js",
+      "chunk-BFWAVLG6.js",
+      "chunk-QDE2PTE4.js",
+      "chunk-63ANBAIQ.js",
+      "chunk-S4EE6C2Q.js",
+      "chunk-7SUJJMFI.js",
+      "chunk-IAGZQ27J.js",
+      "chunk-MIIX5DJK.js",
+      "chunk-GYVW3WIO.js",
+      "chunk-DNLZC42D.js",
+      "chunk-WWEXYVIA.js",
+      "chunk-UQN6DRSC.js",
+      "chunk-HZCRCU3P.js",
+      "chunk-JMOED7BD.js",
+      "chunk-UPG2LXYC.js",
+      "chunk-U2RI4OOT.js",
+      "chunk-Z2BMPPKI.js",
+      "chunk-XBIZI2F6.js",
+      "chunk-FQCGX6CT.js"
+     ],
+     "steady": {
+      "frames": 12,
+      "fps": 2.2,
+      "median": 408.4,
+      "p95": 766.6,
+      "max": 766.6,
+      "over25": 12,
+      "longShare": 100,
+      "busyPct": 100,
+      "scriptPct": 9.2,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0,
+       "renderer": 51.6,
+       "GPU": 114.8,
+       "network.mojom.NetworkService": 0.2,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 4.45,
+       "p95": 13.5,
+       "frames": 12
+      },
+      "rafCalls": 24,
+      "rendererMsPerFrame": 234.5
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 657.6,
+       "p95": 1212.5,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 303.5,
+       "p95": 590.3
+      },
+      "downUpToFrame": 1085.9,
+      "eventTimingMax": 1080,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 1080,
+        "delay": 358.2,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 1080,
+        "delay": 357.4,
+        "proc": 0.8
+       },
+       {
+        "name": "pointerup",
+        "dur": 664,
+        "delay": 281.7,
+        "proc": 7.1
+       },
+       {
+        "name": "mouseup",
+        "dur": 664,
+        "delay": 288.8,
+        "proc": 0
+       },
+       {
+        "name": "click",
+        "dur": 664,
+        "delay": 288.8,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 95,
+       "fps": 2.8,
+       "median": 333.3,
+       "p95": 600,
+       "max": 733.3,
+       "over25": 95,
+       "longShare": 100
+      }
+     },
+     "heapMB": 7,
+     "domNodes": 44,
+     "loadavg": [
+      11.3,
+      10.3,
+      11.8
+     ]
+    },
+    {
+     "variant": "pixi",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/pixi/?n=2000&load=50",
+     "errors": [],
+     "ttff": 1053.4,
+     "fcp": 100,
+     "info": {
+      "renderer": "pixi-webgl"
+     },
+     "jsFiles": [
+      "app.js",
+      "chunk-BFWAVLG6.js",
+      "chunk-63ANBAIQ.js",
+      "chunk-QDE2PTE4.js",
+      "chunk-S4EE6C2Q.js",
+      "chunk-IAGZQ27J.js",
+      "chunk-7SUJJMFI.js",
+      "chunk-DNLZC42D.js",
+      "chunk-GYVW3WIO.js",
+      "chunk-MIIX5DJK.js",
+      "chunk-WWEXYVIA.js",
+      "chunk-HZCRCU3P.js",
+      "chunk-JMOED7BD.js",
+      "chunk-UQN6DRSC.js",
+      "chunk-UPG2LXYC.js",
+      "chunk-U2RI4OOT.js",
+      "chunk-Z2BMPPKI.js",
+      "chunk-XBIZI2F6.js",
+      "chunk-FQCGX6CT.js"
+     ],
+     "steady": {
+      "frames": 15,
+      "fps": 2.9,
+      "median": 333.3,
+      "p95": 416.6,
+      "max": 416.6,
+      "over25": 15,
+      "longShare": 100,
+      "busyPct": 99.9,
+      "scriptPct": 13.2,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0,
+       "renderer": 64.5,
+       "GPU": 154.2,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 4.1,
+       "p95": 7.5,
+       "frames": 15
+      },
+      "rafCalls": 30,
+      "rendererMsPerFrame": 222.4
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 706.5,
+       "p95": 1069.5,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 345.8,
+       "p95": 685.3
+      },
+      "downUpToFrame": 942,
+      "eventTimingMax": 888,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 616,
+        "delay": 236.3,
+        "proc": 0
+       },
+       {
+        "name": "pointerdown",
+        "dur": 616,
+        "delay": 232.3,
+        "proc": 4
+       },
+       {
+        "name": "pointerup",
+        "dur": 888,
+        "delay": 461.8,
+        "proc": 0.7
+       },
+       {
+        "name": "mouseup",
+        "dur": 888,
+        "delay": 462.5,
+        "proc": 0
+       },
+       {
+        "name": "click",
+        "dur": 888,
+        "delay": 462.5,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 93,
+       "fps": 2.5,
+       "median": 400,
+       "p95": 533.4,
+       "max": 683.3,
+       "over25": 93,
+       "longShare": 100
+      }
+     },
+     "heapMB": 7,
+     "domNodes": 44,
+     "loadavg": [
+      11.9,
+      10.9,
+      11.9
+     ]
+    },
+    {
+     "variant": "pixi",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/pixi/?n=2000&load=50",
+     "errors": [],
+     "ttff": 1033.2,
+     "fcp": 84,
+     "info": {
+      "renderer": "pixi-webgl"
+     },
+     "jsFiles": [
+      "app.js",
+      "chunk-BFWAVLG6.js",
+      "chunk-QDE2PTE4.js",
+      "chunk-63ANBAIQ.js",
+      "chunk-S4EE6C2Q.js",
+      "chunk-7SUJJMFI.js",
+      "chunk-IAGZQ27J.js",
+      "chunk-MIIX5DJK.js",
+      "chunk-GYVW3WIO.js",
+      "chunk-DNLZC42D.js",
+      "chunk-WWEXYVIA.js",
+      "chunk-HZCRCU3P.js",
+      "chunk-UQN6DRSC.js",
+      "chunk-JMOED7BD.js",
+      "chunk-UPG2LXYC.js",
+      "chunk-U2RI4OOT.js",
+      "chunk-Z2BMPPKI.js",
+      "chunk-XBIZI2F6.js",
+      "chunk-FQCGX6CT.js"
+     ],
+     "steady": {
+      "frames": 22,
+      "fps": 4.3,
+      "median": 216.7,
+      "p95": 316.6,
+      "max": 383.4,
+      "over25": 22,
+      "longShare": 100,
+      "busyPct": 99.9,
+      "scriptPct": 15,
+      "stylePct": 0,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.2,
+       "renderer": 78.4,
+       "GPU": 223.5,
+       "network.mojom.NetworkService": 0.2,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": {
+       "median": 3.8,
+       "p95": 5.2,
+       "frames": 22
+      },
+      "rafCalls": 44,
+      "rendererMsPerFrame": 182.3
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 602,
+       "p95": 1004,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 315.7,
+       "p95": 483.1
+      },
+      "downUpToFrame": 818.6,
+      "eventTimingMax": 392,
+      "eventTiming": [
+       {
+        "name": "mousedown",
+        "dur": 392,
+        "delay": 120.5,
+        "proc": 0
+       }
+      ],
+      "frames": {
+       "frames": 98,
+       "fps": 3.1,
+       "median": 283.4,
+       "p95": 533.3,
+       "max": 783.3,
+       "over25": 98,
+       "longShare": 100
+      }
+     },
+     "heapMB": 7.1,
+     "domNodes": 44,
+     "loadavg": [
+      9.6,
+      10.4,
+      11.6
+     ]
+    }
+   ]
+  },
+  "dom|2000|4x|load50": {
+   "cell": {
+    "variant": "dom",
+    "n": 2000,
+    "throttle": 4,
+    "load": 50
+   },
+   "summary": {
+    "runs": 5,
+    "renderer": "dom",
+    "ttff": 210.6,
+    "fps": 4.2,
+    "frameMedian": 233.3,
+    "frameP95": 316.7,
+    "over25": 22,
+    "longShare": 100,
+    "mainFps": null,
+    "mainP95": null,
+    "busyPct": 99.4,
+    "scriptPct": 25.5,
+    "rendererCpu": 121.1,
+    "gpuCpu": 52.2,
+    "browserCpu": 0.2,
+    "rendererMsPerFrame": 281.6,
+    "jsMs": null,
+    "jsP95": null,
+    "rafCalls": 0,
+    "drawCalls": null,
+    "moveToFrame": 370.8,
+    "moveToFrameP95": 611.6,
+    "moveDelay": 98.3,
+    "moveDelayP95": 329.3,
+    "dragFps": 3.8,
+    "eventTimingMax": 584,
+    "dragOk": true,
+    "heapMB": 2.3,
+    "domNodes": 6046,
+    "jsFiles": [
+     "app.js"
+    ],
+    "loadavg1": 11.2
+   },
+   "runs": [
+    {
+     "variant": "dom",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/dom/?n=2000&load=50",
+     "errors": [],
+     "ttff": 241.8,
+     "fcp": 72,
+     "info": {
+      "renderer": "dom"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 17,
+      "fps": 3.5,
+      "median": 233.3,
+      "p95": 733.3,
+      "max": 733.3,
+      "over25": 17,
+      "longShare": 100,
+      "busyPct": 97.7,
+      "scriptPct": 22.4,
+      "stylePct": 35.1,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.4,
+       "renderer": 97.9,
+       "GPU": 46.2,
+       "network.mojom.NetworkService": 0.2,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": null,
+      "rafCalls": 0,
+      "rendererMsPerFrame": 279.7
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 416.8,
+       "p95": 744.3,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 71.5,
+       "p95": 329.3
+      },
+      "downUpToFrame": 365.8,
+      "eventTimingMax": 464,
+      "eventTiming": [
+       {
+        "name": "pointerdown",
+        "dur": 440,
+        "delay": 40.3,
+        "proc": 0.5
+       },
+       {
+        "name": "pointerup",
+        "dur": 464,
+        "delay": 31,
+        "proc": 1.6
+       },
+       {
+        "name": "click",
+        "dur": 464,
+        "delay": 113.9,
+        "proc": 0.1
+       }
+      ],
+      "frames": {
+       "frames": 69,
+       "fps": 3.2,
+       "median": 300,
+       "p95": 500,
+       "max": 683.3,
+       "over25": 69,
+       "longShare": 100
+      }
+     },
+     "heapMB": 2.3,
+     "domNodes": 6046,
+     "loadavg": [
+      11.1,
+      9.3,
+      12
+     ]
+    },
+    {
+     "variant": "dom",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/dom/?n=2000&load=50",
+     "errors": [],
+     "ttff": 195.6,
+     "fcp": 76,
+     "info": {
+      "renderer": "dom"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 22,
+      "fps": 4.2,
+      "median": 241.6,
+      "p95": 316.7,
+      "max": 366.7,
+      "over25": 22,
+      "longShare": 100,
+      "busyPct": 99.7,
+      "scriptPct": 27.5,
+      "stylePct": 35.1,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.2,
+       "renderer": 126.2,
+       "GPU": 52.2,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": null,
+      "rafCalls": 0,
+      "rendererMsPerFrame": 300.5
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 396.9,
+       "p95": 578.5,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 150.8,
+       "p95": 294.1
+      },
+      "downUpToFrame": 468.4,
+      "eventTimingMax": 656,
+      "eventTiming": [
+       {
+        "name": "pointerdown",
+        "dur": 424,
+        "delay": 24.4,
+        "proc": 2.2
+       },
+       {
+        "name": "pointerup",
+        "dur": 656,
+        "delay": 28.3,
+        "proc": 6.8
+       },
+       {
+        "name": "click",
+        "dur": 656,
+        "delay": 67.3,
+        "proc": 0.1
+       }
+      ],
+      "frames": {
+       "frames": 70,
+       "fps": 3.8,
+       "median": 249.9,
+       "p95": 416.7,
+       "max": 500,
+       "over25": 70,
+       "longShare": 100
+      }
+     },
+     "heapMB": 2.2,
+     "domNodes": 6046,
+     "loadavg": [
+      11.2,
+      10,
+      11.9
+     ]
+    },
+    {
+     "variant": "dom",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/dom/?n=2000&load=50",
+     "errors": [],
+     "ttff": 210.6,
+     "fcp": 128,
+     "info": {
+      "renderer": "dom"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 22,
+      "fps": 4.3,
+      "median": 233.3,
+      "p95": 300,
+      "max": 316.8,
+      "over25": 22,
+      "longShare": 100,
+      "busyPct": 99.4,
+      "scriptPct": 23.7,
+      "stylePct": 37.5,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0,
+       "renderer": 121.1,
+       "GPU": 53.5,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": null,
+      "rafCalls": 0,
+      "rendererMsPerFrame": 281.6
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 370.8,
+       "p95": 569.1,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 98.3,
+       "p95": 315.6
+      },
+      "downUpToFrame": 348.7,
+      "eventTimingMax": 584,
+      "eventTiming": [
+       {
+        "name": "pointerdown",
+        "dur": 424,
+        "delay": 63.1,
+        "proc": 3
+       },
+       {
+        "name": "pointerup",
+        "dur": 584,
+        "delay": 34.3,
+        "proc": 1.4
+       },
+       {
+        "name": "click",
+        "dur": 584,
+        "delay": 54.2,
+        "proc": 0.4
+       }
+      ],
+      "frames": {
+       "frames": 66,
+       "fps": 3.6,
+       "median": 266.6,
+       "p95": 416.7,
+       "max": 500,
+       "over25": 66,
+       "longShare": 100
+      }
+     },
+     "heapMB": 2.3,
+     "domNodes": 6046,
+     "loadavg": [
+      13.6,
+      10.9,
+      12
+     ]
+    },
+    {
+     "variant": "dom",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/dom/?n=2000&load=50",
+     "errors": [],
+     "ttff": 170,
+     "fcp": 84,
+     "info": {
+      "renderer": "dom"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 26,
+      "fps": 5.1,
+      "median": 191.7,
+      "p95": 266.6,
+      "max": 283.4,
+      "over25": 26,
+      "longShare": 100,
+      "busyPct": 99.8,
+      "scriptPct": 26.9,
+      "stylePct": 35.8,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0,
+       "renderer": 130.6,
+       "GPU": 59,
+       "network.mojom.NetworkService": 0,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": null,
+      "rafCalls": 0,
+      "rendererMsPerFrame": 256.1
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 337.3,
+       "p95": 624.4,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 106.7,
+       "p95": 335.5
+      },
+      "downUpToFrame": 552.2,
+      "eventTimingMax": 648,
+      "eventTiming": [
+       {
+        "name": "pointerdown",
+        "dur": 336,
+        "delay": 22,
+        "proc": 0.5
+       },
+       {
+        "name": "pointerup",
+        "dur": 648,
+        "delay": 160.5,
+        "proc": 8.2
+       },
+       {
+        "name": "click",
+        "dur": 648,
+        "delay": 193.5,
+        "proc": 0.7
+       }
+      ],
+      "frames": {
+       "frames": 75,
+       "fps": 4.1,
+       "median": 250,
+       "p95": 333.4,
+       "max": 399.9,
+       "over25": 75,
+       "longShare": 100
+      }
+     },
+     "heapMB": 2.4,
+     "domNodes": 6046,
+     "loadavg": [
+      13.5,
+      11.3,
+      12
+     ]
+    },
+    {
+     "variant": "dom",
+     "n": 2000,
+     "throttle": 4,
+     "reduced": false,
+     "load": 50,
+     "idle": false,
+     "url": "http://127.0.0.1:40057/dom/?n=2000&load=50",
+     "errors": [],
+     "ttff": 252.9,
+     "fcp": 132,
+     "info": {
+      "renderer": "dom"
+     },
+     "jsFiles": [
+      "app.js"
+     ],
+     "steady": {
+      "frames": 20,
+      "fps": 3.9,
+      "median": 258.3,
+      "p95": 383.3,
+      "max": 383.3,
+      "over25": 20,
+      "longShare": 100,
+      "busyPct": 97.6,
+      "scriptPct": 25.5,
+      "stylePct": 35.8,
+      "layoutPct": 0,
+      "cpuPct": {
+       "browser": 0.2,
+       "renderer": 113.6,
+       "GPU": 47.7,
+       "network.mojom.NetworkService": 0.2,
+       "storage.mojom.StorageService": 0
+      },
+      "drawCalls": null,
+      "js": null,
+      "rafCalls": 0,
+      "rendererMsPerFrame": 291.3
+     },
+     "drag": {
+      "picked": true,
+      "moved": [
+       120,
+       60
+      ],
+      "dropped": 1,
+      "moveToFrame": {
+       "median": 343.3,
+       "p95": 611.6,
+       "count": 35
+      },
+      "moveDelay": {
+       "median": 53.4,
+       "p95": 333.7
+      },
+      "downUpToFrame": 489.5,
+      "eventTimingMax": 576,
+      "eventTiming": [
+       {
+        "name": "pointerdown",
+        "dur": 576,
+        "delay": 182.5,
+        "proc": 0.8
+       },
+       {
+        "name": "pointerup",
+        "dur": 472,
+        "delay": 33.4,
+        "proc": 6.1
+       },
+       {
+        "name": "click",
+        "dur": 472,
+        "delay": 73.7,
+        "proc": 0.1
+       }
+      ],
+      "frames": {
+       "frames": 71,
+       "fps": 4,
+       "median": 250,
+       "p95": 350.1,
+       "max": 433.3,
+       "over25": 71,
+       "longShare": 100
+      }
+     },
+     "heapMB": 2.3,
+     "domNodes": 6046,
+     "loadavg": [
+      8.9,
+      10.2,
+      11.5
+     ]
+    }
+   ]
+  }
+ },
+ "a11y": {
+  "tree": {
+   "dom": {
+    "focusable": false,
+    "tabsToFocus": null,
+    "focused": null,
+    "tabStops": 0,
+    "buttons": 0,
+    "snapshotHead": "",
+    "snapshotLines": 1
+   },
+   "svg": {
+    "focusable": false,
+    "tabsToFocus": null,
+    "focused": null,
+    "tabStops": 0,
+    "buttons": 0,
+    "snapshotHead": "- img",
+    "snapshotLines": 1
+   },
+   "canvas2d": {
+    "focusable": false,
+    "tabsToFocus": null,
+    "focused": null,
+    "tabStops": 0,
+    "buttons": 0,
+    "snapshotHead": "",
+    "snapshotLines": 1
+   },
+   "canvas2d-worker": {
+    "focusable": false,
+    "tabsToFocus": null,
+    "focused": null,
+    "tabStops": 0,
+    "buttons": 0,
+    "snapshotHead": "",
+    "snapshotLines": 1
+   },
+   "pixi": {
+    "focusable": false,
+    "tabsToFocus": null,
+    "focused": null,
+    "tabStops": 0,
+    "buttons": 0,
+    "snapshotHead": "",
+    "snapshotLines": 1
+   },
+   "phaser": {
+    "focusable": false,
+    "tabsToFocus": null,
+    "focused": null,
+    "tabStops": 0,
+    "buttons": 0,
+    "snapshotHead": "",
+    "snapshotLines": 1
+   },
+   "three": {
+    "focusable": false,
+    "tabsToFocus": null,
+    "focused": null,
+    "tabStops": 0,
+    "buttons": 0,
+    "snapshotHead": "",
+    "snapshotLines": 1
+   },
+   "three-instanced": {
+    "focusable": false,
+    "tabsToFocus": null,
+    "focused": null,
+    "tabStops": 0,
+    "buttons": 0,
+    "snapshotHead": "",
+    "snapshotLines": 1
+   },
+   "r3f": {
+    "focusable": false,
+    "tabsToFocus": null,
+    "focused": null,
+    "tabStops": 0,
+    "buttons": 0,
+    "snapshotHead": "",
+    "snapshotLines": 1
+   },
+   "dom-a11y": {
+    "focusable": true,
+    "tabsToFocus": 1,
+    "focused": {
+     "tag": "div",
+     "role": "button",
+     "name": "Candle 20 of 20"
+    },
+    "tabStops": 1,
+    "buttons": 20,
+    "snapshotHead": "- group \"Decorations on the cake\":\n  - button \"Candle 1 of 20\"\n  - button \"Strawberry 2 of 20\"\n  - button \"Macaron 3 of 20\"\n  - button \"Flower 4 of 20\"\n  - button \"Flower 5 of 20\"",
+    "snapshotLines": 21
+   },
+   "svg-a11y": {
+    "focusable": true,
+    "tabsToFocus": 1,
+    "focused": {
+     "tag": "g",
+     "role": "button",
+     "name": "Candle 20 of 20"
+    },
+    "tabStops": 1,
+    "buttons": 20,
+    "snapshotHead": "- img:\n  - group \"Decorations on the cake\":\n    - button \"Candle 1 of 20\"\n    - button \"Strawberry 2 of 20\"\n    - button \"Macaron 3 of 20\"\n    - button \"Flower 4 of 20\"",
+    "snapshotLines": 22
+   },
+   "pixi-a11y": {
+    "focusable": true,
+    "tabsToFocus": 1,
+    "focused": {
+     "tag": "button",
+     "role": null,
+     "name": "Candle 20 of 20"
+    },
+    "tabStops": 1,
+    "buttons": 20,
+    "snapshotHead": "- group \"Decorations on the cake\":\n  - button \"Candle 1 of 20\"\n  - button \"Strawberry 2 of 20\"\n  - button \"Macaron 3 of 20\"\n  - button \"Flower 4 of 20\"\n  - button \"Flower 5 of 20\"",
+    "snapshotLines": 21
+   },
+   "pixi-pixia11y": {
+    "focusable": true,
+    "tabsToFocus": 1,
+    "focused": {
+     "tag": "button",
+     "role": null,
+     "name": "Candle 1 of 20"
+    },
+    "tabStops": 20,
+    "buttons": 20,
+    "snapshotHead": "- button \"Candle 1 of 20\"\n- button \"Strawberry 2 of 20\"\n- button \"Macaron 3 of 20\"\n- button \"Flower 4 of 20\"\n- button \"Flower 5 of 20\"\n- button \"Macaron 6 of 20\"",
+    "snapshotLines": 20
+   }
+  },
+  "keyboard": {
+   "dom-a11y": {
+    "item": 19,
+    "movedBy": [
+     24,
+     16
+    ],
+    "counter": "1",
+    "live": "Placed Candle 20 of 20.",
+    "pass": true
+   },
+   "svg-a11y": {
+    "item": 19,
+    "movedBy": [
+     24,
+     16
+    ],
+    "counter": "1",
+    "live": "Placed Candle 20 of 20.",
+    "pass": true
+   },
+   "pixi-a11y": {
+    "item": 19,
+    "movedBy": [
+     24,
+     16
+    ],
+    "counter": "1",
+    "live": "Placed Candle 20 of 20.",
+    "pass": true
+   },
+   "pixi-pixia11y": {
+    "enterSelects": true,
+    "arrowsMove": false,
+    "counter": "0",
+    "focusedAfterArrows": null,
+    "pass": false,
+    "note": "Enter/Space fire a click on the overlay <button>, which PixiJS forwards as click/pointertap; there is no keyboard move, so drag has no keyboard equivalent."
+   }
   }
  }
 }

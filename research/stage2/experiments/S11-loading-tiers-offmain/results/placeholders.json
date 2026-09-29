@@ -1,0 +1,474 @@
+{
+ "env": {
+  "date": "2026-09-29T00:13:49.036Z",
+  "node": "v22.22.2",
+  "cpus": 4,
+  "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "loadavgAtStart": [
+   5.1,
+   8.1,
+   10.5
+  ],
+  "loadavgAtEnd": [
+   7.7,
+   8.5,
+   10.6
+  ]
+ },
+ "built": {
+  "items": [
+   {
+    "file": "concert.jpg",
+    "w": 400,
+    "h": 267,
+    "bh43": "LB7-Zw9F4n_3~qD%9F?bt7WBRjt7",
+    "bh64": "WB7-Zw9F4n_3t7D%~qD%9F?bt7IUt7WBRjt7ayWBD%xu%MIUWB%M",
+    "th": "CQgKBYAyi4ZPpXiGiFeZhgAAAAAA",
+    "thBytes": 21,
+    "webpBytes": 72,
+    "avifBytes": 302,
+    "dominant": "#080808",
+    "encodeMs": {
+     "blurhash": 22.4,
+     "thumbhash": 27.9
+    },
+    "webpUriChars": 119,
+    "avifUriChars": 427
+   },
+   {
+    "file": "hero.jpg",
+    "w": 2725,
+    "h": 2225,
+    "bh43": "L8Dk-{}[0h0gIa=x-og3Vt-V?H-p",
+    "bh64": "W8Dk-{}[0h0g^P^jIa=x-og3$*-UVt-V?H-p%1r?%1X9J:xu=xs9",
+    "th": "1DgGDoILwErCm5rIrIpnWomdCMOqYKs=",
+    "thBytes": 23,
+    "webpBytes": 108,
+    "avifBytes": 330,
+    "dominant": "#282828",
+    "encodeMs": {
+     "blurhash": 25.4,
+     "thumbhash": 22.4
+    },
+    "webpUriChars": 167,
+    "avifUriChars": 463
+   },
+   {
+    "file": "bh1.jpg",
+    "w": 269,
+    "h": 173,
+    "bh43": "LGHB}It72yo}yZoLWBNa%zofMdjF",
+    "bh64": "WGHB}It72yo}wc%NyZoLWBNa=sxZ%zofMdjF%MW=o}NGxZ%2I=Rj",
+    "th": "I/gFJIiGiHqPZoqOgmYHhIdQeA==",
+    "thBytes": 19,
+    "webpBytes": 100,
+    "avifBytes": 314,
+    "dominant": "#8898a8",
+    "encodeMs": {
+     "blurhash": 22.3,
+     "thumbhash": 9.7
+    },
+    "webpUriChars": 159,
+    "avifUriChars": 443
+   },
+   {
+    "file": "bh2.jpg",
+    "w": 301,
+    "h": 193,
+    "bh43": "LJEo$DhL=z,7[5A3#tNZ:kk6[RF5",
+    "bh64": "WJEo$DhL=z,7E2O][5A3#tNZKkV@:kk6[RF5O[Xn}=KOr;OZ9wNh",
+    "th": "HNcFJIbfJIpcWlqHZ36VBAr88g==",
+    "thBytes": 19,
+    "webpBytes": 132,
+    "avifBytes": 341,
+    "dominant": "#2888d8",
+    "encodeMs": {
+     "blurhash": 20.2,
+     "thumbhash": 12.5
+    },
+    "webpUriChars": 199,
+    "avifUriChars": 479
+   },
+   {
+    "file": "bh3.jpg",
+    "w": 242,
+    "h": 172,
+    "bh43": "LAPZfR?a%i_N~qt7t7a#%$ozI9R5",
+    "bh64": "WBPZfR?H%h_4D$={~qt6t7a#WBs.%hozI9R5%htl~qWqIUt6%MR-",
+    "th": "dQgGDYD2GaWKeIeOYb1HdQmHoGII",
+    "thBytes": 21,
+    "webpBytes": 74,
+    "avifBytes": 312,
+    "dominant": "#d8d8d8",
+    "encodeMs": {
+     "blurhash": 10.5,
+     "thumbhash": 4.7
+    },
+    "webpUriChars": 123,
+    "avifUriChars": 439
+   },
+   {
+    "file": "bh4.jpg",
+    "w": 187,
+    "h": 120,
+    "bh43": "LLN]On=|Tw^i}qVyVZRi};RPxtwG",
+    "bh64": "WLN]On=|Tw^iVtyW}qVyVZRikZaw};RPxtwG%3xB--T1xa-;rsxt",
+    "th": "KkkGFISrS2lqZmtveZdlbG/A2g==",
+    "thBytes": 19,
+    "webpBytes": 130,
+    "avifBytes": 320,
+    "dominant": "#e8b8a8",
+    "encodeMs": {
+     "blurhash": 12,
+     "thumbhash": 4.2
+    },
+    "webpUriChars": 199,
+    "avifUriChars": 451
+   },
+   {
+    "file": "bh5.jpg",
+    "w": 249,
+    "h": 159,
+    "bh43": "LQP6]fxu?w%f^+s:NGWCS%Rjr;xu",
+    "bh64": "WQP6]fxu?w%fMw-;^+s:NGWCj?aeS%Rjr;xuS$RP-=bIM_aKxvtR",
+    "th": "NAgGDIL3R4mLdnh4l4oHiXGQCA==",
+    "thBytes": 19,
+    "webpBytes": 76,
+    "avifBytes": 323,
+    "dominant": "#e8e8e8",
+    "encodeMs": {
+     "blurhash": 11.2,
+     "thumbhash": 3.8
+    },
+    "webpUriChars": 127,
+    "avifUriChars": 455
+   },
+   {
+    "file": "bh-wide.jpg",
+    "w": 1180,
+    "h": 556,
+    "bh43": "LRCi?nIUD%IV_NM{M{RjyDM{aKs.",
+    "bh64": "WRCi?nIUD%IVt6%M_NM{M{RjaexuyDM{aKs.RjkD%MRjjZkCWBae",
+    "th": "1QcOC4I0lXlfdpd2Y4NQZAg=",
+    "thBytes": 17,
+    "webpBytes": 84,
+    "avifBytes": 294,
+    "dominant": "#181818",
+    "encodeMs": {
+     "blurhash": 18.8,
+     "thumbhash": 9.3
+    },
+    "webpUriChars": 135,
+    "avifUriChars": 415
+   }
+  ],
+  "decoders": {
+   "blurhashDecode": {
+    "min": 1803,
+    "gzip": 1052
+   },
+   "thumbhashToDataURL": {
+    "min": 2151,
+    "gzip": 1239
+   },
+   "thumbhashToRGBA": {
+    "min": 1260,
+    "gzip": 741
+   },
+   "comlink": {
+    "min": 4477,
+    "gzip": 2034
+   },
+   "detectGpu": {
+    "min": 7798,
+    "gzip": 3733
+   },
+   "tierJs": {
+    "min": 4102,
+    "gzip": 1941
+   },
+   "governorJs": {
+    "min": 946,
+    "gzip": 629
+   }
+  },
+  "progressive": {
+   "jpeg-baseline": 257701,
+   "jpeg-progressive": 196310,
+   "webp": 124698,
+   "avif": 113943
+  }
+ },
+ "decode": [
+  {
+   "cpu": 1,
+   "kind": "color",
+   "sync": 0.599999999627471,
+   "decoded": 0.599999999627471,
+   "painted": 26.09999999962747
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash",
+   "sync": 25.100000001490116,
+   "decoded": 25.100000001490116,
+   "painted": 32.600000001490116
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash-6x4",
+   "sync": 30.5,
+   "decoded": 30.5,
+   "painted": 55.80000000074506
+  },
+  {
+   "cpu": 1,
+   "kind": "blurhash-dataurl",
+   "sync": 33.40000000037253,
+   "decoded": 44.5,
+   "painted": 77.09999999962747
+  },
+  {
+   "cpu": 1,
+   "kind": "thumbhash",
+   "sync": 39.29999999888241,
+   "decoded": 62.59999999962747,
+   "painted": 82
+  },
+  {
+   "cpu": 1,
+   "kind": "thumbhash-canvas",
+   "sync": 0.599999999627471,
+   "decoded": 22.59999999962747,
+   "painted": 54
+  },
+  {
+   "cpu": 1,
+   "kind": "webp",
+   "sync": 0.8000000007450581,
+   "decoded": 10.800000000745058,
+   "painted": 38.600000001490116
+  },
+  {
+   "cpu": 1,
+   "kind": "avif",
+   "sync": 0.6999999992549419,
+   "decoded": 14.900000000372529,
+   "painted": 38.40000000037253
+  },
+  {
+   "cpu": 4,
+   "kind": "color",
+   "sync": 1.199999999254942,
+   "decoded": 1.199999999254942,
+   "painted": 30.899999998509884
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash",
+   "sync": 70.40000000037253,
+   "decoded": 70.40000000037253,
+   "painted": 95.5
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash-6x4",
+   "sync": 79.90000000037253,
+   "decoded": 80,
+   "painted": 129
+  },
+  {
+   "cpu": 4,
+   "kind": "blurhash-dataurl",
+   "sync": 102,
+   "decoded": 118.80000000074506,
+   "painted": 133.40000000037253
+  },
+  {
+   "cpu": 4,
+   "kind": "thumbhash",
+   "sync": 65.59999999962747,
+   "decoded": 87.39999999850988,
+   "painted": 95
+  },
+  {
+   "cpu": 4,
+   "kind": "thumbhash-canvas",
+   "sync": 2.599999999627471,
+   "decoded": 41.20000000111759,
+   "painted": 67.30000000074506
+  },
+  {
+   "cpu": 4,
+   "kind": "webp",
+   "sync": 2.199999999254942,
+   "decoded": 11.900000000372529,
+   "painted": 28.59999999962747
+  },
+  {
+   "cpu": 4,
+   "kind": "avif",
+   "sync": 3.199999999254942,
+   "decoded": 21.90000000037253,
+   "painted": 53
+  }
+ ],
+ "film": [
+  {
+   "k": "jpeg-baseline",
+   "bytes": 257701,
+   "frames": 21,
+   "visibleSteps": 2,
+   "firstMs": 1397,
+   "ninetyMs": 1652,
+   "completeMs": 1652,
+   "lcp": 1620
+  },
+  {
+   "k": "jpeg-progressive",
+   "bytes": 196310,
+   "frames": 18,
+   "visibleSteps": 2,
+   "firstMs": 453,
+   "ninetyMs": 1401,
+   "completeMs": 1401,
+   "lcp": 1392
+  },
+  {
+   "k": "webp",
+   "bytes": 124698,
+   "frames": 15,
+   "visibleSteps": 1,
+   "firstMs": 989,
+   "ninetyMs": 989,
+   "completeMs": 989,
+   "lcp": 988
+  },
+  {
+   "k": "avif",
+   "bytes": 113943,
+   "frames": 14,
+   "visibleSteps": 1,
+   "firstMs": 958,
+   "ninetyMs": 958,
+   "completeMs": 958,
+   "lcp": 932
+  }
+ ],
+ "decodeSummary": {
+  "1x|color": {
+   "syncMs": 0.6,
+   "decodedMs": 0.6,
+   "paintedMs": 26.1
+  },
+  "1x|blurhash": {
+   "syncMs": 25.1,
+   "decodedMs": 25.1,
+   "paintedMs": 32.6
+  },
+  "1x|blurhash-6x4": {
+   "syncMs": 30.5,
+   "decodedMs": 30.5,
+   "paintedMs": 55.8
+  },
+  "1x|blurhash-dataurl": {
+   "syncMs": 33.4,
+   "decodedMs": 44.5,
+   "paintedMs": 77.1
+  },
+  "1x|thumbhash": {
+   "syncMs": 39.3,
+   "decodedMs": 62.6,
+   "paintedMs": 82
+  },
+  "1x|thumbhash-canvas": {
+   "syncMs": 0.6,
+   "decodedMs": 22.6,
+   "paintedMs": 54
+  },
+  "1x|webp": {
+   "syncMs": 0.8,
+   "decodedMs": 10.8,
+   "paintedMs": 38.6
+  },
+  "1x|avif": {
+   "syncMs": 0.7,
+   "decodedMs": 14.9,
+   "paintedMs": 38.4
+  },
+  "4x|color": {
+   "syncMs": 1.2,
+   "decodedMs": 1.2,
+   "paintedMs": 30.9
+  },
+  "4x|blurhash": {
+   "syncMs": 70.4,
+   "decodedMs": 70.4,
+   "paintedMs": 95.5
+  },
+  "4x|blurhash-6x4": {
+   "syncMs": 79.9,
+   "decodedMs": 80,
+   "paintedMs": 129
+  },
+  "4x|blurhash-dataurl": {
+   "syncMs": 102,
+   "decodedMs": 118.8,
+   "paintedMs": 133.4
+  },
+  "4x|thumbhash": {
+   "syncMs": 65.6,
+   "decodedMs": 87.4,
+   "paintedMs": 95
+  },
+  "4x|thumbhash-canvas": {
+   "syncMs": 2.6,
+   "decodedMs": 41.2,
+   "paintedMs": 67.3
+  },
+  "4x|webp": {
+   "syncMs": 2.2,
+   "decodedMs": 11.9,
+   "paintedMs": 28.6
+  },
+  "4x|avif": {
+   "syncMs": 3.2,
+   "decodedMs": 21.9,
+   "paintedMs": 53
+  }
+ },
+ "filmSummary": {
+  "jpeg-baseline": {
+   "kb": 252,
+   "visibleSteps": 2,
+   "firstMs": 1397,
+   "ninetyMs": 1652,
+   "completeMs": 1652,
+   "lcp": 1620
+  },
+  "jpeg-progressive": {
+   "kb": 192,
+   "visibleSteps": 2,
+   "firstMs": 453,
+   "ninetyMs": 1401,
+   "completeMs": 1401,
+   "lcp": 1392
+  },
+  "webp": {
+   "kb": 122,
+   "visibleSteps": 1,
+   "firstMs": 989,
+   "ninetyMs": 989,
+   "completeMs": 989,
+   "lcp": 988
+  },
+  "avif": {
+   "kb": 111,
+   "visibleSteps": 1,
+   "firstMs": 958,
+   "ninetyMs": 958,
+   "completeMs": 958,
+   "lcp": 932
+  }
+ }
+}

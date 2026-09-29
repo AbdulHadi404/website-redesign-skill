@@ -357,7 +357,7 @@ if (judgements?.sheets) {
     return { id, ...k, seen: j.seen, better: j.better, correct, reversed, note: j.note };
   });
   const by = (f) => rows.reduce((m, r) => { (m[f(r)] ||= []).push(r); return m; }, {});
-  const summary = Object.fromEntries(Object.entries(by((r) => r.view.split(' ')[0])).map(([v, rs]) => [v, { n: rs.length, seen: rs.filter((r) => r.seen).length, correct: rs.filter((r) => r.correct).length, reversed: rs.filter((r) => r.reversed).length }]));
+  const summary = Object.fromEntries(Object.entries(by((r) => `${r.id[0] === 's' ? 'stack' : 'single'} ${r.view.split(' ')[0]}`)).map(([v, rs]) => [v, { n: rs.length, seen: rs.filter((r) => r.seen).length, correct: rs.filter((r) => r.correct).length, reversed: rs.filter((r) => r.reversed).length }]));
   results.blindScore = { judge: judgements.judge, summary, rows };
 }
 

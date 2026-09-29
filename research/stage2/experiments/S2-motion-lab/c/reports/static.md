@@ -1,6 +1,6 @@
-# Motion check — http://127.0.0.1:46551/captures/c/static.html
+# Motion check — http://127.0.0.1:42563/captures/c/static.html
 
-2026-09-28 · desktop · Chromium 141.0.7390.37 · tokens from motion.md defaults: micro 100, small 150, medium 240, large 300, page 400, hero 700
+2026-09-29 · desktop · Chromium 141.0.7390.37 · tokens from motion.md defaults: micro 100, small 150, medium 240, large 300, page 400, hero 700
 
 ## Spec: 0/9 entries pass
 
@@ -22,6 +22,7 @@ Filmstrips: `filmstrip-cta-press.jpg`, `filmstrip-cta-hover.jpg`, `filmstrip-pla
 
 - Elements with motion: 11 (11 transitions, 0 animations); under reduce: 63 (63, 0).
 - Reduced-motion handling: 1 CSS `prefers-reduced-motion: reduce` block(s) including a universal kill rule; JavaScript queried it 0×.
+- At rest (no input, after load): requestAnimationFrame 0×/s.
 - At load: 0 CSS/WAAPI animation(s) normally, 0 under reduce; JS-driven inline-style motion on 0 element(s) normally, 0 under reduce.
 - Hover: 0/10 controls change visibly · keyboard focus: 10/10 · press (:active): 0/7 buttons.
 

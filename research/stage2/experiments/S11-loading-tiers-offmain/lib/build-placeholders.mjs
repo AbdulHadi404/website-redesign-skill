@@ -69,7 +69,7 @@ export async function buildPlaceholders() {
 <div class=g id=g></div>
 <script type=module>
 import { decode } from '/vendor/blurhash.js';
-import { thumbHashToDataURL } from '/vendor/thumbhash.js';
+import { thumbHashToDataURL, thumbHashToRGBA } from '/vendor/thumbhash.js';
 const kind = new URLSearchParams(location.search).get('kind') || 'color';
 const items = await (await fetch('items.json')).json();
 await new Promise((r) => setTimeout(r, 300));
@@ -89,7 +89,10 @@ for (let i = 0; i < 24; i++) {
     const ctx = cv.getContext('2d'); const id = ctx.createImageData(32, 32); id.data.set(px); ctx.putImageData(id, 0, 0);
     const im = new Image(); im.src = cv.toDataURL(); c.append(im); imgs.push(im);
   } else if (kind === 'thumbhash') { const im = new Image(); im.src = thumbHashToDataURL(b64(it.th)); c.append(im); imgs.push(im); }
-  else { const im = new Image(); im.src = kind === 'webp' ? it.webp : it.avif; im.style.filter = 'blur(8px)'; im.style.transform = 'scale(1.1)'; c.append(im); imgs.push(im); }
+  else if (kind === 'thumbhash-canvas') {
+    const t = thumbHashToRGBA(b64(it.th)); const cv = document.createElement('canvas'); cv.width = t.w; cv.height = t.h;
+    const ctx = cv.getContext('2d'); const id = ctx.createImageData(t.w, t.h); id.data.set(t.rgba); ctx.putImageData(id, 0, 0); c.append(cv);
+  } else { const im = new Image(); im.src = kind === 'webp' ? it.webp : it.avif; im.style.filter = 'blur(8px)'; im.style.transform = 'scale(1.1)'; c.append(im); imgs.push(im); }
   g.append(c);
 }
 const sync = performance.now() - t0;

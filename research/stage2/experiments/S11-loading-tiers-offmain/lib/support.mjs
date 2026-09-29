@@ -36,7 +36,7 @@ const FEATURES = {
   'TextDecoderStream': 'api.TextDecoderStream',
   'CompressionStream': 'api.CompressionStream',
   'fetchpriority (img)': 'html.elements.img.fetchpriority',
-  'fetch() priority': 'api.RequestInit.priority',
+  'link fetchPriority': 'api.HTMLLinkElement.fetchPriority',
   'modulepreload': 'html.elements.link.rel.modulepreload',
   'speculation rules': 'html.elements.script.type.speculationrules',
   'content-visibility': 'css.properties.content-visibility',

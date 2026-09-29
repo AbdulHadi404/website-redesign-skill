@@ -69,4 +69,14 @@ if (R.stacks) {
   const baseFlags = Object.entries(R.singles.probe.base[1440]).filter(([, x]) => x.flag).map(([k]) => k);
   console.log(`\nBaseline probe flags (1440): ${baseFlags.join(', ')}`);
 }
+if (J.stackKeySnapshot) {
+  console.log('\n## Stack sheets (builder, blind to side)\n');
+  console.log('| Sheet | Variant | Against | View | Seen | Verdict |');
+  console.log('| --- | --- | --- | --- | --- | --- |');
+  for (const [id, k] of Object.entries(J.stackKeySnapshot)) {
+    const j = J.sheets[id]; if (!j) continue;
+    const verdict = !j.seen ? 'not seen' : j.better === '=' ? 'no preference' : j.better === k.variantSide ? 'variant preferred' : 'reference preferred';
+    console.log(`| ${id} | ${k.variant} | ${k.reference} | ${k.view} | ${j.seen ? 'yes' : 'no'} | ${verdict}${j.note ? ` (${j.note})` : ''} |`);
+  }
+}
 if (R.labChecks) console.log(`\n## Lab checks\n\n\`\`\`json\n${JSON.stringify(R.labChecks, null, 1)}\n\`\`\``);

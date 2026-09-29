@@ -1,6 +1,6 @@
 {
  "env": {
-  "date": "2026-09-28T23:51:22.379Z",
+  "date": "2026-09-28T23:59:56.950Z",
   "node": "v22.22.2",
   "cpus": 4,
   "platform": "linux",
@@ -3182,8 +3182,8 @@
  "c": {
   "pages": {
    "static": {
-    "exit": null,
-    "seconds": 89,
+    "exit": 1,
+    "seconds": 79,
     "specPass": "0/9",
     "spec": {
      "tp": 11,
@@ -3241,8 +3241,8 @@
     }
    },
    "good": {
-    "exit": null,
-    "seconds": 98,
+    "exit": 0,
+    "seconds": 89,
     "specPass": "9/9",
     "spec": {
      "tp": 0,
@@ -3280,8 +3280,8 @@
     }
    },
    "over": {
-    "exit": null,
-    "seconds": 92,
+    "exit": 1,
+    "seconds": 94,
     "specPass": "0/9",
     "spec": {
      "tp": 31,
@@ -3333,8 +3333,8 @@
       "reduced motion: still moves — spec says static"
      ],
      "stat-count": [
-      "duration ~2495–2516ms (sampled: last visible change – fitted) outside 800ms",
-      "sampled curve fits linear better than out (rms 0.072 vs 0.003)",
+      "duration ~2485–2506ms (sampled: last visible change – fitted) outside 800ms",
+      "sampled curve fits linear better than out (rms 0.072 vs 0.005)",
       "reduced motion: still animates (text or custom property) — spec says instant"
      ],
      "hero-in": [
@@ -3362,8 +3362,8 @@
     }
    },
    "gsap": {
-    "exit": null,
-    "seconds": 91,
+    "exit": 0,
+    "seconds": 90,
     "specPass": "9/9",
     "spec": {
      "tp": 0,
