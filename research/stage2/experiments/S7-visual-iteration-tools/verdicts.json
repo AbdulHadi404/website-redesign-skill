@@ -1,5 +1,5 @@
 {
- "about": "Verdicts given by eye (the 1:1 crops, the sheets and, where needed, a probe of the page) for each finding key: target|check|selector (sweep), target|mutation|check|selector (stress) or target|check|selector (rtl controls), nth-of-type indices normalised. TP = real, and a designer would fix it. INT = real, the tool aimed at the right thing, but intended or harmless. FP = not real, pinned on the wrong element, or caused by the tool: a mutation aimed at authored copy as if it were data, a list detector that took prose, badges or sections for a list, a check that ignores what is painted. Tool-caused FPs carry cause: tool. Relabelled after the review (2026-09-29): 44 keys that had been INT because the tool mis-targeted authored copy or missed a painted band are FP (cause: tool). Checked by the S7 stream (the tools' author): one rater.",
+ "about": "Verdicts given by eye (the 1:1 crops, the sheets and, where needed, a probe of the page) for each finding key: target|check|selector (sweep), target|mutation|check|selector (stress) or target|check|selector (rtl controls), nth-of-type indices normalised. TP = real, and a designer would fix it. INT = real, the tool aimed at the right thing, but intended or harmless. FP = not real, pinned on the wrong element, or caused by the tool: a mutation aimed at authored copy as if it were data, a list detector that took prose, badges or sections for a list, a check that ignores what is painted. Tool-caused FPs carry cause: tool. Relabelled after the review (2026-09-29): 44 keys that had been INT because the tool mis-targeted authored copy or missed a painted band are FP (cause: tool); 4 slow/late-shift keys that had been TP (permit-home, permit-apply, govuk, milkline-app div.top) are FP (cause: tool): their filmstrips show no movement, the first snapshot had read a layout that was never painted. Held-out-2 pages (bs-*, carbon-table, primer-issues, stemwren-*) were labelled after a first pass with the scripts frozen, then again for the few keys the fixed scripts added. Checked by the S7 stream (the tools' author): one rater.",
  "sweep": {
   "sweep-lab|truncated|#trunc": {
    "v": "TP",
@@ -1855,6 +1855,10 @@
    "v": "FP",
    "cause": "tool",
    "note": "the three payment options were read as a list and their authored labels took the long token (held-out-2 page, after the fixes)"
+  },
+  "stemwren-home|slow|late-shift|section#about.occasions": {
+   "v": "TP",
+   "note": "below the fold: the testimonials section shrinks 424 → 368 px after the first painted frame, most likely when the display=swap web fonts (Great Vibes, Poppins) arrive; real, but the remedy is a metric-matched fallback (size-adjust), not the reserved space the detail suggests (held-out-2 page, after the fixes)"
   }
  },
  "rtl": {

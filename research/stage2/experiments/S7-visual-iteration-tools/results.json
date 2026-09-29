@@ -1,12 +1,12 @@
 {
  "meta": {
-  "updated": "2026-09-29T08:37:58.974Z",
+  "updated": "2026-09-29T09:43:43.223Z",
   "node": "v22.22.2",
   "cpus": 4,
   "loadavg": [
-   1.5,
-   1.7,
-   1.8
+   6.1,
+   5,
+   3.5
   ],
   "playwrightCore": "1.63.0",
   "chromiumBuilds": "chromium-1194",
@@ -14,8 +14,8 @@
   "sweepMs": 363016,
   "stressMs": 921891,
   "vrMs": 1060771,
-  "sheetsMs": 3169,
-  "scoreMs": 14,
+  "sheetsMs": 3625,
+  "scoreMs": 18,
   "motionMs": 13615,
   "holdoutMs": 793555,
   "holdout-sweepMs": 165487,
@@ -28,7 +28,7 @@
   "timingMs": 84722,
   "evidenceMs": 159484,
   "rtlMs": 130037,
-  "holdout2Ms": 1508435
+  "holdout2Ms": 1530304
  },
  "sweep": {
   "scripts": {
@@ -2182,12 +2182,56 @@
     "INT": 7,
     "FP": 0,
     "unlabelled": 0,
+    "actionable": 88,
+    "intShare": 12,
+    "fpShare": 0,
+    "fpToolCaused": 0,
     "unseeded": {
      "all": 36,
      "TP": 31,
      "INT": 5,
+     "FP": 0,
+     "unlabelled": 0,
+     "actionable": 86,
+     "intShare": 14,
+     "fpShare": 0,
+     "fpToolCaused": 0
+    },
+    "realSite": {
+     "all": 11,
+     "TP": 6,
+     "INT": 5,
+     "FP": 0,
+     "unlabelled": 0,
+     "actionable": 55,
+     "intShare": 45,
+     "fpShare": 0,
+     "fpToolCaused": 0
+    },
+    "nativeRtl": {
+     "all": 0,
+     "TP": 0,
+     "INT": 0,
+     "FP": 0,
+     "unlabelled": 0,
+     "actionable": null,
+     "intShare": null,
+     "fpShare": null,
+     "fpToolCaused": 0
+    },
+    "notAtDefaultWidths": {
+     "all": 14,
+     "TP": 10,
+     "INT": 4,
      "FP": 0
-    }
+    },
+    "notAtResponsiveWidths": {
+     "all": 8,
+     "TP": 6,
+     "INT": 2,
+     "FP": 0
+    },
+    "zoomOnly": 2
    }
   }
  },
@@ -7363,11 +7407,42 @@
     "INT": 2,
     "FP": 26,
     "unlabelled": 0,
+    "actionable": 79,
+    "intShare": 2,
+    "fpShare": 20,
+    "fpToolCaused": 26,
     "unseeded": {
      "all": 70,
      "TP": 44,
      "INT": 2,
-     "FP": 24
+     "FP": 24,
+     "unlabelled": 0,
+     "actionable": 63,
+     "intShare": 3,
+     "fpShare": 34,
+     "fpToolCaused": 24
+    },
+    "realSite": {
+     "all": 20,
+     "TP": 15,
+     "INT": 2,
+     "FP": 3,
+     "unlabelled": 0,
+     "actionable": 75,
+     "intShare": 10,
+     "fpShare": 15,
+     "fpToolCaused": 3
+    },
+    "nativeRtl": {
+     "all": 0,
+     "TP": 0,
+     "INT": 0,
+     "FP": 0,
+     "unlabelled": 0,
+     "actionable": null,
+     "intShare": null,
+     "fpShare": null,
+     "fpToolCaused": 0
     }
    }
   }
@@ -14525,28 +14600,12 @@
     "kb": 630
    },
    {
-    "file": "shots/sweep-slop-sheet.jpg",
-    "kb": 380
-   },
-   {
-    "file": "shots/sweep-permit-apply-sheet.jpg",
-    "kb": 251
-   },
-   {
     "file": "shots/stress-lab-sheet.jpg",
-    "kb": 832
+    "kb": 833
    },
    {
     "file": "shots/stress-lab-slow.jpg",
     "kb": 73
-   },
-   {
-    "file": "shots/stress-permit-apply-sheet.jpg",
-    "kb": 252
-   },
-   {
-    "file": "shots/stress-milkline-app-sheet.jpg",
-    "kb": 386
    },
    {
     "file": "shots/rtl-sanad-ar-sheet.jpg",
@@ -14562,7 +14621,7 @@
    },
    {
     "file": "shots/evidence-before-after.jpg",
-    "kb": 175
+    "kb": 197
    },
    {
     "file": "shots/vr-diffs-390.jpg",
@@ -14571,7 +14630,7 @@
   ]
  },
  "scored": {
-  "at": "2026-09-29T08:36:03.978Z"
+  "at": "2026-09-29T09:43:43.245Z"
  },
  "motion": {
   "files": [
@@ -15374,12 +15433,56 @@
      "INT": 1,
      "FP": 1,
      "unlabelled": 0,
+     "actionable": 88,
+     "intShare": 6,
+     "fpShare": 6,
+     "fpToolCaused": 1,
      "unseeded": {
       "all": 17,
       "TP": 15,
       "INT": 1,
-      "FP": 1
-     }
+      "FP": 1,
+      "unlabelled": 0,
+      "actionable": 88,
+      "intShare": 6,
+      "fpShare": 6,
+      "fpToolCaused": 1
+     },
+     "realSite": {
+      "all": 2,
+      "TP": 1,
+      "INT": 1,
+      "FP": 0,
+      "unlabelled": 0,
+      "actionable": 50,
+      "intShare": 50,
+      "fpShare": 0,
+      "fpToolCaused": 0
+     },
+     "nativeRtl": {
+      "all": 0,
+      "TP": 0,
+      "INT": 0,
+      "FP": 0,
+      "unlabelled": 0,
+      "actionable": null,
+      "intShare": null,
+      "fpShare": null,
+      "fpToolCaused": 0
+     },
+     "notAtDefaultWidths": {
+      "all": 1,
+      "TP": 0,
+      "INT": 1,
+      "FP": 0
+     },
+     "notAtResponsiveWidths": {
+      "all": 0,
+      "TP": 0,
+      "INT": 0,
+      "FP": 0
+     },
+     "zoomOnly": 0
     }
    }
   },
@@ -17288,1442 +17391,45 @@
      "INT": 2,
      "FP": 10,
      "unlabelled": 0,
+     "actionable": 52,
+     "intShare": 8,
+     "fpShare": 40,
+     "fpToolCaused": 10,
      "unseeded": {
       "all": 25,
       "TP": 13,
       "INT": 2,
-      "FP": 10
+      "FP": 10,
+      "unlabelled": 0,
+      "actionable": 52,
+      "intShare": 8,
+      "fpShare": 40,
+      "fpToolCaused": 10
+     },
+     "realSite": {
+      "all": 4,
+      "TP": 3,
+      "INT": 1,
+      "FP": 0,
+      "unlabelled": 0,
+      "actionable": 75,
+      "intShare": 25,
+      "fpShare": 0,
+      "fpToolCaused": 0
+     },
+     "nativeRtl": {
+      "all": 0,
+      "TP": 0,
+      "INT": 0,
+      "FP": 0,
+      "unlabelled": 0,
+      "actionable": null,
+      "intShare": null,
+      "fpShare": null,
+      "fpToolCaused": 0
      }
     }
    }
-  }
- },
- "holdoutPreFix": {
-  "note": "Held-out pages as first measured, before the two fixes they prompted (overflow culprits past the start edge; prose paragraphs taken as a list). Verdicts from verdicts.json. The runner cannot rebuild this snapshot with the current scripts: it is kept as the record of the held-out result; results.holdout is the re-run after the fixes.",
-  "at": "2026-09-29T03:19:59.481Z",
-  "sweep": {
-   "totals": {
-    "ranges": 44,
-    "TP": 39,
-    "INT": 5,
-    "FP": 0,
-    "unlabelled": 0,
-    "msPerWidthMedian": 170,
-    "wallMsMedian": 27927,
-    "missedByCaptureWidths": 28,
-    "findingKeys": 17,
-    "notAtDefaultWidths": 1,
-    "notAtResponsiveWidths": 0,
-    "zoomOnly": 0,
-    "seededRecall": null,
-    "keys": {
-     "all": 17,
-     "TP": 15,
-     "INT": 2,
-     "FP": 0,
-     "unlabelled": 0,
-     "unseeded": {
-      "all": 17,
-      "TP": 15,
-      "INT": 2,
-      "FP": 0,
-      "unlabelled": 0
-     },
-     "realSite": {
-      "all": 2,
-      "TP": 1,
-      "INT": 1,
-      "FP": 0,
-      "unlabelled": 0
-     }
-    }
-   },
-   "targets": [
-    {
-     "name": "hallam-home",
-     "kind": "holdout fixture (H-blind-eval Hallam & Price, a 2014 Bootstrap-style site)",
-     "verdicts": {
-      "TP": 11,
-      "INT": 3,
-      "FP": 0,
-      "unlabelled": 0
-     },
-     "ranges": [
-      {
-       "check": "no-viewport",
-       "sev": "error",
-       "sel": "(page)",
-       "from": "320",
-       "to": "760",
-       "pass": "phone",
-       "detail": "no <meta name=\"viewport\" content=\"width=device-width\">: phones lay the page out 980px wide and shrink it",
-       "verdict": {
-        "v": "TP",
-        "note": "no viewport meta (held-out page)"
-       }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap",
-       "from": "768",
-       "to": "952",
-       "pass": "desktop",
-       "detail": "page 192px wider than the viewport: div.wrap",
-       "verdict": {
-        "v": "TP",
-        "note": ".wrap { width: 960px } (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(4)",
-       "from": "768",
-       "to": "848",
-       "pass": "desktop",
-       "detail": "2 nav item(s) past the viewport edge (\"Our Team\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(5)",
-       "from": "856",
-       "to": "936",
-       "pass": "desktop",
-       "detail": "1 nav item(s) past the viewport edge (\"Contact\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap",
-       "from": "640 (1280 at 200%)",
-       "to": "640 (1280 at 200%)",
-       "pass": "zoom",
-       "detail": "page 320px wider than the viewport: div.wrap",
-       "verdict": {
-        "v": "TP",
-        "note": ".wrap { width: 960px } (held-out page)"
-       }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "page 640px wider than the viewport: div.wrap",
-       "verdict": {
-        "v": "TP",
-        "note": ".wrap { width: 960px } (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(2)",
-       "from": "640 (1280 at 200%)",
-       "to": "640 (1280 at 200%)",
-       "pass": "zoom",
-       "detail": "4 nav item(s) past the viewport edge (\"Services\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(1)",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "5 nav item(s) past the viewport edge (\"Home\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "measure",
-       "sev": "warn",
-       "sel": "div.wrap > div.content > p",
-       "from": "768",
-       "to": "1920",
-       "pass": "desktop",
-       "detail": "124 characters per line (2 lines) > 90",
-       "verdict": {
-        "v": "TP",
-        "note": "124 characters a line of 13 px text (held-out page)"
-       }
-      },
-      {
-       "check": "dead-band",
-       "sev": "warn",
-       "sel": "div.wrap",
-       "from": "1024",
-       "to": "1920",
-       "pass": "desktop",
-       "detail": "360px with no text, media or control from y=264",
-       "verdict": {
-        "v": "INT",
-        "note": "the image-less slider and grey image placeholders: painted, but the check counts only text, media and controls (held-out page)"
-       }
-      },
-      {
-       "check": "measure",
-       "sev": "warn",
-       "sel": "div.wrap > div.content > p",
-       "from": "640 (1280 at 200%)",
-       "to": "640 (1280 at 200%)",
-       "pass": "zoom",
-       "detail": "124 characters per line (2 lines) > 90",
-       "verdict": {
-        "v": "TP",
-        "note": "124 characters a line of 13 px text (held-out page)"
-       }
-      },
-      {
-       "check": "measure",
-       "sev": "warn",
-       "sel": "div.wrap > div.content > p",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "124 characters per line (2 lines) > 90",
-       "verdict": {
-        "v": "TP",
-        "note": "124 characters a line of 13 px text (held-out page)"
-       }
-      },
-      {
-       "check": "dead-band",
-       "sev": "warn",
-       "sel": "div.wrap",
-       "from": "640 (1280 at 200%)",
-       "to": "640 (1280 at 200%)",
-       "pass": "zoom",
-       "detail": "360px with no text, media or control from y=264",
-       "verdict": {
-        "v": "INT",
-        "note": "the image-less slider and grey image placeholders: painted, but the check counts only text, media and controls (held-out page)"
-       }
-      },
-      {
-       "check": "dead-band",
-       "sev": "warn",
-       "sel": "div.wrap",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "360px with no text, media or control from y=264",
-       "verdict": {
-        "v": "INT",
-        "note": "the image-less slider and grey image placeholders: painted, but the check counts only text, media and controls (held-out page)"
-       }
-      }
-     ]
-    },
-    {
-     "name": "hallam-fees",
-     "kind": "holdout fixture (H-blind-eval Hallam & Price)",
-     "verdicts": {
-      "TP": 11,
-      "INT": 0,
-      "FP": 0,
-      "unlabelled": 0
-     },
-     "ranges": [
-      {
-       "check": "no-viewport",
-       "sev": "error",
-       "sel": "(page)",
-       "from": "320",
-       "to": "760",
-       "pass": "phone",
-       "detail": "no <meta name=\"viewport\" content=\"width=device-width\">: phones lay the page out 980px wide and shrink it",
-       "verdict": {
-        "v": "TP",
-        "note": "no viewport meta (held-out page)"
-       }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap",
-       "from": "768",
-       "to": "952",
-       "pass": "desktop",
-       "detail": "page 192px wider than the viewport: div.wrap",
-       "verdict": {
-        "v": "TP",
-        "note": ".wrap { width: 960px } (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(4)",
-       "from": "768",
-       "to": "848",
-       "pass": "desktop",
-       "detail": "2 nav item(s) past the viewport edge (\"Our Team\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(5)",
-       "from": "856",
-       "to": "936",
-       "pass": "desktop",
-       "detail": "1 nav item(s) past the viewport edge (\"Contact\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap",
-       "from": "640 (1280 at 200%)",
-       "to": "640 (1280 at 200%)",
-       "pass": "zoom",
-       "detail": "page 320px wider than the viewport: div.wrap",
-       "verdict": {
-        "v": "TP",
-        "note": ".wrap { width: 960px } (held-out page)"
-       }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "page 640px wider than the viewport: div.wrap",
-       "verdict": {
-        "v": "TP",
-        "note": ".wrap { width: 960px } (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(2)",
-       "from": "640 (1280 at 200%)",
-       "to": "640 (1280 at 200%)",
-       "pass": "zoom",
-       "detail": "4 nav item(s) past the viewport edge (\"Services\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(1)",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "5 nav item(s) past the viewport edge (\"Home\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "measure",
-       "sev": "warn",
-       "sel": "div.wrap > div.content > p:nth-of-type(1)",
-       "from": "768",
-       "to": "1920",
-       "pass": "desktop",
-       "detail": "152 characters per line (1 line) > 90",
-       "verdict": {
-        "v": "TP",
-        "note": "152 characters a line (held-out page)"
-       }
-      },
-      {
-       "check": "measure",
-       "sev": "warn",
-       "sel": "div.wrap > div.content > p:nth-of-type(1)",
-       "from": "640 (1280 at 200%)",
-       "to": "640 (1280 at 200%)",
-       "pass": "zoom",
-       "detail": "152 characters per line (1 line) > 90",
-       "verdict": {
-        "v": "TP",
-        "note": "152 characters a line (held-out page)"
-       }
-      },
-      {
-       "check": "measure",
-       "sev": "warn",
-       "sel": "div.wrap > div.content > p:nth-of-type(1)",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "152 characters per line (1 line) > 90",
-       "verdict": {
-        "v": "TP",
-        "note": "152 characters a line (held-out page)"
-       }
-      }
-     ]
-    },
-    {
-     "name": "hallam-services",
-     "kind": "holdout fixture (H-blind-eval Hallam & Price)",
-     "verdicts": {
-      "TP": 8,
-      "INT": 0,
-      "FP": 0,
-      "unlabelled": 0
-     },
-     "ranges": [
-      {
-       "check": "no-viewport",
-       "sev": "error",
-       "sel": "(page)",
-       "from": "320",
-       "to": "760",
-       "pass": "phone",
-       "detail": "no <meta name=\"viewport\" content=\"width=device-width\">: phones lay the page out 980px wide and shrink it",
-       "verdict": {
-        "v": "TP",
-        "note": "no viewport meta (held-out page)"
-       }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap",
-       "from": "768",
-       "to": "952",
-       "pass": "desktop",
-       "detail": "page 192px wider than the viewport: div.wrap",
-       "verdict": {
-        "v": "TP",
-        "note": ".wrap { width: 960px } (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(4)",
-       "from": "768",
-       "to": "848",
-       "pass": "desktop",
-       "detail": "2 nav item(s) past the viewport edge (\"Our Team\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(5)",
-       "from": "856",
-       "to": "936",
-       "pass": "desktop",
-       "detail": "1 nav item(s) past the viewport edge (\"Contact\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap",
-       "from": "640 (1280 at 200%)",
-       "to": "640 (1280 at 200%)",
-       "pass": "zoom",
-       "detail": "page 320px wider than the viewport: div.wrap",
-       "verdict": {
-        "v": "TP",
-        "note": ".wrap { width: 960px } (held-out page)"
-       }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "page 640px wider than the viewport: div.wrap",
-       "verdict": {
-        "v": "TP",
-        "note": ".wrap { width: 960px } (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(2)",
-       "from": "640 (1280 at 200%)",
-       "to": "640 (1280 at 200%)",
-       "pass": "zoom",
-       "detail": "4 nav item(s) past the viewport edge (\"Services\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(1)",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "5 nav item(s) past the viewport edge (\"Home\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      }
-     ]
-    },
-    {
-     "name": "hallam-contact",
-     "kind": "holdout fixture (H-blind-eval Hallam & Price)",
-     "verdicts": {
-      "TP": 8,
-      "INT": 0,
-      "FP": 0,
-      "unlabelled": 0
-     },
-     "ranges": [
-      {
-       "check": "no-viewport",
-       "sev": "error",
-       "sel": "(page)",
-       "from": "320",
-       "to": "760",
-       "pass": "phone",
-       "detail": "no <meta name=\"viewport\" content=\"width=device-width\">: phones lay the page out 980px wide and shrink it",
-       "verdict": {
-        "v": "TP",
-        "note": "no viewport meta (held-out page)"
-       }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap",
-       "from": "768",
-       "to": "952",
-       "pass": "desktop",
-       "detail": "page 192px wider than the viewport: div.wrap",
-       "verdict": {
-        "v": "TP",
-        "note": ".wrap { width: 960px } (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(4)",
-       "from": "768",
-       "to": "848",
-       "pass": "desktop",
-       "detail": "2 nav item(s) past the viewport edge (\"Our Team\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(5)",
-       "from": "856",
-       "to": "936",
-       "pass": "desktop",
-       "detail": "1 nav item(s) past the viewport edge (\"Contact\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap",
-       "from": "640 (1280 at 200%)",
-       "to": "640 (1280 at 200%)",
-       "pass": "zoom",
-       "detail": "page 320px wider than the viewport: div.wrap",
-       "verdict": {
-        "v": "TP",
-        "note": ".wrap { width: 960px } (held-out page)"
-       }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "page 640px wider than the viewport: div.wrap",
-       "verdict": {
-        "v": "TP",
-        "note": ".wrap { width: 960px } (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(2)",
-       "from": "640 (1280 at 200%)",
-       "to": "640 (1280 at 200%)",
-       "pass": "zoom",
-       "detail": "4 nav item(s) past the viewport edge (\"Services\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      },
-      {
-       "check": "nav-overflow",
-       "sev": "error",
-       "sel": "div.wrap > header > nav > a:nth-of-type(1)",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "5 nav item(s) past the viewport edge (\"Home\")",
-       "verdict": {
-        "v": "TP",
-        "note": "the nav runs past the edge below 960 px (held-out page)"
-       }
-      }
-     ]
-    },
-    {
-     "name": "basket",
-     "kind": "holdout fixture",
-     "verdicts": {
-      "TP": 0,
-      "INT": 0,
-      "FP": 0,
-      "unlabelled": 0
-     },
-     "ranges": []
-    },
-    {
-     "name": "a11y-wizard",
-     "kind": "holdout fixture",
-     "verdicts": {
-      "TP": 0,
-      "INT": 0,
-      "FP": 0,
-      "unlabelled": 0
-     },
-     "ranges": []
-    },
-    {
-     "name": "astro-h20",
-     "kind": "holdout real site (Astro portfolio example)",
-     "verdicts": {
-      "TP": 1,
-      "INT": 2,
-      "FP": 0,
-      "unlabelled": 0
-     },
-     "ranges": [
-      {
-       "check": "wrap-orphan",
-       "sev": "warn",
-       "sel": "#menu-content > div.menu-footer > div.socials",
-       "from": "992",
-       "to": "1056",
-       "pass": "desktop",
-       "detail": "6 items as 5 per row: the last row holds one",
-       "verdict": {
-        "v": "TP",
-        "note": "the shared header fault (held-out page)"
-       }
-      },
-      {
-       "check": "measure",
-       "sev": "warn",
-       "sel": "div.wrapper.stack > div.hero.stack > div.details > p.description",
-       "from": "320",
-       "to": "336",
-       "pass": "phone",
-       "detail": "19 characters per line over 5 lines < 20 — a squeezed column",
-       "verdict": {
-        "v": "INT",
-        "note": "a centred large-type lede at 320 px (held-out page)"
-       }
-      },
-      {
-       "check": "measure",
-       "sev": "warn",
-       "sel": "div.wrapper.stack > div.hero.stack > div.details > p.description",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "19 characters per line over 5 lines < 20 — a squeezed column",
-       "verdict": {
-        "v": "INT",
-        "note": "a centred large-type lede at 320 px (held-out page)"
-       }
-      }
-     ]
-    }
-   ]
-  },
-  "stress": {
-   "totals": {
-    "findings": 49,
-    "TP": 23,
-    "INT": 20,
-    "FP": 6,
-    "unlabelled": 0,
-    "seededRecall": null,
-    "keys": {
-     "all": 27,
-     "TP": 11,
-     "INT": 13,
-     "FP": 3,
-     "unlabelled": 0,
-     "unseeded": {
-      "all": 27,
-      "TP": 11,
-      "INT": 13,
-      "FP": 3,
-      "unlabelled": 0
-     },
-     "realSite": {
-      "all": 6,
-      "TP": 3,
-      "INT": 2,
-      "FP": 1,
-      "unlabelled": 0
-     }
-    }
-   },
-   "targets": [
-    {
-     "name": "hallam-home",
-     "kind": "holdout fixture (H-blind-eval Hallam & Price, a 2014 Bootstrap-style site)",
-     "verdicts": {
-      "TP": 3,
-      "INT": 9,
-      "FP": 0,
-      "unlabelled": 0
-     },
-     "findings": [
-      {
-       "mutation": "long",
-       "width": 390,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap > div.cols > div.col",
-       "count": 1,
-       "detail": "page 171px wider than the viewport: div.wrap > div.cols > div.col, div.wrap > div.accred > span, div.wrap > div.accred > span",
-       "verdict": {
-        "v": "INT",
-        "note": "authored teaser columns read as a list (held-out page)"
-       }
-      },
-      {
-       "mutation": "no-images",
-       "width": 390,
-       "check": "unsized-image",
-       "sev": "warn",
-       "sel": "header > img",
-       "count": 1,
-       "detail": "1 image(s) with no width/height or aspect-ratio are 16px tall while missing and 56px loaded (logo.svg): everything below jumps when they arrive",
-       "verdict": {
-        "v": "TP",
-        "note": "logo.svg without dimensions: 16 → 56 px (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 390,
-       "check": "not-mirrored",
-       "sev": "warn",
-       "sel": "div.wrap > div.slider > div.dots",
-       "count": 1,
-       "detail": "positioned element stays 480px from the left and 426px from the right in RTL (left/right)",
-       "verdict": {
-        "v": "INT",
-        "note": "left: 50% without a translate: off-centre in both directions (held-out page)"
-       }
-      },
-      {
-       "mutation": "list-500",
-       "width": 390,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap > div.cols > div.col",
-       "count": 1,
-       "detail": "page 63133px wider than the viewport: div.wrap > div.cols > div.col, div.wrap > div.cols > div.col, div.wrap > div.cols > div.col",
-       "verdict": {
-        "v": "INT",
-        "note": "500 authored teasers is not a real state (held-out page)"
-       }
-      },
-      {
-       "mutation": "no-images",
-       "width": 768,
-       "check": "unsized-image",
-       "sev": "warn",
-       "sel": "header > img",
-       "count": 1,
-       "detail": "1 image(s) with no width/height or aspect-ratio are 16px tall while missing and 56px loaded (logo.svg): everything below jumps when they arrive",
-       "verdict": {
-        "v": "TP",
-        "note": "logo.svg without dimensions: 16 → 56 px (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 768,
-       "check": "not-mirrored",
-       "sev": "warn",
-       "sel": "div.wrap > div.slider > div.dots",
-       "count": 1,
-       "detail": "positioned element stays 480px from the left and 426px from the right in RTL (left/right)",
-       "verdict": {
-        "v": "INT",
-        "note": "left: 50% without a translate: off-centre in both directions (held-out page)"
-       }
-      },
-      {
-       "mutation": "list-0",
-       "width": 768,
-       "check": "dead-band",
-       "sev": "warn",
-       "sel": "div.wrap",
-       "count": 1,
-       "detail": "432px with no text, media or control from y=264",
-       "verdict": {
-        "v": "INT",
-        "note": "same (held-out page)"
-       }
-      },
-      {
-       "mutation": "long",
-       "width": 1280,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap > div.cols > div.col",
-       "count": 1,
-       "detail": "page 21px wider than the viewport: div.wrap > div.cols > div.col",
-       "verdict": {
-        "v": "INT",
-        "note": "authored teaser columns read as a list (held-out page)"
-       }
-      },
-      {
-       "mutation": "no-images",
-       "width": 1280,
-       "check": "unsized-image",
-       "sev": "warn",
-       "sel": "header > img",
-       "count": 1,
-       "detail": "1 image(s) with no width/height or aspect-ratio are 16px tall while missing and 56px loaded (logo.svg): everything below jumps when they arrive",
-       "verdict": {
-        "v": "TP",
-        "note": "logo.svg without dimensions: 16 → 56 px (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 1280,
-       "check": "not-mirrored",
-       "sev": "warn",
-       "sel": "div.wrap > div.slider > div.dots",
-       "count": 1,
-       "detail": "positioned element stays 480px from the left and 426px from the right in RTL (left/right)",
-       "verdict": {
-        "v": "INT",
-        "note": "left: 50% without a translate: off-centre in both directions (held-out page)"
-       }
-      },
-      {
-       "mutation": "list-0",
-       "width": 1280,
-       "check": "dead-band",
-       "sev": "warn",
-       "sel": "div.wrap",
-       "count": 1,
-       "detail": "432px with no text, media or control from y=264",
-       "verdict": {
-        "v": "INT",
-        "note": "same (held-out page)"
-       }
-      },
-      {
-       "mutation": "list-500",
-       "width": 1280,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap > div.cols > div.col",
-       "count": 1,
-       "detail": "page 62983px wider than the viewport: div.wrap > div.cols > div.col, div.wrap > div.cols > div.col, div.wrap > div.cols > div.col",
-       "verdict": {
-        "v": "INT",
-        "note": "500 authored teasers is not a real state (held-out page)"
-       }
-      }
-     ]
-    },
-    {
-     "name": "hallam-fees",
-     "kind": "holdout fixture (H-blind-eval Hallam & Price)",
-     "verdicts": {
-      "TP": 3,
-      "INT": 3,
-      "FP": 0,
-      "unlabelled": 0
-     },
-     "findings": [
-      {
-       "mutation": "long",
-       "width": 390,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap > div.accred > span",
-       "count": 1,
-       "detail": "page 50px wider than the viewport: div.wrap > div.accred > span, div.wrap > div.accred > span, div.wrap > div.top",
-       "verdict": {
-        "v": "INT",
-        "note": "authored accreditation badges read as a list (held-out page)"
-       }
-      },
-      {
-       "mutation": "no-images",
-       "width": 390,
-       "check": "unsized-image",
-       "sev": "warn",
-       "sel": "header > img",
-       "count": 1,
-       "detail": "1 image(s) with no width/height or aspect-ratio are 16px tall while missing and 56px loaded (logo.svg): everything below jumps when they arrive",
-       "verdict": {
-        "v": "TP",
-        "note": "logo.svg without dimensions: 16 → 56 px (held-out page)"
-       }
-      },
-      {
-       "mutation": "list-500",
-       "width": 390,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap > div.accred > span",
-       "count": 1,
-       "detail": "page 23758px wider than the viewport: div.wrap > div.accred > span, div.wrap > div.accred > span, div.wrap > div.accred > span",
-       "verdict": {
-        "v": "INT",
-        "note": "same (held-out page)"
-       }
-      },
-      {
-       "mutation": "no-images",
-       "width": 768,
-       "check": "unsized-image",
-       "sev": "warn",
-       "sel": "header > img",
-       "count": 1,
-       "detail": "1 image(s) with no width/height or aspect-ratio are 16px tall while missing and 56px loaded (logo.svg): everything below jumps when they arrive",
-       "verdict": {
-        "v": "TP",
-        "note": "logo.svg without dimensions: 16 → 56 px (held-out page)"
-       }
-      },
-      {
-       "mutation": "no-images",
-       "width": 1280,
-       "check": "unsized-image",
-       "sev": "warn",
-       "sel": "header > img",
-       "count": 1,
-       "detail": "1 image(s) with no width/height or aspect-ratio are 16px tall while missing and 56px loaded (logo.svg): everything below jumps when they arrive",
-       "verdict": {
-        "v": "TP",
-        "note": "logo.svg without dimensions: 16 → 56 px (held-out page)"
-       }
-      },
-      {
-       "mutation": "list-500",
-       "width": 1280,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap > div.accred > span",
-       "count": 1,
-       "detail": "page 23608px wider than the viewport: div.wrap > div.accred > span, div.wrap > div.accred > span, div.wrap > div.accred > span",
-       "verdict": {
-        "v": "INT",
-        "note": "same (held-out page)"
-       }
-      }
-     ]
-    },
-    {
-     "name": "hallam-contact",
-     "kind": "holdout fixture (H-blind-eval Hallam & Price)",
-     "verdicts": {
-      "TP": 3,
-      "INT": 3,
-      "FP": 0,
-      "unlabelled": 0
-     },
-     "findings": [
-      {
-       "mutation": "long",
-       "width": 390,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap > div.accred > span",
-       "count": 1,
-       "detail": "page 50px wider than the viewport: div.wrap > div.accred > span, div.wrap > div.accred > span, div.wrap > div.top",
-       "verdict": {
-        "v": "INT",
-        "note": "authored accreditation badges read as a list (held-out page)"
-       }
-      },
-      {
-       "mutation": "no-images",
-       "width": 390,
-       "check": "unsized-image",
-       "sev": "warn",
-       "sel": "header > img",
-       "count": 1,
-       "detail": "1 image(s) with no width/height or aspect-ratio are 16px tall while missing and 56px loaded (logo.svg): everything below jumps when they arrive",
-       "verdict": {
-        "v": "TP",
-        "note": "logo.svg without dimensions: 16 → 56 px (held-out page)"
-       }
-      },
-      {
-       "mutation": "list-500",
-       "width": 390,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap > div.accred > span",
-       "count": 1,
-       "detail": "page 23758px wider than the viewport: div.wrap > div.accred > span, div.wrap > div.accred > span, div.wrap > div.accred > span",
-       "verdict": {
-        "v": "INT",
-        "note": "same (held-out page)"
-       }
-      },
-      {
-       "mutation": "no-images",
-       "width": 768,
-       "check": "unsized-image",
-       "sev": "warn",
-       "sel": "header > img",
-       "count": 1,
-       "detail": "1 image(s) with no width/height or aspect-ratio are 16px tall while missing and 56px loaded (logo.svg): everything below jumps when they arrive",
-       "verdict": {
-        "v": "TP",
-        "note": "logo.svg without dimensions: 16 → 56 px (held-out page)"
-       }
-      },
-      {
-       "mutation": "no-images",
-       "width": 1280,
-       "check": "unsized-image",
-       "sev": "warn",
-       "sel": "header > img",
-       "count": 1,
-       "detail": "1 image(s) with no width/height or aspect-ratio are 16px tall while missing and 56px loaded (logo.svg): everything below jumps when they arrive",
-       "verdict": {
-        "v": "TP",
-        "note": "logo.svg without dimensions: 16 → 56 px (held-out page)"
-       }
-      },
-      {
-       "mutation": "list-500",
-       "width": 1280,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "div.wrap > div.accred > span",
-       "count": 1,
-       "detail": "page 23608px wider than the viewport: div.wrap > div.accred > span, div.wrap > div.accred > span, div.wrap > div.accred > span",
-       "verdict": {
-        "v": "INT",
-        "note": "same (held-out page)"
-       }
-      }
-     ]
-    },
-    {
-     "name": "a11y-wizard",
-     "kind": "holdout fixture",
-     "verdicts": {
-      "TP": 11,
-      "INT": 3,
-      "FP": 3,
-      "unlabelled": 0
-     },
-     "findings": [
-      {
-       "mutation": "pseudo",
-       "width": 390,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "a.skip",
-       "count": 1,
-       "detail": "page 157px wider than the viewport: a.skip, #step-check > fieldset, #step-check > div.intro > h1",
-       "verdict": {
-        "v": "FP",
-        "note": "the overflow is real (the fieldset and h1), but the skip link parked at left: -9999px is named, which cannot widen a left-to-right page (fixed since: culprits must lie past the end edge) (held-out page)"
-       }
-      },
-      {
-       "mutation": "pseudo",
-       "width": 390,
-       "check": "zoom-out",
-       "sev": "error",
-       "sel": "(page)",
-       "count": 1,
-       "detail": "layout viewport 547px at a 390px screen — phones show the page zoomed out",
-       "verdict": {
-        "v": "TP",
-        "note": "35% longer text makes the phone page zoom out (held-out page)"
-       }
-      },
-      {
-       "mutation": "long",
-       "width": 390,
-       "check": "protrusion",
-       "sev": "error",
-       "sel": "#step-check > dl > div.row:nth-of-type(1) > dt",
-       "count": 11,
-       "detail": "\"Wolfeschlegelsteinhausenberger\" runs 227px out of the right of #step-check > dl > div.row:nth-of-type(1)",
-       "verdict": {
-        "v": "INT",
-        "note": "authored questions in a summary list read as data (held-out page)"
-       }
-      },
-      {
-       "mutation": "long",
-       "width": 390,
-       "check": "protrusion",
-       "sev": "error",
-       "sel": "dl > div.row:nth-of-type(1) > dd.act > a",
-       "count": 10,
-       "detail": "\"Wolfeschlegelsteinhausenberger\" runs 157px out of the right of #step-check > dl > div.row:nth-of-type(1)",
-       "verdict": {
-        "v": "INT",
-        "note": "authored Change links (held-out page)"
-       }
-      },
-      {
-       "mutation": "long",
-       "width": 390,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "a.skip",
-       "count": 1,
-       "detail": "page 617px wider than the viewport: a.skip, #main > div.drawer > table, #step-check > dl > div.row > dt",
-       "verdict": {
-        "v": "FP",
-        "note": "same misattribution to the parked skip link (held-out page)"
-       }
-      },
-      {
-       "mutation": "long",
-       "width": 390,
-       "check": "zoom-out",
-       "sev": "error",
-       "sel": "(page)",
-       "count": 1,
-       "detail": "layout viewport 1007px at a 390px screen — phones show the page zoomed out",
-       "verdict": {
-        "v": "INT",
-        "note": "caused by authored text (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 390,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "a.skip",
-       "count": 1,
-       "detail": "page 9999px wider than the viewport: a.skip, header, #main",
-       "verdict": {
-        "v": "TP",
-        "note": "left: -9999px parks the skip link inside the scrollable area of an RTL page: 9,999 px of sideways scroll (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 390,
-       "check": "zoom-out",
-       "sev": "error",
-       "sel": "(page)",
-       "count": 1,
-       "detail": "layout viewport 1560px at a 390px screen — phones show the page zoomed out",
-       "verdict": {
-        "v": "TP",
-        "note": "same (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 390,
-       "check": "not-mirrored",
-       "sev": "warn",
-       "sel": "a.skip",
-       "count": 1,
-       "detail": "positioned element stays -9999px from the left and 10191px from the right in RTL (left/right)",
-       "verdict": {
-        "v": "TP",
-        "note": "same root cause: physical left (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 390,
-       "check": "not-mirrored",
-       "sev": "warn",
-       "sel": "#main > div.drawer",
-       "count": 1,
-       "detail": "positioned element stays 0px from the left and 150px from the right in RTL (left/right)",
-       "verdict": {
-        "v": "TP",
-        "note": "the drawer is placed with left (held-out page)"
-       }
-      },
-      {
-       "mutation": "long",
-       "width": 768,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "a.skip",
-       "count": 1,
-       "detail": "page 239px wider than the viewport: a.skip, #main > div.drawer > table",
-       "verdict": {
-        "v": "FP",
-        "note": "same misattribution to the parked skip link (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 768,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "a.skip",
-       "count": 1,
-       "detail": "page 9999px wider than the viewport: a.skip",
-       "verdict": {
-        "v": "TP",
-        "note": "left: -9999px parks the skip link inside the scrollable area of an RTL page: 9,999 px of sideways scroll (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 768,
-       "check": "not-mirrored",
-       "sev": "warn",
-       "sel": "a.skip",
-       "count": 1,
-       "detail": "positioned element stays -9999px from the left and 10569px from the right in RTL (left/right)",
-       "verdict": {
-        "v": "TP",
-        "note": "same root cause: physical left (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 768,
-       "check": "not-mirrored",
-       "sev": "warn",
-       "sel": "#main > div.drawer",
-       "count": 1,
-       "detail": "positioned element stays 0px from the left and 528px from the right in RTL (left/right)",
-       "verdict": {
-        "v": "TP",
-        "note": "the drawer is placed with left (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 1280,
-       "check": "overflow",
-       "sev": "error",
-       "sel": "a.skip",
-       "count": 1,
-       "detail": "page 9999px wider than the viewport: a.skip",
-       "verdict": {
-        "v": "TP",
-        "note": "left: -9999px parks the skip link inside the scrollable area of an RTL page: 9,999 px of sideways scroll (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 1280,
-       "check": "not-mirrored",
-       "sev": "warn",
-       "sel": "a.skip",
-       "count": 1,
-       "detail": "positioned element stays -9999px from the left and 11081px from the right in RTL (left/right)",
-       "verdict": {
-        "v": "TP",
-        "note": "same root cause: physical left (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 1280,
-       "check": "not-mirrored",
-       "sev": "warn",
-       "sel": "#main > div.drawer",
-       "count": 1,
-       "detail": "positioned element stays -236px from the left and 804px from the right in RTL (left/right)",
-       "verdict": {
-        "v": "TP",
-        "note": "the drawer is placed with left (held-out page)"
-       }
-      }
-     ]
-    },
-    {
-     "name": "astro-about",
-     "kind": "holdout real site (Astro portfolio example)",
-     "verdicts": {
-      "TP": 3,
-      "INT": 2,
-      "FP": 3,
-      "unlabelled": 0
-     },
-     "findings": [
-      {
-       "mutation": "pseudo",
-       "width": 390,
-       "check": "edge-cut",
-       "sev": "error",
-       "sel": "div.stack.backgrounds > div.stack.gap-20 > aside > h2",
-       "count": 1,
-       "detail": "\"[Îñtéréštédvérwáltüñgsch íñ wörkíñg tögé\" 49px past the right edge, which no scroll reaches",
-       "verdict": {
-        "v": "TP",
-        "note": "long compound in the contact heading (held-out page)"
-       }
-      },
-      {
-       "mutation": "pseudo",
-       "width": 390,
-       "check": "edge-cut",
-       "sev": "error",
-       "sel": "div.stack.backgrounds > div.stack.gap-20 > aside > a",
-       "count": 1,
-       "detail": "\"[Šéñd Mé á Méššágévérwáltüñgschä]\" 12px past the left edge, which no scroll reaches",
-       "verdict": {
-        "v": "TP",
-        "note": "the pill spills past both edges (held-out page)"
-       }
-      },
-      {
-       "mutation": "long",
-       "width": 390,
-       "check": "edge-cut",
-       "sev": "error",
-       "sel": "… > p",
-       "count": 3,
-       "detail": "\"Wolfeschlegelsteinhausenbergerdorffvoral\" 54px past the right edge, which no scroll reaches",
-       "verdict": {
-        "v": "INT",
-        "note": "prose paragraphs read as a list (fixed since: paragraphs are not list items) (held-out page)"
-       }
-      },
-      {
-       "mutation": "list-0",
-       "width": 390,
-       "check": "no-empty-state",
-       "sev": "warn",
-       "sel": "section",
-       "count": 1,
-       "detail": "904 → 10 characters of text with its list empty, and no empty-state message",
-       "verdict": {
-        "v": "FP",
-        "note": "the \"list\" was a run of prose paragraphs; emptying it is not a state the page can be in (fixed since) (held-out page)"
-       }
-      },
-      {
-       "mutation": "pseudo",
-       "width": 768,
-       "check": "wide-control",
-       "sev": "warn",
-       "sel": "div.stack.backgrounds > div.stack.gap-20 > aside > a",
-       "count": 1,
-       "detail": "\"[Šéñd Mé á Méššágévérwál\" 493px wide at a 768px viewport",
-       "verdict": {
-        "v": "INT",
-        "note": "the pill grows with its label (held-out page)"
-       }
-      },
-      {
-       "mutation": "list-0",
-       "width": 768,
-       "check": "no-empty-state",
-       "sev": "warn",
-       "sel": "section",
-       "count": 1,
-       "detail": "904 → 10 characters of text with its list empty, and no empty-state message",
-       "verdict": {
-        "v": "FP",
-        "note": "the \"list\" was a run of prose paragraphs; emptying it is not a state the page can be in (fixed since) (held-out page)"
-       }
-      },
-      {
-       "mutation": "rtl",
-       "width": 1280,
-       "check": "not-mirrored",
-       "sev": "warn",
-       "sel": "div.stack.backgrounds > div.stack.gap-20 > aside > h2",
-       "count": 1,
-       "detail": "text-align: left (physical) — stays left in RTL; use start",
-       "verdict": {
-        "v": "TP",
-        "note": "text-align: left (held-out page)"
-       }
-      },
-      {
-       "mutation": "list-0",
-       "width": 1280,
-       "check": "no-empty-state",
-       "sev": "warn",
-       "sel": "section",
-       "count": 1,
-       "detail": "904 → 10 characters of text with its list empty, and no empty-state message",
-       "verdict": {
-        "v": "FP",
-        "note": "the \"list\" was a run of prose paragraphs; emptying it is not a state the page can be in (fixed since) (held-out page)"
-       }
-      }
-     ]
-    }
-   ]
   }
  },
  "guard": {
@@ -23223,8 +21929,8 @@
  "holdout2": {
   "sweep": {
    "scripts": {
-    "sweep.mjs": "26cb1f826272",
-    "stress.mjs": "d0dba7ab1c3a"
+    "sweep.mjs": "656ee69cd500",
+    "stress.mjs": "aaec5fe02925"
    },
    "targets": [
     {
@@ -23232,24 +21938,24 @@
      "kind": "holdout-2 fixture (H-blind-eval Stem & Wren: a florist site with a width=1100 viewport)",
      "url": "/repo/research/experiments/H-blind-eval/stemwren/fixture/",
      "widths": 147,
-     "ms": 20925,
+     "ms": 20865,
      "msPerWidth": 142,
-     "wallMs": 26062,
+     "wallMs": 25780,
      "loads": 2,
      "errors": 7,
      "warnings": 18,
-     "findingKeys": 12,
+     "findingKeys": 11,
      "notAtDefaultWidths": 0,
      "notAtResponsiveWidths": 0,
-     "zoomOnly": 7,
+     "zoomOnly": 6,
      "missedByCaptureWidths": 14,
      "breakpoints": 0,
      "flips": [],
      "verdicts": {
-      "TP": 23,
+      "TP": 25,
       "INT": 0,
       "FP": 0,
-      "unlabelled": 2
+      "unlabelled": 0
      },
      "ranges": [
       {
@@ -23281,12 +21987,28 @@
       {
        "check": "overflow",
        "sev": "error",
-       "sel": "section.features > div.card",
+       "sel": "header > nav",
        "from": "640 (1280 at 200%)",
        "to": "640 (1280 at 200%)",
        "pass": "zoom",
-       "detail": "page 45px wider than the viewport: section.features > div.card, #occasions > div.row > div.occasion",
-       "verdict": null
+       "detail": "page 45px wider than the viewport: header > nav, section.features > div.card, #occasions > div.row > div.occasion",
+       "verdict": {
+        "v": "TP",
+        "note": "at 200%/400% zoom the nowrap nav runs past the viewport (held-out-2 page)"
+       }
+      },
+      {
+       "check": "overflow",
+       "sev": "error",
+       "sel": "header > nav",
+       "from": "320 (1280 at 400%)",
+       "to": "320 (1280 at 400%)",
+       "pass": "zoom",
+       "detail": "page 365px wider than the viewport: header > nav, section.hero > h1, section.features > div.card",
+       "verdict": {
+        "v": "TP",
+        "note": "at 200%/400% zoom the nowrap nav runs past the viewport (held-out-2 page)"
+       }
       },
       {
        "check": "overlap",
@@ -23326,16 +22048,6 @@
         "v": "TP",
         "note": "at 200%/400% zoom the nowrap nav runs past the viewport (held-out-2 page)"
        }
-      },
-      {
-       "check": "overflow",
-       "sev": "error",
-       "sel": "section.hero > h1",
-       "from": "320 (1280 at 400%)",
-       "to": "320 (1280 at 400%)",
-       "pass": "zoom",
-       "detail": "page 365px wider than the viewport: section.hero > h1, section.features > div.card, section.features > div.card",
-       "verdict": null
       },
       {
        "check": "dead-band",
@@ -23578,9 +22290,9 @@
      "kind": "holdout-2 fixture (H-blind-eval Stem & Wren order form, data from JSON)",
      "url": "/repo/research/experiments/H-blind-eval/stemwren/fixture/order/",
      "widths": 147,
-     "ms": 20051,
-     "msPerWidth": 136,
-     "wallMs": 23683,
+     "ms": 20729,
+     "msPerWidth": 141,
+     "wallMs": 24541,
      "loads": 2,
      "errors": 5,
      "warnings": 6,
@@ -23748,9 +22460,9 @@
      "kind": "holdout-2 product page (G-product-lab, IBM Carbon CSS from npm)",
      "url": "/ext/product-lab/carbon-table.html",
      "widths": 147,
-     "ms": 20860,
-     "msPerWidth": 142,
-     "wallMs": 24532,
+     "ms": 21328,
+     "msPerWidth": 145,
+     "wallMs": 25137,
      "loads": 2,
      "errors": 6,
      "warnings": 3,
@@ -23892,9 +22604,9 @@
      "kind": "holdout-2 product page (G-product-lab, GitHub Primer CSS from npm)",
      "url": "/ext/product-lab/primer-issues.html",
      "widths": 147,
-     "ms": 19986,
-     "msPerWidth": 136,
-     "wallMs": 23873,
+     "ms": 21123,
+     "msPerWidth": 144,
+     "wallMs": 25428,
      "loads": 2,
      "errors": 15,
      "warnings": 6,
@@ -24192,9 +22904,9 @@
      "kind": "holdout-2 real open-source page (Bootstrap example, LTR)",
      "url": "/ext/bootstrap-built/album.html",
      "widths": 147,
-     "ms": 20430,
-     "msPerWidth": 139,
-     "wallMs": 21355,
+     "ms": 22112,
+     "msPerWidth": 150,
+     "wallMs": 23067,
      "loads": 2,
      "errors": 0,
      "warnings": 0,
@@ -24218,9 +22930,9 @@
      "kind": "holdout-2 real open-source page (Bootstrap example, LTR)",
      "url": "/ext/bootstrap-built/pricing.html",
      "widths": 147,
-     "ms": 20575,
-     "msPerWidth": 140,
-     "wallMs": 22621,
+     "ms": 21451,
+     "msPerWidth": 146,
+     "wallMs": 23724,
      "loads": 2,
      "errors": 5,
      "warnings": 0,
@@ -24310,9 +23022,9 @@
      "kind": "holdout-2 real open-source page (Bootstrap example, LTR)",
      "url": "/ext/bootstrap-built/checkout.html",
      "widths": 147,
-     "ms": 21125,
-     "msPerWidth": 144,
-     "wallMs": 24418,
+     "ms": 22040,
+     "msPerWidth": 150,
+     "wallMs": 25685,
      "loads": 2,
      "errors": 5,
      "warnings": 2,
@@ -24428,9 +23140,9 @@
      "kind": "holdout-2 real open-source page (Bootstrap example, LTR)",
      "url": "/ext/bootstrap-built/dashboard.html",
      "widths": 147,
-     "ms": 23824,
-     "msPerWidth": 162,
-     "wallMs": 24743,
+     "ms": 22301,
+     "msPerWidth": 152,
+     "wallMs": 23248,
      "loads": 2,
      "errors": 0,
      "warnings": 0,
@@ -24454,9 +23166,9 @@
      "kind": "holdout-2 real open-source page (Bootstrap example, native RTL)",
      "url": "/ext/bootstrap-built/album-rtl.html",
      "widths": 147,
-     "ms": 21398,
-     "msPerWidth": 146,
-     "wallMs": 22285,
+     "ms": 22301,
+     "msPerWidth": 152,
+     "wallMs": 23264,
      "loads": 2,
      "errors": 0,
      "warnings": 0,
@@ -24480,9 +23192,9 @@
      "kind": "holdout-2 real open-source page (Bootstrap example, native RTL)",
      "url": "/ext/bootstrap-built/checkout-rtl.html",
      "widths": 147,
-     "ms": 21284,
-     "msPerWidth": 145,
-     "wallMs": 24026,
+     "ms": 21763,
+     "msPerWidth": 148,
+     "wallMs": 24609,
      "loads": 2,
      "errors": 0,
      "warnings": 2,
@@ -24533,9 +23245,9 @@
      "kind": "holdout-2 real open-source page (Bootstrap example, native RTL)",
      "url": "/ext/bootstrap-built/dashboard-rtl.html",
      "widths": 147,
-     "ms": 23951,
-     "msPerWidth": 163,
-     "wallMs": 25035,
+     "ms": 22322,
+     "msPerWidth": 152,
+     "wallMs": 23283,
      "loads": 2,
      "errors": 0,
      "warnings": 0,
@@ -24559,9 +23271,9 @@
      "kind": "holdout-2 real open-source page (Bootstrap example, native RTL)",
      "url": "/ext/bootstrap-built/blog-rtl.html",
      "widths": 147,
-     "ms": 25652,
-     "msPerWidth": 175,
-     "wallMs": 30430,
+     "ms": 25399,
+     "msPerWidth": 173,
+     "wallMs": 31297,
      "loads": 2,
      "errors": 3,
      "warnings": 12,
@@ -24779,35 +23491,35 @@
    ],
    "totals": {
     "ranges": 95,
-    "TP": 84,
+    "TP": 86,
     "INT": 9,
     "FP": 0,
-    "unlabelled": 2,
-    "msPerWidthMedian": 144,
-    "wallMsMedian": 24418,
+    "unlabelled": 0,
+    "msPerWidthMedian": 150,
+    "wallMsMedian": 24609,
     "missedByCaptureWidths": 53,
-    "findingKeys": 48,
+    "findingKeys": 47,
     "notAtDefaultWidths": 9,
     "notAtResponsiveWidths": 3,
-    "zoomOnly": 12,
+    "zoomOnly": 11,
     "seededRecall": null,
     "keys": {
-     "all": 48,
-     "TP": 39,
+     "all": 47,
+     "TP": 40,
      "INT": 7,
      "FP": 0,
-     "unlabelled": 2,
-     "actionable": 81,
+     "unlabelled": 0,
+     "actionable": 85,
      "intShare": 15,
      "fpShare": 0,
      "fpToolCaused": 0,
      "unseeded": {
-      "all": 48,
-      "TP": 39,
+      "all": 47,
+      "TP": 40,
       "INT": 7,
       "FP": 0,
-      "unlabelled": 2,
-      "actionable": 81,
+      "unlabelled": 0,
+      "actionable": 85,
       "intShare": 15,
       "fpShare": 0,
       "fpToolCaused": 0
@@ -24840,27 +23552,33 @@
       "INT": 2,
       "FP": 0
      },
-     "zoomOnly": 12
+     "notAtResponsiveWidths": {
+      "all": 3,
+      "TP": 2,
+      "INT": 1,
+      "FP": 0
+     },
+     "zoomOnly": 11
     }
    }
   },
   "stress": {
    "scripts": {
-    "sweep.mjs": "26cb1f826272",
-    "stress.mjs": "d0dba7ab1c3a"
+    "sweep.mjs": "656ee69cd500",
+    "stress.mjs": "aaec5fe02925"
    },
    "targets": [
     {
      "name": "stemwren-home",
      "kind": "holdout-2 fixture (H-blind-eval Stem & Wren: a florist site with a width=1100 viewport)",
      "url": "/repo/research/experiments/H-blind-eval/stemwren/fixture/",
-     "ms": 116752,
-     "wallMs": 117643,
+     "ms": 119276,
+     "wallMs": 120600,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 3476,
+       "ms": 3688,
        "applied": "34 text(s) changed",
        "errors": 1,
        "warnings": 1
@@ -24868,7 +23586,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 3571,
+       "ms": 3821,
        "applied": "14 text(s) changed; data-like texts only (17): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 3,
        "warnings": 0
@@ -24876,7 +23594,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 3021,
+       "ms": 2997,
        "applied": "11 text(s) changed; 11 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -24884,7 +23602,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 2966,
+       "ms": 2874,
        "applied": "1 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -24892,7 +23610,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 7301,
+       "ms": 7494,
        "applied": "1 image request(s) blocked",
        "errors": 0,
        "warnings": 1
@@ -24900,7 +23618,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 3110,
+       "ms": 3276,
        "applied": "dir=rtl lang=ar; 27 element(s) checked for mirroring; 34 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -24908,7 +23626,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 3299,
+       "ms": 3247,
        "applied": "section.features: 3 → 0 div; div.row: 5 → 0 div; section.testimonials: 3 → 0 div",
        "errors": 0,
        "warnings": 3
@@ -24916,7 +23634,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 2969,
+       "ms": 3429,
        "applied": "section.features: 3 → 1 div; div.row: 5 → 1 div; section.testimonials: 3 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -24924,23 +23642,23 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 3152,
-       "applied": "section.features: 3 → 500 div (136736px tall, layout 28 ms); div.row: 5 → 500 div (260px tall, layout 6 ms); section.testimonials: 3 → 500 div (28312px tall, layout 5 ms)",
+       "ms": 3205,
+       "applied": "section.features: 3 → 500 div (136736px tall, layout 55 ms); div.row: 5 → 500 div (260px tall, layout 10 ms); section.testimonials: 3 → 500 div (28312px tall, layout 10 ms)",
        "errors": 1,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 4161,
-       "applied": "4 frames; CLS 0.000; load event at 1.5 s; loading indicators seen: none",
+       "ms": 6141,
+       "applied": "5 frames; CLS 0.000; load event at 1.6 s; loading indicators seen: none",
        "errors": 0,
-       "warnings": 0
+       "warnings": 1
       },
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 26,
+       "ms": 27,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -24948,7 +23666,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 24,
+       "ms": 18,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -24956,7 +23674,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 3566,
+       "ms": 3441,
        "applied": "34 text(s) changed",
        "errors": 1,
        "warnings": 1
@@ -24964,7 +23682,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 3503,
+       "ms": 3444,
        "applied": "14 text(s) changed; data-like texts only (17): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 4,
        "warnings": 0
@@ -24972,7 +23690,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 3255,
+       "ms": 3180,
        "applied": "11 text(s) changed; 11 item(s), one slot each",
        "errors": 0,
        "warnings": 1
@@ -24980,7 +23698,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 3097,
+       "ms": 3030,
        "applied": "1 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -24988,7 +23706,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 7393,
+       "ms": 7428,
        "applied": "1 image request(s) blocked",
        "errors": 0,
        "warnings": 1
@@ -24996,7 +23714,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 3270,
+       "ms": 3258,
        "applied": "dir=rtl lang=ar; 26 element(s) checked for mirroring; 34 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -25004,7 +23722,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 3178,
+       "ms": 3230,
        "applied": "section.features: 3 → 0 div; div.row: 5 → 0 div; section.testimonials: 3 → 0 div",
        "errors": 0,
        "warnings": 3
@@ -25012,7 +23730,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 3094,
+       "ms": 3141,
        "applied": "section.features: 3 → 1 div; div.row: 5 → 1 div; section.testimonials: 3 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -25020,15 +23738,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 3307,
-       "applied": "section.features: 3 → 500 div (68075px tall, layout 18 ms); div.row: 5 → 500 div (260px tall, layout 5 ms); section.testimonials: 3 → 500 div (4570px tall, layout 4 ms)",
+       "ms": 3265,
+       "applied": "section.features: 3 → 500 div (68075px tall, layout 21 ms); div.row: 5 → 500 div (260px tall, layout 6 ms); section.testimonials: 3 → 500 div (4570px tall, layout 5 ms)",
        "errors": 1,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 3087,
+       "ms": 3194,
        "applied": "34 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -25036,7 +23754,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 3484,
+       "ms": 3448,
        "applied": "14 text(s) changed; data-like texts only (17): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 4,
        "warnings": 0
@@ -25044,7 +23762,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 3342,
+       "ms": 3158,
        "applied": "11 text(s) changed; 11 item(s), one slot each",
        "errors": 0,
        "warnings": 1
@@ -25052,7 +23770,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 3092,
+       "ms": 3052,
        "applied": "1 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -25060,7 +23778,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 7479,
+       "ms": 7495,
        "applied": "1 image request(s) blocked",
        "errors": 0,
        "warnings": 1
@@ -25068,7 +23786,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 3228,
+       "ms": 3268,
        "applied": "dir=rtl lang=ar; 27 element(s) checked for mirroring; 34 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -25076,7 +23794,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 3324,
+       "ms": 3291,
        "applied": "section.features: 3 → 0 div; div.row: 5 → 0 div; section.testimonials: 3 → 0 div",
        "errors": 0,
        "warnings": 3
@@ -25084,7 +23802,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 3182,
+       "ms": 3045,
        "applied": "section.features: 3 → 1 div; div.row: 5 → 1 div; section.testimonials: 3 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -25092,14 +23810,14 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 3213,
-       "applied": "section.features: 3 → 500 div (48059px tall, layout 17 ms); div.row: 5 → 500 div (260px tall, layout 5 ms); section.testimonials: 3 → 500 div (4570px tall, layout 4 ms)",
+       "ms": 3103,
+       "applied": "section.features: 3 → 500 div (48059px tall, layout 18 ms); div.row: 5 → 500 div (260px tall, layout 5 ms); section.testimonials: 3 → 500 div (4570px tall, layout 5 ms)",
        "errors": 1,
        "warnings": 0
       }
      ],
      "verdicts": {
-      "TP": 6,
+      "TP": 7,
       "INT": 1,
       "FP": 25,
       "unlabelled": 0
@@ -25240,6 +23958,19 @@
         "v": "FP",
         "note": "authored category tiles, feature cards and testimonials treated as data or a list (held-out-2 page)",
         "cause": "tool"
+       }
+      },
+      {
+       "mutation": "slow",
+       "width": 390,
+       "check": "late-shift",
+       "sev": "warn",
+       "sel": "section#about.occasions",
+       "count": 1,
+       "detail": "moved up 56px after it first showed at 1.6 s; above it section.testimonials 424 → 368px — reserve the space (a skeleton of the final height, image dimensions)",
+       "verdict": {
+        "v": "TP",
+        "note": "below the fold: the testimonials section shrinks 424 → 368 px after the first painted frame, most likely when the display=swap web fonts (Great Vibes, Poppins) arrive; real, but the remedy is a metric-matched fallback (size-adjust), not the reserved space the detail suggests (held-out-2 page, after the fixes)"
        }
       },
       {
@@ -25552,13 +24283,13 @@
      "name": "stemwren-order",
      "kind": "holdout-2 fixture (H-blind-eval Stem & Wren order form, data from JSON)",
      "url": "/repo/research/experiments/H-blind-eval/stemwren/fixture/order/",
-     "ms": 117855,
-     "wallMs": 118749,
+     "ms": 119037,
+     "wallMs": 120262,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 3099,
+       "ms": 3763,
        "applied": "84 text(s) changed",
        "errors": 0,
        "warnings": 1
@@ -25566,7 +24297,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 2891,
+       "ms": 2936,
        "applied": "65 text(s) changed; data-like texts only (51): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -25574,7 +24305,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 2895,
+       "ms": 3027,
        "applied": "3 text(s) changed; 3 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -25582,7 +24313,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 2938,
+       "ms": 2908,
        "applied": "10 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -25590,7 +24321,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 7024,
+       "ms": 6994,
        "applied": "1 image request(s) blocked",
        "errors": 0,
        "warnings": 1
@@ -25598,7 +24329,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 2918,
+       "ms": 3037,
        "applied": "dir=rtl lang=ar; 36 element(s) checked for mirroring; 84 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -25606,7 +24337,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 2723,
+       "ms": 2872,
        "applied": "div#flower-rows: 3 → 0 div",
        "errors": 0,
        "warnings": 0
@@ -25614,7 +24345,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 2865,
+       "ms": 2898,
        "applied": "div#flower-rows: 3 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -25622,23 +24353,23 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 3417,
-       "applied": "div#flower-rows: 3 → 500 div (32500px tall, layout 114 ms)",
+       "ms": 3512,
+       "applied": "div#flower-rows: 3 → 500 div (32500px tall, layout 138 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 6090,
-       "applied": "5 frames; CLS 0.027; load event at 1.7 s; loading indicators seen: none",
+       "ms": 6125,
+       "applied": "5 frames; CLS 0.027; load event at 1.6 s; loading indicators seen: none",
        "errors": 0,
        "warnings": 1
       },
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 3006,
+       "ms": 2889,
        "applied": "3 data request(s) answered 500",
        "errors": 0,
        "warnings": 2
@@ -25646,7 +24377,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 2989,
+       "ms": 2972,
        "applied": "3 data request(s) aborted",
        "errors": 0,
        "warnings": 2
@@ -25654,7 +24385,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 3045,
+       "ms": 3182,
        "applied": "84 text(s) changed",
        "errors": 0,
        "warnings": 1
@@ -25662,7 +24393,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 3106,
+       "ms": 2969,
        "applied": "65 text(s) changed; data-like texts only (51): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -25670,7 +24401,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2936,
+       "ms": 2968,
        "applied": "3 text(s) changed; 3 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -25678,7 +24409,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 2937,
+       "ms": 2983,
        "applied": "10 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -25686,78 +24417,6 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 7152,
-       "applied": "1 image request(s) blocked",
-       "errors": 0,
-       "warnings": 1
-      },
-      {
-       "mutation": "rtl",
-       "width": 768,
-       "ms": 3128,
-       "applied": "dir=rtl lang=ar; 36 element(s) checked for mirroring; 84 text(s) in Arabic",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "list-0",
-       "width": 768,
-       "ms": 2939,
-       "applied": "div#flower-rows: 3 → 0 div",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "list-1",
-       "width": 768,
-       "ms": 2998,
-       "applied": "div#flower-rows: 3 → 1 div",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "list-500",
-       "width": 768,
-       "ms": 3425,
-       "applied": "div#flower-rows: 3 → 500 div (32500px tall, layout 110 ms)",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "pseudo",
-       "width": 1280,
-       "ms": 2869,
-       "applied": "84 text(s) changed",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "long",
-       "width": 1280,
-       "ms": 2933,
-       "applied": "65 text(s) changed; data-like texts only (51): list items, cells, names, e-mails, URLs — --targets to choose",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "empty",
-       "width": 1280,
-       "ms": 2971,
-       "applied": "3 text(s) changed; 3 item(s), one slot each",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "numbers",
-       "width": 1280,
-       "ms": 2896,
-       "applied": "10 text(s) changed",
-       "errors": 0,
-       "warnings": 0
-      },
-      {
-       "mutation": "no-images",
-       "width": 1280,
        "ms": 7219,
        "applied": "1 image request(s) blocked",
        "errors": 0,
@@ -25765,8 +24424,80 @@
       },
       {
        "mutation": "rtl",
+       "width": 768,
+       "ms": 3147,
+       "applied": "dir=rtl lang=ar; 36 element(s) checked for mirroring; 84 text(s) in Arabic",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "list-0",
+       "width": 768,
+       "ms": 2987,
+       "applied": "div#flower-rows: 3 → 0 div",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "list-1",
+       "width": 768,
+       "ms": 2950,
+       "applied": "div#flower-rows: 3 → 1 div",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "list-500",
+       "width": 768,
+       "ms": 3509,
+       "applied": "div#flower-rows: 3 → 500 div (32500px tall, layout 117 ms)",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "pseudo",
        "width": 1280,
-       "ms": 3099,
+       "ms": 2939,
+       "applied": "84 text(s) changed",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "long",
+       "width": 1280,
+       "ms": 2945,
+       "applied": "65 text(s) changed; data-like texts only (51): list items, cells, names, e-mails, URLs — --targets to choose",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "empty",
+       "width": 1280,
+       "ms": 3028,
+       "applied": "3 text(s) changed; 3 item(s), one slot each",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "numbers",
+       "width": 1280,
+       "ms": 2860,
+       "applied": "10 text(s) changed",
+       "errors": 0,
+       "warnings": 0
+      },
+      {
+       "mutation": "no-images",
+       "width": 1280,
+       "ms": 7127,
+       "applied": "1 image request(s) blocked",
+       "errors": 0,
+       "warnings": 1
+      },
+      {
+       "mutation": "rtl",
+       "width": 1280,
+       "ms": 3187,
        "applied": "dir=rtl lang=ar; 36 element(s) checked for mirroring; 84 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -25774,7 +24505,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2922,
+       "ms": 2880,
        "applied": "div#flower-rows: 3 → 0 div",
        "errors": 0,
        "warnings": 0
@@ -25782,7 +24513,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 3009,
+       "ms": 2937,
        "applied": "div#flower-rows: 3 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -25790,17 +24521,17 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 3510,
-       "applied": "div#flower-rows: 3 → 500 div (32500px tall, layout 145 ms)",
+       "ms": 3379,
+       "applied": "div#flower-rows: 3 → 500 div (32500px tall, layout 140 ms)",
        "errors": 0,
        "warnings": 0
       }
      ],
      "verdicts": {
-      "TP": 8,
+      "TP": 9,
       "INT": 1,
       "FP": 0,
-      "unlabelled": 1
+      "unlabelled": 0
      },
      "findings": [
       {
@@ -25837,7 +24568,10 @@
        "sel": "footer",
        "count": 1,
        "detail": "moved down 195px after it first showed at 1.6 s; above it div.form-wrap 1255 → 1450px — reserve the space (a skeleton of the final height, image dimensions)",
-       "verdict": null
+       "verdict": {
+        "v": "TP",
+        "note": "filmstrip checked: the stems list arrives at 3.0 s and the form grows 1,255 → 1,450 px, pushing the delivery fields and footer down (held-out-2 page, after the fixes)"
+       }
       },
       {
        "mutation": "errors",
@@ -25936,13 +24670,13 @@
      "name": "carbon-table",
      "kind": "holdout-2 product page (G-product-lab, IBM Carbon CSS from npm)",
      "url": "/ext/product-lab/carbon-table.html",
-     "ms": 102438,
-     "wallMs": 103251,
+     "ms": 103890,
+     "wallMs": 104883,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 3113,
+       "ms": 3136,
        "applied": "65 text(s) changed",
        "errors": 1,
        "warnings": 0
@@ -25950,7 +24684,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 2885,
+       "ms": 2842,
        "applied": "41 text(s) changed; data-like texts only (70): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -25958,7 +24692,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 2875,
+       "ms": 2932,
        "applied": "10 text(s) changed; 10 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -25966,7 +24700,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 2852,
+       "ms": 2761,
        "applied": "54 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -25974,7 +24708,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 2917,
+       "ms": 2937,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -25982,7 +24716,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 3222,
+       "ms": 3236,
        "applied": "dir=rtl lang=ar; 117 element(s) checked for mirroring; 65 text(s) in Arabic",
        "errors": 1,
        "warnings": 0
@@ -25990,7 +24724,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 2995,
+       "ms": 2997,
        "applied": "tbody: 10 → 0 tr",
        "errors": 0,
        "warnings": 1
@@ -25998,7 +24732,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 2889,
+       "ms": 2909,
        "applied": "tbody: 10 → 1 tr",
        "errors": 0,
        "warnings": 0
@@ -26006,15 +24740,15 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 3401,
-       "applied": "tbody: 10 → 500 tr (34000px tall, layout 105 ms)",
+       "ms": 3667,
+       "applied": "tbody: 10 → 500 tr (34000px tall, layout 116 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 9114,
+       "ms": 9108,
        "applied": "6 frames; CLS 0.000; load event at 6.6 s; loading indicators seen: none",
        "errors": 0,
        "warnings": 1
@@ -26022,7 +24756,7 @@
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 26,
+       "ms": 29,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -26030,7 +24764,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 26,
+       "ms": 30,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -26038,7 +24772,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 3187,
+       "ms": 3082,
        "applied": "65 text(s) changed",
        "errors": 1,
        "warnings": 0
@@ -26046,7 +24780,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 3206,
+       "ms": 3169,
        "applied": "41 text(s) changed; data-like texts only (70): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 1,
        "warnings": 0
@@ -26054,7 +24788,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2840,
+       "ms": 2794,
        "applied": "10 text(s) changed; 10 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -26062,7 +24796,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 3162,
+       "ms": 3106,
        "applied": "54 text(s) changed",
        "errors": 1,
        "warnings": 0
@@ -26070,7 +24804,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 2832,
+       "ms": 2976,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -26078,7 +24812,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 3011,
+       "ms": 3205,
        "applied": "dir=rtl lang=ar; 119 element(s) checked for mirroring; 65 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -26086,7 +24820,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 2985,
+       "ms": 3103,
        "applied": "tbody: 10 → 0 tr",
        "errors": 0,
        "warnings": 1
@@ -26094,7 +24828,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 2778,
+       "ms": 2898,
        "applied": "tbody: 10 → 1 tr",
        "errors": 0,
        "warnings": 0
@@ -26102,15 +24836,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 3261,
-       "applied": "tbody: 10 → 500 tr (34000px tall, layout 97 ms)",
+       "ms": 3442,
+       "applied": "tbody: 10 → 500 tr (34000px tall, layout 112 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 2890,
+       "ms": 3123,
        "applied": "65 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -26118,7 +24852,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 3209,
+       "ms": 3274,
        "applied": "41 text(s) changed; data-like texts only (70): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 1,
        "warnings": 0
@@ -26126,7 +24860,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 2828,
+       "ms": 2872,
        "applied": "10 text(s) changed; 10 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -26134,7 +24868,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 3228,
+       "ms": 3146,
        "applied": "54 text(s) changed",
        "errors": 1,
        "warnings": 0
@@ -26142,7 +24876,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 2902,
+       "ms": 2855,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -26150,7 +24884,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 2970,
+       "ms": 3055,
        "applied": "dir=rtl lang=ar; 126 element(s) checked for mirroring; 65 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -26158,7 +24892,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2917,
+       "ms": 3013,
        "applied": "tbody: 10 → 0 tr",
        "errors": 0,
        "warnings": 1
@@ -26166,7 +24900,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 2874,
+       "ms": 2832,
        "applied": "tbody: 10 → 1 tr",
        "errors": 0,
        "warnings": 0
@@ -26174,17 +24908,17 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 3323,
-       "applied": "tbody: 10 → 500 tr (16000px tall, layout 108 ms)",
+       "ms": 3316,
+       "applied": "tbody: 10 → 500 tr (16000px tall, layout 98 ms)",
        "errors": 0,
        "warnings": 0
       }
      ],
      "verdicts": {
       "TP": 9,
-      "INT": 0,
+      "INT": 1,
       "FP": 1,
-      "unlabelled": 1
+      "unlabelled": 0
      },
      "findings": [
       {
@@ -26234,8 +24968,11 @@
        "sev": "warn",
        "sel": "(page)",
        "count": 1,
-       "detail": "nothing readable until 6.708 s on a throttled phone",
-       "verdict": null
+       "detail": "nothing readable until 6.657 s on a throttled phone",
+       "verdict": {
+        "v": "INT",
+        "note": "render-blocking CSS on a throttled link (now timed at the first painted frame): a performance finding, not a layout fault (held-out-2 page, after the fixes)"
+       }
       },
       {
        "mutation": "pseudo",
@@ -26334,13 +25071,13 @@
      "name": "primer-issues",
      "kind": "holdout-2 product page (G-product-lab, GitHub Primer CSS from npm)",
      "url": "/ext/product-lab/primer-issues.html",
-     "ms": 92778,
-     "wallMs": 93600,
+     "ms": 92639,
+     "wallMs": 93521,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 2807,
+       "ms": 2842,
        "applied": "48 text(s) changed",
        "errors": 2,
        "warnings": 0
@@ -26348,7 +25085,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 2789,
+       "ms": 2810,
        "applied": "25 text(s) changed; data-like texts only (24): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 3,
        "warnings": 0
@@ -26356,7 +25093,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 2552,
+       "ms": 2567,
        "applied": "6 text(s) changed; 6 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -26364,7 +25101,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 2567,
+       "ms": 2561,
        "applied": "23 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -26372,7 +25109,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 2573,
+       "ms": 2568,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -26380,7 +25117,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 2738,
+       "ms": 2751,
        "applied": "dir=rtl lang=ar; 57 element(s) checked for mirroring; 48 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -26388,7 +25125,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 2704,
+       "ms": 2678,
        "applied": "div.Box: 6 → 0 div",
        "errors": 0,
        "warnings": 1
@@ -26396,7 +25133,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 2563,
+       "ms": 2557,
        "applied": "div.Box: 6 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -26404,8 +25141,8 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 3124,
-       "applied": "div.Box: 6 → 500 div (60104px tall, layout 39 ms)",
+       "ms": 3100,
+       "applied": "div.Box: 6 → 500 div (60104px tall, layout 41 ms)",
        "errors": 0,
        "warnings": 0
       },
@@ -26420,7 +25157,7 @@
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 26,
+       "ms": 22,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -26428,7 +25165,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 28,
+       "ms": 19,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -26436,7 +25173,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 2798,
+       "ms": 2773,
        "applied": "48 text(s) changed",
        "errors": 3,
        "warnings": 1
@@ -26444,7 +25181,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 2722,
+       "ms": 2750,
        "applied": "25 text(s) changed; data-like texts only (24): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 1,
        "warnings": 0
@@ -26452,7 +25189,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2565,
+       "ms": 2552,
        "applied": "6 text(s) changed; 6 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -26460,7 +25197,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 2546,
+       "ms": 2544,
        "applied": "23 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -26468,7 +25205,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 2566,
+       "ms": 2562,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -26476,7 +25213,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 2840,
+       "ms": 2839,
        "applied": "dir=rtl lang=ar; 66 element(s) checked for mirroring; 48 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -26484,7 +25221,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 2668,
+       "ms": 2684,
        "applied": "div.Box: 6 → 0 div",
        "errors": 0,
        "warnings": 1
@@ -26492,7 +25229,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 2565,
+       "ms": 2572,
        "applied": "div.Box: 6 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -26500,15 +25237,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 3119,
-       "applied": "div.Box: 6 → 500 div (39056px tall, layout 39 ms)",
+       "ms": 3080,
+       "applied": "div.Box: 6 → 500 div (39056px tall, layout 41 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 2551,
+       "ms": 2561,
        "applied": "48 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -26516,7 +25253,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 2568,
+       "ms": 2557,
        "applied": "25 text(s) changed; data-like texts only (24): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -26524,7 +25261,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 2575,
+       "ms": 2545,
        "applied": "6 text(s) changed; 6 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -26532,7 +25269,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 2577,
+       "ms": 2564,
        "applied": "23 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -26540,7 +25277,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 2579,
+       "ms": 2587,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -26548,7 +25285,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 2841,
+       "ms": 2838,
        "applied": "dir=rtl lang=ar; 66 element(s) checked for mirroring; 48 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -26556,7 +25293,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2687,
+       "ms": 2670,
        "applied": "div.Box: 6 → 0 div",
        "errors": 0,
        "warnings": 1
@@ -26564,7 +25301,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 2556,
+       "ms": 2559,
        "applied": "div.Box: 6 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -26572,17 +25309,17 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 2977,
-       "applied": "div.Box: 6 → 500 div (39056px tall, layout 39 ms)",
+       "ms": 3023,
+       "applied": "div.Box: 6 → 500 div (39056px tall, layout 41 ms)",
        "errors": 0,
        "warnings": 0
       }
      ],
      "verdicts": {
       "TP": 12,
-      "INT": 0,
+      "INT": 1,
       "FP": 3,
-      "unlabelled": 1
+      "unlabelled": 0
      },
      "findings": [
       {
@@ -26672,8 +25409,11 @@
        "sev": "warn",
        "sel": "(page)",
        "count": 1,
-       "detail": "nothing readable until 5.283 s on a throttled phone",
-       "verdict": null
+       "detail": "nothing readable until 5.302 s on a throttled phone",
+       "verdict": {
+        "v": "INT",
+        "note": "render-blocking CSS on a throttled link (now timed at the first painted frame): a performance finding, not a layout fault (held-out-2 page, after the fixes)"
+       }
       },
       {
        "mutation": "pseudo",
@@ -26800,12 +25540,12 @@
      "kind": "holdout-2 real open-source page (Bootstrap example, LTR)",
      "url": "/ext/bootstrap-built/album.html",
      "ms": 98805,
-     "wallMs": 99739,
+     "wallMs": 99729,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 3190,
+       "ms": 3160,
        "applied": "53 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -26813,7 +25553,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 3488,
+       "ms": 3489,
        "applied": "36 text(s) changed; data-like texts only (36): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 3,
        "warnings": 0
@@ -26821,7 +25561,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 3203,
+       "ms": 3150,
        "applied": "9 text(s) changed; 9 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -26829,7 +25569,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 3169,
+       "ms": 3159,
        "applied": "9 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -26837,7 +25577,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 3178,
+       "ms": 3163,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -26853,7 +25593,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 3237,
+       "ms": 3238,
        "applied": "div.row.row-cols-1: 9 → 0 div",
        "errors": 0,
        "warnings": 1
@@ -26861,7 +25601,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 3151,
+       "ms": 3155,
        "applied": "div.row.row-cols-1: 9 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -26869,7 +25609,7 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 3502,
+       "ms": 3509,
        "applied": "div.row.row-cols-1: 9 → 500 div (197000px tall, layout 40 ms)",
        "errors": 0,
        "warnings": 0
@@ -26877,7 +25617,7 @@
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 6098,
+       "ms": 6100,
        "applied": "5 frames; CLS 0.000; load event at 3.0 s; loading indicators seen: svg.bd-placeholder-img.card-img-top",
        "errors": 0,
        "warnings": 0
@@ -26885,7 +25625,7 @@
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 24,
+       "ms": 30,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -26893,7 +25633,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 25,
+       "ms": 21,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -26901,7 +25641,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 2955,
+       "ms": 2966,
        "applied": "53 text(s) changed",
        "errors": 3,
        "warnings": 0
@@ -26909,7 +25649,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 2962,
+       "ms": 3003,
        "applied": "36 text(s) changed; data-like texts only (36): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 4,
        "warnings": 0
@@ -26917,7 +25657,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2681,
+       "ms": 2670,
        "applied": "9 text(s) changed; 9 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -26925,7 +25665,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 2843,
+       "ms": 2926,
        "applied": "9 text(s) changed",
        "errors": 1,
        "warnings": 0
@@ -26933,7 +25673,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 2686,
+       "ms": 2710,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -26941,7 +25681,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 2995,
+       "ms": 3011,
        "applied": "dir=rtl lang=ar; 81 element(s) checked for mirroring; 53 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -26949,7 +25689,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 2766,
+       "ms": 2817,
        "applied": "div.row.row-cols-1: 9 → 0 div",
        "errors": 0,
        "warnings": 1
@@ -26957,7 +25697,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 2677,
+       "ms": 2679,
        "applied": "div.row.row-cols-1: 9 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -26965,15 +25705,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 3029,
-       "applied": "div.row.row-cols-1: 9 → 500 div (77822px tall, layout 43 ms)",
+       "ms": 3045,
+       "applied": "div.row.row-cols-1: 9 → 500 div (77822px tall, layout 44 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 2692,
+       "ms": 2695,
        "applied": "53 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -26981,7 +25721,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 3153,
+       "ms": 3067,
        "applied": "36 text(s) changed; data-like texts only (36): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 4,
        "warnings": 0
@@ -26989,7 +25729,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 2702,
+       "ms": 2690,
        "applied": "9 text(s) changed; 9 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -26997,7 +25737,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 2691,
+       "ms": 2701,
        "applied": "9 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -27005,7 +25745,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 2689,
+       "ms": 2719,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -27013,7 +25753,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 3130,
+       "ms": 3046,
        "applied": "dir=rtl lang=ar; 81 element(s) checked for mirroring; 53 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -27021,7 +25761,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2879,
+       "ms": 2861,
        "applied": "div.row.row-cols-1: 9 → 0 div",
        "errors": 0,
        "warnings": 1
@@ -27029,7 +25769,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 2697,
+       "ms": 2674,
        "applied": "div.row.row-cols-1: 9 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -27037,8 +25777,8 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 3032,
-       "applied": "div.row.row-cols-1: 9 → 500 div (69806px tall, layout 49 ms)",
+       "ms": 3019,
+       "applied": "div.row.row-cols-1: 9 → 500 div (69806px tall, layout 44 ms)",
        "errors": 0,
        "warnings": 0
       }
@@ -27341,13 +26081,13 @@
      "name": "bs-pricing",
      "kind": "holdout-2 real open-source page (Bootstrap example, LTR)",
      "url": "/ext/bootstrap-built/pricing.html",
-     "ms": 92148,
-     "wallMs": 93082,
+     "ms": 92363,
+     "wallMs": 93285,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 3200,
+       "ms": 3187,
        "applied": "55 text(s) changed",
        "errors": 7,
        "warnings": 0
@@ -27355,7 +26095,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 2810,
+       "ms": 2849,
        "applied": "16 text(s) changed; data-like texts only (16): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -27363,7 +26103,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 2832,
+       "ms": 2808,
        "applied": "16 text(s) changed; 16 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -27371,7 +26111,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 2815,
+       "ms": 2804,
        "applied": "9 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -27379,7 +26119,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 2821,
+       "ms": 2846,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -27387,7 +26127,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 3121,
+       "ms": 3123,
        "applied": "dir=rtl lang=ar; 80 element(s) checked for mirroring; 55 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -27395,7 +26135,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 2956,
+       "ms": 2985,
        "applied": "ul.list-unstyled.mt-3: 4 → 0 li; ul.list-unstyled.mt-3: 4 → 0 li; ul.list-unstyled.mt-3: 4 → 0 li; tbody: 4 → 0 tr",
        "errors": 0,
        "warnings": 2
@@ -27403,7 +26143,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 2834,
+       "ms": 2828,
        "applied": "ul.list-unstyled.mt-3: 4 → 1 li; ul.list-unstyled.mt-3: 4 → 1 li; ul.list-unstyled.mt-3: 4 → 1 li; tbody: 4 → 1 tr",
        "errors": 0,
        "warnings": 0
@@ -27411,16 +26151,16 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 3108,
-       "applied": "ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 5 ms); ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 5 ms); ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 5 ms); tbody: 4 → 500 tr (26625px tall, layout 71 ms)",
+       "ms": 3057,
+       "applied": "ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 4 ms); ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 5 ms); ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 5 ms); tbody: 4 → 500 tr (26625px tall, layout 67 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 6121,
-       "applied": "5 frames; CLS 0.000; load event at 3.0 s; loading indicators seen: none",
+       "ms": 6132,
+       "applied": "5 frames; CLS 0.000; load event at 2.9 s; loading indicators seen: none",
        "errors": 0,
        "warnings": 0
       },
@@ -27435,7 +26175,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 22,
+       "ms": 25,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -27443,7 +26183,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 2952,
+       "ms": 2877,
        "applied": "55 text(s) changed",
        "errors": 2,
        "warnings": 1
@@ -27451,7 +26191,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 2572,
+       "ms": 2595,
        "applied": "16 text(s) changed; data-like texts only (16): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -27459,7 +26199,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2566,
+       "ms": 2585,
        "applied": "16 text(s) changed; 16 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -27467,7 +26207,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 2584,
+       "ms": 2594,
        "applied": "9 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -27475,7 +26215,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 2607,
+       "ms": 2595,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -27483,7 +26223,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 2885,
+       "ms": 2897,
        "applied": "dir=rtl lang=ar; 85 element(s) checked for mirroring; 55 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -27491,7 +26231,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 2737,
+       "ms": 2754,
        "applied": "ul.list-unstyled.mt-3: 4 → 0 li; ul.list-unstyled.mt-3: 4 → 0 li; ul.list-unstyled.mt-3: 4 → 0 li; tbody: 4 → 0 tr",
        "errors": 0,
        "warnings": 2
@@ -27499,7 +26239,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 2562,
+       "ms": 2591,
        "applied": "ul.list-unstyled.mt-3: 4 → 1 li; ul.list-unstyled.mt-3: 4 → 1 li; ul.list-unstyled.mt-3: 4 → 1 li; tbody: 4 → 1 tr",
        "errors": 0,
        "warnings": 0
@@ -27507,15 +26247,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 2814,
-       "applied": "ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 5 ms); ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 5 ms); ul.list-unstyled.mt-3: 4 → 500 li (15000px tall, layout 5 ms); tbody: 4 → 500 tr (20750px tall, layout 69 ms)",
+       "ms": 2828,
+       "applied": "ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 4 ms); ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 6 ms); ul.list-unstyled.mt-3: 4 → 500 li (15000px tall, layout 4 ms); tbody: 4 → 500 tr (20750px tall, layout 76 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 2583,
+       "ms": 2570,
        "applied": "55 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -27523,7 +26263,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 2569,
+       "ms": 2613,
        "applied": "16 text(s) changed; data-like texts only (16): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -27531,7 +26271,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 2569,
+       "ms": 2630,
        "applied": "16 text(s) changed; 16 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -27539,7 +26279,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 2568,
+       "ms": 2610,
        "applied": "9 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -27547,7 +26287,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 2573,
+       "ms": 2632,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -27555,7 +26295,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 2973,
+       "ms": 3006,
        "applied": "dir=rtl lang=ar; 86 element(s) checked for mirroring; 55 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -27563,7 +26303,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2758,
+       "ms": 2769,
        "applied": "ul.list-unstyled.mt-3: 4 → 0 li; ul.list-unstyled.mt-3: 4 → 0 li; ul.list-unstyled.mt-3: 4 → 0 li; tbody: 4 → 0 tr",
        "errors": 0,
        "warnings": 2
@@ -27571,7 +26311,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 2576,
+       "ms": 2593,
        "applied": "ul.list-unstyled.mt-3: 4 → 1 li; ul.list-unstyled.mt-3: 4 → 1 li; ul.list-unstyled.mt-3: 4 → 1 li; tbody: 4 → 1 tr",
        "errors": 0,
        "warnings": 0
@@ -27579,7 +26319,7 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 2857,
+       "ms": 2772,
        "applied": "ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 4 ms); ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 4 ms); ul.list-unstyled.mt-3: 4 → 500 li (12000px tall, layout 4 ms); tbody: 4 → 500 tr (20750px tall, layout 62 ms)",
        "errors": 0,
        "warnings": 0
@@ -27851,13 +26591,13 @@
      "name": "bs-checkout",
      "kind": "holdout-2 real open-source page (Bootstrap example, LTR)",
      "url": "/ext/bootstrap-built/checkout.html",
-     "ms": 95317,
-     "wallMs": 96234,
+     "ms": 96847,
+     "wallMs": 97854,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 2830,
+       "ms": 2908,
        "applied": "63 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -27865,7 +26605,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 3071,
+       "ms": 3261,
        "applied": "18 text(s) changed; data-like texts only (16): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 3,
        "warnings": 0
@@ -27873,7 +26613,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 2810,
+       "ms": 2892,
        "applied": "3 text(s) changed; 6 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -27881,7 +26621,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 2832,
+       "ms": 2890,
        "applied": "7 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -27889,7 +26629,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 2851,
+       "ms": 2871,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -27897,7 +26637,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 3147,
+       "ms": 3279,
        "applied": "dir=rtl lang=ar; 54 element(s) checked for mirroring; 63 text(s) in Arabic",
        "errors": 0,
        "warnings": 5
@@ -27905,7 +26645,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 2822,
+       "ms": 2884,
        "applied": "ul.list-group.mb-3: 3 → 0 li; div.my-3: 3 → 0 div",
        "errors": 0,
        "warnings": 0
@@ -27913,7 +26653,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 2826,
+       "ms": 2916,
        "applied": "ul.list-group.mb-3: 3 → 1 li; div.my-3: 3 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -27921,15 +26661,15 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 3280,
-       "applied": "ul.list-group.mb-3: 3 → 500 li (28196px tall, layout 22 ms); div.my-3: 3 → 500 div (12998px tall, layout 13 ms)",
+       "ms": 3355,
+       "applied": "ul.list-group.mb-3: 3 → 500 li (28196px tall, layout 26 ms); div.my-3: 3 → 500 div (12998px tall, layout 13 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 6140,
+       "ms": 6163,
        "applied": "5 frames; CLS 0.000; load event at 3.0 s; loading indicators seen: none",
        "errors": 0,
        "warnings": 0
@@ -27937,7 +26677,7 @@
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 31,
+       "ms": 43,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -27945,7 +26685,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 29,
+       "ms": 52,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -27953,7 +26693,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 2920,
+       "ms": 2988,
        "applied": "63 text(s) changed",
        "errors": 1,
        "warnings": 0
@@ -27961,7 +26701,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 2962,
+       "ms": 3060,
        "applied": "18 text(s) changed; data-like texts only (16): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 3,
        "warnings": 0
@@ -27969,7 +26709,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2690,
+       "ms": 2730,
        "applied": "3 text(s) changed; 6 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -27977,7 +26717,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 2702,
+       "ms": 2718,
        "applied": "7 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -27985,7 +26725,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 2720,
+       "ms": 2685,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -27993,7 +26733,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 3014,
+       "ms": 3015,
        "applied": "dir=rtl lang=ar; 65 element(s) checked for mirroring; 63 text(s) in Arabic",
        "errors": 0,
        "warnings": 5
@@ -28001,7 +26741,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 2691,
+       "ms": 2712,
        "applied": "ul.list-group.mb-3: 3 → 0 li; div.my-3: 3 → 0 div",
        "errors": 0,
        "warnings": 0
@@ -28009,7 +26749,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 2702,
+       "ms": 2694,
        "applied": "ul.list-group.mb-3: 3 → 1 li; div.my-3: 3 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -28017,15 +26757,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 3145,
-       "applied": "ul.list-group.mb-3: 3 → 500 li (28196px tall, layout 21 ms); div.my-3: 3 → 500 div (12998px tall, layout 13 ms)",
+       "ms": 3127,
+       "applied": "ul.list-group.mb-3: 3 → 500 li (28196px tall, layout 21 ms); div.my-3: 3 → 500 div (12998px tall, layout 12 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 2909,
+       "ms": 2951,
        "applied": "63 text(s) changed",
        "errors": 1,
        "warnings": 0
@@ -28033,7 +26773,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 3014,
+       "ms": 3127,
        "applied": "18 text(s) changed; data-like texts only (16): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 4,
        "warnings": 0
@@ -28041,7 +26781,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 2702,
+       "ms": 2678,
        "applied": "3 text(s) changed; 6 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -28049,7 +26789,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 2694,
+       "ms": 2720,
        "applied": "7 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -28057,7 +26797,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 2713,
+       "ms": 2714,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -28065,7 +26805,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 3026,
+       "ms": 3025,
        "applied": "dir=rtl lang=ar; 66 element(s) checked for mirroring; 63 text(s) in Arabic",
        "errors": 0,
        "warnings": 5
@@ -28073,7 +26813,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2694,
+       "ms": 2680,
        "applied": "ul.list-group.mb-3: 3 → 0 li; div.my-3: 3 → 0 div",
        "errors": 0,
        "warnings": 0
@@ -28081,7 +26821,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 2705,
+       "ms": 2693,
        "applied": "ul.list-group.mb-3: 3 → 1 li; div.my-3: 3 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -28089,8 +26829,8 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 3135,
-       "applied": "ul.list-group.mb-3: 3 → 500 li (28196px tall, layout 25 ms); div.my-3: 3 → 500 div (12998px tall, layout 16 ms)",
+       "ms": 3189,
+       "applied": "ul.list-group.mb-3: 3 → 500 li (28196px tall, layout 24 ms); div.my-3: 3 → 500 div (12998px tall, layout 15 ms)",
        "errors": 0,
        "warnings": 0
       }
@@ -28459,13 +27199,13 @@
      "name": "bs-dashboard",
      "kind": "holdout-2 real open-source page (Bootstrap example, LTR)",
      "url": "/ext/bootstrap-built/dashboard.html",
-     "ms": 93799,
-     "wallMs": 94745,
+     "ms": 94514,
+     "wallMs": 95492,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 2595,
+       "ms": 2600,
        "applied": "90 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -28473,7 +27213,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 2600,
+       "ms": 2584,
        "applied": "66 text(s) changed; data-like texts only (81): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -28481,7 +27221,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 2589,
+       "ms": 2575,
        "applied": "16 text(s) changed; 16 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -28489,7 +27229,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 2609,
+       "ms": 2592,
        "applied": "16 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -28497,7 +27237,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 2586,
+       "ms": 2600,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -28505,7 +27245,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 2767,
+       "ms": 2759,
        "applied": "dir=rtl lang=ar; 117 element(s) checked for mirroring; 90 text(s) in Arabic",
        "errors": 0,
        "warnings": 0
@@ -28513,7 +27253,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 2683,
+       "ms": 2718,
        "applied": "tbody: 16 → 0 tr",
        "errors": 0,
        "warnings": 1
@@ -28521,7 +27261,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 2579,
+       "ms": 2607,
        "applied": "tbody: 16 → 1 tr",
        "errors": 0,
        "warnings": 0
@@ -28529,15 +27269,15 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 2785,
-       "applied": "tbody: 16 → 500 tr (15000px tall, layout 52 ms)",
+       "ms": 2912,
+       "applied": "tbody: 16 → 500 tr (15000px tall, layout 91 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 9115,
+       "ms": 9098,
        "applied": "6 frames; CLS 0.000; load event at 4.3 s; loading indicators seen: none",
        "errors": 0,
        "warnings": 1
@@ -28545,7 +27285,7 @@
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 35,
+       "ms": 46,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -28553,7 +27293,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 33,
+       "ms": 43,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -28561,7 +27301,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 2818,
+       "ms": 2830,
        "applied": "90 text(s) changed",
        "errors": 1,
        "warnings": 1
@@ -28569,7 +27309,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 2758,
+       "ms": 2795,
        "applied": "76 text(s) changed; data-like texts only (91): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 1
@@ -28577,7 +27317,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2585,
+       "ms": 2593,
        "applied": "26 text(s) changed; 26 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -28585,7 +27325,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 2743,
+       "ms": 2761,
        "applied": "16 text(s) changed",
        "errors": 0,
        "warnings": 1
@@ -28593,7 +27333,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 2593,
+       "ms": 2630,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -28601,7 +27341,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 2907,
+       "ms": 2929,
        "applied": "dir=rtl lang=ar; 112 element(s) checked for mirroring; 90 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -28609,7 +27349,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 2681,
+       "ms": 2689,
        "applied": "ul.nav.flex-column: 6 → 0 li; ul.nav.flex-column: 4 → 0 li; tbody: 16 → 0 tr",
        "errors": 0,
        "warnings": 1
@@ -28617,7 +27357,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 2590,
+       "ms": 2605,
        "applied": "ul.nav.flex-column: 6 → 1 li; ul.nav.flex-column: 4 → 1 li; tbody: 16 → 1 tr",
        "errors": 0,
        "warnings": 0
@@ -28625,15 +27365,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 3149,
-       "applied": "ul.nav.flex-column: 6 → 500 li (18500px tall, layout 26 ms); ul.nav.flex-column: 4 → 500 li (21125px tall, layout 28 ms); tbody: 16 → 500 tr (15000px tall, layout 44 ms)",
+       "ms": 3351,
+       "applied": "ul.nav.flex-column: 6 → 500 li (18500px tall, layout 30 ms); ul.nav.flex-column: 4 → 500 li (21125px tall, layout 35 ms); tbody: 16 → 500 tr (15000px tall, layout 54 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 2806,
+       "ms": 2814,
        "applied": "90 text(s) changed",
        "errors": 0,
        "warnings": 1
@@ -28641,7 +27381,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 2826,
+       "ms": 2809,
        "applied": "76 text(s) changed; data-like texts only (91): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 1
@@ -28649,7 +27389,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 2585,
+       "ms": 2591,
        "applied": "26 text(s) changed; 26 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -28657,7 +27397,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 2578,
+       "ms": 2605,
        "applied": "16 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -28665,7 +27405,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 2588,
+       "ms": 2589,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -28673,7 +27413,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 2926,
+       "ms": 2976,
        "applied": "dir=rtl lang=ar; 112 element(s) checked for mirroring; 90 text(s) in Arabic",
        "errors": 0,
        "warnings": 1
@@ -28681,7 +27421,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2714,
+       "ms": 2727,
        "applied": "ul.nav.flex-column: 6 → 0 li; ul.nav.flex-column: 4 → 0 li; tbody: 16 → 0 tr",
        "errors": 0,
        "warnings": 1
@@ -28689,7 +27429,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 2575,
+       "ms": 2641,
        "applied": "ul.nav.flex-column: 6 → 1 li; ul.nav.flex-column: 4 → 1 li; tbody: 16 → 1 tr",
        "errors": 0,
        "warnings": 0
@@ -28697,8 +27437,8 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 3152,
-       "applied": "ul.nav.flex-column: 6 → 500 li (18500px tall, layout 33 ms); ul.nav.flex-column: 4 → 500 li (18500px tall, layout 29 ms); tbody: 16 → 500 tr (15000px tall, layout 49 ms)",
+       "ms": 3198,
+       "applied": "ul.nav.flex-column: 6 → 500 li (18500px tall, layout 27 ms); ul.nav.flex-column: 4 → 500 li (18500px tall, layout 30 ms); tbody: 16 → 500 tr (15000px tall, layout 47 ms)",
        "errors": 0,
        "warnings": 0
       }
@@ -28730,7 +27470,7 @@
        "sev": "warn",
        "sel": "(page)",
        "count": 1,
-       "detail": "nothing readable until 4.346 s on a throttled phone",
+       "detail": "nothing readable until 4.354 s on a throttled phone",
        "verdict": {
         "v": "INT",
         "note": "render-blocking CSS and scripts on a throttled link: a performance finding, not a layout fault (held-out-2 page)"
@@ -28877,13 +27617,13 @@
      "name": "bs-album-rtl",
      "kind": "holdout-2 real open-source page (Bootstrap example, native RTL)",
      "url": "/ext/bootstrap-built/album-rtl.html",
-     "ms": 95881,
-     "wallMs": 96835,
+     "ms": 97764,
+     "wallMs": 98712,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 3046,
+       "ms": 3043,
        "applied": "53 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -28891,7 +27631,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 3069,
+       "ms": 3045,
        "applied": "0 text(s) changed; data-like texts only (36): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -28899,7 +27639,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 3060,
+       "ms": 3079,
        "applied": "9 text(s) changed; 9 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -28907,7 +27647,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 3063,
+       "ms": 3144,
        "applied": "9 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -28915,7 +27655,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 3066,
+       "ms": 3085,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -28923,7 +27663,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 3202,
+       "ms": 3233,
        "applied": "the page is already right-to-left: physical text-align checked as it is; it loads a right-to-left stylesheet (bootstrap.rtl.min.css), so its LTR locale uses another: not flipped (run --only rtl on the LTR page); text left as it is",
        "errors": 0,
        "warnings": 0
@@ -28931,7 +27671,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 3137,
+       "ms": 3238,
        "applied": "div.row.row-cols-1: 9 → 0 div",
        "errors": 0,
        "warnings": 1
@@ -28939,7 +27679,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 3044,
+       "ms": 3153,
        "applied": "div.row.row-cols-1: 9 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -28947,23 +27687,23 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 3421,
-       "applied": "div.row.row-cols-1: 9 → 500 div (185000px tall, layout 53 ms)",
+       "ms": 3542,
+       "applied": "div.row.row-cols-1: 9 → 500 div (185000px tall, layout 60 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 6102,
-       "applied": "5 frames; CLS 0.000; load event at 2.9 s; loading indicators seen: svg.bd-placeholder-img.card-img-top",
+       "ms": 6135,
+       "applied": "5 frames; CLS 0.000; load event at 3.0 s; loading indicators seen: svg.bd-placeholder-img.card-img-top",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 36,
+       "ms": 52,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -28971,7 +27711,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 26,
+       "ms": 35,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -28979,7 +27719,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 2940,
+       "ms": 3189,
        "applied": "53 text(s) changed",
        "errors": 3,
        "warnings": 0
@@ -28987,7 +27727,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 2702,
+       "ms": 2751,
        "applied": "0 text(s) changed; data-like texts only (36): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -28995,7 +27735,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2711,
+       "ms": 2738,
        "applied": "9 text(s) changed; 9 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -29003,7 +27743,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 2857,
+       "ms": 2936,
        "applied": "9 text(s) changed",
        "errors": 1,
        "warnings": 0
@@ -29011,7 +27751,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 2697,
+       "ms": 2756,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -29019,7 +27759,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 2823,
+       "ms": 2859,
        "applied": "the page is already right-to-left: physical text-align checked as it is; it loads a right-to-left stylesheet (bootstrap.rtl.min.css), so its LTR locale uses another: not flipped (run --only rtl on the LTR page); text left as it is",
        "errors": 0,
        "warnings": 0
@@ -29027,7 +27767,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 2792,
+       "ms": 2795,
        "applied": "div.row.row-cols-1: 9 → 0 div",
        "errors": 0,
        "warnings": 1
@@ -29035,7 +27775,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 2674,
+       "ms": 2726,
        "applied": "div.row.row-cols-1: 9 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -29043,15 +27783,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 3039,
-       "applied": "div.row.row-cols-1: 9 → 500 div (69806px tall, layout 58 ms)",
+       "ms": 3192,
+       "applied": "div.row.row-cols-1: 9 → 500 div (69806px tall, layout 62 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 2698,
+       "ms": 2713,
        "applied": "53 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -29059,7 +27799,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 2689,
+       "ms": 2687,
        "applied": "0 text(s) changed; data-like texts only (36): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -29067,7 +27807,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 2684,
+       "ms": 2696,
        "applied": "9 text(s) changed; 9 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -29075,7 +27815,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 2693,
+       "ms": 2692,
        "applied": "9 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -29083,7 +27823,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 2695,
+       "ms": 2740,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -29091,7 +27831,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 2847,
+       "ms": 2951,
        "applied": "the page is already right-to-left: physical text-align checked as it is; it loads a right-to-left stylesheet (bootstrap.rtl.min.css), so its LTR locale uses another: not flipped (run --only rtl on the LTR page); text left as it is",
        "errors": 0,
        "warnings": 0
@@ -29099,7 +27839,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2815,
+       "ms": 3065,
        "applied": "div.row.row-cols-1: 9 → 0 div",
        "errors": 0,
        "warnings": 1
@@ -29107,7 +27847,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 2676,
+       "ms": 2733,
        "applied": "div.row.row-cols-1: 9 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -29115,8 +27855,8 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 2997,
-       "applied": "div.row.row-cols-1: 9 → 500 div (61790px tall, layout 53 ms)",
+       "ms": 3072,
+       "applied": "div.row.row-cols-1: 9 → 500 div (61790px tall, layout 59 ms)",
        "errors": 0,
        "warnings": 0
       }
@@ -29226,13 +27966,13 @@
      "name": "bs-checkout-rtl",
      "kind": "holdout-2 real open-source page (Bootstrap example, native RTL)",
      "url": "/ext/bootstrap-built/checkout-rtl.html",
-     "ms": 93893,
-     "wallMs": 94827,
+     "ms": 96634,
+     "wallMs": 97806,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 2842,
+       "ms": 2808,
        "applied": "63 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -29240,7 +27980,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 3021,
+       "ms": 3176,
        "applied": "6 text(s) changed; data-like texts only (16): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 2,
        "warnings": 0
@@ -29248,7 +27988,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 2823,
+       "ms": 2889,
        "applied": "3 text(s) changed; 6 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -29256,7 +27996,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 2822,
+       "ms": 2890,
        "applied": "6 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -29264,7 +28004,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 2830,
+       "ms": 2884,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -29272,7 +28012,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 2964,
+       "ms": 3083,
        "applied": "the page is already right-to-left: physical text-align checked as it is; it loads a right-to-left stylesheet (bootstrap.rtl.min.css), so its LTR locale uses another: not flipped (run --only rtl on the LTR page); text left as it is",
        "errors": 0,
        "warnings": 0
@@ -29280,7 +28020,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 2814,
+       "ms": 2899,
        "applied": "ul.list-group.mb-3: 3 → 0 li; div.my-3: 3 → 0 div",
        "errors": 0,
        "warnings": 0
@@ -29288,7 +28028,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 2824,
+       "ms": 2834,
        "applied": "ul.list-group.mb-3: 3 → 1 li; div.my-3: 3 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -29296,15 +28036,15 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 3268,
-       "applied": "ul.list-group.mb-3: 3 → 500 li (28196px tall, layout 27 ms); div.my-3: 3 → 500 div (12998px tall, layout 15 ms)",
+       "ms": 3255,
+       "applied": "ul.list-group.mb-3: 3 → 500 li (28196px tall, layout 26 ms); div.my-3: 3 → 500 div (12998px tall, layout 15 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 6122,
+       "ms": 6131,
        "applied": "5 frames; CLS 0.000; load event at 3.0 s; loading indicators seen: none",
        "errors": 0,
        "warnings": 0
@@ -29312,7 +28052,7 @@
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 31,
+       "ms": 34,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -29320,7 +28060,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 35,
+       "ms": 32,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -29328,7 +28068,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 2919,
+       "ms": 2973,
        "applied": "63 text(s) changed",
        "errors": 1,
        "warnings": 0
@@ -29336,7 +28076,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 2717,
+       "ms": 2730,
        "applied": "6 text(s) changed; data-like texts only (16): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -29344,7 +28084,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2717,
+       "ms": 2758,
        "applied": "3 text(s) changed; 6 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -29352,7 +28092,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 2708,
+       "ms": 2744,
        "applied": "6 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -29360,7 +28100,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 2712,
+       "ms": 2738,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -29368,7 +28108,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 2831,
+       "ms": 2818,
        "applied": "the page is already right-to-left: physical text-align checked as it is; it loads a right-to-left stylesheet (bootstrap.rtl.min.css), so its LTR locale uses another: not flipped (run --only rtl on the LTR page); text left as it is",
        "errors": 0,
        "warnings": 0
@@ -29376,7 +28116,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 2689,
+       "ms": 2741,
        "applied": "ul.list-group.mb-3: 3 → 0 li; div.my-3: 3 → 0 div",
        "errors": 0,
        "warnings": 0
@@ -29384,7 +28124,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 2740,
+       "ms": 2716,
        "applied": "ul.list-group.mb-3: 3 → 1 li; div.my-3: 3 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -29392,15 +28132,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 3120,
-       "applied": "ul.list-group.mb-3: 3 → 500 li (28196px tall, layout 26 ms); div.my-3: 3 → 500 div (12998px tall, layout 15 ms)",
+       "ms": 3321,
+       "applied": "ul.list-group.mb-3: 3 → 500 li (28196px tall, layout 71 ms); div.my-3: 3 → 500 div (12998px tall, layout 28 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 2935,
+       "ms": 3180,
        "applied": "63 text(s) changed",
        "errors": 1,
        "warnings": 0
@@ -29408,7 +28148,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 2710,
+       "ms": 2830,
        "applied": "6 text(s) changed; data-like texts only (16): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -29416,7 +28156,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 2692,
+       "ms": 2893,
        "applied": "3 text(s) changed; 6 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -29424,7 +28164,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 2687,
+       "ms": 2820,
        "applied": "6 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -29432,7 +28172,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 2705,
+       "ms": 2779,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -29440,7 +28180,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 2840,
+       "ms": 3040,
        "applied": "the page is already right-to-left: physical text-align checked as it is; it loads a right-to-left stylesheet (bootstrap.rtl.min.css), so its LTR locale uses another: not flipped (run --only rtl on the LTR page); text left as it is",
        "errors": 0,
        "warnings": 0
@@ -29448,7 +28188,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2703,
+       "ms": 2724,
        "applied": "ul.list-group.mb-3: 3 → 0 li; div.my-3: 3 → 0 div",
        "errors": 0,
        "warnings": 0
@@ -29456,7 +28196,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 2677,
+       "ms": 2774,
        "applied": "ul.list-group.mb-3: 3 → 1 li; div.my-3: 3 → 1 div",
        "errors": 0,
        "warnings": 0
@@ -29464,8 +28204,8 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 3129,
-       "applied": "ul.list-group.mb-3: 3 → 500 li (28196px tall, layout 28 ms); div.my-3: 3 → 500 div (12998px tall, layout 17 ms)",
+       "ms": 3483,
+       "applied": "ul.list-group.mb-3: 3 → 500 li (28196px tall, layout 35 ms); div.my-3: 3 → 500 div (12998px tall, layout 31 ms)",
        "errors": 0,
        "warnings": 0
       }
@@ -29473,8 +28213,8 @@
      "verdicts": {
       "TP": 2,
       "INT": 0,
-      "FP": 1,
-      "unlabelled": 1
+      "FP": 2,
+      "unlabelled": 0
      },
      "findings": [
       {
@@ -29485,7 +28225,11 @@
        "sel": "… > div.my-3 > div.form-check > label.form-check-label",
        "count": 1,
        "detail": "page 66px wider than the viewport: … > div.my-3 > div.form-check > label.form-check-label",
-       "verdict": null
+       "verdict": {
+        "v": "FP",
+        "cause": "tool",
+        "note": "the three payment options were read as a list and their authored labels took the long token (held-out-2 page, after the fixes)"
+       }
       },
       {
        "mutation": "long",
@@ -29533,13 +28277,13 @@
      "name": "bs-dashboard-rtl",
      "kind": "holdout-2 real open-source page (Bootstrap example, native RTL)",
      "url": "/ext/bootstrap-built/dashboard-rtl.html",
-     "ms": 92984,
-     "wallMs": 93912,
+     "ms": 94763,
+     "wallMs": 96583,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 2595,
+       "ms": 2665,
        "applied": "90 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -29547,7 +28291,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 2596,
+       "ms": 2697,
        "applied": "2 text(s) changed; data-like texts only (81): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -29555,7 +28299,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 2605,
+       "ms": 2872,
        "applied": "16 text(s) changed; 16 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -29563,7 +28307,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 2579,
+       "ms": 2716,
        "applied": "16 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -29571,7 +28315,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 2616,
+       "ms": 2819,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -29579,7 +28323,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 2739,
+       "ms": 3240,
        "applied": "the page is already right-to-left: physical text-align checked as it is; it loads a right-to-left stylesheet (bootstrap.rtl.min.css), so its LTR locale uses another: not flipped (run --only rtl on the LTR page); text left as it is",
        "errors": 0,
        "warnings": 0
@@ -29587,7 +28331,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 2688,
+       "ms": 2885,
        "applied": "tbody: 16 → 0 tr",
        "errors": 0,
        "warnings": 1
@@ -29595,7 +28339,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 2613,
+       "ms": 2622,
        "applied": "tbody: 16 → 1 tr",
        "errors": 0,
        "warnings": 0
@@ -29603,15 +28347,15 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 2795,
-       "applied": "tbody: 16 → 500 tr (15000px tall, layout 57 ms)",
+       "ms": 2897,
+       "applied": "tbody: 16 → 500 tr (15000px tall, layout 51 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 9122,
+       "ms": 9115,
        "applied": "6 frames; CLS 0.000; load event at 4.3 s; loading indicators seen: none",
        "errors": 0,
        "warnings": 1
@@ -29619,7 +28363,7 @@
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 48,
+       "ms": 27,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -29627,7 +28371,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 32,
+       "ms": 36,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -29635,7 +28379,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 2758,
+       "ms": 2751,
        "applied": "90 text(s) changed",
        "errors": 0,
        "warnings": 1
@@ -29643,7 +28387,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 2616,
+       "ms": 2670,
        "applied": "2 text(s) changed; data-like texts only (91): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -29651,7 +28395,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 2585,
+       "ms": 2574,
        "applied": "26 text(s) changed; 26 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -29659,7 +28403,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 2584,
+       "ms": 2577,
        "applied": "16 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -29667,7 +28411,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 2601,
+       "ms": 2573,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -29675,7 +28419,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 2754,
+       "ms": 2714,
        "applied": "the page is already right-to-left: physical text-align checked as it is; it loads a right-to-left stylesheet (bootstrap.rtl.min.css), so its LTR locale uses another: not flipped (run --only rtl on the LTR page); text left as it is",
        "errors": 0,
        "warnings": 0
@@ -29683,7 +28427,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 2721,
+       "ms": 2758,
        "applied": "ul.nav.flex-column: 6 → 0 li; ul.nav.flex-column: 4 → 0 li; tbody: 16 → 0 tr",
        "errors": 0,
        "warnings": 1
@@ -29691,7 +28435,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 2569,
+       "ms": 2609,
        "applied": "ul.nav.flex-column: 6 → 1 li; ul.nav.flex-column: 4 → 1 li; tbody: 16 → 1 tr",
        "errors": 0,
        "warnings": 0
@@ -29699,15 +28443,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 3231,
-       "applied": "ul.nav.flex-column: 6 → 500 li (18500px tall, layout 42 ms); ul.nav.flex-column: 4 → 500 li (18500px tall, layout 31 ms); tbody: 16 → 500 tr (15000px tall, layout 53 ms)",
+       "ms": 3210,
+       "applied": "ul.nav.flex-column: 6 → 500 li (18500px tall, layout 28 ms); ul.nav.flex-column: 4 → 500 li (18500px tall, layout 29 ms); tbody: 16 → 500 tr (15000px tall, layout 51 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 2835,
+       "ms": 2829,
        "applied": "90 text(s) changed",
        "errors": 0,
        "warnings": 1
@@ -29715,7 +28459,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 2618,
+       "ms": 2603,
        "applied": "2 text(s) changed; data-like texts only (91): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -29723,7 +28467,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 2604,
+       "ms": 2592,
        "applied": "26 text(s) changed; 26 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -29731,7 +28475,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 2595,
+       "ms": 2597,
        "applied": "16 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -29739,7 +28483,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 2608,
+       "ms": 2573,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -29747,7 +28491,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 2748,
+       "ms": 2730,
        "applied": "the page is already right-to-left: physical text-align checked as it is; it loads a right-to-left stylesheet (bootstrap.rtl.min.css), so its LTR locale uses another: not flipped (run --only rtl on the LTR page); text left as it is",
        "errors": 0,
        "warnings": 0
@@ -29755,7 +28499,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 2714,
+       "ms": 2720,
        "applied": "ul.nav.flex-column: 6 → 0 li; ul.nav.flex-column: 4 → 0 li; tbody: 16 → 0 tr",
        "errors": 0,
        "warnings": 1
@@ -29763,7 +28507,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 2604,
+       "ms": 2588,
        "applied": "ul.nav.flex-column: 6 → 1 li; ul.nav.flex-column: 4 → 1 li; tbody: 16 → 1 tr",
        "errors": 0,
        "warnings": 0
@@ -29771,8 +28515,8 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 3247,
-       "applied": "ul.nav.flex-column: 6 → 500 li (18500px tall, layout 27 ms); ul.nav.flex-column: 4 → 500 li (18500px tall, layout 30 ms); tbody: 16 → 500 tr (15000px tall, layout 52 ms)",
+       "ms": 3195,
+       "applied": "ul.nav.flex-column: 6 → 500 li (18500px tall, layout 43 ms); ul.nav.flex-column: 4 → 500 li (18500px tall, layout 45 ms); tbody: 16 → 500 tr (15000px tall, layout 68 ms)",
        "errors": 0,
        "warnings": 0
       }
@@ -29804,7 +28548,7 @@
        "sev": "warn",
        "sel": "(page)",
        "count": 1,
-       "detail": "nothing readable until 4.4 s on a throttled phone",
+       "detail": "nothing readable until 4.375 s on a throttled phone",
        "verdict": {
         "v": "INT",
         "note": "render-blocking CSS and scripts on a throttled link: a performance finding, not a layout fault (held-out-2 page)"
@@ -29868,13 +28612,13 @@
      "name": "bs-blog-rtl",
      "kind": "holdout-2 real open-source page (Bootstrap example, native RTL)",
      "url": "/ext/bootstrap-built/blog-rtl.html",
-     "ms": 111727,
-     "wallMs": 112649,
+     "ms": 111418,
+     "wallMs": 112438,
      "perMutation": [
       {
        "mutation": "pseudo",
        "width": 390,
-       "ms": 3987,
+       "ms": 3959,
        "applied": "102 text(s) changed",
        "errors": 1,
        "warnings": 0
@@ -29882,7 +28626,7 @@
       {
        "mutation": "long",
        "width": 390,
-       "ms": 3717,
+       "ms": 3727,
        "applied": "0 text(s) changed; data-like texts only (25): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -29890,7 +28634,7 @@
       {
        "mutation": "empty",
        "width": 390,
-       "ms": 3762,
+       "ms": 3727,
        "applied": "22 text(s) changed; 22 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -29898,7 +28642,7 @@
       {
        "mutation": "numbers",
        "width": 390,
-       "ms": 3673,
+       "ms": 3664,
        "applied": "9 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -29906,7 +28650,7 @@
       {
        "mutation": "no-images",
        "width": 390,
-       "ms": 3727,
+       "ms": 3678,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -29914,7 +28658,7 @@
       {
        "mutation": "rtl",
        "width": 390,
-       "ms": 3829,
+       "ms": 3840,
        "applied": "the page is already right-to-left: physical text-align checked as it is; it loads a right-to-left stylesheet (bootstrap.rtl.min.css), so its LTR locale uses another: not flipped (run --only rtl on the LTR page); text left as it is",
        "errors": 0,
        "warnings": 0
@@ -29922,7 +28666,7 @@
       {
        "mutation": "list-0",
        "width": 390,
-       "ms": 3665,
+       "ms": 3670,
        "applied": "ol: 4 → 0 li; ul: 3 → 0 li; ul.list-unstyled: 3 → 0 li; ol.list-unstyled.mb-0: 12 → 0 li",
        "errors": 0,
        "warnings": 0
@@ -29930,7 +28674,7 @@
       {
        "mutation": "list-1",
        "width": 390,
-       "ms": 3689,
+       "ms": 3655,
        "applied": "ol: 4 → 1 li; ul: 3 → 1 li; ul.list-unstyled: 3 → 1 li; ol.list-unstyled.mb-0: 12 → 1 li",
        "errors": 0,
        "warnings": 0
@@ -29938,23 +28682,23 @@
       {
        "mutation": "list-500",
        "width": 390,
-       "ms": 4280,
-       "applied": "ol: 4 → 500 li (12000px tall, layout 14 ms); ul: 3 → 500 li (27984px tall, layout 23 ms); ul.list-unstyled: 3 → 500 li (97279px tall, layout 36 ms); ol.list-unstyled.mb-0: 12 → 500 li (12000px tall, layout 9 ms)",
+       "ms": 4225,
+       "applied": "ol: 4 → 500 li (12000px tall, layout 13 ms); ul: 3 → 500 li (27984px tall, layout 21 ms); ul.list-unstyled: 3 → 500 li (97279px tall, layout 34 ms); ol.list-unstyled.mb-0: 12 → 500 li (12000px tall, layout 9 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "slow",
        "width": 390,
-       "ms": 6116,
-       "applied": "5 frames; CLS 0.000; load event at 3.0 s; loading indicators seen: svg.bd-placeholder-img",
+       "ms": 6110,
+       "applied": "5 frames; CLS 0.000; load event at 3.1 s; loading indicators seen: svg.bd-placeholder-img",
        "errors": 0,
        "warnings": 1
       },
       {
        "mutation": "errors",
        "width": 390,
-       "ms": 35,
+       "ms": 23,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -29962,7 +28706,7 @@
       {
        "mutation": "offline",
        "width": 390,
-       "ms": 27,
+       "ms": 20,
        "applied": "skipped: the page made no fetch/XHR request while loading (pass --api for other data requests)",
        "errors": 0,
        "warnings": 0
@@ -29970,7 +28714,7 @@
       {
        "mutation": "pseudo",
        "width": 768,
-       "ms": 3200,
+       "ms": 3201,
        "applied": "102 text(s) changed",
        "errors": 1,
        "warnings": 0
@@ -29978,7 +28722,7 @@
       {
        "mutation": "long",
        "width": 768,
-       "ms": 3218,
+       "ms": 3209,
        "applied": "0 text(s) changed; data-like texts only (25): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -29986,7 +28730,7 @@
       {
        "mutation": "empty",
        "width": 768,
-       "ms": 3185,
+       "ms": 3169,
        "applied": "22 text(s) changed; 22 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -29994,7 +28738,7 @@
       {
        "mutation": "numbers",
        "width": 768,
-       "ms": 3191,
+       "ms": 3203,
        "applied": "9 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -30002,7 +28746,7 @@
       {
        "mutation": "no-images",
        "width": 768,
-       "ms": 3201,
+       "ms": 3182,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -30010,7 +28754,7 @@
       {
        "mutation": "rtl",
        "width": 768,
-       "ms": 3332,
+       "ms": 3310,
        "applied": "the page is already right-to-left: physical text-align checked as it is; it loads a right-to-left stylesheet (bootstrap.rtl.min.css), so its LTR locale uses another: not flipped (run --only rtl on the LTR page); text left as it is",
        "errors": 0,
        "warnings": 0
@@ -30018,7 +28762,7 @@
       {
        "mutation": "list-0",
        "width": 768,
-       "ms": 3189,
+       "ms": 3169,
        "applied": "ol: 4 → 0 li; ul: 3 → 0 li; ul.list-unstyled: 3 → 0 li; ol.list-unstyled.mb-0: 12 → 0 li",
        "errors": 0,
        "warnings": 0
@@ -30026,7 +28770,7 @@
       {
        "mutation": "list-1",
        "width": 768,
-       "ms": 3182,
+       "ms": 3158,
        "applied": "ol: 4 → 1 li; ul: 3 → 1 li; ul.list-unstyled: 3 → 1 li; ol.list-unstyled.mb-0: 12 → 1 li",
        "errors": 0,
        "warnings": 0
@@ -30034,15 +28778,15 @@
       {
        "mutation": "list-500",
        "width": 768,
-       "ms": 3713,
-       "applied": "ol: 4 → 500 li (12000px tall, layout 14 ms); ul: 3 → 500 li (19992px tall, layout 22 ms); ul.list-unstyled: 3 → 500 li (103668px tall, layout 35 ms); ol.list-unstyled.mb-0: 12 → 500 li (12000px tall, layout 9 ms)",
+       "ms": 3622,
+       "applied": "ol: 4 → 500 li (12000px tall, layout 13 ms); ul: 3 → 500 li (19992px tall, layout 20 ms); ul.list-unstyled: 3 → 500 li (103668px tall, layout 33 ms); ol.list-unstyled.mb-0: 12 → 500 li (12000px tall, layout 9 ms)",
        "errors": 0,
        "warnings": 0
       },
       {
        "mutation": "pseudo",
        "width": 1280,
-       "ms": 3419,
+       "ms": 3497,
        "applied": "102 text(s) changed",
        "errors": 0,
        "warnings": 1
@@ -30050,7 +28794,7 @@
       {
        "mutation": "long",
        "width": 1280,
-       "ms": 3097,
+       "ms": 3094,
        "applied": "0 text(s) changed; data-like texts only (25): list items, cells, names, e-mails, URLs — --targets to choose",
        "errors": 0,
        "warnings": 0
@@ -30058,7 +28802,7 @@
       {
        "mutation": "empty",
        "width": 1280,
-       "ms": 3074,
+       "ms": 3042,
        "applied": "22 text(s) changed; 22 item(s), one slot each",
        "errors": 0,
        "warnings": 0
@@ -30066,7 +28810,7 @@
       {
        "mutation": "numbers",
        "width": 1280,
-       "ms": 3073,
+       "ms": 3080,
        "applied": "9 text(s) changed",
        "errors": 0,
        "warnings": 0
@@ -30074,7 +28818,7 @@
       {
        "mutation": "no-images",
        "width": 1280,
-       "ms": 3071,
+       "ms": 3253,
        "applied": "0 image request(s) blocked",
        "errors": 0,
        "warnings": 0
@@ -30082,7 +28826,7 @@
       {
        "mutation": "rtl",
        "width": 1280,
-       "ms": 3198,
+       "ms": 3227,
        "applied": "the page is already right-to-left: physical text-align checked as it is; it loads a right-to-left stylesheet (bootstrap.rtl.min.css), so its LTR locale uses another: not flipped (run --only rtl on the LTR page); text left as it is",
        "errors": 0,
        "warnings": 0
@@ -30090,7 +28834,7 @@
       {
        "mutation": "list-0",
        "width": 1280,
-       "ms": 3067,
+       "ms": 3043,
        "applied": "ol: 4 → 0 li; ul: 3 → 0 li; ul.list-unstyled: 3 → 0 li; ol.list-unstyled.mb-0: 12 → 0 li",
        "errors": 0,
        "warnings": 0
@@ -30098,7 +28842,7 @@
       {
        "mutation": "list-1",
        "width": 1280,
-       "ms": 3059,
+       "ms": 3040,
        "applied": "ol: 4 → 1 li; ul: 3 → 1 li; ul.list-unstyled: 3 → 1 li; ol.list-unstyled.mb-0: 12 → 1 li",
        "errors": 0,
        "warnings": 0
@@ -30106,17 +28850,17 @@
       {
        "mutation": "list-500",
        "width": 1280,
-       "ms": 3631,
-       "applied": "ol: 4 → 500 li (12000px tall, layout 13 ms); ul: 3 → 500 li (15984px tall, layout 22 ms); ul.list-unstyled: 3 → 500 li (64500px tall, layout 34 ms); ol.list-unstyled.mb-0: 12 → 500 li (12000px tall, layout 9 ms)",
+       "ms": 3708,
+       "applied": "ol: 4 → 500 li (12000px tall, layout 13 ms); ul: 3 → 500 li (15984px tall, layout 30 ms); ul.list-unstyled: 3 → 500 li (64500px tall, layout 97 ms); ol.list-unstyled.mb-0: 12 → 500 li (12000px tall, layout 17 ms)",
        "errors": 0,
        "warnings": 0
       }
      ],
      "verdicts": {
       "TP": 3,
-      "INT": 0,
+      "INT": 1,
       "FP": 0,
-      "unlabelled": 1
+      "unlabelled": 0
      },
      "findings": [
       {
@@ -30139,8 +28883,11 @@
        "sev": "warn",
        "sel": "(page)",
        "count": 1,
-       "detail": "nothing readable until 3.02 s on a throttled phone",
-       "verdict": null
+       "detail": "nothing readable until 3.049 s on a throttled phone",
+       "verdict": {
+        "v": "INT",
+        "note": "render-blocking CSS on a throttled link (now timed at the first painted frame): a performance finding, not a layout fault (held-out-2 page, after the fixes)"
+       }
       },
       {
        "mutation": "pseudo",
@@ -30172,54 +28919,54 @@
     }
    ],
    "totals": {
-    "findings": 169,
-    "TP": 106,
-    "INT": 4,
-    "FP": 54,
-    "unlabelled": 5,
+    "findings": 170,
+    "TP": 108,
+    "INT": 7,
+    "FP": 55,
+    "unlabelled": 0,
     "seededRecall": null,
     "keys": {
-     "all": 97,
-     "TP": 62,
-     "INT": 4,
-     "FP": 26,
-     "unlabelled": 5,
-     "actionable": 64,
-     "intShare": 4,
-     "fpShare": 27,
-     "fpToolCaused": 26,
+     "all": 98,
+     "TP": 64,
+     "INT": 7,
+     "FP": 27,
+     "unlabelled": 0,
+     "actionable": 65,
+     "intShare": 7,
+     "fpShare": 28,
+     "fpToolCaused": 27,
      "unseeded": {
-      "all": 97,
-      "TP": 62,
-      "INT": 4,
-      "FP": 26,
-      "unlabelled": 5,
-      "actionable": 64,
-      "intShare": 4,
-      "fpShare": 27,
-      "fpToolCaused": 26
+      "all": 98,
+      "TP": 64,
+      "INT": 7,
+      "FP": 27,
+      "unlabelled": 0,
+      "actionable": 65,
+      "intShare": 7,
+      "fpShare": 28,
+      "fpToolCaused": 27
      },
      "realSite": {
       "all": 56,
       "TP": 38,
-      "INT": 2,
-      "FP": 14,
-      "unlabelled": 2,
+      "INT": 3,
+      "FP": 15,
+      "unlabelled": 0,
       "actionable": 68,
-      "intShare": 4,
-      "fpShare": 25,
-      "fpToolCaused": 14
+      "intShare": 5,
+      "fpShare": 27,
+      "fpToolCaused": 15
      },
      "nativeRtl": {
       "all": 15,
       "TP": 10,
-      "INT": 1,
-      "FP": 2,
-      "unlabelled": 2,
+      "INT": 2,
+      "FP": 3,
+      "unlabelled": 0,
       "actionable": 67,
-      "intShare": 7,
-      "fpShare": 13,
-      "fpToolCaused": 2
+      "intShare": 13,
+      "fpShare": 20,
+      "fpToolCaused": 3
      }
     }
    }
@@ -31966,6 +30713,12 @@
       "all": 9,
       "TP": 7,
       "INT": 2,
+      "FP": 0
+     },
+     "notAtResponsiveWidths": {
+      "all": 3,
+      "TP": 2,
+      "INT": 1,
       "FP": 0
      },
      "zoomOnly": 12

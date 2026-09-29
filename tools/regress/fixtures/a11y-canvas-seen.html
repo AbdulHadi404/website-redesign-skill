@@ -1,0 +1,17 @@
+<!doctype html>
+<!-- states.mjs --aria (lib/seen.mjs) regress fixture: content that Playwright's ariaSnapshot lists but Chromium's
+     accessibility tree does not. #app is inert behind an open panel, the artwork is aria-hidden, and "Check" opens a
+     modal dialog that makes everything outside it inert. Expect ⟨inert: #app⟩, ⟨aria-hidden: div.art⟩ and, with the
+     dialog open, ⟨inert: outside #confirm⟩ on the rest; "Start now", the panel and the dialog's own buttons unmarked. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Permits</title>
+<style>body{margin:0;font:16px/1.4 system-ui,sans-serif;color:#1b1b1b;background:#fff}header,main,aside{padding:12px 24px}
+.art{display:flex;gap:12px;align-items:center;background:#eef3f8;padding:12px 24px}
+aside{border-left:4px solid #1d70b8;background:#f4f8fb}button{font:inherit;padding:6px 12px}</style></head>
+<body>
+<header><h1>Parking permits</h1><button type="button" id="start">Start now</button></header>
+<div class="art" aria-hidden="true"><p>Hidden caption for the artwork</p><button type="button" tabindex="-1">Play the animation</button></div>
+<div id="app" inert><main><h2>Your permits</h2><p>Zone 4, expires in 12 days.</p><a href="#renew">Renew permit</a></main></div>
+<aside aria-label="Filters"><h2>Filters</h2><button type="button" id="close">Close filters</button> <button type="button" id="check">Check</button></aside>
+<dialog id="confirm"><p>Check your details before you pay.</p><button type="button" id="ok">Confirm</button></dialog>
+<script>document.getElementById('check').addEventListener('click', () => document.getElementById('confirm').showModal());</script>
+</body></html>

@@ -259,6 +259,10 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   });
 
   // ---- content cut off by an overflow:hidden/clip ancestor ---------------
+  // Across the inline axis, by the element's box. Down the block axis, by the ink of its own text when probes.mjs
+  // glyphClipProbe measured it first (its data-audit-ink mark, in document coordinates): a box whose padding runs past
+  // the clip cuts nothing, and glyphs that reach past their line box are cut although the box fits. Without a mark
+  // (not measured), by the box. inkK links an element to its entry in glyphClipProbe's list, so a caller reports it once.
   const clippedText = [];
   for (const [el] of textEls) {
     if (!visible(el)) continue;
@@ -266,6 +270,8 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     if (cs.textOverflow === 'ellipsis' || cs.webkitLineClamp !== 'none' && cs.webkitLineClamp) continue;
     const r = el.getBoundingClientRect();
     if (r.width <= 2 || r.height <= 2) continue; // visually-hidden text
+    const ink = (el.getAttribute('data-audit-ink') || '').split(',').map((v) => parseFloat(v) - scrollY);
+    const inked = ink.length === 2 && ink.every(Number.isFinite);
     for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
       const pc = getComputedStyle(p);
       if (['auto', 'scroll'].includes(pc.overflowX) || ['auto', 'scroll'].includes(pc.overflowY)) break; // scrollable: reachable, not cut off
@@ -274,8 +280,8 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       const q = p.getBoundingClientRect();
       if (q.width <= 2 || q.height <= 2) break;
       const outX = cx && (r.right > q.right + 2 || r.left < q.left - 2);
-      const outY = cy && (r.bottom > q.bottom + 2 || r.top < q.top - 2);
-      if (outX || outY) clippedText.push({ selector: sel(el), by: sel(p), text: short(el.textContent, 30) });
+      const outY = cy && (inked ? ink[1] > q.bottom + 1 || ink[0] < q.top - 1 : r.bottom > q.bottom + 2 || r.top < q.top - 2);
+      if (outX || outY) clippedText.push({ selector: sel(el), by: sel(p), text: short(el.textContent, 30), axis: outX && outY ? 'xy' : outX ? 'x' : 'y', ink: inked, inkK: el.getAttribute('data-audit-ink-k') });
       break;
     }
   }
@@ -297,31 +303,50 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   const nearMisses = [];
   for (let i = 1; i < edges.length; i++) { const d = edges[i][0] - edges[i - 1][0]; if (d >= 1 && d <= 4) nearMisses.push(`${edges[i - 1][0]}px ×${edges[i - 1][1]} vs ${edges[i][0]}px ×${edges[i][1]}`); }
 
-  // ---- concentric radii: a rounded element near its rounded parent's corner --------
-  // Nested corners read as one shape when inner radius ≈ outer radius − the gap between them. An inner radius
-  // equal to or larger than that looks swollen (the common "card with a pill inside it" mismatch).
-  const radiusMismatch = [];
-  for (const el of document.body.querySelectorAll('*')) {
-    const cs = getComputedStyle(el);
-    const R = parseFloat(cs.borderTopLeftRadius);
-    if (!(R >= 8) || !visible(el)) continue;
-    const pr = el.getBoundingClientRect();
-    if (pr.width < 60 || pr.height < 40) continue;
+  // ---- concentric radii: a rounded element near a corner of its nearest painted rounded ancestor --------
+  // Nested corners read as one shape when inner radius ≈ outer radius − the gap between them; an inner radius well
+  // above that looks swollen (the "card with a pill inside it" mismatch). Stage-2 S9 (probe v2): all four corners,
+  // each with its own radii; the nearest painted rounded ancestor, not any rounded box further up; discs and pills
+  // skipped, inside and out (a round play button in a card is a role, not a nesting); a flag only where the gap is at
+  // most R, the case the rule is for. A child further in (R < gap ≤ 1.5 R) is listed as information (radiusFarIn).
+  const radiusMismatch = [], radiusFarIn = [];
+  {
+    const CORNERS = [['TopLeft', 'top-left'], ['TopRight', 'top-right'], ['BottomLeft', 'bottom-left'], ['BottomRight', 'bottom-right']];
+    // a corner's horizontal radius in px (a percentage resolves against the box; the smaller side keeps it conservative)
+    const radius = (v, box) => { const a = String(v).split(' ')[0]; return a.endsWith('%') ? (parseFloat(a) / 100) * Math.min(box.width, box.height) : parseFloat(a) || 0; };
     // painted surfaces only: a radius on an invisible box has no corner to match
-    const painted = (c) => c.backgroundColor !== 'rgba(0, 0, 0, 0)' || parseFloat(c.borderTopWidth) > 0 || c.boxShadow !== 'none';
-    if (!painted(cs)) continue;
-    for (const ch of el.querySelectorAll('*')) {
-      const ccs = getComputedStyle(ch);
-      const r = parseFloat(ccs.borderTopLeftRadius);
-      if (!(r >= 4) || !painted(ccs)) continue;
-      const cr = ch.getBoundingClientRect();
-      if (cr.width < 24 || cr.height < 16 || cr.width >= pr.width - 1) continue;
-      const d = Math.min(cr.left - pr.left, cr.top - pr.top);
-      if (d < 0 || d > R || cr.left - pr.left > R * 1.5 || cr.top - pr.top > R * 1.5) continue; // not near the corner
-      const ideal = Math.max(R - d, 0);
-      if (r > ideal + 4 && r < 999) { radiusMismatch.push(`\`${sel(ch)}\` ${Math.round(r)}px inside \`${sel(el)}\` ${Math.round(R)}px, ${Math.round(d)}px in (≈${Math.round(ideal)}px)`); break; }
+    const painted = (c) => rgba(c.backgroundColor)[3] > 0 || (c.backgroundImage && c.backgroundImage !== 'none') || (parseFloat(c.borderTopWidth) > 0 && c.borderTopStyle !== 'none' && rgba(c.borderTopColor)[3] > 0) || c.boxShadow !== 'none';
+    const rounded = new Map();
+    for (const el of document.body.querySelectorAll('*')) {
+      if (el instanceof SVGElement && el.tagName !== 'svg') continue;
+      const c = getComputedStyle(el);
+      if (!/[1-9]/.test(c.borderTopLeftRadius + c.borderTopRightRadius + c.borderBottomLeftRadius + c.borderBottomRightRadius) || !painted(c)) continue;
+      const box = el.getBoundingClientRect();
+      if (box.width < 1 || box.height < 1) continue;
+      const rad = CORNERS.map(([k]) => radius(c[`border${k}Radius`], box));
+      // a disc or a pill: its round ends are its shape, not a nested corner
+      if (Math.max(...rad) >= Math.min(box.width, box.height) / 2 - 1) continue;
+      rounded.set(el, { box, rad });
     }
-    if (radiusMismatch.length >= 8) break;
+    for (const [ch, { box: cr, rad: rc }] of rounded) {
+      if (radiusMismatch.length >= 8) break;
+      if (cr.width < 24 || cr.height < 16) continue;
+      let p = ch.parentElement;
+      while (p && p !== document.body && !rounded.has(p)) p = p.parentElement;
+      if (!p || p === document.body) continue;
+      const { box: pr, rad: rp } = rounded.get(p);
+      if (pr.width < 60 || pr.height < 40 || cr.width >= pr.width - 1 || !visible(ch)) continue;
+      const gaps = [[cr.left - pr.left, cr.top - pr.top], [pr.right - cr.right, cr.top - pr.top], [cr.left - pr.left, pr.bottom - cr.bottom], [pr.right - cr.right, pr.bottom - cr.bottom]];
+      for (let i = 0; i < 4; i++) {
+        const R = rp[i], r = rc[i], [dx, dy] = gaps[i];
+        if (R < 8 || r < 4 || dx < 0 || dy < 0 || dx > R * 1.5 + 2 || dy > R * 1.5 + 2) continue; // not near this corner
+        const gap = Math.min(dx, dy), ideal = Math.max(R - gap, 0);
+        if (r <= ideal + 4) continue;
+        const row = `\`${sel(ch)}\` ${Math.round(r)}px inside \`${sel(p)}\` ${Math.round(R)}px, ${Math.round(gap)}px in (≈${Math.round(ideal)}px${i ? `, ${CORNERS[i][1]} corner` : ''})`;
+        if (gap <= R) radiusMismatch.push(row); else if (radiusFarIn.length < 8) radiusFarIn.push(row);
+        break;
+      }
+    }
   }
 
   // ---- meaning carried by colour alone: status dots with no text -----------
@@ -824,11 +849,19 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   // Greetings in the languages this skill has met (Arabic interfaces greet as often as English ones).
   const greeting = /(^|[\s,.!])(welcome back|good (morning|afternoon|evening)|hello|hi|hey|bonjour|bonsoir|bienvenue|hola|buenos d[ií]as|bienvenid[oa]|hallo|guten (morgen|tag|abend)|willkommen|ol[aá]|bom dia|bem-vind[oa]|merhaba|g[uü]nayd[ıi]n|ho[sş] geldin|مرحب[\u0600-\u06FF\u064B-\u065F]*|أهل[\u0600-\u06FF\u064B-\u065F]*|اهل[\u0600-\u06FF]*|صباح الخير|مساء الخير|هلا|سلام|خوش آمدید|درود)[\s,،!]+\S+/i.test(hs.map((h) => h.textContent).join(' ') + ' ' + [...document.querySelectorAll('h1, [class*=title]')].slice(0, 3).map((e) => e.textContent).join(' '));
   const iconOnly = [...document.querySelectorAll('button, [role=button], a')].filter((b) => visible(b) && !b.textContent.trim() && b.getBoundingClientRect().width <= 48).length;
+  // A chart is labelled by text inside it, axis/tick/legend text beside it, or an accessible name: aria-labelledby
+  // that resolves to text, aria-label, a <title>, or the title of a role="img". An SVG or canvas hidden from assistive
+  // technology (aria-hidden, role none/presentation) is decoration, not a chart (stage-2 S5 G4: 3 → 0 on its prototype).
+  const accName = (g) => {
+    const byIds = (g.getAttribute('aria-labelledby') || '').split(/\s+/).filter(Boolean).map((id) => { const t = document.getElementById(id); return t ? (t.getAttribute('aria-label') || t.textContent || '').trim() : ''; }).join(' ').trim();
+    return byIds || (g.getAttribute('aria-label') || '').trim() || (g.getAttribute('role') === 'img' ? (g.getAttribute('title') || '').trim() : '') || (g.tagName === 'svg' ? ([...g.children].find((c) => c.tagName === 'title')?.textContent || '').trim() : '');
+  };
   const charts = [...document.querySelectorAll('svg, canvas')].filter((g) => {
+    if (g.getAttribute('aria-hidden') === 'true' || /^(none|presentation)$/.test(g.getAttribute('role') || '')) return false;
     const r = g.getBoundingClientRect();
     if (r.width < 60 || r.height < 24 || !visible(g)) return false;
     const hasData = g.tagName === 'svg' && g.querySelector('path, rect, polyline, circle');
-    const labelled = g.querySelector?.('text') || g.getAttribute('aria-label') || g.querySelector?.('title') || (g.parentElement && /\d/.test([...g.parentElement.querySelectorAll('[class*=axis], [class*=tick], [class*=legend]')].map((x) => x.textContent).join('')));
+    const labelled = g.querySelector?.('text') || accName(g) || g.querySelector?.('title') || (g.parentElement && /\d/.test([...g.parentElement.querySelectorAll('[class*=axis], [class*=tick], [class*=legend]')].map((x) => x.textContent).join('')));
     return (hasData || g.tagName === 'CANVAS') && !labelled;
   }).length;
   const controls = [...document.querySelectorAll('button, input:not([type=checkbox]):not([type=radio]):not([type=hidden]), select')].filter(visible).map((c) => Math.round(c.getBoundingClientRect().height));
@@ -855,7 +888,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     title: document.title, lang: document.documentElement.lang || null,
     targets: { total: targets.length, under24: small.filter((s) => !s.spacingException), under24SpacingOk: small.filter((s) => s.spacingException).length, under44, under44List, under48: under48Els.length, under48List: under48Els.slice(0, 6).map((t) => ({ selector: sel(t.el), w: Math.round(t.r.width), h: Math.round(t.r.height), name: short(t.el.getAttribute('aria-label') || t.el.textContent || '', 24) })) },
     fakeControls: fakeControls.slice(0, 15), fakeControlCount: fakeControls.length,
-    clippedText: clippedText.slice(0, 10), clippedCount: clippedText.length, colourOnly: colourOnly.slice(0, 10), colourOnlyCount: colourOnly.length, bareEmpty, unavailableFamilies, mono,
+    clippedText: clippedText.slice(0, 10), clippedCount: clippedText.length, clippedInk: clippedText.map((c) => c.inkK).filter(Boolean), colourOnly: colourOnly.slice(0, 10), colourOnlyCount: colourOnly.length, bareEmpty, unavailableFamilies, mono,
     images,
     system: {
       radii: top(radii, 10).map(([r, n]) => ({ radius: r, count: n })), shadowKinds: shadows.size, shadowTop: top(shadows, 4).map(([s, n]) => ({ shadow: s, count: n })),
@@ -864,7 +897,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     signals: {
       gradientText, emoji: emoji.slice(0, 10), cliches: [...cliches], statClaims: statClaims.slice(0, 10), gradients: gradients.length, violetGradients: gradients.filter((g) => g.violet).length,
       backdropBlur: blur, cards, pills, buttonsLike, iconTiles, domNodes: all.length,
-      mainGround, creamGround, eyebrows, eyebrowExamples, sectionCount, accentedHeadlines: accentedHeadlines.slice(0, 5), sideStripes, stripeExamples, glows, oneRadius, centredShare, nearMisses, leftEdges: edges.length, radiusMismatch,
+      mainGround, creamGround, eyebrows, eyebrowExamples, sectionCount, accentedHeadlines: accentedHeadlines.slice(0, 5), sideStripes, stripeExamples, glows, oneRadius, centredShare, nearMisses, leftEdges: edges.length, radiusMismatch, radiusFarIn,
       emDashes, middleDots, arrowCtas, aphorisms, headingRatio, bodyPx, flatSteps, headingInversions, widows, deadBands, numbers,
       cardTextShare: Math.round((charsInCards / pageChars) * 100), outerCards: outerCards.length, kpiTiles, greeting, iconOnly, unlabelledCharts: charts,
       controlHeights: [...new Set(controls)].sort((x, y) => x - y), maxPx, hoverMoves, badgeAboveH1,

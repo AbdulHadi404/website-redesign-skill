@@ -21,6 +21,10 @@
  *             obscured by sticky UI, traps, skip link; reverse walk for obscuring
  *             [2.1.1 2.1.2 2.4.3 2.4.7 2.4.11 2.4.13 2.4.1]
  *   pointer   clickable things that keyboard users cannot reach (listeners / cursor:pointer)  [2.1.1 4.1.2]
+ *             A clickable canvas that is not focusable is a WARN, not a FAIL, when the Tab walk stops on controls
+ *             over it (stand-ins): they may be its keyboard path, so check them against the canvas contract.
+ *   canvas    per clickable canvas: controls over it at load, whether a key on one changes the canvas's pixels,
+ *             and whether anything is announced (live region, ariaNotify, focus on a new control)  [2.1.1 4.1.3]
  *   targets   targets < 24x24 without the spacing exception                  [2.5.8]
  *   nontext   form-control boundaries < 3:1 against their background         [1.4.11]
  *   autocomplete  personal-data fields without autocomplete tokens          [1.3.5]
@@ -31,6 +35,7 @@
  *   motion    animations still running under prefers-reduced-motion; auto-updating regions [2.3.3 2.2.2]
  */
 import { mkdir, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { launch, open, decodeImages } from './lib/env.mjs';
 
@@ -46,6 +51,7 @@ await mkdir(outDir, { recursive: true });
 const { browser } = await launch({ chrome: process.env.CHROME_PATH });
 const findings = [];
 const add = (level, section, sc, msg, where = '') => findings.push({ level, section, sc, msg, where });
+const clickableCanvases = []; // { ci: index among the page's canvases, signal, role, where, focusable }
 const report = { url, date: new Date().toISOString(), findings, data: {} };
 const t0 = performance.now();
 
@@ -115,8 +121,9 @@ async function loadEverything(page) {
   await decodeImages(page).catch(() => {});
 }
 
-async function newPage(opts = {}) {
+async function newPage(opts = {}, init = null) {
   const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1, ...opts });
+  if (init) await ctx.addInitScript(init);
   const page = await ctx.newPage();
   await open(page, url);
   await page.evaluate(() => document.fonts?.ready);
@@ -229,10 +236,19 @@ async function newPage(opts = {}) {
   const candidates = await page.evaluate((shownSrc) => {
     const shown = eval(shownSrc);
     const native = 'a[href],button,input,select,textarea,summary,label,iframe,[contenteditable=""],[contenteditable=true],video[controls],audio[controls]';
+    // A canvas, or a wrapper that is mostly one canvas (React Three Fiber listens on the canvas's parent): its index
+    // among the page's canvases, so the keyboard walk can tell which Tab stops lie over it.
+    const canvases = [...document.querySelectorAll('canvas')];
+    const canvasOf = (el) => {
+      if (el.tagName === 'CANVAS') return canvases.indexOf(el);
+      const r = el.getBoundingClientRect(); let best = -1, area = 0;
+      for (const c of el.querySelectorAll('canvas')) { const q = c.getBoundingClientRect(); if (q.width * q.height > area) { area = q.width * q.height; best = canvases.indexOf(c); } }
+      return best >= 0 && area * 2 >= r.width * r.height ? best : -1;
+    };
     return [...document.querySelectorAll('body *')].filter(el => !el.matches(native) && !el.closest('button,a[href],label,summary,select')
       && !['svg', 'path', 'circle', 'polyline', 'g', 'script', 'style', 'option'].includes(el.tagName.toLowerCase()))
       .filter(el => el.getClientRects().length > 0 && shown(el)) // rendered, with a box of its own
-      .slice(0, 4000).map(el => ({ i: el.getAttribute('data-a11y-i'), pointer: getComputedStyle(el).cursor === 'pointer' && getComputedStyle(el.parentElement).cursor !== 'pointer', onclick: el.hasAttribute('onclick'), tabIndex: (el.tagName === 'A' && !el.hasAttribute('href') && !el.hasAttribute('tabindex')) ? -1 : el.tabIndex, role: el.getAttribute('role'), hasControls: !!el.querySelector('a[href],button,input,select,textarea,summary,[tabindex="0"]') }));
+      .slice(0, 4000).map(el => ({ i: el.getAttribute('data-a11y-i'), pointer: getComputedStyle(el).cursor === 'pointer' && getComputedStyle(el.parentElement).cursor !== 'pointer', onclick: el.hasAttribute('onclick'), tabIndex: (el.tagName === 'A' && !el.hasAttribute('href') && !el.hasAttribute('tabindex')) ? -1 : el.tabIndex, role: el.getAttribute('role'), hasControls: !!el.querySelector('a[href],button,input,select,textarea,summary,[tabindex="0"]'), canvas: canvases.length ? canvasOf(el) : -1 }));
   }, shownSrc);
   for (const c of candidates) {
     let listeners = [];
@@ -245,7 +261,14 @@ async function newPage(opts = {}) {
     if (c.hasControls) continue; // event delegation on a container of real controls
     const where = await page.evaluate(`(${describe})(document.querySelector('[data-a11y-i="${c.i}"]'))`);
     const signal = c.onclick ? 'onclick' : listeners.length ? `${listeners[0].type} listener` : 'cursor:pointer';
-    if (c.tabIndex < 0) add('FAIL', 'pointer', '2.1.1', `Clickable (${signal}) but not keyboard focusable${c.role ? ` (role=${c.role})` : ''}`, where);
+    // A clickable canvas is judged after the keyboard walk, once per canvas (it and its wrapper may both listen):
+    // controls over it may be its stand-ins (section 4), and it has a keyboard path if it or its wrapper is focusable.
+    if (c.canvas >= 0) {
+      const k = clickableCanvases.find((x) => x.ci === c.canvas);
+      if (!k) clickableCanvases.push({ ci: c.canvas, signal, role: c.role, where, focusable: c.tabIndex >= 0 });
+      else k.focusable ||= c.tabIndex >= 0;
+    }
+    if (c.tabIndex < 0) { if (c.canvas < 0) add('FAIL', 'pointer', '2.1.1', `Clickable (${signal}) but not keyboard focusable${c.role ? ` (role=${c.role})` : ''}`, where); }
     else if (!c.role) add('FAIL', 'pointer', '4.1.2', `Clickable and focusable (${signal}) but has no role — screen readers do not announce it as a control`, where);
   }
 
@@ -466,13 +489,27 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
       let covered = 0, offscreen = 0;
       const root = el.getRootNode(); // works inside shadow DOM too
       const inside = (a, b) => { for (let n = b; n; n = n.parentNode || n.host) if (n === a) return true; return false; };
-      for (const [x, y] of pts) {
-        if (x < 0 || y < 0 || x > innerWidth || y > innerHeight) { offscreen++; continue; }
-        const top = (root.elementFromPoint ? root : document).elementFromPoint(x, y);
-        if (top && top !== el && !inside(el, top) && !inside(top, el) && !(el.labels && [...el.labels].some(l => inside(l, top)))) covered++;
-      }
+      // Stand-ins over a canvas take pointer-events: none so that the canvas keeps its drag; elementFromPoint then
+      // sees through them to the canvas, and they read as hidden under it. Hit-test the focused element as if it
+      // took the pointer (paint order is unchanged), then put its style attribute back as it was.
+      const passThrough = getComputedStyle(el).pointerEvents === 'none', style = el.getAttribute('style');
+      if (passThrough) el.style.setProperty('pointer-events', 'auto', 'important');
+      try {
+        for (const [x, y] of pts) {
+          if (x < 0 || y < 0 || x > innerWidth || y > innerHeight) { offscreen++; continue; }
+          const top = (root.elementFromPoint ? root : document).elementFromPoint(x, y);
+          if (top && top !== el && !inside(el, top) && !inside(top, el) && !(el.labels && [...el.labels].some(l => inside(l, top)))) covered++;
+        }
+      } finally { if (passThrough) { if (style === null) el.removeAttribute('style'); else el.setAttribute('style', style); } }
+      // Which canvases the stop lies over (its centre in the canvas's box), and whether it is a control that could
+      // stand in for something drawn there: not a link, a text field, an iframe or the canvas itself.
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const overCanvas = [...document.querySelectorAll('canvas')].flatMap((c, i) => { const b = c.getBoundingClientRect(); return c !== el && b.width * b.height > 0 && cx >= b.left && cx <= b.right && cy >= b.top && cy <= b.bottom ? [i] : []; });
+      const role = (el.getAttribute('role') || '').toLowerCase(), type = (el.getAttribute('type') || '').toLowerCase(), tag = el.tagName.toLowerCase();
+      const standIn = overCanvas.length > 0 && !(((tag === 'a' || tag === 'area') && el.hasAttribute('href')) || role === 'link' || tag === 'iframe' || tag === 'canvas' || tag === 'textarea' || el.isContentEditable
+        || role === 'textbox' || role === 'searchbox' || (tag === 'input' && /^(|text|email|search|password|tel|url|date|time|datetime-local|month|week)$/.test(type)));
       if (!el.dataset.a11yStop) el.dataset.a11yStop = String(Math.random()).slice(2, 10);
-      return { key: el.dataset.a11yStop, where: d(el), tag: el.tagName.toLowerCase(), href: el.getAttribute('href'), tabindex: el.getAttribute('tabindex'), rect: { x: Math.round(r.x), y: Math.round(r.y + scrollY), w: Math.round(r.width), h: Math.round(r.height), vy: Math.round(r.y) }, covered, offscreen, iframe: el.tagName === 'IFRAME', focusVisible: el.matches(':focus-visible') };
+      return { key: el.dataset.a11yStop, where: d(el), tag, href: el.getAttribute('href'), tabindex: el.getAttribute('tabindex'), rect: { x: Math.round(r.x), y: Math.round(r.y + scrollY), w: Math.round(r.width), h: Math.round(r.height), vy: Math.round(r.y) }, covered, offscreen, iframe: el.tagName === 'IFRAME', focusVisible: el.matches(':focus-visible'), ...(passThrough ? { passThrough } : {}), ...(overCanvas.length ? { overCanvas, standIn } : {}) };
     }, describe);
     if (info.body) { stops.push({ body: true }); if (stops.filter(s => s.body).length > 1) break; continue; }
     if (stops.length && stops.some(s => s.key === info.key)) { info.repeat = true; stops.push(info); break; }
@@ -577,8 +614,18 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
     if (b.rect.y < a.rect.y - 150 && sameColumn) add('WARN', 'keyboard', '2.4.3', `Focus jumps back up the page (${a.where} → ${b.where}) — check order matches reading order`);
   }
   const last = stops[stops.length - 1];
-  if (!last?.repeat && !last?.body && real.length >= maxTabs) add('INFO', 'keyboard', '—', `Stopped after ${maxTabs} Tab presses without cycling (raise --tabs)`);
+  const walkCut = !last?.repeat && !last?.body && real.length >= maxTabs;
+  if (walkCut) add('INFO', 'keyboard', '—', `Stopped after ${maxTabs} Tab presses without cycling (raise --tabs)`);
   report.data.tabOrder = real.map(s => `${s.aria}  ←  ${s.where}`);
+  // A clickable canvas that is not focusable (section 5): Tab stops on controls over it may be its stand-ins, the
+  // keyboard path of an accessible canvas (they often take pointer-events: none so the canvas keeps its drag).
+  // Whether they do what the pointer does is not something a walk can tell: WARN, and check them by hand.
+  for (const k of clickableCanvases) {
+    if (k.focusable) continue;
+    k.standIns = real.filter(s => s.standIn && s.overCanvas.includes(k.ci));
+    if (k.standIns.length) add('WARN', 'pointer', '2.1.1', `Clickable canvas (${k.signal}) is not focusable; ${k.standIns.length} Tab stop(s) over it may be its stand-ins (${k.standIns.slice(0, 3).map(s => s.aria).join(', ')}${k.standIns.length > 3 ? ', …' : ''}) — check them against the canvas contract (accessibility.md, "Canvas, WebGL and game-like interaction"): present from load, named, a key for every pointer action, outcomes announced`, k.where);
+    else add('FAIL', 'pointer', '2.1.1', `Clickable (${k.signal}) but not keyboard focusable${k.role ? ` (role=${k.role})` : ''}${walkCut ? ` — and no Tab stop over it in the first ${maxTabs} (raise --tabs)` : ''}`, k.where);
+  }
   // reverse walk: sticky headers typically obscure focus when moving backwards
   let rev = 0;
   for (let i = 0; i < Math.min(real.length, maxTabs); i++) {
@@ -588,8 +635,13 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
       const b = el.getBoundingClientRect(); if (!b.width || !b.height) return null;
       const pts = [[b.left + b.width / 2, b.top + b.height / 2], [b.left + b.width * 0.2, b.top + b.height * 0.25], [b.left + b.width * 0.8, b.top + b.height * 0.75]];
       const root = el.getRootNode(); const inside = (a, b) => { for (let n = b; n; n = n.parentNode || n.host) if (n === a) return true; return false; };
-      const cov = pts.filter(([x, y]) => { const t = (root.elementFromPoint ? root : document).elementFromPoint(x, y); return t && t !== el && !inside(el, t) && !inside(t, el); }).length;
-      return { cov, where: d(el) };
+      // As in the forward walk: a pointer-events: none stand-in is hit-tested as if it took the pointer.
+      const passThrough = getComputedStyle(el).pointerEvents === 'none', style = el.getAttribute('style');
+      if (passThrough) el.style.setProperty('pointer-events', 'auto', 'important');
+      try {
+        const cov = pts.filter(([x, y]) => { const t = (root.elementFromPoint ? root : document).elementFromPoint(x, y); return t && t !== el && !inside(el, t) && !inside(t, el); }).length;
+        return { cov, where: d(el) };
+      } finally { if (passThrough) { if (style === null) el.removeAttribute('style'); else el.setAttribute('style', style); } }
     }, describe);
     if (r && r.cov === 3) { rev++; if (rev <= 5) add('FAIL', 'keyboard', '2.4.11', 'Hidden under other content when reached with Shift+Tab (add scroll-padding-top for sticky headers)', r.where); }
   }
@@ -610,6 +662,138 @@ async function keyboardWalk(page, { shots = true, label = 'default', limit = max
   }, [describe, shownSrc]);
   for (const u of unreachable) add('FAIL', 'keyboard', '2.1.1', 'Has a widget role but is not in the Tab sequence (and no roving-tabindex sibling is)', u);
   await page.context().close();
+}
+
+// ---------- 5b. clickable canvases: stand-ins at load, a key that changes the canvas, narration ----------
+// Reduced from the S6 lab's canvas probe (research/stage2/experiments/S6-interactive-experiences/lib/probe-canvas.mjs)
+// to what can be judged without false alarms. On a fresh page, before any input: the controls over each clickable
+// canvas (stand-ins must exist from load: screen-reader browse mode and voice control never press Tab first). Then,
+// on up to four of them (or the canvas itself when it takes focus), one key at a time until something responds: did
+// the canvas's pixels change (a compositor capture, so WebGL counts), and was the change announced (live-region
+// text, ariaNotify, a pressed/checked/value change, or focus on a new named control)? Keys go only to widgets, never
+// to links; navigations and requests other than reads are aborted, so nothing is sent. A canvas that changes by
+// itself is not judged by its pixels. Proof that one key works, not that every task does: walk the tasks by hand.
+if (clickableCanvases.length) {
+  const spy = () => {
+    window.__a11yNotify = [];
+    for (const proto of [window.Element?.prototype, window.Document?.prototype]) {
+      const orig = proto?.ariaNotify;
+      if (typeof orig === 'function') proto.ariaNotify = function (msg, ...rest) { window.__a11yNotify.push(String(msg)); return orig.call(this, msg, ...rest); };
+    }
+  };
+  const page = await newPage({}, spy);
+  page.on('dialog', (d) => d.dismiss().catch(() => {}));
+  const shot = async (ci) => {
+    const clip = await page.evaluate((i) => {
+      const r = document.querySelectorAll('canvas')[i]?.getBoundingClientRect(); if (!r) return null;
+      const x = Math.max(0, r.left), y = Math.max(0, r.top), width = Math.min(r.right, innerWidth) - x, height = Math.min(r.bottom, innerHeight) - y;
+      return width >= 2 && height >= 2 ? { x, y, width, height } : null;
+    }, ci).catch(() => null);
+    const png = clip && await page.screenshot({ clip, animations: 'disabled', caret: 'hide' }).catch(() => null);
+    return png ? createHash('sha1').update(png).digest('hex') : null;
+  };
+  // In the page: the live-region text, the ariaNotify count, the scroll position, and the focused element against
+  // the one a key was pressed on (window.__a11yTarget) and the elements that existed before (window.__a11yOld).
+  const state = (before) => {
+    let a = document.activeElement; while (a?.shadowRoot?.activeElement) a = a.shadowRoot.activeElement;
+    const nameOf = (e) => (e?.getAttribute('aria-label') || (e?.getAttribute('aria-labelledby') || '').split(/\s+/).map((id) => document.getElementById(id)?.textContent || '').join(' ') || e?.textContent || e?.getAttribute('title') || e?.value || '').trim().replace(/\s+/g, ' ').slice(0, 100);
+    const live = [...document.querySelectorAll('[role=status],[role=alert],[role=log],output,[aria-live]')].filter((e) => e.getAttribute('aria-live') !== 'off').map((e) => e.textContent.trim().replace(/\s+/g, ' '));
+    const out = { live, notify: window.__a11yNotify?.length || 0, lastNotify: window.__a11yNotify?.at?.(-1) || '', sx: scrollX, sy: scrollY, same: a === window.__a11yTarget, isNew: !!a && a !== document.body && !!window.__a11yOld && !window.__a11yOld.has(a), name: nameOf(a),
+      state: a ? ['aria-pressed', 'aria-checked', 'aria-selected', 'aria-expanded', 'aria-valuenow', 'aria-valuetext'].map((x) => a.getAttribute(x)).concat([a.checked, a.value]).join('|') : '' };
+    if (before) window.__a11yOld = new WeakSet(document.querySelectorAll('*'));
+    return out;
+  };
+  const KEYS = { button: ['Enter', 'ArrowRight'], checkbox: ['Space'], radio: ['ArrowDown'], slider: ['ArrowRight'], combobox: ['ArrowDown'], canvas: ['ArrowRight', 'Enter', 'Space'] };
+  report.data.canvas = [];
+  try {
+    // Keys press real buttons: nothing may leave the page. Navigations of the page and every request that is not a
+    // read (a POST from "Add to basket" over a product viewer) are aborted while they are tested.
+    await page.route('**/*', (route) => { const q = route.request(); return (q.isNavigationRequest() && q.frame() === page.mainFrame()) || !/^(GET|HEAD|OPTIONS)$/.test(q.method()) ? route.abort('aborted') : route.continue(); });
+    for (const k of clickableCanvases) {
+      // The controls over the canvas now, before any key; tagged so the key test can focus them.
+      const load = await page.evaluate(([ci, shownSrc]) => {
+        const shown = eval(shownSrc);
+        const c = document.querySelectorAll('canvas')[ci]; if (!c) return null;
+        c.scrollIntoView({ block: c.getBoundingClientRect().height > innerHeight ? 'start' : 'center', behavior: 'instant' });
+        const b = c.getBoundingClientRect();
+        const widgets = 'button, input:not([type=hidden]), select, summary, [role=button], [role=checkbox], [role=radio], [role=switch], [role=slider], [role=spinbutton], [role=option], [role=gridcell], [role=treeitem], [role=menuitem], [role=menuitemcheckbox], [role=menuitemradio], [role=tab]';
+        const kind = (e) => { const role = e.getAttribute('role') || '', t = (e.getAttribute('type') || '').toLowerCase();
+          return (e.matches('input') && t === 'checkbox') || /^(checkbox|switch|menuitemcheckbox)$/.test(role) ? 'checkbox' : (e.matches('input') && t === 'radio') || /^(radio|menuitemradio)$/.test(role) ? 'radio'
+            : (e.matches('input') && /^(range|number)$/.test(t)) || /^(slider|spinbutton)$/.test(role) ? 'slider' : e.matches('select') ? 'combobox' : 'button'; };
+        const out = [];
+        for (const e of document.querySelectorAll(`${widgets}, [tabindex]`)) {
+          if (e === c || e.disabled || e.closest('[inert]') || (!e.matches(widgets) && e.tabIndex < 0)) continue;
+          if (e.matches('a[href], [role=link], iframe, textarea, [role=textbox], [role=searchbox], canvas') || e.isContentEditable
+            || (e.matches('input') && /^(|text|email|search|password|tel|url|date|time|datetime-local|month|week)$/.test((e.getAttribute('type') || '').toLowerCase()))) continue;
+          const fallback = c.contains(e); // focusable fallback content is a keyboard path of its own
+          const r = e.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+          if (!fallback && (!shown(e) || x < b.left || x > b.right || y < b.top || y > b.bottom)) continue;
+          e.setAttribute('data-a11y-standin', `${ci}-${out.length}`);
+          out.push({ id: `${ci}-${out.length}`, kind: kind(e), name: (e.getAttribute('aria-label') || e.textContent || e.value || '').trim().replace(/\s+/g, ' ').slice(0, 60), tabbable: e.tabIndex >= 0 });
+        }
+        // The canvas (or its same-size wrapper) when it takes focus itself.
+        let self = null;
+        for (let e = c, i = 0; e && e !== document.body && i < 4; e = e.parentElement, i++) {
+          const r = e.getBoundingClientRect();
+          if (r.width * r.height > 2 * b.width * b.height + 1) break;
+          if (e.tabIndex >= 0) { self = e; break; }
+        }
+        if (self) self.setAttribute('data-a11y-standin', `${ci}-self`);
+        return { standIns: out, self: !!self };
+      }, [k.ci, shownSrc]).catch(() => null);
+      if (!load) continue;
+      const r = { where: k.where, atLoad: load.standIns.length, tabbableAtLoad: load.standIns.filter((s) => s.tabbable).length, walked: (k.standIns || []).length, tried: [], path: null };
+      const candidates = [...load.standIns.filter((s) => s.tabbable), ...load.standIns.filter((s) => !s.tabbable)].slice(0, 4).map((s) => ({ ...s, label: `${s.kind} "${s.name}"` }));
+      if (load.self) candidates.push({ id: `${k.ci}-self`, kind: 'canvas', label: 'the canvas itself' });
+      // A canvas that changes with no input (an animated scene) cannot use its pixels as evidence.
+      const base = new Set();
+      if (candidates.length) for (let i = 0; i < 4; i++) { base.add(await shot(k.ci)); await page.waitForTimeout(120); }
+      r.selfAnimating = base.size > 1;
+      for (const s of candidates) {
+        for (const key of KEYS[s.kind]) {
+          const focused = await page.evaluate((id) => {
+            const e = document.querySelector(`[data-a11y-standin="${id}"]`); if (!e?.isConnected) return false;
+            e.focus({ preventScroll: true, focusVisible: true });
+            let a = document.activeElement; while (a?.shadowRoot?.activeElement) a = a.shadowRoot.activeElement;
+            window.__a11yTarget = e; return a === e;
+          }, s.id).catch(() => false);
+          if (!focused) break;
+          await page.waitForTimeout(150); // what focusing draws (a selection ring) belongs to the "before"
+          const before = await page.evaluate(state, true);
+          const h0 = r.selfAnimating ? null : await shot(k.ci);
+          await page.keyboard.press(key);
+          await page.waitForTimeout(500);
+          // A key the page does not handle may scroll it (Space, arrows): put the scroll back so the capture compares
+          // the same part of the canvas.
+          await page.evaluate(([x, y]) => { if (scrollX !== x || scrollY !== y) window.scrollTo({ left: x, top: y, behavior: 'instant' }); }, [before.sx, before.sy]).catch(() => {});
+          const h1 = r.selfAnimating ? null : await shot(k.ci);
+          const after = await page.evaluate(state, false).catch(() => null);
+          if (!after) break;
+          const said = after.live.find((t, i) => t && t !== before.live[i]) || (after.notify > before.notify ? after.lastNotify || '(ariaNotify)' : '');
+          const pixels = h0 && h1 ? h0 !== h1 : null;
+          const newFocus = after.isNew && !after.same, stateChanged = after.same && after.state !== before.state, nameChanged = after.same && after.name !== before.name;
+          // A pixel change counts when focus stayed, or moved to a control the key created; focus moving along a
+          // toolbar changes pixels too (its ring), and is navigation, not a response.
+          const response = !!said || stateChanged || nameChanged || (pixels && (after.same || newFocus));
+          const narrated = !!said || stateChanged || (newFocus && !!after.name);
+          r.tried.push({ control: s.label, key, pixels, said, stateChanged, nameChanged, newFocus: newFocus ? after.name : false });
+          if (response) { r.path = { control: s.label, key, pixels, said, stateChanged, nameChanged, newFocus: newFocus ? after.name : '', narrated }; break; }
+        }
+        if (r.path) break;
+      }
+      report.data.canvas.push(r);
+      const p = r.path;
+      const loadTxt = `${r.atLoad} control(s) over it at load${r.atLoad ? ` (${r.tabbableAtLoad} in the Tab order)` : ''}${load.self ? ', and it takes focus itself' : ''}`;
+      const how = p ? `${p.key} on ${p.control}: ${p.pixels === null ? 'the canvas changes by itself, so its pixels prove nothing' : p.pixels ? 'the canvas changed' : 'the canvas did not change'}${p.stateChanged ? ', the control\'s state changed' : p.nameChanged ? ', the control was renamed' : ''}; announced: ${p.said ? `"${p.said.slice(0, 90)}"` : p.newFocus ? `focus moved to the new "${p.newFocus.slice(0, 60)}"` : p.stateChanged ? 'the state change' : 'nothing'}`
+        : candidates.length ? `no key tried (${[...new Set(r.tried.map((t) => t.key))].join(', ')} on ${new Set(r.tried.map((t) => t.control)).size} control(s)) changed it or was announced — walk its tasks by hand` : 'no keyboard path to test';
+      add('INFO', 'canvas', '—', `Clickable canvas: ${loadTxt}; ${how}`, k.where);
+      if (p && !p.narrated) add('WARN', 'canvas', '4.1.3', `${p.key} on ${p.control} ${p.pixels ? 'changes the canvas' : 'renames the control'} but nothing is announced (no live-region text, ariaNotify, state change or focus on a new control) — say the outcome in a role="status" region that exists from load`, k.where);
+      if (!r.atLoad && !load.self && r.walked) add('WARN', 'canvas', '4.1.2', `No controls over the canvas at load, but the Tab walk found ${r.walked}: stand-ins must exist from load (screen-reader browse mode and voice control never press Tab first)`, k.where);
+    }
+  } finally {
+    await page.unroute('**/*').catch(() => {});
+    await page.context().close();
+  }
 }
 
 // ---------- 10. reflow and zoom ----------

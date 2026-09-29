@@ -31,9 +31,16 @@
  *     one build's server compresses text and the other's does not, since that alone moves LCP on a throttled network.
  * A local server has no real network distance: the throttling adds it back, roughly. Lab numbers rank builds; they
  * do not predict field data (performance.md §6).
+ *
+ * The machine's load average (1 minute) is printed at the start and at the end of the run, with the CPU count, and in
+ * perf.md's header. At or above one per CPU the line warns: the CPU throttle busy-waits on a core of its own, and on a
+ * busy machine the timings (FCP, LCP, TBT) stretch by an amount that changes from run to run, so that run's numbers
+ * are relative only: compare builds measured in the same run (--before), and judge the thresholds on an idle machine.
+ * Windows reports no load average; the line says so.
  */
 import { writeFile } from 'node:fs/promises';
 import { gzipSync } from 'node:zlib';
+import os from 'node:os';
 import { parseArgs, asList, launch, urlFor } from './lib/env.mjs';
 
 const a = parseArgs();
@@ -151,6 +158,15 @@ const WHERE = ({ scripts, imgs, lcpSize }) => {
 const TEXT = /^(text\/|application\/(javascript|x-javascript|ecmascript|json|ld\+json|manifest\+json|xml|xhtml\+xml)|image\/svg\+xml)/i;
 const timed = (p, ms) => Promise.race([p.catch(() => null), new Promise((r) => setTimeout(r, ms, null).unref())]);
 const kindOf = (name, init) => (/\.(woff2?|ttf|otf)(\?|$)/.test(name) ? 'font' : /\.css(\?|$)/.test(name) || init === 'css' && /css/.test(name) ? 'css' : init === 'script' ? 'js' : init === 'img' || /\.(png|jpe?g|webp|avif|gif|svg)(\?|$)/.test(name) ? 'img' : 'other');
+
+// The host's load (S11: the throttler burns 55–88% of a core by itself; delivered slowdown moved with the host's load).
+const CPUS = os.availableParallelism?.() || os.cpus().length || 1;
+const load = (when) => {
+  if (process.platform === 'win32') return { busy: false, value: null, line: `load average: not reported on Windows (${when}) — close other work before trusting the timings` };
+  const value = os.loadavg()[0], busy = value >= CPUS;
+  return { busy, value, line: `load average ${value.toFixed(2)} on ${CPUS} CPU${CPUS > 1 ? 's' : ''} (${when})${busy ? ' ⚠ busy machine: the timings of this run are relative only — compare builds measured in the same run (--before), and judge the thresholds on an idle machine' : ''}` };
+};
+const loadStart = load('start');
 
 const { browser } = await launch({ chrome: a.chrome });
 
@@ -288,10 +304,12 @@ async function site(base) {
 
 const profile = `${device}, CPU ×${cpu}, ${a.net || (device === 'phone' ? 'slow4g' : 'no network throttling')}, cache off, median of ${runs}`;
 console.log(`perf — ${profile}`);
+console.log(loadStart.line);
 let before = null;
 if (a.before) { console.log(`\nbefore: ${a.before}`); before = await site(a.before); console.log(`\nafter: ${a.base}`); }
 const after = await site(a.base);
 await browser.close();
+const loadEnd = load('end');
 
 const good = (rows) => (rows || []).filter((r) => !r.error);
 // A server that sent text uncompressed: the page that would save the most, for the preamble.
@@ -301,7 +319,9 @@ const plainLine = (url, rows) => {
 };
 const compresses = (rows) => { const g = good(rows); return g.reduce((s, r) => s + r.text.packed, 0) > g.reduce((s, r) => s + r.text.plain, 0); };
 const plainNotes = [plainLine(before ? `The new build (${a.base})` : a.base, after), before && plainLine(`The old build (${a.before})`, before)].filter(Boolean);
-const md = ['# Performance (lab)', '', `${a.base}${a.before ? ` against ${a.before}` : ''} · ${profile} · ${new Date().toISOString().slice(0, 16)}`, '',
+const loadNote = loadStart.value == null ? 'load average not reported (Windows)'
+  : `load average ${loadStart.value.toFixed(2)} → ${loadEnd.value.toFixed(2)} on ${CPUS} CPUs${loadStart.busy || loadEnd.busy ? ' (busy machine: these numbers are relative only)' : ''}`;
+const md = ['# Performance (lab)', '', `${a.base}${a.before ? ` against ${a.before}` : ''} · ${profile} · ${loadNote} · ${new Date().toISOString().slice(0, 16)}`, '',
   'Lab numbers from emulated throttling on a local server: they rank builds and catch regressions; they do not predict field data. LCP ≤ 2.5 s, CLS ≤ 0.1, TBT ≤ 200 ms are the "good" thresholds.', '',
   ...(plainNotes.length ? [`${plainNotes.join(' ')} Transfer below is as served; the transfer-growth check compares gzip-equivalent sizes, since a production host compresses text.`, ''] : []),
   '| Page | LCP (range) | LCP element | FCP | CLS | TBT | Transfer (html / css / js / font / img) | Requests | DOM nodes |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- |',
@@ -396,4 +416,5 @@ if (before) {
 md.push('', '## Flags', '', ...(flags.length || notes.length ? [...flags.map((f) => `- ⚠ ${f}`), ...notes.map((n) => `- ◇ ${n}`)] : ['- ✓ none']));
 const outFile = String(a.out || 'perf.md');
 await writeFile(outFile, md.join('\n') + '\n');
-console.log(`\n${flags.length ? `${flags.length} flag(s)` : 'no flags'}${notes.length ? `, ${notes.length} note(s) to answer in the report (◇)` : ''} · ${outFile}`);
+console.log(`\n${loadEnd.line}`);
+console.log(`${flags.length ? `${flags.length} flag(s)` : 'no flags'}${notes.length ? `, ${notes.length} note(s) to answer in the report (◇)` : ''} · ${outFile}`);

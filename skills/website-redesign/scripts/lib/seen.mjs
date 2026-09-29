@@ -11,6 +11,14 @@
  *   ⟨covered by header.bar⟩                   another element is painted on top of it
  *   ⟨transparent⟩                             on screen at opacity near zero (often a reveal that has not run)
  *   ⟨screen-reader only⟩                      the 1×1 visually-hidden pattern: intentionally not seen
+ *   ⟨inert: main⟩                             inside an `inert` element: no clicks, no focus, not in the
+ *                                             accessibility tree (a background left inert behind a panel)
+ *   ⟨inert: outside dialog#confirm⟩           outside the open modal <dialog>: the same, until it closes
+ *   ⟨aria-hidden: div.hero⟩                   inside aria-hidden="true": screen readers skip it
+ *
+ * Playwright's ariaSnapshot lists inert content and content behind a modal dialog, and mode 'ai' lists aria-hidden
+ * content too; Chromium's own accessibility tree has none of it. Those three marks outrank the others: the node is
+ * not there for a screen reader wherever it sits on screen.
  *
  * Children inherit their parent's mark and are not re-marked. Bare generic wrappers are dropped from the tree.
  */
@@ -22,6 +30,20 @@ const CLASSIFY = (el) => {
     const cls = [...n.classList].filter((c) => !/^(css-|sc-|_|svelte-|astro-)|\d{3,}|:/.test(c)).slice(0, 2);
     return n.tagName.toLowerCase() + (cls.length ? '.' + cls.join('.') : '');
   };
+  // Not in the accessibility tree: an inert or aria-hidden ancestor (across shadow roots), or a modal dialog open
+  // elsewhere. The nearest inert ancestor is named; for aria-hidden the outermost, which is the one to remove.
+  const isModal = (d) => { try { return d.matches(':modal'); } catch { return false; } };
+  let inert = null, hidden = null, inModal = false;
+  for (let a = el; a; a = a.parentElement || a.getRootNode?.().host) {
+    if (!inert && a.inert) inert = a;
+    if (/^true$/i.test(a.getAttribute?.('aria-hidden') || '')) hidden = a;
+    if (a.tagName === 'DIALOG' && isModal(a)) inModal = true;
+  }
+  if (inert) return { f: 0, sf: 0, covered: `inert: ${sel(inert)}` };
+  // A wrapper of the dialog (body, the app root) is not blocked as a whole: its other children are, one by one.
+  const modal = !inModal && [...document.querySelectorAll('dialog')].find(isModal);
+  if (modal && !el.contains(modal)) return { f: 0, sf: 0, covered: `inert: outside ${sel(modal)}` };
+  if (hidden) return { f: 0, sf: 0, covered: `aria-hidden: ${sel(hidden)}` };
   const r = el.getBoundingClientRect();
   if (r.width < 1 || r.height < 1) return { f: 1, sf: 1 };
   if (r.width <= 2 && r.height <= 2) return { f: 0, sf: 0, covered: 'screen-reader only' }; // the 1×1 visually-hidden pattern
@@ -131,6 +153,7 @@ export async function seenTree(page) {
   const head = [
     `# Screen ${vp.width}×${vp.height}, scrolled to y=${scrollY}. ⟨…⟩ marks nodes that are in the tree but not readable on this screen.`,
     hidden.length ? `# Named but not readable here: ${hidden.map(([k, n]) => `${n}× ${k}`).join('; ')}.` : '# Everything named on this screen is readable (apart from what the page scrolls to).',
+    ...(hidden.some(([k]) => /^(inert|aria-hidden): /.test(k)) ? ['# ⟨inert: …⟩ and ⟨aria-hidden: …⟩ nodes are not in the accessibility tree: a screen reader never reaches them, and inert ones take no clicks or focus either.'] : []),
     '# Judge from the capture; use this for selectors. A marked node is something the user cannot see yet.',
   ];
   return head.join('\n') + '\n' + out.join('\n') + '\n';

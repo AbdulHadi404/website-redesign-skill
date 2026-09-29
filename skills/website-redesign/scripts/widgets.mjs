@@ -18,6 +18,47 @@
  *   { "type": "live", "trigger": "#street", "keys": ["ArrowDown"] }   // a <select> feeding a status region
  *   { "type": "live", "trigger": "#length-6", "keys": ["Space"] }     // a radio: Enter would submit its form
  *   { "type": "menu-button", "button": "#account" }
+ *   { "type": "roving",      "group": "[role=toolbar]" }             // toolbar, radio group, menubar: one Tab stop, arrows
+ *   { "type": "slider",      "slider": "#price" }                    // role=slider or <input type=range>
+ *   { "type": "palette",     "trigger": "#search", "keys": ["Control+k"] }   // command palette; "query": text that matches
+ *   { "type": "sortable",    "list": "#stages" }                     // keyboard reordering; "handle", "items", "keys"
+ *   { "type": "splitter",    "separator": "[role=separator]" }       // resizable panes (window splitter)
+ *
+ * Arrow keys follow the visual arrow (accessibility.md §3): in a row of tabs, toolbar buttons, radios or menubar items,
+ * the key that points at the next item moves focus there — ArrowRight in a left-to-right widget, ArrowLeft in a
+ * right-to-left one, where the next item is on the left (Radix, React Aria, Firefox's RTL guideline and Chromium's
+ * native radios and ranges do this; APG says nothing about RTL; some systems, aegov among them, use DOM order, which
+ * fails here). The direction is the widget's computed `direction`, and every arrow line says which one was assumed.
+ * The test starts at the current item and moves to its neighbour, so with three or more items a wrap-around cannot
+ * pass for a move; with two, a wrap and a move look the same. Vertical widgets (aria-orientation, or items stacked) use
+ * ArrowDown and ArrowUp; a row laid out against its direction (row-reverse) follows the eye. Sliders: the thumb moves
+ * the way the arrow points (in RTL, ArrowLeft raises a slider whose minimum is on the right); a splitter moves the way
+ * the arrow points whatever the direction (APG).
+ *
+ * roving: "group" is the toolbar, radiogroup, menubar (or a horizontal menu, a fieldset of radios); its items are its
+ * tabs, radios, menu items or focusable controls, not those of a composite nested inside it ("items" overrides). One
+ * Tab stop (roving tabindex or aria-activedescendant); the arrow key toward the neighbour moves there and the other
+ * comes back; radios are checked as focus moves.
+ * slider: a name, aria-valuenow (a native range has its value), the arrows change the value and move the thumb the way
+ * they point (a custom thumb is found by what moves; if none does, a left-to-right slider must rise on ArrowRight),
+ * ArrowUp raises it, Home and End reach the minimum and maximum.
+ * palette: the trigger (focused, then "keys", default Enter) opens a dialog with a name; focus moves into its search
+ * field; typing "query" (default: the start of the last result shown) filters the results, and they are announced
+ * (a count in a live region, or the first result through aria-activedescendant); ArrowDown makes a result active for
+ * a screen reader; a query that matches nothing shows a message that is announced (a visible "No results" that is not
+ * in a live region fails, WCAG 4.1.3); Escape closes it (a second Escape when the first only cleared the field) and
+ * focus returns to the trigger. Background left in the accessibility tree warns. Results are never run: a command could
+ * navigate, sign out or delete.
+ * sortable: "list" holds the items (its children, or "items" inside it); the first item's handle ("handle" inside each
+ * item, default the item if focusable, else its first focusable control) must have a name that says which item it
+ * moves ("Reorder Brief") and instructions (aria-describedby); Space picks it up (Enter when Space does nothing), the
+ * arrow toward the next item moves it two places, Space (or Enter) drops it; the order must change, focus must stay on
+ * the moved item, the moves must be announced and the announcements must name the item or its neighbours — internal
+ * ids ("i1 was moved over i2") fail, positions alone warn. Escape during a move must put the item back. "keys" replaces
+ * the whole sequence for a move menu or grid (["Enter", "Enter", "ArrowDown", "Enter"]); Escape is then not tested.
+ * splitter: the divider is focusable, role=separator, named, with aria-valuenow (and min/max), and its aria-orientation
+ * matches the divider (vertical between side-by-side panes; the ARIA default is horizontal); the arrows move it the way
+ * they point and change aria-valuenow; Home/End reach its limits and Enter collapses or restores the pane (APG; warn).
  *
  * "before" steps run in order: { "fill": [sel, text] }, { "select": [sel, value or label] }, { "click": sel },
  * { "tap": sel } (touch devices), { "check": sel }, { "focus": sel }, { "press": key } or { "press": [sel, key] },
@@ -248,6 +289,139 @@ function recorder(type, target) {
   return r;
 }
 
+// What Chromium's accessibility tree says about one element: role, name, description, value, and whether it is
+// ignored (aria-hidden, inert, or outside an open modal dialog).
+async function axOf(page, handle) {
+  if (!handle) return {};
+  const cdp = await page.context().newCDPSession(page);
+  try {
+    await handle.evaluate((e) => { window.__wcAxOne = e; });
+    const { result } = await cdp.send('Runtime.evaluate', { expression: 'window.__wcAxOne' });
+    const { nodes } = await cdp.send('Accessibility.getPartialAXTree', { objectId: result.objectId, fetchRelatives: false });
+    const n = nodes[0] || {};
+    const v = (x) => (x?.value != null ? String(x.value) : '');
+    return { role: v(n.role), name: v(n.name).replace(/\s+/g, ' ').trim(), description: v(n.description).replace(/\s+/g, ' ').trim(), value: v(n.value), ignored: !!n.ignored };
+  } catch { return {}; } finally {
+    await cdp.send('Runtime.evaluate', { expression: 'delete window.__wcAxOne' }).catch(() => {});
+    await cdp.detach().catch(() => {});
+  }
+}
+const OPPOSITE = { ArrowLeft: 'ArrowRight', ArrowRight: 'ArrowLeft', ArrowUp: 'ArrowDown', ArrowDown: 'ArrowUp' };
+const quote = (s, n = 80) => { const t = String(s).replace(/\s+/g, ' ').trim(); return `"${t.length > n ? `${t.slice(0, n - 1)}…` : t}"`; };
+
+// A key held for 40 ms, as a person presses it: libraries that move focus in a timer and act on it only while the
+// key is down (Radix radios check the radio that takes focus) miss a keyup that follows the keydown at once.
+const key = (page, k) => page.keyboard.press(k, { delay: 40 });
+
+/**
+ * The Tab stops inside a group, counted by pressing Tab as a person does: from the focusable element just before it
+ * (or the top of the page), Tab until focus enters the group (at most three presses), then count the presses that
+ * keep it inside. A library that makes the group the stop and forwards focus to the current item (Radix), or gives
+ * every item tabindex="0" and takes focus out itself on Tab (React Aria's toolbar), is counted by what it does.
+ * `how` says what took focus on entering: the group pointing at an item (aria-activedescendant) or an item.
+ */
+async function tabStops(page, g) {
+  await g.evaluate((g) => {
+    const vis = (e) => (e.checkVisibility ? e.checkVisibility({ visibilityProperty: true }) : e.getClientRects().length > 0);
+    const before = [...document.querySelectorAll('a[href],button,input:not([type=hidden]),select,textarea,summary,iframe,[tabindex],[contenteditable=""],[contenteditable=true]')]
+      .filter((e) => e.tabIndex >= 0 && !e.matches(':disabled') && !g.contains(e) && !e.contains(g) && vis(e) && (e.compareDocumentPosition(g) & Node.DOCUMENT_POSITION_FOLLOWING));
+    const p = before.pop();
+    if (p) p.focus(); else document.activeElement?.blur?.();
+  });
+  let stops = 0, how = null;
+  for (let i = 0; i < 30; i++) {
+    await page.keyboard.press('Tab'); await page.waitForTimeout(60);
+    const w = await g.evaluate((g) => ({ inside: g.contains(document.activeElement), ad: document.activeElement === g && g.hasAttribute('aria-activedescendant') })).catch(() => ({}));
+    if (w.inside) { stops++; how ||= w.ad ? 'aria-activedescendant' : 'roving tabindex'; } else if (stops || i >= 2) break;
+  }
+  return { stops, how };
+}
+
+/**
+ * Arrow keys across the items of a composite widget (tabs, toolbar buttons, radios, menubar items), keyboard-first.
+ * The arrow key follows the visual arrow (see the header): the key that points from the current item at its neighbour
+ * must move focus there, and the opposite key must come back. The direction is the group's computed `direction`; the
+ * neighbour's place decides the key (a row-reversed row follows the eye), and every line names the direction assumed.
+ * `sel` picks the items inside the group (default: by the group's role, else its focusable controls, leaving out
+ * those of a composite nested inside it); `start` is 'first' (tabs) or 'current' (the roving item, the checked radio).
+ * Returns what happened, for the caller's own checks (selection following focus, a radio checked by the move).
+ */
+async function arrowWalk(page, r, group, { sel, noun, what, start = 'first' }) {
+  const g = await group.elementHandle();
+  const s0 = await g.evaluate((g, { sel, start }) => {
+    const vis = (e) => (e.checkVisibility ? e.checkVisibility({ visibilityProperty: true }) : e.getClientRects().length > 0);
+    const MI = '[role=menuitem],[role=menuitemradio],[role=menuitemcheckbox]';
+    const BY_ROLE = { tablist: '[role=tab]', radiogroup: '[role=radio],input[type=radio]', menubar: MI, menu: MI, listbox: '[role=option]', tree: '[role=treeitem]' };
+    const FOCUSABLE = 'a[href],button,input:not([type=hidden]),select,textarea,summary,[tabindex],[contenteditable=""],[contenteditable=true],[role=button],[role=link],[role=checkbox],[role=radio],[role=switch],[role=tab],[role=option],[role=spinbutton],[role=slider],[role=combobox],[role=textbox],' + MI;
+    // Composites with arrow keys of their own; a radio group inside a toolbar is part of the toolbar's row (APG).
+    const COMPOSITE = '[role=toolbar],[role=menubar],[role=menu],[role=tablist],[role=listbox],[role=grid],[role=treegrid],[role=tree]';
+    const role = g.getAttribute('role') || '';
+    const q = sel || BY_ROLE[role] || (g.querySelector('input[type=radio]') && !g.querySelector(`${MI},[role=radio],[role=tab]`) ? 'input[type=radio]' : FOCUSABLE);
+    let items = [...g.querySelectorAll(q)].filter((e) => vis(e) && !e.matches(':disabled') && (() => { const k = e.parentElement?.closest(COMPOSITE); return !k || k === g || !g.contains(k); })());
+    items = items.filter((e) => !items.some((o) => o !== e && o.contains(e)));
+    // A visually hidden native radio is placed by its label.
+    const box = (e) => { let b = e.getBoundingClientRect(); if ((b.width < 4 || b.height < 4) && e.labels?.[0]) b = e.labels[0].getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2, w: b.width, h: b.height }; };
+    // A group in the Tab sequence whose items are not: it points at them (aria-activedescendant) or hands focus on.
+    const viaGroup = g.hasAttribute('aria-activedescendant') || (g.tabIndex >= 0 && items.length > 0 && !items.some((e) => e.tabIndex >= 0));
+    const on = (e) => e.matches(':checked,[aria-checked=true],[aria-selected=true],[aria-pressed=true]');
+    let cur = 0;
+    if (start === 'current') { const i = items.findIndex((e) => e.tabIndex >= 0 && (!e.matches('input[type=radio]') || e.checked)); const j = items.findIndex((e) => e.matches('input[type=radio]:checked') || on(e)); cur = Math.max(0, i >= 0 ? i : j); }
+    window.__wcNav = { g, items, ad: false };
+    return { n: items.length, dir: getComputedStyle(g).direction, orient: g.getAttribute('aria-orientation'), role, viaGroup, boxes: items.map(box), cur };
+  }, { sel, start });
+  const out = { ...s0, moved: false };
+  if (s0.n < 2) return out;
+  const where = () => page.evaluate(() => {
+    const { items } = window.__wcNav; let a = document.activeElement;
+    const id = a?.getAttribute('aria-activedescendant'); if (id) a = document.getElementById(id) || a;
+    return { idx: items.findIndex((e) => e === a || e.contains(a)), sel: items.findIndex((e) => e.matches(':checked,[aria-checked=true],[aria-selected=true]')) };
+  }).catch(() => ({ idx: -1, sel: -1 }));
+  const focusItem = (i) => page.evaluate((i) => { const { items } = window.__wcNav; items[i].focus(); return items[i].contains(document.activeElement); }, i);
+  // Focus the start. A group that is itself the stop either hands focus to an item (Radix) or keeps it and points at
+  // the current item with aria-activedescendant; only the second is driven through the group.
+  let ad = false, s = s0.cur;
+  if (s0.viaGroup) {
+    await page.evaluate(() => window.__wcNav.g.focus()); await page.waitForTimeout(60);
+    const w = await page.evaluate(() => { const n = window.__wcNav; return document.activeElement === n.g; });
+    if (w) { ad = true; await page.evaluate(() => { window.__wcNav.ad = true; }); s = Math.max(0, (await where()).idx); }
+  }
+  if (!ad && !(await focusItem(s))) { out.unfocusable = true; return out; }
+  const t = s < s0.n - 1 ? s + 1 : s - 1;
+  const rel = t > s ? 'next' : 'previous';
+  const a0 = s0.boxes[s], a1 = s0.boxes[t], dx = a1.x - a0.x, dy = a1.y - a0.y;
+  const stacked = Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > Math.min(a0.h, a1.h) / 2;
+  const vertical = s0.orient === 'vertical' || (s0.orient !== 'horizontal' && stacked);
+  const byDir = (t > s) === (s0.dir === 'rtl') ? 'ArrowLeft' : 'ArrowRight';
+  const toward = vertical ? (dy < 0 ? 'ArrowUp' : 'ArrowDown') : Math.abs(dx) > 1 ? (dx < 0 ? 'ArrowLeft' : 'ArrowRight') : byDir;
+  const away = OPPOSITE[toward];
+  const place = vertical ? (toward === 'ArrowDown' ? 'below it' : 'above it') : `on its ${toward === 'ArrowLeft' ? 'left' : 'right'}`;
+  const assumed = vertical ? `vertical ${what}` : `direction: ${s0.dir}, read from the ${what}${toward !== byDir ? '; its items run against that direction, and the key follows the eye' : ''}`;
+  Object.assign(out, { toward, away, vertical, s, t, ad, assumed });
+  await key(page, toward); await page.waitForTimeout(150);
+  const w1 = await where();
+  out.selAfter = w1.sel; out.idxAfter = w1.idx;
+  if (w1.idx === t) {
+    out.moved = true;
+    r.ok(`${toward} moves focus to the ${rel} ${noun}, ${place} (${assumed})`);
+    await key(page, away); await page.waitForTimeout(150);
+    const w2 = await where();
+    w2.idx === s ? r.ok(`${away} moves back`) : r.fail('2.1.1', `${away} does not move focus back to the ${rel === 'next' ? 'previous' : 'next'} ${noun} (${assumed})`);
+    return out;
+  }
+  // Wrong: find out whether the other arrow does the job (the arrows run backwards) or neither moves.
+  const went = w1.idx >= 0 && w1.idx !== s ? `; it went to ${noun} ${w1.idx + 1} of ${s0.n}` : w1.idx === s ? '; focus stayed' : '';
+  // Back to the start: focus it again, or (aria-activedescendant, which focus does not reset) press the other key
+  // until the group points at it again.
+  if (!ad) await focusItem(s);
+  else if (w1.idx !== s && w1.idx >= 0) { await key(page, away); await page.waitForTimeout(150); }
+  await key(page, away); await page.waitForTimeout(150);
+  const w2 = await where();
+  if (!vertical && w2.idx === t) {
+    r.fail('2.1.1', `The arrow keys run backwards: ${toward} does not move to the ${rel} ${noun}, ${place}${went}, and ${away} does (${assumed}). The arrow key follows the visual arrow: in ${s0.dir === 'rtl' ? 'right-to-left' : 'left-to-right'} text ${byDir} moves to the next ${noun} (Radix, React Aria, Firefox's RTL guideline and native radios and ranges do this; APG says nothing about RTL)`);
+  } else r.fail('2.1.1', `${toward} does not move focus to the ${rel} ${noun}, ${place}${went} (${assumed})${w2.idx === t ? `; ${away} does` : `; nor does ${away}`}`);
+  return out;
+}
+
 const tests = {
   async dialog(page, c) {
     const r = recorder('dialog', c.trigger);
@@ -298,15 +472,17 @@ const tests = {
     const selected = info.filter(t => t.sel === 'true');
     selected.length === 1 ? r.ok('exactly one aria-selected=true') : r.fail('4.1.2', `${selected.length} tabs have aria-selected=true (need exactly 1)`);
     info.every(t => t.ctrl && t.panel) ? r.ok('every tab aria-controls a tabpanel') : r.fail('1.3.1', 'Tabs missing aria-controls → role=tabpanel');
-    const inSeq = info.filter(t => t.ti >= 0).length;
+    // Counted by pressing Tab: Radix makes the tablist the stop and hands focus to the selected tab.
+    const inSeq = (await tabStops(page, await list.elementHandle())).stops;
     inSeq === 1 ? r.ok('roving tabindex: one tab in the Tab sequence') : r.fail('2.1.1', `${inSeq} tabs in the Tab sequence (APG: only the selected tab, arrows move between tabs)`);
     const first = list.locator('[role=tab]').first();
     const focused = await first.evaluate(t => { t.focus(); return document.activeElement === t; });
     if (!focused) { r.fail('2.1.1', 'Tabs cannot receive focus'); return r; }
-    await page.keyboard.press('ArrowRight'); await page.waitForTimeout(150);
-    const moved = await list.evaluate(l => { const tabs = [...l.querySelectorAll('[role=tab]')]; return { idx: tabs.indexOf(document.activeElement), selIdx: tabs.findIndex(t => t.getAttribute('aria-selected') === 'true') }; });
-    moved.idx === 1 ? r.ok('ArrowRight moves focus to next tab') : r.fail('2.1.1', 'ArrowRight does not move focus between tabs');
-    moved.selIdx === 1 ? r.ok('selection follows focus (automatic activation)') : r.warnf('—', 'Selection does not follow focus — acceptable only if Enter/Space activates (manual activation)');
+    // The arrow toward the next tab (ArrowLeft in a right-to-left tablist) moves focus there, and the other comes back.
+    const nav = await arrowWalk(page, r, list, { sel: '[role=tab]', noun: 'tab', what: 'tablist' });
+    // Selection following focus is judged on whatever tab the first arrow reached (a backwards one included).
+    if (nav.idxAfter >= 0 && nav.idxAfter !== nav.s) nav.selAfter === nav.idxAfter ? r.ok('selection follows focus (automatic activation)') : r.warnf('—', 'Selection does not follow focus — acceptable only if Enter/Space activates (manual activation)');
+    await first.evaluate(t => t.focus());
     await page.keyboard.press('End'); const end = await list.evaluate(l => [...l.querySelectorAll('[role=tab]')].indexOf(document.activeElement));
     end === info.length - 1 ? r.ok('End → last tab') : r.warnf('—', 'End key not supported');
     await page.keyboard.press('Home'); const home = await list.evaluate(l => [...l.querySelectorAll('[role=tab]')].indexOf(document.activeElement));
@@ -467,6 +643,330 @@ const tests = {
     back ? r.ok('Escape returns focus to the button') : r.fail('2.4.3', 'Escape does not return focus to the menu button');
     return r;
   },
+
+  // A toolbar, radio group, menubar or horizontal menu: one Tab stop, arrows that follow the visual arrow.
+  async roving(page, c) {
+    const r = recorder('roving', c.group);
+    const group = page.locator(c.group).first();
+    await group.waitFor({ state: 'attached', timeout: 3000 });
+    const role = (await group.getAttribute('role')) || await group.evaluate((g) => g.tagName.toLowerCase());
+    const tab = await tabStops(page, await group.elementHandle());
+    const nav = await arrowWalk(page, r, group, { sel: c.items, noun: 'item', what: role, start: 'current' });
+    if (nav.n < 2) { r.fail('—', `Not tested: ${nav.n} item(s) found in the ${role} (need two; give the contract "items")`); return r; }
+    if (tab.stops === 1) r.ok(`one Tab stop for the ${role} (${tab.how})`);
+    else if (tab.stops === 0) r.fail('2.1.1', `Tab does not reach the ${role} — keyboard users cannot get to it`);
+    else r.warnf('—', `${tab.stops} Tab stops inside the ${role} — APG: one Tab stop, the arrow keys move between items`);
+    if (nav.unfocusable) { r.fail('2.1.1', `The ${role}'s items cannot receive focus`); return r; }
+    // Radios are checked as focus moves (APG radio group; native radios do it).
+    const radios = await group.evaluate((g) => !!g.querySelector('[role=radio],input[type=radio]'));
+    if (radios && nav.idxAfter >= 0 && nav.idxAfter !== nav.s) nav.selAfter === nav.idxAfter ? r.ok('the radio that takes focus is checked') : r.warnf('—', 'Moving focus with the arrow keys does not check the radio (APG radio group: arrows move focus and check)');
+    return r;
+  },
+
+  // role=slider or <input type=range>: a name, a value, arrows that move the thumb the way they point, Home/End.
+  async slider(page, c) {
+    const r = recorder('slider', c.slider);
+    const el = page.locator(c.slider).first();
+    await el.waitFor({ state: 'attached', timeout: 3000 });
+    const h = await el.elementHandle();
+    const read = () => h.evaluate((e) => {
+      const native = e.matches('input[type=range]');
+      const num = (a) => { const v = e.getAttribute(a); return v != null && v.trim() !== '' && Number.isFinite(+v) ? +v : null; };
+      const b = e.getBoundingClientRect(), cs = getComputedStyle(e);
+      return { native, role: e.getAttribute('role'), tag: e.tagName.toLowerCase(), now: native ? +e.value : num('aria-valuenow'), min: native ? +(e.min || 0) : num('aria-valuemin'), max: native ? +(e.max || 100) : num('aria-valuemax'),
+        orient: e.getAttribute('aria-orientation'), dir: cs.direction, tall: b.height > b.width * 1.5, writing: cs.writingMode };
+    });
+    const s0 = await read();
+    if (!s0.native && s0.role !== 'slider') { r.fail('4.1.2', `${c.slider} is <${s0.tag}> without role="slider"`); return r; }
+    const ax = await axOf(page, h);
+    ax.name ? r.ok(`named: "${ax.name}"`) : r.fail('4.1.2', 'The slider has no accessible name');
+    if (!s0.native && s0.now == null) r.fail('4.1.2', 'No aria-valuenow — screen readers cannot say the value');
+    if (!s0.native && (s0.min == null || s0.max == null)) r.warnf('4.1.2', 'No aria-valuemin/aria-valuemax — 0 and 100 are assumed');
+    const focused = await h.evaluate((e) => { e.focus(); return document.activeElement === e; });
+    if (!focused) { r.fail('2.1.1', 'The slider cannot receive keyboard focus'); return r; }
+    const vertical = s0.orient === 'vertical' || (s0.native ? /vertical/.test(s0.writing) : s0.orient !== 'horizontal' && s0.tall);
+    // A custom thumb is the small box near the slider that moves furthest along its axis without changing size
+    // (Radix and React Aria put the role on the thumb, MUI on a hidden input inside it). A native range's thumb lives
+    // in the browser's shadow tree; Chromium moves it with the arrow in either direction (measured, S8): its value is read.
+    const boxes = () => h.evaluate((e) => {
+      if (!window.__wcThumbs) {
+        let root = e; for (let i = 0; i < 3 && root.parentElement && root.parentElement !== document.body; i++) root = root.parentElement;
+        window.__wcThumbs = [e, ...root.querySelectorAll('*')].filter((x) => { const b = x.getBoundingClientRect(); return b.width > 0 && b.height > 0 && b.width <= 80 && b.height <= 80; });
+      }
+      return window.__wcThumbs.map((x) => { const b = x.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2, b.width, b.height]; });
+    });
+    const press = async (k, n = 1) => {
+      const b0 = s0.native ? [] : await boxes();
+      for (let i = 0; i < n; i++) { await page.keyboard.press(k); await page.waitForTimeout(80); }
+      await page.waitForTimeout(200);
+      const b1 = s0.native ? [] : await boxes();
+      let d = 0;
+      for (let i = 0; i < b0.length; i++) { const m = vertical ? b1[i][1] - b0[i][1] : b1[i][0] - b0[i][0]; if (Math.abs(b1[i][2] - b0[i][2]) < 1 && Math.abs(b1[i][3] - b0[i][3]) < 1 && Math.abs(m) > Math.abs(d)) d = m; }
+      return { now: (await read()).now, d: Math.abs(d) >= 1 ? d : 0 };
+    };
+    const [inc, dec] = vertical ? ['ArrowUp', 'ArrowDown'] : ['ArrowRight', 'ArrowLeft'];
+    const assumed = vertical ? 'vertical slider' : `direction: ${s0.dir}, read from the slider`;
+    // Start away from both ends, so that either arrow can move it.
+    if (s0.now != null && s0.min != null && s0.max != null && s0.max > s0.min && (s0.now <= s0.min || s0.now >= s0.max)) {
+      for (const k of s0.now <= s0.min ? ['ArrowUp', inc, dec] : ['ArrowDown', dec, inc]) { const v = (await read()).now; if (v > s0.min && v < s0.max) break; await press(k, 3); }
+    }
+    const v0 = (await read()).now;
+    const a = await press(inc, 2);
+    const b = await press(dec, 2);
+    const vals = `value ${v0} → ${a.now} → ${b.now}`;
+    const way = (d) => (vertical ? (d < 0 ? 'up' : 'down') : d < 0 ? 'left' : 'right');
+    const want = { ArrowRight: 'right', ArrowLeft: 'left', ArrowUp: 'up', ArrowDown: 'down' };
+    if (a.now === v0 && b.now === a.now && !a.d && !b.d) r.fail('2.1.1', `${inc} and ${dec} do not change the value (${vals}; ${assumed})`);
+    else if (s0.native) r.ok(`${inc} and ${dec} change the value (${vals}; a native range, whose thumb Chromium moves the way the arrow points; ${assumed})`);
+    else if (a.d || b.d) {
+      const bad = [[inc, a.d], [dec, b.d]].filter(([k, d]) => d && way(d) !== want[k]);
+      if (bad.length) r.fail('2.1.1', `The arrow keys run backwards: ${bad.map(([k, d]) => `${k} moves the thumb ${way(d)}`).join(', ')} (${vals}; ${assumed}). The arrow key follows the visual arrow${s0.dir === 'rtl' && !vertical ? ': in a right-to-left slider whose minimum is on the right, ArrowLeft raises the value and moves the thumb left' : ''}`);
+      else r.ok(`${inc} moves the thumb ${want[inc]} and ${dec} ${want[dec]} (${vals}; ${assumed})`);
+      if (a.now === v0 && b.now === a.now) r.fail('4.1.2', 'The thumb moves but aria-valuenow does not change');
+    } else if (!vertical && s0.dir === 'rtl') r.ok(`${inc} and ${dec} change the value (${vals}; no moving thumb was found, so their direction was not checked; ${assumed})`);
+    else if (a.now > v0 && b.now < a.now) r.ok(`${inc} raises the value and ${dec} lowers it (${vals}; no moving thumb was found, so the track is taken to run ${vertical ? 'bottom to top' : 'left to right'}; ${assumed})`);
+    else r.fail('2.1.1', `${inc} does not raise the value (${vals}; no moving thumb was found; ${assumed}; APG: Right and Up raise it)`);
+    if (!vertical) { const u0 = (await read()).now; const u = await press('ArrowUp'); u.now > u0 ? r.ok('ArrowUp raises the value') : r.warnf('—', `ArrowUp does not raise the value (APG slider: Up raises it in either direction; ${u0} → ${u.now})`); }
+    const lim = await read();
+    if (lim.min != null && lim.max != null) {
+      const e = await press('End'); const hm = await press('Home');
+      e.now === lim.max && hm.now === lim.min ? r.ok(`Home and End reach the minimum and maximum (${lim.min}, ${lim.max})`) : r.warnf('—', `Home/End do not reach the minimum and maximum (End → ${e.now}, Home → ${hm.now}; range ${lim.min}–${lim.max})`);
+    }
+    await h.evaluate(() => { delete window.__wcThumbs; }).catch(() => {});
+    return r;
+  },
+
+  // A command palette: a named dialog, focus in its field, results and "no results" announced, Escape, focus back.
+  async palette(page, c) {
+    const r = recorder('palette', c.trigger);
+    const trigger = await page.locator(c.trigger).first().elementHandle();
+    await activate(page, c.trigger, r, keysOf(c));
+    await page.waitForTimeout(300);
+    // The palette: the open dialog, else the layer around a text field that took focus (the outermost fixed box).
+    const found = await page.evaluate((t) => {
+      const vis = (e) => (e.checkVisibility ? e.checkVisibility({ visibilityProperty: true }) : e.getClientRects().length > 0);
+      const who = (e) => (e.id ? '#' + e.id : e.tagName.toLowerCase() + (e.getAttribute('role') ? `[role=${e.getAttribute('role')}]` : ''));
+      const FIELD = 'input:not([type]),input[type=text],input[type=search],textarea,[role=combobox],[role=searchbox],[role=textbox],[contenteditable=""],[contenteditable=true]';
+      const isField = (e) => !!e && e !== t && e.matches(FIELD) && vis(e);
+      const dlg = [...document.querySelectorAll('dialog[open],[role=dialog],[role=alertdialog]')].filter(vis).pop() || null;
+      const a = document.activeElement;
+      const field = isField(a) && (!dlg || dlg.contains(a)) ? a : (dlg && [...dlg.querySelectorAll(FIELD)].find(isField)) || null;
+      let layer = dlg;
+      if (!layer && field) { layer = document.body; for (let e = field; e && e !== document.body; e = e.parentElement) if (getComputedStyle(e).position === 'fixed') layer = e; }
+      window.__wcPal = { dlg, field, layer };
+      return { dialog: !!dlg, modal: !!dlg && (dlg.matches(':modal') || dlg.getAttribute('aria-modal') === 'true'), field: !!field, focusIn: !!field && a === field, focus: a && a !== document.body ? who(a) : 'body', layer: layer ? who(layer) : null };
+    }, trigger);
+    if (!found.dialog && !found.field) { r.fail('4.1.2', `No dialog opened, and no search field took focus (focus: ${found.focus})`); return r; }
+    const part = (k) => page.evaluateHandle((k) => window.__wcPal[k], k);
+    if (!found.dialog) r.fail('4.1.2', `The palette has no dialog semantics: its search field sits in a plain layer (${found.layer}), so screen readers are not told a dialog opened — use a named role="dialog" (or <dialog>) that is modal`);
+    else { const d = await axOf(page, await part('dlg')); d.name ? r.ok(`dialog named "${d.name}"`) : r.fail('4.1.2', 'The palette dialog has no accessible name — aria-label it ("Command palette")'); }
+    // The page behind is hidden from assistive technology while the palette is open (a modal dialog, inert, aria-hidden).
+    const behind = await axOf(page, trigger);
+    found.modal || behind.ignored ? r.ok(`the page behind is hidden from assistive technology (${found.modal ? 'a modal dialog' : 'the opener has left the accessibility tree'})`)
+      : r.warnf('1.3.2', 'The page behind stays in the accessibility tree while the palette is open (the opener is still exposed) — make it modal (showModal(), or aria-modal with the rest inert)');
+    if (!found.field) { r.fail('2.4.3', `No search field in the palette (focus: ${found.focus})`); return r; }
+    const f = await axOf(page, await part('field'));
+    if (found.focusIn) r.ok(`focus moved into the search field (${f.role || 'field'} "${f.name}")`);
+    else { r.fail('2.4.3', `Focus did not move into the palette's search field (focus: ${found.focus})`); await page.evaluate(() => window.__wcPal.field.focus()); }
+    if (!f.name) r.fail('4.1.2', 'The search field has no accessible name');
+    const view = () => page.evaluate(() => {
+      const { dlg, layer, field } = window.__wcPal;
+      const vis = (e) => (e.checkVisibility ? e.checkVisibility({ visibilityProperty: true }) : e.getClientRects().length > 0);
+      const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
+      // Text in a display: contents box (React Aria's empty state) has no box of its own: its parent's decides.
+      const shows = (e) => vis(e) || (getComputedStyle(e).display === 'contents' && !!e.parentElement && shows(e.parentElement));
+      const OPT = '[role=option],[role=menuitem],[role=menuitemradio],[role=menuitemcheckbox],[role=gridcell]';
+      const scopes = [layer, ...`${field?.getAttribute('aria-controls') || ''} ${field?.getAttribute('aria-owns') || ''}`.split(/\s+/).map((i) => i && document.getElementById(i))].filter((e) => e?.isConnected);
+      const opts = new Set(); const texts = new Set();
+      for (const s of scopes) {
+        for (const o of s.querySelectorAll(OPT)) if (vis(o)) opts.add(o);
+        for (const e of s.querySelectorAll('*')) { const own = norm([...e.childNodes].filter((n) => n.nodeType === 3).map((n) => n.nodeValue).join(' ')); if (own && shows(e)) texts.add(own); }
+      }
+      const a = document.activeElement; const id = a?.getAttribute('aria-activedescendant'); const ad = id ? document.getElementById(id) : null;
+      const active = ad && vis(ad) ? norm(ad.innerText || ad.getAttribute('aria-label')) : a?.matches(OPT) ? norm(a.innerText || a.getAttribute('aria-label')) : null;
+      const open = [dlg, layer !== document.body && layer, field].some((e) => e && e.isConnected && vis(e));
+      return { options: [...opts].map((o) => norm(o.innerText || o.getAttribute('aria-label'))).filter(Boolean), active, via: ad && active ? 'aria-activedescendant' : active ? 'focus' : null, texts: [...texts], open, inField: a === field };
+    });
+    // Results: typing filters them, and a screen reader hears it (a count in a live region, or the active result).
+    const v0 = await view();
+    const word = (s) => (s.split(/\s+/).find((w) => /^\p{L}{3}/u.test(w)) || s).slice(0, 3).toLowerCase();
+    const q = c.query != null ? String(c.query) : v0.options.length ? word(v0.options[v0.options.length - 1]) : 'a';
+    await page.evaluate(() => { window.__announced = []; });
+    await page.keyboard.type(q, { delay: 40 }); await page.waitForTimeout(700);
+    const v1 = await view();
+    const heard1 = await page.evaluate(() => [...new Set(window.__announced)]);
+    const filtered = `typing "${q}" leaves ${v1.options.length} of ${v0.options.length} result(s)`;
+    if (heard1.length) r.ok(`results announced via live region: ${quote(heard1.join(' / '))} (${filtered})`);
+    else if (v1.active) r.ok(`the first result is read through ${v1.via}: "${v1.active}" (${filtered}; no count is announced)`);
+    else if (!v1.options.length) r.warnf('—', `Results not tested: ${filtered} — give the contract a "query" that matches a command`);
+    else r.warnf('4.1.3', `The results change silently (${filtered}): no count in a live region, and no result made active (aria-activedescendant)`);
+    if (v1.options.length) {
+      await page.keyboard.press('ArrowDown'); await page.waitForTimeout(400);
+      const v2 = await view();
+      v2.active ? r.ok(`ArrowDown makes a result active for a screen reader (${v2.via}: "${v2.active}")`) : r.fail('4.1.2', 'ArrowDown makes no result active for a screen reader: no aria-activedescendant on the field, and focus did not move to a result');
+      if (!v2.inField) await page.evaluate(() => window.__wcPal.field?.focus());
+    }
+    // A query that matches nothing: its message must be announced (a visible status message, WCAG 4.1.3).
+    for (let i = 0; i < q.length + 2; i++) await page.keyboard.press('Backspace');
+    await page.waitForTimeout(400);
+    const shown = new Set((await view()).texts);
+    const none = c.none != null ? String(c.none) : 'zqxjzq';
+    await page.evaluate(() => { window.__announced = []; });
+    await page.keyboard.type(none, { delay: 40 }); await page.waitForTimeout(800);
+    const v3 = await view();
+    const heard3 = await page.evaluate(() => [...new Set(window.__announced)]);
+    const msg = v3.texts.filter((t) => !shown.has(t) && t !== none);
+    if (v3.options.length) r.warnf('—', `"No results" not tested: "${none}" still leaves ${v3.options.length} result(s)`);
+    else if (heard3.length) r.ok(`no match announced via live region: ${quote(heard3.join(' / '))}`);
+    else if (msg.length) r.fail('4.1.3', `No match: ${quote(msg.join(' / '))} is shown but not announced — put it (or a result count) in a role="status" region that exists before the first keystroke`);
+    else r.warnf('4.1.3', `A query that matches nothing ("${none}") shows no message and announces nothing`);
+    // Escape closes the palette (React Aria's first Escape clears the field) and focus returns to the trigger.
+    await page.keyboard.press('Escape'); await page.waitForTimeout(350);
+    let open = (await view().catch(() => ({ open: false }))).open, twice = false;
+    if (open) { await page.keyboard.press('Escape'); await page.waitForTimeout(350); open = (await view().catch(() => ({ open: false }))).open; twice = !open; }
+    if (open) { r.fail('2.1.2', 'Escape does not close the palette'); return r; }
+    r.ok(`Escape closes it${twice ? ' (the first Escape cleared the field, the second closed it)' : ''}`);
+    (await page.evaluate((t) => document.activeElement === t, trigger)) ? r.ok('focus returned to the trigger') : r.fail('2.4.3', `Focus not returned to the trigger on close (now on ${await active(page)})`);
+    return r;
+  },
+
+  // Keyboard reordering: a named handle, pick up / move / drop, focus kept, moves announced by name, Escape cancels.
+  async sortable(page, c) {
+    const r = recorder('sortable', c.list);
+    const list = page.locator(c.list).first();
+    await list.waitFor({ state: 'attached', timeout: 3000 });
+    const lh = await list.elementHandle();
+    // The items in order, each with its label (its first line of text) and its handle; kept in the page for the steps.
+    // The handle is chosen once, on the first item, and found the same way in every item after (the item itself, or
+    // its n-th focusable control): a grid moves its roving tabindex onto the rows while it is used.
+    let pin = null;
+    const state = () => lh.evaluate((l, { isel, hsel, pin }) => {
+      const vis = (e) => (e.checkVisibility ? e.checkVisibility({ visibilityProperty: true }) : e.getClientRects().length > 0);
+      const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
+      let items = null;
+      if (isel) items = [...l.querySelectorAll(isel)].filter(vis);
+      else for (let box = l, i = 0; i < 4 && !items; i++) { const kids = [...box.children].filter((e) => vis(e) && norm(e.innerText)); if (kids.length === 1 && kids[0].children.length) box = kids[0]; else items = kids; }
+      items ||= [];
+      const label = (e) => (e.innerText || '').split('\n').map(norm).find((s) => /[\p{L}\p{N}]/u.test(s)) || norm(e.getAttribute('aria-label'));
+      const F = 'a[href],button,input,select,textarea,summary,[tabindex],[role=button]';
+      const guess = (e) => (e.tabIndex >= 0 ? e : [...e.querySelectorAll(F)].find((x) => x.tabIndex >= 0 && vis(x)) || (e.hasAttribute('tabindex') ? e : e.querySelector('[tabindex]'))) || null;
+      if (!hsel && pin == null && items[0]) { const h = guess(items[0]); pin = !h ? null : h === items[0] ? -1 : [...items[0].querySelectorAll(F)].indexOf(h); }
+      const handle = (e) => (hsel ? e.querySelector(hsel) : pin == null ? null : pin < 0 ? e : e.querySelectorAll(F)[pin]) || null;
+      window.__wcSort = { items, handles: items.map(handle), label };
+      const box = (e) => { const b = e.getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; };
+      return { labels: items.map(label), boxes: items.map(box), handles: items.map((e) => !!handle(e)), dir: getComputedStyle(l).direction, pin };
+    }, { isel: c.items, hsel: c.handle, pin }).then((s) => { pin = s.pin; return s; });
+    const s0 = await state();
+    if (s0.labels.length < 2) { r.fail('—', `Not tested: ${s0.labels.length} item(s) found in ${c.list} (give the contract "items")`); return r; }
+    const moved = s0.labels[0];
+    if (!s0.handles[0]) { r.fail('2.1.1', `"${moved}" has nothing that takes keyboard focus: it can only be dragged with a pointer`); return r; }
+    const hax = await axOf(page, await page.evaluateHandle(() => window.__wcSort.handles[0]));
+    if (!hax.name) r.fail('4.1.2', 'The drag handle has no accessible name');
+    else hax.name.toLowerCase().includes(moved.toLowerCase()) ? r.ok(`handle named "${hax.name}"`) : r.warnf('2.4.6', `The handle's name "${hax.name}" does not say which item it moves — name it "Reorder ${moved}"`);
+    if (!c.keys) hax.description ? r.ok(`instructions: ${quote(hax.description, 100)}`) : r.warnf('—', 'The handle has no instructions (aria-describedby): how to pick up, move, drop and cancel');
+    // The move key points at the next item: ArrowDown in a list, ArrowLeft in a right-to-left row.
+    const a0 = s0.boxes[0], a1 = s0.boxes[1], dx = a1.x - a0.x, dy = a1.y - a0.y;
+    const mv = Math.abs(dy) >= Math.abs(dx) ? (dy < 0 ? 'ArrowUp' : 'ArrowDown') : dx < 0 ? 'ArrowLeft' : 'ArrowRight';
+    const layout = /Up|Down/.test(mv) ? 'a vertical list' : `a row, direction: ${s0.dir}, read from the list; the next item is on the ${dx < 0 ? 'left' : 'right'}`;
+    const same = (x, y) => x.join('\n') === y.join('\n');
+    const tries = c.keys ? [[].concat(c.keys)] : [['Space', mv, mv, 'Space'], ['Enter', mv, mv, 'Enter']];
+    let got = null, used = null;
+    for (const keys of tries) {
+      await state();
+      await page.evaluate(() => { window.__announced = []; window.__wcSort.handles[0]?.focus(); });
+      for (const k of keys) { await page.keyboard.press(k); await page.waitForTimeout(250); }
+      await page.waitForTimeout(1200); // Pragmatic drag and drop announces after 1000 ms
+      got = { s: await state(), heard: await page.evaluate(() => [...new Set(window.__announced)]) }; used = keys;
+      if (!same(got.s.labels, s0.labels)) break;
+      await page.keyboard.press('Escape'); await page.waitForTimeout(400);
+    }
+    const after = got.s.labels, heard = got.heard, text = heard.join(' / ');
+    if (same(after, s0.labels)) { r.fail('2.1.1', `The keyboard does not reorder the list: ${tries.map((k) => k.join(', ')).join(', then ')} on the handle of "${moved}" left the order as it was (${layout})${heard.length ? `; announced: ${quote(text)}` : ''}`); return r; }
+    const to = after.indexOf(moved);
+    r.ok(`${used.join(', ')} moves "${moved}" from position 1 to ${to + 1} of ${after.length} (${layout})`);
+    const kept = await page.evaluate((moved) => {
+      const a = document.activeElement; if (!a || a === document.body) return false;
+      const { items, label } = window.__wcSort; const it = items.find((e) => e.contains(a));
+      return (it && label(it) === moved) || `${a.getAttribute('aria-label') || ''} ${a.innerText || ''}`.includes(moved);
+    }, moved);
+    kept ? r.ok(`focus stays on "${moved}"`) : r.fail('2.4.3', `Focus did not stay on the moved item (now on ${await active(page)})`);
+    // Announcements: an item's name (or its neighbours'), never an internal id; positions alone leave out which item.
+    const low = text.toLowerCase();
+    const names = s0.labels.filter((l) => l && low.includes(l.toLowerCase()));
+    const ids = [...new Set((text.match(/[\p{L}\p{N}_-]+/gu) || []).filter((t) => /\d/.test(t) && /[a-z_]/i.test(t) && !/^\d+(st|nd|rd|th|px)$/i.test(t) && !s0.labels.some((l) => l.toLowerCase().includes(t.toLowerCase()))))];
+    const say = `"${moved} moved to position ${to + 1} of ${after.length}"`;
+    if (!heard.length) r.fail('4.1.3', 'Nothing was announced during the move (pick up, moves, drop)');
+    else if (names.length) r.ok(`announcements name the items: ${quote(text, 120)}`);
+    else if (ids.length) r.fail('4.1.3', `The announcements name internal ids (${ids.slice(0, 3).join(', ')}), not the items: ${quote(text, 120)} — give the library announcements that use the item's label (${say})`);
+    else if (/\d/.test(text)) r.warnf('4.1.3', `The announcements give positions but not the item: ${quote(text, 120)} — name it (${say})`);
+    else r.warnf('4.1.3', `The announcements name neither the item nor its position: ${quote(text, 120)}`);
+    // Escape during a move puts the item back (only with the default keys: a move menu has its own way out).
+    if (!c.keys) {
+      const s1 = await state();
+      const i = s1.labels.indexOf(moved);
+      const k = i < s1.labels.length - 1 ? mv : OPPOSITE[mv];
+      await page.evaluate((i) => window.__wcSort.handles[i]?.focus(), i);
+      for (const key of [used[0], k, 'Escape']) { await page.keyboard.press(key); await page.waitForTimeout(250); }
+      await page.waitForTimeout(800);
+      const s2 = await state();
+      same(s2.labels, s1.labels) ? r.ok(`Escape during a move puts "${moved}" back`) : r.fail('—', `Escape does not cancel a move: ${used[0]}, ${k}, Escape left "${moved}" at position ${s2.labels.indexOf(moved) + 1} (it was at ${i + 1})`);
+    }
+    return r;
+  },
+
+  // Resizable panes: a focusable, named separator with a value and the right orientation, moved by the arrows.
+  async splitter(page, c) {
+    const r = recorder('splitter', c.separator);
+    const sep = page.locator(c.separator).first();
+    await sep.waitFor({ state: 'attached', timeout: 3000 });
+    const h = await sep.elementHandle();
+    const read = () => h.evaluate((e) => {
+      const num = (a) => { const v = e.getAttribute(a); return v != null && v.trim() !== '' && Number.isFinite(+v) ? +v : null; };
+      const vis = (x) => (x.checkVisibility ? x.checkVisibility() : x.getClientRects().length > 0);
+      const cen = (x) => { const b = x.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; };
+      // The divider's orientation: vertical between side-by-side panes (its neighbours), else by its own shape.
+      let p = e.previousElementSibling; while (p && !vis(p)) p = p.previousElementSibling;
+      let n = e.nextElementSibling; while (n && !vis(n)) n = n.nextElementSibling;
+      const b = e.getBoundingClientRect(), [x, y] = cen(e);
+      const side = p && n ? (Math.abs(cen(p)[0] - cen(n)[0]) > Math.abs(cen(p)[1] - cen(n)[1]) ? 'vertical' : 'horizontal') : b.height > b.width ? 'vertical' : 'horizontal';
+      return { x, y, now: num('aria-valuenow'), min: num('aria-valuemin'), max: num('aria-valuemax'), orient: e.getAttribute('aria-orientation'), role: e.getAttribute('role'), tag: e.tagName.toLowerCase(), dir: getComputedStyle(e).direction, divider: side };
+    });
+    const s0 = await read();
+    s0.role === 'separator' ? r.ok('role="separator"') : r.fail('4.1.2', `The divider is <${s0.tag}>${s0.role ? ` with role="${s0.role}"` : ''}, not role="separator" — screen readers are not told it resizes the panes`);
+    const focused = await h.evaluate((e) => { e.focus(); return document.activeElement === e; });
+    if (!focused) { r.fail('2.1.1', 'The divider cannot receive keyboard focus — the panes can only be resized with a pointer (tabindex="0" and arrow keys)'); return r; }
+    const ax = await axOf(page, h);
+    ax.name ? r.ok(`named: "${ax.name}"`) : r.fail('4.1.2', 'The divider has no accessible name — name it after the pane it resizes (APG: aria-labelledby that pane\'s label, or aria-label)');
+    if (s0.now == null) r.fail('4.1.2', 'No aria-valuenow — screen readers cannot say where the divider is');
+    else if (s0.min == null || s0.max == null) r.warnf('4.1.2', `No aria-valuemin/aria-valuemax — 0 and 100 are assumed (aria-valuenow ${s0.now})`);
+    else s0.now >= s0.min && s0.now <= s0.max ? r.ok(`aria-valuenow ${s0.now} in ${s0.min}–${s0.max}`) : r.fail('4.1.2', `aria-valuenow ${s0.now} is outside ${s0.min}–${s0.max}`);
+    (s0.orient || 'horizontal') === s0.divider ? r.ok(`aria-orientation ${s0.orient ? `"${s0.orient}"` : '(default horizontal)'} matches the ${s0.divider} divider`)
+      : r.fail('4.1.2', `aria-orientation ${s0.orient ? `"${s0.orient}"` : 'is missing (the default is horizontal)'} on a ${s0.divider} divider — screen readers name the wrong arrow keys; set aria-orientation="${s0.divider}"`);
+    const [fwd, back] = s0.divider === 'vertical' ? ['ArrowRight', 'ArrowLeft'] : ['ArrowDown', 'ArrowUp'];
+    const axis = s0.divider === 'vertical' ? 'x' : 'y';
+    const word = { ArrowRight: 'right', ArrowLeft: 'left', ArrowDown: 'down', ArrowUp: 'up' };
+    const way = (d) => (axis === 'x' ? (d > 0 ? 'right' : 'left') : d > 0 ? 'down' : 'up');
+    const step = async (k, n = 3) => { const a = await read(); for (let i = 0; i < n; i++) { await page.keyboard.press(k); await page.waitForTimeout(100); } await page.waitForTimeout(200); const b = await read(); return { d: Math.abs(b[axis] - a[axis]) >= 1 ? b[axis] - a[axis] : 0, from: a.now, to: b.now }; };
+    // Forward, back past the start, forward again (a divider at its limit moves only one way).
+    let f = await step(fwd); const bk = await step(back, f.d || f.from !== f.to ? 3 : 6); if (!f.d && f.from === f.to) f = await step(fwd);
+    const assumed = `direction: ${s0.dir}, and a divider moves the way the arrow points in either direction, APG`;
+    const moves = [[fwd, f], [back, bk]];
+    const wrong = moves.filter(([k, m]) => m.d && way(m.d) !== word[k]);
+    const still = moves.filter(([, m]) => !m.d);
+    const valued = f.from !== f.to || bk.from !== bk.to;
+    if (still.length === 2 && !valued) r.fail('2.1.1', `${fwd} and ${back} do not move the divider (${assumed})`);
+    else if (wrong.length) r.fail('2.1.1', `The arrow keys run backwards: ${wrong.map(([k, m]) => `${k} moves the divider ${way(m.d)}`).join(', ')} (${assumed})`);
+    else if (still.length === 2) r.warnf('—', `The arrows change aria-valuenow (${f.from} → ${f.to}, ${bk.from} → ${bk.to}) but the divider does not move`);
+    else r.ok(`${moves.filter(([, m]) => m.d).map(([k, m]) => `${k} moves the divider ${word[k]} (${m.d > 0 ? '+' : ''}${Math.round(m.d)} px, aria-valuenow ${m.from} → ${m.to})`).join(', ')} (${assumed})`);
+    if (still.length < 2 && s0.now != null && !valued) r.fail('4.1.2', `aria-valuenow stays ${s0.now} while the divider moves`);
+    const e = await step('End', 1), hm = await step('Home', 1);
+    const moved = (m) => m.d || m.from !== m.to;
+    moved(e) && moved(hm) ? r.ok(`Home and End move the divider to its limits (aria-valuenow ${hm.to}, ${e.to})`) : r.warnf('—', `Home/End do not move the divider (APG: optional; End → ${e.to}, Home → ${hm.to})`);
+    const en = await step('Enter', 1);
+    if (moved(en)) { r.ok(`Enter collapses or restores the pane (aria-valuenow ${en.from} → ${en.to})`); await step('Enter', 1); }
+    else r.warnf('—', 'Enter does not collapse or restore the pane (APG window splitter)');
+    return r;
+  },
 };
 
 const t0 = performance.now();
@@ -495,14 +995,17 @@ for (const c of contracts) {
       : Promise.reject(new Error('not a step (fill, select, click, tap, check, focus, press, wait)'));
     await step.catch((e) => setup.push(`[—] before step ${JSON.stringify(s)} failed: ${e.message.split('\n')[0]}`));
   }
-  try { const r = await tests[c.type](page, c); r.fails.unshift(...setup); results.push(r); }
+  try {
+    if (!tests[c.type]) throw new Error(`unknown contract type "${c.type}" (${Object.keys(tests).join(', ')})`);
+    const r = await tests[c.type](page, c); r.fails.unshift(...setup); results.push(r);
+  }
   catch (e) {
-    const target = c.trigger || c.tablist || c.button || c.form;
+    const target = c.trigger || c.tablist || c.button || c.form || c.group || c.slider || c.list || c.separator;
     const vp = page.viewportSize();
     // The commonest cause: a control that exists only at another width (a phone menu tested on a desktop viewport).
     const hidden = await page.locator(target).first().evaluate((el) => !el.checkVisibility?.({ checkVisibilityCSS: true }), null, { timeout: 1000 }).catch(() => null);
     const stepFailed = setup.length ? ' (a before step failed, see below)' : '';
-    const why = hidden === true ? `${target} exists but is not visible at ${vp.width}×${vp.height}${stepFailed || ' — give the contract "device": "phone" (or run with --device phone)'}`
+    const why = !tests[c.type] ? e.message : hidden === true ? `${target} exists but is not visible at ${vp.width}×${vp.height}${stepFailed || ' — give the contract "device": "phone" (or run with --device phone)'}`
       : hidden === null ? `${target} not found on the page${stepFailed}` : e.message.split('\n')[0];
     results.push({ type: c.type, target, passes: [], fails: [`test error: ${why}`, ...setup], warns: [] });
   }

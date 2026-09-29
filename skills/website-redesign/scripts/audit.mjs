@@ -42,7 +42,17 @@
  *  - no-JS render: content that stays invisible without JavaScript (the
  *    reveal trap)
  *  - paint: LCP element and time, CLS, bytes by resource type, fonts loaded
+ *  - clipping by ink: glyphs (accents, Arabic marks, descenders) cut by the box that clips them, in any script
+ *    (lib/probes.mjs glyphClipProbe: ink from canvas measureText on each rendered line; FAIL on a cut of 1px or
+ *    more). The clipped-text check uses the same ink down the block axis, so padding past a clip is not a cut
  *  - numbers: digit systems mixed in a row, numeric columns not right-aligned in paint, tabular figures, decimals
+ *  - right to left (only when the page is RTL or holds Arabic; lib/rtl.mjs): text-align: left in RTL text, tracking
+ *    or italics on Arabic, LTR data out of order within a line and LTR-data fields laid out RTL, drawers parked off
+ *    the left, icons that mirror wrongly (names checked against lib/icon-names.json), physical CSS and x-moving
+ *    keyframes, glyphs drawn by a system fallback font
+ *  - phone width (lib/rtl.mjs): hover-only reveals, no pressed state with the tap highlight off, the keyboard each
+ *    field brings, controls under the emulated safe-area insets (only with viewport-fit=cover), fixed bars over a
+ *    focused field (only with interactive-widget=resizes-content), a primary action pinned in the top third
  *  - signals: generic-look tells to review — gradient text, violet gradients,
  *    backdrop blur, emoji as icons, icon tiles, card and pill counts,
  *    over-used font families, cliché copy, big-number claims to verify
@@ -54,7 +64,8 @@
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { parseArgs, asList, launch, open, settle, finishMotion, freezeMotion, growToDocument, resolveModule, slugFor, urlFor } from './lib/env.mjs';
-import { overflowCulprits } from './lib/probes.mjs';
+import { overflowCulprits, glyphClipProbe } from './lib/probes.mjs';
+import { rtlChecks, phoneChecks } from './lib/rtl.mjs';
 import { pageInventory, hiddenContent } from './lib/inventory.mjs';
 import { scriptsDir } from './lib/env.mjs';
 
@@ -241,6 +252,9 @@ try {
       await page.mouse.move(0, 0).catch(() => {});
       const layoutW = await page.evaluate(() => innerWidth);
       const overflow = await page.evaluate(overflowCulprits);
+      const cdp = await ctx.newCDPSession(page).catch(() => null);
+      // Phone-width checks read the screen as a phone shows it: before the viewport grows to the document.
+      const phone = mobile ? await phoneChecks(page, cdp, { width, height: h0 }).catch((e) => ({ error: String(e?.message || e).split('\n')[0], findings: [] })) : null;
       await growToDocument(page, width);
       // Growing the viewport fires scroll-reveal observers; let those transitions finish before measuring.
       await page.waitForTimeout(250);
@@ -248,7 +262,11 @@ try {
       // Stop all CSS motion for the scans (the inventory and axe): a transition still running reads mid-fade colours
       // as contrast failures. After the focus walk, never before it: focus rings that transition are measured as users see them.
       await freezeMotion(page);
+      // Ink first: it marks each measured element with its ink extent, which the inventory's clipped-text check reads.
+      const ink = await page.evaluate(glyphClipProbe, { scripts: 'all', mark: true }).catch((e) => ({ error: String(e?.message || e).split('\n')[0], clipped: [] }));
       const inv = await page.evaluate(pageInventory, { initialViewportHeight: h0, lazyAttrs, saturated: saturatedFile.faces });
+      await page.evaluate(() => { for (const a of ['data-audit-ink', 'data-audit-ink-k']) document.querySelectorAll(`[${a}]`).forEach((e) => e.removeAttribute(a)); }).catch(() => {});
+      const rtl = await rtlChecks(page, cdp).catch((e) => ({ error: String(e?.message || e).split('\n')[0], findings: [] }));
 
       let axe = null;
       if (axePath) {
@@ -276,7 +294,7 @@ try {
       }
       await ctx.close();
 
-      const report = { url, width, theme, loadMs, layoutWidth: layoutW, overflow, focus, perf, inventory: inv, axe, errors };
+      const report = { url, width, theme, loadMs, layoutWidth: layoutW, overflow, focus, perf, inventory: inv, ink, rtl, phone, axe, errors };
       await writeFile(path.join(outDir, `${slug}-${width}${theme !== 'light' ? `-${theme}` : ''}.json`), JSON.stringify(report, null, 2));
 
       // ---------- summary ----------
@@ -302,6 +320,12 @@ try {
       const fails = inv.contrast.failing;
       if (fails.length) F.push(`Contrast below WCAG AA on ${inv.contrast.failingCount} of ${inv.contrast.checked} text elements: ${fails.slice(0, 6).map((c) => `\`${c.selector}\`${c.times > 1 ? ` ×${c.times}` : ''} ${c.fg} on ${c.bg} = ${c.ratio}:1 (needs ${c.need}, ${c.px}px)`).join('; ')}`);
       if (inv.clippedCount) F.push(`Text cut off by an overflow:hidden/clip container (${inv.clippedCount}): ${inv.clippedText.slice(0, 5).map((c) => `\`${c.selector}\` in \`${c.by}\``).join(', ')} — scroll it, reflow it, or truncate deliberately with a way to see the rest.`);
+      // Ink past a clip on a line that is still shown: marks, accents and descenders shaved off (an element the line
+      // above already names is not repeated). One entry per element and clipper.
+      const named = new Set(inv.clippedInk || []);
+      const inkCut = [...new Map((ink.clipped || []).filter((g) => !named.has(String(g.k))).map((g) => [`${g.selector}|${g.clipper}`, g])).values()];
+      if (inkCut.length) F.push(`Glyphs cut by their clipping box (${inkCut.length}; ink measured, not boxes): ${inkCut.slice(0, 5).map((g) => `\`${g.selector}\`${g.clipper === 'self' ? '' : ` in \`${g.clipper}\``}${g.scroller ? ' (a scroller: past its whole scrollable area)' : ''} ${[g.topPx ? `top ${g.topPx}px` : '', g.bottomPx ? `bottom ${g.bottomPx}px` : ''].filter(Boolean).join(' and ')} cut (${g.font}, line-height ${g.lineHeight}) "${g.text}"`).join('; ')}${inkCut.length > 5 ? '; …' : ''} — raise the line-height to the face's floor for this content (marked Arabic and accented capitals need more than plain Latin; fonts.mjs), or truncate with overflow-x: clip; overflow-y: visible and an ellipsis.`);
+      if (ink.error) W.push(`Glyph clipping not measured: ${ink.error}`);
       if (inv.colourOnlyCount) F.push(`Status carried by colour alone (${inv.colourOnlyCount} dots with no text or name): ${inv.colourOnly.slice(0, 4).map((c) => `\`${c.selector}\` ${c.colour}`).join(', ')} — add a word or an icon with a label (WCAG 1.4.1).`);
       if (inv.unavailableFamilies.length) F.push(`Declared font families not available — the page renders in a fallback: ${inv.unavailableFamilies.join(', ')} (font file blocked, 404, or never loaded).`);
       const mono = inv.mono || { count: 0, items: [] };
@@ -405,6 +429,17 @@ try {
       if (nb.numberInputs) F.push(`${nb.numberInputs} <input type="number"> on a right-to-left page — it silently drops Arabic digits typed by the user; use type="text" inputmode="decimal" and normalise (multilingual.md §2a).`);
       if (nb.columns?.length) W.push(`Numeric columns: ${nb.columns.join('; ')} — right-aligned, tabular, one number of decimals per column (dataviz.md, multilingual.md §2a).`);
       if (nb.otherScript?.length) W.push(`Arabic-script text on a Latin-script page (lang: ${nb.pageLang}) with no lang of its own: ${nb.otherScript.join('; ')} — untranslated strings, or missing lang="ar" (WCAG 3.1.2).`);
+      // The RTL and phone blocks (lib/rtl.mjs): FAIL is a fail, WARN a warning, INFO a decision to record.
+      for (const [label, res] of [['RTL', rtl], ['Phone', phone]]) {
+        if (!res) continue;
+        if (res.error) { W.push(`${label} checks could not run: ${res.error}`); continue; }
+        for (const f of res.findings) {
+          const cut = f.message.indexOf(' — '), head = cut > 0 ? f.message.slice(0, cut) : f.message, advice = cut > 0 ? f.message.slice(cut) : '';
+          const ex = f.examples.length ? ` (${f.examples.length}): ${f.examples.slice(0, 6).join('; ')}${f.examples.length > 6 ? `; … ${f.examples.length - 6} more` : ''}` : '';
+          const line = `${label} [${f.check}]: ${head}${ex}${advice}${f.level === 'INFO' ? ' (information)' : ''}`;
+          (f.level === 'FAIL' ? F : W).push(line);
+        }
+      }
       if (sg.deadBands?.length) W.push(`Dead bands at ${width}px (tall strips with no text, media or controls): ${sg.deadBands.join('; ')} — cap tall heroes (\`min(100svh, 56rem)\`), remove spacers, or give the space a job.`);
       if (sg.widows?.length) W.push(`Headline widows at ${width}px: ${sg.widows.slice(0, 4).join('; ')} — \`text-wrap: balance\` (or \`pretty\`), a \`max-width\` in \`ch\`, or a rewrite.`);
       if (sg.headingInversions?.length) W.push(`Heading sizes inverted: ${sg.headingInversions.join(', ')} — the visual outline contradicts the document outline.`);

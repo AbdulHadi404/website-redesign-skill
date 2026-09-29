@@ -1,0 +1,14 @@
+// The 12 pathological tenant colours from S12 (research/stage2/streams/S12-systems-and-references.md, E1).
+// One tenant per line: #RRGGBB [#RRGGBB dark-mode override] [name]
+#FFFF00 yellow
+#F0F0F0 near-white
+#000000 black
+#FF0000 pure red
+#8A8F98 grey
+#1A3CF2 blue
+#00A86B jade
+#FF7A00 orange
+#00D1FF cyan
+#6B21A8 purple
+#0B1F3A navy
+#FF69B4 pink

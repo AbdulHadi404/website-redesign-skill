@@ -1,0 +1,9 @@
+<!doctype html>
+<!-- capture.mjs regress fixture (run at 1024 and 390): a right-to-left page with a 1500px strip that overflows to the
+     left (the end edge), so the page scrolls sideways. Playwright's own screenshot of such a page is shifted by the
+     overflow (the heading and the start of every line missing, the second image not in the shot), and the flat-image
+     self-check then compared the wrong pixels: "1 image(s) painted flat (dashboard.png)". Expect the overflow line
+     naming div.wide and no "painted flat". -->
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>صور</title>
+<style>body{margin:0;font-family:system-ui,"Noto Sans Arabic",sans-serif} main{padding:24px} .wide{width:1500px;height:10px;background:#eee} img{display:block;margin:16px 0;max-width:none}</style></head>
+<body><main><h1>صور</h1><div class="wide"></div><img src="dashboard.png" width="600" height="350" alt="لوحة"><p>نص تحت الصورة.</p><img src="dashboard.png" width="400" height="233" alt="لوحة ٢"></main></body></html>

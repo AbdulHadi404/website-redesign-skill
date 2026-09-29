@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>نص لاتيني ملتف داخل صفحة عربية</title>
+<!-- Copy of research/stage2/experiments/S8-rtl-mobile-haptics/fixtures/bidi-wrap.html (stage-2 S8), system fonts, for tools/regress.mjs.
+     Regression page for the bidi-order check (audit.mjs RTL block; the lab's rtl-check.mjs, bidi): LTR text that wraps inside RTL blocks must not read as
+     "scrambled" (its later words sit on a lower line, further left), while LTR data laid out out of order still must.
+     data-expect: fail = scrambled data (FAIL), warn = only end punctuation moves (WARN), none = nothing to report. -->
+<style>
+  body { font: 16px/1.6 sans-serif; margin: 24px; }
+  .narrow { inline-size: 7rem; border: 1px solid #ccc; padding: 4px 8px; margin-block: 8px; }
+  .card { inline-size: 11rem; border: 1px solid #ccc; padding: 8px; margin-block: 8px; }
+  table { border-collapse: collapse; } td { border: 1px solid #ccc; padding: 4px 8px; inline-size: 5rem; }
+</style>
+</head>
+<body>
+<h1>نص لاتيني ملتف</h1>
+<!-- none: two English words wrapping in a narrow cell (the GOV-SA "Line content" case) -->
+<table><tr><td id="n-cell" data-expect="none">Line content</td><td>عمود</td></tr></table>
+<!-- none: a wrapped English sentence with no punctuation at its ends -->
+<div class="narrow" id="n-sentence" data-expect="none">The quick brown fox jumps over the lazy dog near the river bank</div>
+<!-- none: a wrapped brand name with a number inside -->
+<h2 class="card" id="n-brand" data-expect="none">Riyad Bank Vision 2030 Digital Services Programme</h2>
+<!-- warn: several English sentences wrapping: the final full stop moves to the other end of its line -->
+<p class="card" id="w-para" data-expect="warn">Payments are processed daily. Refunds take 3 to 5 working days. Contact support for help.</p>
+<!-- none: the same phrases isolated as they should be -->
+<p class="card" id="n-bdi" data-expect="none">الدعم: <bdi>Contact support for help.</bdi></p>
+<div class="narrow" id="n-ltr" dir="ltr" data-expect="none">Payments are processed daily. Refunds take 3 to 5 working days.</div>
+<!-- fail: a phone number that wraps in a narrow cell: each line shows its groups in reverse -->
+<table><tr><td id="f-phone" data-expect="fail">+966 50 123 4567</td><td>الجوال</td></tr></table>
+<!-- fail: a time range and a signed percentage on one line -->
+<p id="f-hours" data-expect="fail">09:00 - 17:00</p>
+<p id="f-change" data-expect="fail">-4.2%</p>
+<!-- none: the same data isolated -->
+<p id="n-hours" data-expect="none"><bdi dir="ltr">09:00 - 17:00</bdi></p>
+</body>
+</html>

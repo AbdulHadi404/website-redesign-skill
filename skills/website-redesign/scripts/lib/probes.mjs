@@ -127,3 +127,135 @@ export function overflowCulprits() {
   }
   return { overflow: by > 0, by, viewport: vw, culprits: [...out, ...textCulprits].slice(0, 8), cutAtEdge, clip };
 }
+
+/**
+ * Text whose INK (marks, accents, ascenders, descenders) is cut by the box that clips it, in any script. Line boxes
+ * are built from the font's ascent and descent, but Arabic marks and stacked hamza/harakat, and accented Latin
+ * capitals, reach past them, and nothing in layout says so: getBoundingClientRect and scrollHeight never see ink.
+ * Method (stage-2 stream S8, lib/glyph-probe.mjs, validated against two independent pixel truths): split each text
+ * node into its rendered lines, measure each line's ink with canvas measureText (shaped by the same engine), place
+ * it on the line's baseline (the fragment's bottom − fontBoundingBoxDescent) and compare it with the padding box of
+ * the nearest box that clips the block axis (overflow hidden/clip/auto/scroll, paint containment). A scroll
+ * container whose content scrolls on the block axis is judged against its whole scrollable area, not its scrollport:
+ * a line crossing the scrollport edge scrolls into view, ink outside the scrollable area never does. Lines wholly
+ * outside the clip (clamped away, or content cut off) are not ink cuts: they are counted as hidden lines.
+ * An absolutely positioned box is clipped only by its containing block and what contains that; a fixed one by
+ * nothing (transformed ancestors aside). Inline boxes and table rows ignore overflow. Body and html never count:
+ * their overflow goes to the viewport, which scrolls.
+ * Each text node costs one Range: the whole string's ink is placed on every line first, and only a node that this
+ * conservative estimate flags is measured again line by line (a Range per character, up to 400).
+ * opts: { scripts: 'all' | 'arabic' (default 'all'), minPx: 1 (flag a cut of at least this), limit: 600 (clipped
+ *   text nodes measured), mark: false }. With mark, every measured element gets data-audit-ink="top,bottom" (its own
+ *   text's ink extent in document coordinates, for inventory.mjs's clipped-text check), and each reported one
+ *   data-audit-ink-k="<index into clipped>".
+ * Returns { checked, clipped: [{ k (one per element), selector, clipper, text, font, lineHeight, boxHeight, scroller, topPx, bottomPx }], ms }.
+ */
+export function glyphClipProbe(opts = {}) {
+  const t0 = performance.now();
+  const minPx = opts.minPx ?? 1, arabicOnly = opts.scripts === 'arabic', limit = opts.limit ?? 600;
+  const AR = /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/;
+  const ctx = document.createElement('canvas').getContext('2d');
+  const sel = (el) => { if (el.id) return '#' + el.id; const c = [...el.classList].slice(0, 2).map((x) => '.' + x).join(''); const p = el.parentElement; const own = el.tagName.toLowerCase() + c; return p && p !== document.body && !el.id && !c ? `${p.id ? '#' + p.id : p.tagName.toLowerCase() + [...p.classList].slice(0, 1).map((x) => '.' + x).join('')} > ${own}` : own; };
+  const csMemo = new Map();
+  const cs = (e) => { let c = csMemo.get(e); if (!c) { c = getComputedStyle(e); csMemo.set(e, c); } return c; };
+  const NO_OVERFLOW = /^(inline|contents|none|table-row|table-row-group|table-header-group|table-footer-group|table-column|table-column-group)$/;
+  const clips = (c) => !NO_OVERFLOW.test(c.display) && (/hidden|clip|auto|scroll/.test(c.overflowY) || /paint|strict|content/.test(c.contain));
+  const holdsAbs = (c) => c.position !== 'static' || c.transform !== 'none' || c.perspective !== 'none' || c.filter !== 'none' || /paint|layout|strict|content/.test(c.contain) || /transform|perspective|filter/.test(c.willChange);
+  const clipMemo = new Map();
+  const clipperOf = (el) => {
+    if (clipMemo.has(el)) return clipMemo.get(el);
+    let found = null;
+    for (let p = el, escaping = false; p && p !== document.body && p !== document.documentElement; p = p.parentElement) {
+      const c = cs(p);
+      if (escaping && holdsAbs(c)) escaping = false;
+      if (!escaping && clips(c)) { found = p; break; }
+      if (c.position === 'fixed') break;
+      if (c.position === 'absolute') escaping = true;
+    }
+    clipMemo.set(el, found);
+    return found;
+  };
+  const hiddenText = (el) => {
+    if (el.checkVisibility && !el.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true })) return true;
+    for (let e = el; e && e !== document.body; e = e.parentElement) {
+      const c = cs(e);
+      if (c.clip === 'rect(0px, 0px, 0px, 0px)' || /inset\(50%\)/.test(c.clipPath)) return true;
+    }
+    const b = el.getBoundingClientRect();
+    return b.width <= 2 || b.height <= 2;
+  };
+  const sy = scrollY;
+  const out = [], inkOf = new Map();
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const range = document.createRange();
+  let n, checked = 0;
+  while ((n = walker.nextNode()) && checked < limit) {
+    const text = n.data;
+    if (!text.trim() || (arabicOnly && !AR.test(text))) continue;
+    const el = n.parentElement;
+    if (!el || el.closest('svg, script, style, noscript, template, textarea, select, option')) continue;
+    const clipper = clipperOf(el);
+    if (!clipper || hiddenText(el)) continue;
+    const cr = clipper.getBoundingClientRect(), ccs = cs(clipper);
+    if (cr.width < 2 || cr.height < 2) continue;
+    checked++;
+    // overflow: clip honours overflow-clip-margin (Chromium, Firefox; not Safari): the clip edge moves out by that much
+    const margin = ccs.overflowY === 'clip' ? parseFloat(ccs.overflowClipMargin) || 0 : 0;
+    const clip = { top: cr.top + parseFloat(ccs.borderTopWidth) - margin, bottom: cr.bottom - parseFloat(ccs.borderBottomWidth) + margin };
+    const scroller = /auto|scroll/.test(ccs.overflowY) && clipper.scrollHeight > clipper.clientHeight + 1;
+    if (scroller) { clip.top -= clipper.scrollTop; clip.bottom = clip.top + clipper.scrollHeight; }
+    const c = cs(el);
+    ctx.font = `${c.fontStyle} ${c.fontWeight} ${c.fontSize} ${c.fontFamily}`;
+    // Lines: the node's fragments grouped by their bottom edge (a bidi line splits into several fragments).
+    range.selectNodeContents(n);
+    const frags = [...range.getClientRects()].filter((q) => q.height > 0 && q.width > 0);
+    if (!frags.length) continue;
+    const judge = (lines) => {
+      let worst = null, hiddenLines = 0, inkTop = Infinity, inkBottom = -Infinity;
+      for (const line of lines) {
+        const m = line.m;
+        const baseline = line.bottom - m.fontBoundingBoxDescent;
+        const top = baseline - m.actualBoundingBoxAscent, bottom = baseline + m.actualBoundingBoxDescent;
+        inkTop = Math.min(inkTop, top); inkBottom = Math.max(inkBottom, bottom);
+        if (line.top >= clip.bottom - 1 || line.bottom <= clip.top + 1) { hiddenLines++; continue; }
+        const cutTop = clip.top - top, cutBottom = bottom - clip.bottom;
+        if (cutTop >= minPx || cutBottom >= minPx) {
+          const w = { topPx: Math.round(Math.max(0, cutTop) * 10) / 10, bottomPx: Math.round(Math.max(0, cutBottom) * 10) / 10 };
+          if (!worst || w.topPx + w.bottomPx > worst.topPx + worst.bottomPx) worst = w;
+        }
+      }
+      return { worst, hiddenLines, inkTop, inkBottom };
+    };
+    const byBottom = new Map();
+    for (const q of frags) { const k = Math.round(q.bottom); const l = byBottom.get(k); if (l) l.top = Math.min(l.top, q.top); else byBottom.set(k, { top: q.top, bottom: q.bottom }); }
+    const whole = ctx.measureText(text.trim());
+    let res = judge([...byBottom.values()].map((l) => ({ ...l, m: whole })));
+    if (res.worst && byBottom.size > 1) {
+      // The conservative estimate flags a cut: measure each line's own characters.
+      const lines = new Map();
+      const L = Math.min(text.length, 400);
+      for (let i = 0; i < L; i++) {
+        range.setStart(n, i); range.setEnd(n, i + 1);
+        const b = range.getBoundingClientRect(); if (!b.height) continue;
+        const key = Math.round(b.bottom);
+        const line = lines.get(key) || { top: b.top, bottom: b.bottom, chars: '' };
+        line.chars += text[i]; lines.set(key, line);
+      }
+      if (lines.size) res = judge([...lines.values()].map((l) => ({ ...l, m: ctx.measureText(l.chars.trim() || l.chars) })));
+    }
+    if (opts.mark && Number.isFinite(res.inkTop)) {
+      const prev = inkOf.get(el);
+      inkOf.set(el, prev ? [Math.min(prev[0], res.inkTop + sy), Math.max(prev[1], res.inkBottom + sy)] : [res.inkTop + sy, res.inkBottom + sy]);
+    }
+    if (res.worst) {
+      const fs = parseFloat(c.fontSize);
+      // One key per element (its first reported text node), so a caller can match the element's other runs too.
+      const k = +(el.getAttribute('data-audit-ink-k') ?? out.length);
+      if (opts.mark && !el.hasAttribute('data-audit-ink-k')) el.setAttribute('data-audit-ink-k', String(k));
+      out.push({ k, selector: sel(el), clipper: clipper === el ? 'self' : sel(clipper), text: text.replace(/\s+/g, ' ').trim().slice(0, 40), font: `${c.fontSize} ${c.fontFamily.split(',')[0].replace(/["']/g, '').trim()}`,
+        lineHeight: c.lineHeight === 'normal' ? 'normal' : +(parseFloat(c.lineHeight) / fs).toFixed(2), boxHeight: Math.round(cr.height), scroller, ...res.worst });
+    }
+  }
+  if (opts.mark) for (const [el, [a, b]] of inkOf) el.setAttribute('data-audit-ink', `${a.toFixed(1)},${b.toFixed(1)}`);
+  return { checked, clipped: out, ms: Math.round(performance.now() - t0) };
+}

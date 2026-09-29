@@ -1,0 +1,106 @@
+/* Copy of research/stage2/experiments/S8-rtl-mobile-haptics/fixtures/bilingual-broken.css for tools/regress.mjs (audit.mjs RTL block):
+   system fonts instead of the lab's git-ignored font files, so the page renders the same anywhere those fonts are absent. */
+/* Bilingual component page — BROKEN variant: the mistakes RTL builds usually ship (physical properties, icons flipped
+   wholesale in one place and not at all in others, tracking and italics on Arabic, a drawer that enters from the left,
+   a truncating line-height that clips harakat). Same markup as bilingual.css. */
+:root { --ink: #16181d; --muted: #555b66; --line: #d8dbe0; --accent: #0b5cad; --bg: #fff; --panel: #f5f6f8; --danger: #b3261e; --ok: #1d7a3e; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 15px/1.5 system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+:lang(ar) body, body:lang(ar) { line-height: 1.7; }
+.sr { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.icon { flex: none; vertical-align: middle; }
+/* Directional icons mirror with the layout; clocks, media, checks, search and objects do not. */
+[dir=rtl] .toolbar .icon, [dir=rtl] .media .icon, [dir=rtl] .due .icon, [dir=rtl] .toast .icon { transform: scaleX(-1); }
+
+.bar { display: flex; align-items: center; gap: 12px; padding-block: 8px; padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right)); border-block-end: 1px solid var(--line); }
+.brand { font-weight: 700; color: inherit; text-decoration: none; margin-right: 8px; }
+.navlist { display: flex; gap: 16px; list-style: none; margin: 0; padding: 0; }
+.navlist a { color: var(--muted); text-decoration: none; display: inline-block; padding-block: 4px; }
+.navlist a[aria-current] { color: var(--ink); font-weight: 600; box-shadow: inset 0 -2px 0 var(--accent); }
+.search { display: flex; align-items: center; gap: 6px; margin-left: auto; border: 1px solid var(--line); border-radius: 8px; padding-inline: 8px; }
+.search input { border: 0; font: inherit; padding-block: 6px; inline-size: 14rem; background: transparent; }
+.icon-btn { position: relative; display: inline-grid; place-items: center; min-inline-size: 40px; min-block-size: 40px; border: 0; background: none; border-radius: 8px; color: inherit; cursor: pointer; }
+.icon-btn:hover { background: var(--panel); }
+.badge { position: absolute; top: 2px; right: 2px; font-size: 11px; background: var(--danger); color: #fff; border-radius: 999px; padding-inline: 5px; line-height: 16px; }
+.lang { color: var(--accent); }
+
+.drawer { position: fixed; top: 0; bottom: 0; left: 0; inline-size: 280px; background: var(--bg); box-shadow: 0 8px 24px rgb(0 0 0 / .18); padding: 16px; z-index: 10;
+  transform: translateX(-100%); transition: transform .25s; }
+.drawer-open .drawer { transform: none; }
+.drawer ul { list-style: none; margin: 0; padding: 0; }
+.drawer a { display: flex; justify-content: space-between; align-items: center; padding-block: 10px; color: inherit; text-decoration: none; }
+
+main { max-inline-size: 60rem; margin-inline: auto; padding: 16px; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 4px; list-style: none; padding: 0; margin: 8px 0 16px; color: var(--muted); font-size: 14px; }
+.crumbs li { display: flex; align-items: center; gap: 4px; }
+.crumbs a { color: var(--accent); display: inline-block; padding-block: 2px; }
+.eyebrow { margin: 0; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+h1 { margin: 4px 0; font-size: 28px; line-height: 1.25; }
+:lang(ar) h1 { line-height: 1.5; }
+.lede { margin: 0 0 12px; color: var(--muted); text-align: left; }
+
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-block: 8px 16px; }
+.due { display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; color: var(--muted); font-size: 14px; }
+
+.stepper { display: flex; align-items: center; gap: 8px; list-style: none; padding: 0; margin: 0 0 16px; }
+.stepper li { display: flex; align-items: center; gap: 6px; }
+.stepper .done { color: var(--ok); }
+.stepper .num { display: inline-grid; place-items: center; inline-size: 22px; block-size: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 12px; }
+.stepper .sep { color: var(--line); }
+
+.tabs { display: flex; gap: 4px; border-block-end: 1px solid var(--line); margin-block-end: 16px; }
+.tabs [role=tab] { font: inherit; background: none; border: 0; padding: 8px 14px; border-block-end: 2px solid transparent; cursor: pointer; }
+.tabs [aria-selected=true] { border-block-end-color: var(--accent); font-weight: 600; }
+
+.form { display: grid; gap: 14px; max-inline-size: 30rem; }
+.field { display: grid; gap: 4px; }
+.field label { font-weight: 600; font-size: 14px; }
+.field input, .search input { font-size: 16px; }
+.field input { font: inherit; font-size: 16px; padding-block: 8px; padding-inline: 12px; border: 1px solid #8a9099; border-radius: 6px; }
+/* LTR data (email, phone, IBAN) keeps LTR order but aligns with the form. Chromium only knows the prefixed keyword. */
+.field input[dir=ltr] { text-align: -webkit-match-parent; text-align: match-parent; }
+.hint { margin: 0; font-size: 13px; color: var(--muted); text-align: left; }
+.with-icon { position: relative; }
+.with-icon input { inline-size: 100%; padding-right: 36px; }
+.with-icon .icon { position: absolute; right: 10px; top: 50%; translate: 0 -50%; color: var(--danger); }
+.invalid input { border-color: var(--danger); }
+.error { margin: 0; color: var(--danger); font-size: 14px; }
+.range { display: flex; gap: 8px; align-items: center; }
+.primary { justify-self: start; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-weight: 600; background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding-block: 10px; padding-inline: 16px; }
+.note { margin-block: 16px; }
+.note-text { display: inline-block; max-width: 22rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.1; vertical-align: bottom; }
+
+.table-wrap { overflow-x: auto; }
+.orders { border-collapse: collapse; inline-size: 100%; margin-block: 16px; font-size: 14px; }
+.orders caption { text-align: left; font-weight: 600; padding-block-end: 6px; }
+.orders th, .orders td { text-align: left; padding: 10px 8px 10px 12px; border-block-end: 1px solid var(--line); }
+/* Numbers align right in both directions: place values line up (multilingual.md §2a). Deliberately physical. */
+.orders .num { text-align: right; font-variant-numeric: tabular-nums; }
+.orders th.num { white-space: nowrap; }
+.cell-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 12rem; line-height: 1.2; }
+.row-open { display: inline-grid; place-items: center; min-inline-size: 32px; min-block-size: 32px; color: var(--muted); }
+
+.pager { display: flex; justify-content: space-between; margin-block: 16px; }
+.pager a { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); }
+
+.reel { display: grid; grid-auto-flow: column; grid-auto-columns: 40%; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-block-end: 8px; }
+.tile { scroll-snap-align: start; block-size: 90px; border-radius: 10px; background: var(--panel); display: grid; place-items: center; font-size: 24px; }
+.reel-ctrl { display: flex; gap: 4px; justify-content: flex-end; }
+.tile { animation: slide-in .3s both; }
+@keyframes slide-in { from { transform: translateX(-24px); opacity: 0; } }
+
+/* Media controls stay LTR in every language (dir="ltr" on the player): time runs left to right on a timeline. */
+.media { display: flex; align-items: center; gap: 8px; margin-block: 16px; }
+.track { flex: 1; block-size: 4px; background: var(--line); border-radius: 2px; }
+.played { inline-size: 30%; block-size: 100%; background: var(--accent); }
+.time { font-variant-numeric: tabular-nums; font-size: 13px; color: var(--muted); }
+.upload { display: grid; gap: 4px; margin-block: 16px; }
+.progress { block-size: 6px; background: var(--line); border-radius: 3px; }
+.bar-fill { inline-size: 60%; block-size: 100%; background: var(--ok); border-radius: inherit; }
+.chart { margin: 16px 0; color: var(--accent); }
+.card { padding: 16px; border-radius: 10px; box-shadow: 4px 4px 12px rgb(0 0 0 / .18); margin-block: 16px; }
+
+.toast { position: fixed; bottom: 16px; right: 16px; display: flex; gap: 8px; align-items: center; background: #1f2329; color: #fff; padding: 10px 14px; border-radius: 8px; }
+
+/* phone: the header keeps the menu button, brand, language and cart; nav and search move into the drawer */
+@media (max-width: 700px) { .bar nav, .bar .search { display: none; } .stepper { flex-wrap: wrap; } }

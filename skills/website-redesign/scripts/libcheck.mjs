@@ -1,39 +1,63 @@
 #!/usr/bin/env node
 /**
- * libcheck — judge an npm library in minutes before building hard UI on it.
- * (Proposed for skills/website-redesign/scripts/; written and tested in the S4 lab.)
+ * libcheck.mjs — judge an npm CODE library in minutes before building hard UI on it: licence class with the restrictive
+ * sentences quoted, releases, activity, adoption and size. Flags are triage for a human to read, never a gate.
  *
- *   node libcheck.mjs <package>[@version][=owner/repo] [<package> …] [--repo owner/name] [--size] [--entry "<js>"] [--json]
- *   node libcheck.mjs --search "resizable panels" [--size-limit 12]
+ *   node libcheck.mjs <package>[@version][=owner/repo] [<package> …]    # latest, or that version's tarball
+ *   node libcheck.mjs react-resizable-panels --size                      # + bundle cost of `export * from '<package>'`
+ *   node libcheck.mjs @dnd-kit/core --size --entry "export { DndContext } from '@dnd-kit/core';"   # a realistic import
+ *   node libcheck.mjs some-lib --repo owner/name                         # when package.json names no GitHub repository
+ *   node libcheck.mjs vaul lexical --json                                # machine-readable, one object per package
+ *   node libcheck.mjs --search "resizable panels" [--size-limit 12]      # candidate NAMES only (see below)
  *
- * Scope: CODE libraries. Icons, fonts, photos and other assets are checked by hand (resources/README.md);
- * libcheck recognises the OFL and Creative Commons texts only so it does not mislabel them.
+ * Scope: CODE libraries (npm packages you import). Icons, fonts, photos and other assets are checked by hand
+ * (resources/README.md): libcheck recognises the OFL and Creative Commons texts only so that it does not mislabel them.
+ * Licence readings are engineering triage, not legal advice.
  *
- * For each package it reports, from primary sources only:
- *   release    latest version and date, releases in the last 12 months, deprecation, direct deps, peers
- *   adoption   weekly downloads and dependents (npm search API)
- *   licence    the LICENSE text shipped in the tarball (npm pack), classified from its words, never from
- *              package.json; a pointer file or a missing file falls back to the repository's root licence
- *   activity   the repository over git (treeless, shallow since 12 months ago): commits, human authors,
- *              the top author's share (bus factor), last commit; README "unmaintained" notices
- *   size       (--size) esbuild + gzip of a minimal entry, React/Vue/Svelte external; initial vs lazy JS,
- *              CSS, WASM/other assets, how many npm packages end up in the bundle
- * and ends with the licence class (A–D, as in resources/README.md) and RED / AMBER flags. The flags are
- * TRIAGE for a human to read, not a gate: restrictive licence sentences are quoted so someone can decide.
- * Regression cases (packages where the heuristics once went wrong) live in the S4 lab: node lib/regress.mjs.
+ * For each package, from primary sources only:
+ *   release    latest version and date; in the last 12 months: stable releases, pre-releases (nightly/canary/beta,
+ *              counted apart) and breaking-by-semver versions (a new 0.MINOR line before 1.0, a new MAJOR after);
+ *              deprecation, direct dependencies, peers, install scripts
+ *   adoption   weekly downloads and dependents (npm search API) — not a quality signal, only context
+ *   licence    the licence text shipped in the tarball (npm pack), classified from its words. The package.json field is
+ *              used only when no text exists, or when the shipped file is not this package's licence (third-party
+ *              notices, a multi-licence repository notice) — and a field naming commercial terms beside a permissive
+ *              file is reported as a conflict, not resolved. A pointer file or a missing file falls back to the
+ *              repository's root licence. Licence documents that are not text (a PDF EULA) are named, not read.
+ *   activity   the repository over git (treeless, shallow since 12 months ago): commits, human authors, the top
+ *              author's share (bus factor), last commit; "unmaintained/archived/deprecated" notices about THIS package
+ *              in the package README or the repository README
+ *   size       (--size) esbuild + gzip of a minimal entry (--entry for a realistic one), React/Vue/Svelte external:
+ *              initial vs lazy JS, CSS, WASM and other assets, how many npm packages end up in the bundle
+ * It ends with the licence class, as in resources/README.md — A ship · B ship with a condition (MPL/EPL notices,
+ * CC BY credit) · C only with a human decision recorded in DESIGN.md (copyleft, brand decision, procurement) · D reject
+ * (no licence anywhere, non-commercial only, placeholder package) · ? read it — and RED / AMBER flags:
+ *   RED    do not adopt until someone has read the quoted evidence and decided (for a purchase, the client decides:
+ *          write it into DESIGN.md as a question);
+ *   AMBER  write it down and mitigate (pin the version, wrap it, lazy-load it).
+ * The exit code is 0 whatever the flags; 1 only when a package could not be checked (not on npm, no such version,
+ * network). Then read the README and the last three changelog entries, and try its keyboard and screen-reader
+ * behaviour in a demo before committing.
  *
- * --search ranks npm text-search results by weekly downloads (npm's own score fields are constant 1/1/1
- * as of 2026-09 and carry no signal) and prints the top ones with their last publish date. It yields
- * candidate NAMES only and misses category leaders often (S4 lab, 18 designer queries: no recommended leader
- * in the top 12 for 7, only some of them for 5 more); search the
- * skill's hard-ui.md, the primitive libraries and the dependency lists of products that do it well first.
+ * Evidence (research/stage2/streams/S4-capability-catalogue.md, F1 and "Changes after review"): 34 regression cases
+ * (the reviewer's wrong verdicts and the F1 licence traps), 15/16 right on held-out packages at the first run. At
+ * promotion, 52 more held-out packages found 7 wrong verdicts (third-party notices read as the package's licence, a
+ * commercial field beside a copied MIT file, a PDF EULA read as text, a purchase-page pointer, a licence folder that
+ * crashed it, a trial-mode README, a negated "licence key"); each is fixed and is now a regression case:
+ * tools/regress.mjs, group libcheck (add every future wrong verdict there).
  *
- * Needs network (registry.npmjs.org, github.com, raw.githubusercontent.com) and git; --size runs
- * `npm install` into a temporary folder. Node 18+.
+ * --search ranks npm text-search results by weekly downloads (npm's own score fields are constant and carry no signal)
+ * and prints the top ones with their last publish date. It yields candidate NAMES only, with a measured miss rate
+ * (S4 lab, 18 designer queries: no recommended leader in the top 12 for 7, only some of them for 5 more), and surfaces
+ * vendor subpackages, dormant packages and unrelated CLI tools. Look first in the skill's hard-ui.md, the component
+ * lists of the primitive layer in use, and the dependency lists of products that already do it well.
+ *
+ * Needs Node 18+, npm and git, and network access to registry.npmjs.org, github.com and raw.githubusercontent.com;
+ * --size runs `npm install` (scripts ignored) into a temporary folder.
  */
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-import { mkdtemp, readdir, readFile, writeFile, mkdir, rm } from 'node:fs/promises';
+import { mkdtemp, readdir, readFile, writeFile, mkdir, rm, stat } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import os from 'node:os';
@@ -42,16 +66,20 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const run = promisify(execFile);
 const DAY = 86400000;
+// Every request has a time limit: an unreachable host must end in an error line, not a hang.
+const get = (url) => fetch(url, { signal: AbortSignal.timeout(30000) });
 export const today = () => new Date();
 export const cutoffDate = (months = 12) => new Date(Date.now() - months * 30.44 * DAY).toISOString().slice(0, 10);
 
 // ── npm registry ────────────────────────────────────────────────────────────────────────────────
-export async function registry(name, cutoff = cutoffDate()) {
-  const r = await fetch('https://registry.npmjs.org/' + name.replace('/', '%2F'));
-  if (!r.ok) return { name, error: 'HTTP ' + r.status };
+/** Registry facts for `name`; release counts are for the whole package, dependencies and fields for `version` (default latest). */
+export async function registry(name, cutoff = cutoffDate(), version = null) {
+  let r;
+  try { r = await get('https://registry.npmjs.org/' + name.replace('/', '%2F')); } catch (e) { return { name, error: `registry.npmjs.org unreachable (${e.cause?.code || e.name})` }; }
+  if (!r.ok) return { name, error: 'HTTP ' + r.status + (r.status === 404 ? ' (no such package on npm)' : '') };
   const j = await r.json();
   const latest = j['dist-tags']?.latest;
-  const m = j.versions?.[latest] || {};
+  const m = j.versions?.[version || latest] || {};
   const since = new Date(cutoff).getTime();
   const versions = Object.entries(j.time || {}).filter(([v]) => j.versions?.[v]).sort((a, b) => new Date(a[1]) - new Date(b[1]));
   const inWindow = versions.filter(([, t]) => new Date(t).getTime() >= since);
@@ -62,7 +90,7 @@ export async function registry(name, cutoff = cutoffDate()) {
   const firstOfLine = new Map();
   for (const [v, t] of versions) if (stable(v) && !firstOfLine.has(lineOf(v))) firstOfLine.set(lineOf(v), new Date(t).getTime());
   const breaking12m = [...firstOfLine.values()].filter((t) => t >= since).length;
-  return {
+  const out = {
     name, latest, latestDate: (j.time?.[latest] || '').slice(0, 10),
     releases12m: inWindow.length, stableReleases12m: inWindow.filter(([v]) => stable(v)).length,
     preReleases12m: inWindow.filter(([v]) => !stable(v)).length, breaking12m,
@@ -73,6 +101,8 @@ export async function registry(name, cutoff = cutoffDate()) {
     repository: String(m.repository?.url || m.repository || '').replace(/^git\+|\.git$/g, ''),
     firstPublished: (j.time?.created || '').slice(0, 10),
   };
+  Object.defineProperty(out, 'hasVersion', { value: (v) => !!j.versions?.[v], enumerable: false }); // kept out of --json
+  return out;
 }
 
 export async function adoption(name) {
@@ -80,7 +110,7 @@ export async function adoption(name) {
   let r = null;
   for (let i = 0; i < 4 && !r?.ok; i++) {
     if (i) await new Promise((ok) => setTimeout(ok, 1500 * 2 ** i));
-    r = await fetch(`https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(name)}&size=20`).catch(() => null);
+    r = await get(`https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(name)}&size=20`).catch(() => null);
   }
   if (!r?.ok) return { error: 'npm search unavailable (HTTP ' + (r?.status ?? 'network') + ')' };
   const j = await r.json();
@@ -89,7 +119,8 @@ export async function adoption(name) {
 }
 
 export async function search(text, limit = 12) {
-  const r = await fetch(`https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(text)}&size=250`);
+  const r = await get(`https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(text)}&size=250`);
+  if (!r.ok) throw new Error(`npm search: HTTP ${r.status}`);
   const j = await r.json();
   // npm's own score fields are constant (1/1/1) and its ranking mixes in huge unrelated utilities when sorted by
   // downloads, so keep only packages whose name, description or keywords contain every query word (stemmed to
@@ -137,7 +168,8 @@ const FLAGS = [
   ['trial', /\btrial\b|evaluation (period|purposes|licen[cs]e)/i],
   ['time-limited', /\bfor \d+ days\b|\b\d+[- ]day (trial|evaluation)|after \d+ days/i],
   // Not "licence fee" alone: the GPL-3.0 says "You may not impose a license fee".
-  ['paid', /\bsubscription\b|\bper (developer|seat)\b|purchase (a |the )?(commercial )?licen[cs]e|licen[cs]e fees? (is|are) (payable|due)/i],
+  // …and a link to a purchase page (AnyChart's LICENCE: "available under different licenses … Read more at http://www.anychart.com/buy/").
+  ['paid', /\bsubscription\b|\bper (developer|seat)\b|purchase (a |the )?(commercial )?licen[cs]e|licen[cs]e fees? (is|are) (payable|due)|https?:\/\/[^\s)>\]]*\/(buy|pricing|purchase)\b/i],
   // "Commercial and Non-Commercial Use" (a grant) is not a restriction: only NC-only wording counts.
   ['non-commercial', /non-?commercial (use |purposes )?only|only (for |in )?non-?commercial|for non-?commercial (use|purposes)|\bNonCommercial\b|not for commercial|non-?commercial licen[cs]e/i],
   ['keep-logo', /(logo|watermark|attribution|made with)[^.]{0,120}(must|shall|remain|visible|not be removed)/i],
@@ -205,12 +237,27 @@ function classifyText(text) {
   return { classified, classes: own, flags: shown, head: flat.slice(0, 200), evidence: evidence.slice(0, 6) };
 }
 
-export const isLicenceFile = (f) => /(^|[-_.])(licen[cs]e|copying)([-_.]|$)/i.test(f) && !/\.(js|mjs|cjs|ts|map|json)$/i.test(f);
+export const isLicenceFile = (f) => /(^|[-_.])(licen[cs]e|copying|eula)([-_.]|$)/i.test(f) && !/\.(js|mjs|cjs|ts|map|json)$/i.test(f);
+const BINARY_DOC = /\.(pdf|docx?|rtf|odt|pages)$/i;
+
+// A licence file that says it covers only the third-party code bundled with the package is not the package's own
+// licence (@mescius/spread-sheets: "This document applies to the third party software included with this package.
+// See SpreadJS-EULA.txt for SPREADJS full End User License Agreement", followed by MIT notices for JSZip and others).
+export function thirdPartyOnly(text) {
+  const head = String(text).replace(/^\uFEFF/, '').slice(0, 400).replace(/\s+/g, ' ');
+  const m = head.match(/[^.]*\b(?:(?:applies|apply|pertains|relates) to (?:the )?(?:third|3rd)[- ]party|(?:third|3rd)[- ]party (?:software )?notices?\b|licen[cs]es? (?:of|for) (?:the )?(?:third|3rd)[- ]party)[^.]*\.?/i);
+  return m ? m[0].trim().slice(0, 200) : null;
+}
+
+// A package.json field that names commercial terms: "Commercial", "UNLICENSED", "proprietary", a EULA or a purchase
+// page ("http://www.fusioncharts.com/buy/", "SEE LICENSE IN <http://www.anychart.com/buy>"). A field that only points
+// at a file ("SEE LICENSE IN LICENSE.md") is not one.
+export const restrictiveField = (f) => !!f && /^\s*(UNLICENSED|proprietary|commercial)\s*$|eula|\bbuy\b|purchase|pricing|commercial|proprietary|licen[cs]e[- _]?agreement/i.test(String(f));
 
 export async function repoLicence(repo) {
   if (!repo) return null;
   for (const f of ['LICENSE', 'LICENSE.md', 'LICENSE.txt', 'LICENCE', 'LICENCE.md', 'license', 'license.md', 'License.md', 'COPYING']) {
-    const r = await fetch(`https://raw.githubusercontent.com/${repo}/HEAD/${f}`).catch(() => null);
+    const r = await get(`https://raw.githubusercontent.com/${repo}/HEAD/${f}`).catch(() => null);
     if (r?.ok) return { file: `github.com/${repo}/${f}`, text: await r.text() };
   }
   return null;
@@ -225,7 +272,7 @@ function fromField(field) {
   const f = String(field).trim();
   if (/^SEE LICEN[CS]E IN /i.test(f)) return null;
   if (SPDX_RE.test(f) && !/^(UNLICENSED|proprietary|commercial)$/i.test(f)) return { classified: f, classes: [f], flags: [], evidence: [], fieldOnly: true };
-  return { classified: /^UNLICENSED$/i.test(f) ? 'custom / proprietary' : 'custom', classes: [], flags: [], evidence: [`[package.json] ${f.slice(0, 200)}`], fieldOnly: true };
+  return { classified: restrictiveField(f) ? 'custom / proprietary' : 'custom', classes: [], flags: [], evidence: [`[package.json] ${f.slice(0, 200)}`], fieldOnly: true };
 }
 
 // A repository-wide notice ("This repository contains software under two licenses … Each package's own
@@ -247,11 +294,31 @@ function fromRepoNotice(text, name, field) {
 
 /** Classify the licence files in an unpacked package folder (falls back to the repo root licence, then to the package.json field). */
 export async function licenceFromDir(dir, repo) {
-  const files = existsSync(dir) ? (await readdir(dir)).filter(isLicenceFile) : [];
+  // Regular files only (devextreme ships a `license/` folder of licence-key scripts, which once crashed this); licence
+  // documents that are not text (@mescius/wijmo's COMMERCIAL-LICENSE.pdf) are named as evidence, never read as text.
+  const names = existsSync(dir) ? (await readdir(dir)).filter(isLicenceFile) : [];
+  const regular = [];
+  for (const f of names) if ((await stat(path.join(dir, f)).catch(() => null))?.isFile()) regular.push(f);
+  const docs = regular.filter((f) => BINARY_DOC.test(f)), files = regular.filter((f) => !BINARY_DOC.test(f));
   const pj = existsSync(path.join(dir, 'package.json')) ? JSON.parse(await readFile(path.join(dir, 'package.json'), 'utf8')) : {};
   const field = typeof pj.license === 'string' ? pj.license : pj.license?.type ?? (Array.isArray(pj.licenses) ? pj.licenses.map((l) => l.type || l).join(' OR ') : null);
+  const vendorDoc = docs.some((f) => /eula|commercial|proprietary|agreement/i.test(f));
+  const withDocs = (r) => {
+    if (!docs.length) return r;
+    const none = /NO LICENCE/.test(r.classified);
+    return { ...r, docs, flags: [...new Set([...(r.flags || []), ...(vendorDoc ? ['vendor-agreement'] : [])])],
+      classified: none ? `${vendorDoc ? 'custom / proprietary' : 'custom'} (licence document ${docs.join(', ')})` : r.classified,
+      evidence: [`[licence document] the package ships ${docs.join(', ')}: not text, open it`, ...(r.evidence || [])] };
+  };
   let source = 'package', file = files.join(', '), text = '';
   if (files.length) text = (await Promise.all(files.map((f) => readFile(path.join(dir, f), 'utf8')))).join('\n\n');
+  // Third-party notices only: the package's own licence is the field (or nothing), never the bundled code's MIT.
+  const tp = files.length ? thirdPartyOnly(text) : null;
+  if (tp) {
+    const f = fromField(field) || { classified: 'NO LICENCE for the package itself', classes: [], flags: [], evidence: [] };
+    const r = withDocs({ source: `package.json field (${file} covers bundled third-party code only)`, file, ...f, thirdParty: true });
+    return { ...r, evidence: [`[third-party notices] ${tp}`, ...r.evidence] };
+  }
   if (files.length && text.length < 400 && /github\.com\/[^\s)]+licen[cs]e/i.test(text)) {
     const r = await repoLicence(repo);
     if (r) { source = 'repo root (package file is a pointer)'; file = r.file; text = r.text; }
@@ -260,14 +327,22 @@ export async function licenceFromDir(dir, repo) {
     const r = await repoLicence(repo);
     if (!r) {
       const f = fromField(field);
-      if (f) return { source: 'package.json field only (no licence text in package or repo root)', file: null, ...f };
-      return { source: 'none', file: null, classified: 'NO LICENCE FILE (package or repo root)', flags: [], evidence: [] };
+      if (f) return withDocs({ source: 'package.json field only (no licence text in package or repo root)', file: null, ...f });
+      return withDocs({ source: 'none', file: null, classified: 'NO LICENCE FILE (package or repo root)', flags: [], evidence: [] });
     }
     source = 'repo root (package ships none)'; file = r.file; text = r.text;
   }
   const notice = fromRepoNotice(text, pj.name, field);
-  if (notice) return { source: source + '; multi-licence repo notice', file, bytes: text.length, ...notice };
-  return { source, file, bytes: text.length, ...classifyLicenceText(text) };
+  if (notice) return withDocs({ source: source + '; multi-licence repo notice', file, bytes: text.length, ...notice });
+  let res = withDocs({ source, file, bytes: text.length, ...classifyLicenceText(text) });
+  // A field naming commercial terms beside a permissive file is a conflict for a human, not a permissive licence: the
+  // file can be a copied one (fusioncharts ships Meta's MIT LICENSE.md, its field is ".../buy/") or the root licence of
+  // an examples repository (scichart's field is its EULA URL).
+  if (restrictiveField(field) && licenceClass(res).cls === 'A') {
+    const holder = text.match(/Copyright[^\n]{0,80}/i)?.[0].trim();
+    res = { ...res, conflict: String(field), evidence: [`[package.json] "${String(field).slice(0, 120)}", but ${file} is ${res.classified}${holder ? ` (${holder})` : ''}: it may cover copied or bundled code only`, ...(res.evidence || [])] };
+  }
+  return res;
 }
 
 /** Licence class in the terms of resources/README.md (A ship · B ship with a condition · C human decision · D reject; "?" read it). */
@@ -277,6 +352,7 @@ export function licenceClass(lic) {
   if (!lic || /NO LICENCE/.test(c)) return { cls: 'D', why: 'no licence text or field anywhere: all rights reserved' };
   const buy = flags.filter((f) => (PROCUREMENT.has(f) && f !== 'watermark' && f !== 'keep-logo') || f === 'proprietary' || (f === 'commercial' && !(lic.classes || []).length));
   if (buy.length || /^custom \/ proprietary/.test(c)) return { cls: 'C', kind: 'procurement', why: 'source-available, paid, trial or capped: the client buys it or it is not used' };
+  if (lic.conflict) return { cls: 'C', kind: 'procurement', why: 'package.json names commercial terms but the licence file is permissive: read both' };
   if (flags.includes('watermark') || flags.includes('keep-logo')) return { cls: 'C', kind: 'brand decision', why: 'a third-party watermark or logo must stay visible in the product' };
   if (flags.includes('no-logo-use')) return { cls: 'C', kind: 'restricted use', why: 'forbids logo or identity use (and usually resale as a library)' };
   if (/CC-BY-NC/.test(c) || (flags.includes('non-commercial') && !/commercial \(dual\)/.test(c))) return { cls: 'D', why: 'non-commercial only' };
@@ -321,7 +397,8 @@ export function readmeNotice(text, name) {
 export function readmeProcurement(text) {
   if (!text) return null;
   const flat = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-  const re = /(will|may|does) (overlay|add|show|display|place|render)[^.]{0,40}watermark|watermark[^.]{0,80}(unless|until|without) (a |you )?[^.]{0,20}(licen[cs]e|key|purchas)|\bfor (testing|evaluation) (only|purposes only)\b|this package is for (testing|evaluation)|placeholder package/i;
+  // …or runs in trial mode until a licence is set (@pdftron/webviewer: "WebViewer will run in trial mode until a license is provided").
+  const re = /(will|may|does) (overlay|add|show|display|place|render)[^.]{0,40}watermark|watermark[^.]{0,80}(unless|until|without) (a |you )?[^.]{0,20}(licen[cs]e|key|purchas)|\bfor (testing|evaluation) (only|purposes only)\b|this package is for (testing|evaluation)|placeholder package|\b(runs?|will run|operates?) in (trial|evaluation|demo) mode\b/i;
   const s = flat.split(/(?<=[.!?])\s+/).find((x) => re.test(x));
   return s ? s.slice(0, 220) : null;
 }
@@ -333,10 +410,18 @@ export function readmeMaintenance(text) {
   return m ? m[0].trim().slice(0, 200) : null;
 }
 
+// A README sentence about a paid tier (AMBER): "ag-grid-enterprise is available under a commercial license". Not a
+// sentence that denies one (konva: "Konva is MIT licensed and does not require a license key").
+export function readmeCommercial(text) {
+  if (!text) return null;
+  const s = text.replace(/\s+/g, ' ').split(/(?<=[.!?])\s+/).find((x) => /commercial licen[cs]e|licen[cs]e key|pro edition|enterprise (edition|features|licen)|pricing|premium/i.test(x) && !/\b(does not|doesn't|do not|don't|never|no need to) (require|need)s? (a |any )?(commercial licen[cs]e|licen[cs]e key)/i.test(x));
+  return s ? s.slice(0, 220) : null;
+}
+
 export async function repoReadme(repo) {
   if (!repo) return null;
   for (const f of ['README.md', 'readme.md', 'Readme.md', 'README']) {
-    const r = await fetch(`https://raw.githubusercontent.com/${repo}/HEAD/${f}`).catch(() => null);
+    const r = await get(`https://raw.githubusercontent.com/${repo}/HEAD/${f}`).catch(() => null);
     if (r?.ok) return await r.text();
   }
   return null;
@@ -347,7 +432,9 @@ async function packLicence(name, version, repo, tmp) {
   await mkdir(dest, { recursive: true });
   const { stdout } = await run('npm', ['pack', `${name}@${version}`, '--pack-destination', dest, '--json', '--silent'], { maxBuffer: 32 << 20 });
   const tgz = path.join(dest, JSON.parse(stdout)[0].filename);
-  await run('tar', ['-xzf', tgz, '-C', dest]);
+  // Only the top-level files are read (licence files, README, package.json): @progress/kendo-ui unpacks to 210 MB.
+  await run('tar', ['-xzf', tgz, '-C', dest, '--exclude=*/*/*']);
+  await rm(tgz, { force: true });
   const pkgDir = path.join(dest, 'package');
   const readme = existsSync(pkgDir) ? (await readdir(pkgDir)).find((x) => /^readme(\.md)?$/i.test(x)) : null;
   const readmeText = readme ? await readFile(path.join(pkgDir, readme), 'utf8') : '';
@@ -355,32 +442,38 @@ async function packLicence(name, version, repo, tmp) {
   const rootReadme = await repoReadme(repo);
   const notice = readmeNotice(readmeText, name) || (rootReadme && readmeNotice(rootReadme, name));
   const noticeSource = readmeNotice(readmeText, name) ? 'package README' : notice ? `github.com/${repo} README` : null;
-  const commercial = (readmeText + '\n' + (rootReadme || '')).replace(/\s+/g, ' ').split(/(?<=[.!?])\s+/).find((x) => /commercial licen[cs]e|licen[cs]e key|pro edition|enterprise (edition|features|licen)|pricing|premium/i.test(x));
-  return { ...(await licenceFromDir(pkgDir, repo)), readmeNotice: notice, readmeNoticeSource: noticeSource, readmeMaintenance: readmeMaintenance(readmeText) || readmeMaintenance(rootReadme), readmeProcurement: readmeProcurement(readmeText), readmeCommercial: commercial ? commercial.slice(0, 220) : null };
+  return { ...(await licenceFromDir(pkgDir, repo)), readmeNotice: notice, readmeNoticeSource: noticeSource, readmeMaintenance: readmeMaintenance(readmeText) || readmeMaintenance(rootReadme), readmeProcurement: readmeProcurement(readmeText), readmeCommercial: readmeCommercial(readmeText + '\n' + (rootReadme || '')) };
 }
 
 // ── Repository activity over git ────────────────────────────────────────────────────────────────
 const BOT = /\[bot\]|github-actions|dependabot|renovate|changeset|semantic-release|greenkeeper|actions-user|release-please|autofix|copilot/i;
+// One clone per repository, even when several packages of one monorepo are checked at the same time.
+const clones = new Map();
+const NO_PROMPT = { ...process.env, GIT_TERMINAL_PROMPT: '0' };   // a private or missing repository fails, it never asks for a password
+async function cloneOnce(repo, dir, cutoff) {
+  if (existsSync(dir)) return null;
+  const url = `https://github.com/${repo}`;
+  let shallowOk = false;
+  for (let i = 0; i < 2 && !shallowOk; i++) {
+    try { await run('git', ['clone', '-q', '--bare', '--single-branch', '--filter=tree:0', `--shallow-since=${cutoff}`, url, dir], { timeout: 240000, env: NO_PROMPT }); shallowOk = true; }
+    catch { await rm(dir, { recursive: true, force: true }); }
+  }
+  if (shallowOk) return null;
+  // No commit since the cutoff makes --shallow-since fail: fetch the last commit only. If that commit is inside the
+  // window, the first clone failed for another reason (network): report an error, not "0 commits".
+  try { await run('git', ['clone', '-q', '--bare', '--single-branch', '--filter=tree:0', '--depth=1', url, dir], { timeout: 240000, env: NO_PROMPT }); }
+  catch (e2) { return String(e2.stderr || e2.message).trim().split('\n')[0]; }
+  const lastIso = (await run('git', ['-C', dir, 'log', '-1', '--format=%cI'])).stdout.trim();
+  if (lastIso && lastIso.slice(0, 10) >= cutoff) { await rm(dir, { recursive: true, force: true }); return 'shallow clone failed although the repository has recent commits; re-run'; }
+  return null;
+}
 export async function activity(repo, cacheDir, cutoff = cutoffDate()) {
   if (!repo) return null;
   const dir = path.join(cacheDir, repo.replace('/', '__'));
-  const url = `https://github.com/${repo}`;
   await mkdir(cacheDir, { recursive: true });
-  if (!existsSync(dir)) {
-    let shallowOk = false;
-    for (let i = 0; i < 2 && !shallowOk; i++) {
-      try { await run('git', ['clone', '-q', '--bare', '--single-branch', '--filter=tree:0', `--shallow-since=${cutoff}`, url, dir], { timeout: 240000 }); shallowOk = true; }
-      catch { await rm(dir, { recursive: true, force: true }); }
-    }
-    if (!shallowOk) {
-      // No commit since the cutoff makes --shallow-since fail: fetch the last commit only. If that commit is
-      // inside the window, the first clone failed for another reason (network): report an error, not "0 commits".
-      try { await run('git', ['clone', '-q', '--bare', '--single-branch', '--filter=tree:0', '--depth=1', url, dir], { timeout: 240000 }); }
-      catch (e2) { return { repo, error: String(e2.stderr || e2.message).split('\n')[0] }; }
-      const lastIso = (await run('git', ['-C', dir, 'log', '-1', '--format=%cI'])).stdout.trim();
-      if (lastIso && lastIso.slice(0, 10) >= cutoff) { await rm(dir, { recursive: true, force: true }); return { repo, error: 'shallow clone failed although the repository has recent commits; re-run' }; }
-    }
-  }
+  if (!clones.has(dir)) clones.set(dir, cloneOnce(repo, dir, cutoff).catch((e) => String(e.message)));
+  const err = await clones.get(dir);
+  if (err) return { repo, error: err };
   const { stdout } = await run('git', ['-C', dir, 'log', `--since=${cutoff}`, '--format=%an|%ae|%cI'], { maxBuffer: 64 << 20 });
   const last = (await run('git', ['-C', dir, 'log', '-1', '--format=%cI'])).stdout.trim().slice(0, 10);
   const rows = stdout.trim() ? stdout.trim().split('\n').map((l) => l.split('|')) : [];
@@ -475,19 +568,24 @@ export async function check(arg, { tmp, repo: repoOpt = null, size: withSize = f
   const [spec, repoArg] = arg.split('=');
   const at = spec.lastIndexOf('@');
   const [name, pinned] = at > 0 ? [spec.slice(0, at), spec.slice(at + 1)] : [spec, null];
-  const reg = await registry(name);
+  const reg = await registry(name, undefined, pinned);
   if (reg.error) return { name, error: reg.error };
+  if (pinned && !reg.hasVersion(pinned)) return { name, error: `no version ${pinned} on npm (latest ${reg.latest})` };
   const version = pinned || reg.latest;
   // repository.url forms: git+https://github.com/o/r.git, git@github.com:o/r, github:o/r (moment), o/r
   const repo = repoArg || repoOpt || (reg.repository.match(/github\.com[/:]([^/]+\/[^/#]+)|^github:([^/]+\/[^/#]+)|^([\w.-]+\/[\w.-]+)$/)?.slice(1).find(Boolean) ?? null);
-  const [lic, act, adopt] = await Promise.all([packLicence(name, version, repo, tmp), withActivity ? activity(repo, path.join(tmp, 'git')) : undefined, adoption(name)]);
+  let lic, act, adopt;
+  try { [lic, act, adopt] = await Promise.all([packLicence(name, version, repo, tmp), withActivity ? activity(repo, path.join(tmp, 'git')) : undefined, adoption(name)]); }
+  catch (e) { return { name, version, error: `could not fetch the package (${String(e.stderr || e.message).trim().split('\n')[0].slice(0, 160)})` }; }
   let size = null;
   if (withSize) {
     const root = path.join(tmp, 'size-' + name.replace(/[@/]/g, '_'));
     await mkdir(root, { recursive: true });
     await writeFile(path.join(root, 'package.json'), '{"private":true}');
-    await run('npm', ['install', '--silent', '--ignore-scripts', '--no-audit', '--no-fund', '--legacy-peer-deps', `${name}@${version}`, 'esbuild'], { cwd: root, maxBuffer: 64 << 20, timeout: 600000 });
-    size = await bundleCost(entry || `export * from '${name}';`, { root, buildDir: path.join(root, 'build') });
+    try {
+      await run('npm', ['install', '--silent', '--ignore-scripts', '--no-audit', '--no-fund', '--legacy-peer-deps', `${name}@${version}`, 'esbuild'], { cwd: root, maxBuffer: 64 << 20, timeout: 600000 });
+      size = await bundleCost(entry || `export * from '${name}';`, { root, buildDir: path.join(root, 'build') });
+    } catch (e) { size = { ok: false, error: `npm install failed: ${String(e.stderr || e.message).trim().split('\n')[0].slice(0, 160)}` }; }
   }
   return { name, version, registry: reg, adoption: adopt, licence: lic, activity: act, size, ...flagsFor({ reg, lic, act, size, adopt }) };
 }
@@ -498,17 +596,23 @@ async function main() {
   const opt = (k) => (argv.includes(k) ? argv[argv.indexOf(k) + 1] : null);
   const json = argv.includes('--json');
   if (argv.includes('--search')) {
-    const rows = await search(opt('--search'), +(opt('--size-limit') || 12));
+    const words = opt('--search');
+    if (!words || words.startsWith('--')) { console.log('usage: node libcheck.mjs --search "<words>" [--size-limit 12] [--json]'); process.exit(1); }
+    const rows = await search(words, +(opt('--size-limit') || 12));
     if (json) return console.log(JSON.stringify(rows, null, 1));
     for (const r of rows) console.log(`${String(r.weekly).padStart(10)}/wk  ${r.date}  ${r.name}@${r.version}  — ${r.description}`);
     return;
   }
   const names = argv.filter((a, i) => !a.startsWith('--') && !['--repo', '--entry', '--size-limit', '--search'].includes(argv[i - 1]));
   if (!names.length) { console.log('usage: node libcheck.mjs <package>[@version][=owner/repo] … [--repo owner/name] [--size] [--entry "<js>"] [--json] | --search "<words>"'); process.exit(1); }
+  if (opt('--repo') && names.length > 1) console.error('--repo applies to one package; with several, write each as <package>=owner/repo');
   const tmp = await mkdtemp(path.join(os.tmpdir(), 'libcheck-'));
-  const out = [];
-  for (const arg of names) out.push(await check(arg, { tmp, repo: names.length === 1 ? opt('--repo') : null, size: argv.includes('--size'), entry: opt('--entry') }));
-  await rm(tmp, { recursive: true, force: true });
+  // Three packages at a time, printed in the order given.
+  const out = new Array(names.length);
+  let next = 0;
+  const worker = async () => { for (let i = next++; i < names.length; i = next++) out[i] = await check(names[i], { tmp, repo: names.length === 1 ? opt('--repo') : null, size: argv.includes('--size'), entry: opt('--entry') }).catch((e) => ({ name: names[i], error: 'crash: ' + e.message })); };
+  try { await Promise.all([worker(), worker(), worker()]); } finally { await rm(tmp, { recursive: true, force: true }); }
+  if (out.some((r) => r.error)) process.exitCode = 1;   // could not check; flags never change the exit code
   if (json) return console.log(JSON.stringify(out, null, 1));
   const kb = (b) => (b / 1024).toFixed(1) + ' KB';
   for (const r of out) {

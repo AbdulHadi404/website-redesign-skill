@@ -27,12 +27,15 @@
  *              on the left, text-align: left), then short and long texts swapped for Arabic samples. A page that is
  *              already right-to-left is checked the other way: physical text-align: left as it stands, then the page
  *              flipped to dir="ltr" (its other locale, when it shares the CSS) for what stays put (physical right,
- *              text-align: right); its text and lang are left as they are, and only mirroring is reported. When the flip does not take (a direction declared !important), the position
- *              check is skipped and the run says so
+ *              text-align: right), and shown back in RTL for the evidence; its text and lang are left as they are,
+ *              and only mirroring is reported. Not flipped when it loads an RTL-only stylesheet (bootstrap.rtl.css,
+ *              style-rtl.css: its LTR locale loads another; run --only rtl on that page). When a flip does not take
+ *              (a direction declared !important), the position check is skipped and the run says so
  *   list-0, list-1, list-500   every repeated list (cards, rows, results; auto-detected, or --list) emptied, cut
  *              to one item, or grown to 500 by cloning: the empty state, the lone card, the long page
  *   slow       throttled network and CPU while loading (562 ms RTT, 1.4 Mbit/s down, 4× CPU): a filmstrip of the
- *              first seconds, layout shifts with their sources, loading indicators seen, fonts still loading
+ *              first seconds, layout shifts with their sources, loading indicators seen, fonts still loading; every
+ *              snapshot is of a painted frame (script can read an unstyled layout that is never shown)
  *   errors     every fetch/XHR answered 500: blank sections, "undefined" / "NaN" / "[object Object]", no message
  *   offline    every fetch/XHR aborted (the network dropped after the page loaded)
  * Network mutations (slow, errors, offline) run at the first width only unless --all-widths.
