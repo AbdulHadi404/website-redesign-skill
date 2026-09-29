@@ -1,5 +1,5 @@
 {
- "url": "http://127.0.0.1:42205/ext/regress/dashboard.html",
+ "url": "http://127.0.0.1:38965/ext/regress/dashboard.html",
  "mode": "flip",
  "width": 1280,
  "summary": {
@@ -83,5 +83,5 @@
    ]
   }
  ],
- "ms": 523
+ "ms": 428
 }

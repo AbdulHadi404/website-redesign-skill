@@ -1,5 +1,5 @@
 {
- "url": "http://127.0.0.1:42205/ext/bootstrap-built/sidebars.html",
+ "url": "http://127.0.0.1:38965/ext/bootstrap-built/sidebars.html",
  "mode": "flip",
  "width": 1280,
  "summary": {
@@ -334,5 +334,5 @@
    ]
   }
  ],
- "ms": 4528
+ "ms": 3603
 }

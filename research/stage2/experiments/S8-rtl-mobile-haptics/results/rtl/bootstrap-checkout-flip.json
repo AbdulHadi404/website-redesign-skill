@@ -25,27 +25,27 @@
   {
    "level": "FAIL",
    "check": "mirror",
-   "message": "Boxes that do not mirror when the page turns RTL (topmost only)",
+   "message": "Boxes that do not mirror when the page turns RTL (topmost only; > 8 px from the mirrored place)",
    "count": 18,
    "examples": [
-    "div",
-    "div",
-    "div",
-    "div.text-success",
-    "span",
-    "#same-address — margin-left -24px / right 0px, float left",
-    "label.form-check-label — parent div.form-check: padding-left 24px / right 0px",
-    "#save-info — margin-left -24px / right 0px, float left",
-    "label.form-check-label — parent div.form-check: padding-left 24px / right 0px",
-    "#credit — margin-left -24px / right 0px, float left",
-    "label.form-check-label — parent div.form-check: padding-left 24px / right 0px",
-    "#debit — margin-left -24px / right 0px, float left",
-    "label.form-check-label — parent div.form-check: padding-left 24px / right 0px",
-    "#paypal — margin-left -24px / right 0px, float left",
-    "label.form-check-label — parent div.form-check: padding-left 24px / right 0px",
-    "li.list-inline-item — margin-left 0px / right 8px",
-    "li.list-inline-item — margin-left 0px / right 8px",
-    "li.list-inline-item — parent ul.list-inline: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)"
+    "div (40 px off)",
+    "div (40 px off)",
+    "div (40 px off)",
+    "div.text-success (40 px off)",
+    "span (40 px off)",
+    "#same-address (592 px off) — margin-left -24px / right 0px, float left",
+    "label.form-check-label (24 px off) — parent div.form-check: padding-left 24px / right 0px",
+    "#save-info (592 px off) — margin-left -24px / right 0px, float left",
+    "label.form-check-label (24 px off) — parent div.form-check: padding-left 24px / right 0px",
+    "#credit (592 px off) — margin-left -24px / right 0px, float left",
+    "label.form-check-label (24 px off) — parent div.form-check: padding-left 24px / right 0px",
+    "#debit (592 px off) — margin-left -24px / right 0px, float left",
+    "label.form-check-label (24 px off) — parent div.form-check: padding-left 24px / right 0px",
+    "#paypal (592 px off) — margin-left -24px / right 0px, float left",
+    "label.form-check-label (24 px off) — parent div.form-check: padding-left 24px / right 0px",
+    "li.list-inline-item (28 px off) — margin-left 0px / right 8px",
+    "li.list-inline-item (28 px off) — margin-left 0px / right 8px",
+    "li.list-inline-item (20 px off) — parent ul.list-inline: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)"
    ]
   },
   {
@@ -185,5 +185,5 @@
    ]
   }
  ],
- "ms": 944
+ "ms": 739
 }

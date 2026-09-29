@@ -40,9 +40,17 @@
  *   reduced    keep (essential feedback: press, toggle, focus) · fade (no movement; opacity/colour ≤ 200 ms or
  *              instant) · instant (final state in one frame) · static (already in its final state, nothing changes:
  *              scroll reveals) · pause (a loop that must not run)
+ * How it decides: a channel (translate, scale, opacity, colour, shadow, size, text, a transitioning custom property)
+ * that changes over ≥ 3 frames animates; 1–2 changes is instant. CSS/WAAPI durations and easings are read exactly from
+ * the Animation objects; JavaScript-driven motion (GSAP, anime.js, React Spring) is judged from samples: a duration
+ * range (last visible change … duration fitted with the best easing) and the easing that fits best. Targets mounted
+ * by the trigger (React AnimatePresence) are picked up late. Channels already moving before the trigger (a pulsing
+ * loop) are ignored. A box that moves because something near it changed size is a note, not a failure.
  * Writes <out>/motion.md, <out>/motion.json and <out>/filmstrip-<id>.png. Exits 1 when a spec entry fails (with
  * --strict, also on any flag). Limits: sampling reads computed styles, so canvas, WebGL, Lottie and Rive frames are
- * invisible to it (their <canvas> is one element); hover checks need a fine pointer (skipped with --device phone).
+ * invisible to it (their <canvas> is one element); hover checks need a fine pointer (skipped with --device phone);
+ * a CSS counter's digits are not readable (the transitioning custom property is). Scored on four builds of one page
+ * and six held-out pages: research/stage2/experiments/S2-motion-lab (c/).
  */
 import { writeFile, readFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -337,14 +345,17 @@ function channelStats(frames, idx, tFrom) {
 }
 /** animates: changed over ≥ 3 frames; instant: changed in 1–2 steps; none. */
 function classify(stats) {
-  if (!stats || !Object.keys(stats).length) return { state: 'none', moves: false, fades: false, counts: false, layout: false, jumps: [] };
+  if (!stats || !Object.keys(stats).length) return { state: 'none', moves: false, fades: false, counts: false, layout: false, jumps: [], shifted: [] };
   const anim = (ch) => stats[ch] && stats[ch].changes >= 3;
   const moves = MOVE_CH.some(anim) || SIZE_CH.some(anim);
   const fades = anim('op') || ['color', 'bg', 'shadow', 'filter', 'outline'].some(anim) || anim('clip');
   const counts = anim('text') || anim('cvar'); // a number counting, or a custom property driving something the sampler cannot name
   const any = Object.values(stats).some((s) => s.changes >= 3);
-  const jumps = stats.vis ? [] : [...SIZE_CH, 'ol', 'ot'].filter((ch) => stats[ch] && stats[ch].changes < 3); // display:none ↔ shown moves every box
-  return { state: any ? 'animates' : 'instant', moves, fades, counts, layout: SIZE_CH.some(anim) || (anim('ol') || anim('ot')), jumps };
+  const jumped = stats.vis ? [] : [...SIZE_CH, 'ol', 'ot'].filter((ch) => stats[ch] && stats[ch].changes < 3); // display:none ↔ shown moves every box
+  // its own size jumped (with or without position): a layout property changed without transitioning; position alone: something around it re-laid out
+  const jumps = jumped.some((ch) => SIZE_CH.includes(ch)) ? jumped : [];
+  const shifted = jumps.length ? [] : jumped;
+  return { state: any ? 'animates' : 'instant', moves, fades, counts, layout: SIZE_CH.some(anim) || (anim('ol') || anim('ot')), jumps, shifted };
 }
 function dominant(stats) {
   let best = null, score = 0;
@@ -505,7 +516,8 @@ if (!a['no-audit']) {
       return { i, sel: describe(e), control: !inline, button: e.matches('button, [role=button], input[type=submit], input[type=button]') || (e.tagName === 'A' && /\b(btn|button|cta)\b/i.test(e.className)) }; });
   }, MAX);
   const centre = (i) => page.evaluate((i) => { const e = window.__cands[i]; e.scrollIntoView({ block: 'center', behavior: 'instant' }); const r = e.getBoundingClientRect();
-    const x = r.left + r.width / 2, y = r.top + r.height / 2; const top = document.elementFromPoint(x, y); return { x, y, hit: !!top && (top === e || e.contains(top)) }; }, i);
+    const x = r.left + r.width / 2, y = r.top + r.height / 2; const top = document.elementFromPoint(x, y); const vv = window.visualViewport || { scale: 1, offsetLeft: 0, offsetTop: 0 };
+    return { x: (x - vv.offsetLeft) * vv.scale, y: (y - vv.offsetTop) * vv.scale, hit: !!top && (top === e || e.contains(top)) }; }, i);
   if (!phone) {
     for (const c of candidates) {
       const p = await centre(c.i); if (!p.hit) continue;
@@ -583,7 +595,9 @@ async function trigger(page, entry, ms) {
     await page.waitForTimeout(150);
   }
   await page.waitForTimeout(250);
-  const box = async () => page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, on);
+  // input coordinates live in the visual viewport: on a phone page that overflows (zoomed out) they differ from CSS px
+  const box = async () => page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(); const vv = window.visualViewport || { scale: 1, offsetLeft: 0, offsetTop: 0 };
+    return { x: (r.left + r.width / 2 - vv.offsetLeft) * vv.scale, y: (r.top + r.height / 2 - vv.offsetTop) * vv.scale }; }, on);
   const n = await page.evaluate(samplerStart, { sel: entry.target, on, ms });
   if (!n) return { error: `target ${entry.target} not found` };
   if (n < 0 && entry.trigger === 'hover') return { error: `target ${entry.target} not found` };
@@ -714,7 +728,8 @@ function analyse(entry, data) {
   const scrollLinked = anims.some((x) => x.timeline !== 'document');
   const inViewAtStart = entry.trigger === 'scroll' && (data.inView || []).some(Boolean);
   const jumps = [...new Set(perTarget.flatMap((p) => (p.cls.state === 'animates' || state === 'animates' ? p.cls.jumps : [])))];
-  return { tT: Math.round(tT), jumps, state, moves, fades, counts, layout, vt, declared, observed, stagger, staggerSource, scrollLinked, inViewAtStart, props: [...changedProps], anims: anims.slice(0, 8), dominant: ch0,
+  const shifted = [...new Set(perTarget.flatMap((p) => p.cls.shifted))];
+  return { tT: Math.round(tT), jumps, shifted, state, moves, fades, counts, layout, vt, declared, observed, stagger, staggerSource, scrollLinked, inViewAtStart, props: [...changedProps], anims: anims.slice(0, 8), dominant: ch0,
     final: fin && { op: fin.op, vis: fin.vis, tx: fin.tx, ty: fin.ty, sx: fin.sx, text: fin.text }, targets: data.n, perTarget: perTarget.map((p) => p.cls.state),
     interrupt: entry.interrupt ? interruptInfo(entry, data, ch0, state) : null, frames: data.frames.length, ambient: [...ambient] };
 }
@@ -751,6 +766,8 @@ function judge(entry, n, r) {
     else if (est?.length) { const lo = dur.min * 0.85 - 17, hi = dur.max * 1.15 + 17;
       if (est.at(-1) < lo || est[0] > hi) problems.push(`duration ~${est[0]}–${est.at(-1)}ms (sampled: last visible change – fitted) outside ${dur.label}`); }
   }
+  const notes = [];
+  if (n.shifted?.length) notes.push(`moved by a layout shift around it (${n.shifted.map((c) => ({ ol: 'left', ot: 'top' }[c])).join(', ')} jumped in one frame while its own size did not): look for content changing size nearby`);
   if (n.jumps?.length && n.state === 'animates') problems.push(`layout jumps in one frame (${n.jumps.map((c) => ({ ow: 'width', oh: 'height', ol: 'left/margin', ot: 'top/margin' }[c])).join(', ')}): a layout property changed without transitioning`);
   const wantE = resolveEasing(entry.easing);
   let easing = null;
@@ -788,7 +805,7 @@ function judge(entry, n, r) {
     reduced = { expected: exp || '—', outcome, ok, final: r.final };
   } else if (r?.error) problems.push(`reduced run: ${r.error}`);
   if (n.interrupt && /swallowed|jumps/.test(n.interrupt.result)) problems.push(`interrupted after ${entry.interrupt}ms: ${n.interrupt.result}`);
-  return { pass: problems.length === 0, problems, easing, reduced };
+  return { pass: problems.length === 0, problems, notes, easing, reduced };
 }
 
 const films = [];
@@ -853,7 +870,7 @@ if (spec) {
     const n = x.normal || {}; const r = x.reduced;
     const d = n.declared != null ? `${n.declared}ms` : n.observed != null ? `~${n.observed}ms` : '—';
     const e = x.easing?.declared ? x.easing.declared.join(' / ') : x.easing?.estimated ? `≈ ${x.easing.estimated}` : '—';
-    md.push(`| ${esc(x.id)} | ${esc(x.trigger)} | ${esc(n.error || n.state)}${n.vt ? ' (view transition)' : ''}${x.spec?.stagger && n.stagger != null ? `, stagger ${n.stagger}ms (${n.staggerSource})` : ''} | ${d} (spec ${esc(x.spec?.duration ?? '—')}) | ${esc(e)} | ${esc(r ? `${r.expected} → ${r.outcome}` : '—')} | ${x.pass ? '✓' : `✗ ${esc(x.problems.join('; '))}`} |`);
+    md.push(`| ${esc(x.id)} | ${esc(x.trigger)} | ${esc(n.error || n.state)}${n.vt ? ' (view transition)' : ''}${x.spec?.stagger && n.stagger != null ? `, stagger ${n.stagger}ms (${n.staggerSource})` : ''} | ${d} (spec ${esc(x.spec?.duration ?? '—')}) | ${esc(e)} | ${esc(r ? `${r.expected} → ${r.outcome}` : '—')} | ${x.pass ? '✓' : `✗ ${esc(x.problems.join('; '))}`}${x.notes?.length ? ` (note: ${esc(x.notes.join('; '))})` : ''} |`);
   }
   md.push('');
   const fl = report.spec.filter((x) => x.filmstrip); if (fl.length) md.push(`Filmstrips: ${fl.map((x) => `\`${x.filmstrip}\``).join(', ')}`, '');

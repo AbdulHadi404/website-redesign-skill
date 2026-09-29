@@ -265,6 +265,45 @@ try {
     }
   }
 
+  if (stage === 'all' || stage === 'checks') {
+    // Small controlled checks behind findings in the report.
+    const lab = {};
+    // 1. Does the browser's default focus ring follow corner-shape? (a squircle button, default ring vs solid ring)
+    {
+      const ctx = await browser.newContext({ viewport: { width: 520, height: 200 }, deviceScaleFactor: 3 });
+      const p = await ctx.newPage();
+      await p.setContent(`<style>body{margin:0;padding:30px;background:#f4f4f4;display:flex;gap:40px;font:600 16px sans-serif}
+        button{height:44px;padding:0 20px;border:0;border-radius:19px;background:#c43d1b;color:#fff}
+        .sq{corner-shape:squircle}.solid:focus-visible{outline:2px solid #b8391a;outline-offset:3px}</style>
+        <button class="sq" id=a>default ring</button><button class="sq solid" id=b>solid ring</button>`);
+      const shots = [];
+      for (const id of ['a', 'b']) {
+        await p.focus(`#${id}`);
+        const bb = await (await p.$(`#${id}`)).boundingBox();
+        const f = path.join(CAP, `ring-${id}.png`);
+        await p.screenshot({ path: f, clip: { x: bb.x - 10, y: bb.y - 10, width: bb.width + 20, height: bb.height + 20 } });
+        // fill colour outside the ring: sample the corner pixels just outside the button's box corner diagonal
+        shots.push({ file: f, caption: id === 'a' ? 'corner-shape: squircle + default focus ring (outline-style: auto)' : 'corner-shape: squircle + outline: 2px solid, offset 3px' });
+        lab[`ring-${id}`] = await p.evaluate((id) => { const cs = getComputedStyle(document.getElementById(id)); return { outlineStyle: cs.outlineStyle, cornerShape: cs.getPropertyValue('corner-shape') }; }, id);
+      }
+      await contact(conv, shots, path.join(SHOTS, 'focus-ring-corner-shape.jpg'), { cols: 2, width: 330, title: 'Chromium: the default focus ring is drawn round and ignores corner-shape; a solid outline follows it.' });
+      await ctx.close();
+    }
+    // 2. What pixelmatch (threshold 0.1, the compare.mjs default) and CIEDE2000 see of a 1 px 10% black hairline on white.
+    {
+      const ctx = await browser.newContext({ viewport: { width: 200, height: 100 } });
+      const p = await ctx.newPage();
+      const shot = async (css) => { await p.setContent(`<body style="margin:0;background:#fff"><div style="margin:20px;width:160px;height:60px;background:#fff;${css}"></div>`); return readPng(await p.screenshot({ path: path.join(CAP, 'tmp-hairline.png') }).then(() => path.join(CAP, 'tmp-hairline.png'))); };
+      const A = await shot(''), B = await shot('box-shadow: inset 0 0 0 1px rgb(0 0 0 / .1)'), C = await shot('box-shadow: 0 2px 8px rgb(0 0 0 / .08)');
+      const hb = measure(A, B), sh = measure(A, C);
+      lab.hairline10 = { changedPx: Math.round(hb.any / 100 * 200 * 100), pixelmatchPct: hb.pm, de00Over1Pct: hb.jnd1, de00Over2_3Pct: hb.jnd };
+      lab.softShadow = { changedPx: Math.round(sh.any / 100 * 200 * 100), pixelmatchPct: sh.pm, de00Over1Pct: sh.jnd1, de00Over2_3Pct: sh.jnd };
+      await ctx.close();
+    }
+    results.labChecks = lab;
+    log(`checks: ${JSON.stringify(lab)}`);
+  }
+
   if ((stage === 'all' || stage === 'stacks') && STACKS) {
     const names = Object.keys(STACKS);
     log(`stacks: ${names.join(', ')}`);

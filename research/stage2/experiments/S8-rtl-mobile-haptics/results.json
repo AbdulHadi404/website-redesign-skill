@@ -1,13 +1,23 @@
 {
- "date": "2026-09-28T23:55:42.514Z",
+ "date": "2026-09-29T00:03:56.608Z",
  "chromium": "141.0.7390.37",
  "node": "v22.22.2",
  "parts": {
+  "icons": {
+   "codexIcons": 293,
+   "codexFlip": 89,
+   "codexRtlAsset": 10,
+   "flutterBase": 2233,
+   "flutterBaseMirror": 76,
+   "mirrorKeys": 161,
+   "mirrorBoth": 4
+  },
   "compat": {
    "bcd": {
     "timestamp": "2026-09-24T13:25:51.189Z",
     "version": "8.1.3"
    },
+   "webFeatures": "3.40.0",
    "groups": {
     "haptics": {
      "api.Navigator.vibrate": {
@@ -603,6 +613,77 @@
       }
      }
     },
+    "clipping": {
+     "css.properties.overflow-x.clip": {
+      "chrome": "90",
+      "chrome_android": "90",
+      "edge": "90",
+      "firefox": "81",
+      "firefox_android": "81",
+      "safari": "16",
+      "safari_ios": "16",
+      "samsunginternet_android": "15.0",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "overflow-clip",
+       "status": "high",
+       "low": "2022-09-12",
+       "high": "2025-03-12"
+      }
+     },
+     "css.properties.overflow-clip-margin": {
+      "chrome": "90 (partial)",
+      "chrome_android": "90 (partial)",
+      "edge": "90 (partial)",
+      "firefox": "102",
+      "firefox_android": "102",
+      "safari": "no",
+      "safari_ios": "no",
+      "samsunginternet_android": "15.0 (partial)",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "notes": [
+       "chrome: Only works when both axes are using overflow: clip. See bug 40235584.",
+       "chrome_android: Only works when both axes are using overflow: clip. See bug 40235584.",
+       "edge: Only works when both axes are using overflow: clip. See bug 40235584.",
+       "samsunginternet_android: Only works when both axes are using overflow: clip. See bug 40235584."
+      ],
+      "baseline": {
+       "feature": "overflow-clip-margin",
+       "status": false,
+       "low": null,
+       "high": null
+      }
+     },
+     "css.properties.text-align.match-parent": {
+      "chrome": "16 (-webkit-)",
+      "chrome_android": "18 (-webkit-)",
+      "edge": "79 (-webkit-)",
+      "firefox": "40",
+      "firefox_android": "40",
+      "safari": "15.4",
+      "safari_ios": "15.4",
+      "samsunginternet_android": "1.0 (-webkit-)",
+      "status": {
+       "deprecated": false,
+       "experimental": false,
+       "standard_track": true
+      },
+      "baseline": {
+       "feature": "text-align",
+       "status": "high",
+       "low": "2015-07-29",
+       "high": "2018-01-29"
+      }
+     }
+    },
     "bidiType": {
      "css.selectors.dir": {
       "chrome": "120",
@@ -795,7 +876,8 @@
       }
      }
     }
-   }
+   },
+   "table": "| Feature | Chrome | Chrome Android | Firefox | Firefox Android | Safari | Safari iOS | Baseline |\n|---|---|---|---|---|---|---|---|\n| VisualViewport | 61 | 61 | 91 | 68 | 13 | 13 | high (2024-02-10) |\n| VirtualKeyboard API | 94 | 94 | no | no | no | no | no |\n| env(keyboard-inset-*) | 94 | 94 | no | no | no | no | — |\n| interactive-widget | no | 108 | no | 133 | no | no | — |\n| viewport-fit | no | 135 | no | 79 | no | 11 | — |\n| env(safe-area-inset-*) | 69 | 69 | 65 | 65 | 11 | 11 | high (2022-07-15) |\n| CloseWatcher | 126 | 126 | 149 | 149 | preview | no | no |\n| dialog closedby | 134 | 134 | 141 | 141 | preview | no | no |\n| Navigation API | 102 | 102 | 147 | 147 | 26.2 | 26.2 | low (2026-01-13) |\n| navigator.share | 128 | 61 | 71 (flag) | 79 | 12.1 | 12.2 | no |\n| navigator.vibrate | 32 | 32 | 16–129, removed | 79 (partial) | no | no | no |\n| input switch | no | no | no | no | 17.4 | 17.4 | no |\n| saveData | 65 | 65 | no | no | no | no | no |\n| prefers-reduced-data | 85 (flag) | 85 (flag) | no | no | no | no | no |\n| overflow-x: clip | 90 | 90 | 81 | 81 | 16 | 16 | high (2025-03-12) |\n| overflow-clip-margin | 90 (partial) | 90 (partial) | 102 | 102 | no | no | no |\n| text-align: match-parent | 16 (-webkit-) | 18 (-webkit-) | 40 | 40 | 15.4 | 15.4 | no |\n| text-justify | 145 | 145 | 55 | 55 | no | no | no |\n| @font-face ascent-override | 87 | 87 | 89 | 89 | preview | no | no |\n| @font-face size-adjust | 92 | 92 | 92 | 92 | 17 | 17 | high (2026-03-18) |"
   },
   "vmetrics": {
    "note": "em units; ink measured at 60 px (pixels) and 100 px (canvas); Chromium headless, --font-render-hinting=none",
@@ -827,9 +909,36 @@
        "lineAscent": 1.07,
        "lineDescent": 0.63,
        "minLineHeight": 0.94,
+       "minLineHeightWindows": 0.94,
        "firstSafeInSweep": 1,
        "probeMaxErrorPx60": 0,
        "fontkitVsCanvasEm": 0.003,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_plain2": {
+       "text": "جميع الحقوق محفوظة ويمكن مراجعتها",
+       "inkAscent": 0.68,
+       "inkDescent": 0.29,
+       "lineAscent": 1.07,
+       "lineDescent": 0.63,
+       "minLineHeight": 1.02,
+       "minLineHeightWindows": 1.01,
+       "firstSafeInSweep": 1,
+       "probeMaxErrorPx60": 0.6,
+       "fontkitVsCanvasEm": 0.009,
        "clipAt": {
         "1": {
          "topPx60": 0,
@@ -852,6 +961,7 @@
        "lineAscent": 1.07,
        "lineDescent": 0.63,
        "minLineHeight": 1.27,
+       "minLineHeightWindows": 1.28,
        "firstSafeInSweep": 1.25,
        "probeMaxErrorPx60": 0.4,
        "fontkitVsCanvasEm": 0.009,
@@ -870,6 +980,32 @@
         }
        }
       },
+      "ar_vocal2": {
+       "text": "يُرِيدُ جِيرَانِي عِنَبًا",
+       "inkAscent": 0.789,
+       "inkDescent": 0.434,
+       "lineAscent": 1.07,
+       "lineDescent": 0.63,
+       "minLineHeight": 1.31,
+       "minLineHeightWindows": 1.3,
+       "firstSafeInSweep": 1.25,
+       "probeMaxErrorPx60": 0.7,
+       "fontkitVsCanvasEm": 0.002,
+       "clipAt": {
+        "1": {
+         "topPx60": 4,
+         "bottomPx60": 9
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 3
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
       "ar_stack": {
        "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
        "inkAscent": 1.139,
@@ -877,6 +1013,7 @@
        "lineAscent": 1.07,
        "lineDescent": 0.63,
        "minLineHeight": 1.84,
+       "minLineHeightWindows": 1.84,
        "firstSafeInSweep": 1.8,
        "probeMaxErrorPx60": 0.5,
        "fontkitVsCanvasEm": 0.009,
@@ -894,6 +1031,32 @@
          "bottomPx60": 0
         }
        }
+      },
+      "ar_stack2": {
+       "text": "إِنَّ جِئْتُمْ بِأَسْئِلَةٍ لِأُمِّي",
+       "inkAscent": 1.071,
+       "inkDescent": 0.434,
+       "lineAscent": 1.07,
+       "lineDescent": 0.63,
+       "minLineHeight": 1.7,
+       "minLineHeightWindows": 1.71,
+       "firstSafeInSweep": 1.7,
+       "probeMaxErrorPx60": 1.1,
+       "fontkitVsCanvasEm": 0.009,
+       "clipAt": {
+        "1": {
+         "topPx60": 20,
+         "bottomPx60": 9
+        },
+        "1.2": {
+         "topPx60": 14,
+         "bottomPx60": 3
+        },
+        "1.5": {
+         "topPx60": 5,
+         "bottomPx60": 0
+        }
+       }
       }
      },
      "lineHeightNormal": 1.7,
@@ -902,6 +1065,19 @@
       "capHeight": 0.72,
       "bodyHeight": 0.36,
       "alefHeight": 0.68
+     },
+     "linuxMetricsFrom": "hhea",
+     "floors": {
+      "linuxMac": {
+       "plain": 1.02,
+       "vocalised": 1.31,
+       "stacked": 1.84
+      },
+      "windows": {
+       "plain": 1.01,
+       "vocalised": 1.3,
+       "stacked": 1.84
+      }
      }
     },
     "Noto Sans Arabic": {
@@ -931,6 +1107,7 @@
        "lineAscent": 1.37,
        "lineDescent": 0.74,
        "minLineHeight": 1.25,
+       "minLineHeightWindows": 1.26,
        "firstSafeInSweep": 1.2,
        "probeMaxErrorPx60": 0.5,
        "fontkitVsCanvasEm": 0.007,
@@ -949,6 +1126,32 @@
         }
        }
       },
+      "ar_plain2": {
+       "text": "جميع الحقوق محفوظة ويمكن مراجعتها",
+       "inkAscent": 0.735,
+       "inkDescent": 0.39,
+       "lineAscent": 1.37,
+       "lineDescent": 0.74,
+       "minLineHeight": 1.41,
+       "minLineHeightWindows": 1.42,
+       "firstSafeInSweep": 1.4,
+       "probeMaxErrorPx60": 0.8,
+       "fontkitVsCanvasEm": 0.005,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 12
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 6
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
       "ar_vocal": {
        "text": "كُتُبٌ جَمِيلَةٌ",
        "inkAscent": 1.112,
@@ -956,6 +1159,7 @@
        "lineAscent": 1.37,
        "lineDescent": 0.74,
        "minLineHeight": 1.59,
+       "minLineHeightWindows": 1.59,
        "firstSafeInSweep": 1.6,
        "probeMaxErrorPx60": 0.8,
        "fontkitVsCanvasEm": 0.002,
@@ -974,6 +1178,32 @@
         }
        }
       },
+      "ar_vocal2": {
+       "text": "يُرِيدُ جِيرَانِي عِنَبًا",
+       "inkAscent": 0.839,
+       "inkDescent": 0.422,
+       "lineAscent": 1.37,
+       "lineDescent": 0.74,
+       "minLineHeight": 1.47,
+       "minLineHeightWindows": 1.48,
+       "firstSafeInSweep": 1.5,
+       "probeMaxErrorPx60": 0.7,
+       "fontkitVsCanvasEm": 0.012,
+       "clipAt": {
+        "1": {
+         "topPx60": 1,
+         "bottomPx60": 14
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 8
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
       "ar_stack": {
        "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
        "inkAscent": 1.242,
@@ -981,6 +1211,7 @@
        "lineAscent": 1.37,
        "lineDescent": 0.74,
        "minLineHeight": 1.85,
+       "minLineHeightWindows": 1.85,
        "firstSafeInSweep": 1.8,
        "probeMaxErrorPx60": 1.3,
        "fontkitVsCanvasEm": 0.012,
@@ -998,6 +1229,32 @@
          "bottomPx60": 0
         }
        }
+      },
+      "ar_stack2": {
+       "text": "إِنَّ جِئْتُمْ بِأَسْئِلَةٍ لِأُمِّي",
+       "inkAscent": 1.15,
+       "inkDescent": 0.449,
+       "lineAscent": 1.37,
+       "lineDescent": 0.74,
+       "minLineHeight": 1.67,
+       "minLineHeightWindows": 1.66,
+       "firstSafeInSweep": 1.7,
+       "probeMaxErrorPx60": 1.3,
+       "fontkitVsCanvasEm": 0.012,
+       "clipAt": {
+        "1": {
+         "topPx60": 20,
+         "bottomPx60": 15
+        },
+        "1.2": {
+         "topPx60": 14,
+         "bottomPx60": 9
+        },
+        "1.5": {
+         "topPx60": 5,
+         "bottomPx60": 0
+        }
+       }
       }
      },
      "lineHeightNormal": 2.11,
@@ -1006,6 +1263,19 @@
       "capHeight": 0.72,
       "bodyHeight": 0.39,
       "alefHeight": 0.71
+     },
+     "linuxMetricsFrom": "hhea",
+     "floors": {
+      "linuxMac": {
+       "plain": 1.41,
+       "vocalised": 1.59,
+       "stacked": 1.85
+      },
+      "windows": {
+       "plain": 1.42,
+       "vocalised": 1.59,
+       "stacked": 1.85
+      }
      }
     },
     "Noto Kufi Arabic": {
@@ -1035,6 +1305,7 @@
        "lineAscent": 1.28,
        "lineDescent": 0.62,
        "minLineHeight": 1.25,
+       "minLineHeightWindows": 1.25,
        "firstSafeInSweep": 1.2,
        "probeMaxErrorPx60": 0.4,
        "fontkitVsCanvasEm": 0.006,
@@ -1053,6 +1324,32 @@
         }
        }
       },
+      "ar_plain2": {
+       "text": "جميع الحقوق محفوظة ويمكن مراجعتها",
+       "inkAscent": 0.82,
+       "inkDescent": 0.32,
+       "lineAscent": 1.28,
+       "lineDescent": 0.62,
+       "minLineHeight": 1.3,
+       "minLineHeightWindows": 1.31,
+       "firstSafeInSweep": 1.25,
+       "probeMaxErrorPx60": 0.5,
+       "fontkitVsCanvasEm": 0.006,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 9
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 3
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
       "ar_vocal": {
        "text": "كُتُبٌ جَمِيلَةٌ",
        "inkAscent": 1.111,
@@ -1060,6 +1357,7 @@
        "lineAscent": 1.28,
        "lineDescent": 0.62,
        "minLineHeight": 1.56,
+       "minLineHeightWindows": 1.56,
        "firstSafeInSweep": 1.6,
        "probeMaxErrorPx60": 0.6,
        "fontkitVsCanvasEm": 0.006,
@@ -1078,6 +1376,32 @@
         }
        }
       },
+      "ar_vocal2": {
+       "text": "يُرِيدُ جِيرَانِي عِنَبًا",
+       "inkAscent": 0.901,
+       "inkDescent": 0.458,
+       "lineAscent": 1.28,
+       "lineDescent": 0.62,
+       "minLineHeight": 1.58,
+       "minLineHeightWindows": 1.58,
+       "firstSafeInSweep": 1.6,
+       "probeMaxErrorPx60": 0.7,
+       "fontkitVsCanvasEm": 0.006,
+       "clipAt": {
+        "1": {
+         "topPx60": 4,
+         "bottomPx60": 18
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 12
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 3
+        }
+       }
+      },
       "ar_stack": {
        "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
        "inkAscent": 1.254,
@@ -1085,6 +1409,7 @@
        "lineAscent": 1.28,
        "lineDescent": 0.62,
        "minLineHeight": 1.85,
+       "minLineHeightWindows": 1.84,
        "firstSafeInSweep": 2,
        "probeMaxErrorPx60": 1.1,
        "fontkitVsCanvasEm": 0.006,
@@ -1102,6 +1427,32 @@
          "bottomPx60": 2
         }
        }
+      },
+      "ar_stack2": {
+       "text": "إِنَّ جِئْتُمْ بِأَسْئِلَةٍ لِأُمِّي",
+       "inkAscent": 1.218,
+       "inkDescent": 0.458,
+       "lineAscent": 1.28,
+       "lineDescent": 0.62,
+       "minLineHeight": 1.78,
+       "minLineHeightWindows": 1.77,
+       "firstSafeInSweep": 1.8,
+       "probeMaxErrorPx60": 0.7,
+       "fontkitVsCanvasEm": 0.006,
+       "clipAt": {
+        "1": {
+         "topPx60": 23,
+         "bottomPx60": 18
+        },
+        "1.2": {
+         "topPx60": 17,
+         "bottomPx60": 12
+        },
+        "1.5": {
+         "topPx60": 8,
+         "bottomPx60": 3
+        }
+       }
       }
      },
      "lineHeightNormal": 1.9,
@@ -1110,6 +1461,19 @@
       "capHeight": 0.72,
       "bodyHeight": 0.49,
       "alefHeight": 0.76
+     },
+     "linuxMetricsFrom": "hhea",
+     "floors": {
+      "linuxMac": {
+       "plain": 1.3,
+       "vocalised": 1.58,
+       "stacked": 1.85
+      },
+      "windows": {
+       "plain": 1.31,
+       "vocalised": 1.58,
+       "stacked": 1.84
+      }
      }
     },
     "IBM Plex Sans Arabic": {
@@ -1139,6 +1503,7 @@
        "lineAscent": 1.09,
        "lineDescent": 0.42,
        "minLineHeight": 1.19,
+       "minLineHeightWindows": 1.19,
        "firstSafeInSweep": 1.2,
        "probeMaxErrorPx60": 0.3,
        "fontkitVsCanvasEm": 0.009,
@@ -1157,6 +1522,32 @@
         }
        }
       },
+      "ar_plain2": {
+       "text": "جميع الحقوق محفوظة ويمكن مراجعتها",
+       "inkAscent": 0.76,
+       "inkDescent": 0.3,
+       "lineAscent": 1.09,
+       "lineDescent": 0.42,
+       "minLineHeight": 1.27,
+       "minLineHeightWindows": 1.27,
+       "firstSafeInSweep": 1.25,
+       "probeMaxErrorPx60": 0.9,
+       "fontkitVsCanvasEm": 0.009,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 9
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 3
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
       "ar_vocal": {
        "text": "كُتُبٌ جَمِيلَةٌ",
        "inkAscent": 1.031,
@@ -1164,6 +1555,7 @@
        "lineAscent": 1.09,
        "lineDescent": 0.42,
        "minLineHeight": 1.39,
+       "minLineHeightWindows": 1.39,
        "firstSafeInSweep": 1.4,
        "probeMaxErrorPx60": 0.7,
        "fontkitVsCanvasEm": 0.004,
@@ -1182,6 +1574,32 @@
         }
        }
       },
+      "ar_vocal2": {
+       "text": "يُرِيدُ جِيرَانِي عِنَبًا",
+       "inkAscent": 0.827,
+       "inkDescent": 0.464,
+       "lineAscent": 1.09,
+       "lineDescent": 0.42,
+       "minLineHeight": 1.6,
+       "minLineHeightWindows": 1.6,
+       "firstSafeInSweep": 1.6,
+       "probeMaxErrorPx60": 0.4,
+       "fontkitVsCanvasEm": 0.006,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 18
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 12
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 3
+        }
+       }
+      },
       "ar_stack": {
        "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
        "inkAscent": 1.205,
@@ -1189,6 +1607,7 @@
        "lineAscent": 1.09,
        "lineDescent": 0.42,
        "minLineHeight": 1.74,
+       "minLineHeightWindows": 1.74,
        "firstSafeInSweep": 1.7,
        "probeMaxErrorPx60": 1.2,
        "fontkitVsCanvasEm": 0.006,
@@ -1206,6 +1625,32 @@
          "bottomPx60": 2
         }
        }
+      },
+      "ar_stack2": {
+       "text": "إِنَّ جِئْتُمْ بِأَسْئِلَةٍ لِأُمِّي",
+       "inkAscent": 1.161,
+       "inkDescent": 0.454,
+       "lineAscent": 1.09,
+       "lineDescent": 0.42,
+       "minLineHeight": 1.65,
+       "minLineHeightWindows": 1.65,
+       "firstSafeInSweep": 1.6,
+       "probeMaxErrorPx60": 0.8,
+       "fontkitVsCanvasEm": 0.006,
+       "clipAt": {
+        "1": {
+         "topPx60": 19,
+         "bottomPx60": 17
+        },
+        "1.2": {
+         "topPx60": 13,
+         "bottomPx60": 11
+        },
+        "1.5": {
+         "topPx60": 4,
+         "bottomPx60": 2
+        }
+       }
       }
      },
      "lineHeightNormal": 1.51,
@@ -1214,6 +1659,19 @@
       "capHeight": 0.71,
       "bodyHeight": 0.41,
       "alefHeight": 0.74
+     },
+     "linuxMetricsFrom": "hhea",
+     "floors": {
+      "linuxMac": {
+       "plain": 1.27,
+       "vocalised": 1.6,
+       "stacked": 1.74
+      },
+      "windows": {
+       "plain": 1.27,
+       "vocalised": 1.6,
+       "stacked": 1.74
+      }
      }
     },
     "Tajawal": {
@@ -1243,6 +1701,7 @@
        "lineAscent": 0.64,
        "lineDescent": 0.36,
        "minLineHeight": 1.02,
+       "minLineHeightWindows": 1.1,
        "firstSafeInSweep": 1,
        "probeMaxErrorPx60": 0.6,
        "fontkitVsCanvasEm": 0.004,
@@ -1261,6 +1720,32 @@
         }
        }
       },
+      "ar_plain2": {
+       "text": "جميع الحقوق محفوظة ويمكن مراجعتها",
+       "inkAscent": 0.66,
+       "inkDescent": 0.38,
+       "lineAscent": 0.64,
+       "lineDescent": 0.36,
+       "minLineHeight": 1.04,
+       "minLineHeightWindows": 1.4,
+       "firstSafeInSweep": 1.1,
+       "probeMaxErrorPx60": 1.2,
+       "fontkitVsCanvasEm": 0.013,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 2
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
       "ar_vocal": {
        "text": "كُتُبٌ جَمِيلَةٌ",
        "inkAscent": 0.965,
@@ -1268,6 +1753,7 @@
        "lineAscent": 0.64,
        "lineDescent": 0.36,
        "minLineHeight": 1.65,
+       "minLineHeightWindows": 1.29,
        "firstSafeInSweep": 1.6,
        "probeMaxErrorPx60": 0.5,
        "fontkitVsCanvasEm": 0.007,
@@ -1286,6 +1772,32 @@
         }
        }
       },
+      "ar_vocal2": {
+       "text": "يُرِيدُ جِيرَانِي عِنَبًا",
+       "inkAscent": 0.845,
+       "inkDescent": 0.39,
+       "lineAscent": 0.64,
+       "lineDescent": 0.36,
+       "minLineHeight": 1.41,
+       "minLineHeightWindows": 1.42,
+       "firstSafeInSweep": 1.4,
+       "probeMaxErrorPx60": 0.3,
+       "fontkitVsCanvasEm": 0.007,
+       "clipAt": {
+        "1": {
+         "topPx60": 12,
+         "bottomPx60": 2
+        },
+        "1.2": {
+         "topPx60": 6,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
       "ar_stack": {
        "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
        "inkAscent": 1.1,
@@ -1293,6 +1805,33 @@
        "lineAscent": 0.64,
        "lineDescent": 0.36,
        "minLineHeight": 1.92,
+       "minLineHeightWindows": 1.56,
+       "firstSafeInSweep": 2,
+       "probeMaxErrorPx60": 0.6,
+       "fontkitVsCanvasEm": 0.007,
+       "clipAt": {
+        "1": {
+         "topPx60": 27,
+         "bottomPx60": 2
+        },
+        "1.2": {
+         "topPx60": 21,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 12,
+         "bottomPx60": 0
+        }
+       }
+      },
+      "ar_stack2": {
+       "text": "إِنَّ جِئْتُمْ بِأَسْئِلَةٍ لِأُمِّي",
+       "inkAscent": 1.1,
+       "inkDescent": 0.39,
+       "lineAscent": 0.64,
+       "lineDescent": 0.36,
+       "minLineHeight": 1.92,
+       "minLineHeightWindows": 1.56,
        "firstSafeInSweep": 2,
        "probeMaxErrorPx60": 0.6,
        "fontkitVsCanvasEm": 0.007,
@@ -1318,6 +1857,19 @@
       "capHeight": 0.64,
       "bodyHeight": 0.44,
       "alefHeight": 0.65
+     },
+     "linuxMetricsFrom": "hhea",
+     "floors": {
+      "linuxMac": {
+       "plain": 1.04,
+       "vocalised": 1.65,
+       "stacked": 1.92
+      },
+      "windows": {
+       "plain": 1.4,
+       "vocalised": 1.42,
+       "stacked": 1.56
+      }
      }
     },
     "Cairo": {
@@ -1347,6 +1899,7 @@
        "lineAscent": 1.3,
        "lineDescent": 0.57,
        "minLineHeight": 1.27,
+       "minLineHeightWindows": 1.27,
        "firstSafeInSweep": 1.25,
        "probeMaxErrorPx60": 0.9,
        "fontkitVsCanvasEm": 0.004,
@@ -1365,6 +1918,32 @@
         }
        }
       },
+      "ar_plain2": {
+       "text": "جميع الحقوق محفوظة ويمكن مراجعتها",
+       "inkAscent": 0.72,
+       "inkDescent": 0.32,
+       "lineAscent": 1.3,
+       "lineDescent": 0.57,
+       "minLineHeight": 1.37,
+       "minLineHeightWindows": 1.37,
+       "firstSafeInSweep": 1.4,
+       "probeMaxErrorPx60": 0.6,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 11
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 5
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
       "ar_vocal": {
        "text": "كُتُبٌ جَمِيلَةٌ",
        "inkAscent": 0.925,
@@ -1372,6 +1951,7 @@
        "lineAscent": 1.3,
        "lineDescent": 0.57,
        "minLineHeight": 1.12,
+       "minLineHeightWindows": 1.12,
        "firstSafeInSweep": 1.1,
        "probeMaxErrorPx60": 0.4,
        "fontkitVsCanvasEm": 0.002,
@@ -1390,6 +1970,32 @@
         }
        }
       },
+      "ar_vocal2": {
+       "text": "يُرِيدُ جِيرَانِي عِنَبًا",
+       "inkAscent": 0.778,
+       "inkDescent": 0.43,
+       "lineAscent": 1.3,
+       "lineDescent": 0.57,
+       "minLineHeight": 1.59,
+       "minLineHeightWindows": 1.59,
+       "firstSafeInSweep": 1.6,
+       "probeMaxErrorPx60": 0.3,
+       "fontkitVsCanvasEm": 0.002,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 18
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 12
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 3
+        }
+       }
+      },
       "ar_stack": {
        "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
        "inkAscent": 1.154,
@@ -1397,6 +2003,7 @@
        "lineAscent": 1.3,
        "lineDescent": 0.57,
        "minLineHeight": 1.58,
+       "minLineHeightWindows": 1.58,
        "firstSafeInSweep": 1.6,
        "probeMaxErrorPx60": 1.2,
        "fontkitVsCanvasEm": 0.004,
@@ -1414,6 +2021,32 @@
          "bottomPx60": 0
         }
        }
+      },
+      "ar_stack2": {
+       "text": "إِنَّ جِئْتُمْ بِأَسْئِلَةٍ لِأُمِّي",
+       "inkAscent": 1.054,
+       "inkDescent": 0.43,
+       "lineAscent": 1.3,
+       "lineDescent": 0.57,
+       "minLineHeight": 1.59,
+       "minLineHeightWindows": 1.59,
+       "firstSafeInSweep": 1.6,
+       "probeMaxErrorPx60": 0.3,
+       "fontkitVsCanvasEm": 0.002,
+       "clipAt": {
+        "1": {
+         "topPx60": 11,
+         "bottomPx60": 18
+        },
+        "1.2": {
+         "topPx60": 5,
+         "bottomPx60": 12
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 3
+        }
+       }
       }
      },
      "lineHeightNormal": 1.87,
@@ -1422,6 +2055,19 @@
       "capHeight": 0.7,
       "bodyHeight": 0.5,
       "alefHeight": 0.72
+     },
+     "linuxMetricsFrom": "hhea",
+     "floors": {
+      "linuxMac": {
+       "plain": 1.37,
+       "vocalised": 1.59,
+       "stacked": 1.59
+      },
+      "windows": {
+       "plain": 1.37,
+       "vocalised": 1.59,
+       "stacked": 1.59
+      }
      }
     },
     "Almarai": {
@@ -1451,6 +2097,7 @@
        "lineAscent": 0.91,
        "lineDescent": 0.21,
        "minLineHeight": 1.32,
+       "minLineHeightWindows": 1.31,
        "firstSafeInSweep": 1.25,
        "probeMaxErrorPx60": 1.6,
        "fontkitVsCanvasEm": 0.009,
@@ -1469,6 +2116,32 @@
         }
        }
       },
+      "ar_plain2": {
+       "text": "جميع الحقوق محفوظة ويمكن مراجعتها",
+       "inkAscent": 0.74,
+       "inkDescent": 0.38,
+       "lineAscent": 0.91,
+       "lineDescent": 0.21,
+       "minLineHeight": 1.46,
+       "minLineHeightWindows": 1.45,
+       "firstSafeInSweep": 1.4,
+       "probeMaxErrorPx60": 0.8,
+       "fontkitVsCanvasEm": 0.009,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 13
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 7
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
       "ar_vocal": {
        "text": "كُتُبٌ جَمِيلَةٌ",
        "inkAscent": 1,
@@ -1476,6 +2149,7 @@
        "lineAscent": 0.91,
        "lineDescent": 0.21,
        "minLineHeight": 1.3,
+       "minLineHeightWindows": 1.31,
        "firstSafeInSweep": 1.25,
        "probeMaxErrorPx60": 0.7,
        "fontkitVsCanvasEm": 0.005,
@@ -1494,6 +2168,32 @@
         }
        }
       },
+      "ar_vocal2": {
+       "text": "يُرِيدُ جِيرَانِي عِنَبًا",
+       "inkAscent": 0.875,
+       "inkDescent": 0.462,
+       "lineAscent": 0.91,
+       "lineDescent": 0.21,
+       "minLineHeight": 1.62,
+       "minLineHeightWindows": 1.62,
+       "firstSafeInSweep": 1.6,
+       "probeMaxErrorPx60": 0.7,
+       "fontkitVsCanvasEm": 0.005,
+       "clipAt": {
+        "1": {
+         "topPx60": 2,
+         "bottomPx60": 18
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 12
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 3
+        }
+       }
+      },
       "ar_stack": {
        "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
        "inkAscent": 1.239,
@@ -1501,6 +2201,7 @@
        "lineAscent": 0.91,
        "lineDescent": 0.21,
        "minLineHeight": 1.78,
+       "minLineHeightWindows": 1.78,
        "firstSafeInSweep": 1.8,
        "probeMaxErrorPx60": 1.7,
        "fontkitVsCanvasEm": 0.005,
@@ -1518,6 +2219,32 @@
          "bottomPx60": 6
         }
        }
+      },
+      "ar_stack2": {
+       "text": "إِنَّ جِئْتُمْ بِأَسْئِلَةٍ لِأُمِّي",
+       "inkAscent": 1.16,
+       "inkDescent": 0.52,
+       "lineAscent": 0.91,
+       "lineDescent": 0.21,
+       "minLineHeight": 1.74,
+       "minLineHeightWindows": 1.73,
+       "firstSafeInSweep": 1.7,
+       "probeMaxErrorPx60": 1.2,
+       "fontkitVsCanvasEm": 0.005,
+       "clipAt": {
+        "1": {
+         "topPx60": 19,
+         "bottomPx60": 21
+        },
+        "1.2": {
+         "topPx60": 13,
+         "bottomPx60": 15
+        },
+        "1.5": {
+         "topPx60": 4,
+         "bottomPx60": 6
+        }
+       }
       }
      },
      "lineHeightNormal": 1.12,
@@ -1526,6 +2253,19 @@
       "capHeight": 0.72,
       "bodyHeight": 0.47,
       "alefHeight": 0.72
+     },
+     "linuxMetricsFrom": "hhea",
+     "floors": {
+      "linuxMac": {
+       "plain": 1.46,
+       "vocalised": 1.62,
+       "stacked": 1.78
+      },
+      "windows": {
+       "plain": 1.45,
+       "vocalised": 1.62,
+       "stacked": 1.78
+      }
      }
     },
     "Readex Pro": {
@@ -1555,6 +2295,7 @@
        "lineAscent": 1,
        "lineDescent": 0.25,
        "minLineHeight": 1.25,
+       "minLineHeightWindows": 1.25,
        "firstSafeInSweep": 1.2,
        "probeMaxErrorPx60": 0.5,
        "fontkitVsCanvasEm": 0.004,
@@ -1573,6 +2314,32 @@
         }
        }
       },
+      "ar_plain2": {
+       "text": "جميع الحقوق محفوظة ويمكن مراجعتها",
+       "inkAscent": 0.75,
+       "inkDescent": 0.46,
+       "lineAscent": 1,
+       "lineDescent": 0.25,
+       "minLineHeight": 1.67,
+       "minLineHeightWindows": 1.67,
+       "firstSafeInSweep": 1.7,
+       "probeMaxErrorPx60": 0.4,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 20
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 14
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 5
+        }
+       }
+      },
       "ar_vocal": {
        "text": "كُتُبٌ جَمِيلَةٌ",
        "inkAscent": 1.121,
@@ -1580,6 +2347,7 @@
        "lineAscent": 1,
        "lineDescent": 0.25,
        "minLineHeight": 1.49,
+       "minLineHeightWindows": 1.49,
        "firstSafeInSweep": 1.5,
        "probeMaxErrorPx60": 1.3,
        "fontkitVsCanvasEm": 0.009,
@@ -1598,6 +2366,32 @@
         }
        }
       },
+      "ar_vocal2": {
+       "text": "يُرِيدُ جِيرَانِي عِنَبًا",
+       "inkAscent": 0.846,
+       "inkDescent": 0.48,
+       "lineAscent": 1,
+       "lineDescent": 0.25,
+       "minLineHeight": 1.71,
+       "minLineHeightWindows": 1.71,
+       "firstSafeInSweep": 1.7,
+       "probeMaxErrorPx60": 0.3,
+       "fontkitVsCanvasEm": 0.007,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 21
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 15
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 6
+        }
+       }
+      },
       "ar_stack": {
        "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
        "inkAscent": 1.318,
@@ -1605,6 +2399,7 @@
        "lineAscent": 1,
        "lineDescent": 0.25,
        "minLineHeight": 1.89,
+       "minLineHeightWindows": 1.89,
        "firstSafeInSweep": 2,
        "probeMaxErrorPx60": 1.1,
        "fontkitVsCanvasEm": 0.009,
@@ -1622,6 +2417,32 @@
          "bottomPx60": 4
         }
        }
+      },
+      "ar_stack2": {
+       "text": "إِنَّ جِئْتُمْ بِأَسْئِلَةٍ لِأُمِّي",
+       "inkAscent": 1.318,
+       "inkDescent": 0.48,
+       "lineAscent": 1,
+       "lineDescent": 0.25,
+       "minLineHeight": 1.89,
+       "minLineHeightWindows": 1.89,
+       "firstSafeInSweep": 2,
+       "probeMaxErrorPx60": 1.3,
+       "fontkitVsCanvasEm": 0.009,
+       "clipAt": {
+        "1": {
+         "topPx60": 26,
+         "bottomPx60": 20
+        },
+        "1.2": {
+         "topPx60": 20,
+         "bottomPx60": 14
+        },
+        "1.5": {
+         "topPx60": 11,
+         "bottomPx60": 5
+        }
+       }
       }
      },
      "lineHeightNormal": 1.25,
@@ -1630,6 +2451,19 @@
       "capHeight": 0.71,
       "bodyHeight": 0.44,
       "alefHeight": 0.74
+     },
+     "linuxMetricsFrom": "hhea",
+     "floors": {
+      "linuxMac": {
+       "plain": 1.67,
+       "vocalised": 1.71,
+       "stacked": 1.89
+      },
+      "windows": {
+       "plain": 1.67,
+       "vocalised": 1.71,
+       "stacked": 1.89
+      }
      }
     },
     "Alexandria": {
@@ -1659,6 +2493,7 @@
        "lineAscent": 0.97,
        "lineDescent": 0.25,
        "minLineHeight": 1.26,
+       "minLineHeightWindows": 1.26,
        "firstSafeInSweep": 1.25,
        "probeMaxErrorPx60": 0.7,
        "fontkitVsCanvasEm": 0.005,
@@ -1677,6 +2512,32 @@
         }
        }
       },
+      "ar_plain2": {
+       "text": "جميع الحقوق محفوظة ويمكن مراجعتها",
+       "inkAscent": 0.82,
+       "inkDescent": 0.37,
+       "lineAscent": 0.97,
+       "lineDescent": 0.25,
+       "minLineHeight": 1.46,
+       "minLineHeightWindows": 1.46,
+       "firstSafeInSweep": 1.4,
+       "probeMaxErrorPx60": 0.8,
+       "fontkitVsCanvasEm": 0.002,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 13
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 7
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
       "ar_vocal": {
        "text": "كُتُبٌ جَمِيلَةٌ",
        "inkAscent": 1.148,
@@ -1684,6 +2545,7 @@
        "lineAscent": 0.97,
        "lineDescent": 0.25,
        "minLineHeight": 1.58,
+       "minLineHeightWindows": 1.58,
        "firstSafeInSweep": 1.6,
        "probeMaxErrorPx60": 0.8,
        "fontkitVsCanvasEm": 0.004,
@@ -1702,6 +2564,32 @@
         }
        }
       },
+      "ar_vocal2": {
+       "text": "يُرِيدُ جِيرَانِي عِنَبًا",
+       "inkAscent": 0.931,
+       "inkDescent": 0.57,
+       "lineAscent": 0.97,
+       "lineDescent": 0.25,
+       "minLineHeight": 1.86,
+       "minLineHeightWindows": 1.86,
+       "firstSafeInSweep": 1.8,
+       "probeMaxErrorPx60": 0.8,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 5,
+         "bottomPx60": 25
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 19
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 10
+        }
+       }
+      },
       "ar_stack": {
        "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
        "inkAscent": 1.338,
@@ -1709,6 +2597,7 @@
        "lineAscent": 0.97,
        "lineDescent": 0.25,
        "minLineHeight": 1.96,
+       "minLineHeightWindows": 1.96,
        "firstSafeInSweep": 2,
        "probeMaxErrorPx60": 0.3,
        "fontkitVsCanvasEm": 0.004,
@@ -1726,6 +2615,32 @@
          "bottomPx60": 4
         }
        }
+      },
+      "ar_stack2": {
+       "text": "إِنَّ جِئْتُمْ بِأَسْئِلَةٍ لِأُمِّي",
+       "inkAscent": 1.234,
+       "inkDescent": 0.57,
+       "lineAscent": 0.97,
+       "lineDescent": 0.25,
+       "minLineHeight": 1.86,
+       "minLineHeightWindows": 1.86,
+       "firstSafeInSweep": 1.8,
+       "probeMaxErrorPx60": 0.8,
+       "fontkitVsCanvasEm": 0.004,
+       "clipAt": {
+        "1": {
+         "topPx60": 23,
+         "bottomPx60": 25
+        },
+        "1.2": {
+         "topPx60": 17,
+         "bottomPx60": 19
+        },
+        "1.5": {
+         "topPx60": 8,
+         "bottomPx60": 10
+        }
+       }
       }
      },
      "lineHeightNormal": 1.22,
@@ -1734,6 +2649,19 @@
       "capHeight": 0.71,
       "bodyHeight": 0.52,
       "alefHeight": 0.82
+     },
+     "linuxMetricsFrom": "hhea",
+     "floors": {
+      "linuxMac": {
+       "plain": 1.46,
+       "vocalised": 1.86,
+       "stacked": 1.96
+      },
+      "windows": {
+       "plain": 1.46,
+       "vocalised": 1.86,
+       "stacked": 1.96
+      }
      }
     },
     "Vazirmatn": {
@@ -1763,6 +2691,7 @@
        "lineAscent": 1.03,
        "lineDescent": 0.54,
        "minLineHeight": 1.09,
+       "minLineHeightWindows": 1.09,
        "firstSafeInSweep": 1.1,
        "probeMaxErrorPx60": 0.7,
        "fontkitVsCanvasEm": 0.007,
@@ -1781,6 +2710,32 @@
         }
        }
       },
+      "ar_plain2": {
+       "text": "جميع الحقوق محفوظة ويمكن مراجعتها",
+       "inkAscent": 0.69,
+       "inkDescent": 0.34,
+       "lineAscent": 1.03,
+       "lineDescent": 0.54,
+       "minLineHeight": 1.17,
+       "minLineHeightWindows": 1.17,
+       "firstSafeInSweep": 1.2,
+       "probeMaxErrorPx60": 0.1,
+       "fontkitVsCanvasEm": 0.005,
+       "clipAt": {
+        "1": {
+         "topPx60": 0,
+         "bottomPx60": 5
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
       "ar_vocal": {
        "text": "كُتُبٌ جَمِيلَةٌ",
        "inkAscent": 0.986,
@@ -1788,6 +2743,7 @@
        "lineAscent": 1.03,
        "lineDescent": 0.54,
        "minLineHeight": 1.48,
+       "minLineHeightWindows": 1.48,
        "firstSafeInSweep": 1.5,
        "probeMaxErrorPx60": 1,
        "fontkitVsCanvasEm": 0.004,
@@ -1806,6 +2762,32 @@
         }
        }
       },
+      "ar_vocal2": {
+       "text": "يُرِيدُ جِيرَانِي عِنَبًا",
+       "inkAscent": 0.814,
+       "inkDescent": 0.46,
+       "lineAscent": 1.03,
+       "lineDescent": 0.54,
+       "minLineHeight": 1.41,
+       "minLineHeightWindows": 1.41,
+       "firstSafeInSweep": 1.4,
+       "probeMaxErrorPx60": 1.2,
+       "fontkitVsCanvasEm": 0.012,
+       "clipAt": {
+        "1": {
+         "topPx60": 3,
+         "bottomPx60": 12
+        },
+        "1.2": {
+         "topPx60": 0,
+         "bottomPx60": 6
+        },
+        "1.5": {
+         "topPx60": 0,
+         "bottomPx60": 0
+        }
+       }
+      },
       "ar_stack": {
        "text": "أُمَّهَاتٌ إِلَيْكُمْ لَأَنَّ آمِينَ",
        "inkAscent": 1.155,
@@ -1813,6 +2795,7 @@
        "lineAscent": 1.03,
        "lineDescent": 0.54,
        "minLineHeight": 1.82,
+       "minLineHeightWindows": 1.82,
        "firstSafeInSweep": 1.8,
        "probeMaxErrorPx60": 0.6,
        "fontkitVsCanvasEm": 0.012,
@@ -1830,6 +2813,32 @@
          "bottomPx60": 0
         }
        }
+      },
+      "ar_stack2": {
+       "text": "إِنَّ جِئْتُمْ بِأَسْئِلَةٍ لِأُمِّي",
+       "inkAscent": 1.168,
+       "inkDescent": 0.46,
+       "lineAscent": 1.03,
+       "lineDescent": 0.54,
+       "minLineHeight": 1.85,
+       "minLineHeightWindows": 1.85,
+       "firstSafeInSweep": 1.8,
+       "probeMaxErrorPx60": 1.4,
+       "fontkitVsCanvasEm": 0.013,
+       "clipAt": {
+        "1": {
+         "topPx60": 24,
+         "bottomPx60": 12
+        },
+        "1.2": {
+         "topPx60": 18,
+         "bottomPx60": 6
+        },
+        "1.5": {
+         "topPx60": 9,
+         "bottomPx60": 0
+        }
+       }
       }
      },
      "lineHeightNormal": 1.57,
@@ -1838,6 +2847,19 @@
       "capHeight": 0.72,
       "bodyHeight": 0.36,
       "alefHeight": 0.67
+     },
+     "linuxMetricsFrom": "hhea",
+     "floors": {
+      "linuxMac": {
+       "plain": 1.17,
+       "vocalised": 1.48,
+       "stacked": 1.85
+      },
+      "windows": {
+       "plain": 1.17,
+       "vocalised": 1.48,
+       "stacked": 1.85
+      }
      }
     },
     "Noto Nastaliq Urdu": {
@@ -1867,6 +2889,7 @@
        "lineAscent": 1.9,
        "lineDescent": 0.6,
        "minLineHeight": 2.03,
+       "minLineHeightWindows": 2.04,
        "firstSafeInSweep": 2,
        "probeMaxErrorPx60": 0.4,
        "fontkitVsCanvasEm": "Cannot read properties of null (reading 'xCoordinate')",
@@ -1892,6 +2915,7 @@
        "lineAscent": 1.9,
        "lineDescent": 0.6,
        "minLineHeight": 2.6,
+       "minLineHeightWindows": 2.6,
        "firstSafeInSweep": null,
        "probeMaxErrorPx60": 0.5,
        "fontkitVsCanvasEm": "Cannot read properties of null (reading 'xCoordinate')",
@@ -1917,7 +2941,8 @@
       "capHeight": 0.72,
       "bodyHeight": 0.45,
       "alefHeight": 0.87
-     }
+     },
+     "linuxMetricsFrom": "hhea"
     },
     "Inter": {
      "family": "Inter",
@@ -1946,6 +2971,7 @@
        "lineAscent": 0.97,
        "lineDescent": 0.24,
        "minLineHeight": 1.15,
+       "minLineHeightWindows": 1.15,
        "firstSafeInSweep": 1.1,
        "probeMaxErrorPx60": 0.5,
        "fontkitVsCanvasEm": 0.021,
@@ -1971,6 +2997,7 @@
        "lineAscent": 0.97,
        "lineDescent": 0.24,
        "minLineHeight": 1.27,
+       "minLineHeightWindows": 1.27,
        "firstSafeInSweep": 1.3,
        "probeMaxErrorPx60": 1.4,
        "fontkitVsCanvasEm": 0.006,
@@ -1996,7 +3023,8 @@
       "capHeight": 0.73,
       "bodyHeight": 0.36,
       "alefHeight": 0.76
-     }
+     },
+     "linuxMetricsFrom": "hhea"
     },
     "IBM Plex Sans": {
      "family": "IBM Plex Sans",
@@ -2025,6 +3053,7 @@
        "lineAscent": 1.03,
        "lineDescent": 0.28,
        "minLineHeight": 1.17,
+       "minLineHeightWindows": 1.17,
        "firstSafeInSweep": 1.2,
        "probeMaxErrorPx60": 0.1,
        "fontkitVsCanvasEm": 0.002,
@@ -2050,6 +3079,7 @@
        "lineAscent": 1.03,
        "lineDescent": 0.28,
        "minLineHeight": 1.21,
+       "minLineHeightWindows": 1.21,
        "firstSafeInSweep": 1.2,
        "probeMaxErrorPx60": 0.7,
        "fontkitVsCanvasEm": 0.004,
@@ -2075,7 +3105,8 @@
       "capHeight": 0.71,
       "bodyHeight": 0.36,
       "alefHeight": 0.76
-     }
+     },
+     "linuxMetricsFrom": "hhea"
     },
     "Noto Sans": {
      "family": "Noto Sans",
@@ -2104,6 +3135,7 @@
        "lineAscent": 1.07,
        "lineDescent": 0.29,
        "minLineHeight": 1.26,
+       "minLineHeightWindows": 1.26,
        "firstSafeInSweep": 1.2,
        "probeMaxErrorPx60": 0.8,
        "fontkitVsCanvasEm": 0.013,
@@ -2129,6 +3161,7 @@
        "lineAscent": 1.07,
        "lineDescent": 0.29,
        "minLineHeight": 1.26,
+       "minLineHeightWindows": 1.26,
        "firstSafeInSweep": 1.2,
        "probeMaxErrorPx60": 0.8,
        "fontkitVsCanvasEm": 0.006,
@@ -2154,7 +3187,8 @@
       "capHeight": 0.72,
       "bodyHeight": 0.36,
       "alefHeight": 0.76
-     }
+     },
+     "linuxMetricsFrom": "hhea"
     }
    },
    "sizeAdjustToMatch": {
@@ -3227,6 +4261,3655 @@
     }
    ]
   },
+  "cliptruth": {
+   "note": "truth: unclipped overlay vs page, rows differing in 30 px bands outside the clip edges (scrollers: line scrolled to the middle first); probe flags > 0.75 px, truth counts ≥ 1 px",
+   "sets": {
+    "inSampleRecipes": {
+     "skippedNoTruth": 0,
+     "checked": 108,
+     "flaggedNow": 53,
+     "flaggedFirstVersion": 53,
+     "unflaggedPopulation": 55,
+     "unflaggedSampled": 55,
+     "probe": {
+      "tp": 51,
+      "fp": 2,
+      "fn": 2,
+      "tn": 53,
+      "fpList": [
+       "recipes #c51 \"الخدمات الإلكترونية\"",
+       "recipes #c94 \"كُتُبٌ جَمِيلَةٌ\""
+      ],
+      "fnList": [
+       "recipes #c92 truth 1/0px \"إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ\"",
+       "recipes #c98 truth 1/0px \"إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ\""
+      ]
+     },
+     "probeFirstVersion": {
+      "tp": 51,
+      "fp": 2,
+      "fn": 2,
+      "tn": 53,
+      "fpList": [
+       "recipes #c51 \"الخدمات الإلكترونية\"",
+       "recipes #c94 \"كُتُبٌ جَمِيلَةٌ\""
+      ],
+      "fnList": [
+       "recipes #c92 truth 1/0px \"إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ\"",
+       "recipes #c98 truth 1/0px \"إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ\""
+      ]
+     }
+    },
+    "scrollContainers": {
+     "skippedNoTruth": 0,
+     "checked": 96,
+     "flaggedNow": 13,
+     "flaggedFirstVersion": 27,
+     "unflaggedPopulation": 69,
+     "unflaggedSampled": 69,
+     "perRecipe": {
+      "panelTight": {
+       "cases": 12,
+       "truthCut": 12,
+       "flaggedNow": 12,
+       "flaggedFirstVersion": 12,
+       "maxTruthPx": 8
+      },
+      "tbody": {
+       "cases": 72,
+       "truthCut": 0,
+       "flaggedNow": 0,
+       "flaggedFirstVersion": 12,
+       "maxTruthPx": 0
+      },
+      "panelRoomy": {
+       "cases": 12,
+       "truthCut": 1,
+       "flaggedNow": 1,
+       "flaggedFirstVersion": 3,
+       "maxTruthPx": 1
+      }
+     },
+     "probe": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0,
+      "tn": 83,
+      "fpList": [],
+      "fnList": []
+     },
+     "probeFirstVersion": {
+      "tp": 13,
+      "fp": 14,
+      "fn": 0,
+      "tn": 69,
+      "fpList": [
+       "scroll td (scroller) \"كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ\"",
+       "scroll td (scroller) \"إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ \"",
+       "scroll td (scroller) \"كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ\"",
+       "scroll td (scroller) \"إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ \"",
+       "scroll div (scroller) \"كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ\"",
+       "scroll td (scroller) \"كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ\"",
+       "scroll td (scroller) \"إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ \"",
+       "scroll td (scroller) \"كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ\"",
+       "scroll td (scroller) \"إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ \"",
+       "scroll div (scroller) \"كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ\"",
+       "scroll td (scroller) \"كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ\"",
+       "scroll td (scroller) \"إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ \"",
+       "scroll td (scroller) \"كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ\"",
+       "scroll td (scroller) \"إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ \""
+      ],
+      "fnList": []
+     }
+    },
+    "page:govsa-rtl": {
+     "skippedNoTruth": 0,
+     "checked": 176,
+     "flaggedNow": 0,
+     "flaggedFirstVersion": 3,
+     "unflaggedPopulation": 106,
+     "unflaggedSampled": 18
+    },
+    "page:bootstrap-dashboard-rtl": {
+     "skippedNoTruth": 0,
+     "checked": 98,
+     "flaggedNow": 0,
+     "flaggedFirstVersion": 0,
+     "unflaggedPopulation": 98,
+     "unflaggedSampled": 20
+    },
+    "page:bootstrap-checkout-rtl": {
+     "skippedNoTruth": 0,
+     "checked": 0,
+     "flaggedNow": 0,
+     "flaggedFirstVersion": 0,
+     "unflaggedPopulation": 0,
+     "unflaggedSampled": 0
+    },
+    "page:bootstrap-album-rtl": {
+     "skippedNoTruth": 0,
+     "checked": 0,
+     "flaggedNow": 0,
+     "flaggedFirstVersion": 0,
+     "unflaggedPopulation": 0,
+     "unflaggedSampled": 0
+    },
+    "page:bootstrap-blog-rtl": {
+     "skippedNoTruth": 0,
+     "checked": 11,
+     "flaggedNow": 0,
+     "flaggedFirstVersion": 0,
+     "unflaggedPopulation": 11,
+     "unflaggedSampled": 11
+    },
+    "page:bootstrap-carousel-rtl": {
+     "skippedNoTruth": 6,
+     "checked": 11,
+     "flaggedNow": 0,
+     "flaggedFirstVersion": 0,
+     "unflaggedPopulation": 9,
+     "unflaggedSampled": 9
+    },
+    "page:regress-capture-reach-rtl": {
+     "skippedNoTruth": 0,
+     "checked": 0,
+     "flaggedNow": 0,
+     "flaggedFirstVersion": 0,
+     "unflaggedPopulation": 0,
+     "unflaggedSampled": 0
+    },
+    "page:fixture-ar-broken": {
+     "skippedNoTruth": 0,
+     "checked": 26,
+     "flaggedNow": 2,
+     "flaggedFirstVersion": 2,
+     "unflaggedPopulation": 22,
+     "unflaggedSampled": 11
+    },
+    "realPages": {
+     "cases": 68,
+     "probe": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "tn": 66,
+      "fpList": [],
+      "fnList": []
+     },
+     "probeFirstVersion": {
+      "tp": 2,
+      "fp": 3,
+      "fn": 0,
+      "tn": 63,
+      "fpList": [
+       "govsa-rtl label.govsa-checkbox (scroller) \"خط المحتوى\"",
+       "govsa-rtl td (scroller) \"خط المحتوى\"",
+       "govsa-rtl span (scroller) \"خط المحتوى\""
+      ],
+      "fnList": []
+     },
+     "unmatchedOverlays": 0
+    }
+   },
+   "cases": {
+    "recipes": 108,
+    "scroll": [
+     {
+      "page": "scroll",
+      "case": "Tajawal|panelTight|vocal",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 5,
+      "truthBottomPx": 0,
+      "lines": 4,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 5.4,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 5.4,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|panelTight|stack",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 8,
+      "truthBottomPx": 0,
+      "lines": 3,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 7.6,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 7.6,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 11.5
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 11.5
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|panelTight|vocal",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 4,
+      "truthBottomPx": 0,
+      "lines": 4,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 3.6,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 3.6,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|panelTight|stack",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 6,
+      "truthBottomPx": 0,
+      "lines": 3,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 6.2,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 6.2,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 15.7
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 15.6
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|panelRoomy|vocal",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 4,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 23.7
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|panelTight|vocal",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 4,
+      "truthBottomPx": 0,
+      "lines": 4,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 4.4,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 4.4,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|panelTight|stack",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 6,
+      "truthBottomPx": 0,
+      "lines": 3,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 6.4,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 6.4,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 15
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 15.5
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|panelTight|vocal",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 2,
+      "truthBottomPx": 0,
+      "lines": 4,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 2.3,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 2.3,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|panelTight|stack",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 6,
+      "truthBottomPx": 0,
+      "lines": 3,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 6.1,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 6.1,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 15.5
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 17
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|panelRoomy|vocal",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 4,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 26
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|panelTight|vocal",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 2,
+      "truthBottomPx": 0,
+      "lines": 4,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 1.5,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 1.5,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|panelTight|stack",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 4,
+      "truthBottomPx": 0,
+      "lines": 3,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 4.6,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 4.6,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 15.5
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 13.8
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|panelRoomy|stack",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 1,
+      "truthBottomPx": 0,
+      "lines": 3,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0.9,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0.9,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|panelTight|vocal",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 5,
+      "truthBottomPx": 0,
+      "lines": 5,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 4.8,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 4.8,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|panelTight|stack",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 8,
+      "truthBottomPx": 0,
+      "lines": 3,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 7.9,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 7.9,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 17.5
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 15.2
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|panelRoomy|vocal",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 4,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|panelRoomy|stack",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 3,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Tajawal|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|panelRoomy|vocal",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 4,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|panelRoomy|stack",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 3,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "IBM Plex Sans Arabic|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|panelRoomy|stack",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 3,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Noto Sans Arabic|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|panelRoomy|vocal",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 4,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|panelRoomy|stack",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 3,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Almarai|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|panelRoomy|stack",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": false,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 3,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Cairo|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|panelRoomy|vocal",
+      "selector": "div",
+      "clipper": "self",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 5,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|tbody|vocal",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "كُتُبٌ جَمِيلَةٌ لِلْقِرَاءَةِ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "scroll",
+      "case": "Alexandria|tbody|stack",
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "إِلَيْكُمْ لَأَنَّ أُمَّهَاتٌ ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     }
+    ],
+    "real": [
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "label.govsa-checkbox",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "خط المحتوى",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 4
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "خط المحتوى",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 6
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "span",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "خط المحتوى",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 6
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "th",
+      "clipper": "div.govsa-table",
+      "scroller": false,
+      "text": "Column title",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "Line content",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "Line content",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "Line content",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "Line content",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "Line content",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "Line content",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "Line content",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "th",
+      "clipper": "div.govsa-table",
+      "scroller": false,
+      "text": "عنوان",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "خط المحتوى",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "خط المحتوى",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "label.govsa-checkbox",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "Label",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "label.govsa-checkbox",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "Label",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "th",
+      "clipper": "div.govsa-table",
+      "scroller": false,
+      "text": "عنوان المحتوى",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "label.govsa-checkbox",
+      "clipper": "tbody",
+      "scroller": true,
+      "text": "خط المحتوى",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "#headingOne",
+      "clipper": "div.card",
+      "scroller": false,
+      "text": "Lable #1",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "#headingOne",
+      "clipper": "div.card",
+      "scroller": false,
+      "text": "Lable #1",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "govsa-rtl",
+      "case": null,
+      "selector": "#headingThree",
+      "clipper": "div.card",
+      "scroller": false,
+      "text": "عنوان #3",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "a.nav-link.d-flex",
+      "clipper": "div.offcanvas-body.d-md-flex",
+      "scroller": false,
+      "text": "لوحة القيادة",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "a.nav-link.d-flex",
+      "clipper": "div.offcanvas-body.d-md-flex",
+      "scroller": false,
+      "text": "التكاملات",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "a.nav-link.d-flex",
+      "clipper": "div.offcanvas-body.d-md-flex",
+      "scroller": false,
+      "text": "مبيعات نهاية العام",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "th",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "عنوان",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "عشوائية",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "مبهة",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "غنية",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "تثري",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "بيانات",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "مبهة",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "توضيحية",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "مفيدة",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "عشوائية",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "مبهة",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "غنية",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "تثري",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "تثري",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "مبهة",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "توضيحية",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-dashboard-rtl",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-responsive.small",
+      "scroller": false,
+      "text": "مفيدة",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-blog-rtl",
+      "case": null,
+      "selector": "strong.d-inline-block.mb-2",
+      "clipper": "div.row.g-0",
+      "scroller": false,
+      "text": "العالم",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-blog-rtl",
+      "case": null,
+      "selector": "h3.mb-0",
+      "clipper": "div.row.g-0",
+      "scroller": false,
+      "text": "مشاركة مميزة",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-blog-rtl",
+      "case": null,
+      "selector": "div.mb-1.text-body-secondary",
+      "clipper": "div.row.g-0",
+      "scroller": false,
+      "text": "نوفمبر 12",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-blog-rtl",
+      "case": null,
+      "selector": "p.card-text.mb-auto",
+      "clipper": "div.row.g-0",
+      "scroller": false,
+      "text": "هذه بطاقة أوسع مع نص داعم أدنا",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-blog-rtl",
+      "case": null,
+      "selector": "a.icon-link.gap-1",
+      "clipper": "div.row.g-0",
+      "scroller": false,
+      "text": "أكمل القراءة",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-blog-rtl",
+      "case": null,
+      "selector": "strong.d-inline-block.mb-2",
+      "clipper": "div.row.g-0",
+      "scroller": false,
+      "text": "التصميم",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-blog-rtl",
+      "case": null,
+      "selector": "h3.mb-0",
+      "clipper": "div.row.g-0",
+      "scroller": false,
+      "text": "عنوان الوظيفة",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-blog-rtl",
+      "case": null,
+      "selector": "div.mb-1.text-body-secondary",
+      "clipper": "div.row.g-0",
+      "scroller": false,
+      "text": "نوفمبر 11",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-blog-rtl",
+      "case": null,
+      "selector": "p.mb-auto",
+      "clipper": "div.row.g-0",
+      "scroller": false,
+      "text": "هذه بطاقة أوسع مع نص داعم أدنا",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-blog-rtl",
+      "case": null,
+      "selector": "a.icon-link.gap-1",
+      "clipper": "div.row.g-0",
+      "scroller": false,
+      "text": "أكمل القراءة",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-blog-rtl",
+      "case": null,
+      "selector": "code",
+      "clipper": "pre",
+      "scroller": false,
+      "text": "Example code block",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-carousel-rtl",
+      "case": null,
+      "selector": "h1",
+      "clipper": "div.carousel-inner",
+      "scroller": false,
+      "text": "عنوان المثال.",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-carousel-rtl",
+      "case": null,
+      "selector": "p.opacity-75",
+      "clipper": "div.carousel-inner",
+      "scroller": false,
+      "text": "تشير الدراسات الإحصائية حسب ال",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 2,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "bootstrap-carousel-rtl",
+      "case": null,
+      "selector": "a.btn.btn-lg",
+      "clipper": "div.carousel-inner",
+      "scroller": false,
+      "text": "سجل اليوم",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "span.note-text",
+      "clipper": "self",
+      "scroller": false,
+      "text": "سَلِّمْ إِلَى الاسْتِقْبَالِ ل",
+      "truthTopPx": 4,
+      "truthBottomPx": 2,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 5.3,
+       "bottomPx": 3.5
+      },
+      "probeFirstVersion": {
+       "topPx": 5.3,
+       "bottomPx": 3.5
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "div.cell-name",
+      "clipper": "self",
+      "scroller": false,
+      "text": "سارة أحمد",
+      "truthTopPx": 1,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 1,
+       "bottomPx": 0.2
+      },
+      "probeFirstVersion": {
+       "topPx": 1,
+       "bottomPx": 0.2
+      },
+      "sampledUnflagged": false
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "caption",
+      "clipper": "div.table-wrap",
+      "scroller": false,
+      "text": "أحدث الطلبات",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "th",
+      "clipper": "div.table-wrap",
+      "scroller": false,
+      "text": "العميل",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "th.num",
+      "clipper": "div.table-wrap",
+      "scroller": false,
+      "text": "المبلغ",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-wrap",
+      "scroller": false,
+      "text": "مدفوع",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-wrap",
+      "scroller": false,
+      "text": "1041",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-wrap",
+      "scroller": false,
+      "text": "مسترد",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-wrap",
+      "scroller": false,
+      "text": "1040",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "td",
+      "clipper": "div.table-wrap",
+      "scroller": false,
+      "text": "قيد الانتظار",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "div.tile",
+      "clipper": "div.reel",
+      "scroller": false,
+      "text": "1",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "div.tile",
+      "clipper": "div.reel",
+      "scroller": false,
+      "text": "3",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     },
+     {
+      "page": "fixture-ar-broken",
+      "case": null,
+      "selector": "div.tile",
+      "clipper": "div.reel",
+      "scroller": false,
+      "text": "5",
+      "truthTopPx": 0,
+      "truthBottomPx": 0,
+      "lines": 1,
+      "unmatched": 0,
+      "probe": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "probeFirstVersion": {
+       "topPx": 0,
+       "bottomPx": 0
+      },
+      "sampledUnflagged": true
+     }
+    ]
+   },
+   "truthMethodAgreement": {
+    "cases": 108,
+    "sameVerdict": 105,
+    "medianAbsDiffPx": 0,
+    "p90AbsDiffPx": 1,
+    "maxAbsDiffPx": 1
+   }
+  },
   "mixed": {
    "text": "Your order ships from Riyadh. The courier (مندوب التوصيل) will call before arriving. Track it under الطلبات الحالية in the app. Payment: بطاقة مدى or cash. Questions? Write to support any time; we answer in English and العربية.",
    "fonts": {
@@ -4129,6 +8812,18 @@
       "visual": "left",
       "followsArrow": false
      }
+    },
+    "aegov (custom.js as shipped)": {
+     "ArrowLeft": {
+      "movedTo": "previous (DOM)",
+      "visual": "right",
+      "followsArrow": false
+     },
+     "ArrowRight": {
+      "movedTo": "next (DOM)",
+      "visual": "left",
+      "followsArrow": false
+     }
     }
    },
    "native": {
@@ -4395,7 +9090,7 @@
      "overrideRules": 1,
      "logicalRules": 14
     },
-    "ms": 425
+    "ms": 471
    },
    "fixture-ar-broken": {
     "mode": "as-served",
@@ -4411,7 +9106,7 @@
      "overrideRules": 0,
      "logicalRules": 6
     },
-    "ms": 856
+    "ms": 493
    },
    "fixture-en-good-flip": {
     "mode": "flip",
@@ -4432,13 +9127,13 @@
      "overrideRules": 1,
      "logicalRules": 14
     },
-    "ms": 9071
+    "ms": 5826
    },
    "fixture-en-broken-flip": {
     "mode": "flip",
     "summary": {
      "FAIL": 8,
-     "WARN": 4,
+     "WARN": 5,
      "INFO": 3
     },
     "mirror": {
@@ -4453,13 +9148,13 @@
      "overrideRules": 0,
      "logicalRules": 6
     },
-    "ms": 9161
+    "ms": 5651
    },
    "bootstrap-dashboard-rtl": {
     "mode": "as-served",
     "summary": {
      "FAIL": 0,
-     "WARN": 0,
+     "WARN": 1,
      "INFO": 4
     },
     "mirror": null,
@@ -4469,7 +9164,7 @@
      "overrideRules": 0,
      "logicalRules": 9
     },
-    "ms": 581
+    "ms": 685
    },
    "bootstrap-checkout-rtl": {
     "mode": "as-served",
@@ -4485,13 +9180,13 @@
      "overrideRules": 0,
      "logicalRules": 9
     },
-    "ms": 872
+    "ms": 317
    },
    "bootstrap-dashboard-flip": {
     "mode": "flip",
     "summary": {
      "FAIL": 1,
-     "WARN": 2,
+     "WARN": 3,
      "INFO": 3
     },
     "mirror": {
@@ -4506,7 +9201,7 @@
      "overrideRules": 0,
      "logicalRules": 9
     },
-    "ms": 3690
+    "ms": 2693
    },
    "bootstrap-checkout-flip": {
     "mode": "flip",
@@ -4527,14 +9222,14 @@
      "overrideRules": 0,
      "logicalRules": 9
     },
-    "ms": 944
+    "ms": 739
    },
    "seeded": {
     "defects": [
      {
       "defect": "brand margin-right",
       "asServed": "INFO",
-      "flip": "FAIL"
+      "flip": "WARN"
      },
      {
       "defect": "search margin-left:auto",
@@ -4554,7 +9249,7 @@
      {
       "defect": "due margin-left",
       "asServed": "INFO",
-      "flip": "FAIL"
+      "flip": "WARN"
      },
      {
       "defect": "field padding-right for the icon",
@@ -4660,8 +9355,8 @@
      "null": 0
     },
     "flip": {
-     "FAIL": 16,
-     "WARN": 3,
+     "FAIL": 14,
+     "WARN": 5,
      "INFO": 1,
      "null": 4
     },
@@ -4749,12 +9444,12 @@
      ]
     },
     "findings": [],
-    "ms": 1076
+    "ms": 549
    },
    "broken-portrait": {
     "summary": {
      "FAIL": 3,
-     "WARN": 7,
+     "WARN": 6,
      "INFO": 1
     },
     "thumb": {
@@ -4815,7 +9510,6 @@
      ]
     },
     "findings": [
-     "WARN safe-area: ",
      "FAIL safe-area: 8",
      "WARN targets: 15",
      "WARN targets: 11",
@@ -4827,7 +9521,84 @@
      "WARN keyboard: 3",
      "WARN thumb: 1"
     ],
-    "ms": 1110
+    "ms": 635
+   },
+   "broken-plainmeta-portrait": {
+    "summary": {
+     "FAIL": 2,
+     "WARN": 5,
+     "INFO": 3
+    },
+    "thumb": {
+     "model": {
+      "pxPerMm": 6.1,
+      "pivotOutsideMm": 5,
+      "pivotUpMm": 15,
+      "near": 25,
+      "natural": 65,
+      "stretch": 85,
+      "edgeMm": 5
+     },
+     "primaries": [
+      {
+       "target": "a.fab-top.primary\"Buy now\"",
+       "band": "top third",
+       "right": "regrip",
+       "left": "regrip",
+       "edge": false
+      },
+      {
+       "target": "button.primary\"Add to cart\"",
+       "band": "bottom third",
+       "right": "awkward (at the thumb base)",
+       "left": "natural",
+       "edge": false
+      }
+     ],
+     "tabbar": [
+      {
+       "target": "a\"Home\"",
+       "band": "bottom third",
+       "right": "natural",
+       "left": "awkward (at the thumb base)",
+       "edge": true
+      },
+      {
+       "target": "a\"Search\"",
+       "band": "bottom third",
+       "right": "natural",
+       "left": "natural",
+       "edge": true
+      },
+      {
+       "target": "a\"Bag\"",
+       "band": "bottom third",
+       "right": "natural",
+       "left": "natural",
+       "edge": true
+      },
+      {
+       "target": "a\"Account\"",
+       "band": "bottom third",
+       "right": "awkward (at the thumb base)",
+       "left": "natural",
+       "edge": true
+      }
+     ]
+    },
+    "findings": [
+     "INFO safe-area: ",
+     "WARN targets: 15",
+     "WARN targets: 11",
+     "INFO targets: 7",
+     "FAIL hover: 1",
+     "WARN pressed: 15",
+     "FAIL keyboards: 5",
+     "WARN keyboards: 19",
+     "INFO keyboard: ",
+     "WARN thumb: 1"
+    ],
+    "ms": 542
    },
    "good-landscape": {
     "summary": {
@@ -4841,12 +9612,12 @@
      "tabbar": []
     },
     "findings": [],
-    "ms": 1187
+    "ms": 535
    },
    "broken-landscape": {
     "summary": {
      "FAIL": 3,
-     "WARN": 6,
+     "WARN": 5,
      "INFO": 1
     },
     "thumb": {
@@ -4855,7 +9626,6 @@
      "tabbar": []
     },
     "findings": [
-     "WARN safe-area: ",
      "FAIL safe-area: 4",
      "WARN targets: 15",
      "WARN targets: 11",
@@ -4866,13 +9636,13 @@
      "WARN keyboards: 19",
      "WARN keyboard: 7"
     ],
-    "ms": 1117
+    "ms": 476
    },
    "bootstrap-checkout-rtl-phone": {
     "summary": {
      "FAIL": 0,
-     "WARN": 4,
-     "INFO": 1
+     "WARN": 3,
+     "INFO": 3
     },
     "thumb": {
      "model": {
@@ -4896,23 +9666,15 @@
      "tabbar": []
     },
     "findings": [
-     "WARN safe-area: ",
+     "INFO safe-area: ",
      "WARN targets: 4",
      "INFO targets: 3",
      "WARN pressed: 3",
-     "WARN keyboards: 6"
+     "WARN keyboards: 6",
+     "INFO keyboard: "
     ],
-    "ms": 941
+    "ms": 358
    }
-  },
-  "icons": {
-   "codexIcons": 293,
-   "codexFlip": 89,
-   "codexRtlAsset": 10,
-   "flutterBase": 2233,
-   "flutterBaseMirror": 76,
-   "mirrorKeys": 161,
-   "mirrorBoth": 4
   },
   "oos": {
    "rtl": {
@@ -4926,7 +9688,7 @@
       },
       "failExamples": 0,
       "failByCheck": {},
-      "ms": 568
+      "ms": 364
      },
      "fixed": {
       "summary": {
@@ -4936,7 +9698,7 @@
       },
       "failExamples": 0,
       "failByCheck": {},
-      "ms": 346,
+      "ms": 275,
       "fails": []
      }
     },
@@ -4952,7 +9714,7 @@
       "failByCheck": {
        "arabic": 6
       },
-      "ms": 341
+      "ms": 331
      },
      "fixed": {
       "summary": {
@@ -4965,47 +9727,47 @@
        "icons": 2,
        "arabic": 6
       },
-      "ms": 394,
+      "ms": 372,
       "fails": [
        {
         "check": "icons",
         "example": "bi #chevron-right in \"أكمل القراءة\"",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "icons",
         "example": "bi #chevron-right in \"أكمل القراءة\"",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "arabic",
         "example": "h1.display-4.fst-italic (italic)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "arabic",
         "example": "h3.pb-4.mb-4 (italic)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "arabic",
         "example": "h4.fst-italic (italic)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "arabic",
         "example": "h4.fst-italic (italic)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "arabic",
         "example": "h4.fst-italic (italic)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "arabic",
         "example": "h4.fst-italic (italic)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        }
       ]
      }
@@ -5022,7 +9784,7 @@
       "failByCheck": {
        "bidi": 1
       },
-      "ms": 310
+      "ms": 450
      },
      "fixed": {
       "summary": {
@@ -5034,12 +9796,12 @@
       "failByCheck": {
        "bidi": 1
       },
-      "ms": 299,
+      "ms": 513,
       "fails": [
        {
         "check": "bidi",
         "example": "p: \"© 2017–2026 Company, Inc. ·\" reads as \"· . Company , Inc 2026 – 2017 ©\"",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        }
       ]
      }
@@ -5056,7 +9818,7 @@
       "failByCheck": {
        "mirror": 2
       },
-      "ms": 764
+      "ms": 767
      },
      "fixed": {
       "summary": {
@@ -5068,17 +9830,17 @@
       "failByCheck": {
        "mirror": 2
       },
-      "ms": 886,
+      "ms": 703,
       "fails": [
        {
         "check": "mirror",
         "example": "a.navbar-brand.d-flex (16 px off) — margin-left 0px / right 16px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "p.float-end.mb-1 (1025 px off) — float right",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        }
       ]
      }
@@ -5096,7 +9858,7 @@
        "mirror": 9,
        "align": 2
       },
-      "ms": 491
+      "ms": 662
      },
      "fixed": {
       "summary": {
@@ -5109,57 +9871,57 @@
        "mirror": 8,
        "align": 2
       },
-      "ms": 767,
+      "ms": 613,
       "fails": [
        {
         "check": "mirror",
         "example": "a.navbar-brand (16 px off) — margin-left 0px / right 16px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.nav-item (640 px off) — parent ul.navbar-nav.me-auto: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.nav-item (640 px off) — parent ul.navbar-nav.me-auto: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.nav-item (640 px off) — parent ul.navbar-nav.me-auto: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "a.btn.btn-lg (723 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "button.carousel-control-prev (1088 px off) — left 0px / right 1088px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "button.carousel-control-next (1088 px off) — left 1088px / right 0px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "p.float-end (1025 px off) — float right",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "align",
         "example": "h1",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "align",
         "example": "p.opacity-75",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        }
       ]
      }
@@ -5176,7 +9938,7 @@
       "failByCheck": {
        "mirror": 28
       },
-      "ms": 3980
+      "ms": 3493
      },
      "fixed": {
       "summary": {
@@ -5188,127 +9950,127 @@
       "failByCheck": {
        "mirror": 24
       },
-      "ms": 4528,
+      "ms": 3603,
       "fails": [
        {
         "check": "mirror",
         "example": "a.d-flex.align-items-center (108 px off) — margin-left 0px / right 108.281px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "a.d-flex.align-items-center (108 px off) — margin-left 0px / right 108.281px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (48 px off) — margin-left 0px / right 8px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (32 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (32 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (32 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (32 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "svg.bi.pe-none (32 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "button.btn.btn-toggle (40 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "a.link-body-emphasis.d-inline-flex (60 px off) — margin-left 20px / right 0px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "a.link-body-emphasis.d-inline-flex (60 px off) — margin-left 20px / right 0px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "a.link-body-emphasis.d-inline-flex (60 px off) — margin-left 20px / right 0px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "button.btn.btn-toggle (40 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "button.btn.btn-toggle (40 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "button.btn.btn-toggle (40 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        }
       ]
      }
@@ -5326,7 +10088,7 @@
        "mirror": 43,
        "arabic": 3
       },
-      "ms": 2472
+      "ms": 2249
      },
      "fixed": {
       "summary": {
@@ -5338,7 +10100,7 @@
       "failByCheck": {
        "mirror": 38
       },
-      "ms": 3306,
+      "ms": 2482,
       "fails": [
        {
         "check": "mirror",
@@ -5363,7 +10125,7 @@
        {
         "check": "mirror",
         "example": "span.govsa-checkbox__checkmark (114 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
@@ -5373,147 +10135,147 @@
        {
         "check": "mirror",
         "example": "span.govsa-radio__checkmark (144 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "#customSwitches (243 px off) — left 0px / right 242.5px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "div.col-7.govsa-card__tag (113 px off) — float left",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "div.col-7.govsa-card__tag (125 px off) — float left",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "div.col-7.govsa-card__tag (113 px off) — float left",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "div.col-7.govsa-card__tag (113 px off) — float left",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item (40 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item (40 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item.active-page (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item.disabled (40 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item (40 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item.active-page (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item (41 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item.disabled (40 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item (40 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item.active-page (43 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item (46 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.page-item (46 px off) — parent ul.pagination.govsa-pagination: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "#carouselExampleIndicators (192 px off) — margin-left 192.328px / right 0px",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "i.govsa-icon.govsa--Color (219 px off) — float right",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "i.govsa-icon.govsa--Color (219 px off) — float right",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "i.govsa-icon.govsa--Color (219 px off) — float right",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "i.govsa-icon.govsa--Color (219 px off) — float right",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "li.nav-item.govsa-tab--active (40 px off) — parent ul.nav.nav-tabs: RTL adds padding: left 0px / right 40px (a physical reset of a logical default)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
@@ -5546,7 +10308,7 @@
        "bidi": 53,
        "arabic": 3
       },
-      "ms": 766
+      "ms": 742
      },
      "fixed": {
       "summary": {
@@ -5558,12 +10320,12 @@
       "failByCheck": {
        "bidi": 1
       },
-      "ms": 774,
+      "ms": 604,
       "fails": [
        {
         "check": "bidi",
         "example": "span: \"60% of vistors said yes from 2843 Feedba\" reads as \"of vistors said yes from 2843 Feedback 60 %\"",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        }
       ]
      }
@@ -5578,7 +10340,7 @@
       },
       "failExamples": 0,
       "failByCheck": {},
-      "ms": 432
+      "ms": 152
      },
      "fixed": {
       "summary": {
@@ -5588,7 +10350,7 @@
       },
       "failExamples": 0,
       "failByCheck": {},
-      "ms": 425,
+      "ms": 203,
       "fails": []
      }
     },
@@ -5604,7 +10366,7 @@
       "failByCheck": {
        "bidi": 1
       },
-      "ms": 195
+      "ms": 275
      },
      "fixed": {
       "summary": {
@@ -5616,12 +10378,12 @@
       "failByCheck": {
        "bidi": 1
       },
-      "ms": 253,
+      "ms": 290,
       "fails": [
        {
         "check": "bidi",
         "example": "span: \"+12.4%\" reads as \"% 12 . 4 +\"",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        }
       ]
      }
@@ -5636,7 +10398,7 @@
       },
       "failExamples": 0,
       "failByCheck": {},
-      "ms": 323
+      "ms": 309
      },
      "fixed": {
       "summary": {
@@ -5646,7 +10408,7 @@
       },
       "failExamples": 0,
       "failByCheck": {},
-      "ms": 215,
+      "ms": 258,
       "fails": []
      }
     },
@@ -5660,7 +10422,7 @@
       },
       "failExamples": 0,
       "failByCheck": {},
-      "ms": 243
+      "ms": 208
      },
      "fixed": {
       "summary": {
@@ -5670,7 +10432,7 @@
       },
       "failExamples": 0,
       "failByCheck": {},
-      "ms": 230,
+      "ms": 224,
       "fails": []
      }
     },
@@ -5688,7 +10450,7 @@
        "align": 4,
        "bidi": 2
       },
-      "ms": 464
+      "ms": 505
      },
      "fixed": {
       "summary": {
@@ -5701,37 +10463,37 @@
        "mirror": 2,
        "align": 4
       },
-      "ms": 542,
+      "ms": 475,
       "fails": [
        {
         "check": "mirror",
         "example": "span.govuk-header__logotype (10 px off)",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "mirror",
         "example": "div.govuk-grid-column-two-thirds (330 px off) — float left",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "align",
         "example": "caption.govuk-table__caption.govuk-table__caption--m",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "align",
         "example": "th.govuk-table__header",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "align",
         "example": "th.govuk-table__header",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "align",
         "example": "th.govuk-table__header",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        }
       ]
      }
@@ -5749,7 +10511,7 @@
        "mirror": 3,
        "align": 7
       },
-      "ms": 446
+      "ms": 464
      },
      "fixed": {
       "summary": {
@@ -5761,42 +10523,42 @@
       "failByCheck": {
        "align": 7
       },
-      "ms": 523,
+      "ms": 428,
       "fails": [
        {
         "check": "align",
         "example": "th",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "align",
         "example": "th",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "align",
         "example": "th",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "align",
         "example": "th",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "align",
         "example": "th",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "align",
         "example": "th",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "align",
         "example": "th",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        }
       ]
      }
@@ -5811,7 +10573,7 @@
       },
       "failExamples": 0,
       "failByCheck": {},
-      "ms": 408
+      "ms": 339
      },
      "fixed": {
       "summary": {
@@ -5821,7 +10583,7 @@
       },
       "failExamples": 0,
       "failByCheck": {},
-      "ms": 398,
+      "ms": 436,
       "fails": []
      }
     },
@@ -5837,7 +10599,7 @@
       "failByCheck": {
        "keys": 1
       },
-      "ms": 219
+      "ms": 182
      },
      "fixed": {
       "summary": {
@@ -5849,12 +10611,12 @@
       "failByCheck": {
        "keys": 1
       },
-      "ms": 228,
+      "ms": 156,
       "fails": [
        {
         "check": "keys",
         "example": "tablist \"aegov\"",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        }
       ]
      }
@@ -5871,7 +10633,7 @@
       "failByCheck": {
        "bidi": 7
       },
-      "ms": 360
+      "ms": 296
      },
      "fixed": {
       "summary": {
@@ -5883,22 +10645,22 @@
       "failByCheck": {
        "bidi": 3
       },
-      "ms": 364,
+      "ms": 227,
       "fails": [
        {
         "check": "bidi",
         "example": "#f-phone: \"+966 50\" reads as \"50 966 +\"",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "bidi",
         "example": "#f-hours: \"09:00 - 17:00\" reads as \"17 : 00 - 09 : 00\"",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "bidi",
         "example": "#f-change: \"-4.2%\" reads as \"4 . 2 % -\"",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        }
       ]
      }
@@ -5986,12 +10748,12 @@
        {
         "check": "targets",
         "example": "button.iconbtn 18×18",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        },
        {
         "check": "targets",
         "example": "button.iconbtn 18×18",
-        "verdict": "unlabelled"
+        "verdict": "TP"
        }
       ]
      }
@@ -6200,59 +10962,59 @@
     "rtlFirstVersionFails": 177,
     "rtlFixed": {
      "fails": 102,
-     "TP": 0,
+     "TP": 94,
      "FP": 0,
-     "unlabelled": 102
+     "unlabelled": 8
     },
     "mobileFirstVersionFails": 4,
     "mobileFixed": {
      "fails": 2,
-     "TP": 0,
+     "TP": 2,
      "FP": 0,
-     "unlabelled": 2
+     "unlabelled": 0
     },
     "byCheck": {
      "icons": {
       "fails": 2,
-      "TP": 0,
+      "TP": 2,
       "FP": 0,
-      "unlabelled": 2
+      "unlabelled": 0
      },
      "arabic": {
       "fails": 6,
-      "TP": 0,
+      "TP": 6,
       "FP": 0,
-      "unlabelled": 6
+      "unlabelled": 0
      },
      "bidi": {
       "fails": 6,
-      "TP": 0,
+      "TP": 6,
       "FP": 0,
-      "unlabelled": 6
+      "unlabelled": 0
      },
      "mirror": {
       "fails": 74,
-      "TP": 0,
+      "TP": 66,
       "FP": 0,
-      "unlabelled": 74
+      "unlabelled": 8
      },
      "align": {
       "fails": 13,
-      "TP": 0,
+      "TP": 13,
       "FP": 0,
-      "unlabelled": 13
+      "unlabelled": 0
      },
      "keys": {
       "fails": 1,
-      "TP": 0,
+      "TP": 1,
       "FP": 0,
-      "unlabelled": 1
+      "unlabelled": 0
      },
      "targets": {
       "fails": 2,
-      "TP": 0,
+      "TP": 2,
       "FP": 0,
-      "unlabelled": 2
+      "unlabelled": 0
      }
     }
    }

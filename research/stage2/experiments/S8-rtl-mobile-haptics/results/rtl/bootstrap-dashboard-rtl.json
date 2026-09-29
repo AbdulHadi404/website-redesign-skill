@@ -4,7 +4,7 @@
  "width": 1280,
  "summary": {
   "FAIL": 0,
-  "WARN": 0,
+  "WARN": 1,
   "INFO": 4
  },
  "mirror": null,
@@ -30,7 +30,7 @@
   },
   {
    "name": "bi #cart",
-   "class": "never",
+   "class": "unknown",
    "flipped": false,
    "context": "المنتجات"
   },
@@ -43,18 +43,24 @@
   {
    "name": "bi #graph-up",
    "class": "ambiguous",
+   "family": "chart",
+   "note": "time axis: Material and Firefox run time right-to-left, Apple and Codex keep graphs",
    "flipped": false,
    "context": "التقارير"
   },
   {
    "name": "bi #puzzle",
-   "class": "unknown",
+   "class": "directional",
+   "strength": "weak",
+   "sources": [
+    "codex"
+   ],
    "flipped": false,
    "context": "التكاملات"
   },
   {
    "name": "bi #plus-circle",
-   "class": "never",
+   "class": "unknown",
    "flipped": false,
    "context": "إضافة تقرير جديد"
   },
@@ -84,31 +90,48 @@
   },
   {
    "name": "bi #gear-wide-connected",
-   "class": "never",
+   "class": "unknown",
    "flipped": false,
    "context": "إعدادات"
   },
   {
    "name": "bi #door-closed",
-   "class": "never",
+   "class": "ambiguous",
+   "family": "logInOut",
+   "note": "Codex flips LogIn/LogOut, Flutter does not",
    "flipped": false,
    "context": "خروج"
   },
   {
    "name": "bi #calendar3",
    "class": "never",
+   "strength": "weak",
+   "sources": [
+    "codex"
+   ],
+   "family": "calendar",
    "flipped": false,
    "context": "هذا الأسبوع"
   }
  ],
  "findings": [
   {
+   "level": "WARN",
+   "check": "icons",
+   "message": "Directional icons with no flip in RTL — confirm each points the reading way (or was swapped for its mirror)",
+   "count": 1,
+   "examples": [
+    "bi #puzzle in \"التكاملات\" [codex]"
+   ]
+  },
+  {
    "level": "INFO",
    "check": "icons",
    "message": "Icons the sources disagree on — record the decision",
-   "count": 1,
+   "count": 2,
    "examples": [
-    "bi #graph-up: not flipped"
+    "bi #graph-up: not flipped — time axis: Material and Firefox run time right-to-left, Apple and Codex keep graphs",
+    "bi #door-closed: not flipped — Codex flips LogIn/LogOut, Flutter does not"
    ]
   },
   {
@@ -210,5 +233,5 @@
    "examples": []
   }
  ],
- "ms": 581
+ "ms": 685
 }

@@ -1,0 +1,315 @@
+{
+ "source": "@mdn/browser-compat-data 8.1.3",
+ "features": {
+  "navigator.hardwareConcurrency": {
+   "path": "api.Navigator.hardwareConcurrency",
+   "chrome": "37",
+   "chrome_android": "37",
+   "firefox": "48",
+   "safari": "15.4",
+   "safari_ios": "15.4",
+   "status": "standard"
+  },
+  "navigator.deviceMemory": {
+   "path": "api.Navigator.deviceMemory",
+   "chrome": "63",
+   "chrome_android": "63",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "standard"
+  },
+  "navigator.connection": {
+   "path": "api.Navigator.connection",
+   "chrome": "61",
+   "chrome_android": "38",
+   "firefox": "31–32 (removed)",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "standard"
+  },
+  "NetworkInformation.saveData": {
+   "path": "api.NetworkInformation.saveData",
+   "chrome": "65",
+   "chrome_android": "65",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "standard"
+  },
+  "NetworkInformation.effectiveType": {
+   "path": "api.NetworkInformation.effectiveType",
+   "chrome": "61",
+   "chrome_android": "38",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "standard"
+  },
+  "Save-Data header": {
+   "path": "http.headers.Save-Data",
+   "chrome": "49",
+   "chrome_android": "49",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "experimental"
+  },
+  "Device-Memory header": {
+   "path": "http.headers.Device-Memory",
+   "chrome": "61",
+   "chrome_android": "61",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "deprecated, non-standard"
+  },
+  "navigator.getBattery": {
+   "path": "api.Navigator.getBattery",
+   "chrome": "38",
+   "chrome_android": "38",
+   "firefox": "43–52 (removed)",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "standard"
+  },
+  "prefers-reduced-motion": {
+   "path": "css.at-rules.media.prefers-reduced-motion",
+   "chrome": "74",
+   "chrome_android": "74",
+   "firefox": "63",
+   "safari": "10.1",
+   "safari_ios": "10.3",
+   "status": "standard"
+  },
+  "prefers-reduced-transparency": {
+   "path": "css.at-rules.media.prefers-reduced-transparency",
+   "chrome": "118",
+   "chrome_android": "118",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "experimental"
+  },
+  "prefers-reduced-data": {
+   "path": "css.at-rules.media.prefers-reduced-data",
+   "chrome": "no",
+   "chrome_android": "no",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "experimental"
+  },
+  "WEBGL_debug_renderer_info": {
+   "path": "api.WEBGL_debug_renderer_info",
+   "chrome": "33",
+   "chrome_android": "33",
+   "firefox": "53",
+   "safari": "9.1",
+   "safari_ios": "9.3",
+   "status": "standard"
+  },
+  "webglcontextlost event": {
+   "path": "api.HTMLCanvasElement.webglcontextlost_event",
+   "chrome": "9",
+   "chrome_android": "25",
+   "firefox": "4",
+   "safari": "5.1",
+   "safari_ios": "8",
+   "status": "standard"
+  },
+  "PressureObserver (Compute Pressure)": {
+   "path": "api.PressureObserver",
+   "chrome": "125",
+   "chrome_android": "no",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "experimental"
+  },
+  "requestIdleCallback": {
+   "path": "api.Window.requestIdleCallback",
+   "chrome": "47",
+   "chrome_android": "47",
+   "firefox": "55",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "standard"
+  },
+  "scheduler.yield": {
+   "path": "api.Scheduler.yield",
+   "chrome": "129",
+   "chrome_android": "129",
+   "firefox": "142",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "standard"
+  },
+  "scheduler.postTask": {
+   "path": "api.Scheduler.postTask",
+   "chrome": "94",
+   "chrome_android": "94",
+   "firefox": "142",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "standard"
+  },
+  "isInputPending": {
+   "path": "api.Scheduling.isInputPending",
+   "chrome": "87",
+   "chrome_android": "87",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "experimental"
+  },
+  "Long Animation Frames": {
+   "path": "api.PerformanceLongAnimationFrameTiming",
+   "chrome": "123",
+   "chrome_android": "123",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "experimental"
+  },
+  "Event Timing interactionId (INP)": {
+   "path": "api.PerformanceEventTiming.interactionId",
+   "chrome": "96",
+   "chrome_android": "96",
+   "firefox": "144",
+   "safari": "26.2",
+   "safari_ios": "26.2",
+   "status": "standard"
+  },
+  "OffscreenCanvas": {
+   "path": "api.OffscreenCanvas",
+   "chrome": "69",
+   "chrome_android": "69",
+   "firefox": "105",
+   "safari": "16.4",
+   "safari_ios": "16.4",
+   "status": "standard"
+  },
+  "OffscreenCanvas webgl2": {
+   "path": "api.OffscreenCanvas.getContext.webgl2_context",
+   "chrome": "69",
+   "chrome_android": "69",
+   "firefox": "105",
+   "safari": "17",
+   "safari_ios": "17",
+   "status": "standard"
+  },
+  "transferControlToOffscreen": {
+   "path": "api.HTMLCanvasElement.transferControlToOffscreen",
+   "chrome": "69",
+   "chrome_android": "69",
+   "firefox": "105",
+   "safari": "16.4",
+   "safari_ios": "16.4",
+   "status": "standard"
+  },
+  "module workers": {
+   "path": "api.Worker.Worker.options_type_parameter",
+   "chrome": "80",
+   "chrome_android": "80",
+   "firefox": "114",
+   "safari": "15",
+   "safari_ios": "15",
+   "status": "standard"
+  },
+  "SharedArrayBuffer": {
+   "path": "javascript.builtins.SharedArrayBuffer",
+   "chrome": "68",
+   "chrome_android": "89",
+   "firefox": "79",
+   "safari": "15.2",
+   "safari_ios": "15.2",
+   "status": "standard"
+  },
+  "createImageBitmap": {
+   "path": "api.createImageBitmap",
+   "chrome": "50",
+   "chrome_android": "50",
+   "firefox": "42",
+   "safari": "15",
+   "safari_ios": "15",
+   "status": "standard"
+  },
+  "TextDecoderStream": {
+   "path": "api.TextDecoderStream",
+   "chrome": "71",
+   "chrome_android": "71",
+   "firefox": "105",
+   "safari": "14.1",
+   "safari_ios": "14.5",
+   "status": "standard"
+  },
+  "CompressionStream": {
+   "path": "api.CompressionStream",
+   "chrome": "80",
+   "chrome_android": "80",
+   "firefox": "113",
+   "safari": "16.4",
+   "safari_ios": "16.4",
+   "status": "standard"
+  },
+  "fetchpriority (img)": {
+   "path": "html.elements.img.fetchpriority",
+   "chrome": "101",
+   "chrome_android": "101",
+   "firefox": "132",
+   "safari": "17.2",
+   "safari_ios": "17.2",
+   "status": "standard"
+  },
+  "fetch() priority": {
+   "path": "api.RequestInit.priority",
+   "missing": true
+  },
+  "modulepreload": {
+   "path": "html.elements.link.rel.modulepreload",
+   "chrome": "66",
+   "chrome_android": "66",
+   "firefox": "115",
+   "safari": "17",
+   "safari_ios": "17",
+   "status": "standard"
+  },
+  "speculation rules": {
+   "path": "html.elements.script.type.speculationrules",
+   "chrome": "109",
+   "chrome_android": "109",
+   "firefox": "no",
+   "safari": "no",
+   "safari_ios": "no",
+   "status": "experimental"
+  },
+  "content-visibility": {
+   "path": "css.properties.content-visibility",
+   "chrome": "85",
+   "chrome_android": "85",
+   "firefox": "125",
+   "safari": "18",
+   "safari_ios": "18",
+   "status": "standard"
+  },
+  "img decoding": {
+   "path": "html.elements.img.decoding",
+   "chrome": "65",
+   "chrome_android": "65",
+   "firefox": "63",
+   "safari": "11.1",
+   "safari_ios": "11.3",
+   "status": "standard"
+  },
+  "HTMLImageElement.decode()": {
+   "path": "api.HTMLImageElement.decode",
+   "chrome": "64",
+   "chrome_android": "64",
+   "firefox": "68",
+   "safari": "11.1",
+   "safari_ios": "11.3",
+   "status": "standard"
+  }
+ }
+}

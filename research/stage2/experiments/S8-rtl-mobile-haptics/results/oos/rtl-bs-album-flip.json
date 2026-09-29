@@ -1,5 +1,5 @@
 {
- "url": "http://127.0.0.1:42205/ext/bootstrap-built/album.html",
+ "url": "http://127.0.0.1:38965/ext/bootstrap-built/album.html",
  "mode": "flip",
  "width": 1280,
  "summary": {
@@ -153,5 +153,5 @@
    ]
   }
  ],
- "ms": 886
+ "ms": 703
 }

@@ -1,5 +1,5 @@
 {
- "url": "http://127.0.0.1:42205/ext/bootstrap-built/carousel.html",
+ "url": "http://127.0.0.1:38965/ext/bootstrap-built/carousel.html",
  "mode": "flip",
  "width": 1280,
  "summary": {
@@ -167,5 +167,5 @@
    ]
   }
  ],
- "ms": 767
+ "ms": 613
 }

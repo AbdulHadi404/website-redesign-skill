@@ -1,4 +1,4 @@
-# Motion check — http://127.0.0.1:34867/captures/c/static.html
+# Motion check — http://127.0.0.1:46551/captures/c/static.html
 
 2026-09-28 · desktop · Chromium 141.0.7390.37 · tokens from motion.md defaults: micro 100, small 150, medium 240, large 300, page 400, hero 700
 

@@ -1,5 +1,5 @@
 {
- "url": "http://127.0.0.1:42205/ext/regress/parity/new.html",
+ "url": "http://127.0.0.1:38965/ext/regress/parity/new.html",
  "mode": "as-served",
  "width": 1280,
  "summary": {
@@ -17,5 +17,5 @@
  "keys": [],
  "icons": [],
  "findings": [],
- "ms": 425
+ "ms": 203
 }

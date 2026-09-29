@@ -11,7 +11,9 @@
  "env": {
   "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content",
   "hoverNone": true,
-  "coarse": true
+  "coarse": true,
+  "cover": true,
+  "resizesContent": true
  },
  "summary": {
   "FAIL": 0,
@@ -61,5 +63,5 @@
   }
  ],
  "findings": [],
- "ms": 1187
+ "ms": 535
 }

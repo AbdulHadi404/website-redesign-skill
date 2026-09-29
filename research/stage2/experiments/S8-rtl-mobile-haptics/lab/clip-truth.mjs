@@ -30,7 +30,7 @@ function setupLine({ nodeIndex, li }) {
   const ccs = getComputedStyle(clipper);
   const scroller = /auto|scroll/.test(ccs.overflowY) && clipper.scrollHeight > clipper.clientHeight + 1;
   window.__gpSaved = { clipper, top: clipper.scrollTop };
-  if (scroller) { const cr = clipper.getBoundingClientRect(); const ln = ls[li]; clipper.scrollTop += (ln.top + ln.bottom) / 2 - (cr.top + cr.bottom) / 2; ls = lines(); }
+  if (scroller) { const cr = clipper.getBoundingClientRect(); const ln = ls[li]; clipper.scrollTo({ top: clipper.scrollTop + (ln.top + ln.bottom) / 2 - (cr.top + cr.bottom) / 2, behavior: 'instant' }); ls = lines(); }
   const ln = ls[li];
   const cs = getComputedStyle(el);
   const o = document.createElement('div'); o.id = '__gp_overlay';
@@ -50,7 +50,7 @@ function setupLine({ nodeIndex, li }) {
   return { label: el.closest('[data-case]')?.dataset.case || null, matched: Math.abs(q.top - ln.top) < 1 && Math.abs(q.height - (ln.bottom - ln.top)) < 1.5, outside, scroller, fixed, lines: ls.length,
     x0: Math.max(ln.left, cr.left) - 2, x1: Math.min(ln.right, cr.right) + 2, clipTop, clipBottom };
 }
-function teardown() { document.getElementById('__gp_overlay')?.remove(); const s = window.__gpSaved; if (s) s.clipper.scrollTop = s.top; window.__gpSaved = null; }
+function teardown() { document.getElementById('__gp_overlay')?.remove(); const s = window.__gpSaved; if (s) s.clipper.scrollTo({ top: s.top, behavior: 'instant' }); window.__gpSaved = null; }
 
 const BAND = 30;
 async function bandDiff(page, which, g) {
@@ -58,39 +58,47 @@ async function bandDiff(page, which, g) {
   const edge = which === 'top' ? g.clipTop : g.clipBottom;
   const vh = page.viewportSize().height;
   let dy = 0;
-  if (!g.fixed && (edge - BAND < 0 || edge + BAND > vh)) { dy = await page.evaluate((y) => { const s0 = scrollY; scrollTo(scrollX, s0 + y - 200); return scrollY - s0; }, edge); }
+  // (instant scrolling: pages with scroll-behavior: smooth would otherwise keep moving after this returns)
+  if (!g.fixed && (edge - BAND < 0 || edge + BAND > vh)) { dy = await page.evaluate((y) => { const s0 = scrollY; scrollTo({ left: scrollX, top: s0 + y - 200, behavior: 'instant' }); return scrollY - s0; }, edge); }
   const e = edge - dy;
   const y0 = which === 'top' ? Math.max(0, Math.floor(e - BAND)) : Math.ceil(e), y1 = which === 'top' ? Math.floor(e) : Math.min(vh, Math.ceil(e + BAND));
   const x0 = Math.max(0, Math.floor(g.x0)), x1 = Math.min(page.viewportSize().width, Math.ceil(g.x1));
   let rows = 0;
   if (y1 - y0 >= 1 && x1 - x0 >= 1) {
     const clip = { x: x0, y: y0, width: x1 - x0, height: y1 - y0 };
-    const A = PNG.sync.read(await page.screenshot({ clip }));
-    await page.evaluate(() => { document.getElementById('__gp_overlay').style.visibility = 'hidden'; });
-    const B = PNG.sync.read(await page.screenshot({ clip }));
-    await page.evaluate(() => { document.getElementById('__gp_overlay').style.visibility = 'visible'; });
-    for (let y = 0; y < A.height; y++) for (let x = 0; x < A.width; x++) { const i = (y * A.width + x) * 4; if (Math.abs(A.data[i] - B.data[i]) + Math.abs(A.data[i + 1] - B.data[i + 1]) + Math.abs(A.data[i + 2] - B.data[i + 2]) > 60) { rows++; break; } }
+    // without the overlay, with it, without it again: a pixel counts only when both overlay-less captures agree and the
+    // overlay capture differs from both (pixels that change on their own — animation, canvas, caret — are ignored)
+    // (the overlay stays in the page and only its colour changes, so it cannot change how its neighbours are painted)
+    const vis = (v) => page.evaluate((v) => { document.getElementById('__gp_overlay').style.color = v ? '#000' : 'transparent'; }, v);
+    let A, B0, B;
+    try { await vis(false); B0 = PNG.sync.read(await page.screenshot({ clip })); await vis(true); A = PNG.sync.read(await page.screenshot({ clip })); await vis(false); B = PNG.sync.read(await page.screenshot({ clip })); await vis(true); }
+    catch (e) { if (dy) await page.evaluate((d) => scrollBy({ top: -d, behavior: 'instant' }), dy); if (process.env.S8_DEBUG) console.error('band', which, JSON.stringify(clip), e.message.split('\n')[0]); return null; }
+    const d = (P, Q, i) => Math.abs(P.data[i] - Q.data[i]) + Math.abs(P.data[i + 1] - Q.data[i + 1]) + Math.abs(P.data[i + 2] - Q.data[i + 2]);
+    for (let y = 0; y < A.height; y++) for (let x = 0; x < A.width; x++) { const i = (y * A.width + x) * 4; if (d(A, B, i) > 60 && d(A, B0, i) > 60 && d(B, B0, i) <= 10) { rows++; break; } }
+    if (rows && process.env.S8_DEBUG) { const fs = await import('node:fs'); const t = Date.now(); for (const [n, P] of [['A', A], ['B0', B0], ['B', B]]) fs.writeFileSync(`/tmp/claude-0/-home-user-website-redesign-skill/c5b6846e-6a5b-5d91-847f-94b2f6f7dc15/scratchpad/band-${t}-${n}.png`, PNG.sync.write(P)); console.error('band dump', t, which, JSON.stringify(clip), 'edge', edge, 'dy', dy); }
   }
-  if (dy) await page.evaluate((d) => scrollBy(0, -d), dy);
+  if (dy) await page.evaluate((d) => scrollBy({ top: -d, behavior: 'instant' }), dy);
   return rows;
 }
 
 // truth for one text node: the worst line
 export async function nodeTruth(page, nodeIndex, maxLines = 6) {
-  let top = 0, bottom = 0, lines = 0, unmatched = 0, skipped = null, label = null;
+  let top = 0, bottom = 0, lines = 0, unmatched = 0, skipped = null, label = null, bandErrors = 0;
   for (let li = 0; li < maxLines; li++) {
     const g = await page.evaluate(setupLine, { nodeIndex, li });
     if (g.skip) { if (li === 0) skipped = g.skip; await page.evaluate(teardown); break; }
     lines = g.lines; label = g.label;
     if (!g.outside) {
       if (!g.matched) unmatched++;
-      top = Math.max(top, await bandDiff(page, 'top', g));
-      bottom = Math.max(bottom, await bandDiff(page, 'bottom', g));
+      const t = await bandDiff(page, 'top', g), b = await bandDiff(page, 'bottom', g);
+      if (t === null || b === null) bandErrors++;
+      top = Math.max(top, t ?? 0); bottom = Math.max(bottom, b ?? 0);
     }
     await page.evaluate(teardown);
     if (li + 1 >= g.lines) break;
   }
-  return { top, bottom, lines, unmatched, skipped, label };
+  if (bandErrors) skipped = 'band outside the page image';
+  return { top, bottom, lines, unmatched, skipped, label, bandErrors };
 }
 
 // the probe (fixed and first version) vs truth on the current page. Flagged nodes are all measured; unflagged ones are
@@ -104,15 +112,15 @@ export async function score(page, { scripts = 'all', sample = 25, label = '' } =
   const rest = now.nodes.filter((x) => !pick.includes(x));
   const step = Math.max(1, Math.ceil(rest.length / sample));
   const sampled = rest.filter((_, i) => i % step === 0).slice(0, sample);
-  const cases = [];
+  const cases = []; let skippedCount = 0;
   for (const x of [...pick, ...sampled]) {
     const t = await nodeTruth(page, x.nodeIndex);
-    if (t.skipped) continue;
+    if (t.skipped) { skippedCount++; continue; }
     const o = oldBy[x.nodeIndex];
     cases.push({ page: label, case: t.label, selector: x.selector, clipper: x.clipper, scroller: x.scroller, text: x.text, truthTopPx: t.top, truthBottomPx: t.bottom, lines: t.lines, unmatched: t.unmatched,
       probe: { topPx: x.topPx, bottomPx: x.bottomPx }, probeFirstVersion: o ? { topPx: o.topPx, bottomPx: o.bottomPx } : null, sampledUnflagged: !pick.includes(x) });
   }
-  return { checked: now.checked, flaggedNow: now.nodes.filter(flagged).length, flaggedFirstVersion: old.nodes.filter(flagged).length, unflaggedPopulation: rest.length, unflaggedSampled: sampled.length, cases };
+  return { skippedNoTruth: skippedCount, checked: now.checked, flaggedNow: now.nodes.filter(flagged).length, flaggedFirstVersion: old.nodes.filter(flagged).length, unflaggedPopulation: rest.length, unflaggedSampled: sampled.length, cases };
 }
 
 export function confusion(cases, key) {
@@ -160,7 +168,7 @@ async function scrollCases(page, base) {
 }
 
 export async function run(browser, base, realPages = []) {
-  const ctx = await browser.newContext({ viewport: { width: 1400, height: 900 }, deviceScaleFactor: 1 });
+  const ctx = await browser.newContext({ viewport: { width: 1400, height: 900 }, deviceScaleFactor: 1, reducedMotion: 'reduce' });
   const page = await ctx.newPage();
   const out = { note: 'truth: unclipped overlay vs page, rows differing in 30 px bands outside the clip edges (scrollers: line scrolled to the middle first); probe flags > 0.75 px, truth counts ≥ 1 px', sets: {} };
   // A. the in-sample recipe page of lab/clip-probe.mjs (same page builder)
@@ -183,7 +191,8 @@ export async function run(browser, base, realPages = []) {
   const C = [];
   for (const [label, url] of realPages) {
     await page.goto(base + url, { waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready);
-    await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; animation: none !important; caret-color: transparent !important }' });
+    await page.waitForTimeout(1500); // script-driven animations (Chart.js) settle
+    await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; animation: none !important; caret-color: transparent !important; scroll-behavior: auto !important }' });
     const r = await score(page, { scripts: 'all', sample: 20, label });
     C.push(...r.cases);
     out.sets[`page:${label}`] = pick(r);
@@ -194,4 +203,4 @@ export async function run(browser, base, realPages = []) {
   await ctx.close();
   return out;
 }
-const pick = (r) => ({ checked: r.checked, flaggedNow: r.flaggedNow, flaggedFirstVersion: r.flaggedFirstVersion, unflaggedPopulation: r.unflaggedPopulation, unflaggedSampled: r.unflaggedSampled });
+const pick = (r) => ({ skippedNoTruth: r.skippedNoTruth, checked: r.checked, flaggedNow: r.flaggedNow, flaggedFirstVersion: r.flaggedFirstVersion, unflaggedPopulation: r.unflaggedPopulation, unflaggedSampled: r.unflaggedSampled });

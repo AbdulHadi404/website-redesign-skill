@@ -1,5 +1,5 @@
 {
- "url": "http://127.0.0.1:42205/ext/bootstrap-built/blog-rtl.html",
+ "url": "http://127.0.0.1:38965/ext/bootstrap-built/blog-rtl.html",
  "mode": "as-served",
  "width": 1280,
  "summary": {
@@ -161,5 +161,5 @@
    ]
   }
  ],
- "ms": 394
+ "ms": 372
 }

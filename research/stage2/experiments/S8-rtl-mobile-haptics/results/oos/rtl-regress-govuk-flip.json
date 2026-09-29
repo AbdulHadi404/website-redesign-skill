@@ -1,5 +1,5 @@
 {
- "url": "http://127.0.0.1:42205/ext/regress/govuk.html",
+ "url": "http://127.0.0.1:38965/ext/regress/govuk.html",
  "mode": "flip",
  "width": 1280,
  "summary": {
@@ -138,5 +138,5 @@
    ]
   }
  ],
- "ms": 542
+ "ms": 475
 }

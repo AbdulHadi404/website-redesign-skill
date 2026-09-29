@@ -1,24 +1,24 @@
 {
- "url": "/fixtures/mobile.html?variant=broken",
+ "url": "/fixtures/mobile.html?variant=broken&meta=plain",
  "width": 390,
  "height": 844,
  "insets": [
-  59,
-  34,
+  0,
+  0,
   0,
   0
  ],
  "env": {
-  "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content",
+  "viewportMeta": "width=device-width, initial-scale=1",
   "hoverNone": true,
   "coarse": true,
-  "cover": true,
-  "resizesContent": true
+  "cover": false,
+  "resizesContent": false
  },
  "summary": {
-  "FAIL": 3,
-  "WARN": 6,
-  "INFO": 1
+  "FAIL": 2,
+  "WARN": 5,
+  "INFO": 3
  },
  "thumb": {
   "model": {
@@ -116,20 +116,10 @@
  ],
  "findings": [
   {
-   "level": "FAIL",
+   "level": "INFO",
    "check": "safe-area",
-   "message": "Controls in fixed/sticky bars inside the safe-area insets (viewport-fit=cover; emulated 59/34/0/0)",
-   "count": 8,
-   "examples": [
-    "button.icon-btn[Back] top 49px under the status bar/island",
-    "button.icon-btn[Share] top 49px under the status bar/island",
-    "button.icon-btn.fav[Save to favourites] top 49px under the status bar/island",
-    "a.fab-top.primary\"Buy now\" top 55px under the status bar/island",
-    "a\"Home\" 34px into the home-indicator zone",
-    "a\"Search\" 34px into the home-indicator zone",
-    "a\"Bag\" 34px into the home-indicator zone",
-    "a\"Account\" 34px into the home-indicator zone"
-   ]
+   "message": "No viewport-fit=cover: the browser keeps the page inside the safe area (letterboxed in landscape; env() insets are 0), so bars cannot sit under the notch or home indicator. Choose cover only for an edge-to-edge design, and then pad bars with env()",
+   "examples": []
   },
   {
    "level": "WARN",
@@ -261,15 +251,10 @@
    ]
   },
   {
-   "level": "WARN",
+   "level": "INFO",
    "check": "keyboard",
-   "message": "With a 336px keyboard open (resizes-content), fixed bars cover the focused field — add scroll-padding-block-end or hide the bars while typing",
-   "count": 3,
-   "examples": [
-    "#card under .buybar",
-    "#cvc under .buybar",
-    "#store under .buybar"
-   ]
+   "message": "No interactive-widget=resizes-content: the keyboard overlays the page (resizes-visual, the default in Chrome Android and on iOS) and fixed bars stay behind it — check focused fields over a real keyboard on a device",
+   "examples": []
   },
   {
    "level": "WARN",
@@ -281,5 +266,5 @@
    ]
   }
  ],
- "ms": 635
+ "ms": 542
 }

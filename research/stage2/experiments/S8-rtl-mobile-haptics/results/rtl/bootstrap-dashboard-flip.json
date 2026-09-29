@@ -4,7 +4,7 @@
  "width": 1280,
  "summary": {
   "FAIL": 1,
-  "WARN": 2,
+  "WARN": 3,
   "INFO": 3
  },
  "mirror": {
@@ -37,7 +37,7 @@
   },
   {
    "name": "bi #cart",
-   "class": "never",
+   "class": "unknown",
    "pixels": "same",
    "context": "Products",
    "island": false
@@ -52,20 +52,26 @@
   {
    "name": "bi #graph-up",
    "class": "ambiguous",
+   "family": "chart",
+   "note": "time axis: Material and Firefox run time right-to-left, Apple and Codex keep graphs",
    "pixels": "same",
    "context": "Reports",
    "island": false
   },
   {
    "name": "bi #puzzle",
-   "class": "unknown",
+   "class": "directional",
+   "strength": "weak",
+   "sources": [
+    "codex"
+   ],
    "pixels": "symmetric",
    "context": "Integrations",
    "island": false
   },
   {
    "name": "bi #plus-circle",
-   "class": "never",
+   "class": "unknown",
    "pixels": "symmetric",
    "context": "Add a new report",
    "island": false
@@ -100,14 +106,16 @@
   },
   {
    "name": "bi #gear-wide-connected",
-   "class": "never",
+   "class": "unknown",
    "pixels": "same",
    "context": "Settings",
    "island": false
   },
   {
    "name": "bi #door-closed",
-   "class": "never",
+   "class": "ambiguous",
+   "family": "logInOut",
+   "note": "Codex flips LogIn/LogOut, Flutter does not",
    "pixels": "same",
    "context": "Sign out",
    "island": false
@@ -115,6 +123,11 @@
   {
    "name": "bi #calendar3",
    "class": "never",
+   "strength": "weak",
+   "sources": [
+    "codex"
+   ],
+   "family": "calendar",
    "pixels": "same",
    "context": "This week",
    "island": false
@@ -124,21 +137,29 @@
   {
    "level": "FAIL",
    "check": "mirror",
-   "message": "Boxes that do not mirror when the page turns RTL (topmost only)",
-   "count": 12,
+   "message": "Boxes that do not mirror when the page turns RTL (topmost only; > 8 px from the mirrored place)",
+   "count": 11,
    "examples": [
-    "svg.bi",
-    "svg.bi",
-    "svg.bi",
-    "svg.bi",
-    "svg.bi",
-    "svg.bi",
-    "svg.bi",
-    "svg.bi",
-    "svg.bi",
-    "svg.bi",
-    "svg.bi",
-    "div.btn-group.me-2 — margin-left 0px / right 8px"
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)",
+    "svg.bi (40 px off)"
+   ]
+  },
+  {
+   "level": "WARN",
+   "check": "mirror",
+   "message": "Boxes 3–8 px from their mirrored place in RTL (topmost only)",
+   "count": 1,
+   "examples": [
+    "div.btn-group.me-2 (8 px off) — margin-left 0px / right 8px"
    ]
   },
   {
@@ -159,9 +180,10 @@
    "level": "INFO",
    "check": "icons",
    "message": "Icons the sources disagree on — record the decision (mirrored here: yes/no)",
-   "count": 1,
+   "count": 2,
    "examples": [
-    "bi #graph-up: same"
+    "bi #graph-up: same — time axis: Material and Firefox run time right-to-left, Apple and Codex keep graphs",
+    "bi #door-closed: same — Codex flips LogIn/LogOut, Flutter does not"
    ]
   },
   {
@@ -263,5 +285,5 @@
    "examples": []
   }
  ],
- "ms": 3690
+ "ms": 2693
 }

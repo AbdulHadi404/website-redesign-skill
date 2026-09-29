@@ -3,14 +3,17 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Seven fixed interactions in CSS/WAAPI, Motion (vanilla + React), GSAP, anime.js v4, React Spring, AutoAnimate and Theatre.js, measured the same way; Rive vs Lottie vs SVG/CSS for a stateful illustrated toggle; fixtures for the motion.mjs spec checker.",
+  "description": "S2 motion lab: seven interactions \u00d7 eight tools (interruption, reduced motion, main thread, rAF at rest, size); Rive vs Lottie vs dotLottie vs SVG/CSS vs sprite for one stateful toggle and a loop; scripts/motion.mjs scored on four builds of one page plus a held-out check on the Part A pages.",
   "license": "MIT",
   "scripts": {
+    "fetch": "node fetch-assets.mjs",
     "all": "node run.mjs",
     "a": "node run.mjs --only a",
     "b": "node run.mjs --only b",
     "c": "node run.mjs --only c",
-    "fetch": "node fetch-assets.mjs"
+    "x": "node run.mjs --only x",
+    "rescore": "node run.mjs --only c --rescore",
+    "summary": "node summarize.mjs"
   },
   "dependencies": {
     "@formkit/auto-animate": "0.10.0",

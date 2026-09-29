@@ -3,20 +3,22 @@
  "width": 390,
  "height": 844,
  "insets": [
-  59,
-  34,
+  0,
+  0,
   0,
   0
  ],
  "env": {
   "viewportMeta": "width=device-width, initial-scale=1",
   "hoverNone": true,
-  "coarse": true
+  "coarse": true,
+  "cover": false,
+  "resizesContent": false
  },
  "summary": {
   "FAIL": 0,
-  "WARN": 4,
-  "INFO": 1
+  "WARN": 3,
+  "INFO": 3
  },
  "thumb": {
   "model": {
@@ -103,9 +105,9 @@
  ],
  "findings": [
   {
-   "level": "WARN",
+   "level": "INFO",
    "check": "safe-area",
-   "message": "No viewport-fit=cover: iOS keeps content out of the notch in landscape (letterboxed bars) and env() insets stay 0 — decide, and check fixed bars on a device",
+   "message": "No viewport-fit=cover: the browser keeps the page inside the safe area (letterboxed in landscape; env() insets are 0), so bars cannot sit under the notch or home indicator. Choose cover only for an edge-to-edge design, and then pad bars with env()",
    "examples": []
   },
   {
@@ -155,7 +157,13 @@
     "#cc-cvv (الرمز الثلاثي (CVV)): cvc field brings the \"text\" keyboard; expected numeric",
     "#cc-cvv (الرمز الثلاثي (CVV)): autocomplete=\"cc-csc\" missing (autofill)"
    ]
+  },
+  {
+   "level": "INFO",
+   "check": "keyboard",
+   "message": "No interactive-widget=resizes-content: the keyboard overlays the page (resizes-visual, the default in Chrome Android and on iOS) and fixed bars stay behind it — check focused fields over a real keyboard on a device",
+   "examples": []
   }
  ],
- "ms": 941
+ "ms": 358
 }

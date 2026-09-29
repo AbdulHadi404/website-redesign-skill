@@ -9,13 +9,15 @@
   59
  ],
  "env": {
-  "viewportMeta": "width=device-width, initial-scale=1",
+  "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content",
   "hoverNone": true,
-  "coarse": true
+  "coarse": true,
+  "cover": true,
+  "resizesContent": true
  },
  "summary": {
   "FAIL": 3,
-  "WARN": 6,
+  "WARN": 5,
   "INFO": 1
  },
  "thumb": {
@@ -62,15 +64,9 @@
  ],
  "findings": [
   {
-   "level": "WARN",
-   "check": "safe-area",
-   "message": "No viewport-fit=cover: iOS keeps content out of the notch in landscape (letterboxed bars) and env() insets stay 0 — decide, and check fixed bars on a device",
-   "examples": []
-  },
-  {
    "level": "FAIL",
    "check": "safe-area",
-   "message": "Controls in fixed/sticky bars inside the safe-area insets (emulated 0/21/59/59)",
+   "message": "Controls in fixed/sticky bars inside the safe-area insets (viewport-fit=cover; emulated 0/21/59/59)",
    "count": 4,
    "examples": [
     "a\"Home\" 21px into the home-indicator zone",
@@ -224,5 +220,5 @@
    ]
   }
  ],
- "ms": 1117
+ "ms": 476
 }
