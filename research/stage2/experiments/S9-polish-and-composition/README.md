@@ -10,8 +10,14 @@ npm install                      # pixelmatch, pngjs (the skill's scripts folder
 node run.mjs                     # fonts, captures, measures, probe, blind sheets, stacks, shots/, results.json
 node run.mjs --stage singles     # every move alone
 node run.mjs --stage stacks      # the stacks named in judgements.json
+node run.mjs --stage checks      # the small lab checks (focus ring vs corner-shape; what pixelmatch sees)
 node run.mjs --no-capture        # re-measure the captures already on disk
+node summarise.mjs               # the report tables, from results.json and judgements.json
+node polish-probe.mjs --base http://localhost:3000 --paths / --widths 1440,390   # the probe on any site
 ```
+
+A full run takes about 12 minutes on a shared 4-CPU machine (captures in batches of six variants, retried if a
+capture process dies).
 
 Captures, diffs and blind sheets go to `captures/` (git-ignored, rebuilt by `run.mjs`); a few JPEG sheets are kept
 in `shots/`. Fonts are fetched by `fetch-assets.mjs` (Google Sans Flex, OFL) into `assets/` (git-ignored). The
@@ -19,7 +25,7 @@ photograph is CC0 (`page/img/LICENSE.txt`).
 
 ## Blind review of the sheets
 
-`captures/blind/p*.jpg` (single moves) and `s*.jpg` (stacks) each show a baseline and a variant as "A" and "B",
+`captures/blind/p*.jpg` (single moves), `q*.jpg` (extra windows for moves pixelmatch cannot see) and `s*.jpg` (stacks) each show a baseline and a variant as "A" and "B",
 sides and order randomised with a fixed seed. For each sheet, before opening anything else, write down:
 
 1. Is there any visible difference between A and B at the size shown? (yes / no)

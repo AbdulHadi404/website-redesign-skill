@@ -115,9 +115,9 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
     weights.set(cs.fontWeight, (weights.get(cs.fontWeight) || 0) + n);
     // Form controls are read below, from their value or placeholder (a textarea's text is its value).
     if (!srOnly(el) && !/^(TEXTAREA|SELECT|OPTION|OPTGROUP)$/.test(el.tagName)) monoCand.push({ el, text, stack: cs.fontFamily, tag: el.tagName.toLowerCase() });
-    // The product-UI caps rule allows a one- or two-word uppercase label at 11px (a status, a column head); anything
-    // else under 12px is reported.
-    const capsLabel = px >= 11 && (cs.textTransform === 'uppercase' || (text === text.toUpperCase() && text !== text.toLowerCase())) && text.split(' ').length <= 2;
+    // The type floor is 12px; the product-UI caps rule allows 11px only for a single uppercase word (a column head,
+    // a nav-group label). Anything else under 12px is reported, two-word caps labels included.
+    const capsLabel = px >= 11 && (cs.textTransform === 'uppercase' || (text === text.toUpperCase() && text !== text.toLowerCase())) && !text.includes(' ');
     if (px < 12 && n > 2 && !capsLabel) smallText.push({ selector: sel(el), px, text: short(text, 40) });
     if (cs.textTransform === 'uppercase' && n > 24) caps.push({ selector: sel(el), text: short(text, 40), tracking: cs.letterSpacing });
     if (EMOJI.test(text) && (el.closest('h1,h2,h3,h4,button,a,[role=button],nav') || n <= 3)) emoji.push({ selector: sel(el), text: short(text, 40) });
@@ -379,8 +379,22 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
   // ---- monospace text: the face actually rendered, form-control values and placeholders included -------------
   // The first family decides, unless it is unavailable: then the stack falls through (the same width probe) to the
   // next family that renders, and a fallback to a monospace face counts as monospace.
-  const probed = new Map();
+  const probed = new Map(), pitch = new Map();
   const missing = (f) => { const k = f.toLowerCase(); if (!probed.has(k)) probed.set(k, probe(f)); return probed.get(k); };
+  // A face named like a code font counts only when its glyphs are one width: Code Next and Code Pro are sans faces.
+  const fixedPitch = (f) => {
+    const k = f.toLowerCase();
+    if (!pitch.has(k)) {
+      const span = document.createElement('span');
+      span.style.cssText = `position:absolute;left:-9999px;top:0;font-size:48px;white-space:nowrap;font-family:"${f.replace(/"/g, '')}", monospace`;
+      document.body.appendChild(span);
+      const w = (t) => { span.textContent = t; return span.getBoundingClientRect().width; };
+      const narrow = w('iiiiiiiiii'), wide = w('WWWWWWWWWW');
+      span.remove();
+      pitch.set(k, Math.abs(wide - narrow) <= wide * 0.02);
+    }
+    return pitch.get(k);
+  };
   const monoFace = (stack) => {
     const fams = families1(stack);
     for (let i = 0; i < fams.length; i++) {
@@ -388,7 +402,7 @@ export function pageInventory({ initialViewportHeight, lazyAttrs, saturated = {}
       const generic = GENERIC.test(f);
       if (generic && !/^(inherit|initial)$/i.test(f)) return /mono/i.test(f) ? (i ? `${fams[0]} → ${f}` : f) : null;
       if (!generic && missing(f)) continue;
-      return MONO.test(f) ? (i ? `${fams[0]} → ${f}` : f) : null;
+      return MONO.test(f) && fixedPitch(f) ? (i ? `${fams[0]} → ${f}` : f) : null;
     }
     return null;
   };

@@ -18,7 +18,8 @@
  *               keyframes entering from scale(0) · controls whose hover or keyboard focus changes nothing visible ·
  *               buttons with no :active (press) feedback · infinite animations · reduced-motion handling: CSS
  *               `prefers-reduced-motion` blocks, a universal "kill everything" rule, JS matchMedia queries, and what
- *               changes at load under reduce (CSS/WAAPI animations and JS-driven inline styles)
+ *               changes at load under reduce (CSS/WAAPI animations and JS-driven inline styles) · requestAnimationFrame
+ *               still firing at rest (a library or loop that never sleeps)
  * With --spec, each entry is triggered for real (hover, focus, press, click, scroll, load, key:<Key>) and sampled
  * every frame (computed transform/opacity/colour/size, document.getAnimations(), view-transition pseudos), once
  * normally and once with prefers-reduced-motion: reduce. Per entry it reports whether anything animated (or it
@@ -162,6 +163,9 @@ function pageInit() {
   });
   const go = () => mo.observe(document.documentElement, { attributes: true, attributeFilter: ['style'], subtree: true });
   if (document.documentElement) go(); else document.addEventListener('DOMContentLoaded', go);
+  // count requestAnimationFrame callbacks: nothing should tick when nothing moves
+  const raf = window.requestAnimationFrame.bind(window); window.__rafCount = 0;
+  window.requestAnimationFrame = (cb) => raf((t) => { window.__rafCount++; cb(t); });
   window.__inputs = [];
   for (const type of ['pointerdown', 'click', 'mouseover', 'keydown', 'focusin', 'scroll'])
     addEventListener(type, (e) => window.__inputs.push({ type, t: performance.now(), onTarget: !!(window.__on && e.target instanceof Node && window.__on.some((o) => o === e.target || o.contains(e.target))), tag: e.target?.tagName || '' }), { capture: true, passive: true });
@@ -462,6 +466,10 @@ if (!a['no-audit']) {
   await load(page);
   await page.waitForTimeout(1500);
   const lm = await page.evaluate(loadMotion);
+  // nothing runs at rest: requestAnimationFrame callbacks per second over 2 s with no input
+  const q0 = await page.evaluate(() => window.__rafCount); await page.waitForTimeout(2000); const q1 = await page.evaluate(() => window.__rafCount);
+  const rafAtRest = (q1 - q0) / 2;
+  if (rafAtRest > 5) flag('raf-at-rest', 'page', `requestAnimationFrame fires ${Math.round(rafAtRest)}×/s with no input — a JS loop runs at rest (seen in the lab: GSAP ScrollTrigger once registered, anime.js onScroll, React Spring useScroll, Motion scroll() with x/y/scale values, Rive and dotLottie until stopRendering()/freeze(), hand-written loops); stop it when nothing moves`, 'warn');
   const group = (arr) => { const m = new Map(); for (const x of arr) { const k = x.sel; m.set(k, (m.get(k) || 0) + 1); } return m; };
   // flags from the inventory
   const seen = new Set();
@@ -561,7 +569,7 @@ if (!a['no-audit']) {
     inventoryNormal: { elements: inv.items.length, transitions: inv.items.reduce((s, x) => s + x.transitions.length, 0), animations: inv.items.reduce((s, x) => s + x.animations.length, 0) },
     reduceBlocks: inv.reduceBlocks, killAll: inv.killAll, blockedSheets: inv.blockedSheets, mqReduce: lm.mqReduce,
     loadNormal: { anims: lm.anims.length, churn: lm.churn }, loadReduce: { anims: lmR.anims.length, churn: lmR.churn, moving: movingUnderReduce.map((x) => `${x.target}${x.pseudo} ${x.name}`) },
-    hover: hoverRes, focus: focusRes, press: pressRes, jsDriven,
+    hover: hoverRes, focus: focusRes, press: pressRes, jsDriven, rafAtRest,
   };
 }
 delete report.__inv;
@@ -880,10 +888,11 @@ if (report.audit) {
   md.push('## Audit', '');
   md.push(`- Elements with motion: ${A.inventoryNormal.elements} (${A.inventoryNormal.transitions} transitions, ${A.inventoryNormal.animations} animations); under reduce: ${A.inventoryReduce.elements} (${A.inventoryReduce.transitions}, ${A.inventoryReduce.animations}).`);
   md.push(`- Reduced-motion handling: ${A.reduceBlocks} CSS \`prefers-reduced-motion: reduce\` block(s)${A.killAll ? ' including a universal kill rule' : ''}; JavaScript queried it ${A.mqReduce}×.${A.blockedSheets ? ` ${A.blockedSheets} stylesheet(s) unreadable (cross-origin): their rules are not inventoried.` : ''}`);
+  md.push(`- At rest (no input, after load): requestAnimationFrame ${A.rafAtRest}×/s.`);
   md.push(`- At load: ${A.loadNormal.anims} CSS/WAAPI animation(s) normally, ${A.loadReduce.anims} under reduce; JS-driven inline-style motion on ${A.loadNormal.churn.length} element(s) normally, ${A.loadReduce.churn.length} under reduce.`);
   const hv = A.hover.filter((x) => x.control), fc = A.focus, pr = A.press;
   md.push(`- Hover: ${hv.filter((x) => x.changed).length}/${hv.length} controls change visibly · keyboard focus: ${fc.filter((x) => x.changed).length}/${fc.length} · press (:active): ${pr.filter((x) => x.changed).length}/${pr.length} buttons.`, '');
-  const order = ['reduce-kills-all', 'no-reduced-motion', 'moves-under-reduce', 'transition-all', 'layout-transition', 'layout-keyframes', 'scale-zero', 'off-token', 'long', 'no-active', 'hover-none', 'focus-none', 'linear-movement', 'infinite'];
+  const order = ['reduce-kills-all', 'no-reduced-motion', 'moves-under-reduce', 'raf-at-rest', 'transition-all', 'layout-transition', 'layout-keyframes', 'scale-zero', 'off-token', 'long', 'no-active', 'hover-none', 'focus-none', 'linear-movement', 'infinite'];
   const byKind = new Map(); for (const f of flags) { if (!byKind.has(f.kind)) byKind.set(f.kind, []); byKind.get(f.kind).push(f); }
   md.push('### Flags', '');
   if (!flags.length) md.push('None.', '');

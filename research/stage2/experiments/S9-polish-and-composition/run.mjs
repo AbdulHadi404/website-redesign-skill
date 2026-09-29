@@ -5,6 +5,7 @@
  *   node run.mjs                  # singles (every move alone) + stacks (if judgements.json exists) + sheets
  *   node run.mjs --stage singles  # only the single-move captures, measures, probe and blind sheets
  *   node run.mjs --stage stacks   # only the stacks (needs judgements.json)
+ *   node run.mjs --stage checks   # only the small lab checks (focus ring vs corner-shape; what pixelmatch sees)
  *   node run.mjs --no-capture     # reuse the captures already in captures/pages
  *
  * Steps: fetch fonts (fetch-assets.mjs) -> serve page/ with each variant's move classes -> render the phone image
@@ -361,13 +362,5 @@ if (judgements?.sheets) {
   results.blindScore = { judge: judgements.judge, summary, rows };
 }
 
-// the judgements (written by hand from the blind sheets, see README) joined with the measures
-if (judgements?.singles && results.singles) {
-  results.judged = {};
-  for (const [id, j] of Object.entries(judgements.singles)) {
-    const m = results.singles.measures[id];
-    results.judged[id] = { ...j, fold1440: m?.[1440].fold, fold390: m?.[390].fold, probeDetected1440: results.singles.detected[id]?.[1440] };
-  }
-}
 await writeFile(resultsFile, JSON.stringify(results, null, 1));
 log(`wrote ${path.relative(process.cwd(), resultsFile)}`);

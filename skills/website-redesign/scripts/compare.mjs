@@ -10,6 +10,7 @@
  *   node compare.mjs --grid a.png b.png c.png --labels old new ref --out sheet.png [--blur 6]
  *   node compare.mjs --grid new.png references/ledger/*.jpg --blur 6   # no --labels: each panel is captioned with its file name
  *   node compare.mjs --grid new.png old.png references/ledger/*.jpg --labels New Old --blur 6   # label your own panels only
+ *   node compare.mjs --grid raw/{000..023}.jpg --labels {000..023} --cols 6 --out raw/contact-000.png   # 4 rows of 6
  *
  * --labels  captions, paired with the files by position in the order the files arrive (a shell glob sorts
  *           by name, not in the order you had in mind). Several arguments are several labels, commas and
@@ -24,6 +25,8 @@
  *           beside the ledger's sanad-dashboard.jpg.
  *           Every sheet prints its file -> caption pairing. A --dir sheet takes at most two labels, its
  *           before and after captions, used on every sheet.
+ * --cols N  (--grid) lays the panels out N to a row, left to right then down, so a contact sheet of 24 images
+ *           can be 6 across; without it a grid is one row. Labels still pair with files by position.
  * --blur N  blurs every panel by N px: the squint test. What still reads when
  *           detail is gone is the hierarchy you actually shipped; two blurred
  *           panels that look alike are the same design.
@@ -137,11 +140,11 @@ async function mustBeFiles(files) {
   if (missing.length) fail(`Not found, or not a file: ${missing.join(', ')}${missing.some((f) => /[*?[{]/.test(f)) ? '\n(a pattern that reaches the script unexpanded matched no file)' : ''}`);
 }
 
-async function sheet(files, labels, out) {
+async function sheet(files, labels, out, perRow = files.length) {
   const imgs = await Promise.all(files.map(async (f) => `data:image/png;base64,${(await readFile(f)).toString('base64')}`));
   const { browser } = await launch({ chrome: a.chrome });
   const page = await browser.newPage({ viewport: { width: 1600, height: 900 } });
-  const cols = files.length;
+  const cols = Math.min(perRow, files.length);
   await page.setContent(`<!doctype html><html><body style="margin:0;background:#e9e9e7;font:600 15px/1.3 system-ui,sans-serif;color:#222">
     <div id="g" style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:24px;padding:24px;align-items:start;width:${Math.min(cols * 900, 2700)}px">
     ${imgs.map((src, i) => `<figure style="margin:0"><figcaption style="margin:0 0 10px">${esc(labels[i] ?? path.basename(files[i]))}</figcaption>
@@ -173,13 +176,18 @@ async function diff(before, after, out) {
   console.log(`${out}: ${n} pixels differ (${((n / (w * h)) * 100).toFixed(2)}%)${sizeNote}`);
 }
 
+// Panels per row on a grid: one row unless --cols says otherwise. A before/after sheet always has two panels.
+const perRow = a.cols === undefined ? null : typeof a.cols === 'string' ? Number(a.cols) : NaN;
+if (perRow !== null && !(Number.isInteger(perRow) && perRow > 0)) fail(`--cols needs one whole number of panels per row (--cols 6)${a.cols === true ? '' : `, not "${[a.cols].flat().join(' ')}"`}.`);
+if (perRow !== null && !a.grid) console.error('--cols unused: only a --grid sheet takes it (a before/after sheet has two panels side by side).');
+
 if (a.grid) {
   const files = asList(a.grid);
-  if (!files.length) fail('--grid needs the image files to lay out: --grid a.png b.png [--labels x y]');
+  if (!files.length) fail('--grid needs the image files to lay out: --grid a.png b.png [--labels x y] [--cols 6]');
   await mustBeFiles(files);
   const { caps, pairing } = captionsFor(files, files.map((f) => path.basename(f)));
   console.log(pairing);
-  await sheet(files, caps, a.out || 'sheet.png');
+  await sheet(files, caps, a.out || 'sheet.png', perRow ?? files.length);
 } else if (a.dir || (a.before && a.after && (await stat(String(a.before)).catch(() => null))?.isDirectory())) {
   // Pairs by name with the -before/-after label removed, from one folder (the --label convention), from
   // before/ and after/ subfolders, or from --before <dir> --after <dir>.
@@ -210,6 +218,6 @@ if (a.grid) {
   if (a.diff) await diff(files[0], files[1], a.diff);
   if (drawSheet) { console.log(shown.pairing); await sheet(files, shown.caps, a.out || 'compare.png'); }
 } else {
-  console.error('Usage: --before a.png --after b.png [--out sheet.png] [--diff diff.png] | --dir captures | --grid a.png b.png [--labels x y] (by position; fewer is fine, "-" keeps a file name; --labels-as-given skips the name check)');
+  console.error('Usage: --before a.png --after b.png [--out sheet.png] [--diff diff.png] | --dir captures | --grid a.png b.png [--labels x y] (by position; fewer is fine, "-" keeps a file name; --labels-as-given skips the name check) [--cols N] (panels per row; one row without it)');
   process.exit(1);
 }

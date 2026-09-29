@@ -95,12 +95,14 @@ export function overflowCulprits() {
     const ell = [el, el.parentElement].find((e) => e && e !== document.body && getComputedStyle(e).textOverflow === 'ellipsis' && (nowrap(getComputedStyle(e)) || nowrap(cs)));
     if (ell) { const b = ell.getBoundingClientRect(); if (b.left >= -1 && b.right <= vw + 1) continue; }
     // Walk up: a real scroller makes it reachable; a clipping box below body either cuts the text itself (clippedText
-    // in inventory.mjs reports that) or, when it too runs past the edge, is cut with the text by body or html.
+    // in inventory.mjs reports that) or, when it too runs past the edge, is cut with the text by body or html. A box
+    // is a real scroller only when it scrolls sideways: `overflow-y: auto` makes overflow-x compute to auto as well,
+    // and such a box with nothing to scroll sideways clips like a hidden one (a 420px panel on a 390px phone).
     let reachable = false, cutBelow = false;
     for (let p = el.parentElement; p && p !== document.body && p !== doc; p = p.parentElement) {
       const o = getComputedStyle(p).overflowX;
-      if (o === 'auto' || o === 'scroll') { reachable = true; break; }
-      if (o !== 'hidden' && o !== 'clip') continue;
+      if ((o === 'auto' || o === 'scroll') && p.scrollWidth > p.clientWidth + 1) { reachable = true; break; }
+      if (o === 'visible') continue;
       const q = p.getBoundingClientRect();
       if (R > q.right + 2 || L < q.left - 2) { cutBelow = true; break; }
       L = Math.max(L, q.left); R = Math.min(R, q.right);

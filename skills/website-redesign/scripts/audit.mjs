@@ -10,6 +10,8 @@
  *        [--out ./audit] [--no-axe] [--focus 40] [--height 900]   (desktop viewport height; try 1600 for tall screens)
  *        [--storage seed.json]                                     (saved state before load: lib/env.mjs)
  *
+ * --kind also takes the category names in categories.md (dashboard, fintech, ecommerce, …); signature, configurator,
+ * builder, studio and visualiser are aliases of app, for a signature route's chrome and controls (framing.md §1).
  * --themes runs every path × width × theme (default light only): each context is created with that
  * prefers-color-scheme, dark at phone width included. --theme-key K also writes the theme name to localStorage[K]
  * before the page's scripts run (after any --storage seed, so it wins), for a site that stores the choice. The
@@ -21,8 +23,8 @@
  *    readable text past the viewport edge that no scroll reaches: under the page's own clip (with html's overflow
  *    not visible, body clips its own box and scrollWidth never shows it), or past the start edge
  *  - type: sizes in use (by share of text), families, weights, measure
- *    (characters per line), centred/justified runs, leading, text < 12px (a one- or two-word uppercase label at
- *    11px is allowed), rendered monospace (code/kbd/samp/pre defaults and form-control values included)
+ *    (characters per line), centred/justified runs, leading, text < 12px (a single uppercase word at 11px is
+ *    allowed), rendered monospace (code/kbd/samp/pre defaults and form-control values included)
  *  - contrast: every text element against the ground actually painted under it
  *    (WCAG 2 ratio; text over images/gradients listed as "check by eye")
  *  - keyboard: tabs through the page, flags controls whose focus is invisible
@@ -46,7 +48,8 @@
  *    over-used font families, cliché copy, big-number claims to verify
  *
  * Writes <out>/<slug>-<width>.json (<slug>-<width>-<theme>.json for a theme other than light) and prints a
- * Markdown summary (also saved as <out>/audit.md). Exits 1 when any page has a fail (✗) or could not be audited.
+ * Markdown summary (also saved as <out>/audit.md). Exits 1 when any page has a fail (✗) or could not be audited,
+ * 2 on an unknown --kind or theme.
  */
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -64,14 +67,16 @@ const focusLimit = Number(a.focus) || 40;
 // What kind of surface this is (from the framing step): marketing | app | field | commerce | content | docs | service.
 // It changes which signals are reported: an app is judged by density and task rules, not by hero rules; a service
 // needs no nav landmark; the display-voice signal is for marketing and content only. The category names in
-// categories.md are accepted too and map to the rule set that fits them.
+// categories.md are accepted too and map to the rule set that fits them; a signature route (a configurator, a
+// builder, a studio, a visualiser) is audited as an app for its chrome and controls (framing.md §1).
 const KINDS = ['marketing', 'app', 'field', 'commerce', 'content', 'docs', 'service'];
-const ALIASES = { dashboard: 'app', fintech: 'app', admin: 'app', enterprise: 'app', saas: 'app', internal: 'app', frontline: 'field', mobile: 'field',
+const ALIASES = { dashboard: 'app', fintech: 'app', admin: 'app', enterprise: 'app', saas: 'app', internal: 'app',
+  signature: 'app', configurator: 'app', builder: 'app', studio: 'app', visualiser: 'app', visualizer: 'app', frontline: 'field', mobile: 'field',
   ecommerce: 'commerce', shop: 'commerce', store: 'commerce', checkout: 'commerce', public: 'service', government: 'service', form: 'service',
   editorial: 'content', blog: 'content', news: 'content', documentation: 'docs', landing: 'marketing', portfolio: 'marketing' };
 const kindAsked = String(a.kind || 'marketing').toLowerCase();
 const kind = KINDS.includes(kindAsked) ? kindAsked : ALIASES[kindAsked];
-if (!kind) { console.error(`Unknown --kind "${kindAsked}". Use ${KINDS.join(' | ')} (or a category: ${Object.keys(ALIASES).join(', ')}).`); process.exit(2); }
+if (!kind) { console.error(`Unknown --kind "${kindAsked}". Use ${KINDS.join(' | ')} (or an alias: ${Object.keys(ALIASES).join(', ')}).`); process.exit(2); }
 const themes = asList(a.themes, ['light']).map((t) => t.toLowerCase());
 const badTheme = themes.find((t) => !['light', 'dark', 'no-preference'].includes(t));
 if (badTheme) { console.error(`Unknown theme "${badTheme}" in --themes. Use light, dark (or no-preference), comma-separated.`); process.exit(2); }
@@ -438,7 +443,8 @@ if (axePath) {
   md();
   const order = { critical: 0, serious: 1, moderate: 2, minor: 3 };
   const rules = [...byRule.values()].sort((x, y) => (order[x.impact] ?? 4) - (order[y.impact] ?? 4) || y.views.length - x.views.length || x.id.localeCompare(y.id));
-  if (!rules.length) md(`No violations in ${axeViews} view${axeViews === 1 ? '' : 's'}.`);
+  // No view scanned (every page failed to load) is not a clean result.
+  if (!rules.length) md(axeViews ? `No violations in ${axeViews} view${axeViews === 1 ? '' : 's'}.` : 'Nothing scanned: no page could be audited.');
   for (const r of rules) {
     md(`- [${r.impact || 'n/a'}] ${r.id} — ${r.help} (${r.views.length} view${r.views.length === 1 ? '' : 's'})${r.experimental ? ' — experimental rule, review each' : ''}`);
     for (const n of [...r.nodes.values()].slice(0, 5)) md(`  - ${n.at}${n.more ? ` (+${n.more} more view${n.more === 1 ? '' : 's'})` : ''}: \`${n.target}\`${n.summary ? ` — ${n.summary}` : ''}`);
