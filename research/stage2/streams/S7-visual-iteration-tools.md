@@ -1,351 +1,431 @@
-<!-- Stream S7, saved from the lab agent's hand-back (lab version; the amendment after review is still running and will replace this file). Experiment folder: research/stage2/experiments/S7-visual-iteration-tools/. -->
+<!-- Stream S7, saved from the lab agent's hand-back (corrected after review). Experiment folder: research/stage2/experiments/S7-visual-iteration-tools/. The skeptical review is in S7-visual-iteration-tools.review.json. -->
 
-# S7: Screenshot-driven iteration, visual regression, viewport sweeps and real-content stress
+# S7 — Screenshot-driven iteration, visual regression, viewport sweeps and real-content stress
 
 ## What the skill already knew
 
-- **Capture and measurement.** `capture.mjs` captures five widths (1440/1280/1024/768/390, plus 320/360/844 in the responsive pass). It finishes motion, decodes images and warns about overflow and text cut at the viewport edge. `audit.mjs` measures one width at a time: overflow culprits, clipped text, dead bands and targets.
-- **States and diffs.** `states.mjs` drives states and seeded fixtures (0/200 items, 500 responses, delays). `compare.mjs` draws before/after, blurred and grid sheets. Its `--diff` is pixelmatch at threshold 0.1.
-- **What was missing.** `visual-qa.md`'s QA matrix lists content cases (0/1/100+ items, 70-character names, long URLs, missing images, large numbers, translations, RTL) and 200%/400% zoom. Nothing generated those cases or looked between the sampled widths. `tools.md` named Playwright `toHaveScreenshot`, odiff, reg-cli, BackstopJS and Lost Pixel as options without choosing one.
-- **Stage 1 (not repeated here).** The fresh-context reviewer, blur and removal tests, bounded rounds, "verify the verifier", and the marked accessibility tree for walkthroughs (experiment K).
+The skill already had these tools:
+- **`capture.mjs`** captures five widths (1440/1280/1024/768/390, plus 320/360/844 in the responsive pass). It finishes motion, decodes images and warns about overflow.
+- **`audit.mjs`** measures one width at a time. **`states.mjs`** drives states and seeded fixtures.
+- **`compare.mjs --diff`** runs pixelmatch at threshold 0.1.
 
-## Findings
+`visual-qa.md`'s QA matrix lists content cases (0/1/100+ items, long names and URLs, missing images, big numbers, translation, RTL) and 200%/400% zoom. Nothing generated those cases, and nothing looked between the sampled widths. `tools.md` named Playwright `toHaveScreenshot`, odiff, reg-cli, BackstopJS and Lost Pixel without choosing one.
+
+Stage 1 established the following, and this report does not repeat it: the fresh-context reviewer, blur and removal tests, bounded rounds, "verify the verifier", and the marked accessibility tree.
+
+## Findings (tagged; numbers where they exist)
 
 ### Visual regression
 
 1. **`compare.mjs --diff` reports "0 pixels differ" for a visible brand-colour change.**
-   - The primary button went from #1d4ed8 to #2563eb: ΔE2000 7.2, and white-text contrast dropped from 6.70 to 5.17.
-   - pixelmatch at 0.1 (compare.mjs) and Playwright's default 0.2 both count 0 px at 1280 and at 390. The change needs threshold ≤ 0.05 (11,123 px). A ΔE2000 0.8 token drift is caught only at threshold 0.
-   - [L `results.json` vr.thresholdSweep; V `compare.mjs` source `threshold: 0.1`; ΔE from colorjs.io]
-2. **Pixel counts cannot tell a regression from environment noise.** At 1280 and threshold 0.1:
-   - a 1 px shift of the button row changes 1,530 px;
-   - sub-pixel text rendering changes 6,400 px;
-   - the headless-shell binary instead of full Chromium changes 4,045 px;
-   - a display-P3 colour profile changes 11,792 px.
+   - The change: button #1d4ed8 → #2563eb, ΔE2000 7.2, white-text contrast 6.70 → 5.17.
+   - pixelmatch at 0.1 (as `compare.mjs` calls it) and Playwright's default 0.2 both count 0 px at both widths.
+   - The change needs threshold ≤ 0.05 (11,123 px). A ΔE 0.8 token drift is caught only at 0.
+   - Sources: [L `vr.thresholdSweep`]; [V `compare.mjs` `threshold: 0.1`]; ΔE and contrast from colorjs (the reviewer re-checked them).
 
-   No threshold or pixel budget separates them. The only fix is to keep the environment constant. [L vr.engineRows, thresholdSweep]
-3. **With the environment constant and captures stabilised, a re-render differs by 0 px.**
-   - "Stabilised" means: finite animations finished; infinite ones rewound to t=0 and paused; caret hidden; dynamic regions covered by a solid box.
-   - The result held at every threshold, at both widths, across two runs.
-   - So threshold 0 is usable inside the agent's own loop. [L vr thresholdSweep, control rows]
-4. **Two captures of the same page by today's `capture.mjs` differ by 6,056 px at threshold 0 (225 px at 0.1).**
-   - The page's only motion was a spinner and a pulsing bar.
-   - Cause: `finishMotion()` pauses infinite animations wherever they happen to be.
-   - [L results.motion, `vr/capture-motion.mjs`; V `lib/env.mjs` `if (iterations === Infinity) a.pause()`]
-5. **Engines on the same PNG pairs**, stabilised captures, 6 regressions and 4 noise kinds at 2 widths:
+2. **Pixel counts cannot tell a regression from environment noise.** At 1280 and t0.1:
 
-   | Engine (as configured) | Regressions caught /12 | Noise flagged /8 | ms per pair (1280 · 390) |
+   | Case | Pixels changed |
+   | --- | --- |
+   | 1 px shift of the button row (a regression) | 1,530 |
+   | sub-pixel text (noise) | 6,400 |
+   | headless shell instead of full Chromium (noise) | 4,045 |
+   | display-P3 profile (noise) | 11,792 |
+
+   [L `vr.thresholdSweep`, reproduced by the reviewer to ±1 px]
+
+3. **With the build held constant and captures stabilised, re-renders match to the pixel.** Real pages add a few isolated pixels and one unstable case.
+   - My control: 10 pages × 2 widths × 3 repeats, each capture in its own launch.
+   - Recipe **once** (finish, pause and mask, then shoot 300 ms later):
+     - 59 of 60 pairs are 0 px.
+     - Astro's project page at 1280 differed by 1,741 px in one repeat. The current-page nav pill was caught mid-way through a `background-color` transition that started after the stabilisation pass.
+   - Recipe **strict** (also `transition: none`, and finish again right before the shot):
+     - 59 of 60 pairs are 0 px.
+     - One pair had 1 isolated pixel, 0 at t0.1.
+   - The reviewer's control: 13 of 14 at 0 px, and Astro home 2 isolated px.
+   - [L `control.byRecipe`; reviewer's run]
+
+4. **`browser.version()` cannot tell the two Chromium builds apart, but CDP can.**
+   - The difference: full Chromium and the headless shell both report `141.0.7390.37`. `Browser.getVersion().product` says `Chrome/…` for one and `HeadlessChrome/…` for the other, and `SystemInfo.getInfo().commandLine` gives the executable and flags. [L `guard.versions`]
+   - How the skill picks a build:
+     - Playwright 1.63 launches the headless shell for any headless launch without a channel (`getExecutableName`). [V `playwright-core/lib/coreBundle.js`]
+     - The skill's `launch()` uses the full build with `--gpu` (`channel: 'chromium'`) and with `--headed`. When the default shell is missing it falls through to the first binary on disk, which in this container is full chromium-1194. [V `lib/env.mjs` `launchBrowser`]
+     - `npx playwright-core install chromium` (the skill's own `browser` script) installs both builds. [V `browsers.json` `installByDefault`; K]
+     - So `capture.mjs` and `capture.mjs --gpu` can capture with different builds, a difference of about 4,000 px with nothing changed.
+   - A sidecar guard fixes this (`vr/build-guard.mjs`):
+     - It refused shell-vs-full, where an unguarded diff counts 4,045 px, and P3-vs-sRGB (11,792 px).
+     - It allowed a re-render in a separate launch (0 px).
+     - [L `guard.pairs`]
+
+5. **Today's `capture.mjs` shows two different frames of the same page:** 6,056 px at t0 (225 px at t0.1) in my run, 5,948 (103) in the reviewer's. `finishMotion()` pauses infinite animations wherever they happen to be, so the frame is random. [L `motion`; V `lib/env.mjs`]
+
+6. **Engines on the same stabilised PNG pairs** (6 regressions and 4 noise kinds, at 2 widths):
+
+   | Engine | Regressions caught /12 | Noise flagged /8 | ms per pair, 1280 · 390 (interleaved median) |
    | --- | --- | --- | --- |
-   | pixelmatch t0.1 (compare.mjs today) | 8 (both colour changes missed) | 6 | 597 · 383 |
-   | pixelmatch t0.05 | 10 (ΔE 0.8 missed) | 6 | same engine |
+   | pixelmatch t0.1 (`compare.mjs`) | 8 (both colour changes missed) | 6 | 162 · 247 |
    | pixelmatch t0 | 12 | 6 | same engine |
-   | Playwright comparator (t0.2) | 8 | 4 (P3 passes) | 347 · 498 |
-   | Playwright ssim-cie94 | 10 | 6 | 3,280 · 4,113 |
-   | odiff t0.1 (`--aa` the same) | 8 | 6 | 237 · 535 |
-   | resemble 0.1% (BackstopJS) | 9 (the removed badge at 1280 missed) | 6 | 887 · 1,126 |
-   | reg-cli defaults (thresholds 0) | 12 | 6 | 571 · 842 (per image, process included) |
-   | DOM + computed-style snapshot diff (prototype) | 12 | 2 (both are the sub-pixel `translateX(0.3px)`, a real CSS change) | 78 · 41 |
+   | Playwright comparator t0.2 | 8 | 4 (P3 passes) | 182 · 348 |
+   | Playwright ssim-cie94 | 10 (ΔE 0.8 missed) | 6 | 859 · 1,652 |
+   | odiff t0.1 | 8 | 6 | **74 · 131** |
+   | resemble 0.1% (BackstopJS) | 9 (removed badge at 1280, ΔE 0.8 missed) | 6 | 202 · 410 |
+   | reg-cli defaults (thresholds 0) | 12 | 6 | 571 · 842 per image, process included (first run, not interleaved) |
+   | DOM + computed-style diff (prototype) | 12 | 2 (both are `translateX(0.3px)`, a real CSS change) | 78 · 41 (first run) |
 
-   - The noise every pixel engine flags is always the same kinds: sub-pixel text noise, the other Chromium binary and the P3 profile.
-   - With raw captures (spinner running, live timestamp), every engine flagged the plain re-render.
-   - Timings come from a shared 4-CPU machine (load average 9–17); compare them only with each other.
-   - [L vr.engines; V reg-cli README "0 by default"; V BackstopJS `engineTools.js` default `misMatchThreshold ?? 0.1`]
-6. **End-to-end tools** (baseline, then one run per variant; out of the box and with the dynamic region masked):
+   - Timings: 7 rounds × 3 pairs, engine order rotated each round, load average 12. odiff is the fastest at both widths, as the reviewer found; my first report's mixed ordering was load noise. [L `timing`; `vr.engines`]
 
-   | Tool | Out of the box | Dynamic region masked | Seconds per run | Setup and maintenance |
-   | --- | --- | --- | --- | --- |
-   | Playwright Test `toHaveScreenshot` 1.63 | every run fails on the timestamp (12/12 caught, 8/8 noise) | 8/12 (both colour changes missed at t0.2), noise 4/8 | 8.0–9.5 | a config and a spec; active (1.63.0) |
-   | BackstopJS 6.3.25 | 11/12, noise 7/8 | 9/12 (removed badge at 1280 = 0.09% < 0.1%; ΔE 0.8 both widths), noise 6/8 | 3.2–3.5 | 19.6 MB unpacked, 18 dependencies; last release 2024-09-07 |
-   | Lost Pixel 3.22 (open-source mode) | 12/12, noise 6/6 | 12/12, noise 4/6 (sub-pixel text, P3) | 4.1–4.2 | 22 dependencies; last release 2024-11-14; pins playwright-core 1.47.2, which cannot launch full Chromium 141, only the headless shell |
+7. **End-to-end tools** (baseline, then one run per variant):
+   - **Playwright Test 1.63:** 12/12 caught and 8/8 noise flagged out of the box (the timestamp fails every run). Masked: 8/12 and 4/8. 8.0–9.5 s per run here, 4.9–6.6 s in the reviewer's run.
+   - **BackstopJS 6.3.25:** 11/12 and 7/8. Masked: 9/12 and 6/8. 3.2–3.5 s per run.
+   - **Lost Pixel 3.22:** 12/12 and 6/6. Masked: 12/12 and 4/6. It pins playwright-core 1.47.2, which launches only the headless shell here.
+   - Sources: [L `vr.pipelines`, the reviewer matches]; [V npm metadata: BackstopJS 2024-09-07, Lost Pixel 2024-11-14]
 
-   Sources: [L vr.pipelines; V npm metadata; V `lost-pixel/node_modules/playwright-core/package.json`; L the launch test this session: full chromium-1194 "Target page, context or browser has been closed", headless shell OK].
-   - Playwright's defaults are confirmed from the installed package: threshold 0.2, animations "disabled", caret "hide", scale "css", and it retakes until "two consecutive stable screenshots". [V `@playwright/test` `types/test.d.ts`; V `playwright-core/lib/coreBundle.js`]
-7. **Percentage thresholds hide small regressions on long pages.** BackstopJS at 0.1% missed a removed "New" badge at 1280 (0.09% of the page). [L]
-8. **What an agent can act on.**
-   - A pixelmatch mask clustered into 8 px cells gives 1–5 boxes for a local regression. Examples: the 1 px shift gives 5 boxes over the hero buttons; the removed badge gives one 40×16 box. Naming the smallest element under each box's centre names the fault (removed badge → `article.card`).
-   - A font fallback or a reflow gives 58–144 boxes. The structural diff groups those into one cause: "font face FrauncesMissing: error", "42 elements moved by (0, 60.5) px", "a.btn-primary background-color rgb(29,78,216) → rgb(37,99,235)".
-   - The structural diff alone separates noise from change: when the DOM is identical and only pixels differ, the difference comes from the environment.
-   - [L vr.domDiff, vr.hybrid (20/20 cases classified; the two sub-pixel cases count as changed, which they are in code)]
-9. **Hosted services (documentation only, not tested).**
-   - Chromatic: default `diffThreshold` 0.063, YIQ distance, to absorb anti-aliasing. [S chromatic.com/docs/threshold]
-   - Argos: threshold 0–1, default 0.5 "tuned to absorb anti-aliasing noise"; ignore a recurring diff by fingerprint; Playwright integration through `argosScreenshot`. [S argos-ci.com docs]
-   - Percy Visual Review Agent (October 2025): bounding boxes around meaningful changes, natural-language summaries, "filters 40% of visual changes that are rendering noise". [S browserstack.com release notes]
-   - All three need an account and CI. The skill's local loop does not need them. Their output shape (boxes, element, cause) is the target.
-10. **Storybook, Loki and reg-suit.**
-    - Loki 0.35.1: last release 2024-08.
-    - @storybook/test-runner 0.24.5: active, but only useful where a project already has Storybook.
-    - reg-suit 0.14.5: a CI wrapper around reg-cli.
-    - The skill works on pages and flows, so building Storybook would test a harness the redesign doesn't have. [V npm metadata]
+8. **Percentage thresholds hide small regressions on long pages.** BackstopJS at 0.1% missed a removed badge: 0.09% of the page. [L]
 
-### Width sweep (`sweep.mjs`, new)
+9. **What an agent can act on.**
+   - An 8 px-clustered pixelmatch mask gives 1–5 boxes for a local change: 5 for the 1 px shift, one 40×16 box for the removed badge.
+   - The structural diff turns a reflow's 58–144 boxes into one cause.
+   - When the DOM is identical and only pixels differ, the environment changed. [L `vr.domDiff`, `vr.hybrid`]
 
-11. **Speed.** One page load per device class, resized in place: 147 widths plus two zoom cases in a median 24.1 s per page. The median was 140 ms per width across 15 pages, on a loaded machine. [L sweep.totals]
-12. **Seeded recall: 14 of 14** defects on the sweep lab. Each defect sits between the widths a capture run samples. [L sweep-lab.recall]
-13. **Precision** by finding key (check + element), each checked by eye in the 1:1 crops and sheets:
-    - pages used while tuning: 59 keys; TP 52, INT 7, FP 0;
-    - those without seeded defects: 36 keys; TP 31, INT 5, FP 0;
-    - held-out pages never used for tuning (Hallam & Price, `basket.html`, `a11y-wizard.html`, Astro `/work/h20/`): 17 keys; TP 15, INT 2, FP 0.
+10. **Hosted services and other runners.**
+    - Hosted services (documentation only): Chromatic `diffThreshold` 0.063; Argos default 0.5; Percy's review agent draws boxes and summaries. [S vendor docs]
+    - Loki 0.35.1 was last released in 2024-08. reg-suit wraps reg-cli. The Storybook runner assumes a Storybook the redesign doesn't have. [V npm]
 
-    TP means real and worth fixing; INT means real but intended or harmless; FP means not real, or pinned on the wrong element. These are after tuning. The development runs produced about ten false-positive classes, all fixed; they are listed under Experiments. One more appeared when the held-out set was re-run: text autosizing on a page without a viewport meta, fixed. [L verdicts.json, results.json]
-14. **What the default capture widths miss.**
-    - 9 of the 36 non-seeded findings (25%) never occur at 1440/1280/1024/768/390.
-    - 6 of 36 (17%) don't occur even with 320/360/844 added.
-    - Examples:
-      - On the slop and Milkline heroes, from 1520 px the inline `img.shot` fits on the buttons' line. The primary call to action drops from y 553 to y 1229, below the fold, beyond the widest default capture.
-      - Pricing and feature grids squeeze to 16–18 characters a line at 704–808.
-      - Astro's skill boxes do the same at 800–960.
-      - Astro's header social icons wrap 5 + 1 at 992–1056 (a 1024 capture shows it, but nothing points at it).
+### Width sweep (`sweep.mjs`)
 
-    [L sweep.totals.notAtDefaultWidths, notAtResponsiveWidths]
-15. **Overflow names the element past the edge, not the one pushing it.**
-    - Larder's Sign-in button is pushed out by a `nowrap` nav.
-    - In right-to-left pages the shared probe looked the wrong way and named full-width blocks. `sweep.mjs` now looks for culprits past the left edge, or past innerWidth − clientWidth when a phone's layout viewport has widened.
-    - The underlying fix belongs in `lib/probes.mjs` (owner). [L]
-16. **ReDeCheck's failure types** are collision, element protrusion, viewport protrusion, incorrect wrapping and small-range layouts; its small-range threshold is 5 px. ReDeCheck itself is Java, Firefox 46 and Selenium (2018) and was not run. `sweep.mjs` adds three checks modelled on it: protrusion out of a drawn box, a lone item on the last row of a wrapping grid, and arrangements that hold at one sampled width only. [V github.com/redecheck/redecheck `RLGAnalyser.java`, MIT; S ACM ISSTA 2017 snippets]
+11. **Speed:** 147 widths plus 2 zoom cases in a median 24.7 s per page, 141 ms per width. The median is 150 ms per width on the held-out-2 pages. [L `sweep.totals`, `holdout2.sweep.totals`]
 
-### Real-content stress (`stress.mjs`, new)
+12. **Seeded recall: 14 of 14.** [L `sweep-lab.recall`, reviewer 14/14]
 
-17. **Seeded recall: 17 of 17** content-fragility defects on the stress lab. Each defect is invisible with the page's own copy and working API. [L stress-lab.recall]
-18. **Precision** by finding key:
-    - pages used while tuning: 135 keys; TP 105, INT 29, FP 0, 1 not verified;
-    - without seeded defects: 73 keys; TP 45, INT 27, 1 not verified;
-    - held-out pages, first run: 27 keys; TP 11, INT 13, FP 3;
-    - held-out pages, re-run after the three fixes that first run prompted: 25 keys; TP 13, INT 12, FP 0.
+13. **Precision.** The headline is actionable precision: TP ÷ all finding keys, where a key is check + element. TP means real and worth fixing; INT means real, rightly aimed, but intended or harmless; FP means not real, the wrong element, or caused by the tool (now labelled FP consistently).
 
-    The FP-free result on the held-out set is after fixing what it showed. The high INT share comes from brochure pages: `long`, `list-0` and `list-500` treat authored cards and badges as data. These mutations are leads to point at data routes with `--targets` or `--list`. [L verdicts.json, results.holdoutPreFix, results.holdout]
-19. **Which mutations found real faults on pages that were not seeded:**
-    - **pseudo** (+35%, and more on short strings). A 25-character compound word runs out of GOV.UK's error summary at 390. Astro's display headings are cut at the viewport edge under a page-level clip. Permit cards overflow at 768. Milkline's `nowrap` greeting overflows.
-    - **numbers.** KPI tiles on both dashboards overflow.
-    - **rtl.** `text-align: left` on 6 of 8 sites. A toast placed with `right:`, a drawer and a skip link placed with `left:`. The `left: -9999px` skip link gives an RTL page 9,999 px of sideways scroll. GOV.UK Frontend's grid columns float left.
-    - **no-images.** Unsized logos and crests jump 16 → 56 px and 0 → 36 px when they arrive.
-    - **slow.** Milkline: CLS 0.93 while loading. The permit site moves 346 px after first paint.
-    - **errors / offline.** Uncaught `d.zones is not iterable` and "Failed to fetch" on the permit and Milkline pages, with no message on screen.
+    | Set | Keys | TP / INT / FP | Actionable |
+    | --- | --- | --- | --- |
+    | Tuning pages | 59 | 52 / 7 / 0 | 88% |
+    | Tuning, unseeded | 36 | 31 / 5 / 0 | 86% |
+    | Old held-out | 17 | 15 / 1 / 1 | 88% |
+    | **Held-out-2, first pass, scripts frozen** | **50** | **40 / 7 / 3** | **80%** (INT 14%, FP 6%) |
+    | Held-out-2 after the fixes it prompted (not held-out) | 47 | 40 / 7 / 0 | 85% |
 
-    [L results.stress, verdicts.json]
-20. **Cost.** 92–148 s per page for 12 mutations at three widths; network mutations run at the first width only. Median per mutation: 3.3–3.9 s for text and list mutations, 7.3 s for no-images, 6.3 s for slow. [L stress.targets.perMutation]
+    - **Old held-out set:** the Hallam dead band is now FP (a painted band). The set is narrow, as the review said:
+      - 12 of its 17 keys are the same 3 faults of one fixed-width template, repeated over 4 routes (no viewport meta, `.wrap` overflow, nav overflow).
+      - `basket` and `a11y-wizard` gave 0 keys.
+      - Only 1 key lies outside the default widths: a 320–336 px lede measure, INT.
+    - **Held-out-2 set:** 12 pages — Stem & Wren home and order, the Carbon and Primer pages with their npm CSS, and Bootstrap's album, pricing, checkout and dashboard, plus album-rtl, checkout-rtl, dashboard-rtl and blog-rtl.
+    - **The 3 first-pass FPs:**
+      - 2 dead bands over aria-hidden SVG placeholders, which the probe treated as absent.
+      - Carbon's fixed full-width header named as the overflow culprit, when it only follows a layout viewport the table widened.
+    - [L `results.holdout2FirstPass.sweep.totals.keys`, `holdout2.sweep.totals.keys`; `verdicts.json`]
+
+14. **What the default capture widths miss, on held-out pages.**
+    - Held-out-2: 9 of 50 keys (7 TP) never occur at 1440/1280/1024/768/390, and 3 (2 TP) are missed even with 320/360/844 added. 12 keys occur only at the zoom cases.
+    - Primer's issue page overflows over 408–616 px through its filter row, a different element from the header that overflows at 390.
+    - Bootstrap pricing's header links run past the rule only at 320–328.
+    - On the tuning pages the figures are 14 of 59 and 8 of 59.
+    - [L `…totals.keys.notAtDefaultWidths`, `notAtResponsiveWidths`]
+
+15. **Overflow culprits.**
+    - Only elements past the end edge can widen a page (the left edge in RTL, or innerWidth − clientWidth on a widened phone viewport).
+    - A full-width fixed or sticky bar that merely follows a widened layout viewport is now dropped when another culprit exists. The bar itself is dropped, not its contents: Stem & Wren's nav inside a sticky header stays a culprit.
+    - [L Carbon and Stem & Wren re-runs; the owner's `lib/probes.mjs` still lacks both]
+
+16. **ReDeCheck's failure types** inform three checks: protrusion, wrap-orphan and small-range layouts. Its small-range threshold is `< 5` px. It is Java + Firefox 46 and was not run. [V `RLGAnalyser.java`, MIT]
+
+17. **Evidence images now show the element each box marks.**
+    - The test (`evidence/evidence-test.mjs`): paint the finding's element magenta, recolour its mark lime, and require the lime box to hold magenta in the image. There are 35 findings on 8 pages and fixtures.
+    - Results:
+      - On the same 19 judged findings, the pre-review code was right on 9 of 19 sheet cells and 13 of 19 crops: 5 marks off the image, 5 misaligned. Now it is right on 19 of 19 and 19 of 19.
+      - For native-RTL `rtl` runs, without flipping back to RTL 9 of 10 were aligned; with the flip back, 16 of 16. The flip-back case is clearest in `shots/evidence-before-after.jpg`.
+    - Two cells are correctly "blank": a skip link parked 9,999 px out in an RTL page's overflow.
+    - The causes:
+      - **Right-to-left pages:** marks at negative x widened the page leftwards, because RTL overflow is scrollable, and clips started at x = 0.
+      - **Zoomed-out phone pages (Stem & Wren):** a full-page screenshot changed the page scale from 0.31 to 0.25 and the scroll height from 5,316 to 4,699, so text autosizing moved the text away from the marks.
+      - **The native-RTL flip:** the page was shot in its flipped direction.
+    - [L `evidence.summary`, `shots/evidence-before-after.jpg`]
+
+### Real-content stress (`stress.mjs`)
+
+18. **Seeded recall: 17 of 17.** [L `stress-lab.recall`, reviewer 17/17]
+
+19. **Precision by finding key (actionable = TP ÷ all):**
+
+    | Set | Keys | TP / INT / FP | Actionable |
+    | --- | --- | --- | --- |
+    | Tuning pages, final scripts, all 12 mutations | 131 | 103 / 2 / 26 | 79% |
+    | Tuning, unseeded | 70 | 44 / 2 / 24 | 63% (FP 34%, all caused by the tool) |
+    | Old held-out | 25 | 13 / 2 / 10 | 52% |
+    | **Held-out-2, first pass, frozen, all 12** | **113** | **62 / 4 / 47** | **55%** (FP 42%, all caused by the tool) |
+    | Held-out-2 after the fixes (not held-out) | 98 | 64 / 7 / 27 | 65% |
+
+    **By mutation, both held-out sets, first pass** (TP / keys): pseudo 38/42, rtl 13/16, no-images 5/6, errors+offline 4/4, list-0 6/12, numbers 1/4, long 8/33, empty 0/4, list-500 0/5, slow 0/12 (all artefacts, finding 20).
+
+    - The **default set** (the eight below): 67/96 (70%) → 69/90 (77%) with the final scripts.
+    - The **data-aimed four** (long, empty, list-1, list-500) run unaimed: 8/42 (19%).
+    - `stress.mjs` now runs only the eight by default: pseudo, numbers, no-images, rtl, list-0, slow, errors, offline. The data-aimed ones run with `--targets`/`--list`, `--only` or `--all`. [L `/tmp`-free runner output; `verdicts.json`]
+
+20. **The late-shift check measured a layout that was never painted.**
+    - The mechanism:
+      - At 0.6 s, with a render-blocking stylesheet still loading, script reads an unstyled layout (`#cards` top 44 px).
+      - `requestAnimationFrame` fires only 1.9 s later, when the styled page (top 616 px) is first painted. [L probe `rbtest.mjs`]
+      - All 10 late-shift findings on held-out-2 and 4 on tuning pages were this artefact. The filmstrips show nothing moving.
+    - My original report's "the permit site moves 346 px after first paint" was wrong and is relabelled FP.
+    - Snapshots now wait for a painted frame. The re-run then found only moves the filmstrips confirm:
+      - permit-apply footer: 144 px, when the zones table fills at 3.0 s;
+      - Milkline herd table: 376 px;
+      - Stem & Wren order footer: 195 px;
+      - Stem & Wren home: a 56 px shrink below the fold, probably a font swap;
+      - the seeded lab shift: 196 px.
+    - "blank" now reports the first painted frame (Carbon 6.7 s, Primer 5.3 s).
+    - [L `stress`/`holdout2` slow rows, filmstrips]
+
+21. **RTL, on controls with a truth list** (`fixtures/rtl-truth.json`):
+
+    | Page | Expected found | Other keys |
+    | --- | --- | --- |
+    | S8 bilingual en, logical CSS | 0 of 0 | 0 |
+    | S8 bilingual ar, logical CSS | 0 of 0 | 0 |
+    | S8 en-broken | 8 of 8 | 1, a consequence (TP) |
+    | S8 ar-broken | 8 of 8 | 1, a consequence (TP) |
+    | Sanad ar (native RTL) | 5 of 5 `text-align: left` rules | 0 |
+    | Sanad `?lang=en` | 5 of 5 | 0 |
+
+    - **The 8 broken-variant items:** badge `right:2px`, alert icon, toast, drawer, lede, hint, caption, th/td.
+    - **Out of scope, listed in the truth file:** `margin-left:auto`, `margin-right`, `padding-right`, directional shadow, slide-in direction, icon flips, font rules.
+    - The reviewer's ~10 Sanad false-positive keys and the avatar protrusion are gone.
+    - **Native RTL is now handled:**
+      - check physical `text-align: left` as the page stands;
+      - flip to LTR (keeping lang and text) and report only what stays put;
+      - flip back to RTL for the evidence.
+    - **Not flipped** when the page loads an RTL-only stylesheet: the four Bootstrap RTL pages load `bootstrap.rtl.min.css` and gave 0 RTL findings.
+    - Initials in avatars are no longer translated.
+    - [L `rtl`, `holdout2`]
+
+22. **Held-out faults the stress run found:**
+    - Stem & Wren order fails silently on 500 and offline (`flowers.forEach`, uncaught).
+    - Missing empty states on Carbon's and Primer's lists and Bootstrap's album and dashboards.
+    - Physical CSS that stays put in RTL: Bootstrap's `.float-end`, `.text-start` and form-check margins, and Primer's subnav floats.
+    - Translated labels overflow on Bootstrap pricing's nav and footer, and on Primer's filters and tabs.
+    - Long product names push prices out of Bootstrap's checkout cart.
+    - Carbon's table has no horizontal scroller, so big numbers or long cells widen the page.
+    - Unsized logos. [L `verdicts.json` notes]
+
+23. **Cost:** 92–142 s per page for all 12 mutations at 3 widths. Text and list mutations take about 3 s each, no-images about 7 s, slow about 6 s. The default eight take less. [L `stress.targets.perMutation`]
 
 ### How a model should look at screenshots
 
-21. **Models miss most single-property changes between two screenshots.**
-    - DiffSpot has 4,400 web-UI pairs, each differing by one CSS property.
-    - The best model finds 40.7% of the changes (Gemini 3.1 Pro).
-    - Claude Opus 4.7 finds 31.2% (41.2 / 30.5 / 21.8 by easy, medium and hard tier), with 99.6% specificity on unchanged pairs.
-    - Neither pixel magnitude nor CLIP distance predicts which changes are missed.
-    - [V github.com/Tencent/DiffSpot README and leaderboard image]
-    - So the skill must never ask a model "what changed?" without a diff pointing at the change.
-22. **Downscaling hides detail.**
-    - This session's tools showed images at most 2,000 px on the long edge ("original 1636×3894, displayed at 840×2000"). [V this session's Read output]
-    - A 390 px phone page captured at DPR 2 and 8,000 CSS px tall is 780 × 16,000 px. It is shown at 0.125 scale: 16 px text becomes 4 px and a 1 px shift disappears.
-    - Details must be judged from 1:1 crops, composition from folds.
-    - At sheet scale, 13 px text in the sweep and stress sheets was unreadable; the crops were legible. [L]
-23. **Crops and marks help small details.** Model accuracy falls as the subject gets smaller, and cropping to the region helps. [S "MLLMs Know Where to Look", ICLR 2025] Numbered marks on regions improve grounding. [S Set-of-Mark, arXiv 2310.11441] The sweep and stress sheets draw numbered boxes with a numbered caption list.
-24. **Close calls are near coin flips.** Model judges predict human UI preferences only slightly above 50% when the human difference is small. [S "MLLM as a UI Judge", arXiv 2510.08783] Don't let a model pick between close variants.
-25. **Extracted text helps; self-revision helps only strong models.** In Design2Code, adding extracted text helped every model; comparing a render with the reference helped only the strongest (GPT-4V). [S arXiv 2403.03163] Give the reviewer measured facts (sweep and stress lists, DOM diff lines) alongside the images.
-26. **Interaction matters more than static renders.** Visual feedback plus interaction raised GUI-code success from 21.7% to 28.3%. [S "Coding with Eyes", arXiv 2604.19750] Failures under runtime interaction are invisible in static screenshots. [S RILA, arXiv 2609.02088] Trained change captioners suppress noise better than pixel-based regression testing. [S WUICC, arXiv 2607.01728]
-27. **No evidence was found for grid overlays** as an aid to model judgement of alignment. `audit.mjs` measures 1–4 px edge drift directly. [S: none found; K]
+These findings are unchanged from my first report (the reviewer confirmed the DiffSpot numbers).
+- **DiffSpot:** the best model finds 40.7% of single-property changes; Claude Opus 4.7 finds 31.2% (41.2 / 30.5 / 21.8 by tier), with 99.6% specificity. [V leaderboard]
+- **Downscaling:** a 780 × 16,000 px capture is shown at 0.125 scale. [V tool output]
+- **Crops and numbered marks** help small details. [S ICLR 2025; Set-of-Mark]
+- **Close calls** are near coin flips for model judges. [S arXiv 2510.08783]
+- **Extracted text** helps every model. [S Design2Code]
+- **Interaction** matters more than static renders. [S arXiv 2604.19750, 2609.02088, 2607.01728; the IDs exist, checked by search]
+- **Grid overlays:** no evidence found either way. [S; K]
 
 ## Experiments
 
 Everything is in `research/stage2/experiments/S7-visual-iteration-tools/`.
-
-- **Rebuild everything:** `npm install && ./fetch-sites.sh && node run.mjs`. This takes about 60 minutes on 4 shared CPUs.
-- **One section:** `node run.mjs vr | motion | sweep | stress | holdout | holdout-sweep | holdout-stress | sheets | score`.
-- **Relabel:** `node verdict-keys.mjs` lists findings without a verdict. After labelling in `verdicts.json`, `node run.mjs score` re-applies the verdicts.
-- **Captures** go to `captures/` (git-ignored). Sheets go to `shots/` (2.9 MB, this repository's fixtures only). The folder minus `captures/` and `node_modules` is 3.8 MB.
+- **Rebuild everything:** `npm install && ./fetch-sites.sh && node run.mjs` (about 95 min).
+- **One section:** `node run.mjs <sections>`. Sections: vr, motion, guard, control, timing, evidence, rtl, sweep, stress, holdout, holdout2, sheets, score.
+- **Held-out-2 first pass with the frozen scripts:** `S7_FROZEN=1 node run.mjs holdout2`, using `frozen/sweep-668ca747ac00.mjs` and `frozen/stress-1cdd07f25219.mjs`.
+- **Labelling:** `node verdict-keys.mjs` lists unlabelled keys; `node run.mjs score` re-applies `verdicts.json`.
+- **Provenance:** every section records the SHA-256 prefixes of the script versions it ran. The final numbers come from sweep `656ee69cd500` and stress `aaec5fe02925`; the stress file now differs only in its header comment (`f4cca18d063c`).
+- **Size:** the folder is 4.4 MB without `captures/` and `node_modules`, and `shots/` holds 8 JPEGs (2.7 MB).
 
 | Experiment | Built | Result |
 | --- | --- | --- |
-| Visual-regression fixture | `fixtures/vr/index.html?v=…`: a page with a live timestamp, a random count and a spinner. Six regressions: 1 px shift, heading font fallback, token ΔE 7.2, token ΔE 0.8, removed badge, one-sentence reflow. Four noise kinds: re-render, `translateX(0.3px)` on text, headless-shell binary, display-P3 profile. 1280@1 and 390@2. `vr/capture-set.mjs` captures raw and stabilised | engine and tool tables above; `shots/vr-diffs-390.jpg` |
-| Engines | `vr/engines.mjs`: pixelmatch (as compare.mjs calls it, and with AA pixels counted), Playwright comparator (default and ssim-cie94), odiff, resemble, reg-cli, a threshold sweep, and region clustering | table in finding 5 |
-| End-to-end tools | `vr/pipelines.mjs` and `vr/pw/`: Playwright Test, BackstopJS (Playwright engine) and Lost Pixel, each out of the box and masked | table in finding 6 |
-| Structural diff | `vr/domdiff.mjs` (snapshot of every element's box, 31 computed properties, own text, pseudo-elements and font-face states, keyed by DOM path) and `vr/run-domdiff.mjs` (plus the element that owns each pixel region) | 12/12 regressions, no environment noise flagged, 41–78 ms |
-| capture.mjs determinism | `fixtures/vr/spinner.html` and `vr/capture-motion.mjs` | 6,056 px differ at t0 |
-| Sweep lab | `fixtures/sweep-lab/` plus `truth.json` (14 seeded) | 14/14 |
-| Stress lab | `fixtures/stress-lab/` (the Larder page with a `fetch` of `api/orders.json` and a skeleton) plus `truth.json` (17 seeded) | 17/17 |
-| Pages used while tuning | 6 regression fixtures from `tools/regress/fixtures/`; the permit old build (home and apply); Milkline home and app; the Astro 7.3.5 "portfolio" example, 4 routes (MIT, commit faac481) | tables below |
-| Held-out pages | the Hallam & Price fixture (4 routes), `basket.html`, `a11y-wizard.html`, Astro `/work/h20/` and `/about/` | sweep 17 keys, 15 TP / 2 INT / 0 FP. Stress, first run 11 TP / 13 INT / 3 FP; re-run after the fixes 13 TP / 12 INT / 0 FP |
-
-The permit redesign ("new" build) is not in the repository; only its captures are. The old build was used.
-
-**Sweep, per page** (all from `results.json`):
-
-| Page | Keys | TP / INT / FP | Not at the 5 default widths | Wall time |
-| --- | --- | --- | --- | --- |
-| sweep-lab (seeded) | 23 | ranges: 44 / 5 / 0 | 5 | 28.6 s |
-| slop | 8 | 22 / 0 / 0 | 3 | 29.7 s |
-| dashboard, app-traps, card, states-overflow | 1–4 each | all TP | 0–1 | 21–25 s |
-| permit home, permit apply | 2 each | all TP | 0 | 23–25 s |
-| Milkline home, Milkline app | 2, 1 | all TP | 1, 0 | 26–28 s |
-| Astro home, about, work, project | 5, 2, 3, 1 | 10 TP, 6 INT | 4 | 24–26 s |
-| GOV.UK fixture | 0 | none | 0 | 20 s |
-
-**False-positive classes found and fixed while tuning** (these are where a naive checker goes wrong):
-
-- 1 px sub-pixel "overflow" with no element past the edge.
-- Whole-card links treated as buttons, giving wide-control, label-wrap and "CTA below the fold" findings.
-- A form's Continue button taken as the page's call to action.
-- The call to action changing identity between widths.
-- Siblings with the same short selector interleaving their width ranges.
-- The overlap check ignoring a title's own `overflow: hidden`.
-- Gradient-filled links not counted as buttons.
-- 42 clipped cells from one clipping card (now reported once, as that card).
-- Pages without a viewport meta: text autosizing changes control sizes between widths and between loads.
-- A skip link parked at `left: -9999px` named as the overflow culprit.
-- Right-to-left culprit search looking the wrong way.
-- Page sections, table cells and prose paragraphs detected as lists.
-- The whole page's text matched as the "error message".
-- Images matched by URL when two images share a file.
-- A gradient pill counted as "text sitting on an image".
-- Baseline keys that included positions, so a list cut to one row reported its old faults as new.
-- "Squeezed" reported for a two-line label that became one line.
-- Long tokens in authored headings.
+| VR fixture, engines, pipelines, DOM diff | unchanged from the first report | findings 1–2, 6–9 |
+| **guard** (new) | `vr/build-guard.mjs`: capture plus sidecar (product, revision, executable, rendering flags, DPR), and a diff that refuses mismatches | refused shell (4,045 px) and P3 (11,792 px); re-render 0 px |
+| **control** (new) | `vr/control.mjs`: 10 pages × 2 widths × 3 repeats × 2 recipes, separate launches | once: 59/60 at 0 px; strict: 59/60 at 0 and 1 × 1 px |
+| **timing** (new) | `vr/timing.mjs`: interleaved rounds | odiff fastest at both widths |
+| **evidence** (new) | `evidence/evidence-test.mjs` plus `fixtures/evidence/` (RTL overflow, width=1100 zoom-out, long LTR) | legacy 9/19 cells → 19/19; all current 35/35 |
+| **rtl** (new) | `fixtures/rtl-truth.json`, run on S8's `bilingual.html` (4 variants, read in place) and Sanad | 8/8, 8/8, 0 on the logical-CSS variants, 5/5, 5/5 |
+| **holdout2** (new) | `lib/extra-pages.mjs` builds Bootstrap examples (MIT, S8's pinned commit) and Carbon/Primer CSS from npm; 12 pages | finding 13 and finding 19 tables |
+| Seeded labs, tuning, old held-out | re-run with the final scripts | 14/14, 17/17; tables in findings 13 and 19 |
 
 ## Decision guidance for the skill
 
-### 1. `resources/tools.md` › "Visual regression and comparison" (replaces the paragraph)
+### 1. `resources/tools.md` › "Visual regression and comparison" (replaces)
 
-> **Decision.**
-> - Inside the skill's own loop: pixelmatch, which is already a dependency of `compare.mjs`, at threshold 0 on stabilised, masked captures from the same machine and browser build; changed regions reported as boxes and named elements; and a DOM/computed-style snapshot diff that states the cause. In the fixture test no threshold separated a 1 px shift (1,530 px) from rendering noise (4,045–11,792 px). Fixing the environment and stabilising the capture made a re-render 0 px.
-> - In a project that already runs Playwright Test: `toHaveScreenshot` per width, with `mask` on dynamic regions and `threshold` of 0.05 or lower. The default 0.2 missed a ΔE 7 brand-colour change. Generate baselines in the CI image, never on a laptop.
-> - Do not add BackstopJS or Lost Pixel. Their last releases were 2024. BackstopJS's 0.1% area threshold missed a removed badge. Lost Pixel pins Playwright 1.47, which cannot launch current full Chromium.
-> - Do not add Loki or a Storybook runner to a page redesign.
-> - reg-cli (Wasm, thresholds 0) and odiff are acceptable engines but add nothing pixelmatch lacks.
-> - Hosted review (Argos, Chromatic, Percy) only when the team wants a review UI in CI.
-> - A diff never judges a redesign; it guards iterations and later changes.
+> - **In the skill's loop:** pixelmatch (already in `compare.mjs`) at threshold 0, on stabilised, masked captures made by one recorded build; changed regions as boxes plus the element under each; a DOM/computed-style diff for the cause.
+> - **No threshold separates** a 1 px shift (1,530 px) from rendering noise (4,045–11,792 px); holding the build constant does.
+> - **Projects already on Playwright Test:** `toHaveScreenshot` with `mask` and `threshold` ≤ 0.05 (0.2 missed a ΔE 7 change); baselines made in the CI image.
+> - **Don't add:** BackstopJS (percentage threshold, 2024), Lost Pixel (pins Playwright 1.47), Loki, or a Storybook runner.
+> - **odiff** is the fastest engine (74/131 ms against pixelmatch's 162/247) but detects the same and is a native binary: optional, not needed.
+> - **Hosted review** only when the team wants a CI UI.
 
-### 2. `visual-qa.md`: new subsection "Regression diffs while iterating", after "Capturing reliably"
+### 2. `visual-qa.md`: "Regression diffs while iterating" (new, after "Capturing reliably")
 
-1. **Same environment or no diff.** Same machine, same Chromium build, same flags and same DPR. After a browser update, re-capture the baseline; do not loosen the threshold.
-2. **Stabilise:**
-   - finish finite animations; rewind infinite ones to t=0 and then pause;
-   - hide the caret;
-   - cover dynamic regions with a solid box: `time`, relative dates, counters, live prices, carousels, video, `<canvas>`, ads and third-party iframes, and anything marked `[data-dynamic]`;
-   - wait for fonts and images.
-3. **Control first.** Capture the same page twice. It must read 0 px. If it doesn't, the capture is unstable; fix that before trusting any diff.
-4. **Baseline naming.** One baseline per route × width × state × theme, named like the captures. The baseline rolls forward each round, so compare against the previous round, never the old site.
-5. **Diff at threshold 0.** For each changed region, name the element and look at its 1:1 crop. If the change was intended, accept it. If not, fix it. If the DOM is identical and only pixels changed, it is the environment: re-baseline.
-6. **Never** use a percentage threshold. Never judge detail from a full-page diff image.
+1. **One build, recorded and checked.**
+   - Each capture writes a sidecar: `Browser.getVersion().product`, revision, executable, rendering flags and DPR.
+   - `browser.version()` is not enough: it is identical for full Chromium and the headless shell.
+   - Never compare a `--gpu` or `--headed` capture with a plain one; on a standard install they are different binaries.
+   - After a browser update, re-baseline.
+2. **Stabilise right before the shot.**
+   - Finish finite animations and transitions; rewind infinite ones to t=0 and pause.
+   - Add `transition: none`, hide the caret, and cover dynamic regions.
+   - Wait for fonts and image decoding, then finish once more immediately before the capture.
+3. **Control first.**
+   - Capture the same page twice, in two launches. Expect 0 px.
+   - A few isolated pixels that the region list names are acceptable after a 1:1 look.
+   - A region over a component, such as a nav pill or a spinner, means something is still moving: fix the stabilisation.
+4. **Baselines:** one per route × width × state × theme, rolled forward each round. (Unchanged.)
+5. **Diff at threshold 0.** Name the element for every region and open its 1:1 crop. Same DOM with different pixels means the environment changed.
+6. **Never use a percentage threshold,** and never judge detail from a full-page diff.
 
-### 3. Requests to the script owners (new)
-
-These are for the owners to implement; S7 did not edit these files.
+### 3. Requests to the script owners (new; S7 did not edit these files)
 
 - **`compare.mjs --diff`:**
-  - default threshold 0 (today 0.1), with `--threshold`;
-  - write `<diff>.json` with regions (8 px clustering, as in `vr/engines.mjs` `regions()`);
-  - draw the boxes on the diff;
-  - print "0 px" only when it is 0.
+  - default threshold 0;
+  - `<diff>.json` with regions (`vr/engines.mjs` `regions()`), and boxes drawn on the diff;
+  - refuse, or with `--force` warn loudly, when the two sidecars differ (prototype: `vr/build-guard.mjs`).
 - **`capture.mjs`:**
-  - `--mask sel` (solid boxes);
-  - rewind infinite animations to `currentTime = 0` before pausing (`lib/env.mjs` `finishMotion`);
-  - optional `--snapshot`, writing the `vr/domdiff.mjs` snapshot beside each capture so that `compare.mjs --dom a.json b.json` can name causes.
-- **`lib/probes.mjs` `overflowCulprits`:** keep only culprits past the end edge; in RTL, look left (and at innerWidth − clientWidth on a widened phone viewport). `sweep.mjs` does this locally today.
+  - write the sidecar (`browserBuild()` is exported from `sweep.mjs` today; move it to `lib/env.mjs`);
+  - `--mask sel`;
+  - the strict stabilisation;
+  - rewind infinite animations in `finishMotion`;
+  - optional `--snapshot` for the DOM diff.
+- **`lib/probes.mjs` `overflowCulprits`:** keep only culprits past the end edge; look left in RTL; drop full-width fixed or sticky bars that only follow a widened layout viewport. `sweep.mjs` does all three locally.
 
-### 4. The width loop protocol
+### 4. The width loop (extends `visual-qa.md` "What to check, per width" and `responsive.md` §8)
 
-This extends `visual-qa.md` "What to check, per width" and `responsive.md` §8. The first checkbox changes from "captures at the widths above" to the protocol below.
+The protocol tree from my first report stands: sweep, then capture the worst widths, look at folds and 1:1 crops, run the regression against the last round, and stress before the critique. One addition:
+- On a phone page with no device-width viewport, sheet cells and crops show what the screen shows, zoomed out. A full-page re-render would move the text away from its marks.
 
-```
-after every layout or CSS change, per template touched
- ├─ node scripts/sweep.mjs --base <url> --paths <route> --out sweep      (~25 s per page)
- │    ├─ every ✗ range: fix, re-sweep
- │    ├─ every △: open its crop in <slug>-crops/; fix it, or write the dismissal in DESIGN.md
- │    └─ "Breakpoints" and "back and forth": capture both sides of each and look
- ├─ node scripts/capture.mjs --widths 1440,1280,1024,768,390,<the sheet's worst widths>
- ├─ look: the -fold.png at each width, then the sweep crops at 1:1; never judge detail from a full-page sheet
- ├─ regression against the last round (§2): changed regions only, each one intended or fixed
- └─ before the critique, and again after the last round of fixes:
-      node scripts/stress.mjs --base <url> --paths <key templates> --out stress   (~2 min per page)
-        ✗ fix · △ judge · a network fault on a data route → keep it as a states.mjs scenario in the project's tests
-```
+`SKILL.md` Phase 6: sweep every template touched; stress every key template before the critique.
 
-- In `responsive.md` §7, add a note: the sweep's zoom cases are 1280×720 at 200% (640×360) and at 400% (320×180), desktop, not touch.
-- In `SKILL.md` Phase 6, add one line: sweep every template touched, and stress every key template before the critique.
+### 5. Real content (extends `visual-qa.md` QA matrix, `multilingual.md` §4, `technical-qa.md` "Real data")
 
-### 5. Real content
+- **Default run:** `stress.mjs` runs the eight mutations that need no page knowledge. On held-out pages, 77% of their findings were worth fixing with the final scripts.
+- **Data-aimed mutations** (long, empty, list-1, list-500) run only when pointed at data: `--targets ".product-name, td"` and `--list ".results"`. Unaimed, 19% of their findings were worth fixing.
+- **On brochure pages,** list-0 findings about authored cards are dismissals; write them down.
+- **RTL, `stress.mjs --only rtl`:**
+  - On an LTR page it flips the page to RTL.
+  - On a page that is already RTL, it checks physical `text-align: left` as the page stands, then flips to LTR to find what stays put. That flip is useful when the Arabic and English locales share one stylesheet (Sanad, S8).
+  - When the page loads an RTL-only stylesheet (`bootstrap.rtl.css`), run it on the LTR page instead.
+- **What to expect:**
+  - sweep: about 85% of held-out keys worth fixing;
+  - stress, default set: about 3 in 4;
+  - late-shift: only moves that the filmstrip shows.
 
-This extends `visual-qa.md` "The design QA matrix" (content row), `multilingual.md` §4, and `technical-qa.md` "Productive surfaces › Real data".
+### 6. Looking at screenshots (extends `visual-qa.md` "Critique")
 
-- Content row: "generated by `stress.mjs`; seeded scenarios that must be kept go into `states.mjs`".
-- Multilingual: before building RTL, run `stress.mjs --only rtl` for what will not mirror (physical `left`/`right`, `text-align: left`, parked skip links). Run `--only pseudo` for German-length labels.
-- Real data: point `long`, `empty` and `list-*` at the data with `--targets` and `--list`. On brochure pages their findings are mostly authored content; dismiss those in writing.
-- **Stress usage:**
+Unchanged: never ask "what changed?" without diff regions; judge detail from 1:1 crops; numbered marks on every sheet; don't let a model choose between close variants; give facts alongside the images.
 
-```bash
-node scripts/stress.mjs --base http://localhost:3000 --paths / /products /account --out stress
-node scripts/stress.mjs --url http://localhost:3000/products --only pseudo,long,numbers,empty,list-0,list-500 \
-     --list ".results" --targets ".product-name, .price, td"
-node scripts/stress.mjs --url http://localhost:3000/ --only rtl                   # before an RTL build
-node scripts/stress.mjs --url http://localhost:3000/app --only slow,errors,offline --api "**/api/**"
-```
+### 7. `tools.md` › "This skill's scripts" (extends)
 
-- **Reading a stress run.** `<slug>-stress.md` has a table of mutation × width, then "what breaks what" (element × mutation), then the findings. `<slug>-stress-sheet.jpg` shows each mutation scrolled to its worst finding with numbered boxes. `<slug>-slow.jpg` is the throttled-load filmstrip. `crops/` holds 1:1 crops.
-- **Sweep usage:**
-  - `node scripts/sweep.mjs --url <page>` or `--base … --paths …`
-  - `--step 8,16`
-  - `--widths list`
-  - `--no-zoom`
-  - `--measure 20,90`
-  - `--cta sel`
-- **Reading a sweep run.** `<slug>.md` has a table of ranges with ✗/△/·, the element and the first width's detail, then breakpoints, flips and small-range layouts. `<slug>-sheet.jpg` shows the worst width per device class. `<slug>-crops/` holds 1:1 crops. Exit code 1 on any ✗.
+- Add rows for `sweep.mjs` and `stress.mjs`.
+- Stress usage:
+  - `node stress.mjs --url …` runs the default eight;
+  - `--targets`/`--list` add the data-aimed mutations;
+  - `--all` runs all twelve;
+  - `--only rtl` checks mirroring.
 
-### 6. Looking at screenshots
+### 8. `tools/regress` (new; suggested, not edited)
 
-This extends `visual-qa.md` "Critique", step 1 and the fallback. The reviewer packet gets the sweep and stress sheets, crops and `.md` files as well as the captures. The rules:
-
-- **Never ask "what changed?".** Give the model the diff regions. Models find 31–41% of single-property changes by eye.
-- **Detail from crops.** Judge detail from 1:1 crops, composition from folds.
-- **Numbered marks.** Every sheet shown to a reviewer carries numbered marks and a caption list.
-- **Close calls.** Don't use the model to choose between close variants.
-- **Facts with images.** Pair every image with its measured facts.
-
-### 7. `resources/tools.md` › "This skill's scripts" (extends)
-
-Two new rows:
-
-- `sweep.mjs`: what breaks between the widths a capture samples (320–1920 plus zoom), as width ranges with the element named, a sheet and crops.
-- `stress.mjs`: what breaks with real content and real networks (pseudo-localisation, long tokens, empty fields, big and negative numbers, missing images, RTL, 0/1/500 items, slow, 500, offline).
-
-### 8. `tools/regress` (new)
-
-Add groups `sweep` and `stress` with `sweep-lab` and `stress-lab` and their `truth.json`, asserting 14/14 and 17/17. Add the GOV.UK fixture as a sweep control (0 findings). Suggested for the owner; S7 did not edit it.
+- **Groups:** sweep-lab 14/14 and stress-lab 17/17.
+- **Controls:**
+  - GOV.UK fixture: 0 sweep findings;
+  - S8 bilingual en and ar: 0 RTL findings each;
+  - en-broken and ar-broken: 8/8 each;
+  - Sanad: 5/5 `text-align` rules, 0 others.
+- Run `evidence/evidence-test.mjs` as a sheet regression test.
 
 ## Rejected ideas and why
 
-- **Relaxing thresholds to absorb cross-machine noise.** Real regressions change fewer pixels than the noise does (1,530 vs 4,045–11,792). Fix the environment instead.
-- **Percentage thresholds (BackstopJS 0.1%).** They scale with page length, and a removed badge on a long page fell under them.
-- **Adopting BackstopJS, Lost Pixel, Loki or reg-suit.** Their last releases were 2024, they are heavy (BackstopJS is 19.6 MB), and Lost Pixel cannot drive current full Chromium. They add nothing the skill's pixelmatch plus Playwright Test lacks.
-- **SSIM comparator.** 6–10× slower, it still flags the noise, and it still misses the ΔE 0.8 drift.
-- **odiff as the default.** Faster on some pairs, but the same detection and a native binary to install.
-- **Building Storybook to test visually.** A page redesign has no component harness, and building one would test the harness.
-- **Binary-searching every breakpoint to 1 px (ReDeCheck).** Steps of 8 and 16 px locate a range well enough to fix. Arrangements that hold at one sampled width are reported instead.
-- **Asking a model to spot differences, or to choose between close variants.** DiffSpot and "MLLM as a UI Judge" (findings 21 and 24).
-- **Grid overlays for alignment judgement.** No evidence found; `audit.mjs` measures edges directly.
-- **Long tokens and `empty` on all text.** On brochure pages they were mostly noise from authored copy. They are now limited to data-like slots (list items, cells, names, e-mails, URLs, `--targets`).
-- **Treating label wrap as a fault in stress.** A button that wraps is the right fallback (`technical-qa.md` "Buttons wrap below 380 px"). Only navigation labels, and buttons wrapping to 3 or more lines, are flagged.
+- **Looser thresholds, or percentage thresholds.** Regressions change fewer pixels than the noise does, and percentages scale with page length.
+- **A hard "the control must read 0 px" rule.** 1–2 isolated pixels occur between launches (Astro home, the VR fixture). Name them and look at them instead.
+- **`browser.version()` as the build check.** It is identical for the two builds that differ by 4,045 px.
+- **Stabilising once, well before the shot.** A late transition slipped through (Astro project, 1,741 px).
+- **BackstopJS, Lost Pixel, Loki, reg-suit, or Storybook for a page redesign.** Same reasons as in my first report.
+- **Running data-aimed mutations on every page.** On held-out pages, 8 of 42 of their findings were worth fixing.
+- **Flipping a native-RTL page that loads an RTL-only stylesheet.** Its LTR locale loads other CSS, so the flip reports nothing actionable.
+- **Loading-state checks that read layout without waiting for a painted frame.** They measure layouts nobody sees.
+- **Counting mis-aimed findings as INT.** Relabelled as FP (cause: tool) throughout.
 
 ## Open questions and limits of this evidence
 
-- **One rater, who wrote the tools.** Every verdict is the tool author's; a fresh rater would likely mark more INT and some TP as INT. Precision on the tuning pages is after tuning; the held-out numbers are the honest ones. Sweep held-out: 15 TP / 2 INT / 0 FP of 17. Stress held-out: 11 TP / 13 INT / 3 FP on the first pass; 13 / 12 / 0 after the fixes that pass prompted.
-- **Small real-site sample.** One real open-source site (Astro's portfolio example, 6 routes) plus fixtures that imitate real old sites. No large commercial site could be reached from this network.
-- **Unverified finding.** One stress finding stays unverified: the Milkline `list-500` dead band did not reproduce by eye.
-- **Held-out pages without a data API.** On the Hallam pages `errors` and `offline` were skipped, so those mutations were exercised only on the permit and Milkline fixtures.
-- **Zoom emulation.** Zoom is emulated as a resized viewport at DPR 1. That matches media-query behaviour, but it is not Chrome's own zoom. [K]
-- **Mutation calibration.** The pseudo-localisation growth table (+100% up to 10 characters … +35% for long text) follows IBM's translation-growth guidance from memory [K]. RTL uses fixed Arabic sample strings rendered in DejaVu Sans.
-- **Slow and throttling.** "slow" uses 562 ms round trip, 1.4 Mbit/s and 4× CPU; local servers make light pages load fast even so. Layout-shift CLS only counts shifts on screen, hence the extra "late-shift" check, which compares section positions.
-- **Timings.** All timings come from a shared 4-CPU container (load average 9–17). They compare only within this run.
-- **The structural diff is still a prototype** (`vr/domdiff.mjs`). It keys elements by DOM path, so inserting a node renames every later sibling. It needs a stable-id strategy before it goes into `capture.mjs` or `compare.mjs`.
-- **Not tested in the lab.** Whether crops, numbered marks and a fresh reviewer measurably improve an agent's own critique was not tested; there was no subagent tool. The evidence is DiffSpot [V] and the papers [S].
-- **Not covered by these scripts.** The fold check auto-picks a call to action; override it with `--cta`. `sweep.mjs` does not exercise hover or pointer changes. `stress.mjs` does not open menus or dialogs; `states.mjs` does.
+- **One rater, who wrote the tools.** A fresh rater would likely move some TP to INT.
+- **The fresh held-out set is modest.**
+  - Its 12 pages are about 7 distinct templates, since Bootstrap's RTL pages are twins of the LTR ones.
+  - Bootstrap's examples use placeholder content, and blog-rtl lacks its docs-bundle nav-scroller CSS in this build.
+  - Carbon and Primer are in-repo demos with the real CSS.
+  - No large commercial site could be reached from this network.
+- **Post-fix numbers are not held-out.** The first-pass numbers are the honest ones.
+- **Shared `lib/probes.mjs`.** Other agents edited it during these runs. Only a new function was added; `overflowCulprits` is unchanged, which I checked with git diff.
+- **Timings** come from a shared 4-CPU machine (load average 4–13), and another stream's benchmark ran concurrently.
+- **Open cause:** the load-to-load label-wrap difference on Bootstrap's dashboard sidebar is unexplained. The guard (label-wrap only for mutations that change text) hides it rather than explaining it.
+- **Unchanged limits from my first report:** zoom is emulated; the pseudo growth table is [K]; the structural diff keys elements by DOM path; model-critique gains were not lab-tested.
 
-Files:
-- /home/user/website-redesign-skill/skills/website-redesign/scripts/sweep.mjs (new, 898 lines)
-- /home/user/website-redesign-skill/skills/website-redesign/scripts/stress.mjs (new, 819 lines)
-- /home/user/website-redesign-skill/research/stage2/experiments/S7-visual-iteration-tools/run.mjs
-- /home/user/website-redesign-skill/research/stage2/experiments/S7-visual-iteration-tools/results.json
-- /home/user/website-redesign-skill/research/stage2/experiments/S7-visual-iteration-tools/verdicts.json
-- /home/user/website-redesign-skill/research/stage2/experiments/S7-visual-iteration-tools/verdict-keys.mjs
-- /home/user/website-redesign-skill/research/stage2/experiments/S7-visual-iteration-tools/fetch-sites.sh
-- /home/user/website-redesign-skill/research/stage2/experiments/S7-visual-iteration-tools/fixtures/ (`vr/`, `sweep-lab/` + `truth.json`, `stress-lab/` + `truth.json`)
-- /home/user/website-redesign-skill/research/stage2/experiments/S7-visual-iteration-tools/vr/ (`engines.mjs`, `pipelines.mjs`, `domdiff.mjs`, `run-domdiff.mjs`, `capture-set.mjs`, `capture-motion.mjs`, `pw/`)
-- /home/user/website-redesign-skill/research/stage2/experiments/S7-visual-iteration-tools/shots/ (8 JPEG sheets, 2.9 MB)
+## Changes after review
+
+1. **Sanad false positives on an already-RTL page (should-fix, agreed).**
+   - `stress.mjs` now detects the page's direction and treats a native-RTL page as described in finding 21:
+     - check physical `text-align: left` as it stands;
+     - flip to LTR, keeping lang and text, and report only what stays put;
+     - flip back to RTL for the evidence;
+     - skip the flip when the page loads an RTL-only stylesheet;
+     - leave avatar initials alone.
+   - Tuning on S8's fixture exposed two more bugs, now fixed:
+     - an `[aria-hidden] ~ *` exclusion hid a badge;
+     - the thresholds were too coarse for small parents.
+   - Result: Sanad ar and en each give only the 5 real `text-align` rules; S8 gives 8/8 on both broken variants and 0 on the logical-CSS ones; the Bootstrap RTL pages give 0.
+   - I did not edit `tools/regress`; Sanad and S8 are suggested for it in §8.
+
+2. **Blank evidence on RTL pages (should-fix, agreed and extended).**
+   - Marks now sit in a clipped layer that is the size of the document and starts at its scroll origin.
+   - Clips start from the scroll origin.
+   - Zoomed-out phone pages are shot as the screen shows them.
+   - Native-RTL flips are shot back in RTL.
+   - An alignment test checks it: 9/19 → 19/19 cells, 13/19 → 19/19 crops, all current 35/35 (finding 17).
+
+3. **FP-free headlines (should-fix, agreed).**
+   - The headline is now TP ÷ keys, with INT and FP shares.
+   - 44 tool-caused INT keys and 4 late-shift TP keys were relabelled FP (cause: tool).
+   - The old held-out set's narrowness is stated in finding 13.
+   - A frozen-script first pass on 12 fresh pages gave sweep 80% and stress 55% actionable.
+   - The fixes it prompted:
+     - aria-hidden placeholders counted as occupying space;
+     - fixed full-width bars not named as culprits;
+     - late-shift measured on painted frames;
+     - the 6,000-run text cap no longer reads as empty space;
+     - a lone "@" is no longer treated as an e-mail;
+     - page chrome is treated as authored;
+     - control labels are never emptied;
+     - label-wrap only under mutations that change text;
+     - the default mutation set narrowed to eight.
+   - The removed `holdoutPreFix` record came from an earlier script version that this runner cannot reproduce.
+
+4. **The threshold-0 control is brittle and the build is not known (should-fix, agreed with one correction).**
+   - The rule now reads "0 px, or a few isolated pixels named and looked at".
+   - A 60-pair, two-recipe control added the strict stabilisation step.
+   - Recording only `browser.version()` and the path, as suggested, would not catch the shell/full switch. The sidecar also records the CDP product and rendering flags, and the guard prototype refuses mismatches.
+   - The concrete silent-switch path is documented: `--gpu` and `--headed` launch full Chromium; a plain launch uses the headless shell when it is installed.
+
+5. **Also corrected:**
+   - The engine timing ordering (odiff fastest).
+   - Motion given as a range.
+   - The wrong "permit moves 346 px" claim.
+   - The Milkline "unverified" dead band, found to be the text-run cap.
+
+Files are in `/home/user/website-redesign-skill/`:
+- `skills/website-redesign/scripts/sweep.mjs` (1,003 lines)
+- `skills/website-redesign/scripts/stress.mjs` (899 lines)
+- In `research/stage2/experiments/S7-visual-iteration-tools/`:
+  - `run.mjs`
+  - `results.json`
+  - `verdicts.json`
+  - `verdict-keys.mjs`
+  - `fetch-sites.sh`
+  - `lib/extra-pages.mjs`
+  - `frozen/`
+  - `evidence/evidence-test.mjs`
+  - `vr/build-guard.mjs`
+  - `vr/control.mjs`
+  - `vr/timing.mjs`
+  - `fixtures/rtl-truth.json`
+  - `fixtures/evidence/`
+  - `shots/evidence-before-after.jpg`
+  - `shots/rtl-sanad-ar-sheet.jpg`
+  - `shots/rtl-s8-en-broken-sheet.jpg`
+  - `shots/holdout2-sweep-stemwren-home-sheet.jpg`

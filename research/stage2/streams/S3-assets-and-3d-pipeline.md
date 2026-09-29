@@ -1,4 +1,4 @@
-<!-- Stream S3, saved from the lab agent's hand-back (corrected after review). Experiment folder: research/stage2/experiments/S3-assets-and-3d-pipeline/. -->
+<!-- Stream S3, saved from the lab agent's hand-back (corrected after review). Experiment folder: research/stage2/experiments/S3-assets-and-3d-pipeline/. The skeptical review is in S3-assets-and-3d-pipeline.review.json. -->
 
 # S3: Asset sources and licensing, sprite pipelines, glTF/3D optimisation
 
