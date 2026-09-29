@@ -5,6 +5,8 @@
  *   node palette.mjs --from public/logo.svg          # colours in the mark, by use
  *   node palette.mjs --from logo.png                 # dominant colours in a raster
  *   node palette.mjs --brand '#1A3CF2' [--name blue] [--dark] [--css out.css]
+ *   node palette.mjs --tenant '#FF7A00' [--dark ['#RRGGBB']] [--label 14/600] [--json]
+ *   node palette.mjs --tenant-set tenants.txt [--dark] [--label 14/600] [--json]
  *
  * --brand builds a 12-step scale on the Radix role model (design-theory.md B5):
  *   1–2 backgrounds · 3–5 component fills (rest/hover/pressed) · 6–8 borders
@@ -13,15 +15,38 @@
  * Hue is held at the brand hue; lightness is stepped; chroma rises toward the
  * middle and falls at the ends; out-of-gamut steps are clamped by chroma, never
  * by lightness. Steps 11 and 12 are *solved*, not guessed: the darkest
- * lightness that reaches APCA Lc 60 and WCAG 4.5:1 (step 11) / Lc 90 and 7:1
- * (step 12) against step 2 — the Radix targets plus the conformance floor. A tinted neutral scale on the same hue comes
- * with it. The output is a starting point to judge on real surfaces — never
- * judge a colour from a swatch (Albers).
+ * lightness that reaches APCA Lc 60 and WCAG 4.5:1 (step 11, against steps 2
+ * and 3, so it holds on a soft badge or a selected row) / Lc 90 and 7:1
+ * (step 12, against step 2) — the Radix targets plus the conformance floor.
+ * The label on step 9 is the one of white or #111 that passes WCAG 4.5:1; APCA
+ * only breaks a tie. When neither passes, the script says so and names the
+ * nearest step that carries a small-text label. Step 10 moves away from that
+ * label when its usual direction would take the label below 4.5:1. A tinted
+ * neutral scale on the same hue comes with it. The output is a starting point
+ * to judge on real surfaces — never judge a colour from a swatch (Albers).
+ *
+ * --tenant treats the colour as untrusted input from a white-label customer
+ * (design-systems.md, tenant themes): only an opaque #RRGGBB is accepted.
+ * Roles: brand = the exact colour on large fills, with its label solved by the
+ * rule above (moved in lightness only when it vanishes into the page, or when
+ * no label passes); accent-strong = the tenant hue with its OKLCH lightness
+ * solved for WCAG 4.5:1 on every ground *and* APCA Lc 75 where reachable, for
+ * links, selected text and checked indicators. Every text pair is gated at
+ * WCAG 4.5:1 and every non-text pair at 3:1; APCA below the size-aware level
+ * of design-theory.md B6 for --label px/weight (default 14/600: Lc 75; Lc 60
+ * at ≥ 24px or ≥ 16px/700) is a warning with the nearest fills that read well
+ * (the admin options), never a gate. --dark adds dark mode (--dark '#RRGGBB'
+ * is a dark-mode override colour). The grounds are the page and its surfaces:
+ * --ground '#FFFFFF' '#F6F6F7' (light) and --dark-ground '#111113' '#1C1D21'
+ * by default. Exits 1 on a WCAG failure or a refused colour.
+ * --tenant-set reads one tenant per line: `#RRGGBB [#RRGGBB dark override]
+ * [name]`; blank lines and // comments are skipped. Exits 1 if any tenant
+ * fails WCAG or is refused; APCA warnings are printed, never fatal.
  *
  * Needs colorjs.io (MIT); raster sampling needs pngjs. `npm install` here.
  */
 import { readFile, writeFile } from 'node:fs/promises';
-import { parseArgs, importModule } from './lib/env.mjs';
+import { parseArgs, asList, importModule } from './lib/env.mjs';
 
 const a = parseArgs();
 let Color = await importModule('colorjs.io');
@@ -90,6 +115,17 @@ const ROLES = ['app background', 'subtle background', 'component', 'component ho
 
 function mk(l, c, h = BH) { return new Color('oklch', [l, c, h]).toGamut({ space: 'srgb', method: 'oklch.c' }); }
 
+// The label on a solid fill: the one of white or #111 that passes WCAG 4.5:1; APCA only breaks a tie (both
+// pass). Picking by APCA alone put white on #FF7A00 at 2.61:1 where #111 gives about 7:1 (S12, defect 1).
+// When neither passes, the better ratio, and `pass: false` so the caller can say so.
+const LABELS = [new Color('#fff'), new Color('#111')];
+function labelOn(fill) {
+  const c = LABELS.map((on) => ({ on, w: wcag(fill, on), lc: Math.abs(apca(fill, on)) }));
+  const pass = c.filter((x) => x.w >= 4.5);
+  const pick = pass.length ? pass.sort((x, y) => y.lc - x.lc)[0] : c.sort((x, y) => y.w - x.w)[0];
+  return { ...pick, pass: pass.length > 0 };
+}
+
 function scale({ dark = false, chroma = BC, neutral = false }) {
   // Lightness for steps 1–8 (Radix-like spacing); chroma share per step.
   const Ls = dark ? [0.17, 0.2, 0.25, 0.29, 0.33, 0.38, 0.44, 0.53] : [0.99, 0.975, 0.945, 0.915, 0.88, 0.84, 0.78, 0.7];
@@ -98,24 +134,29 @@ function scale({ dark = false, chroma = BC, neutral = false }) {
   // 9: the brand itself (light); on dark, lifted if it would sink into the ground.
   let solid = neutral ? mk(dark ? 0.6 : 0.55, chroma) : mk(BL, BC);
   if (dark && !neutral && Math.abs(apca(steps[1], solid)) < 30) solid = mk(Math.max(BL, 0.62), BC * 0.9);
-  const hover = mk(solid.coords[0] + (dark ? 0.05 : -0.05), (solid.coords[1] ?? 0) * 1.02);
-  // 11 and 12: search lightness for the APCA target *and* the WCAG ratio against
-  // step 2 — Lc 60 alone can land at ~3.5:1, which fails WCAG AA for small text.
-  const solve = (target, ratio) => {
+  // 10: 0.05 darker (light) or lighter (dark) — unless that takes step 9's label below 4.5:1 on hover, where
+  // it moves the other way, away from the label (a label chosen for the rest state must hold on hover too).
+  const hoverAt = (sign) => mk(solid.coords[0] + sign * 0.05, (solid.coords[1] ?? 0) * 1.02);
+  const label = labelOn(solid);
+  let hover = hoverAt(dark ? 1 : -1);
+  if (label.pass && wcag(hover, label.on) < 4.5 && wcag(hoverAt(dark ? -1 : 1), label.on) >= 4.5) hover = hoverAt(dark ? -1 : 1);
+  // 11 and 12: search lightness for the APCA target *and* the WCAG ratio — Lc 60 alone can land at ~3.5:1,
+  // which fails WCAG AA for small text. Step 11 is solved against steps 2 *and* 3: solved on step 2 alone it
+  // sat at exactly 4.5:1 there and 4.11–4.19:1 on step 3, the soft-badge and selected-row ground (S12).
+  const solve = (target, ratio, grounds) => {
     let best = null;
     for (let i = 0; i <= 200; i++) {
       const l = dark ? 0.55 + i * 0.0022 : 0.75 - i * 0.0033;
       const c = mk(l, chroma * (neutral ? 0.9 : 0.7));
-      if (Math.abs(apca(steps[1], c)) >= target && wcag(steps[1], c) >= ratio) { best = c; break; }
+      if (grounds.every((g) => Math.abs(apca(g, c)) >= target && wcag(g, c) >= ratio)) { best = c; break; }
     }
     return best ?? mk(dark ? 0.98 : 0.1, chroma * 0.3);
   };
-  return [...steps, solid, hover, solve(60, 4.5), solve(90, 7)];
+  return [...steps, solid, hover, solve(60, 4.5, [steps[1], steps[2]]), solve(90, 7, [steps[1]])];
 }
 
 function table(title, s, dark) {
   const ground = s[1];
-  const white = new Color('#fff'), black = new Color('#111');
   console.log(`${title}\n`);
   console.log('step  role                     hex      oklch                         vs step 2: WCAG   APCA');
   s.forEach((c, i) => {
@@ -127,8 +168,21 @@ function table(title, s, dark) {
   const ok = s.map((c, i) => [i, Math.min(wcag(s[0], c), wcag(s[1], c))]).filter(([, r]) => r >= 3).sort((x, y) => x[1] - y[1]);
   const threeToOne = ok.length ? ok[0][0] : 11;
   console.log(`\n  focus ring and meaningful control borders (≥ 3:1 on steps 1 and 2): step ${threeToOne + 1} ${toHex(s[threeToOne])} (${wcag(s[1], s[threeToOne]).toFixed(2)}:1)${threeToOne > 7 ? ' — steps 6–8 are for decorative borders only' : ''}`);
-  const onSolid = [white, black].sort((x, y) => Math.abs(apca(s[8], y)) - Math.abs(apca(s[8], x)))[0];
-  console.log(`\n  text on step 9: ${toHex(onSolid)} (WCAG ${wcag(s[8], onSolid).toFixed(2)}:1, APCA ${apca(s[8], onSolid).toFixed(0)})${wcag(s[8], onSolid) < 4.5 ? ' — below 4.5:1: use step 9 for large text, icons and fills; darken to step 10/11 for small text' : ''}`);
+  const label = labelOn(s[8]);
+  const onSolid = label.on;
+  let note = '';
+  if (!label.pass) {
+    // Neither label reaches 4.5:1: name the nearest step (10 before 8 on a tie) whose fill carries one.
+    const near = s.map((c, i) => ({ i, c, l: labelOn(c) })).filter((x) => x.i !== 8 && x.l.pass)
+      .sort((x, y) => Math.abs(x.i - 8) - Math.abs(y.i - 8) || y.i - x.i)[0];
+    note = ` — neither #ffffff nor #111111 reaches 4.5:1 on step 9: keep step 9 for large text (≥ 3:1), icons and fills; ${near ? `small-text labels go on step ${near.i + 1} ${toHex(near.c)} with ${toHex(near.l.on)} (${near.l.w.toFixed(2)}:1)` : 'no step of this scale carries a small-text label'}`;
+  } else if (label.lc < 60) note = ` — APCA Lc ${label.lc.toFixed(0)}: reads weak for a label at any size (a warning, never a gate; \`--tenant ${toHex(s[8])}\` lists the nearest fills that read well)`;
+  else if (label.lc < 75) note = ` — APCA Lc ${label.lc.toFixed(0)}: reads well only at ≥ 24px or ≥ 16px bold (a warning, never a gate)`;
+  console.log(`\n  text on step 9: ${toHex(onSolid)} (WCAG ${wcag(s[8], onSolid).toFixed(2)}:1, APCA ${apca(s[8], onSolid).toFixed(0)})${note}`);
+  const onHover = wcag(s[9], onSolid);
+  if (label.pass && onHover < 4.5) console.log(`  on step 10 (solid hover) the same label is ${onHover.toFixed(2)}:1 — below 4.5:1: give hover another cue, or use a hover fill that keeps 4.5:1`);
+  // Steps 11 and 12 also sit on step 3 (a soft badge, a selected row, a component at rest).
+  console.log(`  text on step 3: step 11 ${wcag(s[2], s[10]).toFixed(2)}:1 (APCA ${apca(s[2], s[10]).toFixed(0)}), step 12 ${wcag(s[2], s[11]).toFixed(2)}:1 (APCA ${apca(s[2], s[11]).toFixed(0)})`);
   console.log();
 }
 
