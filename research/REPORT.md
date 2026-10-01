@@ -159,7 +159,7 @@ Full lists are in each report.
 
 ## Remaining gaps
 
-1. **Stage 2 into the skill's documents**, per `research/stage2/01-integration-plan.md`, with a skeptic per file and a consistency pass. The core file should end shorter: the script options move out of `SKILL.md` into a scripts manual.
+1. ~~Stage 2 into the skill's documents~~ — done selectively in the second-pass audit (`research/second-pass/REPORT.md`): the decisions that change ordinary projects were integrated (mostly into `interactive.md`, `motion.md` and `visual-qa.md`), the core shrank and the script options moved to `scripts/README.md`; the rest stays in the archive.
 2. **Blind round 5**, prepared and not run (`experiments/H-blind-eval/round5-prompts.md`):
    - Stem & Wren, a florist where a bouquet builder is warranted;
    - Hallam & Price, accountants asking for Apple-style 3D, where restraint is the answer.

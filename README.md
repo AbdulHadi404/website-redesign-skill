@@ -28,8 +28,8 @@ It is built against three failures:
 | 2. Research | References are chosen by the problem they solve, and principles go into a take/leave table. |
 | 3. Direction | **Expressive:** concept, candidates, typography, a named colour strategy, composition, imagery, motion. **Productive:** interaction model, density, navigation, elevation, and a marketing site's brand layer carried into the product without its expressive devices. Convergence checks run against the model's prior and against the ledger of past outputs. The accessibility decisions are made here too. |
 | 4. System | Three-tier tokens, type sets per surface, a state matrix, and `SYSTEM.md` for product UI. |
-| 5. Build | On a branch, in the existing framework and component library (for a first site, the stack chosen in discovery, `discovery.md` §6), with functionality untouched. |
-| 6. Verify | Captures at five widths plus states and artwork. Measured audit, scripted accessibility checks and widget keyboard contracts, then responsive and performance passes. |
+| 5. Build | The key screen first — built for real, rendered, blurred beside past outputs and reviewed — then the system rolled out on a branch, in the existing framework and component library, with functionality untouched. |
+| 6. Verify | Captures at five widths, a sweep of every width, states and artwork, real-content stress. Measured audit, scripted accessibility checks and widget keyboard contracts, responsive, performance and motion-spec passes, then a polish pass, macro to micro. |
 | 7. Critique | A fresh-context reviewer works from the renders only, in at most three rounds. |
 | 8. Hand-off | Build and tests, then `parity.mjs` against the old site (no unsourced claims, no lost routes or fields), or with `--greenfield` against the discovery sources for a first site (every claim sourced). Then commit, report, and add a row to the ledger. |
 
@@ -42,7 +42,7 @@ The knowledge base behind it is written as checkable rules with their numbers an
 - WCAG 2.2 accessibility decided at design time
 - responsive and performance budgets
 - motion
-- real-time 3D and signature interactive experiences
+- interactive and signature experiences: when interaction beats a page, interaction level and fidelity, choosing a renderer, configurators, real-time 3D
 - data visualisation
 - Arabic and multilingual typography
 - logo construction
@@ -50,30 +50,22 @@ The knowledge base behind it is written as checkable rules with their numbers an
 
 ## The scripts
 
-Measurement replaces guesswork wherever something can be measured. All are in `skills/website-redesign/scripts/`; the ones that load pages are built on Playwright:
+Measurement replaces guesswork wherever something can be measured. Sixteen scripts in `skills/website-redesign/scripts/`, regression-tested in CI against pages with known defects; `scripts/README.md` is their manual.
 
 | Script | Answers |
 | --- | --- |
-| `capture.mjs` | What does every page look like at each width, with reveals finished and images decoded? Also: element shots (`--element`), reduced-motion, dark, no-JS and forced-colours renders (`--reduced-motion`, `--dark`, `--no-js`, `--forced-colors`), removal-test variants (`--variant`), and `--gpu` (or `--headed`) for WebGL. `--dir rtl` (with `--lang ar`) renders a left-to-right build right to left, and at phone widths safe-area insets are emulated when the page sets `viewport-fit=cover`. It reports overflow, phone zoom-out and text cut at the viewport edge, and prints the WebGL renderer for the first page with a `<canvas>`, flagging a software one. Options: `--base`, `--paths`, `--widths`, `--height`, `--dpr`, `--label`, `--out`, `--mode` (`grow` or `fullpage`), `--insets`. |
-| `sweep.mjs` | What breaks between the widths a capture looks at? Every width from 320 to 1920 and the 200% and 400% zoom equivalents: overflow, text cut at the edge, clipped, truncated and overlapping text, wrapping navigation, squeezed targets, distorted images, the h1 or main action falling below the fold, and the breakpoints, merged into width ranges with a contact sheet of the worst widths. Options: `--url`, or `--base` and `--paths`; `--from`, `--to`, `--step`, `--widths`, `--height`, `--device`, `--out`. |
-| `stress.mjs` | What do real content and real networks break? Pseudo-localisation, huge and negative figures, blocked images, a right-to-left flip with Arabic text, empty lists, and a slow, failing or dropped network; long tokens, empty optional fields and one or 500 items when `--targets` or `--list` points at the data. Only what each mutation changed is reported, with a contact sheet and crops. Options: `--url`, or `--base` and `--paths`; `--widths`, `--only`, `--all`, `--out`. |
-| `audit.mjs` | What is measurably wrong, judged by the rules for `--kind` marketing, app, field, commerce, content, docs or service (a signature route runs `app` for its chrome and controls; `signature`, `configurator`, `builder`, `studio` and `visualiser` or `visualizer` are aliases)? Checks overflow and phone zoom-out, text cut at the viewport edge, contrast on the painted ground, invisible focus, targets, fake controls, clipped text, colour-only status, hidden content, fonts that never loaded, text under 12 px, LCP/CLS, axe-core, mixed digit systems and misaligned numeric columns, untranslated strings, glyphs cut by their clipping box (measured by ink), an RTL block on right-to-left or Arabic pages and a phone block at phone widths, finish defects (widows, non-concentric corners, dead bands), and generic-look signals. Also: `--themes light,dark` (or `no-preference`), with `--theme-key` for a stored choice. It fails on rendered monospace unless `--allow-mono`, rolls axe findings up by rule (`--no-axe` skips axe-core), and exits 1 on a fail or a page it could not audit (2 on a bad `--kind` or theme, or a `--theme-key` without a key). Options: `--base`, `--paths`, `--widths`, `--height`, `--out`, `--focus N`. |
-| `a11y.mjs` | What would keyboard, screen-reader, zoom, forced-colours or colour-blind users hit that rule engines miss? A clickable canvas passes only when the controls over it stand in for it (`accessibility.md` §9b). It audits what is rendered, so a wizard is run once per step. Options: a `<url>`, `--width`, `--height`, `--tabs N`, `--out`. |
-| `widgets.mjs` | Do custom widgets keep their keyboard contracts (dialog, tabs, disclosure, live region, form errors, menu button, toolbar/radio group/menubar, slider, command palette, sortable list, splitter), with arrow keys that follow the visual arrow in right-to-left? The contracts are a small JSON of selectors, with `"before"` set-up steps and the activating `"keys"`; `--device` (`phone`, `tablet`, `desktop`) or `--width` and `--height` set the viewport, and a contract can carry its own `"device"` or `"viewport"`. A message counts as announced when it reaches a live region or when focus moves to the message itself; a toast that takes focus fails. |
-| `states.mjs` | What does each widget look like loading, empty, failing, offline, stale, with 200 items, open or focused? It drives these states from mocked routes and steps, flags a scenario or step that changed nothing, and says why a failing step's target refused. With `--aria --each` it drives task walkthroughs: touch taps and swipes, a capture per step, and the accessibility tree marked with what a sighted user cannot read on that screen. `--axe` scans each state with axe-core, overlays open; a critical or serious violation fails the state, and so does a scan that missed what the state opened (`"axe": "no-scroll"` scans that state without scrolling, `"axe": false` skips it). `"record"` keeps each build's requests under its `--label`, for `parity.mjs --payloads`. Options: `--base`, `--out`, `--only a,b`, `--gpu`, `--headed`. |
-| `motion.mjs` | Does the approved motion exist in the build, and does it survive reduced motion? Without a spec it audits what moves (`transition: all`, animated layout properties, durations off the tokens, linear easing, hover and focus that change nothing, loops that never sleep, reduced-motion handling); with `--spec` (a `motion-spec` block in `DESIGN.md`, or JSON) it triggers each entry and samples every frame, normally and under reduced motion, and `--filmstrip` draws the frames. Options: a `<url>` (or `--url`), or `--base` and `--path`; `--device` (`desktop` or `phone`), `--times`, `--jpeg`, `--no-audit`, `--max`, `--strict`, `--out`. |
-| `parity.mjs` | Did the redesign (`--after`) add claims the old site (`--before`) does not source, or drop routes, ids, form fields, analytics `data-*` hooks, form submissions or metadata? Routes come from `--paths` or `--crawl N`; `--derived` lists values computed from data, and `--removed` declares deliberate removals. `--payloads` compares what each build's forms send (`--ignore` for keys that change on every submission). `--greenfield` for a first site: every claim must appear in `--source`. `--out` saves the report. |
-| `contrast.mjs` | WCAG 2 and APCA for any colours or token file. |
-| `palette.mjs` | Samples a logo's colours and builds 12-step OKLCH role scales with solved text steps; `--tenant` and `--tenant-set` check white-label tenant colours (WCAG gates, APCA warns). |
-| `fonts.mjs` | What can this font file actually do? Axes, tabular figures per digit system (Latin, Eastern Arabic, Persian), features, scripts and Arabic coverage, the line box per platform and the clip floor per content class; `--fallback` prints a metric-matched fallback `@font-face`. |
-| `perf.mjs` | How fast is each page on a throttled phone, old against new, when Lighthouse cannot run (or alongside it)? LCP and its element, CLS, TBT, transfer by type; broken baselines and failed requests named on either build, a slower page excused only when the old one lost a file that holds up its largest paint or was an error page, transfer growth questioned, and a busy machine's load average named. Options: `--base`, `--paths`, `--before` (the old build), `--runs`, `--device` (`phone` or `desktop`), `--cpu`, `--net` (`slow4g`, `fast4g`, `none`), `--out`. |
-| `model.mjs` | What will this glTF model cost? Bytes, triangles, draw calls, textures and their GPU memory, against a `--tier` budget (`mobile`, `desktop`, `scene`) (or `--max-bytes`, `--max-tris`, `--max-calls`, `--max-texture`, `--max-vram`, `--max-materials`), with the gltf-transform command for each line over it. `--json` for a machine-readable report, `--fail` to fail a build. No browser. |
-| `libcheck.mjs` | Is this npm code library safe to build hard UI on? Its licence class (A–D) with the restrictive sentences quoted, releases, activity, adoption and, with `--size`, bundle cost; RED and AMBER flags are triage, never a gate. `--search` gives candidate names only; `--json`. Needs the network. |
-| `compare.mjs` | Before/after sheets (`--before` and `--after`, or `--dir`), blurred squint sheets (`--blur`), pixel diffs (`--diff`), and grids of any captures (`--grid`, `--cols` to wrap them). `--labels` are checked against the file names, so a caption on the wrong panel stops the run (`--labels-as-given` draws them as typed). `--out` names the sheet. |
+| `capture.mjs` | each page at each width, fold and full, with reveals finished and images decoded; element shots; reduced-motion, dark, no-JS, forced-colours, RTL and removal variants |
+| `sweep.mjs`, `stress.mjs` | what breaks between widths (320–1920 and zoom); what real content and real networks break |
+| `compare.mjs` | before/after, blurred squint, contact and ledger sheets; pixel diffs |
+| `audit.mjs` | what is measurably wrong, judged by the kind of surface: contrast on the painted ground, focus, targets, overflow, clipped and hidden content, axe-core, numbers and scripts, an RTL and a phone block, finish, generic-look signals; fails rendered monospace unless the audience reads code |
+| `a11y.mjs`, `widgets.mjs` | what keyboard, zoom, forced-colours and colour-blind users hit that rule engines miss; widget keyboard contracts, RTL-aware |
+| `states.mjs` | every widget state from mocked routes; task walkthroughs from captures; axe on open overlays; request recording |
+| `parity.mjs` | unsourced or dropped claims, lost routes, ids, fields and analytics hooks; what forms send; claims on a first site checked against the discovery sources |
+| `perf.mjs`, `motion.mjs` | throttled performance, old against new; whether the approved motion exists and survives reduced motion |
+| `contrast.mjs`, `palette.mjs`, `fonts.mjs` | colour pairs; logo, photo and tenant palettes; what a font file can do |
+| `model.mjs`, `libcheck.mjs` | what a glTF costs; a library's licence class, activity and size |
 
-Every script that loads a page takes `--storage seed.json` to seed localStorage, sessionStorage or cookies, so a filled basket or a signed-in view can be audited. `contrast.mjs`, `palette.mjs`, `fonts.mjs`, `model.mjs`, `compare.mjs` and `parity.mjs --payloads` load none of your pages.
-
-Requirements: Node ≥ 18, `npm install` in `skills/website-redesign/scripts/`, and a Chromium. The scripts find Playwright's browsers on disk; set `CHROME_PATH` or pass `--chrome <path>` to choose one (`a11y.mjs` and `widgets.mjs` read only `CHROME_PATH`), or run `npm run browser`. They work offline against a local dev server. For an application you also need a way to run it locally with realistic data — screens are judged with real volumes, not empty states alone. In Git Bash on Windows, set `MSYS_NO_PATHCONV=1` or pass `--paths` without the leading slash.
+Requirements: Node ≥ 18, `npm install` in `skills/website-redesign/scripts/`, and a Chromium (`CHROME_PATH` or `--chrome <path>` to choose one — `a11y.mjs` and `widgets.mjs` read only `CHROME_PATH` — or `npm run browser`). They work offline against a local server. For an application you also need a way to run it locally with realistic data.
 
 ## Install
 
@@ -134,28 +126,23 @@ Claude writes a `DESIGN.md` (with a `PRODUCT.md` before it when a site is becomi
 
 ```
 skills/website-redesign/
-  SKILL.md                 the workflow, commitments, gates, scripts and knowledge-base map
+  SKILL.md                 what decides the outcome, commitments, the path table, phases, gates, the knowledge-base map
   references/
-    framing.md             classifying surfaces, intensity, the brief, the question bank
-    categories.md          category dials and playbooks (marketing, app, dashboard, commerce, …)
-    discovery.md           Phase 0 for thin context: triage, social audit, domain learning, product/app thinking, signature experiences
-    audit.md, research.md, art-direction.md
-    design-theory.md       fundamentals, colour, typography — with numbers
-    design-systems.md      tokens, reuse before reinvention, component libraries
-    app-ui.md              product UI: states, density and type, navigation, tables, forms, dashboards, sign-in and brand moments
-    ui-ux.md, web-design.md
-    accessibility.md       WCAG 2.2 AA by decision point, native-first map, scripted + manual checks
-    responsive.md, performance.md, motion.md, dataviz.md, multilingual.md
-    realtime-3d.md         signature real-time 3D: two passes, benchmarks, quality per ms, pipelines, adaptive quality
-    imagery.md, logo-design.md, implementation.md, visual-qa.md, technical-qa.md
-    anti-patterns.md       the model's prior, hard bans, purpose-gated techniques, tells
-    lessons.md, ledger.md  every correction so far; every finished output
-    resources/             licence-checked components, assets, type and colour, libraries, tools, inspiration
+    framing.md, categories.md, discovery.md        Phase 0: classifying routes, category dials, thin-context discovery
+    audit.md, research.md                          Phases 1–2
+    art-direction.md, design-theory.md             Phase 3: deriving a direction; colour, type and layout with numbers
+    anti-patterns.md, lessons.md, ledger.md        the model's prior and the tells; the lessons digest; every past output
+    lessons-log.md                                 the full, append-only record behind the digest
+    interactive.md                                 when interaction beats a page; signature experiences, configurators, 3D, generative visuals
+    design-systems.md, app-ui.md                   tokens and components; product UI
+    ui-ux.md, web-design.md, implementation.md, imagery.md, motion.md, logo-design.md
+    visual-qa.md, accessibility.md, responsive.md, performance.md, dataviz.md, multilingual.md, technical-qa.md
+    resources/                                     licence-checked components, assets, type and colour, libraries, tools, inspiration
   templates/               DESIGN.md, SYSTEM.md, PRODUCT.md, critique.md; code/ (tier.js, governor.js, hero-effect.js)
-  scripts/                 the measurement scripts above
-research/                  the evidence behind 2.0: audit, research streams, experiments, labs, blind evaluations
+  scripts/                 the measurement scripts and their manual (README.md)
+research/                  the evidence: audits, research streams, experiments, blind evaluations, stage 2, the second-pass audit
 tools/check-skill.mjs      repository check (frontmatter, cross-references, script syntax), run in CI
-tools/regress.mjs          the scripts against pages with known defects and clean pages (tools/regress/fixtures, the a11y lab), run in CI
+tools/regress.mjs          the scripts against pages with known defects and clean pages, run in CI
 ```
 
 ## Licence

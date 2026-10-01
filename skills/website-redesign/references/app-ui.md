@@ -4,7 +4,7 @@ Read in Phases 3–5 whenever a route is a productive surface (`framing.md`). A 
 
 ## 1. Principles
 
-1. **The user's object is the hero.** Their records, document, queue or canvas outranks the chrome. Dim navigation, shrink icons, remove decorative colour from chrome (Linear's 2024 redesign). Direct manipulation on a canvas: `ui-ux.md` §7b.
+1. **The user's object is the hero.** Their records, document, queue or canvas outranks the chrome. Dim navigation, shrink icons, remove decorative colour from chrome (Linear's 2024 redesign). Direct manipulation on a canvas: `interactive.md` §5.
 2. **Frequency sets the budget.** What is done a hundred times a day gets no animation, no confirmation dialog and a keyboard shortcut; what is done once a year gets guidance.
 3. **Few sizes, used consistently.** Real systems use three to five type sizes on a screen (Primer's issues page: three, largest 16 px); a size used once is a smell. 13–14 px body (14/20 default), 20–28 px page titles, fixed (32 only for a dashboard or home screen whose title stands alone). Type roles: §3.
 4. **One elevation model, named.** Canvas → sibling surfaces → layers inside a surface; overlays are a separate plane; never a surface nested in a surface (Plane's written model). Cards are an elevation for independent objects, not a layout primitive.
@@ -127,7 +127,7 @@ Any screen that shows data fetched from somewhere can be wrong about the present
 
 - **Loading** (Primer, consistent with NN/g) has two rules. A *container* (table, list, tiles) shows nothing under 1 s — but *lay out* the skeleton from first paint (in the server or static HTML, `visibility: hidden` until 1 s), so the space is reserved and nothing shifts when data or the skeleton appears; 1–3 s a skeleton or an indeterminate indicator; 3–10 s determinate progress; over 10 s a background task the user can leave. An *action's* inline spinner, inside the pressed control, appears after a 150–300 ms delay and stays at least 300–500 ms once shown, to avoid flicker. Show each item as it arrives.
 - **Skeletons** only for containers (tables, lists, tiles) and shaped like the final layout (no CLS); never for buttons, inputs, menus, toasts or modals.
-- **Empty states**: *first use* — what will appear here and the one action that fills it; *no results* — how to adjust the filters; *cleared / done* — a quiet confirmation; *permission or error* — what went wrong and the corrective action. Never "No data". Each gets a small glyph from the mark family, one sentence saying why the state is empty, and one action; they are one of the product's few brand moments (§12). A canvas editor or configurator opens on a real, beautiful default (the client's signature piece), not an empty scene (`ui-ux.md` §7b).
+- **Empty states**: *first use* — what will appear here and the one action that fills it; *no results* — how to adjust the filters; *cleared / done* — a quiet confirmation; *permission or error* — what went wrong and the corrective action. Never "No data". Each gets a small glyph from the mark family, one sentence saying why the state is empty, and one action; they are one of the product's few brand moments (§12). A canvas editor or configurator opens on a real, beautiful default (the client's signature piece), not an empty scene (`interactive.md` §5).
 - **Errors**: degrade the part, not the page ("This table could not be loaded — Retry"); separate pages for "Page not found", "There is a problem with the service" and "Service unavailable".
 
 ## 9. Dashboards

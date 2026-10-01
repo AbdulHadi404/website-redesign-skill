@@ -1,6 +1,6 @@
 // tier.js — the starting quality tier for a rich experience (a WebGL scene, a generative background, a heavy canvas),
 // and measureRefresh(), the budget governor.js judges frames against. No dependencies, ~2.7 KB min+gzip. How to use
-// the tiers: realtime-3d.md §6. Copy it into the project and keep this header.
+// the tiers: interactive.md §7. Copy it into the project and keep this header.
 //
 // The tier is two independent answers, never one number:
 //   capability: 'strong' | 'average' | 'low' | 'none' | 'undetermined'   (how much the device can render and compute)

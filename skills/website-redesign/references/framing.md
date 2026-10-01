@@ -41,7 +41,7 @@ Hybrids take the rule of their job. Sign-in, empty states and onboarding are doo
 
 When a marketing site is becoming an application — a transaction needs a human decision (a quote, an approval, a booking), customers have their own state, an operator runs a daily workflow, or capacity is finite — classify the customer routes and the operator's back office separately. The operator's device, often a phone, is recorded like any other route's (`discovery.md` §5, `templates/PRODUCT.md`).
 
-For each route write: category, **frequency** (once · occasional · weekly · daily · all day), **stakes** (what goes wrong if the user errs: nothing · lost time · lost money · legal/health consequence), **device and context** (desk, phone one-handed, shared screen, poor network), and **posture**. Expressive surfaces may spend novelty; productive surfaces spend it almost nowhere. The dials each category sets — body size, density, motion and novelty budget, colour's job, what gets visual weight, navigation model, metrics — are in `categories.md`. Run `audit.mjs` with the matching `--kind`; a signature route runs `--kind app` for its chrome and controls (`--kind signature`, `configurator`, `builder`, `studio` and `visualiser` are aliases of it), and the experience itself is judged against its written quality bar (`discovery.md` §5b) and `visual-qa.md` "3D and WebGL experiences".
+For each route write: category, **frequency** (once · occasional · weekly · daily · all day), **stakes** (what goes wrong if the user errs: nothing · lost time · lost money · legal/health consequence), **device and context** (desk, phone one-handed, shared screen, poor network), and **posture**. Expressive surfaces may spend novelty; productive surfaces spend it almost nowhere. The dials each category sets — body size, density, motion and novelty budget, colour's job, what gets visual weight, navigation model, metrics — are in `categories.md`. Run `audit.mjs` with the matching `--kind`; a signature route runs `--kind app` for its chrome and controls, and the experience itself is judged against its written quality bar (`interactive.md` §3).
 
 ## 2. Choose the intensity
 
@@ -60,14 +60,16 @@ The user's words set the starting point; the audit can argue for more or less. S
 | Rule | Expressive, redesign or rethink (a first site included) | Productive (any intensity) |
 | --- | --- | --- |
 | Five first-notice things must change, except a documented brand asset kept on purpose and named with its reason (`art-direction.md` §4–§5); keep < replace + create | yes | no — keep what users have learned unless evidence says it fails |
-| Hero concept, chapters, varied composition per section | yes | no — repeat the right layout; one layout family per task type |
-| Motion | two or three concept moves + quiet reveals | only to explain change; nothing on keyboard actions or anything done 100+ times a day; on what is done tens of times a day, ≤ 150 ms colour or opacity at most (`motion.md` §2) |
+| Hero concept, a page argument, composition that changes when content changes kind | yes | no — repeat the right layout; one layout family per task type |
+| Motion | two or three concept moves, each with a job; content finished without them | only to explain change; nothing on keyboard actions or anything done 100+ times a day; on what is done tens of times a day, ≤ 150 ms colour or opacity at most (`motion.md` §2) |
 | Novelty | spent in one place | near zero; brand lives in type, colour roles, tone, empty states and rare moments |
 | Density | low, generous | medium to very high; density modes where users differ |
 | Success measured by | memorability, clarity in five seconds, conversion, credibility | task success, time, errors, learnability, accessibility |
 | Critique rows that matter most | distance, first viewport, rhythm, tells | top tasks, states, density, consistency, keyboard |
 
-Signature routes spend novelty and fidelity on the experience itself, while their chrome and controls follow the productive column. They get their own column in the performance budget (`performance.md` §1) and are never judged by the "repeat the right layout" rule (`discovery.md` §5b, `categories.md`).
+Signature routes spend novelty and fidelity on the experience itself, while their chrome and controls follow the productive column; how much any route or moment asks the visitor to operate is its interaction level, with a ceiling per surface (`interactive.md` §2).
+
+**Redesign risk on used routes.** People who use a product daily pay for every change before they benefit from it. On a productive redesign or rethink: keep task and feature parity, old against new; learned locations keep their place or get a signpost; nothing costs a migration (redirects work; accounts, saved views and drafts survive); legibility beats novelty. Expect change aversion — dissatisfaction that fades within a few weeks for people who stay — and tell it apart from real failure by outcomes (task success, errors, support contacts), not by the volume of complaint. Recommend a staged rollout or opt-in period with a named metric and a rollback trigger (`technical-qa.md`, "After launch").
 
 ## 3. Qualities that are often confused
 

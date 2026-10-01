@@ -77,6 +77,6 @@ Say so, name the capability that would help (a browser tool to search and previe
 
 - **Product UI**: prefer real screenshots captured from the running product, and recapture them when the product improves; otherwise rebuild real screens as HTML fragments with obviously illustrative sample data.
 - **Illustration**: decide in this order — none (photography, product, type); drawn in SVG from the brand's own geometry; commissioned when illustration is the identity; a library only as raw material, restyled into one stroke, palette and radius (`resources/assets.md`). Never a library scene as-is.
-- **3D**: only when the object is the product or the data is spatial, with a real poster image as the LCP and the checklist in `motion.md` §9. When a live 3D product exists, marketing stills are rendered from it at its own camera angles, never mocked up, and the marketing pages around it carry no WebGL (`realtime-3d.md` §7, `motion.md` §9).
+- **3D**: only when the object is the product or the data is spatial, with a real poster image as the LCP and the checklist in `motion.md` §9. When a live 3D product exists, marketing stills are rendered from it at its own camera angles, never mocked up, and the marketing pages around it carry no WebGL (`interactive.md` §8, `motion.md` §9).
 - **Diagrams**: draw the actual mechanism (what flows where); animate the flow if it helps understanding.
 - **Logos and marks**: keep a motif with meaning, recolour it into the new system; regenerate favicon and social image so the identity is consistent everywhere.

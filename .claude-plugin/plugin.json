@@ -1,7 +1,7 @@
 {
   "name": "website-redesign",
   "description": "Redesign an existing website or web product — marketing sites, SaaS apps, dashboards, ecommerce, docs, public services — so it is better for its users and genuinely its own: framing by surface type and intensity, measured audit, research by problem, a direction derived from the brand, token and component systems, implementation in the existing stack, then scripted verification of renders, accessibility (WCAG 2.2 AA), responsiveness, performance and truth-parity, critique and iteration.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": {
     "name": "Abdul Hadi",
     "url": "https://github.com/AbdulHadi404"
