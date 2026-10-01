@@ -33,7 +33,7 @@
  *    when a material transmits (transmissionFactor > 0), the opaque objects are drawn again for the transmission
  *    pass, plus one back-face draw per double-sided transmissive primitive where the browser lacks
  *    WEBGL_multisampled_render_to_texture (desktop browsers). Checked against renderer.info (research S3).
- * The tier budgets are starting points, not laws (see `realtime-3d.md` §5 and `motion.md` §9); override them.
+ * The tier budgets are starting points, not laws (see `interactive.md` §7 and `motion.md` §9); override them.
  */
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';

@@ -59,7 +59,7 @@ Kept, and why (a brand asset only — a face the brand family uses, the brand's 
 
 ## Direction
 
-Fill the parts that apply. **Expressive** routes: everything below except the experiential quality bar and "Productive surfaces". **Productive** routes (apps, dashboards, field tools, checkout, services): "Productive surfaces", "First viewport", "Breaks if" and the convergence checks *for the brand layer only*; skip Concept, material-family candidates and the memory test. **Signature** routes (builder, configurator, studio, visualiser): the experiential quality bar first; the experience itself is directed like an expressive route (Concept, candidates, fidelity and materials, its motion and feel), with its interaction model from `ui-ux.md` §7b; its chrome and controls fill "Productive surfaces" (`discovery.md` §5b). A two-page site does not need every section of this template at full length — the Brief, Accessibility, Colour, Typography and Keep/replace/remove/create always; the rest as far as they change a decision. When `SYSTEM.md` also exists, each rule lives in one place: `DESIGN.md` holds decisions and their reasons (the accessibility block says *which* commitments this product makes and why); `SYSTEM.md` holds how components carry them out (focus ring, target sizes, error pattern). Refer, don't repeat.
+Fill the parts that apply. **Expressive** routes: everything below except the experiential quality bar and "Productive surfaces". **Productive** routes (apps, dashboards, field tools, checkout, services): "Productive surfaces", "First viewport", "Breaks if" and the convergence checks *for the brand layer only*; skip Concept, material-family candidates and the memory test. **Signature** routes (builder, configurator, studio, visualiser): the experiential quality bar first; the experience itself is directed like an expressive route (Concept, candidates, fidelity and materials, its motion and feel), with its interaction model from `interactive.md` §5; its chrome and controls fill "Productive surfaces" (`interactive.md` §3). A two-page site does not need every section of this template at full length — the Brief, Accessibility, Colour, Typography and Keep/replace/remove/create always; the rest as far as they change a decision. When `SYSTEM.md` also exists, each rule lives in one place: `DESIGN.md` holds decisions and their reasons (the accessibility block says *which* commitments this product makes and why); `SYSTEM.md` holds how components carry them out (focus ring, target sizes, error pattern). Refer, don't repeat.
 
 **Concept** (expressive surfaces) — one line a founder would recognise as theirs: **"…"**
 
@@ -68,6 +68,13 @@ Fill the parts that apply. **Expressive** routes: everything below except the ex
 **Candidates considered** (three to seven real ones from the company's own world — its moment, material, customers' world, product, industry vernacular — spanning at least three material families), and why each lost: …
 
 **Refuses:** the page this category always ships — and its predictable opposite.
+
+**Content priority** (each key template; what must be seen first, second, third, and what can wait one step):
+- Homepage / busiest screen: 1. … 2. … 3. … · one step away: …
+
+**Interaction** (only where a route or moment might be operated rather than read — `interactive.md` §1–§2): the value test answers (swap, result, first ten seconds); interaction level per moment within the route's ceiling; fidelity (plain / illustrated / rendered) and why it suits the brand's material; the renderer chosen (`interactive.md` §4).
+
+**Key screen:** which screen carries the most risk and will be built and reviewed first (Phase 5): … Review result (captures, blurred sheet, checks answered): …
 
 **First viewport, exactly:** what is where, at what scale, and where the primary action sits (for product routes: the top-task screen, same level of detail).
 
@@ -88,7 +95,7 @@ Fill the parts that apply. **Expressive** routes: everything below except the ex
 - Similar-brief test — this plan for a different company in the category would be: … (must differ)
 - Category test — guessable from the category, or from category + "avoid the obvious"? …
 - Second-order test — any choice justified only as the opposite of a default? …
-- Ledger — the direction in one sentence (surfaces, display voice and emphasis device, label device, dark-chapter colour, accent): … compared with `ledger.md` rows and this user's other sites: …
+- Ledger — the direction in one sentence (surfaces, display voice and emphasis device, label device, dark-chapter colour, accent): … compared with `ledger.md` rows and this user's other sites, and with the ledger read as a set (a shared strategy, ground, accent family or hero form is the skill's habit): …
 - Seam test (productive routes, when a marketing site exists) — moving from the site into the product, is the house recognisable (mark, colour, voice) and the product calmer, denser and faster than the site? …
 
 ## Typography
@@ -103,7 +110,7 @@ Fill the parts that apply. **Expressive** routes: everything below except the ex
 
 ## Colour
 
-**Strategy:** Restrained (60/30/10) / Committed (one saturated hue carries 30–60%) / Full palette / Drenched — and why.
+**Strategy:** Restrained (60/30/10) / Committed (one saturated hue carries 30–60%) / Full palette / Drenched — and why. On an expressive route that chose Restrained, why the brand does not want Committed or Drenched (every blind-test output in `ledger.md` chose Restrained).
 
 **Harmony and sources:** which hue dominates, supports, accents — from the sampled logo hues.
 
@@ -129,13 +136,17 @@ Containers, grid and gutters per breakpoint; spacing scale; vertical rhythm per 
 
 ## Imagery and graphics
 
-(On a productive route the hero, narrative and imagery budget shrinks to the sign-in and empty states, `app-ui.md` §12. A productive screen with no images or illustrations writes "none" and its icon set here.) Photography / product UI / illustration / diagrams / typography-only — chosen and argued (if the company's world is photographable, "none" must be argued). Source, licence class, treatment, pipeline, credits location. The drawn graphics layer: its line style and the motif it comes from.
+(On a productive route the hero, narrative and imagery budget shrinks to the sign-in and empty states, `app-ui.md` §12. A productive screen with no images or illustrations writes "none" and its icon set here.) Photography / product UI / illustration / diagrams / typography-only — chosen and argued (if the company's world is photographable, "none" must be argued). Source, licence class, treatment, pipeline, credits location. Where there is no photography or product to show: what gives the page visual events (diagrams, a drawn graphics layer — its line style and the motif it comes from — or type at image scale).
 
 ## Motion
 
-Productive vs expressive tokens (durations, easings); the two or three concept moves (expressive surfaces only); the reveal system (finished by default); reduced-motion substitutions; what never moves. Sites that frame a signature product: the signature moments list instead of a reveal system, each researched first, with the hand-over into the product (`art-direction.md` §4).
+Productive vs expressive tokens (durations, easings, `motion.md` §4); the two or three concept moves (expressive surfaces only); what never moves. Every promised move is a row below, checked by `node scripts/motion.mjs <url> --spec DESIGN.md` (fields: `motion.md` §2). Sites that frame a signature product: a few researched signature moments instead of a reveal system (`interactive.md` §3).
 
-## Interaction
+| id | trigger | on | target | properties | duration | easing | reduced |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| … | click / press / hover / focus / scroll / load | selector | selector | transform, opacity | token or ms | token | keep / fade / instant / static / pause |
+
+## Interaction and performance
 
 - Primary action per key screen (label, colour, placement): …
 - Components and the state-matrix rows each needs (see `SYSTEM.md` for product UI): …

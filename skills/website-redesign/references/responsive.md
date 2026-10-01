@@ -40,7 +40,7 @@ Then: **container queries** (Baseline widely since 2025-08) for components that 
 - **Cascade trap (measured)**: a `@media (pointer: coarse) { .btn { min-block-size: 44px } }` placed *before* the base `.btn` rule is silently overridden (same specificity). Put input-mode overrides after the base rules or in a later cascade layer — and check the rendered height, not the source.
 - **Gestures are accelerators**: every swipe, long-press or drag has a visible tap alternative (WCAG 2.5.7).
 - **Keyboards**: `type` + `inputmode` + `autocomplete` + `enterkeyhint`; card numbers and one-time codes use `inputmode="numeric"` with `autocomplete="cc-number"` / `"one-time-code"`, never `type=number`; `field-sizing: content` for growing textareas.
-- **`audit.mjs` checks these at phone widths** (lines `Phone [check]`): content revealed only by `:hover` fails (only rules whose media query matches the phone width, and only when they hide text, a control or an image with a text alternative); `type=number` for a code, phone or card number fails, and the wrong keyboard, a missing `autocomplete` or a field under 16 px warns; controls with no `:active` state under a transparent tap highlight warn; controls in fixed bars under the emulated 59/34 px insets fail only with `viewport-fit=cover`; fixed bars over a focused field with a 336 px keyboard are checked only with `interactive-widget=resizes-content`; a primary action pinned in the top third warns.
+- **`audit.mjs` checks these at phone widths** (its phone block: `scripts/README.md` §4): hover-only content, wrong keyboards, missing `autocomplete`, small fields, controls under the safe-area insets, a primary action pinned out of reach.
 
 ## 5. Navigation transformation
 
@@ -54,7 +54,7 @@ Then: **container queries** (Baseline widely since 2025-08) for components that 
 | Enterprise admin, 20+ sections | "Menu" drawer with search inside; home surfaces the phone tasks (approve, look up) | drawer or rail | multi-level sidebar, breadcrumbs, in-page tabs |
 | Docs / content | menu + prominent search; on-page TOC in `<details>` | TOC as a drawer | left nav + sticky "On this page" |
 
-Hard rules: hidden navigation is used far less than visible navigation — show the top 3–5 destinations when you can and hide only the long tail; never hide the only search behind an icon in a search-led product; tab bars navigate, toolbars act; at most five bottom tabs; the current location is always visible; mobile menus are labelled, trap focus, close on Escape, restore focus and lock body scroll; the primary action stays visible at every width (in the header it is styled secondary while the hero's own primary action is on screen: `web-design.md` §6). One sticky primary action per phone screen at most — padded so it never covers the end of the page or a focused element (`scroll-padding-block-end`), hidden while the in-flow CTA is visible. Bottom sheets (built on `<dialog>`) get a grab handle *and* a close button.
+Hard rules: hidden navigation is used far less than visible navigation — show the top 3–5 destinations when you can and hide only the long tail; never hide the only search behind an icon in a search-led product; tab bars navigate, toolbars act; at most five bottom tabs; the current location is always visible; mobile menus are labelled, trap focus, close on Escape, restore focus and lock body scroll; the primary action stays visible at every width (in the header it is styled secondary while the hero's own primary action is on screen: `web-design.md` §4). One sticky primary action per phone screen at most — padded so it never covers the end of the page or a focused element (`scroll-padding-block-end`), hidden while the in-flow CTA is visible. Bottom sheets (built on `<dialog>`) get a grab handle *and* a close button.
 
 **One-handed use, evidence vs folklore**: roughly half of phone use is one-handed and grips change constantly (Hoober); people tap and look at the centre most accurately. Put primary content and actions near the centre and bottom, frequent destinations in a bottom bar, destructive actions away from busy tap zones — but don't cram everything into the lower third; the static "thumb zone" heat map is folklore.
 
@@ -96,11 +96,11 @@ If CSS changes `display` on table elements, re-add `role="table"`/`row`/`cell`/`
 | Desktop / wide | 1920, 2560 | max-width sanity, background bleed |
 | Zoom | 1280 at **200%** and **400%** | 1.4.4 and 1.4.10 |
 
-`capture.mjs` defaults to 1440 / 1280 / 1024 / 768 / 390; add `--widths 320,360,844` for the responsive pass (landscape: `--widths 844 --height 390`). Playwright's iPhone/iPad descriptors default to WebKit — with only Chromium installed, reuse their viewport, DPR and touch settings. For a cheap-Android feel use CPU throttling (4× mid-tier, ~10× low-end on a fast host) and slow-4G network emulation (`performance.md`).
+`capture.mjs` defaults to 1440 / 1280 / 1024 / 768 / 390; add `--widths 320,360,844` for the responsive pass (landscape: `--widths 844 --height 390`). `sweep.mjs` checks every width between 320 and 1920 and both zoom levels, and names the widths worth capturing (`visual-qa.md`, "The width loop"). Playwright's iPhone/iPad descriptors default to WebKit — with only Chromium installed, reuse their viewport, DPR and touch settings. For a cheap-Android feel use CPU throttling (4× mid-tier, ~10× low-end on a fast host) and slow-4G network emulation (`performance.md`).
 
 ## 8. The responsive pass (Phase 6)
 
-- [ ] Captures at the widths above; no horizontal page scroll (`audit.mjs` names the element); no phone zoom-out from an overflowing child.
+- [ ] `sweep.mjs` on every template touched, with no ✗ range left unexplained; captures at the widths above and the worst widths it named; no horizontal page scroll; no phone zoom-out from an overflowing child.
 - [ ] Each viewport class looks *designed*: stack order chosen, sizes re-set, nothing squeezed; mid widths (1024, 768) checked as carefully as the ends.
 - [ ] The hero object (photograph, product) is inside the 390 × 844 first viewport — open the `-fold.png`; a headline, lede, two stacked buttons and a facts row can push it below, leaving a paragraph as the hero. Order the hero head → object → body on narrow screens (grid areas on desktop).
 - [ ] Navigation transformed per §5; the open mobile menu captured; primary action visible at every width.
@@ -108,4 +108,4 @@ If CSS changes `display` on table elements, re-add `role="table"`/`row`/`cell`/`
 - [ ] Targets ≥ 44 px on coarse pointers (check the rendered size — `audit.mjs` counts them); hover-only affordances also reachable by focus and touch.
 - [ ] 200% and 400% zoom at 1280: text grows, content reflows to one column, nothing clipped, no two-dimensional scrolling except inside genuine tables.
 - [ ] Landscape phone: sticky header, footer and keyboard do not eat the screen.
-- [ ] Long content, long words, translations (German-length labels), RTL if supported (`multilingual.md`).
+- [ ] Long content, long words, translations (German-length labels), RTL if supported: `stress.mjs` on the key templates (`multilingual.md`).

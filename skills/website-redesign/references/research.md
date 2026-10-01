@@ -18,11 +18,11 @@ Aim for 4–8 references — fewer when one canonical system answers the problem
 - One deliberately contrary reference, so the direction is chosen rather than defaulted.
 - **For product UI: at least one mature design system and one open-source product** whose decisions you can read in code (Primer, Carbon, GOV.UK Frontend, Polaris, Spectrum, Atlassian, PatternFly; Twenty, Cal.com, Plane, Dub, Documenso). They are measurable, their reasoning is written down, and they are reachable even where live sites are not (`resources/inspiration.md`).
 
-When no references were supplied ("make it premium"), this list is the discovery step (`discovery.md` §4); a signature experience is researched as a product — creative tools, editors, configurators and their interaction feel (`discovery.md` §5b).
+When no references were supplied ("make it premium"), this list is the discovery step (`discovery.md` §4); a signature experience is researched as a product — creative tools, editors, configurators and their interaction feel (`interactive.md` §3).
 
 ## Look, then measure
 
-Actually load them. Capture the first viewport and one or two lower sections. For a reference whose system matters (a competitor's type scale, a product's density), measure it rather than guessing: `npx dembrandt <url>` gives its palette, type styles, spacing, radii and motion; `scripts/audit.mjs --base <url> --paths / --kind app` gives sizes, density, targets and signals. For design systems, read the documentation source and token packages (`npm view`, the repo's docs folder).
+Actually load them. Capture the first viewport and one or two lower sections, and put the first viewports on one sheet beside the old site (`compare.mjs --grid … --labels …`): "what finished looks like here" becomes a picture you can compare against later, and the sheet is what you put away while making. For a reference whose system matters (a competitor's type scale, a product's density), measure it rather than guessing: `npx dembrandt <url>` gives its palette, type styles, spacing, radii and motion; `scripts/audit.mjs --base <url> --paths / --kind app` gives sizes, density, targets and signals. For design systems, read the documentation source and token packages (`npm view`, the repo's docs folder).
 
 When a browser pane stops painting (hidden or throttled), screenshots go stale while the DOM still works: read the page text and structure — often enough for an interaction reference — and take visuals later with `scripts/capture.mjs`.
 

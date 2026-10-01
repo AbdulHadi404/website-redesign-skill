@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Claude Code skill for genuine redesigns of websites and web products — methodology and measurement, not a house style.",
-    "version": "2.0.0"
+    "version": "2.1.0"
   },
   "plugins": [
     {
       "name": "website-redesign",
       "source": "./",
       "description": "Frame → audit (measured) → research → direction → system → build → verify (renders, WCAG 2.2, responsive, performance, parity) → critique → hand-off, for marketing sites and product UI.",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "keywords": [
         "website",
         "redesign",

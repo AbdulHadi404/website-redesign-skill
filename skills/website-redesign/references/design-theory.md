@@ -1,6 +1,6 @@
 # Design fundamentals, colour and typography — the theory this skill works to
 
-Read at the start of Phase 3 (art direction), before deciding a palette, a type scale or a layout system, and again when filling `DESIGN.md`. **Parts B (colour), C (typography) and D (checklists) gate the work; Part A is background** — the vocabulary for a critique, read when a judgement needs naming rather than on every job. It is a working reference: every rule is stated so it can be checked against a render or a token file, and the numbers are the ones the sources give. Companion files: `ui-ux.md` (interaction, forms, states, accessibility), `web-design.md` (pages, heroes, responsiveness, performance), `logo-design.md` (marks and identity).
+Read at the start of Phase 3, before deciding a palette, a type scale or a layout system, and again when filling `DESIGN.md`. **Parts B (colour), C (typography) and D (checklists) gate the work; Part A is the vocabulary for judging layout.** Every rule is stated so it can be checked against a render or a token file; numbers are the sources'. They are starting points that a direction may depart from with a written reason — a rule followed against the brand's grain produces a correct, generic page.
 
 ---
 
@@ -8,38 +8,18 @@ Read at the start of Phase 3 (art direction), before deciding a palette, a type 
 
 ### A1. What "good" means
 
-- **Dieter Rams' ten principles** are still the shortest complete definition: good design is innovative, useful, aesthetic, understandable, unobtrusive, honest, long-lasting, thorough down to the last detail, environmentally friendly, and *as little design as possible* — "less, but better". Two of them do most of the work on the web: **honest** (it does not make the product look more capable than it is — no invented proof, no fabricated capability) and **thorough** ("nothing must be arbitrary or left to chance").
-- **Vignelli's canon**: every piece of design is judged on three axes — *semantics* (does it mean the right thing for this company?), *syntactics* (is it built with discipline: one grid, one type family, consistent spacing?), *pragmatics* (can people read it, use it, find it?). Ambiguity, fashion and visual noise are the enemies; timelessness is the goal. Vignelli used a handful of typefaces for a lifetime — restraint is a design decision, not a limitation.
-- **Paul Rand**: a design gets its meaning from the quality of the thing it stands for, not the other way round; likes and dislikes "should play no part" — judge by whether it *works* (distinctive, visible, adaptable, memorable, universal, durable, simple).
-- **The aesthetic-usability effect** (Kurosu & Kashimura 1995, 26 ATM designs, 252 people; Tractinsky replications): people rate attractive interfaces as easier to use, and are more tolerant of small friction in them. Attractiveness is therefore functional — but it masks *minor* problems only; it does not rescue a broken flow, and in testing it hides real problems behind praise (watch what people do, not what they say).
-- **Norman's three levels** — visceral (the first-glance feeling), behavioural (using it), reflective (what it says about me). A marketing site is judged viscerally in the first second, behaviourally on the first scroll and tap, reflectively when the visitor decides whether it is "for people like me". Design each level on purpose.
+The canon (Rams, Vignelli, Rand, Norman) is assumed knowledge; three consequences do the work here. **Honest**: the design never makes the product look more capable than it is. **Appropriate before attractive**: attractiveness buys tolerance for small friction (the aesthetic–usability effect) but never rescues a broken flow, and in testing it hides real problems behind praise — watch what people do. **Thorough**: nothing arbitrary; every value has a source.
 
 ### A2. Gestalt — how the eye groups before it reads
 
-Every layout is explained by two or three of these; if a chapter cannot be explained by any of them, it is a pile.
-
-| Principle | The eye assumes… | Use it for |
-| --- | --- | --- |
-| Proximity | things close together belong together | a label near its field, a caption near its image; *more space between groups than within them* |
-| Similarity | things that look alike are the same kind | one button style = one meaning; every link looks like a link |
-| Common region | things inside one boundary are a group | a sheet, a panel, a table — the boundary does the grouping, not a border on each item |
-| Continuity | the eye follows a line, curve or alignment | a rail, a timeline path, a column edge; alignment is continuity |
-| Closure | the eye completes a missing shape | negative-space marks, cropped photographs, partially shown next slides |
-| Figure / ground | one thing is the subject, the rest is ground | one focal object per view; copy always has a ground of its own |
-| Symmetry and order (Prägnanz) | the simplest, most stable reading wins | simple geometry reads before ornament; balance reads as calm |
-| Uniform connectedness | things visibly linked are related | a line joining nodes, a shared background band |
-| Common fate | things that move together belong together | staggered reveals, accordion arrows pointing the same way |
-| Focal point / von Restorff | the one that differs is remembered | one accent element per viewport; the primary action |
-| Emergence | the whole is seen before the parts | a logo or illustration reads at a glance or it does not |
-
-Two corollaries the sources stress: **spacing groups before borders do** (use space and a change of ground first; a hairline only where space cannot), and **the accent only works if it is rare** (von Restorff needs a field of sameness to stand out from).
+A layout should be explainable by the grouping principles it uses (proximity, similarity, common region, continuity, figure/ground, focal point); if a section cannot be, it is a pile. Two corollaries do most of the work: **space groups before borders do** (more space between groups than within them; a hairline only where space cannot), and **the accent only works if it is rare** (a focal point needs a field of sameness).
 
 ### A3. Visual hierarchy — the order the eye takes things in
 
 NN/g's definition: arranging elements so the eye consumes them *in the order of intended importance*. The levers, with the working limits the research gives:
 
-- **Scale**: no more than three sizes in a view (small / medium / large); at most two "big" things per viewport or nothing is big. Web ranges the article cites: 14–16 body, 18–22 subhead, up to ~32 for a heading inside content; display type on a landing page runs above that but still on one scale (Part C). Product UI runs flatter: three to five sizes on a screen with a largest-to-body ratio of ~1.3–2 (Primer's issues page: three sizes, largest 16 px; Carbon: four, largest 28 px), where marketing pages run 4–5× (`categories.md`).
-- **Colour and contrast**: saturated for the important, desaturated for the rest; at most 2 primary + 2 secondary colours in a simple design and no more than 3 contrast levels; never hierarchy by colour alone (colour blindness, Part B).
+- **Scale**: few sizes per view, used on purpose — on a marketing viewport usually three, with at most one or two "big" things or nothing is big; display type runs above body on one scale (Part C). Product UI runs flatter: three to five sizes on a screen with a largest-to-body ratio of ~1.3–2 (Primer's issues page: three sizes, largest 16 px; Carbon: four, largest 28 px), where marketing pages run 4–5× (`categories.md`). A size used once is a smell.
+- **Colour and contrast**: saturated for the important, desaturated for the rest; few contrast levels for text (primary, secondary, muted); never hierarchy by colour alone (Part B).
 - **Weight and style**: bold and colour before size — de-emphasise the surroundings to make one thing important (Refactoring UI). Two or three text colours (primary / secondary / muted) and two or three weights carry more hierarchy than five sizes.
 - **Position and reading pattern**: the top-left of a Western page and the first two words of a line are read first; the F-pattern is what people do *when the design gives them no better cues* — headings, front-loaded sentences, bold key terms and lists turn it into a "layer-cake" scan (`ui-ux.md` §3).
 - **Space**: more space around an element raises its importance; grouped things sit closer than unrelated things.
@@ -50,14 +30,14 @@ NN/g's definition: arranging elements so the eye consumes them *in the order of 
 - **Whitespace is active.** Macro whitespace (between chapters and columns) sets pace and perceived quality; micro whitespace (between lines, letters, list items) sets legibility. The correct amount is "more than feels comfortable, then remove a little" — on expressive surfaces. Productive surfaces take their spacing from the 4 px step of `app-ui.md` §3, not the scale below: 20–32 px gaps between sections, never marketing chapter padding that pushes the main object (table, board, form) below the fold.
 - **A spacing scale**, not ad-hoc values: 4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96 · 128. Vertical space between chapters is one of the large steps; inside a chapter, one of the middle ones; inside a component, the small ones. Every spacing decision is a choice *from the scale*.
 - **Grids** (Müller-Brockmann, the Swiss school; the 12-column web grid). Kinds: manuscript (one column of text), column, modular (columns × rows), hierarchical (regions sized by importance). On the web: a 12-column container with fixed gutters gives 2/3/4/6-column layouts for free; content chooses the span, not the device. A **baseline grid** (line-height as the unit; all vertical spacing in multiples of it) is what makes a page feel "set" rather than "placed".
-- **Rhythm** is variation on a beat: chapters alternate composition and surface; within a chapter, repetition (same card, same row) is the beat and one break in it is the emphasis. A page of identical chapters has no rhythm; a page where every chapter is different has no beat.
+- **Rhythm** is variation on a beat: repetition where content is parallel is the beat; a change where content changes kind is the accent. A page of identical sections has no rhythm; a page where every section is different has no beat.
 - **Alignment is the cheapest quality**: everything sits on a column edge or a baseline. Centred text is for one or two lines; long centred paragraphs are a mistake (Part C).
 - **Balance** can be symmetrical (calm, institutional) or asymmetrical (energy, editorial). Asymmetry needs a counterweight — a large quiet area balancing a small loud one — or it reads as unfinished.
-- **Break the grid on purpose, once**: a bleed, an overlap, an element crossing a rule. One break is a design decision; three are chaos.
+- **Break the grid only on purpose**: a bleed, an overlap, an element crossing a rule is emphasis because the grid holds everywhere else; breaks that are not chosen read as mistakes.
 
-### A5. Robin Williams' four, as a final pass
+### A5. Composition checks borrowed from painting and photography
 
-Contrast (if two things are not the same, make them very different), Repetition (repeat the visual devices — the stamp, the rule, the sheet — so the page is one system), Alignment (nothing placed arbitrarily; every element has a visual connection to another), Proximity (related things together). A chapter that fails one of these will look "off" without anyone being able to say why.
+**Value structure**: two or three masses of value, one focal mass on the thing that matters — check with a greyscale blurred sheet. **Silhouette**: the no-text variant at 25% still reads as this design. **One light**: shadows agree on a direction and grow with elevation. **No tangents**: edges that almost meet (1–6 px apart) look like mistakes; align them or separate them clearly. **Eye path**: entry at the strongest contrast, ending at the action.
 
 ---
 
@@ -87,16 +67,16 @@ Sample the brand's hues from the logo first (`audit.md`) and place them on the w
 
 Choose the colour strategy before any colour, and write it in `DESIGN.md`:
 
-- **Restrained** — neutrals carry the page, one accent does the work: the 60/30/10 budget below. The right default for most sites and nearly all product UI.
+- **Restrained** — neutrals carry the page, one accent does the work: the 60/30/10 budget below. Right for nearly all product UI and many sites — and the strategy every blind-test output in `ledger.md` chose, so on an expressive route it needs a reason from the brand too.
 - **Committed** — one saturated brand hue carries 30–60% of the surface (a brand whose identity *is* a field of colour).
 - **Full palette** — several hues, each with a job (playful consumer brands, data-rich or wayfinding sites).
 - **Drenched** — the page *is* the colour; type and imagery sit inside it.
 
 Whichever is chosen, the primary action keeps one colour everywhere and status colours stay reserved. Light or dark is decided by one sentence of physical use scene (night use, media), never by the category ("dark because it is a dev tool"); an all-day app offers both and follows the OS (B8).
 
-**The Restrained budget (60 / 30 / 10).** ~60% dominant neutral surface, ~30% secondary (alternate surface or the brand dark), ~10% accent. The accent's *job* is "act here"; every square metre spent on decoration spends that meaning.
+**The Restrained budget (60 / 30 / 10).** ~60% dominant neutral surface, ~30% secondary (alternate surface or the brand dark), ~10% accent. The accent's *job* is "act here"; every square metre spent on decoration spends that meaning. Committed and Drenched pages move the brand hue into the 60 or 30 and give the action a colour that still stands out against it.
 
-- A full-bleed accent field is right **once** per page, as the identity moment.
+- Under Restrained, a full-bleed accent field is an identity moment: rare, or it stops being one.
 - **The primary action is one colour everywhere.** If a chapter's ground makes that colour impossible, change the ground, not the button.
 - Labels, numerals, rules, icons, chips do **not** take the accent by default; they take ink or a muted tint.
 - Dark chapters count toward the 30%; a page alternating white → dark → accent → dark → accent has inverted the budget.
@@ -189,8 +169,8 @@ Green = succeeded / available, red = failed / danger, amber = attention — and 
 - [ ] Brand hues sampled from the logo files (`palette.mjs --from`); harmony named; which hue dominates, supports, accents.
 - [ ] Colour strategy named (Restrained / Committed / Full palette / Drenched); light or dark from the use scene, both for an all-day app (B8).
 - [ ] Neutrals tinted with the brand-dark hue; ≥ 8 steps with roles assigned per the 12-step table.
-- [ ] Accent has exactly: solid (9), hover (10), text-safe dark (11, ≥ 4.5:1 on white and on the alternate surface), tint surface (2).
-- [ ] Budget per page ≈ 60/30/10; accent fields counted; the primary action is one colour everywhere; labels and numerals off the accent.
+- [ ] The accent has a solid, a hover, a text-safe dark (≥ 4.5:1 on every ground it sits on) and a tint surface.
+- [ ] Proportions per the named strategy; the primary action is one colour everywhere; labels and numerals off the accent.
 - [ ] Every text/ground pair in use tabled with WCAG ratio and APCA Lc on the real ground; dark-mode values for every token if the site themes.
 - [ ] Deuteranopia check: no meaning by hue alone; status colours differ in lightness.
 - [ ] Semantic colours reserved for state.
@@ -208,10 +188,9 @@ Green = succeeded / available, red = failed / danger, amber = attention — and 
 **Layout**
 
 - [ ] One spacing scale; vertical rhythm on the body line-height; a container and gutter per breakpoint.
-- [ ] Each chapter explainable by two Gestalt principles; the squint test shows the intended hierarchy.
-- [ ] ≤ 3 sizes and ≤ 2 "big" elements per viewport; one focal element; one accent element.
-- [ ] Space and ground group content before borders do; cards only for card-shaped content.
-- [ ] One deliberate grid break per page at most.
+- [ ] The blurred render reproduces the content priority in `DESIGN.md`; one focal element per viewport.
+- [ ] Few sizes per view, each used on purpose; space and ground group content before borders do; cards only for independent objects.
+- [ ] Any grid break is deliberate; edges align or clearly separate.
 
 ## Sources read for this reference
 

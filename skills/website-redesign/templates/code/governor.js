@@ -1,6 +1,6 @@
 // governor.js — the runtime quality governor for a rendering loop. It steps quality down when frames are slow, gives up
 // (onFloor) when even the lowest level runs below ~27 fps, and can step back up. No dependencies, ~1.1 KB min+gzip.
-// One governor for the whole skill: 3D scenes (realtime-3d.md §6) and generative backgrounds (hero-effect.js, with
+// One governor for the whole skill: 3D scenes (interactive.md §7) and generative backgrounds (hero-effect.js, with
 // stepUp: false). Pairs with tier.js, whose measureRefresh() gives it its budget. Copy it into the project and keep
 // this header.
 //

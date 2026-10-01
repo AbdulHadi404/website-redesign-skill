@@ -1,6 +1,6 @@
 # Critique — round <n> of at most 3
 
-Fill this from the **renders**, with the old first viewport beside the new one (`compare.mjs`). Best done by a fresh-context reviewer given only the brief, `DESIGN.md` and the capture paths; the builder's account of its own fixes is not evidence.
+Fill this from the **renders**, with the old first viewport beside the new one (`compare.mjs`). Best done by a fresh-context reviewer given only the brief, `DESIGN.md` and the capture paths; the builder's account of its own fixes is not evidence. The key-screen review before rollout answers checks 1, 3, 4, 7, 15 and 17, plus 6 (expressive) or 25 (productive); the fast path answers 1, 2 and 15–20.
 
 **Evidence rule.** A "yes" names a capture file and what in it shows the answer — and is then hunted: look for the capture that would prove it wrong, starting with check 23. Hierarchy, rhythm, clarity and fit cannot be answered from source. Before hand-off, re-open each cited capture and try to prove the "yes" wrong.
 
@@ -28,7 +28,7 @@ One line per point: **objective → element → effect → why** (principle or e
 | 5 | Would a stranger call before/after two different companies' work? Has every first-notice thing changed, except a brand asset `DESIGN.md` names as kept, with its reason (`art-direction.md` §4–§5)? | expressive redesign or rethink | | | |
 | 6 | Is the first viewport memorable without reading the copy? Does the hero pass the headline test, with the action continuing its sentence? | expressive | | | |
 | 7 | Is the typography distinctive where it should be and quiet where it should be, with a real scale that is actually used? | all | | | |
-| 8 | Rhythm: no two adjacent chapters share a composition (expressive) / one layout per kind of task, applied consistently (productive)? | all | | | |
+| 8 | Rhythm: layouts repeat where content is parallel and change where it changes kind, with structure visible from a distance (expressive) / one layout per kind of task, applied consistently (productive)? Does the blurred capture reproduce the content priority in `DESIGN.md`? | all | | | |
 | 9 | Are boxes and cards rare, and only where content is card-shaped? One elevation model? | all | | | |
 | 10 | Is the product shown (real UI, faithful fragments, a demo), not only described? | expressive | | | |
 | 11 | Does every image have a purpose and one treatment? **Image removed:** does the first viewport lose information? | where imagery | | | |
@@ -42,7 +42,7 @@ One line per point: **objective → element → effect → why** (principle or e
 | 19 | Accessibility pass done — keyboard walkthrough, visible focus never hidden, 200%/400% zoom reflow, screen-reader names, forced colours, reduced motion (`accessibility.md`)? | all | | | |
 | 20 | Performance within budget — LCP element eager and sized, fonts subset, no layout shift, JS limited to what routes need (`performance.md`)? | all | | | |
 | 21 | Copy short enough to be read; no happy talk, no clichés, product UI written as product UI; one label per intent? | all | | | |
-| 22 | Would it hold up beside the Phase 2 references — in finish, restraint and hierarchy? | all | | | |
+| 22 | Would it hold up beside the Phase 2 references — in finish, restraint and hierarchy? Polish pass done (`visual-qa.md`): defects fixed or justified, headline and lede breaks re-read at 390, 768 and 1440 after any type change, a solid focus ring that follows the shape? | all | | | |
 | 23 | **Breaks if:** each of the three things `DESIGN.md` says would betray the direction — found in the renders or not? Name the capture that proves it holds (a direction's own rule is the easiest to stop seeing). | all | | | |
 | 24 | **Images tell the truth:** does any image contradict the copy beside it ("each tile slightly different" over identical repeats), or show the product altered — faded, filtered, idealised — so a buyer would be misled? | where imagery | | | |
 | 25 | **Fold at 1280 × 800:** on the busiest productive screen (`capture.mjs --widths 1280 --height 800`), are the first rows of the main object visible without scrolling, and is the page header one band (72–120 px)? | productive | | | |

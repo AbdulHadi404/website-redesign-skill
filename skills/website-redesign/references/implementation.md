@@ -14,23 +14,23 @@ Goal: the redesign, built in the existing stack, with functionality untouched an
 
 1. **Tokens** — colour roles, type sets (expressive and/or productive), spacing, radii, elevation, motion, density, breakpoints. Delete the old ones; do not layer new tokens over them.
 2. **Base** — reset, typography rules, surfaces, container and chapter primitives, focus styles, selection and other browser surfaces. Set `code, kbd, samp, pre { font-family: inherit }` and point the framework's mono token at the UI face unless the audience reads code (commitment 5 in `SKILL.md`): the browser's default monospace counts, and a stray `font-mono` class follows the token.
-3. **Motion** — the reveal system and the concept moves, with a complete reduced-motion block: under reduced motion every delay is zero as well as the movement substituted (`transition-delay`, `animation-delay`, `--stagger`, `--delay`), so a settled state arrives at once (`motion.md` §4, §6).
-4. **Primitives** — nav, footer, buttons, inputs, chapter wrapper, heading pattern; tags and status only if they are data.
-5. **Product fragments and visuals** — the components that show the product (in its real type size and tokens), diagrams, photo containers, the drawn graphics layer.
-6. **Pages** in the narrative order from `DESIGN.md` (expressive) or top-task order (productive) — every state of every component on them.
-7. **Secondary pages** on the same system — no page may still belong to the old design.
-8. **Identity assets** — favicon, social image, theme colour, metadata.
+3. **The key screen** — the screen with the most risk (the homepage's first viewport and the section after it; the busiest top-task screen with real data), built in the real stack with real content, then reviewed before anything else is built (`visual-qa.md`, "The key-screen review"). Fix the direction here if it fails.
+4. **Motion** — built from the motion spec rows in `DESIGN.md` (`motion.md` §2), with a complete reduced-motion block: under reduced motion every delay is zero as well as the movement substituted, so a settled state arrives at once (`motion.md` §4, §6).
+5. **Primitives** — nav, footer, buttons, inputs, section wrapper, heading pattern; tags and status only if they are data.
+6. **Product fragments and visuals** — the components that show the product (in its real type size and tokens), diagrams, photo containers, any drawn graphics.
+7. **Pages** in the narrative order from `DESIGN.md` (expressive) or top-task order (productive) — every state of every component on them.
+8. **Secondary pages** on the same system — no page may still belong to the old design.
+9. **Identity assets** — favicon, social image, theme colour, metadata.
 
 ## Composition (expressive surfaces)
 
-- Vary the composition per chapter; let the sequence come from the company's narrative. A voice-product site might run photographic hero → typographic claim → product scene → diagram → photographic chapter → index → closing; a developer tool: product hero → three product chapters of increasing depth → proof → pricing; a services firm without UI: editorial statement → process diagram → environment photography → people → proof → closing. No two adjacent chapters share a structure; every chapter earns its place.
-- Alternate surfaces so chapters are visible from a distance.
-- Prefer rules, columns and whitespace to boxes. A list renders as a list, a table as a table.
+- The sequence comes from the visitor's questions and the company's story (`web-design.md` §2), and composition follows content: repeat a layout where content is parallel, change it where content changes kind. A voice-product site might run photographic hero → typographic claim → product scene → diagram → closing; a services firm without UI, statement → process → environment photography → people → proof; a two-page site, one strong layout used twice.
+- Prefer space, rules and columns to boxes. A list renders as a list, a table as a table.
 - One primary action, repeated; secondary actions as text links.
-- Headlines on a real scale, wrapped deliberately (`max-width` in `ch`, `text-wrap: balance`), emphasis by the type, not by badges. Body at 60–70 characters and never over 75 (`design-theory.md` C1), never centred in long runs.
+- Headlines on a real scale, wrapped deliberately (`max-width` in `ch`, `text-wrap: balance`), emphasis by the type, not by badges. Body at 60–70 characters, never centred in long runs.
 - Text on its own ground, always (`imagery.md`).
 
-On **productive** surfaces the rule inverts: one layout per kind of task, applied consistently; the user's content gets the width; chrome recedes (`app-ui.md`).
+On **productive** surfaces the rule is stricter: one layout per kind of task, applied consistently; the user's content gets the width; chrome recedes (`app-ui.md`).
 
 ## Showing the product
 
@@ -43,7 +43,7 @@ On **productive** surfaces the rule inverts: one layout per kind of task, applie
 
 ## Interaction
 
-`ui-ux.md` and `app-ui.md` govern everything a visitor touches: one primary action per view; targets ≥ 44 px on touch (never < 24); forms single-column, labels above, validated on submit then live, an error summary at three or more errors; every component's applicable states designed; feedback within 100 ms; motion only to explain change on productive surfaces; icons with visible labels; navigation with a labelled mobile menu; nothing shaped like an ad; no dark patterns.
+Everything a visitor touches follows `ui-ux.md` and, on product surfaces, `app-ui.md`: one primary action per view, targets ≥ 44 px on touch, forms validated on submit then live, every applicable state designed, feedback within 100 ms, icons with visible labels, no dark patterns.
 
 ## Engineering discipline
 
