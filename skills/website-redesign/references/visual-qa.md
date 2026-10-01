@@ -40,9 +40,9 @@ Keep the captures: the user should see before/after (`compare.mjs --dir captures
 
 The first thing built after tokens and base is the screen with the most risk: the homepage's first viewport and the section after it on an expressive route; the busiest top-task screen, with realistic data, on a productive one. It is where the direction meets reality, and where changing it is still cheap.
 
-1. Capture it at 1440 and 390 (fold and full), plus 1280 × 800 for a productive screen.
+1. Capture it at 1440 and 390 (fold and full), plus 1280 × 800 on a productive route.
 2. Blur it beside the old site and the ledger captures: `compare.mjs --grid key-1440.png old-1440.png references/ledger/*.jpg --labels New Old --blur 6`. Write what the blurred sheet communicates before re-reading your own direction. Does the blur reproduce the content priority in `DESIGN.md`?
-3. Answer critique checks 1, 3, 4, 7, 15 and 17 — plus 6 (expressive) or 25 (productive) — from these captures, ideally by a fresh reviewer.
+3. Answer the key-screen subset of `templates/critique.md` from these captures, ideally by a fresh reviewer.
 4. Fix the direction, not just the screen, when a check fails; then roll the system out.
 
 Where the user is engaged in the conversation, show them the key screen at this point: a rejection now costs one screen, not a site.

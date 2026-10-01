@@ -1,6 +1,6 @@
 # Critique — round <n> of at most 3
 
-Fill this from the **renders**, with the old first viewport beside the new one (`compare.mjs`). Best done by a fresh-context reviewer given only the brief, `DESIGN.md` and the capture paths; the builder's account of its own fixes is not evidence. The key-screen review before rollout answers checks 1, 3, 4, 7, 15 and 17, plus 6 (expressive) or 25 (productive); the fast path answers 1, 2 and 15–20.
+Fill this from the **renders**, with the old first viewport beside the new one (`compare.mjs`). Best done by a fresh-context reviewer given only the brief, `DESIGN.md` and the capture paths; the builder's account of its own fixes is not evidence. **Subsets** (this is their one home): the key-screen review before rollout answers checks 1, 3, 4, 7, 15 and 17, plus 6 on an expressive route or 25 on a productive one; the fast path answers 1, 2 and 15–20.
 
 **Evidence rule.** A "yes" names a capture file and what in it shows the answer — and is then hunted: look for the capture that would prove it wrong, starting with check 23. Hierarchy, rhythm, clarity and fit cannot be answered from source. Before hand-off, re-open each cited capture and try to prove the "yes" wrong.
 

@@ -67,7 +67,7 @@ Sample the brand's hues from the logo first (`audit.md`) and place them on the w
 
 Choose the colour strategy before any colour, and write it in `DESIGN.md`:
 
-- **Restrained** — neutrals carry the page, one accent does the work: the 60/30/10 budget below. Right for nearly all product UI and many sites — and the strategy every blind-test output in `ledger.md` chose, so on an expressive route it needs a reason from the brand too.
+- **Restrained** — neutrals carry the page, one accent does the work: the 60/30/10 budget below. Right for nearly all product UI and many sites — and the easy default, so on an expressive route it needs a reason from the brand too (and a look at whether `ledger.md`'s recent outputs already share it).
 - **Committed** — one saturated brand hue carries 30–60% of the surface (a brand whose identity *is* a field of colour).
 - **Full palette** — several hues, each with a job (playful consumer brands, data-rich or wayfinding sites).
 - **Drenched** — the page *is* the colour; type and imagery sit inside it.

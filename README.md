@@ -65,7 +65,7 @@ Measurement replaces guesswork wherever something can be measured. Sixteen scrip
 | `contrast.mjs`, `palette.mjs`, `fonts.mjs` | colour pairs; logo, photo and tenant palettes; what a font file can do |
 | `model.mjs`, `libcheck.mjs` | what a glTF costs; a library's licence class, activity and size |
 
-Requirements: Node ≥ 18, `npm install` in `skills/website-redesign/scripts/`, and a Chromium (`CHROME_PATH` or `--chrome <path>` to choose one, or `npm run browser`). They work offline against a local server. For an application you also need a way to run it locally with realistic data.
+Requirements: Node ≥ 18, `npm install` in `skills/website-redesign/scripts/`, and a Chromium (`CHROME_PATH` or `--chrome <path>` to choose one — `a11y.mjs` and `widgets.mjs` read only `CHROME_PATH` — or `npm run browser`). They work offline against a local server. For an application you also need a way to run it locally with realistic data.
 
 ## Install
 

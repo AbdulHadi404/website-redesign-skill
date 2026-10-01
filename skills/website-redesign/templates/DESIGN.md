@@ -110,7 +110,7 @@ Fill the parts that apply. **Expressive** routes: everything below except the ex
 
 ## Colour
 
-**Strategy:** Restrained (60/30/10) / Committed (one saturated hue carries 30–60%) / Full palette / Drenched — and why. On an expressive route that chose Restrained, why the brand does not want Committed or Drenched (every blind-test output in `ledger.md` chose Restrained).
+**Strategy:** Restrained (60/30/10) / Committed (one saturated hue carries 30–60%) / Full palette / Drenched — and why. On an expressive route that chose Restrained, why the brand does not want Committed or Drenched, and whether the ledger's recent outputs already share the strategy.
 
 **Harmony and sources:** which hue dominates, supports, accents — from the sampled logo hues.
 
@@ -140,11 +140,12 @@ Containers, grid and gutters per breakpoint; spacing scale; vertical rhythm per 
 
 ## Motion
 
-Productive vs expressive tokens (durations, easings, `motion.md` §4); the two or three concept moves (expressive surfaces only); what never moves. Every promised move is a row below, checked by `node scripts/motion.mjs <url> --spec DESIGN.md` (fields: `motion.md` §2). Sites that frame a signature product: a few researched signature moments instead of a reveal system (`interactive.md` §3).
+Productive vs expressive tokens (durations, easings, `motion.md` §4); the two or three concept moves (expressive surfaces only); what never moves. Every promised move is a row below, checked by `node scripts/motion.mjs <url> --spec DESIGN.md` on this page (fields, and one spec per page: `motion.md` §2). Sites that frame a signature product: a few researched signature moments instead of a reveal system (`interactive.md` §3).
+
+Rows for this page (trigger: click, press, hover, focus, scroll, load or `key:<Key>`; duration: a token or ms; reduced: keep, fade, instant, static or pause). Other pages get their own JSON spec with the same fields. Leave no placeholder row: the script reads every row.
 
 | id | trigger | on | target | properties | duration | easing | reduced |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| … | click / press / hover / focus / scroll / load | selector | selector | transform, opacity | token or ms | token | keep / fade / instant / static / pause |
 
 ## Interaction and performance
 

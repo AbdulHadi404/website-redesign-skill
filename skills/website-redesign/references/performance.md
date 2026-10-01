@@ -11,7 +11,7 @@ Core Web Vitals at the 75th percentile, phone and desktop separately: **LCP ≤ 
 | JavaScript, initial | **≤ 100 KB** (islands only; 0 for static pages) | ≤ 200 KB | **≤ 300 KB** | chrome and controls as an app; the engine and scene load late, after a poster, and are not counted against the initial budget of the marketing page that links here (that page stays within its own column) |
 | CSS | ≤ 50 KB | ≤ 75 KB | ≤ 100 KB | as an app |
 | Fonts | ≤ 2 files preloaded, ≤ 100 KB WOFF2 in total | same | same (a system UI font is a valid choice) | same |
-| LCP image | **≤ 200 KB** at the rendered width, AVIF | same | usually text | the poster: a real render in the first frame's framing, AVIF, ≤ 200 KB as on a marketing page (`motion.md` §9) |
+| LCP image | **≤ 200 KB** at the rendered width, AVIF | same | usually text | the poster: a real render in the first frame's framing, AVIF, ≤ 200 KB; it is the LCP while it is smaller than the viewport, and when it covers the whole viewport the route's first text is, so keep that text in the HTML (`motion.md` §9) |
 | Images in the first viewport | ≤ 300 KB | ≤ 400 KB | — | ≤ 300 KB, the poster included |
 | Third parties on the critical path | 1–2 | ≤ 3 | ≤ 2 | as an app |
 | DOM in an interactive view | — | ≤ ~1,500 elements on a listing before virtualising | virtualise or `content-visibility` beyond ~2–3k rows | — |

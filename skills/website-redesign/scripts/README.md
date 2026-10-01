@@ -1,6 +1,6 @@
 # The scripts — manual
 
-Read this when you run a script for the first time in a project, or when a finding looks wrong. `SKILL.md` says *when* each script runs; this file says how, and what its output means. Each script's header holds the complete option list.
+Read this when you run a script for the first time in a project, or when a finding looks wrong. `SKILL.md` says *when* each script runs; this file says how, and what its output means. Each script's header holds the complete option list. Examples are written as run from the skill's folder (`node scripts/<name>.mjs`, with `references/ledger/` beside it); from a project, use the path to the skill's `scripts/` and keep output paths in the project.
 
 ## Contents
 
@@ -27,36 +27,19 @@ Read this when you run a script for the first time in a project, or when a findi
 
 ## 2. Which script answers which question
 
-| Script | Question | Phase |
-| --- | --- | --- |
-| `capture.mjs` | What does each page look like at each width, fold and full, with reveals finished and images decoded? | 1, 5, 6 |
-| `sweep.mjs` | What breaks *between* the widths a capture looks at (320–1920 and zoom)? | 6 |
-| `stress.mjs` | What do real content and real networks break? | 6 |
-| `compare.mjs` | Before/after sheets, blurred squint sheets, contact sheets, pixel diffs | 2, 3, 6, 7 |
-| `audit.mjs` | What is measurably wrong on a rendered page, judged by its kind of surface? | 1, 6 |
-| `a11y.mjs` | What would a keyboard, zoom, forced-colours or colour-blind user hit that rule engines miss? | 1, 6 |
-| `widgets.mjs` | Does each custom widget keep its keyboard contract? | 6 |
-| `states.mjs` | What does each state look like; can a user do the task from what is on screen? | 1, 6, 7 |
-| `parity.mjs` | What did the redesign add without a source, drop, or break? What do the forms send? | 8 |
-| `perf.mjs` | How fast is each page on a throttled phone, old against new? | 1, 6 |
-| `motion.mjs` | Does the approved motion exist, and does it survive reduced motion? | 5, 6 |
-| `contrast.mjs` | WCAG 2 and APCA for any colours or token file | 3, 4 |
-| `palette.mjs` | Logo or photo colours; role scales; tenant colours | 1, 3, 4 |
-| `fonts.mjs` | What a font file can do (figures, scripts, metrics, features) | 3 |
-| `model.mjs` | What a glTF/GLB costs before it ships | 5 |
-| `libcheck.mjs` | Licence class, activity and size of an npm library | 4, 5 |
+The one-line map is the Scripts table in `SKILL.md`; the phase each runs in is in its phase note. The sections below are ordered by job.
 
 ## 3. Capturing
 
 ### `capture.mjs`
 
 ```bash
-node capture.mjs --base http://localhost:3000 --paths / /pricing /app --widths 1440,1280,1024,768,390 --out captures --label after
-node capture.mjs … --element ".diagram, .timeline svg, .product-fragment"   # artwork at 3×
-node capture.mjs … --variant all          # no-text, no-images, no-shadows: removal tests for the critique
-node capture.mjs … --reduced-motion --label reduce ; … --dark --label dark ; … --no-js --label nojs ; … --forced-colors
-node capture.mjs … --widths 1280 --height 800    # the productive fold
-node capture.mjs … --dir rtl --lang ar           # an LTR build flipped right to left
+node scripts/capture.mjs --base http://localhost:3000 --paths / /pricing /app --widths 1440,1280,1024,768,390 --out captures --label after
+node scripts/capture.mjs … --element ".diagram, .timeline svg, .product-fragment"   # artwork at 3×
+node scripts/capture.mjs … --variant all          # no-text, no-images, no-shadows: removal tests for the critique
+node scripts/capture.mjs … --reduced-motion --label reduce ; … --dark --label dark ; … --no-js --label nojs ; … --forced-colors
+node scripts/capture.mjs … --widths 1280 --height 800    # the productive fold
+node scripts/capture.mjs … --dir rtl --lang ar           # an LTR build flipped right to left
 ```
 
 What it does, each step from a real failure: scrolls through so observers fire and lazy images load; finishes running animations; awaits every image bitmap; grows the viewport to the document with viewport-unit elements pinned (otherwise a `100vh` hero balloons to the new viewport); writes a `-fold.png` and a full capture. It reports horizontal overflow, phone zoom-out (an overflowing child widens the layout viewport: a 900 px table made a 390 px page lay out at 924), text cut at the viewport edge where no scroll reaches it, and images that painted flat. It prints the WebGL renderer for the first page with a `<canvas>` (in a shadow root or an embedded iframe too) and flags a software one; `--gpu` (or `--headed`) uses a real GPU. On Linux, `--headed` under `xvfb-run` has a display but no GPU. A canvas created only after a click is not there at capture time: pass `--gpu` to get the line. At phone widths, safe-area insets (59/34 px) are emulated when the page sets `viewport-fit=cover` (`--insets t,b,l,r`, `--insets 0`).
@@ -76,11 +59,11 @@ By default eight mutations that need no page knowledge: pseudo-localisation, hug
 ### `compare.mjs`
 
 ```bash
-node compare.mjs --dir captures                                   # pairs *-before* with *-after*
-node compare.mjs --before captures/old --after captures/new --out cmp
-node compare.mjs --grid new.png old.png references/ledger/*.jpg --labels New Old --blur 6   # the squint and ledger test
-node compare.mjs --grid raw/{000..023}.jpg --labels {000..023} --cols 6 --out raw/contact-000.png
-node compare.mjs --before a.png --after b.png --diff cmp/diff.png
+node scripts/compare.mjs --dir captures                                   # pairs *-before* with *-after*
+node scripts/compare.mjs --before captures/old --after captures/new --out cmp
+node scripts/compare.mjs --grid new.png old.png references/ledger/*.jpg --labels New Old --blur 6   # the squint and ledger test
+node scripts/compare.mjs --grid raw/{000..023}.jpg --labels {000..023} --cols 6 --out raw/contact-000.png
+node scripts/compare.mjs --before a.png --after b.png --diff cmp/diff.png
 ```
 
 `--labels` pair with files by position (a shell glob sorts by name); fewer labels than files is fine, `-` keeps one default caption. A label that names another file of the same folder better than its own stops the run and, when the order is clear, prints the order meant (`--labels-as-given` draws them as typed). A grid is one row unless `--cols N`. Keep contact sheets to about 24 images so each fits a screen.
@@ -90,8 +73,8 @@ Diffs are for regressions while iterating, never for judging a redesign: compare
 ## 4. Measuring: `audit.mjs`
 
 ```bash
-node audit.mjs --base http://localhost:3000 --paths / /pricing --widths 1440,390 --kind marketing --out audit/before
-node audit.mjs --base http://localhost:3000 --paths /app /app/settings --themes light,dark --kind app --out audit/before-app
+node scripts/audit.mjs --base http://localhost:3000 --paths / /pricing --widths 1440,390 --kind marketing --out audit/before
+node scripts/audit.mjs --base http://localhost:3000 --paths /app /app/settings --themes light,dark --kind app --out audit/before-app
 ```
 
 - `--kind`: `marketing` (default), `app`, `field`, `commerce`, `content`, `docs` or `service`, or a category name (dashboard, fintech…). A signature route runs `app` for its chrome and controls; `signature`, `configurator`, `builder`, `studio` and `visualiser` are aliases.
@@ -111,7 +94,7 @@ node audit.mjs --base http://localhost:3000 --paths /app /app/settings --themes 
 ### `a11y.mjs`
 
 ```bash
-node a11y.mjs http://localhost:3000/app --out a11y/app     # per key template
+node scripts/a11y.mjs http://localhost:3000/app --out a11y/app     # per key template
 ```
 
 What rule engines miss, with evidence: names from Chromium's accessibility tree (placeholder-only and title-only names, label-in-name, filename alts), the heading and landmark outline, a keyboard walk with pixel-diff focus detection (invisible and weak rings, focus hidden under sticky UI on the reverse walk, traps, unreachable controls), pointer-only controls, targets, form-control boundary contrast, `autocomplete` and paste blocking, reflow at 320 and 640, text spacing, forced colours, colour-vision renders and motion. Output: FAIL / WARN / INFO lines with the criterion and element, `audit.json`, and PNGs to look at (`reflow-320.png`, `text-spacing.png`, `forced-colors.png`, `vision-*.png`).
@@ -124,7 +107,7 @@ What rule engines miss, with evidence: names from Chromium's accessibility tree 
 ### `widgets.mjs`
 
 ```bash
-node widgets.mjs http://localhost:3000/app a11y/app.contracts.json   # per custom widget
+node scripts/widgets.mjs http://localhost:3000/app a11y/app.contracts.json   # per custom widget
 ```
 
 Contracts, written from the component inventory:
@@ -152,9 +135,9 @@ Contracts, written from the component inventory:
 ## 6. States, flows and walkthroughs: `states.mjs`
 
 ```bash
-node states.mjs states.json --base http://localhost:3000 --out captures/states --label after
-node states.mjs states.json --axe              # axe on each state's final screen, overlays open
-node states.mjs walk.json --aria --each --out captures/walk/new   # a task walkthrough
+node scripts/states.mjs states.json --base http://localhost:3000 --out captures/states --label after
+node scripts/states.mjs states.json --axe              # axe on each state's final screen, overlays open
+node scripts/states.mjs walk.json --aria --each --out captures/walk/new   # a task walkthrough
 ```
 
 One JSON of states, each a route to mock (delay, fail, 500, a fixture of 0 or 200 items), a storage seed, a device and a few steps (`click`, `tap`, `swipe`, `fill`, `press`, `hover`). Write it in Phase 1 against the old build and run the same file on the new one. When the flow itself is rethought (one long form becomes steps), keep one file per build with the same state names, so before/after pairs still line up.
@@ -168,9 +151,9 @@ One JSON of states, each a route to mock (delay, fail, 500, a fixture of 0 or 20
 ## 7. Truth and contracts: `parity.mjs`
 
 ```bash
-node parity.mjs --before http://localhost:4000 --after http://localhost:3000 --crawl 40 --source src content --out parity.md
-node parity.mjs --greenfield --after http://localhost:3000 --crawl 40 --source discovery src --out parity.md
-node parity.mjs --payloads captures/states/requests/before captures/states/requests/after
+node scripts/parity.mjs --before http://localhost:4000 --after http://localhost:3000 --crawl 40 --source src content --out parity.md
+node scripts/parity.mjs --greenfield --after http://localhost:3000 --crawl 40 --source discovery src --out parity.md
+node scripts/parity.mjs --payloads captures/states/requests/before captures/states/requests/after
 ```
 
 - **Unsourced claims**: numbers, prices, percentages, ratings and quotes on the new site found neither on the old site nor in `--source`. A claim counts as on the old site only within one block of text, or as the same value with its own unit attached ("£45" sources "£45.00"; "Zone 70" and "Minutes…" in two list items do not source "70 minutes"). Eastern Arabic digits are normalised. Values computed from data go to `--derived` (one pattern per argument).
@@ -184,7 +167,7 @@ node parity.mjs --payloads captures/states/requests/before captures/states/reque
 ### `perf.mjs`
 
 ```bash
-node perf.mjs --base http://localhost:3000 --before http://localhost:4000 --paths / /pricing
+node scripts/perf.mjs --base http://localhost:3000 --before http://localhost:4000 --paths / /pricing
 ```
 
 Lighthouse's mobile profile (4× CPU, slow 4G, cache off), median of runs: LCP and its element, FCP, CLS, TBT (the lab stand-in for INP), transfer by type, requests and DOM size, old against new. It needs nothing beyond this folder's Playwright, so it runs where `npx lighthouse` cannot; its numbers track Lighthouse's closely enough to rank builds. It names every request that failed on either build. A lost font, render-blocking stylesheet, parser-blocking script or first-viewport image makes a page flatteringly fast; a regression is excused only by one of those (or an error page) on the old build, never by its failed analytics. It asks what transfer growth over 50 KB buys (gzip-equivalent), says when only one server compresses text, and prints the machine's load average, which makes timings relative. Measures the main thread only: CDP throttling does not slow workers, the compositor or the GPU.
@@ -192,11 +175,11 @@ Lighthouse's mobile profile (4× CPU, slow 4G, cache off), median of runs: LCP a
 ### `motion.mjs`
 
 ```bash
-node motion.mjs http://localhost:3000/ --spec DESIGN.md --jpeg     # the gate: every spec row passes
-node motion.mjs http://localhost:3000/                             # an audit of what moves
+node scripts/motion.mjs http://localhost:3000/ --spec DESIGN.md --jpeg     # the gate: every spec row passes
+node scripts/motion.mjs http://localhost:3000/                             # an audit of what moves
 ```
 
-With `--spec` (a fenced `motion-spec` block in `DESIGN.md`, a table with id, trigger and target columns, or a JSON file: the format is in `motion.md` §2), each entry is triggered for real and sampled every frame, normally and under reduced motion: whether it animated, its duration and easing against the tokens, the properties that moved, the stagger, interruption, and whether reduced motion stopped, substituted or left it moving. Filmstrips per entry (`--filmstrip`, `--times`). Without a spec it flags `transition: all`, animated layout properties, durations off the tokens, linear easing on movement, `scale(0)` entrances, hover and focus that change nothing, buttons without press feedback, infinite animations, reduced-motion handling and `requestAnimationFrame` firing at rest. Audit flags are advisory (held-out precision 0.77): never use `--strict` as a gate. A failure that says frames were dropped is re-run on a quiet machine before anyone acts on it. Canvas, WebGL, Lottie and Rive frames are invisible to it. `--device phone` skips hover.
+With `--spec` (a fenced `motion-spec` block in `DESIGN.md`, a table with id, trigger and target columns, or a JSON file: the format is in `motion.md` §2), every entry runs against the one URL and device given, so keep one spec per page and device; `setup` steps exist only in the JSON form. Each entry is triggered for real and sampled every frame, normally and under reduced motion: whether it animated, its duration and easing against the tokens, the properties that moved, the stagger, interruption, and whether reduced motion stopped, substituted or left it moving. Filmstrips per entry (`--filmstrip`, `--times`). Without a spec it flags `transition: all`, animated layout properties, durations off the tokens, linear easing on movement, `scale(0)` entrances, hover and focus that change nothing, buttons without press feedback, infinite animations, reduced-motion handling and `requestAnimationFrame` firing at rest. Audit flags are advisory (held-out precision 0.77): never use `--strict` as a gate. A failure that says frames were dropped is re-run on a quiet machine before anyone acts on it. Canvas, WebGL, Lottie and Rive frames are invisible to it. `--device phone` skips hover.
 
 ## 9. Files, not pages
 

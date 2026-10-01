@@ -46,7 +46,7 @@ For routes Phase 0 classified as used rather than visited, and for the chrome an
 
 ## Performance and motion
 
-Lighthouse at phone emulation (or `perf.mjs --before` where Lighthouse cannot run), median of 3–5 runs, same version as the baseline, LCP *element* checked; the `DESIGN.md` budget met; the redesign not slower than the audit baseline (`performance.md` §6). Every `motion.mjs --spec` row passes; flags reviewed; no `requestAnimationFrame` at rest on app pages.
+Lighthouse at phone emulation (or `perf.mjs --before` where Lighthouse cannot run), median of 3–5 runs, same version as the baseline, LCP *element* checked; the `DESIGN.md` budget met; the redesign not slower than the audit baseline (`performance.md` §6). Every motion-spec row passes on its own page and device (`motion.md` §2); flags reviewed; no `requestAnimationFrame` at rest on app pages.
 
 ## Implementation checks
 
