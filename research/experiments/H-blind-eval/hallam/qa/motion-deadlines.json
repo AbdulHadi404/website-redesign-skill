@@ -1,0 +1,3 @@
+{ "motion": [
+  { "id": "year-fill", "trigger": "scroll", "on": ".taxyear", "target": ".ty-fill", "properties": ["transform"], "reduced": "static" }
+] }

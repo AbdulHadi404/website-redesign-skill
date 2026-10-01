@@ -1,0 +1,21 @@
+[
+ {
+  "type": "disclosure",
+  "button": ".menu-btn",
+  "device": "phone"
+ },
+ {
+  "type": "live",
+  "trigger": "#ff-turnover",
+  "keys": [
+   "ArrowDown"
+  ]
+ },
+ {
+  "type": "live",
+  "trigger": "#ff-type",
+  "keys": [
+   "ArrowDown"
+  ]
+ }
+]

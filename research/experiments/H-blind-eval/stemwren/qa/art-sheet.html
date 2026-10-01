@@ -1,0 +1,21 @@
+<!doctype html><meta charset=utf-8><title>art sheet</title>
+<style>body{margin:0;background:#8ea283 url(../assets/img/linen.webp);background-size:384px;font:14px sans-serif;display:flex;flex-wrap:wrap;gap:8px;padding:8px}
+figure{margin:0;width:300px}figure svg{width:300px;height:420px;display:block}figcaption{background:#f3f5ef;padding:4px 6px}
+.stems{display:flex;gap:4px;background:#f3f5ef;padding:6px;width:100%}.stems svg{width:70px;height:116px}</style>
+<div id=out></div>
+<script type=module>
+import { bouquetSVG, stemSVG, defsSVG } from '../assets/bouquet-art.js';
+import { STARTERS } from '../assets/bouquet-model.js';
+const flowers = await (await fetch('../data/flowers.json')).json();
+const wraps = await (await fetch('../data/wraps.json')).json();
+const data = { flowers, wraps };
+let html = defsSVG();
+const cases = STARTERS.map(s => ({ name: s.name, lines: s.lines, wrap: s.wrap, ribbon: s.ribbon, seed: 7 }));
+cases.push({ name: 'Petite 5 roses tissue', lines: [{id:'rose',colour:'pink',count:5}], wrap:'tissue', ribbon:'silk-blush', seed: 3 });
+cases.push({ name: 'Grand 25 mixed', lines: [{id:'rose-garden',colour:'blush',count:6},{id:'chrysanthemum',colour:'bronze',count:5},{id:'ranunculus',colour:'apricot',count:4},{id:'gypsophila',colour:'white',count:4},{id:'pittosporum',colour:'green',count:3},{id:'eucalyptus',colour:'silver dollar',count:3}], wrap:'kraft', ribbon:'none', seed: 11 });
+cases.push({ name: 'sweet pea + lisianthus lilac', lines: [{id:'sweet-pea',colour:'mixed pastel',count:6},{id:'lisianthus',colour:'lilac',count:5},{id:'eucalyptus',colour:'silver dollar',count:2}], wrap:'linen', ribbon:'twine', seed: 5 });
+for (const c of cases) html += `<figure>${bouquetSVG(c, data)}<figcaption>${c.name} · ${c.wrap} · ${c.ribbon}</figcaption></figure>`;
+html += '<div class=stems>' + flowers.map(f => stemSVG(f, f.colours[0])).join('') + '</div>';
+document.getElementById('out').outerHTML = html;
+document.body.dataset.done = 1;
+</script>

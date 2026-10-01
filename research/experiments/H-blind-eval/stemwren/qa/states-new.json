@@ -1,0 +1,533 @@
+{
+ "path": "/order/",
+ "device": "phone",
+ "states": [
+  {
+   "name": "idle",
+   "steps": [
+    {
+     "wait": 600
+    }
+   ]
+  },
+  {
+   "name": "ch-wrap",
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "wait": 400
+    },
+    {
+     "fill": [
+      "#card_message",
+      "Happy 90th, Grandma! Love from all of us x"
+     ]
+    },
+    {
+     "wait": 200
+    }
+   ]
+  },
+  {
+   "name": "ch-delivery",
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "fill": [
+      "#delivery_postcode",
+      "ls17 6ab"
+     ]
+    },
+    {
+     "wait": 500
+    },
+    {
+     "click": "label:has(input[value='2026-10-03'])"
+    },
+    {
+     "wait": 300
+    }
+   ]
+  },
+  {
+   "name": "outside-area",
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "fill": [
+      "#delivery_postcode",
+      "BD1 1AA"
+     ]
+    },
+    {
+     "wait": 500
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "wait": 300
+    }
+   ]
+  },
+  {
+   "name": "empty-submit",
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "fill": [
+      "#delivery_postcode",
+      "LS17 6AB"
+     ]
+    },
+    {
+     "wait": 500
+    },
+    {
+     "click": "label:has(input[value='2026-10-03'])"
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "wait": 300
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "wait": 400
+    }
+   ]
+  },
+  {
+   "name": "ch-check",
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "fill": [
+      "#card_message",
+      "Happy 90th, Grandma! Love from all of us x"
+     ]
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "fill": [
+      "#delivery_postcode",
+      "LS17 6AB"
+     ]
+    },
+    {
+     "wait": 500
+    },
+    {
+     "click": "label:has(input[value='2026-10-03'])"
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "fill": [
+      "#recipient_name",
+      "Margaret Ellis"
+     ]
+    },
+    {
+     "fill": [
+      "#recipient_address",
+      "22 Street Lane, Moortown, Leeds"
+     ]
+    },
+    {
+     "fill": [
+      "#sender_name",
+      "Sam Ellis"
+     ]
+    },
+    {
+     "fill": [
+      "#sender_email",
+      "sam@example.com"
+     ]
+    },
+    {
+     "fill": [
+      "#sender_phone",
+      "07700 900123"
+     ]
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "wait": 500
+    }
+   ]
+  },
+  {
+   "name": "sent",
+   "route": {
+    "url": "**/api/order",
+    "json": {
+     "order": "SW-01234",
+     "total": 41.25
+    },
+    "record": true
+   },
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "fill": [
+      "#card_message",
+      "Happy 90th, Grandma! Love from all of us x"
+     ]
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "fill": [
+      "#delivery_postcode",
+      "LS17 6AB"
+     ]
+    },
+    {
+     "wait": 500
+    },
+    {
+     "click": "label:has(input[value='2026-10-03'])"
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "fill": [
+      "#recipient_name",
+      "Margaret Ellis"
+     ]
+    },
+    {
+     "fill": [
+      "#recipient_address",
+      "22 Street Lane, Moortown, Leeds"
+     ]
+    },
+    {
+     "fill": [
+      "#sender_name",
+      "Sam Ellis"
+     ]
+    },
+    {
+     "fill": [
+      "#sender_email",
+      "sam@example.com"
+     ]
+    },
+    {
+     "fill": [
+      "#sender_phone",
+      "07700 900123"
+     ]
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "wait": 400
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "wait": 900
+    }
+   ]
+  },
+  {
+   "name": "server-error",
+   "route": {
+    "url": "**/api/order",
+    "status": 500,
+    "body": "oops"
+   },
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "fill": [
+      "#delivery_postcode",
+      "LS7 3NB"
+     ]
+    },
+    {
+     "wait": 500
+    },
+    {
+     "click": "label:has(input[value='2026-10-03'])"
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "fill": [
+      "#recipient_name",
+      "A Person"
+     ]
+    },
+    {
+     "fill": [
+      "#recipient_address",
+      "1 Road"
+     ]
+    },
+    {
+     "fill": [
+      "#sender_name",
+      "C Person"
+     ]
+    },
+    {
+     "fill": [
+      "#sender_email",
+      "c@example.com"
+     ]
+    },
+    {
+     "fill": [
+      "#sender_phone",
+      "07700 900000"
+     ]
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "wait": 400
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "wait": 900
+    }
+   ]
+  },
+  {
+   "name": "share-open",
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "click": "#share"
+    },
+    {
+     "wait": 800
+    }
+   ]
+  },
+  {
+   "name": "stems-too-few",
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "click": "#lines .step[data-step='-1'] >> nth=0"
+    },
+    {
+     "click": "#lines .step[data-step='-1'] >> nth=0"
+    },
+    {
+     "click": "#lines .step[data-step='-1'] >> nth=0"
+    },
+    {
+     "click": "#lines .step[data-step='-1'] >> nth=0"
+    },
+    {
+     "click": "#lines .step[data-step='-1'] >> nth=0"
+    },
+    {
+     "click": "#lines .step[data-step='-1'] >> nth=0"
+    },
+    {
+     "click": "#lines .step[data-step='-1'] >> nth=0"
+    },
+    {
+     "click": "#lines .step[data-step='-1'] >> nth=0"
+    },
+    {
+     "click": "#lines .step[data-step='-1'] >> nth=0"
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "wait": 300
+    }
+   ]
+  },
+  {
+   "name": "date-conflict",
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "fill": [
+      "#delivery_postcode",
+      "LS7 3NB"
+     ]
+    },
+    {
+     "wait": 500
+    },
+    {
+     "fill": [
+      "#other-date",
+      "2026-11-14"
+     ]
+    },
+    {
+     "wait": 400
+    }
+   ]
+  },
+  {
+   "name": "desktop-check",
+   "device": "desktop",
+   "storage": {
+    "localStorage": {
+     "sw-draft": "{\"v\":1,\"lines\":[{\"id\":\"rose-garden\",\"colour\":\"peach\",\"count\":5},{\"id\":\"lisianthus\",\"colour\":\"white\",\"count\":4},{\"id\":\"eucalyptus\",\"colour\":\"silver dollar\",\"count\":3}],\"wrap\":\"kraft\",\"ribbon\":\"twine\",\"seed\":7,\"card_message\":\"Happy 90th, Grandma! Love from all of us x\",\"postcode\":\"LS17 6AB\",\"date\":\"2026-10-03\"}"
+    }
+   },
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "eval": "location.hash='#check'"
+    },
+    {
+     "wait": 100
+    },
+    {
+     "reload": true
+    },
+    {
+     "wait": 700
+    }
+   ]
+  },
+  {
+   "name": "data-offline",
+   "route": {
+    "url": "**/data/flowers.json",
+    "abort": true
+   },
+   "steps": [
+    {
+     "wait": 800
+    }
+   ]
+  },
+  {
+   "name": "ch-wrap-ribbon",
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "wait": 300
+    },
+    {
+     "click": "label:has(input[value='silk-blush'])"
+    },
+    {
+     "wait": 500
+    }
+   ]
+  },
+  {
+   "name": "ch-wrap-scrolled",
+   "steps": [
+    {
+     "wait": 600
+    },
+    {
+     "click": "#next"
+    },
+    {
+     "wait": 300
+    },
+    {
+     "fill": [
+      "#card_message",
+      "for Mum x"
+     ]
+    },
+    {
+     "wait": 600
+    }
+   ]
+  }
+ ]
+}

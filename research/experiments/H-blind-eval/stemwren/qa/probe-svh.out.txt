@@ -1,0 +1,1 @@
+hero svg height at 844 px viewport: 320.71875; after growing the viewport to 3900 px: 1482

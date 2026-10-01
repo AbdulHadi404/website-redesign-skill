@@ -1,0 +1,9 @@
+[
+  { "type": "form-errors", "form": "#enquiry", "submit": "button[type=submit]" },
+  { "type": "form-errors", "form": "#enquiry", "submit": "button[type=submit]", "before": [
+    { "fill": ["#f-name", "Sam Okafor"] }, { "fill": ["#f-email", "sam@example"] }, { "fill": ["#f-phone", "07700 900123"] },
+    { "check": "input[name=business_type][value='Sole trader']" }, { "select": ["#f-turnover", "Under £50k"] }, { "select": ["#f-service", "Personal tax"] },
+    { "fill": ["#f-message", "Help with my tax return"] }, { "check": "input[name=preferred_contact][value=Email]" } ] },
+  { "type": "roving", "group": "[data-q=business_type] fieldset" },
+  { "type": "disclosure", "button": ".menu-btn", "device": "phone" }
+]

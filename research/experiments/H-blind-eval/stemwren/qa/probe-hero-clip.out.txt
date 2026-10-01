@@ -1,0 +1,14 @@
+390 [
+  'h1 inside ',
+  'figcaption.visually-hidden inside (visually hidden by design)',
+  'p.hero-lede inside ',
+  'p.hero-sub inside ',
+  'a.btn hero-cta inside '
+]
+1440 [
+  'h1 inside ',
+  'figcaption.visually-hidden CLIPPED (visually hidden by design)',
+  'p.hero-lede inside ',
+  'p.hero-sub inside ',
+  'a.btn hero-cta inside '
+]

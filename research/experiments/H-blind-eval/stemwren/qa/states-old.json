@@ -1,0 +1,33 @@
+{
+  "path": "/order/",
+  "device": "phone",
+  "states": [
+    { "name": "idle" },
+    { "name": "empty-submit", "steps": [{ "wait": 400 }, { "eval": "window.__alerts=[];window.alert=function(m){window.__alerts.push(m)}" }, { "click": "button.submit" }, { "wait": 300 }] },
+    { "name": "sent",
+      "route": { "url": "**/api/order", "json": { "order": "SW-01234", "total": 49.65 }, "record": true },
+      "steps": [
+        { "wait": 500 },
+        { "eval": "window.confirm=function(){return true};window.alert=function(){}" },
+        { "select": ["select[name=size]", "Classic"] },
+        { "select": ["select[name=flower1]", "rose-garden"] }, { "fill": ["input[name=colour1]", "peach"] }, { "fill": ["input[name=count1]", "5"] },
+        { "select": ["select[name=flower2]", "lisianthus"] }, { "fill": ["input[name=colour2]", "white"] }, { "fill": ["input[name=count2]", "4"] },
+        { "select": ["select[name=flower3]", "eucalyptus"] }, { "fill": ["input[name=colour3]", "silver dollar"] }, { "fill": ["input[name=count3]", "3"] },
+        { "select": ["#wrap", "kraft"] }, { "select": ["#ribbon", "twine"] },
+        { "fill": ["textarea[name=card_message]", "Happy 90th, Grandma! Love from all of us x"] },
+        { "fill": ["input[name=delivery_date]", "03/10/2026"] }, { "fill": ["input[name=delivery_postcode]", "LS17 6AB"] },
+        { "fill": ["input[name=recipient_name]", "Margaret Ellis"] }, { "fill": ["textarea[name=recipient_address]", "22 Street Lane, Moortown, Leeds"] },
+        { "fill": ["input[name=sender_name]", "Sam Ellis"] }, { "fill": ["input[name=sender_email]", "sam@example.com"] }, { "fill": ["input[name=sender_phone]", "07700 900123"] },
+        { "click": "button.submit" }, { "wait": 800 }
+      ] },
+    { "name": "server-error", "route": { "url": "**/api/order", "status": 500, "body": "oops" },
+      "steps": [
+        { "wait": 500 }, { "eval": "window.confirm=function(){return true};window.alert=function(m){document.title='ALERT:'+m}" },
+        { "select": ["select[name=size]", "Classic"] }, { "select": ["select[name=flower1]", "rose"] }, { "fill": ["input[name=colour1]", "red"] }, { "fill": ["input[name=count1]", "12"] },
+        { "fill": ["input[name=delivery_date]", "03/10/2026"] }, { "fill": ["input[name=delivery_postcode]", "LS7 3NB"] },
+        { "fill": ["input[name=recipient_name]", "A"] }, { "fill": ["textarea[name=recipient_address]", "B"] },
+        { "fill": ["input[name=sender_name]", "C"] }, { "fill": ["input[name=sender_email]", "c@example.com"] }, { "fill": ["input[name=sender_phone]", "07700 900000"] },
+        { "click": "button.submit" }, { "wait": 800 }
+      ] }
+  ]
+}

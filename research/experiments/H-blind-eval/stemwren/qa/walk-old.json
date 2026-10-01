@@ -1,0 +1,5 @@
+{ "path": "/order/", "device": "phone", "states": [
+  { "name": "t1-see-it", "steps": [{ "wait": 700 }] },
+  { "name": "t2-peonies-in-october", "steps": [{ "wait": 700 }, { "select": ["select[name=flower1]", "peony"] }, { "wait": 200 }] },
+  { "name": "t3-price-to-ls8", "steps": [{ "wait": 700 }, { "eval": "window.alert=function(m){document.title='ALERT: '+m};window.confirm=function(m){document.title='CONFIRM: '+m;return false}" }, { "select": ["select[name=size]", "Classic"] }, { "select": ["select[name=flower1]", "rose"] }, { "fill": ["input[name=colour1]", "red"] }, { "fill": ["input[name=count1]", "12"] }, { "fill": ["input[name=delivery_postcode]", "LS8 1AA"] }, { "tap": "button.submit" }, { "wait": 300 }, { "eval": "document.body.insertAdjacentHTML('afterbegin','<p style=\"font:20px sans-serif;background:#ff0;padding:8px\">'+document.title+'</p>')" }] }
+] }

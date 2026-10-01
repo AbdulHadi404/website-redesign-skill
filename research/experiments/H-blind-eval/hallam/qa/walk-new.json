@@ -1,0 +1,10 @@
+{ "device": "phone", "states": [
+  { "name": "fee-sole-60k", "path": "/", "each": true, "steps": [ { "select": ["#ff-turnover", "£50k–£90k"] }, { "wait": 400 } ] },
+  { "name": "enquire-from-fee", "path": "/", "each": true,
+    "route": { "url": "**/api/enquiry", "status": 200, "contentType": "text/html", "body": "<!doctype html><html lang=\"en\"><title>Thanks (test server)</title><main><h1>Received</h1></main></html>", "record": true },
+    "steps": [ { "select": ["#ff-turnover", "£50k–£90k"] }, { "wait": 300 }, { "tap": ".ff-ask" }, { "wait": 800 },
+      { "fill": ["#f-name", "Sam Okafor"] }, { "fill": ["#f-email", "sam@example.com"] }, { "fill": ["#f-phone", "07700 900123"] },
+      { "fill": ["#f-message", "First year of accounts, plus my tax return."] },
+      { "tap": "input[name=preferred_contact][value=Phone]" }, { "tap": "input[name=how_heard][value=Google]" },
+      { "tap": "#enquiry [type=submit]" }, { "wait": 800 } ] }
+] }

@@ -1,0 +1,3 @@
+{ "motion": [
+  { "id": "menu-open", "trigger": "click", "on": ".menu-btn", "target": ".site-nav", "properties": ["opacity", "transform"], "duration": "medium", "easing": "out", "reduced": "fade" }
+] }

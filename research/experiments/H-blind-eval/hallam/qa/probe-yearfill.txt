@@ -1,0 +1,16 @@
+no-preference: 
+  tax-year bar 900px from the top of an 844px screen → fill scaleX 0.00
+  tax-year bar 700px from the top of an 844px screen → fill scaleX 0.25
+  tax-year bar 500px from the top of an 844px screen → fill scaleX 0.87
+  tax-year bar 300px from the top of an 844px screen → fill scaleX 1.00
+  tax-year bar 100px from the top of an 844px screen → fill scaleX 1.00
+  tax-year bar 500px from the top of an 844px screen → fill scaleX 0.87
+  tax-year bar 900px from the top of an 844px screen → fill scaleX 0.00
+reduce: 
+  tax-year bar 900px from the top of an 844px screen → fill scaleX 1.00
+  tax-year bar 700px from the top of an 844px screen → fill scaleX 1.00
+  tax-year bar 500px from the top of an 844px screen → fill scaleX 1.00
+  tax-year bar 300px from the top of an 844px screen → fill scaleX 1.00
+  tax-year bar 100px from the top of an 844px screen → fill scaleX 1.00
+  tax-year bar 500px from the top of an 844px screen → fill scaleX 1.00
+  tax-year bar 900px from the top of an 844px screen → fill scaleX 1.00

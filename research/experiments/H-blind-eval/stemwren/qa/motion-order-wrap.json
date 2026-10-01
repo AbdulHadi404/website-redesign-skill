@@ -1,0 +1,4 @@
+{ "motion": [
+  { "id": "wrap-crossfade", "trigger": "click", "on": "label:has(input[value=linen])", "target": "#stage .bq-back.is-new", "properties": ["opacity"], "duration": 200, "easing": "out", "reduced": "instant",
+    "setup": [{ "click": "#next" }, { "wait": 400 }] }
+] }

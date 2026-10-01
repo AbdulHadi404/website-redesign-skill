@@ -1,0 +1,11 @@
+<!doctype html><meta charset=utf-8><link rel=stylesheet href="../../assets/site.css">
+<style>html,body{margin:0;width:1200px;height:630px;overflow:hidden}body{background:var(--linen) url(../../assets/img/linen.webp) 0 0/384px;position:relative}
+#art{position:absolute;right:40px;top:-30px;width:520px;height:690px}#art svg{width:100%;height:100%}
+.t{position:absolute;left:72px;top:150px;width:560px}.t h1{font-size:78px;line-height:1;letter-spacing:-.02em}.t p{font-size:30px;margin-top:22px;background:var(--paper);padding:16px 22px;border-radius:12px;display:inline-block}
+.w{position:absolute;left:72px;top:56px;font-family:var(--hand);font-size:48px}</style>
+<div class=w>Stem &amp; Wren</div><div class=t><h1>Make your own bouquet.</h1><p>Hand-tied in Chapel Allerton, Leeds</p></div><div id=art></div>
+<script type=module>
+import { bouquetSVG } from '../../assets/bouquet-art.js'; import { STARTERS } from '../../assets/bouquet-model.js';
+const [flowers, wraps] = await Promise.all(['flowers','wraps'].map(n=>fetch('../../data/'+n+'.json').then(r=>r.json())));
+const s = STARTERS[0]; document.getElementById('art').innerHTML = bouquetSVG({lines:s.lines,wrap:s.wrap,ribbon:s.ribbon,seed:7},{flowers,wraps});
+</script>

@@ -1,0 +1,6 @@
+{ "path": "/order/", "device": "phone", "states": [
+  { "name": "t1-see-it", "steps": [{ "wait": 700 }] },
+  { "name": "t2-peonies-in-october", "steps": [{ "wait": 700 }, { "swipe": { "at": "#tray", "dx": -200, "dy": 0 } }, { "tap": "[data-add=\"peony\"]" }, { "wait": 300 }] },
+  { "name": "t3-price-to-ls8", "steps": [{ "wait": 700 }, { "tap": "#next" }, { "tap": "#next" }, { "fill": ["#delivery_postcode", "LS8 1AA"] }, { "wait": 500 }] },
+  { "name": "t4-today", "steps": [{ "wait": 700 }, { "tap": "#next" }, { "tap": "#next" }, { "fill": ["#delivery_postcode", "LS7 3NB"] }, { "wait": 500 }, { "swipe": { "at": [195, 500], "dx": 0, "dy": -300 } }] }
+] }

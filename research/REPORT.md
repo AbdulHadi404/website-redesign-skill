@@ -160,9 +160,7 @@ Full lists are in each report.
 ## Remaining gaps
 
 1. ~~Stage 2 into the skill's documents~~ — done selectively in the second-pass audit (`research/second-pass/REPORT.md`): the decisions that change ordinary projects were integrated (mostly into `interactive.md`, `motion.md` and `visual-qa.md`), the core shrank and the script options moved to `scripts/README.md`; the rest stays in the archive.
-2. **Blind round 5**, prepared and not run (`experiments/H-blind-eval/round5-prompts.md`):
-   - Stem & Wren, a florist where a bouquet builder is warranted;
-   - Hallam & Price, accountants asking for Apple-style 3D, where restraint is the answer.
+2. ~~**Blind round 5**~~ — run on 2026-10-01 against the second-pass snapshot `c6e5884` (`experiments/H-blind-eval/README.md`, "Round 5"): both runs read the ambition correctly (a builder for the florist, restraint for the accountants); its findings are recorded there, not yet applied.
 3. **Real devices and real assistive technology**: GPU numbers, iOS Safari, VoiceOver and NVDA. Every lab here ran on headless Chromium with SwiftShader on a shared machine.
 4. **Categories not yet run blind**: docs and developer tools, enterprise admin, a mobile-first consumer app, a content site.
 5. **Live-site studies and re-verifying [K] claims** once the network allows. Most live sites returned 403 here.

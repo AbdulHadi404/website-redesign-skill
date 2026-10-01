@@ -1,0 +1,27 @@
+{
+  "path": "/contact/",
+  "device": "phone",
+  "states": [
+    { "name": "contact-idle" },
+    { "name": "contact-empty-submit",
+      "route": { "url": "**/api/enquiry", "status": 200, "contentType": "text/html", "body": "<!doctype html><title>Thanks</title><p>Received</p>", "record": true },
+      "steps": [{ "click": "#enquiry [type=submit]" }, { "wait": 700 }] },
+    { "name": "contact-sent",
+      "route": { "url": "**/api/enquiry", "status": 200, "contentType": "text/html", "body": "<!doctype html><title>Thanks</title><p>Received</p>", "record": true },
+      "steps": [
+        { "fill": ["[name=name]", "Sam Okafor"] },
+        { "fill": ["[name=email]", "sam@example.com"] },
+        { "fill": ["[name=phone]", "07700 900123"] },
+        { "fill": ["[name=business_name]", "Okafor Joinery"] },
+        { "select": ["[name=business_type]", "Sole trader"] },
+        { "select": ["[name=turnover]", "£50k–£90k"] },
+        { "select": ["[name=service]", "Business accounts"] },
+        { "fill": ["[name=message]", "I need my first year accounts done and a tax return."] },
+        { "select": ["[name=preferred_contact]", "Phone"] },
+        { "select": ["[name=how_heard]", "Google"] },
+        { "click": "#enquiry [type=submit]" }, { "wait": 800 }
+      ] },
+    { "name": "fees-idle", "path": "/fees/" },
+    { "name": "home-desktop", "path": "/", "device": "desktop" }
+  ]
+}

@@ -1,0 +1,5 @@
+[
+  { "type": "dialog", "trigger": "#share" },
+  { "type": "live", "trigger": "#retie" },
+  { "type": "live", "trigger": "[data-add=\"rose\"]" }
+]

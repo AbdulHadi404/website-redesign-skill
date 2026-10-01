@@ -1,0 +1,406 @@
+{
+ "path": "/contact/",
+ "device": "phone",
+ "states": [
+  {
+   "name": "contact-idle"
+  },
+  {
+   "name": "contact-empty-submit",
+   "axe": "no-scroll",
+   "route": {
+    "url": "**/api/enquiry",
+    "status": 200,
+    "contentType": "text/html",
+    "body": "<!doctype html><html lang=\"en\"><title>Thanks (test server)</title><main><h1>Received</h1></main></html>",
+    "record": true
+   },
+   "steps": [
+    {
+     "click": "#enquiry [type=submit]"
+    },
+    {
+     "wait": 700
+    }
+   ]
+  },
+  {
+   "name": "contact-sent",
+   "route": {
+    "url": "**/api/enquiry",
+    "status": 200,
+    "contentType": "text/html",
+    "body": "<!doctype html><html lang=\"en\"><title>Thanks (test server)</title><main><h1>Received</h1></main></html>",
+    "record": true
+   },
+   "steps": [
+    {
+     "fill": [
+      "[name=name]",
+      "Sam Okafor"
+     ]
+    },
+    {
+     "fill": [
+      "[name=email]",
+      "sam@example.com"
+     ]
+    },
+    {
+     "fill": [
+      "[name=phone]",
+      "07700 900123"
+     ]
+    },
+    {
+     "fill": [
+      "[name=business_name]",
+      "Okafor Joinery"
+     ]
+    },
+    {
+     "check": "[name=business_type][value='Sole trader']"
+    },
+    {
+     "select": [
+      "[name=turnover]",
+      "£50k–£90k"
+     ]
+    },
+    {
+     "select": [
+      "[name=service]",
+      "Business accounts"
+     ]
+    },
+    {
+     "fill": [
+      "[name=message]",
+      "I need my first year accounts done and a tax return."
+     ]
+    },
+    {
+     "check": "[name=preferred_contact][value=Phone]"
+    },
+    {
+     "check": "[name=how_heard][value=Google]"
+    },
+    {
+     "click": "#enquiry [type=submit]"
+    },
+    {
+     "wait": 800
+    }
+   ]
+  },
+  {
+   "name": "fees-idle",
+   "path": "/fees/"
+  },
+  {
+   "name": "home-desktop",
+   "path": "/",
+   "device": "desktop"
+  },
+  {
+   "name": "contact-two-errors",
+   "axe": "no-scroll",
+   "steps": [
+    {
+     "fill": [
+      "[name=name]",
+      "Sam Okafor"
+     ]
+    },
+    {
+     "fill": [
+      "[name=email]",
+      "sam@example"
+     ]
+    },
+    {
+     "fill": [
+      "[name=phone]",
+      "07700 900123"
+     ]
+    },
+    {
+     "check": "[name=business_type][value=Individual]"
+    },
+    {
+     "select": [
+      "[name=turnover]",
+      "Under £50k"
+     ]
+    },
+    {
+     "select": [
+      "[name=service]",
+      "Personal tax"
+     ]
+    },
+    {
+     "fill": [
+      "[name=message]",
+      "First tax return"
+     ]
+    },
+    {
+     "check": "[name=preferred_contact][value=Email]"
+    },
+    {
+     "click": "#enquiry [type=submit]"
+    },
+    {
+     "wait": 300
+    }
+   ]
+  },
+  {
+   "name": "contact-prefilled",
+   "path": "/contact/?business_type=Limited+company&turnover=%C2%A390k%E2%80%93%C2%A3150k&service=Business+accounts#enquiry"
+  },
+  {
+   "name": "contact-business-name-blank",
+   "route": {
+    "url": "**/api/enquiry",
+    "status": 200,
+    "contentType": "text/html",
+    "body": "<!doctype html><html lang=\"en\"><title>Thanks (test server)</title><main><h1>Received</h1></main></html>",
+    "record": true
+   },
+   "steps": [
+    {
+     "fill": [
+      "[name=name]",
+      "Ana Silva"
+     ]
+    },
+    {
+     "fill": [
+      "[name=email]",
+      "ana@example.com"
+     ]
+    },
+    {
+     "fill": [
+      "[name=phone]",
+      "0114 496 0000"
+     ]
+    },
+    {
+     "check": "[name=business_type][value=Landlord]"
+    },
+    {
+     "select": [
+      "[name=turnover]",
+      "Under £50k"
+     ]
+    },
+    {
+     "select": [
+      "[name=service]",
+      "Personal tax"
+     ]
+    },
+    {
+     "fill": [
+      "[name=message]",
+      "Two rental flats, need my return filed."
+     ]
+    },
+    {
+     "check": "[name=preferred_contact][value=Email]"
+    },
+    {
+     "check": "[name=how_heard][value=Recommendation]"
+    },
+    {
+     "click": "#enquiry [type=submit]"
+    },
+    {
+     "wait": 800
+    }
+   ]
+  },
+  {
+   "name": "menu-open",
+   "path": "/",
+   "steps": [
+    {
+     "tap": ".menu-btn"
+    },
+    {
+     "wait": 300
+    }
+   ],
+   "axe": "no-scroll"
+  },
+  {
+   "name": "finder-ltd",
+   "path": "/",
+   "steps": [
+    {
+     "select": [
+      "#ff-type",
+      "Limited company"
+     ]
+    },
+    {
+     "select": [
+      "#ff-turnover",
+      "£150k–£500k"
+     ]
+    },
+    {
+     "wait": 400
+    }
+   ]
+  },
+  {
+   "name": "finder-quote",
+   "path": "/",
+   "steps": [
+    {
+     "select": [
+      "#ff-type",
+      "Partnership"
+     ]
+    },
+    {
+     "wait": 400
+    }
+   ]
+  },
+  {
+   "name": "finder-landlord",
+   "path": "/",
+   "steps": [
+    {
+     "select": [
+      "#ff-type",
+      "Landlord"
+     ]
+    },
+    {
+     "wait": 400
+    }
+   ]
+  },
+  {
+   "name": "fees-ltd-top",
+   "path": "/fees/",
+   "device": "desktop",
+   "steps": [
+    {
+     "select": [
+      "#ff-type",
+      "Limited company"
+     ]
+    },
+    {
+     "select": [
+      "#ff-turnover",
+      "Over £500k"
+     ]
+    },
+    {
+     "wait": 400
+    },
+    {
+     "scroll": "#fee-ltd"
+    }
+   ]
+  },
+  {
+   "name": "fees-offline",
+   "path": "/fees/",
+   "route": {
+    "url": "**/data/fees.json",
+    "abort": true
+   }
+  },
+  {
+   "name": "home-slow-data",
+   "path": "/",
+   "route": {
+    "url": "**/data/*.json",
+    "delay": 4000
+   },
+   "steps": [
+    {
+     "wait": 300
+    }
+   ]
+  },
+  {
+   "name": "header-scrolled",
+   "path": "/",
+   "steps": [
+    {
+     "swipe": {
+      "at": [
+       195,
+       600
+      ],
+      "dx": 0,
+      "dy": -1200
+     }
+    },
+    {
+     "wait": 400
+    }
+   ]
+  },
+  {
+   "name": "close-in-view",
+   "path": "/",
+   "device": "desktop",
+   "steps": [
+    {
+     "scroll": ".close .btn-primary"
+    },
+    {
+     "wait": 500
+    }
+   ]
+  },
+  {
+   "name": "landscape-scrolled",
+   "path": "/",
+   "device": {
+    "width": 844,
+    "height": 390,
+    "isMobile": true,
+    "hasTouch": true,
+    "deviceScaleFactor": 2
+   },
+   "steps": [
+    {
+     "swipe": {
+      "at": [
+       422,
+       300
+      ],
+      "dx": 0,
+      "dy": -900
+     }
+    },
+    {
+     "wait": 400
+    }
+   ]
+  },
+  {
+   "name": "focus-ring",
+   "path": "/",
+   "device": "desktop",
+   "steps": [
+    {
+     "press": "Tab",
+     "times": 3
+    }
+   ]
+  }
+ ]
+}

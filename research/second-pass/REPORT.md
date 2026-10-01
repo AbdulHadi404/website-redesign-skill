@@ -54,7 +54,7 @@ A deep review of `skills/website-redesign/` after the R&D merge, aimed at making
 
 ## Still open
 
-1. **Blind round 5** on a frozen snapshot of this version (`experiments/H-blind-eval/round5-prompts.md`), plus fixtures chosen for diversity: a warm or saturated brand mark, an expressive category (restaurant, fashion, culture, portfolio), a Committed or Drenched outcome, and the categories never run blind (docs, enterprise, mobile-first consumer, content).
+1. ~~**Blind round 5**~~ — run on 2026-10-01 against this version (`experiments/H-blind-eval/README.md`, "Round 5"); both outputs chose Committed strategies. Still open: fixtures chosen for diversity: a warm or saturated brand mark, an expressive category (restaurant, fashion, culture, portfolio), a Committed or Drenched outcome, and the categories never run blind (docs, enterprise, mobile-first consumer, content).
 2. A fresh-reviewer comparison with a second subject and reviewer, to separate method from reviewer taste.
 3. Real devices and assistive technology (GPU numbers, iOS Safari, VoiceOver, NVDA), unchanged from the stage-2 report.
 4. Promoting a polish probe into a script after an independent verdict pass (S9 kept it as a candidate).

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact | Hallam &amp; Price – call 0114 270 0418, Kelham Island, Sheffield</title>
+<meta name="description" content="Call 0114 270 0418, email info@hallamprice.co.uk or send us an enquiry. 3 Cotton Mill Walk, Kelham Island, Sheffield S3 8DH. Parking available.">
+<meta name="theme-color" content="#1f3a5f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact | Hallam &amp; Price Chartered Accountants">
+<meta property="og:description" content="Call 0114 270 0418 or send an enquiry. Kelham Island, Sheffield.">
+<meta property="og:image" content="../assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+<script>document.documentElement.classList.add('js');window.hpTrack=window.hpTrack||function(e,p){(window.hpEvents=window.hpEvents||[]).push([e,p||{}])};</script>
+</head>
+<body>
+<!-- prerender:header -->
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header call-primary">
+  <div class="wrap header-inner">
+    <a class="brand" href="../"><picture><source media="(min-width: 64em)" srcset="../assets/logo-outlined-rev.svg"><source media="(max-width: 22.5em)" srcset="../assets/logo-mark-rev.svg"><img src="../assets/logo-compact-rev.svg" alt="Hallam &amp; Price, home" width="219" height="56"></picture></a>
+    <nav class="site-nav" aria-label="Main"><ul id="site-nav-list"><li><a href="../">Home</a></li><li><a href="../services/">Services</a></li><li><a href="../fees/">Fees</a></li><li><a href="../team/">Our team</a></li><li><a href="../contact/" aria-current="page">Contact</a></li></ul></nav>
+    <a class="btn btn-primary call" href="tel:01142700418"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg><span class="call-word">Call</span><span class="call-number"><span class="vh">: </span>0114 270 0418</span></a>
+    <button class="btn menu-btn" type="button" aria-expanded="false" aria-controls="site-nav-list">Menu</button>
+  </div>
+</header>
+<!-- /prerender:header -->
+<main id="main" tabindex="-1">
+
+<section class="field page-head" aria-labelledby="contact-title">
+  <div class="wrap">
+    <h1 id="contact-title">Contact us</h1>
+    <p class="lead">The quickest way is to ring. Or send the form below and a member of our team will be in touch.</p>
+    <a class="big-phone" href="tel:01142700418">0114 270 0418</a>
+  </div>
+</section>
+
+<section class="chapter" aria-labelledby="form-title">
+  <div class="wrap contact-layout">
+    <div class="form-wrap">
+      <h2 id="form-title">Send an enquiry</h2>
+      <p class="lead" style="margin-block: var(--s-3) var(--s-7)">All questions are required unless marked optional.</p>
+
+      <form id="enquiry" method="post" action="/api/enquiry">
+        <div class="error-summary" id="error-summary" tabindex="-1" hidden>
+          <div role="alert">
+            <h2>There is a problem</h2>
+            <ul></ul>
+          </div>
+        </div>
+        <p class="prefill-note" id="prefill-note" hidden>We’ve filled in your answers from the fee finder. Check them below.</p>
+
+        <div class="form-section">
+          <h3 class="vh">About you</h3>
+          <div class="q" data-q="name">
+            <label for="f-name">Your name</label>
+            <input class="input" id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="q" data-q="email">
+            <label for="f-email">Email address</label>
+            <input class="input" id="f-email" name="email" type="email" autocomplete="email" spellcheck="false" required>
+          </div>
+          <div class="q" data-q="phone">
+            <label for="f-phone">Phone number</label>
+            <input class="input w-20" id="f-phone" name="phone" type="tel" autocomplete="tel" required>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="vh">Your business</h3>
+          <div class="q" data-q="business_name">
+            <label for="f-business_name">Business name <span class="optional">(optional)</span></label>
+            <p class="hint" id="f-business_name-hint">Leave blank if you don’t trade under a business name.</p>
+            <input class="input" id="f-business_name" name="business_name" type="text" autocomplete="organization" aria-describedby="f-business_name-hint">
+          </div>
+          <div class="q" data-q="business_type">
+            <fieldset>
+              <legend>Which of these describes you?</legend>
+              <div class="radios">
+                <label class="radio"><input type="radio" id="f-business_type" name="business_type" value="Sole trader" required> Sole trader</label>
+                <label class="radio"><input type="radio" name="business_type" value="Partnership" required> Partnership</label>
+                <label class="radio"><input type="radio" name="business_type" value="Limited company" required> Limited company</label>
+                <label class="radio"><input type="radio" name="business_type" value="Landlord" required> Landlord</label>
+                <label class="radio"><input type="radio" name="business_type" value="Individual" required> Individual</label>
+                <label class="radio"><input type="radio" name="business_type" value="Other" required> Other</label>
+              </div>
+            </fieldset>
+          </div>
+          <div class="q" data-q="turnover">
+            <label for="f-turnover">Annual turnover</label>
+            <p class="hint" id="f-turnover-hint">A rough figure is fine.</p>
+            <select class="select w-20" id="f-turnover" name="turnover" aria-describedby="f-turnover-hint" required>
+              <option value="">Choose a band</option>
+              <option>Under £50k</option>
+              <option>£50k–£90k</option>
+              <option>£90k–£150k</option>
+              <option>£150k–£500k</option>
+              <option>Over £500k</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="vh">What you need</h3>
+          <div class="q" data-q="service">
+            <label for="f-service">Service you need</label>
+            <select class="select w-20" id="f-service" name="service" required>
+              <option value="">Choose a service</option>
+              <option>Personal tax</option>
+              <option>Business accounts</option>
+              <option>VAT</option>
+              <option>Payroll</option>
+              <option>Business advice</option>
+            </select>
+          </div>
+          <div class="q" data-q="message">
+            <label for="f-message">How can we help?</label>
+            <p class="hint" id="f-message-hint">For example, a deadline you’re worried about, or what you need us to take over.</p>
+            <textarea class="textarea" id="f-message" name="message" rows="6" aria-describedby="f-message-hint" required></textarea>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="vh">How we reply</h3>
+          <div class="q" data-q="preferred_contact">
+            <fieldset>
+              <legend>How would you like us to reply?</legend>
+              <div class="radios inline">
+                <label class="radio"><input type="radio" id="f-preferred_contact" name="preferred_contact" value="Phone" required> Phone</label>
+                <label class="radio"><input type="radio" name="preferred_contact" value="Email" required> Email</label>
+              </div>
+            </fieldset>
+          </div>
+          <div class="q" data-q="how_heard">
+            <fieldset>
+              <legend>How did you hear about us?</legend>
+              <div class="radios inline">
+                <label class="radio"><input type="radio" id="f-how_heard" name="how_heard" value="Google" required> Google</label>
+                <label class="radio"><input type="radio" name="how_heard" value="Recommendation" required> Recommendation</label>
+                <label class="radio"><input type="radio" name="how_heard" value="Other" required> Other</label>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        <div class="form-submit">
+          <button class="btn btn-primary" type="submit" data-primary-cta>Send enquiry</button>
+        </div>
+      </form>
+      <script>hpTrack("enquiry_start");</script>
+    </div>
+
+    <aside class="contact-aside" aria-labelledby="find-title">
+      <h2 id="find-title">Find us</h2>
+      <div class="contact-ways">
+        <address>3 Cotton Mill Walk<br>Kelham Island<br>Sheffield S3 8DH</address>
+        <p>Parking available.</p>
+        <p><a href="tel:01142700418">0114 270 0418</a><br><a href="mailto:info@hallamprice.co.uk">info@hallamprice.co.uk</a></p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+</main>
+<!-- prerender:footer -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="stack">
+        <img src="../assets/logo-mark-rev.svg" alt="" width="56" height="56">
+        <p>Hallam &amp; Price Chartered Accountants</p>
+        <address>3 Cotton Mill Walk, Kelham Island, Sheffield S3 8DH</address>
+      </div>
+      <nav aria-label="Footer"><h2>Pages</h2><ul><li><a href="../">Home</a></li><li><a href="../services/">Services</a></li><li><a href="../fees/">Fees</a></li><li><a href="../team/">Our team</a></li><li><a href="../contact/">Contact</a></li></ul></nav>
+      <div><h2>Talk to us</h2><ul><li><a href="tel:01142700418">0114 270 0418</a></li><li><a href="mailto:info@hallamprice.co.uk">info@hallamprice.co.uk</a></li></ul></div>
+    </div>
+    <p class="legal">&copy; 2026 Hallam &amp; Price Chartered Accountants. Registered to carry on audit work in the UK by the ICAEW. 3 Cotton Mill Walk, Kelham Island, Sheffield S3 8DH.</p>
+  </div>
+</footer>
+<!-- /prerender:footer -->
+<script src="../assets/site.js"></script>
+<script src="../assets/form.js"></script>
+</body>
+</html>

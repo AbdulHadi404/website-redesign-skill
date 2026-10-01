@@ -1,0 +1,5 @@
+{ "path": "/", "device": "phone", "states": [
+  { "name": "home-idle", "steps": [{ "wait": 500 }] },
+  { "name": "home-menu-open", "axe": "no-scroll", "steps": [{ "wait": 500 }, { "tap": ".menu-button" }, { "wait": 200 }] },
+  { "name": "home-desktop", "device": "desktop", "steps": [{ "wait": 500 }] }
+] }

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<script>document.documentElement.classList.add("js")</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make your bouquet – Stem &amp; Wren, florist in Chapel Allerton, Leeds</title>
+<meta name="description" content="Pick the stems, see your bouquet come together, and order it hand-tied from Stem & Wren in Chapel Allerton. Delivered across Leeds; same day to LS6, LS7, LS8 and LS17 if you order by 1pm.">
+<meta name="theme-color" content="#f3f5ef">
+<link rel="canonical" href="https://stemandwren.co.uk/order/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Stem &amp; Wren">
+<meta property="og:title" content="Make your bouquet – Stem &amp; Wren">
+<meta property="og:description" content="Pick the stems and see it come together. Hand-tied in Chapel Allerton, delivered across Leeds.">
+<meta property="og:url" content="https://stemandwren.co.uk/order/">
+<meta property="og:image" content="https://stemandwren.co.uk/assets/img/social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="An illustrated bouquet of peach garden roses, white lisianthus and eucalyptus in kraft paper on sage linen.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<link rel="preload" href="../assets/fonts/familjen-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/kalam-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="modulepreload" href="../assets/order.js">
+<link rel="modulepreload" href="../assets/bouquet-model.js">
+<link rel="modulepreload" href="../assets/bouquet-art.js">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/order.css">
+</head>
+<body class="page-order">
+<a class="skip-link" href="#main">Skip to your bouquet</a>
+<header class="bar" id="bar">
+  <a class="wordmark" translate="no" href="../">Stem &amp; Wren<span class="visually-hidden"> – home</span></a>
+  <a class="bar-thumb" id="bar-thumb" href="#flowers" hidden><span class="bar-thumb-art" id="bar-thumb-art"></span><span class="visually-hidden">Your bouquet – see it</span></a>
+  <p class="bar-total"><span class="visually-hidden">Total so far: </span><span id="bar-total">£0.00</span></p>
+</header>
+
+<main id="main" class="builder" data-chapter="flowers" tabindex="-1">
+  <div class="stage linen" id="stage-wrap">
+    <div class="stage-art" id="stage"></div>
+    <p class="stage-size" id="stage-size" aria-hidden="true"></p>
+    <div class="stage-tools" id="stage-tools">
+      <button type="button" class="tool" id="retie"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M15.5 6.5A6 6 0 1 0 16 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16.5 3v4h-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Re-tie</button>
+      <button type="button" class="tool" id="share"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 13V3M6 7l4-4 4 4M4 11v5h12v-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Share</button>
+    </div>
+    <p class="stage-note">An illustration: yours is tied by hand, so it will be its own.</p>
+  </div>
+
+  <form id="order" class="panel" novalidate>
+    <input type="hidden" name="size" id="size" value="">
+    <nav class="chapters" aria-label="Your order, in five parts">
+      <ol id="chapter-list">
+        <li><a href="#flowers" data-to="flowers">Flowers</a></li>
+        <li><a href="#wrap-card" data-to="wrap">Wrap</a></li>
+        <li><a href="#delivery" data-to="delivery">Delivery</a></li>
+        <li><a href="#details" data-to="details">You &amp; them</a></li>
+        <li><a href="#check" data-to="check">Send</a></li>
+      </ol>
+    </nav>
+
+    <div class="error-summary" id="error-summary" tabindex="-1" hidden>
+      <h2 class="error-summary-title">There is a problem</h2>
+      <ul id="error-list"></ul>
+    </div>
+
+    <!-- 1. Flowers -->
+    <fieldset class="chapter" id="flowers" data-chapter="flowers">
+      <legend><h1 class="chapter-title" tabindex="-1">Make your bouquet</h1></legend>
+      <noscript><p class="notice">The bouquet builder needs JavaScript to draw your bouquet and send the order. Please turn it on, or visit the shop at 14 Harrogate Road, Chapel Allerton, Leeds.</p></noscript>
+      <p class="lede" id="tray-hint">Tap a stem to add it: 5 to 25 stems, and the size follows.</p>
+
+      <div class="tray">
+        <h2 class="visually-hidden" id="tray-h">Stems to pick from</h2>
+        <div class="tray-scroll" id="tray" role="region" aria-labelledby="tray-h" aria-describedby="tray-season" tabindex="0">
+          <p class="loading">Getting today's stems…</p>
+        </div>
+        <p class="tray-note" id="tray-note" role="status"></p>
+        <p class="tray-season" id="tray-season"></p>
+        <p class="field-error" id="err-stems" hidden></p>
+      </div>
+
+      <section class="in-bouquet" aria-labelledby="lines-h">
+        <h2 class="section-title" id="lines-h">In your bouquet</h2>
+        <ul class="lines" id="lines"></ul>
+        <p class="lines-total" id="lines-total"></p>
+      </section>
+
+      <details class="starters" id="starters">
+        <summary>Start again from one of ours</summary>
+        <ul class="starter-list" id="starter-list"></ul>
+      </details>
+    </fieldset>
+
+    <!-- 2. Wrap & card -->
+    <fieldset class="chapter" id="wrap-card" data-chapter="wrap" hidden>
+      <legend><h1 class="chapter-title" tabindex="-1">Wrap &amp; card</h1></legend>
+      <fieldset class="choice-group" id="wrap">
+        <legend class="section-title">Wrap</legend>
+        <div class="choices" id="wrap-choices"></div>
+      </fieldset>
+      <fieldset class="choice-group" id="ribbon">
+        <legend class="section-title">Ribbon</legend>
+        <div class="choices" id="ribbon-choices"></div>
+      </fieldset>
+      <div class="field card-field">
+        <label class="section-title" for="card_message">Card message <span class="optional">(optional)</span></label>
+        <p class="hint" id="card-hint">Written by hand on a small card, free with every order. Leave it blank for no message.</p>
+        <textarea class="input" id="card_message" name="card_message" rows="3" aria-describedby="card-hint"></textarea>
+        <div class="card-preview" aria-hidden="true"><p id="card-preview-text"></p></div>
+      </div>
+    </fieldset>
+
+    <!-- 3. Delivery -->
+    <fieldset class="chapter" id="delivery" data-chapter="delivery" hidden>
+      <legend><h1 class="chapter-title" tabindex="-1">Delivery</h1></legend>
+      <div class="field">
+        <label class="label" for="delivery_postcode">Postcode it’s going to</label>
+        <p class="hint" id="pc-hint">We deliver across Leeds. You’ll see the delivery price as soon as you type it.</p>
+        <p class="field-error" id="err-delivery_postcode" hidden></p>
+        <input class="input input--postcode" id="delivery_postcode" name="delivery_postcode" type="text" autocomplete="section-recipient shipping postal-code" autocapitalize="characters" spellcheck="false" aria-describedby="pc-hint pc-result">
+        <p class="pc-result" id="pc-result" role="status"></p>
+      </div>
+      <fieldset class="days" id="days" aria-describedby="days-hint">
+        <legend class="label">Delivery day</legend>
+        <p class="hint" id="days-hint"></p>
+        <p class="field-error" id="err-delivery_date" hidden></p>
+        <div class="day-list" id="day-list"></div>
+        <div class="other-day">
+          <label class="label-small" for="other-date">Or another date</label>
+          <input class="input input--date" type="date" id="other-date">
+        </div>
+      </fieldset>
+      <details class="zones">
+        <summary>Where we deliver, and what it costs</summary>
+        <table class="zones-table">
+          <caption class="visually-hidden">Delivery areas by postcode district</caption>
+          <thead><tr><th scope="col">Area</th><th scope="col">Postcode districts</th><th scope="col" class="num">Delivery</th></tr></thead>
+          <tbody id="zones-body"></tbody>
+        </table>
+      </details>
+    </fieldset>
+
+    <!-- 4. You & them -->
+    <fieldset class="chapter" id="details" data-chapter="details" hidden>
+      <legend><h1 class="chapter-title" tabindex="-1">You &amp; them</h1></legend>
+      <h2 class="section-title section-title--gap">Who are the flowers for?</h2>
+      <div class="field">
+        <label class="label" for="recipient_name">Their name</label>
+        <p class="field-error" id="err-recipient_name" hidden></p>
+        <input class="input" id="recipient_name" name="recipient_name" type="text" autocomplete="section-recipient shipping name">
+      </div>
+      <div class="field">
+        <label class="label" for="recipient_address">Their address</label>
+        <p class="hint" id="addr-hint">House or flat number, street and area. The postcode is already in: <span id="addr-postcode"></span>.</p>
+        <p class="field-error" id="err-recipient_address" hidden></p>
+        <textarea class="input" id="recipient_address" name="recipient_address" rows="3" autocomplete="section-recipient shipping street-address" aria-describedby="addr-hint"></textarea>
+      </div>
+      <h2 class="section-title section-title--gap">Your details</h2>
+      <div class="field">
+        <label class="label" for="sender_name">Your name</label>
+        <p class="field-error" id="err-sender_name" hidden></p>
+        <input class="input" id="sender_name" name="sender_name" type="text" autocomplete="name">
+      </div>
+      <div class="field">
+        <label class="label" for="sender_email">Your email</label>
+        <p class="field-error" id="err-sender_email" hidden></p>
+        <input class="input" id="sender_email" name="sender_email" type="email" autocomplete="email" spellcheck="false" autocapitalize="off">
+      </div>
+      <div class="field">
+        <label class="label" for="sender_phone">Your phone</label>
+        <p class="hint" id="phone-hint">In case the shop needs to ask you about the order.</p>
+        <p class="field-error" id="err-sender_phone" hidden></p>
+        <input class="input" id="sender_phone" name="sender_phone" type="tel" autocomplete="tel" aria-describedby="phone-hint">
+      </div>
+    </fieldset>
+
+    <!-- 5. Check & send -->
+    <fieldset class="chapter" id="check" data-chapter="check" hidden>
+      <legend><h1 class="chapter-title" tabindex="-1">Check &amp; send</h1></legend>
+      <dl class="review" id="review"></dl>
+      <table class="totals" id="totals"><caption class="visually-hidden">Price</caption><tbody></tbody></table>
+      <p class="hint">The shop’s order service confirms the final price when it receives your order.</p>
+    </fieldset>
+
+    <!-- Sent -->
+    <section class="chapter done" id="sent" data-chapter="done" hidden aria-labelledby="done-h">
+      <h1 class="chapter-title" id="done-h" tabindex="-1">Thank you</h1>
+      <p class="done-number" id="done-number"></p>
+      <p id="done-text"></p>
+      <div class="done-actions">
+        <button type="button" class="btn btn--quiet" id="share-done">Share your bouquet</button>
+        <a class="btn btn--quiet" href="./" id="make-another">Make another</a>
+      </div>
+    </section>
+
+    <div class="actionbar" id="actionbar">
+      <p class="send-error" id="send-error" role="alert"></p>
+      <p class="ab-sum"><span id="ab-size"></span><strong id="ab-total"></strong></p>
+      <div class="ab-buttons">
+        <button type="button" class="btn btn--quiet" id="back" hidden>Back</button>
+        <button type="submit" class="btn" id="next">Next: wrap &amp; card</button>
+      </div>
+    </div>
+  </form>
+
+  <p class="visually-hidden" role="status" id="status"></p>
+</main>
+
+<dialog class="share-sheet" id="share-sheet" aria-labelledby="share-h">
+  <h2 id="share-h">Share your bouquet</h2>
+  <img id="share-img" alt="" width="1080" height="1350">
+  <p class="hint" id="share-how">Press and hold the picture to save it, or copy the link.</p>
+  <div class="share-actions">
+    <button type="button" class="btn" id="share-copy">Copy link</button>
+    <a class="btn btn--quiet" id="share-save" download="my-stem-and-wren-bouquet.png" hidden>Save picture</a>
+    <button type="button" class="btn btn--quiet" id="share-close">Close</button>
+  </div>
+  <p class="visually-hidden" role="status" id="share-status"></p>
+</dialog>
+
+<script src="../assets/site.js"></script>
+<script type="module" src="../assets/order.js"></script>
+</body>
+</html>

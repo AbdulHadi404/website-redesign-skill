@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Style tiles — three candidates</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap">
+<style>
+@font-face{font-family:Literata;src:url(../../assets/fonts/literata-600.woff2) format("woff2");font-weight:600}
+@font-face{font-family:"Schibsted Grotesk";src:url(../../assets/fonts/schibsted-grotesk.woff2) format("woff2");font-weight:400 700}
+*{box-sizing:border-box}body{margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:24px;background:#e9ebee;font-family:"Schibsted Grotesk",sans-serif}
+.tile{height:760px;overflow:hidden;position:relative;padding:32px}
+.tile h2{position:absolute;bottom:8px;left:12px;margin:0;font:600 12px/1 sans-serif;color:#555;background:#fff;padding:4px 6px}
+/* A — On the table */
+.a{background:#1f3a5f;color:#fff}
+.a .kick{font-size:15px;color:#c9d9ef;margin:24px 0 8px}
+.a h1{font:600 52px/1.05 Literata,serif;margin:0 0 28px;letter-spacing:-.01em}
+.a .s{font-size:22px;line-height:1.6}
+.a .blank{border-bottom:2px solid #c9a227;padding:0 2px;font-weight:600}
+.a .price{font:600 128px/1 Literata,serif;font-variant-numeric:tabular-nums lining-nums;margin:28px 0 0}
+.a .per{font-size:20px;color:#c9d9ef}
+.a .btn{display:inline-block;margin-top:24px;background:#c9a227;color:#15253b;font-weight:700;padding:14px 22px;border-radius:6px;font-size:18px}
+.a .lnk{margin-left:16px;color:#fff;text-decoration:underline}
+.a .bar{position:absolute;left:0;right:0;top:0;height:56px;background:#fff;display:flex;align-items:center;padding:0 16px;gap:8px}
+.a .bar img{height:36px}.a .bar span{margin-left:auto;background:#c9a227;color:#15253b;font-weight:700;padding:8px 14px;border-radius:6px}
+.a .inner{margin-top:56px}
+/* B — The tax year on the wall */
+.b{background:#fff;color:#15253b;font-family:"Hanken Grotesk",sans-serif}
+.b h1{font:800 46px/1.05 "Hanken Grotesk";margin:16px 0 10px;letter-spacing:-.02em}
+.b p{font-size:18px;color:#4a5d78;margin:0 0 28px}
+.b .year{position:relative;height:340px;border-left:3px solid #1f3a5f;margin-left:12px}
+.b .m{position:absolute;left:-3px;width:14px;border-top:3px solid #1f3a5f}
+.b .m b{position:absolute;left:24px;top:-14px;white-space:nowrap;font-size:16px}
+.b .now{position:absolute;left:-10px;width:16px;height:16px;background:#c9a227}
+.b .now+b{position:absolute;left:24px;font-weight:800;color:#81681c}
+.b .big{font:800 64px/1 "Hanken Grotesk";font-variant-numeric:tabular-nums}
+/* C — The square */
+.c{background:#f3f7fd;color:#15253b;font-family:"Source Serif 4",serif}
+.c h1{font:700 44px/1.08 "Source Serif 4";margin:0 0 24px}
+.c .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.c .sq{aspect-ratio:1;background:#1f3a5f;color:#c9a227;display:flex;flex-direction:column;justify-content:space-between;padding:12px;font:700 40px/1 "Source Serif 4"}
+.c .sq small{font:600 14px/1.2 "Schibsted Grotesk";color:#fff}
+.c .sq.g{background:#c9a227;color:#1f3a5f}.c .sq.g small{color:#15253b}
+.c .sq.s{background:#6b7a8c;color:#fff}
+</style></head><body>
+<section class="tile a"><div class="bar"><img src="../../assets/logo-compact.svg" alt=""><span>Call</span></div><div class="inner">
+<p class="kick">Chartered accountants in Kelham Island, Sheffield, since 1988</p>
+<h1>Fixed fees, on the table.</h1>
+<p class="s">I’m <span class="blank">a sole trader ▾</span> with a turnover of <span class="blank">under £50k ▾</span></p>
+<p class="price">£45 <span class="per">a month + VAT</span></p>
+<p class="per">Sole trader accounts and tax return</p>
+<span class="btn">Ask about this fee</span><a class="lnk">See every fee</a></div>
+<h2>A · On the table — committed navy, Literata, figures as image</h2></section>
+<section class="tile b"><img src="../../assets/logo-outlined.svg" alt="" style="height:40px">
+<h1>Your tax year, and who handles it.</h1><p>Chartered accountants in Kelham Island, Sheffield.</p>
+<div class="year">
+<div class="m" style="top:0"><b>6 April — tax year starts</b></div>
+<div class="m" style="top:110px"><b>31 July — second payment on account</b></div>
+<div class="now" style="top:160px"></div><b style="top:154px;position:absolute;left:24px;font-weight:800;color:#81681c">Today, 1 October</b>
+<div class="m" style="top:200px"><b>31 October — paper returns</b></div>
+<div class="m" style="top:290px"><b>31 January — online returns and payment</b></div>
+</div><p class="big">122 days</p><p>to the online deadline</p>
+<h2>B · The tax year on the wall — white, Hanken Grotesk, diagram</h2></section>
+<section class="tile c"><img src="../../assets/logo-outlined.svg" alt="" style="height:40px;margin-bottom:24px">
+<h1>Accounts, tax and payroll — square with you.</h1>
+<div class="grid"><div class="sq">T<small>Personal tax</small></div><div class="sq g">A<small>Business accounts</small></div><div class="sq s">V<small>VAT and MTD</small></div><div class="sq g">P<small>Payroll</small></div><div class="sq s">B<small>Business advice</small></div><div class="sq">£<small>Fixed fees</small></div></div>
+<h2>C · The square — full palette of the mark, Source Serif 4, tiles</h2></section>
+</body></html>

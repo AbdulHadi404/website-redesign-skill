@@ -1,0 +1,3 @@
+{ "device": "phone", "states": [
+  { "name": "fee-sole-60k", "path": "/", "each": true, "steps": [ { "tap": "nav a[href='fees/']" }, { "wait": 500 }, { "tap": "a.more" }, { "wait": 500 } ] }
+] }

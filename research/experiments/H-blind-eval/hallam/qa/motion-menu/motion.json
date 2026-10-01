@@ -1,0 +1,456 @@
+{
+ "url": "http://127.0.0.1:4820/",
+ "date": "2026-10-01T18:45:14.613Z",
+ "device": "phone",
+ "browser": "141.0.7390.37",
+ "tokens": {
+  "source": "page custom properties",
+  "duration": {
+   "micro": 100,
+   "small": 150,
+   "medium": 240
+  },
+  "easing": {
+   "out": "cubic-bezier(0.2, 0, 0, 1)",
+   "in-out": "cubic-bezier(0.4, 0.14, 0.3, 1)",
+   "exit": "cubic-bezier(0.3, 0, 1, 1)",
+   "emphasized": "cubic-bezier(0.05, 0.7, 0.1, 1)"
+  }
+ },
+ "audit": {
+  "tokens": {
+   "source": "page custom properties",
+   "duration": {
+    "micro": 100,
+    "small": 150,
+    "medium": 240
+   },
+   "easing": {
+    "out": "cubic-bezier(0.2, 0, 0, 1)",
+    "in-out": "cubic-bezier(0.4, 0.14, 0.3, 1)",
+    "exit": "cubic-bezier(0.3, 0, 1, 1)",
+    "emphasized": "cubic-bezier(0.05, 0.7, 0.1, 1)"
+   }
+  },
+  "inventory": [
+   {
+    "sel": "header.site-header",
+    "n": 1,
+    "transitions": [
+     "border-color 150ms cubic-bezier(0.2, 0, 0, 1)"
+    ],
+    "animations": []
+   },
+   {
+    "sel": "a.btn.btn-primary",
+    "n": 1,
+    "transitions": [
+     "background-color 150ms cubic-bezier(0.2, 0, 0, 1)",
+     "transform 100ms cubic-bezier(0.2, 0, 0, 1)"
+    ],
+    "animations": []
+   },
+   {
+    "sel": "button.btn.menu-btn",
+    "n": 1,
+    "transitions": [
+     "background-color 150ms cubic-bezier(0.2, 0, 0, 1)",
+     "transform 100ms cubic-bezier(0.2, 0, 0, 1)"
+    ],
+    "animations": []
+   },
+   {
+    "sel": "#main a.btn.btn-primary",
+    "n": 2,
+    "transitions": [
+     "background-color 150ms cubic-bezier(0.2, 0, 0, 1)",
+     "transform 100ms cubic-bezier(0.2, 0, 0, 1)"
+    ],
+    "animations": []
+   },
+   {
+    "sel": "#main div.ty-fill",
+    "n": 1,
+    "transitions": [],
+    "animations": [
+     "ty-draw 0ms linear timeline:view()"
+    ]
+   }
+  ],
+  "inventoryReduce": {
+   "elements": 4,
+   "transitions": 4,
+   "animations": 0
+  },
+  "inventoryNormal": {
+   "elements": 6,
+   "transitions": 9,
+   "animations": 1
+  },
+  "reduceBlocks": 2,
+  "killAll": null,
+  "blockedSheets": 0,
+  "mqReduce": 1,
+  "loadNormal": {
+   "anims": 1,
+   "churn": []
+  },
+  "loadReduce": {
+   "anims": 0,
+   "churn": [],
+   "moving": []
+  },
+  "spinners": [],
+  "moving": [
+   "a.btn.btn-primary",
+   "button.btn.menu-btn",
+   "#main a.btn.btn-primary",
+   "#main div.ty-fill"
+  ],
+  "hover": [],
+  "focus": [
+   {
+    "i": 0,
+    "sel": "a.skip",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 1,
+    "sel": "a.brand",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 2,
+    "sel": "a.btn.btn-primary",
+    "control": true,
+    "native": false,
+    "button": true,
+    "changed": true
+   },
+   {
+    "i": 3,
+    "sel": "button.btn.menu-btn",
+    "control": true,
+    "native": false,
+    "button": true,
+    "changed": true
+   },
+   {
+    "i": 4,
+    "sel": "#ff-type",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 5,
+    "sel": "#ff-turnover",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 6,
+    "sel": "#main a.btn.btn-primary",
+    "control": true,
+    "native": false,
+    "button": true,
+    "changed": true
+   },
+   {
+    "i": 7,
+    "sel": "#main a.text-link",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 8,
+    "sel": "#service-tax a.service-ask",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 9,
+    "sel": "#service-business a.service-ask",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 10,
+    "sel": "#service-vat a.service-ask",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 11,
+    "sel": "#service-payroll a.service-ask",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 12,
+    "sel": "#service-advice a.service-ask",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 13,
+    "sel": "#main a",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 14,
+    "sel": "#main a.big-phone",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 15,
+    "sel": "#main a",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 16,
+    "sel": "#main a.btn.btn-primary",
+    "control": true,
+    "native": false,
+    "button": true,
+    "changed": true
+   },
+   {
+    "i": 17,
+    "sel": "a",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 18,
+    "sel": "a",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 19,
+    "sel": "a",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 20,
+    "sel": "a",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 21,
+    "sel": "a",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 22,
+    "sel": "a",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   },
+   {
+    "i": 23,
+    "sel": "a",
+    "control": true,
+    "native": false,
+    "button": false,
+    "changed": true
+   }
+  ],
+  "press": [],
+  "jsDriven": 0,
+  "rafAtRest": 0
+ },
+ "spec": [
+  {
+   "id": "menu-open",
+   "trigger": "click",
+   "on": ".menu-btn",
+   "target": ".site-nav",
+   "spec": {
+    "properties": [
+     "opacity",
+     "transform"
+    ],
+    "duration": "medium",
+    "easing": "out",
+    "reduced": "fade"
+   },
+   "normal": {
+    "tT": 160,
+    "jumps": [],
+    "shifted": [],
+    "state": "animates",
+    "moves": true,
+    "fades": true,
+    "counts": false,
+    "layout": false,
+    "vt": null,
+    "declared": 240,
+    "fadeDeclared": 240,
+    "starved": false,
+    "maxGap": 20,
+    "observed": 233,
+    "stagger": null,
+    "staggerSource": null,
+    "scrollLinked": false,
+    "inViewAtStart": false,
+    "props": [
+     "transform",
+     "opacity"
+    ],
+    "anims": [
+     {
+      "kind": "animation",
+      "name": "menu-in",
+      "pseudo": "",
+      "target": "nav.site-nav",
+      "duration": 240,
+      "delay": 0,
+      "easing": "cubic-bezier(0.2, 0, 0, 1)",
+      "iterations": 1,
+      "props": [
+       "opacity",
+       "transform"
+      ],
+      "timeline": "document",
+      "firstSeen": 162
+     }
+    ],
+    "dominant": "op",
+    "text": null,
+    "final": {
+     "op": 1,
+     "vis": 1,
+     "tx": 0,
+     "ty": 0,
+     "sx": 1,
+     "text": ""
+    },
+    "targets": 1,
+    "perTarget": [
+     "animates"
+    ],
+    "interrupt": null,
+    "frames": 100,
+    "ambient": [],
+    "retries": 0,
+    "fit": null
+   },
+   "reduce": {
+    "tT": 156,
+    "jumps": [],
+    "shifted": [],
+    "state": "instant",
+    "moves": false,
+    "fades": false,
+    "counts": false,
+    "layout": false,
+    "vt": null,
+    "declared": null,
+    "fadeDeclared": null,
+    "starved": false,
+    "maxGap": 23,
+    "observed": null,
+    "stagger": null,
+    "staggerSource": null,
+    "scrollLinked": false,
+    "inViewAtStart": false,
+    "props": [],
+    "anims": [],
+    "dominant": null,
+    "text": null,
+    "final": {
+     "op": 1,
+     "vis": 1,
+     "tx": 0,
+     "ty": 0,
+     "sx": 1,
+     "text": ""
+    },
+    "targets": 1,
+    "perTarget": [
+     "instant"
+    ],
+    "interrupt": null,
+    "frames": 100,
+    "ambient": [],
+    "retries": 0
+   },
+   "pass": true,
+   "problems": [],
+   "notes": [],
+   "easing": {
+    "declared": [
+     "cubic-bezier(0.2, 0, 0, 1)"
+    ],
+    "distance": 0
+   },
+   "reduced": {
+    "expected": "fade",
+    "outcome": "stops (instant)",
+    "ok": true,
+    "final": {
+     "op": 1,
+     "vis": 1,
+     "tx": 0,
+     "ty": 0,
+     "sx": 1,
+     "text": ""
+    }
+   },
+   "filmstrip": "filmstrip-menu-open.jpg",
+   "filmstripFit": {
+    "frames": 16,
+    "allInside": true,
+    "width": 1542
+   }
+  }
+ ],
+ "flags": []
+}
